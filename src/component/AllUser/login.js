@@ -7,12 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [phone, setPhone] = useState("");
-    const navigate = useNavigate();
-    
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- try {
+    try {
       const response = await axios.post(
         "https://canine.hirectjob.in/api/v1/auth/customer",
         { cust_phone: phone }
@@ -50,9 +49,11 @@ function Login() {
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Label>Mobile No</Form.Label>
                       <Form.Control
-                        type="number"
+                        input
+                        type="tel"
                         placeholder="Enter number"
                         value={phone}
+                        maxLength="10"
                         onChange={(e) => handleChange(e)}
                       />
                     </Form.Group>

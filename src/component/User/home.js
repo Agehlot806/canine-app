@@ -304,13 +304,13 @@ function Home(props) {
               categories.map((item) => (
                 <div className="Shop-Deals" key={item.id}>
                   <Link to="/dog">
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/public/category/" +
-                      item.image
-                    }
-                  />
-                  <h1>{item.name}</h1>
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/category/" +
+                        item.image
+                      }
+                    />
+                    <h1>{item.name}</h1>
                   </Link>
                 </div>
               ))}
@@ -523,18 +523,18 @@ function Home(props) {
         <Container>
           {thirdbanner
             ? thirdbanner.map(
-              (item, index) =>
-                item.title === "new" && (
-                  <div className="banner-bgmain" key={item.id}>
-                    <img
-                      src={
-                        "https://canine.hirectjob.in/storage/app/public/banner/" +
-                        item.image
-                      }
-                    />
-                  </div>
-                )
-            )
+                (item, index) =>
+                  item.title === "new" && (
+                    <div className="banner-bgmain" key={item.id}>
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        }
+                      />
+                    </div>
+                  )
+              )
             : null}
         </Container>
       </section>
@@ -624,28 +624,36 @@ function Home(props) {
           <div className="needplace">
             <Row>
               <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="ProductPartner-card">
-                  <img src={loicon1} />
-                  <h3>Shop Name</h3>
-                </div>
+                <a href="/product-by-partner">
+                  <div className="ProductPartner-card">
+                    <img src={loicon1} />
+                    <h3 className="text-dark">Shop Name</h3>
+                  </div>
+                </a>
               </Col>
               <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="ProductPartner-card">
-                  <img src={loicon2} />
-                  <h3>Shop Name</h3>
-                </div>
+                <a href="/product-by-partner">
+                  <div className="ProductPartner-card">
+                    <img src={loicon2} />
+                    <h3 className="text-dark">Shop Name</h3>
+                  </div>
+                </a>
               </Col>
               <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="ProductPartner-card">
-                  <img src={loicon1} />
-                  <h3>Shop Name</h3>
-                </div>
+                <a href="/product-by-partner">
+                  <div className="ProductPartner-card">
+                    <img src={loicon1} />
+                    <h3 className="text-dark">Shop Name</h3>
+                  </div>
+                </a>
               </Col>
               <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="ProductPartner-card">
-                  <img src={loicon2} />
-                  <h3>Shop Name</h3>
-                </div>
+                <a href="/product-by-partner">
+                  <div className="ProductPartner-card">
+                    <img src={loicon2} />
+                    <h3 className="text-dark">Shop Name</h3>
+                  </div>
+                </a>
               </Col>
             </Row>
           </div>
@@ -659,8 +667,13 @@ function Home(props) {
               <Col lg={5} className="p-0">
                 <div className="video-content">
                   <h1 className="main-head">Samantha & Maya’s Pet Grooming</h1>
-                  <p>When it comes to cats, everyone knows taste is what’s most important, right? Imagine every meal oozing with irresistible flavour whilst being super healthy.
-                    Yup, the purrrfect combination! Say yes to Drools just like Samantha & Maya!</p>
+                  <p>
+                    When it comes to cats, everyone knows taste is what’s most
+                    important, right? Imagine every meal oozing with
+                    irresistible flavour whilst being super healthy. Yup, the
+                    purrrfect combination! Say yes to Drools just like Samantha
+                    & Maya!
+                  </p>
                   <Button>Shop Now</Button>
                 </div>
               </Col>
@@ -685,27 +698,33 @@ function Home(props) {
                 <div className="blog-card">
                   <img src={cat} />
                   <h3>El Rey Coffee Bar & Luncheonette</h3>
-                  <p>Different kinds of domestic animals have different characteristics and needs.
-                    Aquatic pets can provide a sense of tranquility to their owners and
-                    remove stress.</p>
+                  <p>
+                    Different kinds of domestic animals have different
+                    characteristics and needs. Aquatic pets can provide a sense
+                    of tranquility to their owners and remove stress.
+                  </p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="blog-card">
                   <img src={hamster} />
                   <h3>Photography Tips From Wai Su</h3>
-                  <p>Different kinds of domestic animals have different characteristics and needs.
-                    Aquatic pets can provide a sense of tranquility to their owners and
-                    remove stress.</p>
+                  <p>
+                    Different kinds of domestic animals have different
+                    characteristics and needs. Aquatic pets can provide a sense
+                    of tranquility to their owners and remove stress.
+                  </p>
                 </div>
               </Col>
               <Col lg={4}>
                 <div className="blog-card">
                   <img src={rebit} />
                   <h3>Take Interior Design To A New Level</h3>
-                  <p>Different kinds of domestic animals have different characteristics and needs.
-                    Aquatic pets can provide a sense of tranquility to their owners and
-                    remove stress.</p>
+                  <p>
+                    Different kinds of domestic animals have different
+                    characteristics and needs. Aquatic pets can provide a sense
+                    of tranquility to their owners and remove stress.
+                  </p>
                 </div>
               </Col>
             </Row>
@@ -820,7 +839,9 @@ function Home(props) {
               </Col>
               <Col lg={6}>
                 <div className="Newsletter">
-                  <h1 className="main-head">Get Or Promo Code by Subscribing To our Newsletter</h1>
+                  <h1 className="main-head">
+                    Get Or Promo Code by Subscribing To our Newsletter
+                  </h1>
                   <Form className="d-flex">
                     <Form.Control
                       type="search"

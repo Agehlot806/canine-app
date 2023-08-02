@@ -44,9 +44,11 @@ function Otp() {
                   <Form>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
-                        type="number"
+                        input
+                        type="tel"
                         placeholder="Enter number"
                         value={phone}
+                        maxLength="4"
                         onChange={(e) => setPhone(e.target.value)}
                       />
                     </Form.Group>
