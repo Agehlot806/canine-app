@@ -1,0 +1,221 @@
+@media only screen and (max-width: 1024px) {
+    .navbar-area a {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .offer-productContent button {
+        width: 185px;
+        height: 60px;
+    }
+}
+
+@media only screen and (max-width: 912px) {
+    .home-section {
+        padding-top: 80px;
+        padding-bottom: 40px;
+    }
+
+    .paw-right img {
+        padding: 38px 0;
+    }
+
+    .foodMore {
+        text-align: left;
+        margin: 0;
+    }
+
+    .offer-rightIMG {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 820px) {
+    .home-content h1 {
+        font-size: 65px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .home-content p {
+        margin: 30px 0;
+    }
+
+    .main-head {
+        line-height: 56px;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .home-content {
+        padding: 40px;
+    }
+
+    .food-product {
+        padding: 15px 15px 28px;
+    }
+
+    .offerProImg {
+        text-align: center;
+    }
+
+    .offerProImg img {
+        width: 150px;
+    }
+    .offer-productContent h1 {
+        font-size: 22px;
+    }
+
+    .food-product img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .food-product h6 {
+        font-size: 24px;
+    }
+
+    .food-product p {
+        font-size: 12px;
+    }
+
+    .brandLOGO img {
+        width: 100px;
+    }
+
+    .brand-main img {
+        width: 125px;
+        height: 125px;
+    }
+
+    .brand-bg a {
+        margin: 0 2px 0 2px;
+    }
+
+    .all-btn button {
+        height: 40px;
+        padding: 0 25px;
+    }
+
+    .home-content h1 {
+        font-size: 45px;
+        line-height: 55px;
+    }
+
+    .main-head {
+        font-size: 35px;
+        line-height: 45px;
+    }
+
+    .foodMore {
+        margin: 0 0 20px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    p {
+        font-size: 20px;
+    }
+
+    .home-content h1 {
+        font-size: 28px;
+        line-height: 40px;
+    }
+    .main-head {
+        font-size: 26px;
+    }
+    .Shop-Deals img {
+        width: 170px;
+    }
+    .food-product img {
+        width: 100px;
+        height: 100px;
+    }
+    .food-product h6 {
+        font-size: 17px;
+    }
+    .all-btn button {
+        height: 30px;
+        padding: 0 18px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+    .food-product {
+        padding: 0 10px 15px;
+    }
+    .brand-main img {
+        width: 100px;
+        height: 100px;
+    }
+    .brand-bg h5 {
+        font-size: 18px;
+    }
+    .brand-bg p {
+        font-size: 10px;
+    }
+    .brand-bg a img {
+        width: 20px;
+    }
+}
+
+
+@media only screen and (max-width: 393px) {
+    .aboutImg-main {
+        margin: 0 -15%;
+    }
+
+    .video-right img {
+        left: 64%;
+    }
+    .video-right img {
+        width: 100px;
+        left: 55%;
+    }
+    .food-right {
+        left: 60%;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .food-product img {
+        width: 255px;
+        height: 255px;
+    }
+
+    .home-content h1 {
+        font-size: 31px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    .video-right img {
+        width: 100px;
+    }
+
+    .food-right {
+        left: 70%;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .food-product img {
+        width: 225px;
+        height: 225px;
+    }
+
+    .food h5 {
+        font-size: 24px;
+    }
+
+    .video-right img {
+        width: 90px;
+    }
+
+    .food-right {
+        left: 60%;
+    }
+}
