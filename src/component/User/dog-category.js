@@ -13,48 +13,9 @@ import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
-import brandPro2 from "../../assets/images/img/brandPro2.png";
-
-const clinetreview = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
-        slidesToSlide: 2, // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2,
-        slidesToSlide: 1, // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1, // optional, default to 1.
-    },
-};
-function Dog(props) {
-    const [allproduct, setallproduct] = useState([]);
 
 
-    useEffect(() => {
-        allProduct();
-    }, []);
-
-
-    const allProduct = async () => {
-        axios
-            .get(`${BASE_URL}/items/latest`)
-            .then((response) => {
-                console.log(response);
-                console.log("Delete Successful");
-                setallproduct(response.data.data)
-                // Perform any additional actions after successful deletion
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
+function Dogcategory() {
 
 
     return (
@@ -99,92 +60,23 @@ function Dog(props) {
                         </section>
                     </Col>
                     <Col lg={9}>
-                        <section className="section-padding">
-                            <Container>
-                                <h1 className="main-head">
-                                    Dogs
-                                </h1>
-                            </Container>
-                            <Container fluid>
-                                <Carousel
-                                    swipeable={true}
-                                    draggable={true}
-                                    showDots={true}
-                                    responsive={clinetreview}
-                                    ssr={true} // means to render carousel on server-side.
-                                    infinite={true}
-                                    autoPlay={props.deviceType !== "mobile" ? true : false}
-                                    autoPlaySpeed={2000}
-                                    keyBoardControl={true}
-                                    customTransition="all 1s"
-                                    transitionDuration={1000}
-                                    containerClass="carousel-container"
-                                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                                    deviceType={props.deviceType}
-                                    dotListClass="custom-dot-list-style"
-                                    itemClass="carousel-item-padding-40-px"
-                                >
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={brandPro2}
-                                        />
-                                        <h1>Wet Dog Food</h1>
-                                    </div>
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={product3}
-                                        />
-                                        <h1>Dry Dog Food</h1>
-                                    </div>
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={brandPro2}
-                                        />
-                                        <h1>Training & Behaviour</h1>
-                                    </div>
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={product3}
-                                        />
-                                        <h1>Dog Toys</h1>
-                                    </div>
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={brandPro2}
-                                        />
-                                        <h1>Dog Treats</h1>
-                                    </div>
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={brandPro2}
-                                        />
-                                        <h1>Carriers & Travel</h1>
-                                    </div>
-                                    <div className="Shop-Deals-inner">
-                                        <img
-                                            src={brandPro2}
-                                        />
-                                        <h1>Dog Grooming</h1>
-                                    </div>
-                                </Carousel>
-                            </Container>
-                        </section>
-
-
                         <section className="section-padding food">
                             <Container>
-                                <Row>
-                                    {allproduct && allproduct.map((item) => (
+                            <h1 className="main-head">
+                                Dry Food
+                            </h1>
+                                <div className="needplace">
+                                    <Row>
                                         <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product" key={item.id}>
+                                            <div className="food-product">
                                                 <i class="fa fa-heart-o" />
                                                 <Link to="/product-details">
                                                     <div className='text-center'>
-                                                        <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
+                                                        <img src={product3} />
                                                     </div>
                                                     <div>
-                                                        <h6>{item.name}</h6>
-                                                        <p>{item.description}</p>
+                                                        <h6>Product name</h6>
+                                                        <p>Lorem Ipsum is simply dummy</p>
                                                     </div>
                                                     <div className="product-bag">
                                                         <Row>
@@ -196,15 +88,16 @@ function Dog(props) {
                                                             </Col>
                                                         </Row>
                                                         <Row>
-                                                            <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
+                                                            <Col className='align-self-center'><h6>₹400.00</h6></Col>
                                                             <Col><Link to=''><img src={bag} /></Link></Col>
                                                         </Row>
                                                     </div>
                                                 </Link>
                                             </div>
                                         </Col>
-                                    ))}
-                                </Row>
+
+                                    </Row>
+                                </div>
                             </Container>
                         </section>
 
@@ -383,4 +276,4 @@ function Dog(props) {
     )
 }
 
-export default Dog
+export default Dogcategory

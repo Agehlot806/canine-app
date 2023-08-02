@@ -14,56 +14,8 @@ import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
 
-const clinetreview = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
-        slidesToSlide: 2 // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2,
-        slidesToSlide: 1 // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1 // optional, default to 1.
-    }
-};
-function Product(props) {
-    const [categories, setcategories] = useState([]);
-    const [allproduct, setallproduct] = useState([]);
 
-
-    useEffect(() => {
-        categoriesProduct();
-        allProduct();
-    }, []);
-
-    const categoriesProduct = async () => {
-        try {
-            const response = await fetch(`${BASE_URL}/categories`);
-            const jsonData = await response.json();
-            setcategories(jsonData.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-    const allProduct = async () => {
-        axios
-            .get(`${BASE_URL}/items/latest`)
-            .then((response) => {
-                console.log(response);
-                console.log("Delete Successful");
-                setallproduct(response.data.data)
-                // Perform any additional actions after successful deletion
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
+function Catcategory() {
 
 
     return (
@@ -108,56 +60,23 @@ function Product(props) {
                         </section>
                     </Col>
                     <Col lg={9}>
-                        <section className="section-padding">
-                            <Container>
-                                <h1 className="main-head">
-                                    Shop Deals For Your Best Buddy
-                                </h1>
-                            </Container>
-                            <Container fluid>
-                                <Carousel
-                                    swipeable={true}
-                                    draggable={true}
-                                    showDots={true}
-                                    responsive={clinetreview}
-                                    ssr={true} // means to render carousel on server-side.
-                                    infinite={true}
-                                    autoPlay={props.deviceType !== "mobile" ? true : false}
-                                    autoPlaySpeed={2000}
-                                    keyBoardControl={true}
-                                    customTransition="all 1s"
-                                    transitionDuration={1000}
-                                    containerClass="carousel-container"
-                                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                                    deviceType={props.deviceType}
-                                    dotListClass="custom-dot-list-style"
-                                    itemClass="carousel-item-padding-40-px"
-                                >
-                                    {categories.map((item) => (
-                                        <div className="product-Deals" key={item.id}>
-                                            <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image} />
-                                            <h1>{item.name}</h1>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </Container>
-                        </section>
-
-
                         <section className="section-padding food">
                             <Container>
-                                <Row>
-                                    {allproduct && allproduct.map((item) => (
+                            <h1 className="main-head">
+                            Wet Food
+                            </h1>
+                                <div className="needplace">
+                                    <Row>
                                         <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product" key={item.id}>
+                                            <div className="food-product">
                                                 <i class="fa fa-heart-o" />
                                                 <Link to="/product-details">
                                                     <div className='text-center'>
-                                                        <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
+                                                        <img src={product3} />
                                                     </div>
                                                     <div>
-                                                        <h6>{item.name}</h6>
-                                                        <p>{item.description}</p>
+                                                        <h6>Product name</h6>
+                                                        <p>Lorem Ipsum is simply dummy</p>
                                                     </div>
                                                     <div className="product-bag">
                                                         <Row>
@@ -169,15 +88,16 @@ function Product(props) {
                                                             </Col>
                                                         </Row>
                                                         <Row>
-                                                            <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
+                                                            <Col className='align-self-center'><h6>₹400.00</h6></Col>
                                                             <Col><Link to=''><img src={bag} /></Link></Col>
                                                         </Row>
                                                     </div>
                                                 </Link>
                                             </div>
                                         </Col>
-                                    ))}
-                                </Row>
+
+                                    </Row>
+                                </div>
                             </Container>
                         </section>
 
@@ -356,4 +276,4 @@ function Product(props) {
     )
 }
 
-export default Product
+export default Catcategory

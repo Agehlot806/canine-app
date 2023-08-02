@@ -1,7 +1,7 @@
 import React from "react";
 import '../../assets/css/order-tracker.css'
 import {
-    MDBBtn,
+    // Button,
     MDBCard,
     MDBCardBody,
     MDBCardFooter,
@@ -40,7 +40,7 @@ export default function Map() {
                                             </span>
                                         </div>
                                         <div>
-                                            <MDBBtn className="cancel-btn" data-toggle="modal" data-target="#cancle-order-Modal">Cancel Order</MDBBtn>
+                                            <Button className="cancel-btn" data-toggle="modal" data-target="#cancle-order-Modal">Cancel Order</Button>
                                         </div>
                                     </div>
 
@@ -100,8 +100,8 @@ export default function Map() {
                         <div className="modal-body">
                             <h3>Cancel Order</h3>
                             <p>Are you sure you want to cancel this order?</p>
-                            <MDBBtn className="bordercancle">Cancel</MDBBtn>
-                            <MDBBtn data-toggle="modal" data-dismiss="modal" data-target="#cancleconfirmModal">Confirm</MDBBtn>
+                            <Button className="bordercancle">Cancel</Button>
+                            <Button data-toggle="modal" data-dismiss="modal" data-target="#cancleconfirmModal">Confirm</Button>
                         </div>
                     </div>
                 </div>
@@ -144,8 +144,8 @@ export default function Map() {
                                     </label>
                                 </div>
                             </div>
-                            <MDBBtn className="bordercancle">Cancel</MDBBtn>
-                            <MDBBtn data-toggle="modal" data-dismiss="modal" data-target="#cancleconfirmModal">Confirm</MDBBtn>
+                            <Button className="bordercancle">Cancel</Button>
+                            <Button data-toggle="modal" data-dismiss="modal" data-target="#cancleconfirmModal">Confirm</Button>
                         </div>
                     </div>
                 </div>
@@ -165,8 +165,8 @@ export default function Map() {
                                     <input type="text" className="form-control" placeholder="Enter reason" />
                                 </div>
                             </div>
-                            <MDBBtn className="bordercancle" data-dismiss="modal">Cancel</MDBBtn>
-                            <MDBBtn>Ok</MDBBtn>
+                            <Button className="bordercancle" data-dismiss="modal">Cancel</Button>
+                            <Button>Ok</Button>
 
                         </div>
                     </div>

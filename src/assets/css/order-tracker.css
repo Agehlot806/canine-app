@@ -35,16 +35,18 @@
   }
   .cancel-btn {
     background: red !important;
-    font-size: 15px;
+    text-transform: capitalize !important;
+    font-size: 16px !important;
     border-radius: 50px;
 }
 
 .cancle-orderModal .modal-body button {
     background: red !important;
+    text-transform: capitalize !important;
     border-radius: 50px;
     margin: 0 4px;
     width: 140px;
-    font-size: 16px;
+    font-size: 20px;
 }
 .cancle-orderModal .modal-body .bordercancle {
     background: none !important;
@@ -56,4 +58,7 @@
 }
 .selct-cancle .form-check {
     margin-bottom: 18px;
+}
+.btn {
+  text-transform: capitalize !important;
 }

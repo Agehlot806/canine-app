@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../directives/header'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import banner from '../../assets/images/banner/banner.png'
@@ -7,9 +7,24 @@ import Avatar2 from '../../assets/images/icon/Avatar2.png'
 import Avatar3 from '../../assets/images/icon/Avatar3.png'
 import { Link } from 'react-router-dom'
 import Footer from '../../directives/footer'
-
+import { BASE_URL } from '../../Constant/Index'
 
 function Serviceaddpet() {
+    const [categories, setcategories] = useState([]);
+
+    useEffect(() => {
+        categoriesProduct();
+    }, []);
+
+    const categoriesProduct = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/categories`);
+            const jsonData = await response.json();
+            setcategories(jsonData.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
     return (
         <>
             <Header />
@@ -29,21 +44,35 @@ function Serviceaddpet() {
                             </div>
                             <div className="needplace">
                                 <Row>
-                                    <Col lg={6}>
-                                        <div className="form-group">
-                                            <a><img src={Avatar1} /></a>
-                                            <a><img src={Avatar2} /></a>
-                                            <a><img src={Avatar3} /></a>
-                                        </div>
+                                    {categories &&
+                                        categories.map((item) => (
+                                            <Col lg={3}>
+                                                <div className="form-group">
+                                                    <div className='pet-service-add' key={item.id}>
+                                                        <a><img src={
+                                                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                            item.image
+                                                        } /></a>
+                                                    </div>
+
+                                                </div>
+                                            </Col>
+                                        ))}
+                                </Row>
+                                <Row>
+                                    <Col lg={10}>
                                         <div className="form-group">
                                             <label >Pet type</label>
                                             <ul className="nav nav-pills mb-3" role="tablist">
-                                                <li className="nav-item">
-                                                    <a className="nav-link active" data-toggle="pill" role="tab" aria-selected="true">Dog</a>
-                                                </li>
-                                                <li className="nav-item">
+                                                {categories &&
+                                                    categories.map((item) => (
+                                                        <li className="nav-item" key={item.id}>
+                                                            <a className="nav-link" data-toggle="pill" role="tab" aria-selected="true">{item.name}</a>
+                                                        </li>
+                                                    ))}
+                                                {/* <li className="nav-item">
                                                     <a className="nav-link" data-toggle="pill" role="tab" aria-selected="false">Cat</a>
-                                                </li>
+                                                </li> */}
                                             </ul>
                                         </div>
                                         <div className="form-group">
@@ -84,8 +113,8 @@ function Serviceaddpet() {
                                             <input type="text" className="form-control" placeholder="Pet Name" />
                                         </div>
                                         <div className='add-petbtn'>
-                                        <Button><Link to=''>Add Pet</Link></Button>
-                                    </div>
+                                            <Button><Link to=''>Add Pet</Link></Button>
+                                        </div>
                                     </Col>
                                 </Row>
 

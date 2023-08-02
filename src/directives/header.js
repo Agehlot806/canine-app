@@ -45,7 +45,7 @@ function Header() {
 
                           <NavDropdown.Item>
                             <h3>Dog Food</h3>
-                            <Link to=''>Dry Food</Link>
+                            <Link to='/dog-category'>Dry Food</Link>
                           </NavDropdown.Item>
                           <NavDropdown.Item>
                             <Link to=''>Wet Food</Link>
@@ -165,7 +165,7 @@ function Header() {
                         <Col lg={6}>
                           <NavDropdown.Item>
                             <h3>Cat Food & Treats</h3>
-                            <Link to=''>Wet Food</Link>
+                            <Link to='/cat-category'>Wet Food</Link>
                           </NavDropdown.Item>
                           <NavDropdown.Item>
                             <Link to=''>Treats</Link>

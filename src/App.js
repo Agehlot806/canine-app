@@ -18,7 +18,7 @@ import Shopourbrand from "./component/User/shop-our-brand";
 import Productbypartner from "./component/User/product-by-partner";
 import Productpartnershop from "./component/User/product-partner-shop";
 import Ourbrand from "./component/User/our-brand";
-import Dog from "./component/User/dog";
+import Dogcategory from "./component/User/dog-category";
 import Login from "./component/AllUser/login";
 import Otherlogin from "./component/AllUser/other-login";
 import Otp from "./component/AllUser/otp";
@@ -46,6 +46,7 @@ import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
 import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
 import SalesmanAddcart from "./component/Salesman/salesman-add-cart";
 import Wholeseller from "./component/AllUser/wholeseller";
+import Catcategory from "./component/User/cat-category";
 
 
 
@@ -90,7 +91,8 @@ function App() {
           <Route path='/user-pay' element={<Userpay />} />
           <Route path='/user-upi' element={<Userupi />} />
           <Route path='/map' element={<Map />} />
-          <Route path='/dog' element={<Dog />} />
+          <Route path='/dog-category' element={<Dogcategory />} />
+          <Route path='/cat-category' element={<Catcategory />} />
 
 
           {/* All Login Users */}

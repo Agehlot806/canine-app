@@ -52,10 +52,7 @@ function Veterinaryservice() {
                                         <Form.Label>Name</Form.Label>
                                         <Form.Control placeholder="Enter name" />
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Address</Form.Label>
-                                        <Form.Control placeholder="Enter address" />
-                                    </Form.Group>
+                                   
                                     <Row className="mb-3">
                                         <Col>
                                             <Form.Label>Email</Form.Label>
@@ -66,8 +63,40 @@ function Veterinaryservice() {
                                             <Form.Control placeholder="Enter phone" />
                                         </Col>
                                     </Row>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Label>State</Form.Label>
+                                            <Form.Select
+                                                    aria-label="Default select example"
+                                                >
+                                                    <option>Choose...</option>
+                                                </Form.Select>
+                                        </Col>
+                                        <Col>
+                                            <Form.Label>City</Form.Label>
+                                            <Form.Select
+                                                    aria-label="Default select example"
+                                                >
+                                                    <option>Choose...</option>
+                                                </Form.Select>
+                                        </Col>
+                                    </Row>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Message</Form.Label>
+                                        <Form.Label>Address</Form.Label>
+                                        <Form.Control placeholder="Enter address" />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Select Pet</Form.Label>
+                                        <select className="form-control">
+                                            <option>City</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Pet Problems</Form.Label>
                                         <Form.Control placeholder="Leave a comment here" as="textarea" />
                                     </Form.Group>
                                     <Button className='mt-4'>Submit</Button>

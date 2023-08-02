@@ -322,8 +322,8 @@ function Home(props) {
         <Container>
           <Row>
             <Col lg={6}>
-              <h5>Dog Nutrients & Food </h5>
-              <h1 className="main-head">Late all Products</h1>
+              {/* <h5>Dog Nutrients & Food </h5> */}
+              <h1 className="main-head">Latest all Products</h1>
             </Col>
             <Col lg={6}>
               <div className="foodMore">

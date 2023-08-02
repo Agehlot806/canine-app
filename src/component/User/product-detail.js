@@ -94,24 +94,18 @@ function Productdetail() {
                 <p>By <span>Brand name</span></p>
                 <span><i className="fa fa-star" /> 4.5</span>
                 <div className="needplaceProduct">
-                  <h6>Size</h6>
                   <Row>
-                    <Col sm={2}>
-                      <div className='product-item-inner'>
-                        <img src={productItem} />
-                        <h5>1 KG</h5>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
-                      <div className='product-item-inner'>
-                        <img src={productItem} />
-                        <h5>5 KG</h5>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
-                      <div className='product-item-inner'>
-                        <img src={productItem} />
-                        <h5>10 KG</h5>
+                    <Col sm={6}>
+                      <div className="form-group">
+                        {/* <label >Size</label> */}
+                        <select className="form-control">
+                          <option>Select size</option>
+                          <option>5KG</option>
+                          <option>10KG</option>
+                          <option>15KG</option>
+                          <option>20KG</option>
+                          <option>30KG</option>
+                        </select>
                       </div>
                     </Col>
                     <Col sm={2}>

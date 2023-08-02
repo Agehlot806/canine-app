@@ -276,7 +276,7 @@ a {
 
 .foodMore {
     text-align: right;
-    margin: 25px 0;
+    /* margin: 25px 0; */
 }
 
 .all-btn a {
@@ -653,9 +653,10 @@ a {
 .product-item-inner img {
     width: 80px;
     height: 80px;
-    background: #f2d2dd;
+    /* background: #f2d2dd; */
     padding: 10px;
-    border-radius: 25px;
+    border-radius: 15px;
+    border: 1px solid #d7cace99;
 }
 .productDetail-content i {
     color: red;
@@ -690,8 +691,16 @@ a {
     border-radius: 18px;
     padding: 8px 16px;
 }
-
-
+.product-Deals img {
+    width: 110px;
+}
+.product-Deals {
+    text-align: center;
+}
+.product-Deals h1 {
+    font-size: 25px;
+    margin: 12px 0 0;
+}
 /* Contact area css  */
 .contact-card {
     box-shadow: 0px 1.4653862714767456px 43.96158981323242px 0px #0000000D;
@@ -727,7 +736,11 @@ a {
     border: none;
     height: 60px;
 }
-
+.contact-form select {
+    box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000D;
+    border: none;
+    height: 60px;
+}
 .contact-form textarea {
     box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000D;
     border: none;
@@ -1326,9 +1339,9 @@ a {
 
 /* add cart */
 .quantity-btn input {
-    width: 150px;
-    height: 70px;
-    border-radius: 50px;
+    width: 170px;
+    /* height: 40px;
+    border-radius: 50px; */
 }
 /* .quantity-btn {
     border-radius: 10px;
@@ -1472,12 +1485,11 @@ a {
 }
 
 .banner-video {
-
     color: #fff;
 }
 
 .video-content {
-    padding: 23px;
+    padding: 18px;
     background: #008efd;
 }
 
@@ -2085,7 +2097,7 @@ a.placDate {
     overflow: hidden;
 }
 .add-upload-area a img {
-    width: 100px;
+    width: 150px;
     margin: 0 10px;
 }
 .add-upload-area .form-group {
