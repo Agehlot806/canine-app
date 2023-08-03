@@ -57,20 +57,20 @@ function Login() {
                         onChange={(e) => handleChange(e)}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3" id="formGridCheckbox">
+                    {/* <Form.Group className="mb-3" id="formGridCheckbox">
                       <Form.Check
                         type="checkbox"
                         label="Get OTP via Whatsapp"
                         className="checkbox-area"
                       />
-                    </Form.Group>
+                    </Form.Group> */}
                     <div className="login-btns">
                       <Button
                         variant="primary"
                         type="submit"
                         onClick={handleSubmit}
                       >
-                        Login
+                        <Link to="/otp">Login</Link>{" "}
                       </Button>
                       <div className="login-btns">
                         <Link to="/other-login">Other Login</Link>

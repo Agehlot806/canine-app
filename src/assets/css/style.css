@@ -857,6 +857,21 @@ a {
   width: 100%;
 }
 
+.countdown-text {
+  margin: 20px 0 0;
+}
+.countdown-text button {
+  background: #f1c21b;
+  border: none;
+  padding: 5px 16px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.countdown-text h6 {
+  margin: 8px 0;
+  font-size: 18px;
+}
 .otherLogin-card {
   border-radius: 52.677px;
   padding: 45px 20px;
@@ -895,7 +910,10 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
+.otp-section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
 .otp {
   display: inline-block;
   width: 60px;
@@ -911,7 +929,9 @@ a {
 .otp:focus-visible {
   outline: none !important;
 }
-
+.otp-area h4 {
+  padding: 9px 0 0 0;
+}
 .otp-area {
   border-radius: 42.81px;
   background: #fff;
@@ -926,16 +946,16 @@ a {
   font-size: 14px;
   font-weight: 600;
 }
-
 .otp-area input {
-  border-radius: 37.75px;
-  background: #fff;
-  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px
-    rgba(0, 0, 0, 0.05);
-  height: 55px;
+  border-radius: 25px;
+  background: #eee;
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px rgba(0, 0, 0, 0.05);
+  height: 70px;
   border: none;
+  width: 90px !important;
+  font-size: 30px;
+  margin: 0 5px;
 }
-
 .otp-area h6 {
   margin: 20px 0 0;
 }
@@ -2054,14 +2074,15 @@ a.placDate {
 }
 
 .sevice-select-date ul li {
-  width: 130px;
+  width: 225px;
   text-align: center;
 }
 
 .sevice-select-date ul li a {
-  color: #000;
-  font-size: 20px;
+  color: #000 !important;
+  font-size: 20px !important;
   font-weight: 500;
+  padding: 0 0 20px !important;
 }
 
 .sevice-select-date ul li a:hover {
