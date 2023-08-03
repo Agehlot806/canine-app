@@ -10,7 +10,6 @@ function Signup() {
     const [stateall, setStateall] = useState([]);
     const [stateallCity, setStateallCity] = useState([]);
     const [state, setstate] = useState("");
-
     const [city, setcity] = useState("");
     const [error, seterror] = useState(false);
 

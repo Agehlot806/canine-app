@@ -2144,7 +2144,9 @@ a.placDate {
 .add-upload input {
   display: none;
 }
-
+.selectedCategory img {
+  width: 100px;
+}
 .add-upload label {
   width: 100%;
   padding: 80px 0;
@@ -2353,4 +2355,45 @@ a.placDate {
 
 .cancle-orderModal .modal-body {
   text-align: center;
+}
+
+
+
+
+/* sohel css */
+.filter-product ul li {
+  list-style: none;
+}
+.main-chk ul {
+  padding: 0;
+}
+.main-chk {
+  cursor: pointer;
+}
+.i-con {
+  position: relative;
+}
+.i-con span {
+  position: absolute;
+  left: 90%;
+  display: inline-block;
+  margin-top: -25px;
+  color: #1D1D1D;
+  transform: translateX(-50%);
+}
+.form-range input {
+  color: #4D4D4D;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 5px 5px;
+}
+.form-range span {
+  margin-right: 0.5rem;
+}
+.form-range {
+  margin-bottom: 20px;
+}
+.form-range input:focus-visible{
+  border: 1px solid #ddd;
 }

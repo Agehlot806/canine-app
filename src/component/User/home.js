@@ -32,8 +32,8 @@ import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import loicon1 from "../../assets/images/img/loicon1.png";
 import loicon2 from "../../assets/images/img/loicon2.png";
-
 import aboutpage from "../../assets/images/img/aboutpage.png";
+import toast, { Toaster } from "react-hot-toast";
 
 const homeslider = {
   desktop: {
@@ -76,9 +76,28 @@ function Home(props) {
   const [allproduct, setallproduct] = useState([]);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [email, setEmail] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
+
   useEffect(() => {
     fetchBrands();
   }, []);
+
+
+  const handleNewsletter = (event) => {
+    event.preventDefault();
+    const data = {
+      email: email,
+    };
+    axios.post(`${BASE_URL}/newsletter/subscribe`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Subscription Successfully");
+      })
+      .catch((error) => {
+        toast.error("The email field is required");
+      });
+  };
 
   const fetchBrands = async () => {
     try {
@@ -135,6 +154,7 @@ function Home(props) {
 
   return (
     <>
+    <Toaster />
       <Header />
       <div className="home-bg">
         <div className="home-section">
@@ -848,8 +868,9 @@ function Home(props) {
                       placeholder="Enter your email"
                       className="me-2"
                       aria-label="Search"
+                      value={email} onChange={(e) => setEmail(e.target.value)}
                     />
-                    <Button variant="outline-success">Subscribe</Button>
+                    <Button variant="outline-success" onClick={handleNewsletter}>Subscribe</Button>
                   </Form>
                 </div>
               </Col>
