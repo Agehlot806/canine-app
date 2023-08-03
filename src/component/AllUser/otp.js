@@ -3,10 +3,13 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import OtpInput from "react-otp-input";
 
 function Otp() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("1234");
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(30);
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -28,11 +31,35 @@ function Otp() {
       // Handle error as needed
     }
   };
+  const resendOTP = (e) => {
+    e.preventDefault();
+    setMinutes(1);
+    setSeconds(30);
+  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
 
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(interval);
+        } else {
+          setSeconds(59);
+          setMinutes(minutes - 1);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [seconds]);
   return (
     <>
       <div className="otp-bg">
-        <section className="section-padding food">
+        <section className="section-padding otp-section food">
           <Container>
             <Row className="justify-content-center">
               <Col lg={6}>
@@ -42,7 +69,7 @@ function Otp() {
                   <p>An OTP has been sent to your mobile number</p>
 
                   <Form>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
+                    {/* <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
                         input
                         type="tel"
@@ -51,17 +78,75 @@ function Otp() {
                         maxLength="4"
                         onChange={(e) => setPhone(e.target.value)}
                       />
-                    </Form.Group>
-
-                    <div>
-                      <input className="otp" type="text" maxLength={1} />
-                      <input className="otp" type="text" maxLength={1} />
-                      <input className="otp" type="text" maxLength={1} />
-                      <input className="otp" type="text" maxLength={1} />
+                    </Form.Group> */}
+                    <OtpInput
+                      value={phone}
+                      otpType="number"
+                      onChange={(e) => setPhone(e)}
+                      OTPLength={4}
+                      autoFocus
+                      // renderSeparator={<span>-</span>}
+                      renderInput={(props) => <input {...props} />}
+                    />
+                    {/* <div>
+                      <input
+                        className="otp"
+                        type="text"
+                        maxLength={1}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                      <input
+                        className="otp"
+                        type="text"
+                        maxLength={1}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                      <input
+                        className="otp"
+                        type="text"
+                        maxLength={1}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                      <input
+                        className="otp"
+                        type="text"
+                        maxLength={1}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div> */}
+                    <div className="countdown-text">
+                      <Row>
+                        <Col>
+                          <div>
+                            {seconds > 0 || minutes > 0 ? (
+                              <h6>
+                                Time Remaining:{" "}
+                                {minutes < 10 ? `0${minutes}` : minutes}:
+                                {seconds < 10 ? `0${seconds}` : seconds}
+                              </h6>
+                            ) : (
+                              <h6>Didn't recieve code?</h6>
+                            )}
+                          </div>
+                        </Col>
+                        <Col>
+                          <button
+                            disabled={seconds > 0 || minutes > 0}
+                            style={{
+                              color:
+                                seconds > 0 || minutes > 0 ? "#000" : "red",
+                            }}
+                            onClick={(e) => resendOTP(e)}
+                          >
+                            Resend OTP
+                          </button>
+                        </Col>
+                      </Row>
                     </div>
-                    <h6>
-                      Resent OTP <span>01.24</span>
-                    </h6>
                     <div className="login-btns">
                       <Button
                         variant="primary"

@@ -1,18 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../directives/header";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import service from "../../assets/images/banner/service.png";
 import { Form, Link } from "react-router-dom";
 import Footer from "../../directives/footer";
 import { dayanddates, times } from "../../utils";
+import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
+import moment from "moment/moment";
 
 function Servicedate() {
-  // const [slotday, setSlotDay] = useState(true)
+  const [slotday, setSlotDay] = useState([]);
+  const [timingSlot, setTimingSlot] = useState([]);
+  // console.log("slotday?.slot_timing",);
+  console.log("slotday: ", slotday);
   // const [activeSlot, setActiveSlot] = useState(id)
 
-//   const handleSlotList = () => {
-//     setActiveSlot(id);
-//   };
+  //   const handleSlotList = () => {
+  //     setActiveSlot(id);
+  //   };
+
+  useEffect(() => {
+    handleSlotsData();
+  }, []);
+  const handleSlotsData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/service/18`);
+      setSlotDay(response.data.data);
+      console.log("response.data: ", response.data);
+
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+
   return (
     <>
       <Header />
@@ -26,12 +49,22 @@ function Servicedate() {
         <Container>
           <div className="service-dateCart">
             <div className="month-name">
-              <h4>Jan</h4>
+              {slotday?.length > 0 ? (
+                slotday.map((item, index) => (
+                  <h4>
+                    {moment(item.slot_date).format("MMMM Do YYYY").split("", 3)}
+                    {/* {item} */}
+                  </h4>
+                ))
+              ) : (
+                <p className="emptyMSG">No slot</p>
+              )}
+              {/* <h4>{moment(item.slot_date).format("MMMM Do YYYY")}</h4> */}
             </div>
             <div className="sevice-select-date">
               <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                {dayanddates?.length > 0 ? (
-                  dayanddates.map((item, index) => (
+                {slotday?.length > 0 ? (
+                  slotday.map((item, index) => (
                     <li className="nav-item">
                       <a
                         className="nav-link"
@@ -43,12 +76,14 @@ function Servicedate() {
                         aria-selected="true"
                       >
                         {item.day} <br />
-                        <span>{item.date}</span>
+                        <span>
+                          {moment(item.slot_date).format("MMMM Do YYYY")}
+                        </span>
                       </a>
                     </li>
                   ))
                 ) : (
-                  <p className="emptyMSG">No slot</p>
+                  <p className="emptyMSG">INVALID DATE</p>
                 )}
                 {/* <li className="nav-item">
                   <a
@@ -149,8 +184,8 @@ function Servicedate() {
                   <div className="selectService-date">
                     <h2>Time</h2>
                     <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
+                      {slotday[0]?.slot_timing.length > 0 ? (
+                        slotday[0]?.slot_timing.map((item, index) => (
                           <li className="nav-item">
                             <a
                               className="nav-link"
@@ -158,7 +193,8 @@ function Servicedate() {
                               role="tab"
                               aria-selected="true"
                             >
-                              {item.time}
+                              {moment(item.slot_timing).format("h:mm a")}
+                              {/* {item} */}
                             </a>
                           </li>
                         ))
@@ -166,36 +202,6 @@ function Servicedate() {
                         <p className="emptyMSG">No slot</p>
                       )}
                     </ul>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>indore</option>
-                          <option>ujjain</option>
-                          <option>bhopal</option>
-                          <option>dewas</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -227,36 +233,6 @@ function Servicedate() {
                       )}
                     </ul>
                   </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
-                  </div>
                 </div>
               </div>
               <div
@@ -286,36 +262,6 @@ function Servicedate() {
                         <p className="emptyMSG">No slot</p>
                       )}
                     </ul>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -347,36 +293,6 @@ function Servicedate() {
                       )}
                     </ul>
                   </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
-                  </div>
                 </div>
               </div>
               <div
@@ -406,36 +322,6 @@ function Servicedate() {
                         <p className="emptyMSG">No slot</p>
                       )}
                     </ul>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -468,36 +354,6 @@ function Servicedate() {
                       )}
                     </ul>
                   </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
-                  </div>
                 </div>
               </div>
               <div
@@ -528,38 +384,39 @@ function Servicedate() {
                       )}
                     </ul>
                   </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link to="/service-add-pet">Add Pet</Link>
-                    </Button>
-                  </div>
-                  <div className="form-pet">
-                    <form>
-                      <div className="form-group">
-                        <select className="form-control">
-                          <option>City</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="number"
-                          className="form-control"
-                          placeholder="+91 00000000"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="add-petbtn">
-                    <Button>
-                      <Link>Submit</Link>
-                    </Button>
-                  </div>
                 </div>
               </div>
+            </div>
+
+            <div className="add-petbtn">
+              <Button>
+                <Link to="/service-add-pet">Add Pet</Link>
+              </Button>
+            </div>
+            <div className="form-pet">
+              <form>
+                <div className="form-group">
+                  <select className="form-control">
+                    <option>City</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="+91 00000000"
+                  />
+                </div>
+              </form>
+            </div>
+            <div className="add-petbtn">
+              <Button>
+                <Link>Submit</Link>
+              </Button>
             </div>
           </div>
         </Container>

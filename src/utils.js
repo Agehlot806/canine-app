@@ -33,3 +33,6 @@ export const dayanddates = [
   { day: "SAT", date: "25" },
   { day: "SUN", date: "26" },
 ];
+export const otpmessage = [
+  { message: "OTP Verify", messagenext: "Resend OTP" },
+];
