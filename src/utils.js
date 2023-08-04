@@ -36,3 +36,13 @@ export const dayanddates = [
 export const otpmessage = [
   { message: "OTP Verify", messagenext: "Resend OTP" },
 ];
+
+export const stringes = {
+  submit: "Submit",
+  addPet: "Add Pet",
+  noSlot: "No Slot",
+  time: "Time",
+  invalidDate: "Invalid Date",
+  invalidMonth: "Invalid Month",
+  invalidcity: "Invalid City",
+};
