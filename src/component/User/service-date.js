@@ -4,24 +4,29 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import service from "../../assets/images/banner/service.png";
 import { Form, Link } from "react-router-dom";
 import Footer from "../../directives/footer";
-import { dayanddates, times } from "../../utils";
+import { dayanddates, stringes, times } from "../../utils";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import moment from "moment/moment";
+import dog1 from "../../assets/images/img/dog1.svg";
+import cat1 from "../../assets/images/img/cat1.png";
+import { useParams } from "react-router-dom";
 
 function Servicedate() {
+  const { id } = useParams();
+  console.log("id: ", id);
   const [slotday, setSlotDay] = useState([]);
   const [timingSlot, setTimingSlot] = useState([]);
-  // console.log("slotday?.slot_timing",);
-  console.log("slotday: ", slotday);
-  // const [activeSlot, setActiveSlot] = useState(id)
-
-  //   const handleSlotList = () => {
-  //     setActiveSlot(id);
-  //   };
+  const [bookinTimingSlot, setBookingTimingSlot] = useState([]);
+  const [cityData, setCityData] = useState([]);
+  const [mobile, setMobile] = useState([]);
+  const [petType, setPetType] = useState([]);
+  console.log("petType: ", petType);
 
   useEffect(() => {
     handleSlotsData();
+    handleCityData();
+    petCategories();
   }, []);
   const handleSlotsData = async () => {
     try {
@@ -35,7 +40,51 @@ function Servicedate() {
       // Handle error as needed
     }
   };
+  const petCategories = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/categories`);
+      const jsonData = await response.json();
+      setPetType(jsonData.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const handleCityData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/all_city`);
+      setCityData(response.data.state);
 
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("handleSubmit called"); // Add this
+
+    console.log("bookingData: ", bookingData);
+    const bookingData = new FormData();
+    bookingData.append("user_id", "1");
+    bookingData.append("service_id", id);
+    bookingData.append("dates", moment(slotday).format("DD-MM-YYYY"));
+    bookingData.append("slot", moment(timingSlot).format("h:mm a"));
+    bookingData.append("pet", pet);
+    bookingData.append("city", city_name);
+    bookingData.append("mobile", mobile);
+    console.log("bookingData", bookingData);
+    axios
+      .post(`${BASE_URL}/banners/service_booking`, bookingData)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        console.log("bookingdatattttt....", bookingData);
+        toast.success("Your data Successfully Add");
+      })
+      .catch((error) => {
+        toast.error("Field is required");
+      });
+  };
   return (
     <>
       <Header />
@@ -53,13 +102,11 @@ function Servicedate() {
                 slotday.map((item, index) => (
                   <h4>
                     {moment(item.slot_date).format("MMMM Do YYYY").split("", 3)}
-                    {/* {item} */}
                   </h4>
                 ))
               ) : (
-                <p className="emptyMSG">No slot</p>
+                <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
               )}
-              {/* <h4>{moment(item.slot_date).format("MMMM Do YYYY")}</h4> */}
             </div>
             <div className="sevice-select-date">
               <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -74,6 +121,9 @@ function Servicedate() {
                         role="tab"
                         aria-controls="Set"
                         aria-selected="true"
+                        onClick={() => {
+                          setTimingSlot(item.slot_timing);
+                        }}
                       >
                         {item.day} <br />
                         <span>
@@ -83,9 +133,9 @@ function Servicedate() {
                     </li>
                   ))
                 ) : (
-                  <p className="emptyMSG">INVALID DATE</p>
+                  <p className="emptyMSG">{stringes.invalidDate}</p>
                 )}
-                {/* <li className="nav-item">
+                {/*  <li className="nav-item">
                   <a
                     className="nav-link"
                     id="Sun-tab"
@@ -182,10 +232,10 @@ function Servicedate() {
               >
                 <div>
                   <div className="selectService-date">
-                    <h2>Time</h2>
+                    <h2>{stringes.time}</h2>
                     <ul className="nav nav-pills mb-3" role="tablist">
-                      {slotday[0]?.slot_timing.length > 0 ? (
-                        slotday[0]?.slot_timing.map((item, index) => (
+                      {timingSlot.length > 0 ? (
+                        timingSlot.map((item, index) => (
                           <li className="nav-item">
                             <a
                               className="nav-link"
@@ -194,18 +244,17 @@ function Servicedate() {
                               aria-selected="true"
                             >
                               {moment(item.slot_timing).format("h:mm a")}
-                              {/* {item} */}
                             </a>
                           </li>
                         ))
                       ) : (
-                        <p className="emptyMSG">No slot</p>
+                        <p className="emptyMSG">{stringes.noSlot}</p>
                       )}
                     </ul>
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 className="tab-pane fade"
                 id="Sun"
                 role="tabpanel"
@@ -234,8 +283,8 @@ function Servicedate() {
                     </ul>
                   </div>
                 </div>
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 className="tab-pane fade"
                 id="Mon"
                 role="tabpanel"
@@ -264,8 +313,8 @@ function Servicedate() {
                     </ul>
                   </div>
                 </div>
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 className="tab-pane fade"
                 id="Tue"
                 role="tabpanel"
@@ -385,37 +434,56 @@ function Servicedate() {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="add-petbtn">
               <Button>
-                <Link to="/service-add-pet">Add Pet</Link>
+                <Link to="/service-add-pet">{stringes.addPet}</Link>
               </Button>
             </div>
+
             <div className="form-pet">
               <form>
                 <div className="form-group">
-                  <select className="form-control">
-                    <option>City</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select
+                    className="form-control"
+                    // value={city_name}
+                  >
+                    <option>Pet</option>
+                    {petType &&
+                      petType.map((item) => (
+                        <option key={item.id}>{item.name}</option>
+                      ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <select
+                    className="form-control"
+                    // value={city_name}
+                  >
+                    <option>Choose</option>
+                    {/* {cityData &&
+                      cityData.map((item) => (
+                        <option key={item.id}>{item.city_name}</option>
+                      ))} */}
                   </select>
                 </div>
                 <div className="form-group">
                   <input
-                    type="number"
+                    type="tel"
+                    maxLength={10}
                     className="form-control"
                     placeholder="+91 00000000"
+                    onChange={(e) => setMobile(e.target.value)}
+                    value={mobile}
                   />
                 </div>
               </form>
             </div>
             <div className="add-petbtn">
-              <Button>
-                <Link>Submit</Link>
+              <Button onClick={(e) => handleSubmit(e)}>
+                <Link>{stringes.submit}</Link>
               </Button>
             </div>
           </div>
