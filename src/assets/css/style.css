@@ -2427,3 +2427,95 @@ a.placDate {
 .form-range input:focus-visible{
   border: 1px solid #ddd;
 }
+
+
+/* All veterinary area css */
+.veterinary-card {
+  border-radius: 32.677px;
+}
+
+.veterinary-bg1 {
+  background: linear-gradient(
+    180deg,
+    #c6ecfc 0%,
+    rgba(198, 236, 252, 0.43) 100%
+  );
+}
+
+.veterinary-bg2 {
+  background: linear-gradient(180deg, #eef 0%, rgba(238, 238, 255, 0.45) 100%);
+}
+
+.veterinary-bg3 {
+  background: linear-gradient(
+    180deg,
+    #ffead2 0%,
+    rgba(255, 234, 210, 0.33) 100%
+  );
+}
+
+.veterinary-status h6 {
+  background: #07b12c;
+  width: 100px;
+  padding: 4px;
+  border-radius: 0 35px 0 35px;
+  color: #fff;
+  font-weight: 100;
+  font-size: 12px;
+  text-align: center;
+}
+
+.veterinary-status {
+  float: right;
+}
+
+.veterinary-head-text {
+  padding: 40px 20px;
+}
+
+.veterinary-detail h6 {
+  color: #0b154d;
+  font-weight: 500;
+  letter-spacing: 0.934px;
+  font-size: 18px;
+}
+
+.veterinary-detail a i {
+  color: #ffa24b;
+  margin: 0 4px 0 0;
+}
+
+.veterinary-detail p {
+  color: #0b154d;
+  font-family: Poppins;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+.veterinary-btn {
+  text-align: center;
+}
+
+.veterinary-btn button {
+  border-radius: 30.816px;
+  background: #fc0;
+  border: none;
+  color: #021e2e;
+  font-family: Poppins;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 6px;
+  width: 125px;
+  height: 45px;
+}
+
+.veterinary-logo img {
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px
+    rgba(0, 0, 0, 0.05);
+  padding: 4px;
+  width: 60px;
+  height: 60px;
+}
