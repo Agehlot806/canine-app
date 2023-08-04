@@ -170,10 +170,10 @@ function Serviceaddpet() {
                                             <label >Age</label>
                                             <ul className="nav nav-pills mb-3" role="tablist">
                                                 <li className="nav-item">
-                                                    <a className="nav-link active" data-toggle="pill" role="tab" aria-selected="true">{years}</a>
+                                                    <a className="nav-link active" data-toggle="pill" role="tab" aria-selected="true">Year {years}</a>
                                                 </li>
                                                 <li className="nav-item">
-                                                    <a className="nav-link" data-toggle="pill" role="tab" aria-selected="false">{months}</a>
+                                                    <a className="nav-link" data-toggle="pill" role="tab" aria-selected="false">Month {months}</a>
                                                 </li>
                                             </ul>
                                         </div>
