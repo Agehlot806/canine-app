@@ -46,8 +46,8 @@ function Header() {
               <Col>
                 <Nav
                   className="ml-auto my-2 my-lg-0 "
-                  // style={{ maxHeight: '100px' }}
-                  // navbarScroll
+                // style={{ maxHeight: '100px' }}
+                // navbarScroll
                 >
                   {/* <Nav.Link><Link to='/dashboad'>Dashboard</Link></Nav.Link> */}
                   <Nav.Link>
@@ -255,12 +255,12 @@ function Header() {
                       </div>
                     </div>
                   </NavDropdown>
-                  <Nav.Link>
+                  {/* <Nav.Link>
                     <Link to="/about-us">about us</Link>
                   </Nav.Link>
                   <Nav.Link>
                     <Link to="/service">our services</Link>
-                  </Nav.Link>
+                  </Nav.Link> */}
 
                   <NavDropdown title="Products" id="navbarScrollingDropdown">
                     <NavDropdown.Item>
@@ -285,6 +285,45 @@ function Header() {
                   <Nav.Link>
                     <Link to="/contact">contact</Link>
                   </Nav.Link>
+                  <Nav.Link>
+                    <div className="header-inner-addon input-container">
+                      <i className="fa fa-search" />
+                      <input
+                        placeholder="Search"
+                        type="search"
+                        className="form-control"
+                        aria-label="Search"
+                      />
+                    </div>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Button
+                      // className="blue-btn"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      <i class="fa fa-bell-o" />
+                    </Button>
+                  </Nav.Link>
+                  <Nav.Link>
+                  <Button
+                  //  className="yellow-btn"
+                  >
+                <Link to="/login">Sign In</Link>
+              </Button>
+                  </Nav.Link>
+                  <Nav.Link>
+                  <div className="dropdown">
+                <button className="btn profile-icon dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src={pro} />
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a className="dropdown-item" href="#">Action</a>
+                  <a className="dropdown-item" href="#">Another action</a>
+                  <a className="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+                  </Nav.Link>
                 </Nav>
               </Col>
             </Row>
@@ -295,27 +334,12 @@ function Header() {
                 className="me-2"
                 aria-label="Search"
               /> */}
-              <div className="header-inner-addon input-container">
-                <i className="fa fa-search" />
-                <input
-                  placeholder="Search"
-                  type="search"
-                  className="form-control"
-                  aria-label="Search"
-                />
-              </div>
-              <Button
-                className="blue-btn"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                <i class="fa fa-bell-o" />
-              </Button>
 
-              <Button className="yellow-btn">
-                <Link to="/login">Sign In</Link>
-              </Button>
+
+
+             
               {/* <Button className="blue-btn"><Link to='/signup' >Register</Link></Button> */}
+              
             </Form>
           </Navbar.Collapse>
         </Container>
@@ -332,12 +356,6 @@ function Header() {
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
-            {/* <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Notification</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div> */}
             <div className="modal-body">
               <h5>Notification</h5>
               {notification && notification.length > 0 ? (

@@ -5,32 +5,37 @@ import service from '../../assets/images/banner/service.png'
 import Footer from '../../directives/footer'
 import { BASE_URL } from "../../Constant/Index";
 import axios from 'axios'
+import { Toaster, toast } from 'react-hot-toast'
 
 
 function Veterinaryservice() {
-    const [categories, setcategories] = useState([]);
     const [stateall, setStateall] = useState([]);
     const [stateallCity, setStateallCity] = useState([]);
     const [state, setstate] = useState("");
     const [city, setcity] = useState("");
-    const [error, seterror] = useState(false);
     const [user_name, setuser_name] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setphone] = useState("");
     const [address, setaddress] = useState("");
+    const [dates, setdates] = useState("");
     const [pet_problem, setpet_problem] = useState("");
+    const [pet_id, setpet_id] = useState({});
     const [responseMessage, setResponseMessage] = useState("");
+    const [selectgetpet, setselectgetpet] = useState([]);
+
+    const user_id = localStorage.getItem("");
+    console.log("pet_id", pet_id);
 
     useEffect(() => {
         GetStateAll();
-        categoriesProduct();
+        selectPet();
     }, []);
 
-    const categoriesProduct = async () => {
+    const selectPet = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/auth/get_pet${id}`);
+            const response = await fetch(`${BASE_URL}/auth/get_pet/1`);
             const jsonData = await response.json();
-            setcategories(jsonData.data);
+            setselectgetpet(jsonData.state);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -81,27 +86,34 @@ function Veterinaryservice() {
     const handleVeterinary = (event) => {
         event.preventDefault();
         const data = {
-            user_name: user_name,
+            user_id: "1",
+            name: user_name,
             email: email,
             phone: phone,
+            state: state,
+            city: city,
             address: address,
+            pet: pet_id,
             pet_problem: pet_problem,
+            dates: dates
 
         };
         axios.post(`${BASE_URL}/banners/veterinary_booking`, data)
             .then((response) => {
                 setResponseMessage(response.data.message);
-                toast.success("Subscription Successfully");
+                toast.success("Successfully");
                 console.log("veterinary", data);
             })
             .catch((error) => {
-                console.error("field is required", error);
+                toast.error("Field is required");
             });
     };
+    
 
-
+    console.log("pet_idpet_idpet_id", state);
     return (
         <>
+            <Toaster />
             <Header />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
@@ -144,38 +156,19 @@ function Veterinaryservice() {
                                 <Form>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Name<span style={{ color: "#008efd" }}>*</span></Form.Label>
-                                        <Form.Control placeholder="Enter name" type='text' value={user_name} onChange={(e) => setuser_name(e.target.value)} />
-                                        {error && user_name.length <= 0 ? (
-                                            <span className="validationErr">
-                                                Username is required.
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
+                                        <Form.Control placeholder="Enter name" type='text'
+                                            value={user_name} onChange={(e) => setuser_name(e.target.value)} />
                                     </Form.Group>
-
                                     <Row className="mb-3">
                                         <Col>
                                             <Form.Label>Email<span style={{ color: "#008efd" }}>*</span></Form.Label>
-                                            <Form.Control placeholder="Enter email" type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                                            {error && email.length <= 0 ? (
-                                                <span className="validationErr">
-                                                    Email is required.
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
+                                            <Form.Control placeholder="Enter email" type='email'
+                                                value={email} onChange={(e) => setEmail(e.target.value)} />
                                         </Col>
                                         <Col>
                                             <Form.Label>Phone no<span style={{ color: "#008efd" }}>*</span></Form.Label>
-                                            <Form.Control input placeholder="Enter phone" maxLength={10} type='tel' value={phone} onChange={(e) => setphone(e.target.value)} />
-                                            {error && phone.length <= 0 ? (
-                                                <span className="validationErr">
-                                                    Phone is required.
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
+                                            <Form.Control input placeholder="Enter phone" maxLength={10} type='tel'
+                                                value={phone} onChange={(e) => setphone(e.target.value)} />
                                         </Col>
                                     </Row>
                                     <Row className="mb-3">
@@ -186,7 +179,7 @@ function Veterinaryservice() {
                                             <Form.Select
                                                 aria-label="Default select example"
                                                 onChange={Subscription}
-                                                value={state}
+                                                value={state} onInput={(e) => setstate(e.target.value)}
                                             >
                                                 <option>Choose...</option>
                                                 {stateall.map((items) => (
@@ -195,13 +188,6 @@ function Veterinaryservice() {
                                                     </option>
                                                 ))}
                                             </Form.Select>
-                                            {error && state.length <= 0 ? (
-                                                <span className="validationErr">
-                                                    State is required.
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
                                         </Form.Group>
                                         <Form.Group as={Col}>
                                             <Form.Label>
@@ -209,63 +195,43 @@ function Veterinaryservice() {
                                             </Form.Label>
                                             <Form.Select
                                                 aria-label="Default select example"
-
+                                                value={city} onChange={(e) => setcity(e.target.value)}
                                             >
                                                 <option>Choose...</option>
                                                 {stateallCity.map((items) => (
                                                     <option>{items.city_name}</option>
                                                 ))}
                                             </Form.Select>
-                                            {error && city.length <= 0 ? (
-                                                <span className="validationErr">
-                                                    City is required.
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
+                                         
                                         </Form.Group>
                                     </Row>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Address<span style={{ color: "#008efd" }}>*</span></Form.Label>
-                                        <Form.Control placeholder="Enter address" type='text' value={address} onChange={(e) => setaddress(e.target.value)} />
-                                        {error && address.length <= 0 ? (
-                                            <span className="validationErr">
-                                                Address is required.
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
+                                        <Form.Control placeholder="Enter address" type='text'
+                                            value={address} onChange={(e) => setaddress(e.target.value)} />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Select Pet<span style={{ color: "#008efd" }}>*</span></Form.Label>
+                                        <Form.Label>Booking Date<span style={{ color: "#008efd" }}>*</span></Form.Label>
+                                        <Form.Control value={dates} onChange={(e) => setdates(e.target.value)} type="date" />
+                                    </Form.Group>
 
-                                        <select className="form-control">
-                                             <option>Choose....</option>
-                                            {categories &&
-                                                categories.map((item) => (
-                                                    <option key={item.id}>{item.pet_name}</option>
+                                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Select Pet<span style={{ color: "#008efd" }}>*</span></Form.Label>
+                                        <select className="form-control" value={pet_id} onChange={(e) => setpet_id(e.target.value)} >
+                                            <option>Choose....</option>
+                                            {selectgetpet &&
+                                                selectgetpet.map((item) => (
+                                                    // <a onClick={(e) => setpet_id(item)}>
+                                                    <option value={item.id}>{item.pet_name}</option>
                                                 ))}
                                         </select>
-                                        {/* {error && address.length <= 0 ? (
-                                                <span className="validationErr">
-                                                    Phone is required.
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )} */}
-
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Pet Problems<span style={{ color: "#008efd" }}>*</span></Form.Label>
-                                        <Form.Control placeholder="Leave a comment here" as="textarea" type='text' value={pet_problem} onChange={(e) => setpet_problem(e.target.value)} />
-                                        {error && pet_problem.length <= 0 ? (
-                                            <span className="validationErr">
-                                                Pet problem is required.
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
+                                        <Form.Control placeholder="Leave a comment here" as="textarea" type='text'
+                                            value={pet_problem} onChange={(e) => setpet_problem(e.target.value)} />
                                     </Form.Group>
+
                                     <Button className='mt-4' onClick={handleVeterinary}>Submit</Button>
                                 </Form>
                             </div>

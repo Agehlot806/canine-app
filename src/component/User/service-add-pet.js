@@ -8,11 +8,14 @@ import Avatar3 from '../../assets/images/icon/Avatar3.png'
 import { Link } from 'react-router-dom'
 import Footer from '../../directives/footer'
 import { BASE_URL } from '../../Constant/Index'
+import { Toaster, toast } from 'react-hot-toast'
+import moment from 'moment/moment'
+import axios from 'axios'
 
 function Serviceaddpet() {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    console.log('selectedCategory', selectedCategory);
+    const [selectbreed, setselectbreed] = useState([]);
     const [pets_type, setpets_type] = useState("");
     const [gender, setGender] = useState("");
     const [breeds, setbreeds] = useState("");
@@ -27,6 +30,7 @@ function Serviceaddpet() {
 
     useEffect(() => {
         categoriesProduct();
+        AllselectBreed();
     }, []);
 
     const categoriesProduct = async () => {
@@ -39,35 +43,59 @@ function Serviceaddpet() {
         }
     };
 
-    const handleGenderChange = (selectedGender) => {
-        setGender(selectedGender);
+    const AllselectBreed = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/auth/breed/1`);
+            const jsonData = await response.json();
+            setselectbreed(jsonData.state);
+            console.log("breed", jsonData.state);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
 
 
+    const handleGenderChange = (selectedGender) => {
+        setGender(selectedGender);
+    };
+    console.log('image', image);
     const handlePetsadd = (event) => {
         event.preventDefault();
-        const pet_data = {
-            pets_type: pets_type,
-            gender: gender,
-            breeds: breeds,
-            dob: dob,
-            age: age,
-            pet_name: pet_name,
-            image: image,
-        };
-        axios.post(`${BASE_URL}/auth/pets_add`, pet_data)
+        // const pet_data = {
+        //     user_id: "1",
+        //     pets_type: selectedCategory?.name ? selectedCategory?.name : '',
+        //     gender: gender,
+        //     breeds: breeds,
+        //     dob: moment(dob).format('DD-MM-YY'),
+        //     age: `${years} years ${months} months`,
+        //     pet_name: pet_name,
+        //     image: image.name,
+        // };
+
+        const petData = new FormData()
+        petData.append('user_id', '1')
+        petData.append('pets_type', selectedCategory?.name ? selectedCategory?.name : '')
+        petData.append('gender', gender)
+        petData.append('breeds', breeds)
+        petData.append('dob', moment(dob).format('DD-MM-YYYY'))
+        petData.append('age', `${years} years ${months} months`)
+        petData.append('pet_name', pet_name)
+        petData.append('image', image)
+        console.log('petData', petData);
+        axios.post(`${BASE_URL}/auth/pets_add`, petData)
             .then((response) => {
-                setResponseMessage(response.pet_data.message);
-                toast.success("Subscription Successfully");
-                console.log("veterinary", pet_data);
+                setResponseMessage(response.data.message);
+                console.log("pet add....", petData);
+                toast.success("Your Pet Successfully Add");
             })
             .catch((error) => {
-                console.error("field is required", error);
+                toast.error("Field is required");
             });
     };
 
 
     const calculateAge = (selectedDate) => {
+        setdob(selectedDate)
         const now = new Date();
         let years = now.getFullYear() - selectedDate.getFullYear();
         let months = now.getMonth() - selectedDate.getMonth();
@@ -89,6 +117,7 @@ function Serviceaddpet() {
     };
     return (
         <>
+            <Toaster />
             <Header />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
@@ -103,7 +132,7 @@ function Serviceaddpet() {
                                 <label htmlFor="exampleFormControlFile1">Upload image
                                     <i class="fa fa-upload" /></label>
                                 <input type="file" className="form-control-file" id="exampleFormControlFile1"
-                                    value={image} onChange={(e) => setimage(e.target.value)} />
+                                    onChange={(e) => setimage(e.target.files[0])} />
                             </div>
                             <div className="needplace">
                                 <Row>
@@ -119,20 +148,20 @@ function Serviceaddpet() {
                                 </Row>
                                 <Row>
                                     <Col lg={10}>
-                                        <div className="form-group">
-                                            <label >Pet type</label>
-                                            <ul className="nav nav-pills mb-3" role="tablist">
-                                                {categories &&
-                                                    categories.map((item) => (
-                                                        <li className="nav-item" key={item.id}>
-                                                            <a className="nav-link" data-toggle="pill" role="tab"
-                                                                aria-selected="true" onClick={() => setSelectedCategory(item)}>{item.name}</a>
-                                                        </li>
-                                                    ))}
-                                            </ul>
+                                            <div className="form-group">
+                                                <label >Pet type</label>
+                                                <ul className="nav nav-pills mb-3" role="tablist">
+                                                    {categories &&
+                                                        categories.map((item) => (
+                                                            <li className="nav-item" key={item.id}>
+                                                                <a className="nav-link" data-toggle="pill" role="tab"
+                                                                    aria-selected="true" onClick={() => setSelectedCategory(item)} onInput={(e) => setpets_type(e.target.value)}>{item.name}</a>
+                                                            </li>
+                                                        ))}
+                                                </ul>
 
 
-                                        </div>
+                                            </div>
                                         <div className="form-group">
                                             <label >Gender</label>
                                             <ul className="nav nav-pills mb-3" role="tablist">
@@ -157,9 +186,12 @@ function Serviceaddpet() {
                                         </div>
                                         <div className="form-group">
                                             <label >Breed</label>
-                                            <select className="form-control">
-                                                <option>Jarman safed</option>
-                                                <option>2</option>
+                                            <select className="form-control" value={breeds} onChange={(e) => setbreeds(e.target.value)}>
+                                                <option>Choose....</option>
+                                                {selectbreed &&
+                                                    selectbreed.map((item) => (
+                                                        <option key={item.id}>{item.name}</option>
+                                                    ))}
                                             </select>
                                         </div>
                                         <div className="form-group">
@@ -170,19 +202,17 @@ function Serviceaddpet() {
                                             <label >Age</label>
                                             <ul className="nav nav-pills mb-3" role="tablist">
                                                 <li className="nav-item">
-                                                    <a className="nav-link active" data-toggle="pill" role="tab" aria-selected="true">Year {years}</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="nav-link" data-toggle="pill" role="tab" aria-selected="false">Month {months}</a>
+                                                    <a className="nav-link active" data-toggle="pill" role="tab" aria-selected="true">Year {years} Month {months}</a>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div className="form-group">
                                             <label >Pet Name</label>
-                                            <input type="text" className="form-control" placeholder="Pet Name" />
+                                            <input type="text" className="form-control" placeholder="Pet Name"
+                                                value={pet_name} onChange={(e) => setpet_name(e.target.value)} />
                                         </div>
                                         <div className='add-petbtn'>
-                                            <Button><Link to=''>Add Pet</Link></Button>
+                                            <Button onClick={handlePetsadd}>Add Pet</Button>
                                         </div>
                                     </Col>
                                 </Row>

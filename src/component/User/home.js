@@ -73,6 +73,7 @@ const clinetreview = {
 
 function Home(props) {
   const [categories, setcategories] = useState([]);
+  const [homebanner, sethomebanner] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -81,8 +82,18 @@ function Home(props) {
 
   useEffect(() => {
     fetchBrands();
+    homeAllBanner();
   }, []);
 
+  const homeAllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleNewsletter = (event) => {
     event.preventDefault();
@@ -154,7 +165,7 @@ function Home(props) {
 
   return (
     <>
-    <Toaster />
+      <Toaster />
       <Header />
       <div className="home-bg">
         <div className="home-section">
@@ -190,6 +201,50 @@ function Home(props) {
               // dotListClass="custom-dot-list-style"
               itemClass="carousel-item-padding-40-px"
             >
+              {homebanner &&
+                homebanner.map((item) => (
+                  <div>
+                    <Row>
+                      <Col lg={6} className="align-self-center">
+                        <div className="home-content">
+                          <h1>{item.title}</h1>
+                          <p>{item.description}</p>
+                          <Button>
+                            Explore More <i className="fa fa-angle-right" />
+                          </Button>
+                        </div>
+                      </Col>
+                      <Col lg={6}>
+                        <img src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        } />
+                      </Col>
+                    </Row>
+                  </div>
+                ))}
+              {/* <div>
+                <Row>
+                  <Col lg={6}>
+                    <img src={HomeImg} />
+                  </Col>
+                  <Col lg={6} className="align-self-center">
+                    <div className="home-content">
+                      <h1>
+                        Taking care <br />
+                        for your Smart Dog !
+                      </h1>
+                      <p>
+                        Human–canine bonding is the relationship between dogs
+                        and humans.
+                      </p>
+                      <Button>
+                        Explore More <i className="fa fa-angle-right" />
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
               <div>
                 <Row>
                   <Col lg={6} className="align-self-center">
@@ -211,51 +266,7 @@ function Home(props) {
                     <img src={HomeImg} />
                   </Col>
                 </Row>
-              </div>
-              <div>
-                <Row>
-                  <Col lg={6}>
-                    <img src={HomeImg} />
-                  </Col>
-                  <Col lg={6} className="align-self-center">
-                    <div className="home-content">
-                      <h1>
-                        Taking care <br />
-                        for your Smart Dog !
-                      </h1>
-                      <p>
-                        Human–canine bonding is the relationship between dogs
-                        and humans.
-                      </p>
-                      <Button>
-                        Explore More <i className="fa fa-angle-right" />
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-              <div>
-                <Row>
-                  <Col lg={6} className="align-self-center">
-                    <div className="home-content">
-                      <h1>
-                        Taking care <br />
-                        for your Smart Dog !
-                      </h1>
-                      <p>
-                        Human–canine bonding is the relationship between dogs
-                        and humans.
-                      </p>
-                      <Button>
-                        Explore More <i className="fa fa-angle-right" />
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col lg={6}>
-                    <img src={HomeImg} />
-                  </Col>
-                </Row>
-              </div>
+              </div> */}
             </Carousel>
           </Container>
         </div>
@@ -543,18 +554,18 @@ function Home(props) {
         <Container>
           {thirdbanner
             ? thirdbanner.map(
-                (item, index) =>
-                  item.title === "new" && (
-                    <div className="banner-bgmain" key={item.id}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
-                          item.image
-                        }
-                      />
-                    </div>
-                  )
-              )
+              (item, index) =>
+                item.title === "new" && (
+                  <div className="banner-bgmain" key={item.id}>
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/banner/" +
+                        item.image
+                      }
+                    />
+                  </div>
+                )
+            )
             : null}
         </Container>
       </section>
