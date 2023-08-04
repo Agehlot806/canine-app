@@ -76,7 +76,7 @@ function App() {
           <Route path="/veterinary-service" element={<Veterinaryservice />} />
           <Route path="/add-cart" element={<Addcart />} />
           <Route path="/service-date/:id" element={<Servicedate />} />
-          <Route path="/service-add-pet" element={<Serviceaddpet />} />
+          <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
           <Route path="/service-pet" element={<Servicepet />} />
           <Route path="/our-brand" element={<Ourbrand />} />
 
