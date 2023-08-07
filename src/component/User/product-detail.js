@@ -11,6 +11,7 @@ import product2 from '../../assets/images/img/product2.png'
 import product3 from '../../assets/images/img/product3.png'
 import bag from '../../assets/images/icon/bag.png'
 
+
 function Productdetail() {
   const [quantity, setQuantity] = useState(1);
   const handleIncrementone = () => {
@@ -21,6 +22,7 @@ function Productdetail() {
       setQuantity(quantity - 1);
     }
   };
+
   return (
     <>
       <Header />
@@ -29,6 +31,10 @@ function Productdetail() {
           <img src={productdetail} />
         </div>
       </Container>
+
+
+
+
       <section className="section-padding">
         <Container>
           <Row>

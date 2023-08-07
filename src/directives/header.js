@@ -319,8 +319,7 @@ function Header() {
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <Link className="dropdown-item" to="/all-veterinary">All Veterinary</Link>
-                  {/* <a className="dropdown-item" href="#">Another action</a>
-                  <a className="dropdown-item" href="#">Something else here</a> */}
+                  <Link className="dropdown-item" to="/all-service-booking">All Service Booking</Link>
                 </div>
               </div>
                   </Nav.Link>

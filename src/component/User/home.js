@@ -14,9 +14,9 @@ import rebit from "../../assets/images/img/rebit.png";
 import hamster from "../../assets/images/img/hamster.png";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
-import product3 from "../../assets/images/img/product3.png";
-import Group1 from "../../assets/images/img/Group1.png";
-import Group2 from "../../assets/images/img/Group2.png";
+import third1 from "../../assets/images/banner/third1.webp";
+import third2 from "../../assets/images/banner/third2.webp";
+import third3 from "../../assets/images/banner/third3.webp";
 import cus1 from "../../assets/images/img/cus1.png";
 import cus2 from "../../assets/images/img/cus2.png";
 import cus3 from "../../assets/images/img/cus3.png";
@@ -272,7 +272,7 @@ function Home(props) {
         </div>
       </div>
 
-      <section className="section-padding">
+      {/* <section className="section-padding">
         <Container>
           <Row>
             <Col lg={6}>
@@ -304,7 +304,7 @@ function Home(props) {
             </Col>
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       <section className="section-padding">
         <Container>
@@ -390,7 +390,7 @@ function Home(props) {
                               <p>₹999.00</p>
                             </Col>
                             <Col>
-                              <h5>20%</h5>
+                              <h5>{item.discount}%</h5>
                             </Col>
                           </Row>
                           <Row>
@@ -567,6 +567,25 @@ function Home(props) {
                 )
             )
             : null}
+        </Container>
+      </section>
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            <Col lg={6}>
+              <img src={third1} />
+            </Col>
+            <Col lg={6} className="align-self-center">
+              <Row>
+                <Col sm={12} className="mb-4">
+                <img src={third2} />
+                </Col>
+                <Col sm={12} className="mb-4">
+                <img src={third3} />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Container>
       </section>
       <section className="section-padding">

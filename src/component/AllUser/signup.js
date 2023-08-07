@@ -38,7 +38,6 @@ function Signup() {
                 console.error("ERROR FOUND---->>>>" + error);
             });
     };
-    console.log(state);
 
     const Getdatacity = (state) => {
 

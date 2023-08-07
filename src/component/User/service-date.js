@@ -18,15 +18,20 @@ function Servicedate() {
   const [slotday, setSlotDay] = useState([]);
   const [timingSlot, setTimingSlot] = useState([]);
   const [bookinTimingSlot, setBookingTimingSlot] = useState([]);
-  const [cityData, setCityData] = useState([]);
   const [mobile, setMobile] = useState([]);
   const [petType, setPetType] = useState([]);
+  const [stateall, setStateall] = useState([]);
+  const [stateallCity, setStateallCity] = useState([]);
+  const [state, setstate] = useState("");
+
+
+
   console.log("petType: ", petType);
 
   useEffect(() => {
     handleSlotsData();
-    handleCityData();
     petCategories();
+    GetdataAll();
   }, []);
   const handleSlotsData = async () => {
     try {
@@ -47,17 +52,6 @@ function Servicedate() {
       setPetType(jsonData.data);
     } catch (error) {
       console.error("Error fetching data:", error);
-    }
-  };
-  const handleCityData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/auth/all_city`);
-      setCityData(response.data.state);
-
-      // Handle response as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
     }
   };
   const handleSubmit = async (e) => {
@@ -84,6 +78,51 @@ function Servicedate() {
       .catch((error) => {
         toast.error("Field is required");
       });
+  };
+
+  const GetdataAll = async (e) => {
+    var headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    await fetch(`${BASE_URL}/auth/state`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((Response) => Response.json())
+      .then((Response) => {
+        setStateall(Response.state);
+        console.log("99999999999999999999", Response);
+
+
+
+      })
+      .catch((error) => {
+        console.error("ERROR FOUND---->>>>" + error);
+      });
+  };
+
+  const Getdatacity = (state) => {
+
+    axios
+      .get(`${BASE_URL}/auth/city?state=${state}`, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("responseresponse", response);
+        setStateallCity(response.data.state);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const Subscription = (event) => {
+    if (event.target.value) {
+      setstate(event.target.value);
+
+      Getdatacity(event.target.value);
+    }
   };
   return (
     <>
@@ -448,7 +487,7 @@ function Servicedate() {
                 <div className="form-group">
                   <select
                     className="form-control"
-                    // value={city_name}
+                  // value={city_name}
                   >
                     <option>Pet</option>
                     {petType &&
@@ -457,17 +496,35 @@ function Servicedate() {
                       ))}
                   </select>
                 </div>
-                <div className="form-group">
-                  <select
-                    className="form-control"
-                    // value={city_name}
-                  >
-                    <option>Choose</option>
-                    {/* {cityData &&
-                      cityData.map((item) => (
-                        <option key={item.id}>{item.city_name}</option>
-                      ))} */}
-                  </select>
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
+                      <select
+                        className="form-control"
+                        onChange={Subscription}
+                        value={state}
+                      >
+                        <option>State Choose...</option>
+                        {stateall.map((items) => (
+                          <option value={items.id} key={items.id}>
+                            {items.state_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group">
+                      <select
+                        className="form-control"
+                      >
+                        <option>City Choose...</option>
+                        {stateallCity.map((items) => (
+                          <option>{items.city_name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div className="form-group">
                   <input

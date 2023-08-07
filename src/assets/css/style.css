@@ -152,7 +152,7 @@ box-shadow: none !important;
 }
 /* =========================== Home area css ================================ */
 .home-bg {
-  background: url(../images/banner/banner1.png);
+  background: url(../images/banner/footer.png);
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0 0 45px;
@@ -2456,14 +2456,16 @@ a.placDate {
 
 .veterinary-status h6 {
   background: #07b12c;
-  width: 100px;
-  padding: 4px;
+  width: 180px;
+  padding: 8px;
   border-radius: 0 35px 0 35px;
   color: #fff;
   font-weight: 100;
-  font-size: 12px;
+  font-size: 18px;
   text-align: center;
 }
+
+
 
 .veterinary-status {
   float: right;
@@ -2492,9 +2494,11 @@ a.placDate {
   font-weight: 400;
   opacity: 0.5;
 }
-
 .veterinary-btn {
   text-align: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 .veterinary-btn button {
@@ -2518,4 +2522,13 @@ a.placDate {
   padding: 4px;
   width: 60px;
   height: 60px;
+}
+.veterinary-detail table tr {
+  font-size: 18px;
+}
+.thirdbnner-area {
+  background: #dae453;
+}
+.thirdbnner-area img {
+  width: 100%;
 }
