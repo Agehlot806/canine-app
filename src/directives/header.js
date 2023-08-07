@@ -13,12 +13,17 @@ import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
+import axios from "axios";
 
 function Header() {
-  const [notification, setnotification] = useState([]);
+  const [notification, setNotification] = useState([]);
+  const [allproduct, setAllProduct] = useState([]);
+  const [searchTerm3, setSearchTerm3] = useState("");
+  const [searchapi3, setSearchApi3] = useState([]);
 
   useEffect(() => {
     fetchBrands();
+    allProductdata();
   }, []);
 
   const fetchBrands = async () => {
@@ -26,11 +31,44 @@ function Header() {
       const response = await axios.get(
         `${BASE_URL}/customer/notifications?tergat=customer`
       );
-      setnotification(response.data.data);
+      setNotification(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const allProductdata = async () => {
+    axios
+        .get(`${BASE_URL}/items/latest`)
+        .then((response) => {
+            console.log(response);
+            console.log("Delete Successful");
+            setAllProduct(response.data.data)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+const handleSearch = (e) => {
+  const searchValue = e.target.value.toLowerCase();
+  setSearchTerm(searchValue);
+
+  if (searchValue === "") {
+    setAllProduct(allproduct);
+  } else {
+    const filteredProducts = allproduct.filter(
+      (product) =>
+        product.name && product.name.toLowerCase().includes(searchValue)
+    );
+    setAllProduct(filteredProducts);
+  }
+};
+const [searchTerm, setSearchTerm] = useState("");
+
+
+  
+
   return (
     <>
       <Navbar expand="lg" className="navbar-area">
@@ -289,11 +327,11 @@ function Header() {
                     <div className="header-inner-addon input-container">
                       <i className="fa fa-search" />
                       <input
-                        placeholder="Search"
-                        type="search"
-                        className="form-control"
-                        aria-label="Search"
-                      />
+  type="text"
+  placeholder="Search by name"
+  value={searchTerm}
+  onChange={handleSearch}
+/>
                     </div>
                   </Nav.Link>
                   <Nav.Link>
@@ -345,6 +383,16 @@ function Header() {
                         </Link>
                       </div>
                     </div>
+                  <div className="dropdown">
+                <button className="btn profile-icon dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src={pro} />
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <Link className="dropdown-item" to="/all-veterinary">All Veterinary</Link>
+                  <Link className="dropdown-item" to="/all-service-booking">All Service Booking</Link>
+                  <Link className="dropdown-item" to="/wishlist-products">Wishlist Products</Link>
+                </div>
+              </div>
                   </Nav.Link>
                 </Nav>
               </Col>
