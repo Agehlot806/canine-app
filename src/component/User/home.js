@@ -163,10 +163,31 @@ function Home(props) {
       });
   };
 
+  const addToWishlist = async (item_id) => {
+    const formData = new FormData();
+    formData.append("user_id", 1);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success("Added successfully");
+
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
+  };
+
+
   return (
     <>
       <Toaster />
-      <Header />
+      <Header/>
       <div className="home-bg">
         <div className="home-section">
           <Container className="p-0">
@@ -370,7 +391,7 @@ function Home(props) {
                 allproduct.map((item) => (
                   <Col lg={3} sm={6} xs={6} className="mb-4">
                     <div className="food-product" key={item.id}>
-                      <i class="fa fa-heart-o" />
+                      <i class="fa fa-heart-o" onClick={(id) => addToWishlist(item.id)}/>
                       <Link to="/product-details">
                         <div className="text-center">
                           <img
@@ -477,75 +498,35 @@ function Home(props) {
             </Col>
           </Row>
           <Row className="mt-4">
-            {brands &&
+            {brands ? (
               brands.map((brand) => (
-                <Col lg={3} sm={6} xs={6} className="mb-5">
-                  <div key={brand.id} className="Brand-card brand-1">
-                    <div className="brandLOGO">
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/category/" +
-                          brand.logo
-                        }
-                      />
+                brand.canine == '1' && (
+                  <Col lg={3} sm={6} xs={6} className="mb-5">
+                    <div key={brand.id} className="Brand-card brand-1">
+                      <div className="brandLOGO">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                            brand.logo
+                          }
+                        />
+                      </div>
+                      <div className="brand-main">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                            brand.image
+                          }
+                        />
+                      </div>
+                      <div className="brand-text">
+                        <h5>{brand.title}</h5>
+                      </div>
                     </div>
-                    <div className="brand-main">
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/category/" +
-                          brand.image
-                        }
-                      />
-                    </div>
-                    <div className="brand-text">
-                      <h5>{brand.title}</h5>
-                    </div>
-                  </div>
-                  {/* <div key={brand.id}>
-                    <h2>{brand.name}</h2>
-                    Display other brand data 
-                  </div> */}
-                </Col>
-              ))}
-            {/* <Col lg={3} sm={6} xs={6} className="mb-5">
-              <div className="Brand-card brand-2">
-                <div className="brandLOGO">
-                  <img src={brand2} />
-                </div>
-                <div className="brand-main">
-                  <img src={brandPro2} />
-                </div>
-                <div className="brand-text">
-                  <h5>Rresrvation</h5>
-                </div>
-              </div>
-            </Col>
-            <Col lg={3} sm={6} xs={6} className="mb-5">
-              <div className="Brand-card brand-3">
-                <div className="brandLOGO">
-                  <img src={brand3} />
-                </div>
-                <div className="brand-main">
-                  <img src={brandPro1} />
-                </div>
-                <div className="brand-text">
-                  <h5>Rresrvation</h5>
-                </div>
-              </div>
-            </Col>
-            <Col lg={3} sm={6} xs={6} className="mb-5">
-              <div className="Brand-card brand-4">
-                <div className="brandLOGO">
-                  <img src={brand1} />
-                </div>
-                <div className="brand-main">
-                  <img src={brandPro2} />
-                </div>
-                <div className="brand-text">
-                  <h5>Rresrvation</h5>
-                </div>
-              </div>
-            </Col> */}
+                  </Col>
+                )
+              ))
+            ) : null}
           </Row>
         </Container>
       </section>
@@ -578,10 +559,10 @@ function Home(props) {
             <Col lg={6} className="align-self-center">
               <Row>
                 <Col sm={12} className="mb-4">
-                <img src={third2} />
+                  <img src={third2} />
                 </Col>
                 <Col sm={12} className="mb-4">
-                <img src={third3} />
+                  <img src={third3} />
                 </Col>
               </Row>
             </Col>
@@ -602,58 +583,33 @@ function Home(props) {
           </Row>
           <div className="needplace">
             <Row>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="Brand-card brand-1">
-                  <div className="brandLOGO">
-                    <img src={brand1} />
-                  </div>
-                  <div className="brand-main">
-                    <img src={brandPro1} />
-                  </div>
-                  <div className="brand-text">
-                    <h5>Rresrvation</h5>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="Brand-card brand-2">
-                  <div className="brandLOGO">
-                    <img src={brand2} />
-                  </div>
-                  <div className="brand-main">
-                    <img src={brandPro2} />
-                  </div>
-                  <div className="brand-text">
-                    <h5>Rresrvation</h5>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="Brand-card brand-3">
-                  <div className="brandLOGO">
-                    <img src={brand3} />
-                  </div>
-                  <div className="brand-main">
-                    <img src={brandPro1} />
-                  </div>
-                  <div className="brand-text">
-                    <h5>Rresrvation</h5>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <div className="Brand-card brand-4">
-                  <div className="brandLOGO">
-                    <img src={brand1} />
-                  </div>
-                  <div className="brand-main">
-                    <img src={brandPro2} />
-                  </div>
-                  <div className="brand-text">
-                    <h5>Rresrvation</h5>
-                  </div>
-                </div>
-              </Col>
+              {brands ? (
+                brands.map((brand) => (
+                  brand.canine == '0' && (
+                    <Col lg={3} sm={6} xs={6} className="mb-5">
+                      <div key={brand.id} className="Brand-card brand-1">
+                        <div className="brandLOGO">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/category/" +
+                              brand.logo
+                            } />
+                        </div>
+                        <div className="brand-main">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/category/" +
+                              brand.image
+                            } />
+                        </div>
+                        <div className="brand-text">
+                          <h5>{brand.title}</h5>
+                        </div>
+                      </div>
+                    </Col>
+                  )
+                ))
+              ) : null}
             </Row>
           </div>
         </Container>

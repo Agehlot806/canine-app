@@ -13,6 +13,7 @@ import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
+import { Toaster, toast } from 'react-hot-toast';
 
 const clinetreview = {
     desktop: {
@@ -126,9 +127,30 @@ function Product(props) {
         // Your checkbox logic here (e.g., updating checkbox state)
     };
 
+    const addToWishlist = async (item_id) => {
+        const formData = new FormData();
+        formData.append("user_id", 1);
+        formData.append("item_id", item_id);
+        axios
+          .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+          .then((response) => {
+            console.log("response143", response);
+            if (response.data.message) {
+              toast.success("Added successfully");
+    
+            }
+          })
+          .catch((error) => {
+            toast.error("Already in your wishlist");
+          });
+      };
+
 
     return (
         <>
+        <Toaster />
             <Header />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
@@ -601,7 +623,7 @@ function Product(props) {
                                     {allproduct && allproduct.map((item) => (
                                         <Col lg={4} sm={6} xs={6} className="mb-4">
                                             <div className="food-product" key={item.id}>
-                                                <i class="fa fa-heart-o" />
+                                                <i class="fa fa-heart-o" onClick={(id) => addToWishlist(item.id)}/>
                                                 <Link to="/product-details">
                                                     <div className='text-center'>
                                                         <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
@@ -616,7 +638,7 @@ function Product(props) {
                                                                 <p>₹999.00</p>
                                                             </Col>
                                                             <Col>
-                                                                <h5>20%</h5>
+                                                                <h5>{item.discount}%</h5>
                                                             </Col>
                                                         </Row>
                                                         <Row>

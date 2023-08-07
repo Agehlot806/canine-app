@@ -49,6 +49,7 @@ import Wholeseller from "./component/AllUser/wholeseller";
 import Catcategory from "./component/User/cat-category";
 import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
+import Wishlistproduct from "./component/User/wishlist-product";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -97,6 +98,7 @@ function App() {
           <Route path="/cat-category" element={<Catcategory />} />
           <Route path="/all-veterinary" element={<Allveterinary />} />
           <Route path="/all-service-booking" element={<Allservicebooking />} />
+          <Route path="/wishlist-products" element={<Wishlistproduct />} />
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />
