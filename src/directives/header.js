@@ -46,8 +46,8 @@ function Header() {
               <Col>
                 <Nav
                   className="ml-auto my-2 my-lg-0 "
-                // style={{ maxHeight: '100px' }}
-                // navbarScroll
+                  // style={{ maxHeight: '100px' }}
+                  // navbarScroll
                 >
                   {/* <Nav.Link><Link to='/dashboad'>Dashboard</Link></Nav.Link> */}
                   <Nav.Link>
@@ -306,22 +306,45 @@ function Header() {
                     </Button>
                   </Nav.Link>
                   <Nav.Link>
-                  <Button
-                  //  className="yellow-btn"
-                  >
-                <Link to="/login">Sign In</Link>
-              </Button>
+                    <Button
+                    //  className="yellow-btn"
+                    >
+                      <Link to="/login">Sign In</Link>
+                    </Button>
                   </Nav.Link>
                   <Nav.Link>
-                  <div className="dropdown">
-                <button className="btn profile-icon dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src={pro} />
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <Link className="dropdown-item" to="/all-veterinary">All Veterinary</Link>
-                  <Link className="dropdown-item" to="/all-service-booking">All Service Booking</Link>
-                </div>
-              </div>
+                    <div className="dropdown">
+                      <button
+                        className="btn profile-icon dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <Link to={`/pet-profiles`}>
+                          {" "}
+                          <img src={pro} />
+                        </Link>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <Link className="dropdown-item" to="/all-veterinary">
+                          All Veterinary
+                        </Link>
+                        <Link
+                          className="dropdown-item"
+                          to="/all-service-booking"
+                        >
+                          All Service Booking
+                        </Link>
+                        <Link className="dropdown-item" to="/pet-profile">
+                          My Pet Profile
+                        </Link>
+                      </div>
+                    </div>
                   </Nav.Link>
                 </Nav>
               </Col>
@@ -334,11 +357,7 @@ function Header() {
                 aria-label="Search"
               /> */}
 
-
-
-             
               {/* <Button className="blue-btn"><Link to='/signup' >Register</Link></Button> */}
-              
             </Form>
           </Navbar.Collapse>
         </Container>

@@ -49,6 +49,7 @@ import Wholeseller from "./component/AllUser/wholeseller";
 import Catcategory from "./component/User/cat-category";
 import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
+import Petprofile from "./component/User/pet-profile";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -79,6 +80,7 @@ function App() {
           <Route path="/add-cart" element={<Addcart />} />
           <Route path="/service-date/:id" element={<Servicedate />} />
           <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
+          <Route path="/pet-profile/" element={<Petprofile />} />
           <Route path="/service-pet" element={<Servicepet />} />
           <Route path="/our-brand" element={<Ourbrand />} />
 

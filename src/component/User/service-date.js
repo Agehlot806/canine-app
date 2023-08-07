@@ -8,23 +8,30 @@ import { dayanddates, stringes, times } from "../../utils";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import moment from "moment/moment";
-import dog1 from "../../assets/images/img/dog1.svg";
-import cat1 from "../../assets/images/img/cat1.png";
 import { useParams } from "react-router-dom";
+import strings from "react-localization";
+import { Toaster, toast } from "react-hot-toast";
 
 function Servicedate() {
   const { id } = useParams();
   console.log("id: ", id);
   const [slotday, setSlotDay] = useState([]);
+  console.log("slotday: ", slotday[0]?.slot_date);
   const [timingSlot, setTimingSlot] = useState([]);
-  const [bookinTimingSlot, setBookingTimingSlot] = useState([]);
-  const [mobile, setMobile] = useState([]);
+  console.log("timingSlot: ", timingSlot);
+  const [bookingSlot, setBookingSlot] = useState([]);
+  console.log("bookingSlot: ", bookingSlot);
+  const [mobile, setMobile] = useState("");
   const [petType, setPetType] = useState([]);
+  const [petData, setPetData] = useState("");
+  console.log("petData: ", petData);
   const [stateall, setStateall] = useState([]);
   const [stateallCity, setStateallCity] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  console.log("selectedCity: ", selectedCity);
+  const [formValid, setFormValid] = useState({});
+  console.log("formValid: ", formValid);
   const [state, setstate] = useState("");
-
-
 
   console.log("petType: ", petType);
 
@@ -54,36 +61,63 @@ function Servicedate() {
       console.error("Error fetching data:", error);
     }
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("handleSubmit called"); // Add this
 
-    console.log("bookingData: ", bookingData);
+  // const handleValid = () => {
+  //   let err = {};
+  //   let formError = true;
+  //   if (petData == "") {
+  //     formError = false;
+  //     err["name"] = "Pet is required";
+  //   } else if (selectedCity == "") {
+  //     formError = false;
+  //     err["city_name"] = "City is required";
+  //   } else if (mobile == "") {
+  //     formError = false;
+  //     err["mobile"] = " Mobile Number is required";
+  //   }
+  //   setFormValid(err);
+  //   return formError;
+  // };
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    // console.log("handleSubmit called", handleValid()); // Add this
+
+    // if (handleValid()) {
     const bookingData = new FormData();
     bookingData.append("user_id", "1");
     bookingData.append("service_id", id);
-    bookingData.append("dates", moment(slotday).format("DD-MM-YYYY"));
-    bookingData.append("slot", moment(timingSlot).format("h:mm a"));
-    bookingData.append("pet", pet);
-    bookingData.append("city", city_name);
+    bookingData.append("dates", slotday[0]?.slot_date);
+    bookingData.append("slot", bookingSlot);
+    bookingData.append("pet", petData);
+    bookingData.append("city", selectedCity);
     bookingData.append("mobile", mobile);
-    console.log("bookingData", bookingData);
+    // console.log("bookingData", bookingData);
     axios
       .post(`${BASE_URL}/banners/service_booking`, bookingData)
       .then((response) => {
-        setResponseMessage(response.data.message);
-        console.log("bookingdatattttt....", bookingData);
+        // setResponseMessage(response.data.message);
+        // console.log("bookingdatattttt....", bookingData);
         toast.success("Your data Successfully Add");
       })
       .catch((error) => {
         toast.error("Field is required");
       });
+    // .then((response) => {
+    //   setResponseMessage(response.data.message);
+    //   console.log("bookingdatattttt....", bookingData);
+    //   toast.success("Your data Successfully Add");
+    // })
+    // .catch((error) => {
+    //   toast.error("Field is required");
+    // });
+    // }
   };
 
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Data": "application/json",
     };
     await fetch(`${BASE_URL}/auth/state`, {
       method: "GET",
@@ -91,11 +125,8 @@ function Servicedate() {
     })
       .then((Response) => Response.json())
       .then((Response) => {
-        setStateall(Response.state);
+        setStateall(Response?.data ? Response?.data : []);
         console.log("99999999999999999999", Response);
-
-
-
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -103,14 +134,13 @@ function Servicedate() {
   };
 
   const Getdatacity = (state) => {
-
     axios
       .get(`${BASE_URL}/auth/city?state=${state}`, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
         console.log("responseresponse", response);
-        setStateallCity(response.data.state);
+        setStateallCity(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -126,6 +156,7 @@ function Servicedate() {
   };
   return (
     <>
+      <Toaster />
       <Header />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -174,90 +205,6 @@ function Servicedate() {
                 ) : (
                   <p className="emptyMSG">{stringes.invalidDate}</p>
                 )}
-                {/*  <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="Sun-tab"
-                    data-toggle="pill"
-                    href="#Sun"
-                    role="tab"
-                    aria-controls="Sun"
-                    aria-selected="false"
-                  >
-                    Sun <br />
-                    <span>21</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="Mon-tab"
-                    data-toggle="pill"
-                    href="#Mon"
-                    role="tab"
-                    aria-controls="Mon"
-                    aria-selected="false"
-                  >
-                    Mon <br />
-                    <span>22</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="Tue-tab"
-                    data-toggle="pill"
-                    href="#Tue"
-                    role="tab"
-                    aria-controls="Tue"
-                    aria-selected="false"
-                  >
-                    Tue <br />
-                    <span>23</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="Wed-tab"
-                    data-toggle="pill"
-                    href="#Wed"
-                    role="tab"
-                    aria-controls="Wed"
-                    aria-selected="false"
-                  >
-                    Wed <br />
-                    <span>24</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="Thu-tab"
-                    data-toggle="pill"
-                    href="#Thu"
-                    role="tab"
-                    aria-controls="Thu"
-                    aria-selected="false"
-                  >
-                    Thu <br />
-                    <span>25</span>
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="Fri-tab"
-                    data-toggle="pill"
-                    href="#Fri"
-                    role="tab"
-                    aria-controls="Fri"
-                    aria-selected="false"
-                  >
-                    Fri <br />
-                    <span>26</span>
-                  </a>
-                </li> */}
               </ul>
             </div>
           </div>
@@ -281,6 +228,9 @@ function Servicedate() {
                               data-toggle="pill"
                               role="tab"
                               aria-selected="true"
+                              onClick={() => {
+                                setBookingSlot(item);
+                              }}
                             >
                               {moment(item.slot_timing).format("h:mm a")}
                             </a>
@@ -293,209 +243,35 @@ function Servicedate() {
                   </div>
                 </div>
               </div>
-              {/* <div
-                className="tab-pane fade"
-                id="Sun"
-                role="tabpanel"
-                aria-labelledby="Sun-tab"
-              >
-                <div>
-                  <div className="selectService-date">
-                    <h2>Time</h2>
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                            >
-                              {item.time}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No slot</p>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div> */}
-              {/* <div
-                className="tab-pane fade"
-                id="Mon"
-                role="tabpanel"
-                aria-labelledby="Mon-tab"
-              >
-                <div>
-                  <div className="selectService-date">
-                    <h2>Time</h2>
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                            >
-                              {item.time}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No slot</p>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div> */}
-              {/* <div
-                className="tab-pane fade"
-                id="Tue"
-                role="tabpanel"
-                aria-labelledby="Tue-tab"
-              >
-                <div>
-                  <div className="selectService-date">
-                    <h2>Time</h2>
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                            >
-                              {item.time}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No slot</p>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="tab-pane fade"
-                id="Wed"
-                role="tabpanel"
-                aria-labelledby="Wed-tab"
-              >
-                <div>
-                  <div className="selectService-date">
-                    <h2>Time</h2>
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                            >
-                              {item.time}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No slot</p>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="tab-pane fade"
-                id="Thu"
-                role="tabpanel"
-                aria-labelledby="Thu-tab"
-              >
-                <div>
-                  <div className="selectService-date">
-                    <h2>Time</h2>
-
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                            >
-                              {item.time}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No slot</p>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="tab-pane fade"
-                id="Fri"
-                role="tabpanel"
-                aria-labelledby="Fri-tab"
-              >
-                <div>
-                  <div className="selectService-date">
-                    <h2>Time</h2>
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {times?.length > 0 ? (
-                        times.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                            >
-                              {item.time}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No slot</p>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div> */}
             </div>
 
-            <div className="add-petbtn">
-              <Button>
-                <Link to="/service-add-pet">{stringes.addPet}</Link>
-              </Button>
-            </div>
+            {!petType.length > 0 ? null : (
+              <div className="add-petbtn">
+                <Button>
+                  <Link to={`/service-add-pet/${id}`}>{stringes.addPet}</Link>
+                </Button>
+              </div>
+            )}
 
-            <div className="form-pet">
+            <div className="form-pet mt-4">
               <form>
                 <div className="form-group">
                   <select
                     className="form-control"
-                  // value={city_name}
+                    onChange={(e) => setPetData(e.target.value)}
+                    value={petData}
                   >
-                    <option>Pet</option>
+                    <option>Choose</option>
                     {petType &&
                       petType.map((item) => (
                         <option key={item.id}>{item.name}</option>
                       ))}
                   </select>
+                  {/* {formValid.petName && (
+                    <span style={{ color: "red" }}>Pet is required</span>
+                  )} */}
                 </div>
+
                 <div className="row">
                   <div className="col">
                     <div className="form-group">
@@ -517,12 +293,17 @@ function Servicedate() {
                     <div className="form-group">
                       <select
                         className="form-control"
+                        onChange={(e) => setSelectedCity(e.target.value)}
+                        value={selectedCity}
                       >
                         <option>City Choose...</option>
                         {stateallCity.map((items) => (
                           <option>{items.city_name}</option>
                         ))}
                       </select>
+                      {/* {formValid.cityname && (
+                        <span style={{ color: "red" }}>City is required</span>
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -535,6 +316,11 @@ function Servicedate() {
                     onChange={(e) => setMobile(e.target.value)}
                     value={mobile}
                   />
+                  {/* {formValid.mobile && (
+                    <span style={{ color: "red" }}>
+                      Mobile Number is required
+                    </span>
+                  )} */}
                 </div>
               </form>
             </div>

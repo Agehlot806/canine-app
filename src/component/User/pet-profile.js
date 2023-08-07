@@ -5,15 +5,14 @@ import banner from "../../assets/images/banner/banner.png";
 import Avatar1 from "../../assets/images/icon/Avatar1.svg";
 import Avatar2 from "../../assets/images/icon/Avatar2.png";
 import Avatar3 from "../../assets/images/icon/Avatar3.png";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../directives/footer";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 import moment from "moment/moment";
 import axios from "axios";
 
-function Serviceaddpet() {
-  const { id } = useParams();
+function Petprofile() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -91,7 +90,7 @@ function Serviceaddpet() {
       .then((response) => {
         setResponseMessage(response.data.message);
         console.log("pet add....", petData);
-        navigate(`/service-date/${id}`);
+        // navigate(`/service-date/${id}`);
         toast.success("Your Pet Successfully Add");
       })
       .catch((error) => {
@@ -120,6 +119,7 @@ function Serviceaddpet() {
     setSelectedDate(selectedDate);
     calculateAge(selectedDate);
   };
+
   return (
     <>
       <Toaster />
@@ -272,4 +272,4 @@ function Serviceaddpet() {
   );
 }
 
-export default Serviceaddpet;
+export default Petprofile;
