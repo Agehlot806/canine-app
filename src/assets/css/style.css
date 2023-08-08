@@ -159,10 +159,21 @@ box-shadow: none !important;
 }
 
 .home-section {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  /* padding-top: 12px;
+  padding-bottom: 12px; */
 }
-
+.home-img img {
+  width: 100%;
+}
+.home-img {
+  position: relative;
+}
+.home-content {
+  position: absolute;
+ top: 0;
+  width: 40%;
+  padding: 30px 35px;
+}
 .home-content button {
   background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
       var(--_p, 100%) / 300% no-repeat,
@@ -726,6 +737,7 @@ box-shadow: none !important;
 .product-Deals h1 {
     font-size: 25px;
     margin: 12px 0 0;
+    color: #000;
 }
 /* Contact area css  */
 .contact-card {

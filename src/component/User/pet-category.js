@@ -3,7 +3,7 @@ import Header from '../../directives/header'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import Carousel from "react-multi-carousel";
 import product from '../../assets/images/banner/product.png'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import product1 from '../../assets/images/img/product1.png'
 import product2 from '../../assets/images/img/product2.png'
 import product3 from '../../assets/images/img/product3.png'
@@ -15,57 +15,8 @@ import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
 import { Toaster, toast } from 'react-hot-toast';
 
-const clinetreview = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
-        slidesToSlide: 2 // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2,
-        slidesToSlide: 1 // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1 // optional, default to 1.
-    }
-};
-function Product(props) {
-    const [categories, setcategories] = useState([]);
-    const [allproduct, setallproduct] = useState([]);
 
-
-    useEffect(() => {
-        categoriesProduct();
-        allProduct();
-    }, []);
-
-    const categoriesProduct = async () => {
-        try {
-            const response = await fetch(`${BASE_URL}/categories`);
-            const jsonData = await response.json();
-            setcategories(jsonData.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-    const allProduct = async () => {
-        axios
-            .get(`${BASE_URL}/items/latest`)
-            .then((response) => {
-                console.log(response);
-                console.log("Delete Successful");
-                setallproduct(response.data.data)
-                // Perform any additional actions after successful deletion
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-
+function Petcategory() {
     const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
     const [productTypeDropdownVisible, setProductTypeDropdownVisible] = useState(false);
     const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -113,24 +64,51 @@ function Product(props) {
                 setAccessoryTypeDropdownVisible(!accessoryTypeDropdownVisible)
             default:
                 break;
-
-
         }
     };
+
     const handleCheckboxClick = (event) => {
-        event.stopPropagation(); 
+        event.stopPropagation();
     };
 
-    // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
-  // ----------------------------------------
+    const { id } = useParams();
+    const [petitemproduct, setpetitemproduct] = useState([]);
+    const [subcategories, setsubcategories] = useState([]);
+
+    useEffect(() => {
+        // allPetitemproduct();
+        Allsubcategories();
+    }, []);
+    console.log("idid", id);
+    // const allPetitemproduct = async () => {
+    // axios
+    //     .get(`${BASE_URL}/items/product/7/${subid}`)
+    //     .then((response) => {
+    //         console.log(response);
+    //         console.log("Delete Successful");
+    //         setpetitemproduct(response.data.data)
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
+    // };
+
+    const Allsubcategories = async () => {
+        axios
+            .get(`${BASE_URL}/categories/subcategories`)
+            .then((response) => {
+                console.log(response);
+                console.log("Delete Successful");
+                setsubcategories(response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     const addToWishlist = async (item_id) => {
         const formData = new FormData();
-        formData.append("user_id", storedUserId);
+        formData.append("user_id", 1);
         formData.append("item_id", item_id);
         axios
             .post(`${BASE_URL}/customer/wish-list/add`, formData, {
@@ -147,7 +125,21 @@ function Product(props) {
                 toast.error("Already in your wishlist");
             });
     };
+    const [subid, setsubid] = useState("")
+    const subcatid = (id) => {
+        console.log("testid", id);
+        setsubid(id)
+        axios
+            .get(`${BASE_URL}/items/product/${id}/${subid}`)
+            .then((response) => {
+                console.log(response);
+                setpetitemproduct(response.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
+    }
 
     return (
         <>
@@ -582,88 +574,81 @@ function Product(props) {
                         </section>
                     </Col>
                     <Col lg={9}>
-                        <section className="section-padding">
-                            <Container>
-                                <h1 className="main-head">
-                                    Shop Deals For Your Best Buddy
-                                </h1>
-                            </Container>
-                            <Container fluid>
-                                <Carousel
-                                    swipeable={true}
-                                    draggable={true}
-                                    showDots={true}
-                                    responsive={clinetreview}
-                                    ssr={true} // means to render carousel on server-side.
-                                    infinite={true}
-                                    autoPlay={props.deviceType !== "mobile" ? true : false}
-                                    autoPlaySpeed={2000}
-                                    keyBoardControl={true}
-                                    customTransition="all 1s"
-                                    transitionDuration={1000}
-                                    containerClass="carousel-container"
-                                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                                    deviceType={props.deviceType}
-                                    dotListClass="custom-dot-list-style"
-                                    itemClass="carousel-item-padding-40-px"
-                                >
-                                    {categories.map((item) => (
-                                        <div className="product-Deals" key={item.id}>
-                                            <Link to={`/pet-category/${item.id}`}>
-                                                <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image} />
-                                                <h1>{item.name}</h1>
-                                            </Link>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </Container>
-                        </section>
-
-
                         <section className="section-padding food">
                             <Container>
-                                <Row>
-                                    {allproduct && allproduct.map((item) => (
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product" key={item.id}>
-                                                <i class="fa fa-heart-o" onClick={(id) => addToWishlist(item.id)} />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>{item.name}</h6>
-                                                        <p>{item.description}</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>{item.discount}%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
+                                <h1 className="main-head">
+                                    Dogs
+                                </h1>
+                                <div className="needplace">
+                                    <div className='dog-categorys-area'>
+                                        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            {subcategories && subcategories.length > 0 ? (
+                                                subcategories.map((item, index) => (
+                                                    <li className="nav-item">
+                                                        <a className="nav-link" id="pills-home-tab" data-toggle="pill"
+                                                            onClick={(id) => subcatid(item.id)} href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                                                            <img src={item.image} />
+                                                            <h6>{item.name}</h6>
+                                                        </a>
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <p className="emptyMSG">No Sub Categories.</p>
+                                            )}
+                                        </ul>
+                                        <div className="tab-content" id="pills-tabContent">
+                                            <div className="tab-pane fade show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                <Row>
+                                                {petitemproduct && petitemproduct.length > 0 ? (
+                                                petitemproduct.map((item, index) => (
+                                                        <Col lg={4} sm={6} xs={6} className="mb-4">
+                                                            <div className="food-product" key={item.id}>
+                                                                <i class="fa fa-heart-o" onClick={(id) => addToWishlist(item.id)} />
+                                                                <Link to="/product-details">
+                                                                    <div className='text-center'>
+                                                                        <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
+                                                                    </div>
+                                                                    <div>
+                                                                        <h6>{item.name}</h6>
+                                                                        <p>{item.description}</p>
+                                                                    </div>
+                                                                    <div className="product-bag">
+                                                                        <Row>
+                                                                            <Col>
+                                                                                <p>₹{item.price}</p>
+                                                                            </Col>
+                                                                            <Col>
+                                                                                <h5>{item.discount}%</h5>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col className='align-self-center'><h6>{`₹${item.price - (item.price * item.discount / 100)}`}</h6></Col>
+                                                                            <Col><Link to=''><img src={bag} /></Link></Col>
+                                                                        </Row>
+                                                                    </div>
+                                                                </Link>
+                                                            </div>
+                                                        </Col>
+                                                     ))
+                                                     ) : (
+                                                         <p className="emptyMSG">No Sub Categories Product.</p>
+                                                     )}
+                                                </Row>
                                             </div>
-                                        </Col>
-                                    ))}
-                                </Row>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </Container>
                         </section>
 
-                        <Container fluid className='p-0'>
+                        {/* <Container fluid className='p-0'>
                             <div className='all-bg'>
                                 <img src={bannerone} />
                             </div>
-                        </Container>
+                        </Container> */}
 
-                        <section className="section-padding food">
+                        {/* <section className="section-padding food">
                             <Container>
                                 <Row>
                                     <Col lg={6} sm={6}>
@@ -820,7 +805,7 @@ function Product(props) {
                                     </Row>
                                 </div>
                             </Container>
-                        </section>
+                        </section> */}
                     </Col>
                 </Row>
             </Container >
@@ -832,4 +817,4 @@ function Product(props) {
     )
 }
 
-export default Product
+export default Petcategory

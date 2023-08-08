@@ -18,10 +18,11 @@ import { Link } from 'react-router-dom';
 
 function Shopbybrand() {
     const [thirdbanner, setthirdbanner] = useState([]);
-
+    const [brands, setBrands] = useState([]);
 
     useEffect(() => {
         thirdBanner();
+        fetchBrands();
     }, []);
 
 
@@ -36,6 +37,21 @@ function Shopbybrand() {
                 console.error("Error fetching data:", error);
             });
     };
+
+    const fetchBrands = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/auth/brand`);
+            setBrands(response.data.data);
+
+            // Handle response as needed
+        } catch (error) {
+            console.error(error);
+            // Handle error as needed
+        }
+    };
+    console.log("====================================");
+    console.log(brands);
+    console.log("====================================");
     return (
         <>
             <Header />
@@ -50,66 +66,35 @@ function Shopbybrand() {
                     <h1 className="main-head">Shop By Brands</h1>
                     <div className="needplace">
                         <Row>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-1">
-                                    <Link to='/shop-our-brand'>
-                                        <div className="brandLOGO">
-                                            <img src={brand1} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro1} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-2">
-                                    <Link to='/shop-our-brand'>
-                                        <div className="brandLOGO">
-                                            <img src={brand2} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro2} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-3">
-                                    <Link to='/shop-our-brand'>
-                                        <div className="brandLOGO">
-                                            <img src={brand3} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro1} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-4">
-                                    <Link to='/shop-our-brand'>
-                                        <div className="brandLOGO">
-                                            <img src={brand1} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro2} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
+                            {brands ? (
+                                brands.map((brand) => (
+                                    brand.canine == '0' && (
+                                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                                            <div key={brand.id} className="Brand-card brand-1">
+                                                <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                                    <div className="brandLOGO">
+                                                        <img
+                                                            src={
+                                                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                                brand.logo
+                                                            } />
+                                                    </div>
+                                                    <div className="brand-main">
+                                                        <img
+                                                            src={
+                                                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                                brand.image
+                                                            } />
+                                                    </div>
+                                                    <div className="brand-text">
+                                                        <h5>{brand.title}</h5>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        </Col>
+                                    )
+                                ))
+                            ) : null}
 
                         </Row>
                     </div>
@@ -136,7 +121,7 @@ function Shopbybrand() {
                 </Container>
             </section>
 
-            <section className="section-padding">
+            {/* <section className="section-padding">
                 <Container>
                     <div className=" Newsletter-bg">
                         <Row>
@@ -163,7 +148,7 @@ function Shopbybrand() {
                         </Row>
                     </div>
                 </Container>
-            </section>
+            </section> */}
 
             <Footer />
         </>

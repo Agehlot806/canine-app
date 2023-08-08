@@ -188,9 +188,9 @@ function Home(props) {
     <>
       <Toaster />
       <Header />
-      <div className="home-bg">
+      <div className="">
         <div className="home-section">
-          <Container className="p-0">
+          <Container fluid className="p-0">
             {/* <Row>
               <Col lg={6} className="align-self-center">
                 <div className="home-content">
@@ -212,7 +212,7 @@ function Home(props) {
               ssr={true} // means to render carousel on server-side.
               infinite={true}
               autoPlay={props.deviceType !== "mobile" ? true : false}
-              autoPlaySpeed={1000}
+              autoPlaySpeed={2000}
               keyBoardControl={true}
               customTransition="all 1s"
               transitionDuration={1000}
@@ -225,8 +225,8 @@ function Home(props) {
               {homebanner &&
                 homebanner.map((item) => (
                   <div>
-                    <Row>
-                      <Col lg={6} className="align-self-center">
+                    {/* <Row> */}
+                      {/* <Col lg={6} className="align-self-center">
                         <div className="home-content">
                           <h1>{item.title}</h1>
                           <p>{item.description}</p>
@@ -236,14 +236,34 @@ function Home(props) {
                         </div>
                       </Col>
                       <Col lg={6}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/banner/" +
-                            item.image
-                          }
-                        />
-                      </Col>
-                    </Row>
+                        <img src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        } />
+                      </Col> */}
+                      {/* <Col lg={12}> */}
+                        <div className="home-img">
+                          <div className="">
+                            <img src={
+                              "https://canine.hirectjob.in/storage/app/public/banner/" +
+                              item.image
+                            } />
+                          </div>
+                          <Row>
+                            <Col lg={6}>
+                              <div className="home-content">
+                                <h1>{item.title}</h1>
+                                <p>{item.description}</p>
+                                <Button>
+                                  Explore More <i className="fa fa-angle-right" />
+                                </Button>
+                              </div>
+                            </Col>
+                          </Row>
+
+                        </div>
+                      {/* </Col>
+                    </Row> */}
                   </div>
                 ))}
               {/* <div>
@@ -357,7 +377,7 @@ function Home(props) {
             {categories &&
               categories.map((item) => (
                 <div className="Shop-Deals" key={item.id}>
-                  <Link to="/dog">
+                  <Link to={`/pet-category/${item.id}`}>
                     <img
                       src={
                         "https://canine.hirectjob.in/storage/app/public/category/" +
@@ -509,35 +529,37 @@ function Home(props) {
             </Col>
           </Row>
           <Row className="mt-4">
-            {brands
-              ? brands.map(
-                  (brand) =>
-                    brand.canine == "1" && (
-                      <Col lg={3} sm={6} xs={6} className="mb-5">
-                        <div key={brand.id} className="Brand-card brand-1">
-                          <div className="brandLOGO">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/category/" +
-                                brand.logo
-                              }
-                            />
-                          </div>
-                          <div className="brand-main">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/category/" +
-                                brand.image
-                              }
-                            />
-                          </div>
-                          <div className="brand-text">
-                            <h5>{brand.title}</h5>
-                          </div>
+            {brands ? (
+              brands.map((brand) => (
+                brand.canine == '1' && (
+                  <Col lg={3} sm={6} xs={6} className="mb-5">
+                    <div key={brand.id} className="Brand-card brand-1">
+                      <Link to="/our-our-brand">
+                        <div className="brandLOGO">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/category/" +
+                              brand.logo
+                            }
+                          />
                         </div>
-                      </Col>
-                    )
+                        <div className="brand-main">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/category/" +
+                              brand.image
+                            }
+                          />
+                        </div>
+                        <div className="brand-text">
+                          <h5>{brand.title}</h5>
+                        </div>
+                      </Link>
+                    </div>
+                  </Col>
                 )
+              ))
+            )
               : null}
           </Row>
         </Container>
@@ -595,35 +617,35 @@ function Home(props) {
           </Row>
           <div className="needplace">
             <Row>
-              {brands
-                ? brands.map(
-                    (brand) =>
-                      brand.canine == "0" && (
-                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div key={brand.id} className="Brand-card brand-1">
-                            <div className="brandLOGO">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in/storage/app/public/category/" +
-                                  brand.logo
-                                }
-                              />
-                            </div>
-                            <div className="brand-main">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in/storage/app/public/category/" +
-                                  brand.image
-                                }
-                              />
-                            </div>
-                            <div className="brand-text">
-                              <h5>{brand.title}</h5>
-                            </div>
+              {brands ? (
+                brands.map((brand) => (
+                  brand.canine == '0' && (
+                    <Col lg={3} sm={6} xs={6} className="mb-5">
+                      <div key={brand.id} className="Brand-card brand-1">
+                        <Link to={`/shop-by-brand-list/${brand.id}`}>
+                          <div className="brandLOGO">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                brand.logo
+                              } />
                           </div>
-                        </Col>
-                      )
+                          <div className="brand-main">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                brand.image
+                              } />
+                          </div>
+                          <div className="brand-text">
+                            <h5>{brand.title}</h5>
+                          </div>
+                        </Link>
+                      </div>
+                    </Col>
                   )
+                ))
+                )
                 : null}
             </Row>
           </div>
