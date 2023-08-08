@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../directives/header";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 import Footer from "../../directives/footer";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
 
 function Addcart() {
+  const { id } = useParams();
+  console.log("id: ", id);
   const [quantity, setQuantity] = useState(1);
   const [coupencode, setcoupenCode] = useState(false);
+  const [addToCartProduct, setAddToCartProduct] = useState([]);
+  console.log("addToCartProduct: ", addToCartProduct);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -17,6 +23,22 @@ function Addcart() {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
+  };
+  useEffect(() => {
+    addToCartData();
+  }, []);
+
+  const addToCartData = async () => {
+    axios
+      .get(`${BASE_URL}/customer/wish-list/add_to_card/2`)
+      .then((response) => {
+        console.log(response);
+        setAddToCartProduct(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>

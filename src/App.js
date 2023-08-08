@@ -73,7 +73,7 @@ function App() {
           <Route path="/about-us" element={<Aboutus />} />
           <Route path="/service" element={<Service />} />
           <Route path="/product" element={<Product />} />
-          <Route path="/product-details" element={<Productdetail />} />
+          <Route path="/product-details/:id" element={<Productdetail />} />
           <Route path="/canine-product" element={<Canineproduct />} />
           <Route path="/patners-product" element={<Patnersproduct />} />
           <Route path="/contact" element={<Contact />} />

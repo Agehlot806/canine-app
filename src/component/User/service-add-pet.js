@@ -55,7 +55,12 @@ function Serviceaddpet() {
       console.error("Error fetching data:", error);
     }
   };
-
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("storedUserId: ", storedUserId);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
   const handleGenderChange = (selectedGender) => {
     setGender(selectedGender);
   };
@@ -74,7 +79,7 @@ function Serviceaddpet() {
     // };
 
     const petData = new FormData();
-    petData.append("user_id", "1");
+    petData.append("user_id", storedUserId);
     petData.append(
       "pets_type",
       selectedCategory?.name ? selectedCategory?.name : ""

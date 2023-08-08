@@ -75,6 +75,7 @@ function Home(props) {
   const [categories, setcategories] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [allproduct, setallproduct] = useState([]);
+  console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [brands, setBrands] = useState([]);
   const [email, setEmail] = useState("");
@@ -84,13 +85,13 @@ function Home(props) {
     fetchBrands();
     homeAllBanner();
   }, []);
-
+  // const discontedMrp = allproduct.map(el => el.price * el.discount)
+  // ((price * discount) / 100)
   const homeAllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   };
@@ -100,7 +101,8 @@ function Home(props) {
     const data = {
       email: email,
     };
-    axios.post(`${BASE_URL}/newsletter/subscribe`, data)
+    axios
+      .post(`${BASE_URL}/newsletter/subscribe`, data)
       .then((response) => {
         setResponseMessage(response.data.message);
         toast.success("Subscription Successfully");
@@ -175,7 +177,6 @@ function Home(props) {
         console.log("response143", response);
         if (response.data.message) {
           toast.success("Added successfully");
-
         }
       })
       .catch((error) => {
@@ -183,11 +184,10 @@ function Home(props) {
       });
   };
 
-
   return (
     <>
       <Toaster />
-      <Header/>
+      <Header />
       <div className="home-bg">
         <div className="home-section">
           <Container className="p-0">
@@ -236,10 +236,12 @@ function Home(props) {
                         </div>
                       </Col>
                       <Col lg={6}>
-                        <img src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
-                          item.image
-                        } />
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/banner/" +
+                            item.image
+                          }
+                        />
                       </Col>
                     </Row>
                   </div>
@@ -391,8 +393,11 @@ function Home(props) {
                 allproduct.map((item) => (
                   <Col lg={3} sm={6} xs={6} className="mb-4">
                     <div className="food-product" key={item.id}>
-                      <i class="fa fa-heart-o" onClick={(id) => addToWishlist(item.id)}/>
-                      <Link to="/product-details">
+                      <i
+                        class="fa fa-heart-o"
+                        onClick={(id) => addToWishlist(item.id)}
+                      />
+                      <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">
                           <img
                             src={
@@ -408,7 +413,7 @@ function Home(props) {
                         <div className="product-bag">
                           <Row>
                             <Col>
-                              <p>₹999.00</p>
+                              <p>₹{item.price}</p>
                             </Col>
                             <Col>
                               <h5>{item.discount}%</h5>
@@ -416,7 +421,13 @@ function Home(props) {
                           </Row>
                           <Row>
                             <Col className="align-self-center">
-                              <h6>₹{item.price}</h6>
+                              <h6>
+                                {/* {`₹${(item.price * item.discount) / 100}`} */}
+                                {`₹${
+                                  item.price -
+                                  (item.price * item.discount) / 100
+                                }`}
+                              </h6>
                             </Col>
                             <Col>
                               <Link to="">
@@ -498,35 +509,36 @@ function Home(props) {
             </Col>
           </Row>
           <Row className="mt-4">
-            {brands ? (
-              brands.map((brand) => (
-                brand.canine == '1' && (
-                  <Col lg={3} sm={6} xs={6} className="mb-5">
-                    <div key={brand.id} className="Brand-card brand-1">
-                      <div className="brandLOGO">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/category/" +
-                            brand.logo
-                          }
-                        />
-                      </div>
-                      <div className="brand-main">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/category/" +
-                            brand.image
-                          }
-                        />
-                      </div>
-                      <div className="brand-text">
-                        <h5>{brand.title}</h5>
-                      </div>
-                    </div>
-                  </Col>
+            {brands
+              ? brands.map(
+                  (brand) =>
+                    brand.canine == "1" && (
+                      <Col lg={3} sm={6} xs={6} className="mb-5">
+                        <div key={brand.id} className="Brand-card brand-1">
+                          <div className="brandLOGO">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                brand.logo
+                              }
+                            />
+                          </div>
+                          <div className="brand-main">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                brand.image
+                              }
+                            />
+                          </div>
+                          <div className="brand-text">
+                            <h5>{brand.title}</h5>
+                          </div>
+                        </div>
+                      </Col>
+                    )
                 )
-              ))
-            ) : null}
+              : null}
           </Row>
         </Container>
       </section>
@@ -535,18 +547,18 @@ function Home(props) {
         <Container>
           {thirdbanner
             ? thirdbanner.map(
-              (item, index) =>
-                item.title === "new" && (
-                  <div className="banner-bgmain" key={item.id}>
-                    <img
-                      src={
-                        "https://canine.hirectjob.in/storage/app/public/banner/" +
-                        item.image
-                      }
-                    />
-                  </div>
-                )
-            )
+                (item, index) =>
+                  item.title === "new" && (
+                    <div className="banner-bgmain" key={item.id}>
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        }
+                      />
+                    </div>
+                  )
+              )
             : null}
         </Container>
       </section>
@@ -583,33 +595,36 @@ function Home(props) {
           </Row>
           <div className="needplace">
             <Row>
-              {brands ? (
-                brands.map((brand) => (
-                  brand.canine == '0' && (
-                    <Col lg={3} sm={6} xs={6} className="mb-5">
-                      <div key={brand.id} className="Brand-card brand-1">
-                        <div className="brandLOGO">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/category/" +
-                              brand.logo
-                            } />
-                        </div>
-                        <div className="brand-main">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/category/" +
-                              brand.image
-                            } />
-                        </div>
-                        <div className="brand-text">
-                          <h5>{brand.title}</h5>
-                        </div>
-                      </div>
-                    </Col>
+              {brands
+                ? brands.map(
+                    (brand) =>
+                      brand.canine == "0" && (
+                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                          <div key={brand.id} className="Brand-card brand-1">
+                            <div className="brandLOGO">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/category/" +
+                                  brand.logo
+                                }
+                              />
+                            </div>
+                            <div className="brand-main">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/category/" +
+                                  brand.image
+                                }
+                              />
+                            </div>
+                            <div className="brand-text">
+                              <h5>{brand.title}</h5>
+                            </div>
+                          </div>
+                        </Col>
+                      )
                   )
-                ))
-              ) : null}
+                : null}
             </Row>
           </div>
         </Container>
@@ -854,9 +869,15 @@ function Home(props) {
                       placeholder="Enter your email"
                       className="me-2"
                       aria-label="Search"
-                      value={email} onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
-                    <Button variant="outline-success" onClick={handleNewsletter}>Subscribe</Button>
+                    <Button
+                      variant="outline-success"
+                      onClick={handleNewsletter}
+                    >
+                      Subscribe
+                    </Button>
                   </Form>
                 </div>
               </Col>

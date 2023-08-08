@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
-import Header from '../../directives/header'
-import productdetail from '../../assets/images/banner/productdetail.png'
-import product from '../../assets/images/banner/product.png'
-import productItem from '../../assets/images/img/brandPro1.png'
-import { Container, Row, Col, Table, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import Footer from '../../directives/footer'
-import product1 from '../../assets/images/img/product1.png'
-import product2 from '../../assets/images/img/product2.png'
-import product3 from '../../assets/images/img/product3.png'
-import bag from '../../assets/images/icon/bag.png'
-
+import React, { useEffect, useState } from "react";
+import Header from "../../directives/header";
+import productdetail from "../../assets/images/banner/productdetail.png";
+import product from "../../assets/images/banner/product.png";
+import productItem from "../../assets/images/img/brandPro1.png";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import Footer from "../../directives/footer";
+import product1 from "../../assets/images/img/product1.png";
+import product2 from "../../assets/images/img/product2.png";
+import product3 from "../../assets/images/img/product3.png";
+import bag from "../../assets/images/icon/bag.png";
+import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
 
 function Productdetail() {
+  const { id } = useParams();
+  console.log("id: ", id);
+  const [productDetails, setProductDetails] = useState([]);
+  console.log("productDetails: ", productDetails);
   const [quantity, setQuantity] = useState(1);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -22,65 +27,84 @@ function Productdetail() {
       setQuantity(quantity - 1);
     }
   };
+  useEffect(() => {
+    productData();
+  }, []);
+
+  const productData = async () => {
+    axios
+      .get(`${BASE_URL}/items/details/${id}`)
+      .then((response) => {
+        console.log(response);
+        console.log("Delete Successful");
+        setProductDetails(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
       <Header />
-      <Container fluid className='p-0'>
-        <div className='all-bg'>
+      <Container fluid className="p-0">
+        <div className="all-bg">
           <img src={productdetail} />
         </div>
       </Container>
-
-
-
 
       <section className="section-padding">
         <Container>
           <Row>
             <Col lg={6}>
               <div className="product-item">
-                <img src={productItem} />
+                <img
+                  src={
+                    "https://canine.hirectjob.in//storage/app/public/product/" +
+                    productDetails.image
+                  }
+                />
               </div>
               <div className="needplace">
                 <Row>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
                   <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
+                    <div className="product-item-inner">
                       <img src={productItem} />
                     </div>
                   </Col>
@@ -88,37 +112,59 @@ function Productdetail() {
               </div>
             </Col>
             <Col lg={6}>
-              <div className='productDetail-content'>
+              <div className="productDetail-content">
                 <Row>
                   <Col lg={10}>
-                    <h4>ACANA Singles Grain Free Limited Ingredient Diet Duck and Pear Formula Dog Treats</h4>
+                    <h4>{productDetails.name}</h4>
                   </Col>
                   <Col lg={2}>
                     <i className="fa fa-star" />
                   </Col>
                 </Row>
-                <p>By <span>Brand name</span></p>
-                <span><i className="fa fa-star" /> 4.5</span>
+                <p>
+                  By <span>{productDetails.store_name}</span>
+                </p>
+                <span>
+                  <i className="fa fa-star" /> 4.5
+                </span>
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6}>
                       <div className="form-group">
+                        <select
+                          className="form-control"
+                          // value={pet_id}
+                          // onChange={(e) => setpet_id(e.target.value)}
+                        >
+                          <option>Choose....</option>
+                          {productDetails?.variations &&
+                            productDetails?.variations.map((item) => (
+                              // <a onClick={(e) => setpet_id(item)}>
+                              <option>{item.type}</option>
+                            ))}
+                        </select>
                         {/* <label >Size</label> */}
-                        <select className="form-control">
-                          <option>Select size</option>
+                        {/* <select className="form-control"> */}
+                        {/* <option>Select size</option>
                           <option>5KG</option>
                           <option>10KG</option>
                           <option>15KG</option>
                           <option>20KG</option>
                           <option>30KG</option>
-                        </select>
+                        </select> */}
                       </div>
                     </Col>
                     <Col sm={2}>
                       <div className="quantity-btn">
                         <form>
                           <div className="form-group">
-                            <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Quantity" />
+                            <input
+                              type="number"
+                              className="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              placeholder="Enter Quantity"
+                            />
                           </div>
                         </form>
                       </div>
@@ -126,13 +172,21 @@ function Productdetail() {
                   </Row>
                 </div>
                 <div className="needplaceProduct">
-                  <div className='product-deatils-price'>
+                  <div className="product-deatils-price">
                     <Row>
                       <Col lg={3}>
-                        <p>₹999.00</p>
+                        <p>{`₹${productDetails.price}`}</p>
+                        {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
                       </Col>
                       <Col lg={4}>
-                        <h5>₹520.00</h5>
+                        <h5>
+                          {" "}
+                          {`₹${
+                            productDetails.price -
+                            (productDetails.price * productDetails.discount) /
+                              100
+                          }`}
+                        </h5>
                       </Col>
                       <Col lg={5}>
                         <h6>Your save 100 RS</h6>
@@ -153,7 +207,12 @@ function Productdetail() {
                     </tr>
                     <tr>
                       <th>Diet type</th>
-                      <td>Non Vegetarian</td>
+                      {/* <td>Non Vegetarian</td> */}
+                      <td>
+                        {productDetails.Veg === "0"
+                          ? "Vegetarian"
+                          : "Non Vegetarian"}
+                      </td>
                     </tr>
                     <tr>
                       <th>Age Range</th>
@@ -172,17 +231,19 @@ function Productdetail() {
               </div>
             </Col>
           </Row>
-          <div className='productBTNaddcard'>
-            <Button><Link to='/add-cart'><i className="fa fa-shopping-bag" /> Add to cart</Link></Button>
-
+          <div className="productBTNaddcard">
+            <Button>
+              <Link to="/add-cart">
+                <i className="fa fa-shopping-bag" /> Add to cart
+              </Link>
+            </Button>
           </div>
           <h1 className="main-head mt-4">Product details</h1>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          </p>
+          <p>{productDetails.description}</p>
         </Container>
       </section>
-      <Container fluid className='p-0'>
-        <div className='product-innerBanner'>
+      <Container fluid className="p-0">
+        <div className="product-innerBanner">
           <img src={product} />
         </div>
       </Container>
@@ -198,7 +259,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -207,8 +268,14 @@ function Productdetail() {
                     </div>
                     <div className="product-bag">
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -218,7 +285,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -235,8 +302,14 @@ function Productdetail() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -246,7 +319,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -263,8 +336,14 @@ function Productdetail() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -274,7 +353,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -291,8 +370,14 @@ function Productdetail() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -302,7 +387,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -319,8 +404,14 @@ function Productdetail() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -330,7 +421,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -347,8 +438,14 @@ function Productdetail() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -358,7 +455,7 @@ function Productdetail() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/product-details">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -375,21 +472,26 @@ function Productdetail() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
                 </div>
               </Col>
-
             </Row>
           </div>
         </Container>
       </section>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Productdetail
+export default Productdetail;

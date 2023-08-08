@@ -11,13 +11,18 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const customerData = new FormData();
+    customerData.append("cust_phone", "phone");
     try {
       const response = await axios.post(
         "https://canine.hirectjob.in/api/v1/auth/customer",
-        { cust_phone: phone }
+        customerData
       );
       console.log(response.data);
-      navigate("/otp");
+      if (response.data.status == 200) {
+        await localStorage.setItem("phoneNo", phone);
+        navigate("/otp");
+      }
       // Handle response as needed
     } catch (error) {
       console.error(error);

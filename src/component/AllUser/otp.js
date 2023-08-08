@@ -14,6 +14,8 @@ function Otp() {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const phone = await localStorage.getItem("phoneNo");
+    console.log("phone: ", phone);
     console.log("handleSubmit called"); // Add this
     const formData = new FormData();
     formData.append("phone", phone);
@@ -25,7 +27,14 @@ function Otp() {
         formData
       );
       console.log(response.data);
-      navigate("/");
+      if (response.data.status == 200) {
+        await localStorage.setItem(
+          "userInfo",
+          JSON.stringify(response.data.data)
+        );
+        console.log("response.data.data: ", response.data.data);
+        navigate("/");
+      }
     } catch (error) {
       console.error(error);
       // Handle error as needed

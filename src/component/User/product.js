@@ -127,9 +127,16 @@ function Product(props) {
         // Your checkbox logic here (e.g., updating checkbox state)
     };
 
+    // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("storedUserId: ", storedUserId);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
+
     const addToWishlist = async (item_id) => {
         const formData = new FormData();
-        formData.append("user_id", 1);
+        formData.append("user_id", storedUserId);
         formData.append("item_id", item_id);
         axios
           .post(`${BASE_URL}/customer/wish-list/add`, formData, {

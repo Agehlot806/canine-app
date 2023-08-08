@@ -79,13 +79,16 @@ function Servicedate() {
   //   return formError;
   // };
 
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("customer_id: ", customer_id);
   const handleSubmit = async (e) => {
     // e.preventDefault();
     // console.log("handleSubmit called", handleValid()); // Add this
 
     // if (handleValid()) {
     const bookingData = new FormData();
-    bookingData.append("user_id", "1");
+    bookingData.append("user_id", storedUserId[0].id);
     bookingData.append("service_id", id);
     bookingData.append("dates", slotday[0]?.slot_date);
     bookingData.append("slot", bookingSlot);
