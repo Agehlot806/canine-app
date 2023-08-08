@@ -39,35 +39,32 @@ function Header() {
 
   const allProductdata = async () => {
     axios
-        .get(`${BASE_URL}/items/latest`)
-        .then((response) => {
-            console.log(response);
-            console.log("Delete Successful");
-            setAllProduct(response.data.data)
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-};
+      .get(`${BASE_URL}/items/latest`)
+      .then((response) => {
+        console.log(response);
+        console.log("Delete Successful");
+        setAllProduct(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-const handleSearch = (e) => {
-  const searchValue = e.target.value.toLowerCase();
-  setSearchTerm(searchValue);
+  const handleSearch = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearchTerm(searchValue);
 
-  if (searchValue === "") {
-    setAllProduct(allproduct);
-  } else {
-    const filteredProducts = allproduct.filter(
-      (product) =>
-        product.name && product.name.toLowerCase().includes(searchValue)
-    );
-    setAllProduct(filteredProducts);
-  }
-};
-const [searchTerm, setSearchTerm] = useState("");
-
-
-  
+    if (searchValue === "") {
+      setAllProduct(allproduct);
+    } else {
+      const filteredProducts = allproduct.filter(
+        (product) =>
+          product.name && product.name.toLowerCase().includes(searchValue)
+      );
+      setAllProduct(filteredProducts);
+    }
+  };
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <>
@@ -327,11 +324,11 @@ const [searchTerm, setSearchTerm] = useState("");
                     <div className="header-inner-addon input-container">
                       <i className="fa fa-search" />
                       <input
-  type="text"
-  placeholder="Search by name"
-  value={searchTerm}
-  onChange={handleSearch}
-/>
+                        type="text"
+                        placeholder="Search by name"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                      />
                     </div>
                   </Nav.Link>
                   <Nav.Link>
@@ -351,16 +348,38 @@ const [searchTerm, setSearchTerm] = useState("");
                     </Button>
                   </Nav.Link>
                   <Nav.Link>
-                  <div className="dropdown">
-                <button className="btn profile-icon dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src={pro} />
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <Link className="dropdown-item" to="/all-veterinary">All Veterinary</Link>
-                  <Link className="dropdown-item" to="/all-service-booking">All Service Booking</Link>
-                  <Link className="dropdown-item" to="/wishlist-products">Wishlist Products</Link>
-                </div>
-              </div>
+                    <div className="dropdown">
+                      <button
+                        className="btn profile-icon dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <Link to={`/pet-profile/`}>
+                          {" "}
+                          <img src={pro} />
+                        </Link>
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <Link className="dropdown-item" to="/all-veterinary">
+                          All Veterinary
+                        </Link>
+                        <Link
+                          className="dropdown-item"
+                          to="/all-service-booking"
+                        >
+                          All Service Booking
+                        </Link>
+                        <Link className="dropdown-item" to="/wishlist-products">
+                          Wishlist Products
+                        </Link>
+                      </div>
+                    </div>
                   </Nav.Link>
                 </Nav>
               </Col>
