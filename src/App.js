@@ -14,11 +14,11 @@ import Veterinaryservice from "./component/User/veterinary-service";
 import Addcart from "./component/User/addcart";
 import Servicedate from "./component/User/service-date";
 import Shopbybrand from "./component/User/shop-by-brand";
-import Shopourbrand from "./component/User/shop-our-brand";
+import Ourourbrand from "./component/User/our-our-brand";
 import Productbypartner from "./component/User/product-by-partner";
 import Productpartnershop from "./component/User/product-partner-shop";
 import Ourbrand from "./component/User/our-brand";
-import Dogcategory from "./component/User/dog-category";
+import Petcategory from "./component/User/pet-category";
 import Login from "./component/AllUser/login";
 import Otherlogin from "./component/AllUser/other-login";
 import Otp from "./component/AllUser/otp";
@@ -51,6 +51,7 @@ import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
 import Petprofile from "./component/User/pet-profile";
 import Wishlistproduct from "./component/User/wishlist-product";
+import Shopbybrandlist from "./component/User/shop-by-brand-list";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -85,18 +86,16 @@ function App() {
           <Route path="/service-pet" element={<Servicepet />} />
           <Route path="/our-brand" element={<Ourbrand />} />
 
-          <Route path="/shop-our-brand" element={<Shopourbrand />} />
+          <Route path="/our-our-brand" element={<Ourourbrand />} />
           <Route path="/shop-by-brand" element={<Shopbybrand />} />
+          <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
           <Route path="/product-by-partner" element={<Productbypartner />} />
-          <Route
-            path="/product-partner-shop"
-            element={<Productpartnershop />}
-          />
+          <Route path="/product-partner-shop" element={<Productpartnershop />}/>
           <Route path="/user-pay-method" element={<Userpaymethod />} />
           <Route path="/user-pay" element={<Userpay />} />
           <Route path="/user-upi" element={<Userupi />} />
           <Route path="/map" element={<Map />} />
-          <Route path="/dog-category" element={<Dogcategory />} />
+          <Route path="/pet-category/:id" element={<Petcategory />} />
           <Route path="/cat-category" element={<Catcategory />} />
           <Route path="/all-veterinary" element={<Allveterinary />} />
           <Route path="/all-service-booking" element={<Allservicebooking />} />

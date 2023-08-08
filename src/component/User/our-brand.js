@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../directives/header'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import shopbybrand from '../../assets/images/banner/shopbybrand.png'
+import ourbrand from '../../assets/images/banner/ourbrand.png'
 import brand1 from "../../assets/images/img/brand1.png";
 import brand2 from "../../assets/images/img/brand2.png";
 import brand3 from "../../assets/images/img/brand3.png";
@@ -18,10 +18,11 @@ import { Link } from 'react-router-dom';
 
 function Ourbrand() {
     const [thirdbanner, setthirdbanner] = useState([]);
-
+    const [brands, setBrands] = useState([]);
 
     useEffect(() => {
         thirdBanner();
+        fetchBrands();
     }, []);
 
 
@@ -36,12 +37,29 @@ function Ourbrand() {
                 console.error("Error fetching data:", error);
             });
     };
+
+    const fetchBrands = async () => {
+        try {
+          const response = await axios.get(`${BASE_URL}/auth/brand`);
+          setBrands(response.data.data);
+    
+          // Handle response as needed
+        } catch (error) {
+          console.error(error);
+          // Handle error as needed
+        }
+      };
+      console.log("====================================");
+      console.log(brands);
+      console.log("====================================");
+
+
     return (
         <>
             <Header />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
-                    <img src={shopbybrand} />
+                    <img src={ourbrand} />
                 </div>
             </Container>
 
@@ -50,67 +68,37 @@ function Ourbrand() {
                     <h1 className="main-head">Our Brands</h1>
                     <div className="needplace">
                         <Row>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-1">
-                                    <Link to='/'>
-                                        <div className="brandLOGO">
-                                            <img src={brand1} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro1} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-2">
-                                    <Link to='/'>
-                                        <div className="brandLOGO">
-                                            <img src={brand2} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro2} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-3">
-                                    <Link to='/'>
-                                        <div className="brandLOGO">
-                                            <img src={brand3} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro1} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-                            <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div className="Brand-card brand-4">
-                                    <Link to='/'>
-                                        <div className="brandLOGO">
-                                            <img src={brand1} />
-                                        </div>
-                                        <div className="brand-main">
-                                            <img src={brandPro2} />
-                                        </div>
-                                        <div className="brand-text">
-                                            <h5>Rresrvation</h5>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </Col>
-
+                            {brands ? (
+                                brands.map((brand) => (
+                                    brand.canine == '1' && (
+                                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                                            <div key={brand.id} className="Brand-card brand-1">
+                                            <Link to="/our-our-brand">
+                                                <div className="brandLOGO">
+                                                    <img
+                                                        src={
+                                                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                            brand.logo
+                                                        }
+                                                    />
+                                                </div>
+                                                <div className="brand-main">
+                                                    <img
+                                                        src={
+                                                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                            brand.image
+                                                        }
+                                                    />
+                                                </div>
+                                                <div className="brand-text">
+                                                    <h5>{brand.title}</h5>
+                                                </div>
+                                            </Link>
+                                            </div>
+                                        </Col>
+                                    )
+                                ))
+                            ) : null}
                         </Row>
                     </div>
                 </Container>
@@ -136,7 +124,7 @@ function Ourbrand() {
                 </Container>
             </section>
 
-            <section className="section-padding">
+            {/* <section className="section-padding">
                 <Container>
                     <div className=" Newsletter-bg">
                         <Row>
@@ -163,7 +151,7 @@ function Ourbrand() {
                         </Row>
                     </div>
                 </Container>
-            </section>
+            </section> */}
 
             <Footer />
         </>
