@@ -72,6 +72,8 @@ function Petcategory() {
     };
 
     const { id } = useParams();
+    console.log("idid", id);
+    
     const [petitemproduct, setpetitemproduct] = useState([]);
     const [subcategories, setsubcategories] = useState([]);
 
@@ -79,7 +81,6 @@ function Petcategory() {
         // allPetitemproduct();
         Allsubcategories();
     }, []);
-    console.log("idid", id);
     // const allPetitemproduct = async () => {
     // axios
     //     .get(`${BASE_URL}/items/product/7/${subid}`)
@@ -106,9 +107,16 @@ function Petcategory() {
             });
     };
 
+    // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("storedUserId: ", storedUserId);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
+
     const addToWishlist = async (item_id) => {
         const formData = new FormData();
-        formData.append("user_id", 1);
+        formData.append("user_id", storedUserId);
         formData.append("item_id", item_id);
         axios
             .post(`${BASE_URL}/customer/wish-list/add`, formData, {
@@ -125,6 +133,8 @@ function Petcategory() {
                 toast.error("Already in your wishlist");
             });
     };
+
+
     const [subid, setsubid] = useState("")
     const subcatid = (id) => {
         console.log("testid", id);

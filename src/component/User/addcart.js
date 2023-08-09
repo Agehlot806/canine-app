@@ -4,6 +4,7 @@ import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
+import cart from "../../assets/images/icon/cart.png";
 import Footer from "../../directives/footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
@@ -11,8 +12,9 @@ import { BASE_URL } from "../../Constant/Index";
 
 function Addcart() {
   const { id } = useParams();
-  console.log("id: ", id);
+  console.log("id111111111111: ", id);
   const [quantity, setQuantity] = useState(1);
+  const [customer_id, setcustomer_id] = useState('');
   const [coupencode, setcoupenCode] = useState(false);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   console.log("addToCartProduct: ", addToCartProduct);
@@ -25,8 +27,21 @@ function Addcart() {
     }
   };
   useEffect(() => {
+    getUserInfo()
     addToCartData();
   }, []);
+
+   // storedUserId
+   const getUserInfo = async ()=>{
+    const customerData = await localStorage.getItem("userInfo");
+    console.log("customerData: ",customerData);
+    if (customerData) {
+      setcustomer_id(JSON.parse(customerData).id)
+    }
+ 
+  }
+  console.log("customer_id: ", customer_id);
+   // ----------------------------------------
 
   const addToCartData = async () => {
     axios
@@ -34,11 +49,25 @@ function Addcart() {
       .then((response) => {
         console.log(response);
         setAddToCartProduct(response.data.data);
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleRemoveFromWishlist = async (id) => {
+    try {
+      await axios.delete(`${BASE_URL}/customer/wish-list/remove/7/1`);
+      setWishlistData((prevData) => prevData.filter((item) => item.id !== id));
+
+    } catch (error) {
+      console.error('Error removing item from wishlist:', error);
+      if (error.response) {
+        console.log('Response status:', error.response.status);
+        console.log('Response data:', error.response.data);
+        toast.success("Your Product deleted successfully");
+      }
+    }
   };
   return (
     <>
@@ -51,114 +80,42 @@ function Addcart() {
       <section className="section-padding">
         <div className="add-cart">
           <Container>
-            <Row>
-              <Col lg={2}>
-                <img src={brandPro1} />
-              </Col>
-              <Col lg={7} className="align-self-center">
-                <h2>Mars Petcare Inc</h2>
-                <p>with paneer or cottage cheese.</p>
-              </Col>
-              <Col lg={2} className="align-self-center">
-                <h3>₹620.00</h3>
-                <div className="quantity-btn">
-                  <button onClick={handleDecrementone}>
-                    <i className="fa fa-minus" />
-                  </button>
-                  <span>{quantity}</span>
-                  <button onClick={handleIncrementone}>
-                    <i className="fa fa-plus" />
-                  </button>
-                </div>
-              </Col>
-              <Col lg={1} className="align-self-center">
-                <div className="delete-addcard">
-                  <i class="fa fa-trash-o" />
-                </div>
-              </Col>
-            </Row>
-            <hr />
-            <Row>
-              <Col lg={2}>
-                <img src={brandPro1} />
-              </Col>
-              <Col lg={7} className="align-self-center">
-                <h2>Mars Petcare Inc</h2>
-                <p>with paneer or cottage cheese.</p>
-              </Col>
-              <Col lg={2} className="align-self-center">
-                <h3>₹620.00</h3>
-                <div className="quantity-btn">
-                  <button onClick={handleDecrementone}>
-                    <i className="fa fa-minus" />
-                  </button>
-                  <span>{quantity}</span>
-                  <button onClick={handleIncrementone}>
-                    <i className="fa fa-plus" />
-                  </button>
-                </div>
-              </Col>
-              <Col lg={1} className="align-self-center">
-                <div className="delete-addcard">
-                  <i class="fa fa-trash-o" />
-                </div>
-              </Col>
-            </Row>
-            <hr />
-            <Row>
-              <Col lg={2}>
-                <img src={brandPro1} />
-              </Col>
-              <Col lg={7} className="align-self-center">
-                <h2>Mars Petcare Inc</h2>
-                <p>with paneer or cottage cheese.</p>
-              </Col>
-              <Col lg={2} className="align-self-center">
-                <h3>₹620.00</h3>
-                <div className="quantity-btn">
-                  <button onClick={handleDecrementone}>
-                    <i className="fa fa-minus" />
-                  </button>
-                  <span>{quantity}</span>
-                  <button onClick={handleIncrementone}>
-                    <i className="fa fa-plus" />
-                  </button>
-                </div>
-              </Col>
-              <Col lg={1} className="align-self-center">
-                <div className="delete-addcard">
-                  <i class="fa fa-trash-o" />
-                </div>
-              </Col>
-            </Row>
-            <hr />
-            <Row>
-              <Col lg={2}>
-                <img src={brandPro1} />
-              </Col>
-              <Col lg={7} className="align-self-center">
-                <h2>Mars Petcare Inc</h2>
-                <p>with paneer or cottage cheese.</p>
-              </Col>
-              <Col lg={2} className="align-self-center">
-                <h3>₹620.00</h3>
-                <div className="quantity-btn">
-                  <button onClick={handleDecrementone}>
-                    <i className="fa fa-minus" />
-                  </button>
-                  <span>{quantity}</span>
-                  <button onClick={handleIncrementone}>
-                    <i className="fa fa-plus" />
-                  </button>
-                </div>
-              </Col>
-              <Col lg={1} className="align-self-center">
-                <div className="delete-addcard">
-                  <i class="fa fa-trash-o" />
-                </div>
-              </Col>
-            </Row>
-            <hr />
+            {addToCartProduct && addToCartProduct.length > 0 ? (
+              addToCartProduct.map((item, index) => (
+                <Row>
+                  <Col lg={2}>
+                    <img src={item.image} />
+                  </Col>
+                  <Col lg={7} className="align-self-center">
+                    <h2>{item.item_name}</h2>
+                    {/* <p>with paneer or cottage cheese.</p> */}
+                  </Col>
+                  <Col lg={2} className="align-self-center">
+                    <h3>₹{item.price}</h3>
+                    <div className="quantity-btn">
+                      <button onClick={handleDecrementone}>
+                        <i className="fa fa-minus" />
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button onClick={handleIncrementone}>
+                        <i className="fa fa-plus" />
+                      </button>
+                    </div>
+                  </Col>
+                  <Col lg={1} className="align-self-center">
+                    <div className="delete-addcard">
+                      <i class="fa fa-trash-o" />
+                    </div>
+                  </Col>
+                  <hr />
+                </Row>
+              ))
+            ) : (
+              <div className="Emptycart">
+                <img src={cart} />
+                <p className="emptyMSG">Cart is Empty</p>
+              </div>
+            )}
             <div className="needplace">
               <Row className="justify-content-center">
                 <Col lg={5}>
