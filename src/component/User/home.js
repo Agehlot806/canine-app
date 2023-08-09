@@ -179,9 +179,16 @@ function Home(props) {
       });
   };
 
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.stringify(customer_id);
+  console.log("storedUserId: ", storedUserId);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
+
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
-    formData.append("user_id", 1);
+    formData.append("user_id", storedUserId);
     formData.append("item_id", item_id);
     axios
       .post(`${BASE_URL}/customer/wish-list/add`, formData, {
@@ -458,10 +465,9 @@ function Home(props) {
                             <Col className="align-self-center">
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
-                                  item.price -
+                                {`₹${item.price -
                                   (item.price * item.discount) / 100
-                                }`}
+                                  }`}
                               </h6>
                             </Col>
                             <Col>
@@ -584,18 +590,18 @@ function Home(props) {
         <Container>
           {thirdbanner
             ? thirdbanner.map(
-                (item, index) =>
-                  item.title === "new" && (
-                    <div className="banner-bgmain" key={item.id}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
-                          item.image
-                        }
-                      />
-                    </div>
-                  )
-              )
+              (item, index) =>
+                item.title === "new" && (
+                  <div className="banner-bgmain" key={item.id}>
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/banner/" +
+                        item.image
+                      }
+                    />
+                  </div>
+                )
+            )
             : null}
         </Container>
       </section>

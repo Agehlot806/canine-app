@@ -12,12 +12,14 @@ import product3 from "../../assets/images/img/product3.png";
 import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import { Toaster, toast } from "react-hot-toast";
 
 function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
-  console.log("productDetails?.variations: ", productDetails.variations);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  console.log("productDetails?.variations ", productDetails.variations);
   const [quantity, setQuantity] = useState(1);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -35,7 +37,7 @@ function Productdetail() {
     axios
       .get(`${BASE_URL}/items/details/${id}`)
       .then((response) => {
-        console.log(response);
+        console.log("=======> ",response);
         console.log("Delete Successful");
         setProductDetails(response.data.data);
         // Perform any additional actions after successful deletion
@@ -45,8 +47,32 @@ function Productdetail() {
       });
   };
 
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product/${id}`,
+        {
+          item_name: productDetails.name,
+          variant: "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity:productDetails.quantity,
+          price: productDetails.price,
+        }
+      );
+
+      if (response.data.success) {
+        setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+
   return (
     <>
+    <Toaster />
       <Header />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -131,6 +157,7 @@ function Productdetail() {
                   <Row>
                     <Col sm={6}>
                       <div className="form-group">
+                      {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
                           // value={pet_id}
@@ -140,9 +167,16 @@ function Productdetail() {
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
-                              <option>{item.type}</option>
-                            ))}
+                              <option >{item.type}</option>
+                            ))} 
                         </select>
+                             {/* {productDetails?.variations &&
+    productDetails?.variations.map((variation) => (
+      <option key={variation.type} value={variation.type}>
+        {variation.type} - ₹{variation.price} (Stock: {variation.stock})
+      </option>
+    ))} */}
+                        
                         {/* <label >Size</label> */}
                         {/* <select className="form-control"> */}
                         {/* <option>Select size</option>
@@ -233,9 +267,10 @@ function Productdetail() {
           </Row>
           <div className="productBTNaddcard">
             <Button>
-              <Link to="/add-cart">
+              <Link to="/add-cart" onClick={handleAddToCart}>
                 <i className="fa fa-shopping-bag" /> Add to cart
               </Link>
+              <p>{addToCartStatus}</p>
             </Button>
           </div>
           <h1 className="main-head mt-4">Product details</h1>

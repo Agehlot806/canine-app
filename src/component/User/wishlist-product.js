@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import Header from '../../directives/header';
@@ -15,9 +15,19 @@ function Wishlistproduct() {
     fetchWishlistData();
   }, []);
 
+  // const { id } = useParams();
+  // console.log("wishlistid-------", id);
+
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("storedUserId: ", storedUserId);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
+
   const fetchWishlistData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/customer/wish-list/1`);
+      const response = await axios.get(`${BASE_URL}/customer/wish-list/${storedUserId}`);
       setWishlistData(response.data.data);
     } catch (error) {
       console.error('Error fetching wishlist data:', error);
@@ -26,7 +36,7 @@ function Wishlistproduct() {
 
   const handleRemoveFromWishlist = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/customer/wish-list/remove/8/1`);
+      await axios.delete(`${BASE_URL}/customer/wish-list/remove/7/1`);
       setWishlistData((prevData) => prevData.filter((item) => item.id !== id));
 
     } catch (error) {
@@ -108,7 +118,7 @@ function Wishlistproduct() {
         </Container>
       </section>
 
-      <Footer /> 
+      <Footer />
     </>
   );
 }
