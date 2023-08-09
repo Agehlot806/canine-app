@@ -52,6 +52,9 @@ import Allservicebooking from "./component/User/all-service-booking";
 import Petprofile from "./component/User/pet-profile";
 import Wishlistproduct from "./component/User/wishlist-product";
 import Shopbybrandlist from "./component/User/shop-by-brand-list";
+import Blog from "./component/User/blog";
+import Updateprofile from "./component/User/update-profile";
+import Blogdetails from "./component/User/blog-details";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -86,7 +89,7 @@ function App() {
           <Route path="/service-pet" element={<Servicepet />} />
           <Route path="/our-brand" element={<Ourbrand />} />
 
-          <Route path="/our-our-brand" element={<Ourourbrand />} />
+          <Route path="/our-our-brand/:id" element={<Ourourbrand />} />
           <Route path="/shop-by-brand" element={<Shopbybrand />} />
           <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
           <Route path="/product-by-partner" element={<Productbypartner />} />
@@ -100,6 +103,11 @@ function App() {
           <Route path="/all-veterinary" element={<Allveterinary />} />
           <Route path="/all-service-booking" element={<Allservicebooking />} />
           <Route path="/wishlist-products" element={<Wishlistproduct />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog-details/:id" element={<Blogdetails />} />
+          <Route path="/update-profile" element={<Updateprofile />} />
+          
+
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />

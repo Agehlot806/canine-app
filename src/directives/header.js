@@ -357,15 +357,15 @@ function Header() {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <Link to={`/pet-profile/`}>
-                          {" "}
-                          <img src={pro} />
-                        </Link>
+                        <img src={pro} />
                       </button>
                       <div
                         className="dropdown-menu"
                         aria-labelledby="dropdownMenuButton"
                       >
+                        <Link className="dropdown-item" to={`/pet-profile/`}>
+                          Pet Profile
+                        </Link>
                         <Link className="dropdown-item" to="/all-veterinary">
                           All Veterinary
                         </Link>
@@ -377,6 +377,9 @@ function Header() {
                         </Link>
                         <Link className="dropdown-item" to="/wishlist-products">
                           Wishlist Products
+                        </Link>
+                        <Link className="dropdown-item" to="/update-profile">
+                          Profile
                         </Link>
                       </div>
                     </div>
@@ -427,6 +430,7 @@ function Header() {
               ) : (
                 <p className="emptyMSG">No Notification</p>
               )}
+
               {/* <div className='notification'>
                 <Row>
                   <Col lg={2}>

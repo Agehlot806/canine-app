@@ -2544,3 +2544,64 @@ a.placDate {
 .thirdbnner-area img {
   width: 100%;
 }
+
+.blog-cardContent h4 {
+  color: #008efd;
+  text-transform: capitalize;
+  font-size: 28px;
+}
+.blog-card-are {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  height: 100%;
+  border-radius: 8px;
+}
+.blog-comment a {
+  color: #000;
+}
+.blog-comment a i {
+  margin: 0 10px 0 0;
+}
+.blog-cardContent a {
+  color: #000;
+  font-size: 21px;
+  font-weight: 500;
+}
+.blog-card-are img {
+  width: 100%;
+}
+.contact-form {
+  background: #fff;
+  border-bottom: 5px solid #008efd;
+  border-top-left-radius: 2%;
+  border-top-right-radius: 2%;
+  box-shadow: 0 19px 38px rgba(0,0,0,.3), 0 15px 12px rgba(0,0,0,.22);
+  padding: 60px 100px;
+} 
+.allblogbtn {
+  text-align: center;
+  margin: 50px 0 0;
+}
+.allblogbtn button {
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #f1c21b;
+  color: #fff;
+  border: none;
+  transform: perspective(500px) rotateY(calc(330deg * var(--_i, -1)));
+  transition: 0.3s;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: 60px;
+  font-weight: 600;
+  font-size: 22.1195px;
+  padding: 0 30px;
+}
+.allblogbtn button a{
+  color: #fff;
+}
+
+.dog-categorys-area ul li img {
+  width: 100px;
+  height: 100px;
+  margin: 0 0 20px;
+  border-radius: 50%;
+}

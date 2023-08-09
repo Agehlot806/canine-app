@@ -587,7 +587,7 @@ function Petcategory() {
                                                     <li className="nav-item">
                                                         <a className="nav-link" id="pills-home-tab" data-toggle="pill"
                                                             onClick={(id) => subcatid(item.id)} href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
-                                                            <img src={item.image} />
+                                                            <img src={"https://canine.hirectjob.in//storage/app/public/category/" + item.image} />
                                                             <h6>{item.name}</h6>
                                                         </a>
                                                     </li>

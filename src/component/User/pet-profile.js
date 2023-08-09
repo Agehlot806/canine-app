@@ -11,6 +11,8 @@ import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 import moment from "moment/moment";
 import axios from "axios";
+import { stringes } from "../../utils";
+import strings from "../language";
 
 function Petprofile() {
   const navigate = useNavigate();
@@ -141,7 +143,7 @@ function Petprofile() {
             <form>
               <div className="form-group add-upload">
                 <label htmlFor="exampleFormControlFile1">
-                  Upload image
+                  {strings.uploadImage}
                   <i class="fa fa-upload" />
                 </label>
                 <input
@@ -169,7 +171,7 @@ function Petprofile() {
                 <Row>
                   <Col lg={10}>
                     <div className="form-group">
-                      <label>Pet type</label>
+                      <label>{strings.petType}</label>
                       <ul className="nav nav-pills mb-3" role="tablist">
                         {categories &&
                           categories.map((item) => (
@@ -189,7 +191,7 @@ function Petprofile() {
                       </ul>
                     </div>
                     <div className="form-group">
-                      <label>Gender</label>
+                      <label>{strings.gender}</label>
                       <ul className="nav nav-pills mb-3" role="tablist">
                         <li className="nav-item">
                           <a
@@ -198,7 +200,7 @@ function Petprofile() {
                             }`}
                             onClick={() => handleGenderChange("Male")}
                           >
-                            Male
+                            {strings.male}
                           </a>
                         </li>
                         <li className="nav-item">
@@ -208,19 +210,19 @@ function Petprofile() {
                             }`}
                             onClick={() => handleGenderChange("Female")}
                           >
-                            Female
+                            {strings.female}
                           </a>
                         </li>
                       </ul>
                     </div>
                     <div className="form-group">
-                      <label>Breed</label>
+                      <label>{strings.breed}</label>
                       <select
                         className="form-control"
                         value={breeds}
                         onChange={(e) => setbreeds(e.target.value)}
                       >
-                        <option>Choose....</option>
+                        <option>{strings.choose}</option>
                         {selectbreed &&
                           selectbreed.map((item) => (
                             <option key={item.id}>{item.name}</option>
@@ -228,7 +230,7 @@ function Petprofile() {
                       </select>
                     </div>
                     <div className="form-group">
-                      <label>DOB</label>
+                      <label>{strings.dob}</label>
                       <input
                         className="form-control"
                         placeholder="DOB"
@@ -238,7 +240,7 @@ function Petprofile() {
                       />
                     </div>
                     <div className="form-group">
-                      <label>Age</label>
+                      <label>{strings.age}</label>
                       <ul className="nav nav-pills mb-3" role="tablist">
                         <li className="nav-item">
                           <a
@@ -247,13 +249,13 @@ function Petprofile() {
                             role="tab"
                             aria-selected="true"
                           >
-                            Year {years} Month {months}
+                            {strings.year} {years} {strings.month} {months}
                           </a>
                         </li>
                       </ul>
                     </div>
                     <div className="form-group">
-                      <label>Pet Name</label>
+                      <label>{strings.petName}</label>
                       <input
                         type="text"
                         className="form-control"
@@ -263,7 +265,7 @@ function Petprofile() {
                       />
                     </div>
                     <div className="add-petbtn">
-                      <Button onClick={handlePetsadd}>Add Pet</Button>
+                      <Button onClick={handlePetsadd}>{stringes.addPet}</Button>
                     </div>
                   </Col>
                 </Row>

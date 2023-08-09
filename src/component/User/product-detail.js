@@ -17,7 +17,7 @@ function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
-  console.log("productDetails: ", productDetails);
+  console.log("productDetails?.variations: ", productDetails.variations);
   const [quantity, setQuantity] = useState(1);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);

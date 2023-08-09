@@ -78,6 +78,7 @@ function Home(props) {
   console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
@@ -126,10 +127,12 @@ function Home(props) {
   console.log("====================================");
   console.log(brands);
   console.log("====================================");
+
   useEffect(() => {
     categoriesProduct();
     allProduct();
     thirdBanner();
+    fetchBlogs();
   }, []);
 
   const categoriesProduct = async () => {
@@ -148,6 +151,17 @@ function Home(props) {
       const data = await response.json();
       const latestPosts = data.data.slice(0, 8);
       setallproduct(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/blog`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 3);
+      setblog(latestPosts);
     } catch (error) {
       console.log(error);
     }
@@ -226,7 +240,7 @@ function Home(props) {
                 homebanner.map((item) => (
                   <div>
                     {/* <Row> */}
-                      {/* <Col lg={6} className="align-self-center">
+                    {/* <Col lg={6} className="align-self-center">
                         <div className="home-content">
                           <h1>{item.title}</h1>
                           <p>{item.description}</p>
@@ -241,28 +255,29 @@ function Home(props) {
                           item.image
                         } />
                       </Col> */}
-                      {/* <Col lg={12}> */}
-                        <div className="home-img">
-                          <div className="">
-                            <img src={
-                              "https://canine.hirectjob.in/storage/app/public/banner/" +
-                              item.image
-                            } />
+                    {/* <Col lg={12}> */}
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/banner/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={6}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
                           </div>
-                          <Row>
-                            <Col lg={6}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-
-                        </div>
-                      {/* </Col>
+                        </Col>
+                      </Row>
+                    </div>
+                    {/* </Col>
                     </Row> */}
                   </div>
                 ))}
@@ -529,37 +544,37 @@ function Home(props) {
             </Col>
           </Row>
           <Row className="mt-4">
-            {brands ? (
-              brands.map((brand) => (
-                brand.canine == '1' && (
-                  <Col lg={3} sm={6} xs={6} className="mb-5">
-                    <div key={brand.id} className="Brand-card brand-1">
-                      <Link to="/our-our-brand">
-                        <div className="brandLOGO">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/category/" +
-                              brand.logo
-                            }
-                          />
+            {brands
+              ? brands.map(
+                  (brand) =>
+                    brand.canine == "1" && (
+                      <Col lg={3} sm={6} xs={6} className="mb-5">
+                        <div key={brand.id} className="Brand-card brand-1">
+                          <Link to={`/our-our-brand/${brand.id}`}>
+                            <div className="brandLOGO">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                  brand.logo
+                                }
+                              />
+                            </div>
+                            <div className="brand-main">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                  brand.image
+                                }
+                              />
+                            </div>
+                            <div className="brand-text">
+                              <h5>{brand.title}</h5>
+                            </div>
+                          </Link>
                         </div>
-                        <div className="brand-main">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/category/" +
-                              brand.image
-                            }
-                          />
-                        </div>
-                        <div className="brand-text">
-                          <h5>{brand.title}</h5>
-                        </div>
-                      </Link>
-                    </div>
-                  </Col>
+                      </Col>
+                    )
                 )
-              ))
-            )
               : null}
           </Row>
         </Container>
@@ -617,35 +632,37 @@ function Home(props) {
           </Row>
           <div className="needplace">
             <Row>
-              {brands ? (
-                brands.map((brand) => (
-                  brand.canine == '0' && (
-                    <Col lg={3} sm={6} xs={6} className="mb-5">
-                      <div key={brand.id} className="Brand-card brand-1">
-                        <Link to={`/shop-by-brand-list/${brand.id}`}>
-                          <div className="brandLOGO">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/category/" +
-                                brand.logo
-                              } />
+              {brands
+                ? brands.map(
+                    (brand) =>
+                      brand.canine == "0" && (
+                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                          <div key={brand.id} className="Brand-card brand-1">
+                            <Link to={`/shop-by-brand-list/${brand.id}`}>
+                              <div className="brandLOGO">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                    brand.logo
+                                  }
+                                />
+                              </div>
+                              <div className="brand-main">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                    brand.image
+                                  }
+                                />
+                              </div>
+                              <div className="brand-text">
+                                <h5>{brand.title}</h5>
+                              </div>
+                            </Link>
                           </div>
-                          <div className="brand-main">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/category/" +
-                                brand.image
-                              } />
-                          </div>
-                          <div className="brand-text">
-                            <h5>{brand.title}</h5>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
+                        </Col>
+                      )
                   )
-                ))
-                )
                 : null}
             </Row>
           </div>
@@ -737,40 +754,28 @@ function Home(props) {
           </div>
           <div className="needplace">
             <Row>
-              <Col lg={4}>
-                <div className="blog-card">
-                  <img src={cat} />
-                  <h3>El Rey Coffee Bar & Luncheonette</h3>
-                  <p>
-                    Different kinds of domestic animals have different
-                    characteristics and needs. Aquatic pets can provide a sense
-                    of tranquility to their owners and remove stress.
-                  </p>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="blog-card">
-                  <img src={hamster} />
-                  <h3>Photography Tips From Wai Su</h3>
-                  <p>
-                    Different kinds of domestic animals have different
-                    characteristics and needs. Aquatic pets can provide a sense
-                    of tranquility to their owners and remove stress.
-                  </p>
-                </div>
-              </Col>
-              <Col lg={4}>
-                <div className="blog-card">
-                  <img src={rebit} />
-                  <h3>Take Interior Design To A New Level</h3>
-                  <p>
-                    Different kinds of domestic animals have different
-                    characteristics and needs. Aquatic pets can provide a sense
-                    of tranquility to their owners and remove stress.
-                  </p>
-                </div>
-              </Col>
+              {blog && blog.length > 0 ? (
+                blog.map((item, index) => (
+                  <Col lg={4}>
+                    <div className="blog-card">
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/blog/" +
+                        item.image
+                      }
+                    />
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                    </div>
+                  </Col>
+                ))
+              ) : (
+                <p className="emptyMSG">No Blog Data.</p>
+              )}
             </Row>
+          </div>
+          <div className="allblogbtn">
+            <Button><Link to="/blog">All Blogs</Link></Button>
           </div>
         </Container>
       </section>

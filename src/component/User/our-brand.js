@@ -73,7 +73,7 @@ function Ourbrand() {
                                     brand.canine == '1' && (
                                         <Col lg={3} sm={6} xs={6} className="mb-5">
                                             <div key={brand.id} className="Brand-card brand-1">
-                                            <Link to="/our-our-brand">
+                                            <Link to={`/our-our-brand/${brand.id}`}>
                                                 <div className="brandLOGO">
                                                     <img
                                                         src={
