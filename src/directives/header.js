@@ -9,17 +9,20 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 
 function Header() {
+  const navigate = useNavigate();
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchTerm3, setSearchTerm3] = useState("");
   const [searchapi3, setSearchApi3] = useState([]);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     fetchBrands();
@@ -64,7 +67,29 @@ function Header() {
       setAllProduct(filteredProducts);
     }
   };
-  const [searchTerm, setSearchTerm] = useState("");
+
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     startSessionTimeout(); // Start session timeout on login
+  //   }
+  // }, [isLoggedIn]);
+
+  // const SESSION_TIMEOUT = 1800000; // 30 minutes in milliseconds
+  // let timeoutId;
+
+  // // Set the session timeout when the user logs in
+  // const startSessionTimeout = () => {
+  //   clearTimeout(timeoutId); // Clear any existing timeout
+  //   timeoutId = setTimeout(logout, SESSION_TIMEOUT);
+  // };
+
+  // // Logout function
+  // const logout = () => {
+  //   // Clear any session-related data
+  //   setIsLoggedIn(false);
+  //   clearTimeout(timeoutId); // Clear the timeout
+  //   navigate("/login"); // Redirect to login page
+  // };
 
   return (
     <>
@@ -380,6 +405,14 @@ function Header() {
                         </Link>
                         <Link className="dropdown-item" to="/update-profile">
                           Profile
+                        </Link>
+                        <Link className="dropdown-item">
+                          <button
+                          // onClick={logout}
+                          >
+                            {" "}
+                            Logout
+                          </button>
                         </Link>
                       </div>
                     </div>

@@ -248,7 +248,7 @@ function Servicedate() {
               </div>
             </div>
 
-            {petType.length > 0 ? null : (
+            {!petType.length > 0 ? null : (
               <div className="add-petbtn">
                 <Button>
                   <Link to={`/service-add-pet/${id}`}>{stringes.addPet}</Link>

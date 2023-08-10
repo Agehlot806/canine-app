@@ -19,7 +19,7 @@ function Productdetail() {
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
-  console.log("productDetails?.variations ", productDetails.variations);
+  console.log("productDetails?.variations ", productDetails);
   const [quantity, setQuantity] = useState(1);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -37,7 +37,7 @@ function Productdetail() {
     axios
       .get(`${BASE_URL}/items/details/${id}`)
       .then((response) => {
-        console.log("=======> ",response);
+        console.log("=======> ", response);
         console.log("Delete Successful");
         setProductDetails(response.data.data);
         // Perform any additional actions after successful deletion
@@ -46,17 +46,22 @@ function Productdetail() {
         console.log(error);
       });
   };
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("customer_id: ", customer_id);
 
   const handleAddToCart = async () => {
     try {
       const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product/${id}`,
+        `${BASE_URL}/customer/wish-list/add_product`,
         {
           item_name: productDetails.name,
-          variant: "Default", // You may need to update this based on your data
+          variant: productDetails.variations || "Default", // You may need to update this based on your data
           image: productDetails.image,
-          quantity:productDetails.quantity,
+          quantity: productDetails.quantity,
           price: productDetails.price,
+          user_id: storedUserId,
+          item_id: productDetails.id,
         }
       );
 
@@ -72,7 +77,7 @@ function Productdetail() {
 
   return (
     <>
-    <Toaster />
+      <Toaster />
       <Header />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -157,7 +162,7 @@ function Productdetail() {
                   <Row>
                     <Col sm={6}>
                       <div className="form-group">
-                      {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
+                        {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
                           // value={pet_id}
@@ -167,16 +172,16 @@ function Productdetail() {
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
-                              <option >{item.type}</option>
-                            ))} 
+                              <option>{item.type}</option>
+                            ))}
                         </select>
-                             {/* {productDetails?.variations &&
+                        {/* {productDetails?.variations &&
     productDetails?.variations.map((variation) => (
       <option key={variation.type} value={variation.type}>
         {variation.type} - ₹{variation.price} (Stock: {variation.stock})
       </option>
     ))} */}
-                        
+
                         {/* <label >Size</label> */}
                         {/* <select className="form-control"> */}
                         {/* <option>Select size</option>

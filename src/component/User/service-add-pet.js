@@ -67,16 +67,6 @@ function Serviceaddpet() {
   console.log("image", image);
   const handlePetsadd = (event) => {
     event.preventDefault();
-    // const pet_data = {
-    //     user_id: "1",
-    //     pets_type: selectedCategory?.name ? selectedCategory?.name : '',
-    //     gender: gender,
-    //     breeds: breeds,
-    //     dob: moment(dob).format('DD-MM-YY'),
-    //     age: `${years} years ${months} months`,
-    //     pet_name: pet_name,
-    //     image: image.name,
-    // };
 
     const petData = new FormData();
     petData.append("user_id", storedUserId);
@@ -246,7 +236,17 @@ function Serviceaddpet() {
                             role="tab"
                             aria-selected="true"
                           >
-                            Year {years} Month {months}
+                            Year {years}
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a
+                            className="nav-link active"
+                            data-toggle="pill"
+                            role="tab"
+                            aria-selected="true"
+                          >
+                            Month {months}
                           </a>
                         </li>
                       </ul>

@@ -2,6 +2,7 @@ import LocalizedStrings from "react-localization";
 
 let strings = new LocalizedStrings({
   en: {
+    // useful Links
     usefulLinks: "Useful Links",
     deliveryDeatils: "Delivery Details",
     internationalShipping: "International Shipping",
@@ -9,11 +10,16 @@ let strings = new LocalizedStrings({
     trackYourOrder: "Track Your Order",
     return: "Return",
     findaStore: "Find a Store",
+    //information footer
     information: "Information",
     careers: "Careers",
     aboutUs: "AboutUs",
+    offersDetails: "Offers Details",
+    helpandFAQs: "Help & FAQs",
     ourServices: "Our Services",
     products: "Products",
+    blog: "Blog",
+    // contact ------------
     contactUs: "Contact Us",
     mail: "Mail Us",
     mobile: "+00-000000000",

@@ -12,12 +12,18 @@ import { BASE_URL } from "../../Constant/Index";
 
 function Addcart() {
   const { id } = useParams();
-  console.log("id111111111111: ", id);
+  console.log("id", id);
   const [quantity, setQuantity] = useState(1);
-  const [customer_id, setcustomer_id] = useState('');
+  // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   console.log("addToCartProduct: ", addToCartProduct);
+
+  const customer_id = localStorage.getItem("userInfo");
+  console.log("=======>>>>>> id", customer_id);
+  let storedUserId = JSON.parse(customer_id);
+  console.log("customer_id: ", customer_id);
+
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -27,21 +33,22 @@ function Addcart() {
     }
   };
   useEffect(() => {
-    getUserInfo()
+    // getUserInfo()
     addToCartData();
   }, []);
 
-   // storedUserId
-   const getUserInfo = async ()=>{
-    const customerData = await localStorage.getItem("userInfo");
-    console.log("customerData: ",customerData);
-    if (customerData) {
-      setcustomer_id(JSON.parse(customerData).id)
-    }
- 
-  }
-  console.log("customer_id: ", customer_id);
-   // ----------------------------------------
+  // storedUserId
+
+  //  const getUserInfo = async ()=>{
+  //   const customerData = await localStorage.getItem("userInfo");
+  //   console.log("customerData: ",customerData);
+  //   if (customerData) {
+  //     setcustomer_id(JSON.parse(customerData).id)
+  //   }
+
+  // }
+  // console.log("customer_id: ", customer_id);
+  // ----------------------------------------
 
   const addToCartData = async () => {
     axios
@@ -59,16 +66,16 @@ function Addcart() {
     try {
       await axios.delete(`${BASE_URL}/customer/wish-list/remove/7/1`);
       setWishlistData((prevData) => prevData.filter((item) => item.id !== id));
-
     } catch (error) {
-      console.error('Error removing item from wishlist:', error);
+      console.error("Error removing item from wishlist:", error);
       if (error.response) {
-        console.log('Response status:', error.response.status);
-        console.log('Response data:', error.response.data);
+        console.log("Response status:", error.response.status);
+        console.log("Response data:", error.response.data);
         toast.success("Your Product deleted successfully");
       }
     }
   };
+
   return (
     <>
       <Header />
@@ -194,9 +201,7 @@ function Addcart() {
                       <Col>
                         <h5>Sub Total</h5>
                       </Col>
-                      <Col>
-                        <h5>₹620.00</h5>
-                      </Col>
+                      <Col>{/* <h5>₹{addToCartData[0]?.price}</h5> */}</Col>
                     </Row>
                     <hr />
                     <Row>
@@ -204,7 +209,7 @@ function Addcart() {
                         <h5>Tax(5%)</h5>
                       </Col>
                       <Col>
-                        <h5>₹00.00</h5>
+                        {/* <h5>₹{addToCartData[0]?.price * 0.05}</h5> */}
                       </Col>
                     </Row>
                     <hr />
@@ -213,13 +218,17 @@ function Addcart() {
                         <h5>Rounding Adjust</h5>
                       </Col>
                       <Col>
-                        <h5>₹00.00</h5>
+                        {/* <h5>
+                          ₹{addToCartProduct[0].price} + 5% = ₹
+                          {(addToCartProduct[0].price * 0.05).toFixed(2)}
+                        </h5> */}
                       </Col>
                     </Row>
                   </div>
                 </Col>
               </Row>
             </div>
+
             <div className="needplace">
               <div className="address">
                 <h3>Address</h3>

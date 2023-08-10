@@ -30,7 +30,8 @@ function Otp() {
       if (response.data.status == 200) {
         await localStorage.setItem(
           "userInfo",
-          JSON.stringify(response.data.data)
+          // response.data.data
+          JSON.stringify(response.data.data[0].id)
         );
         console.log("response.data.data: ", response.data.data);
         navigate("/");
@@ -40,6 +41,7 @@ function Otp() {
       // Handle error as needed
     }
   };
+
   const resendOTP = (e) => {
     e.preventDefault();
     setMinutes(1);
