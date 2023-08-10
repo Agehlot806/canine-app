@@ -235,11 +235,7 @@ function Productdetail() {
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
-<<<<<<< HEAD
-                              <option>{item.type}</option>
-=======
                               <option >{item.type}</option>
->>>>>>> origin/soniya
                             ))}
                         </select>
                         {/* {productDetails?.variations &&
