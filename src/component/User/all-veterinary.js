@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
@@ -23,7 +23,7 @@ function Allveterinary() {
   };
   return (
     <>
-      <Header />
+      <Newheader />
       <section className="section-padding">
         <Container>
           <h1 className="main-head">All Veterinary</h1>

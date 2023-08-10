@@ -29,7 +29,7 @@ function Blogdetails() {
 
   return (
     <>
-      <Header />
+      <Newheader />
       <section className="section-padding">
         <Container>
           <Row className="justify-content-center">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import { Container, Row, Col, Button } from "react-bootstrap";
 import banner from "../../assets/images/banner/banner.png";
 import Avatar1 from "../../assets/images/icon/Avatar1.svg";
@@ -128,7 +128,7 @@ function Serviceaddpet() {
   return (
     <>
       <Toaster />
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={banner} />

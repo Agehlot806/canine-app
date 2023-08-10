@@ -15,7 +15,7 @@ function Otp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const phone = await localStorage.getItem("phoneNo");
-    console.log("phone: ", phone);
+    console.log("phoneNo: ", phone);
     console.log("handleSubmit called"); // Add this
     const formData = new FormData();
     formData.append("phone", phone);
@@ -30,7 +30,7 @@ function Otp() {
       if (response.data.status == 200) {
         await localStorage.setItem(
           "userInfo",
-          JSON.stringify(response.data.data)
+          JSON.stringify(response.data.data[0].id)
         );
         console.log("response.data.data: ", response.data.data);
         navigate("/");

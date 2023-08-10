@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import partner from "../../assets/images/banner/partner.png"
 import loicon1 from "../../assets/images/img/loicon1.png";
@@ -34,7 +34,7 @@ function Productbypartner() {
 
     return (
         <>
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={partner} />

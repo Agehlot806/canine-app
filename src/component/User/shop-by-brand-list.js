@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Container, Row, Col } from 'react-bootstrap'
 import shopbybrand from '../../assets/images/banner/shopbybrand.png'
 import axios from 'axios';
@@ -29,7 +29,7 @@ function Shopbybrandlist() {
 
     return (
         <>
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={shopbybrand} />

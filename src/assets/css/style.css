@@ -79,6 +79,11 @@ a {
 .yellow-btn {
   background: #f1c21b !important;
   border: none !important;
+  font-weight: 600;
+  width: 100px;
+  height: 40px;
+  border-radius: 6px;
+  margin: 0 18px;
 }
 
 .blue-btn {
@@ -96,7 +101,7 @@ a {
 }
 
 .logoBG img {
-  width: 100px;
+  width: 75px;
 }
 
 .longdrop {
@@ -137,6 +142,7 @@ a {
   border: 1px solid #3f4254;
   border-radius: 4px;
   padding-left: 35px !important;
+  height: 40px;
 }
 
 .header-inner-addon input:focus {
@@ -1423,30 +1429,26 @@ box-shadow: none !important;
 
 /* add cart */
 .quantity-btn input {
-    width: 170px;
+    width: 60px;
     /* height: 40px;
     border-radius: 50px; */
 }
-/* .quantity-btn {
-    border-radius: 10px;
-    background: #FC0;
-    width: 135px;
-    height: 44px;
-    text-align: center;
-    padding: 10px;
-} */
+.quantity-btn {
+    display: inline-flex;
+}
 
 .quantity-btn button {
   border: none;
-  background: transparent;
+  background: #ffc934;
+  padding: 5px 20px;
+  border-radius: 5px;
   margin: 0 10px;
 }
-
 .quantity-btn button i {
-  font-size: 20px;
-  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
 }
-
 .quantity-btn span {
   border-radius: 8px;
   background: #fff;
@@ -2604,4 +2606,123 @@ a.placDate {
   height: 100px;
   margin: 0 0 20px;
   border-radius: 50%;
+}
+
+/* Custom CSS to style the mega menu */
+.mega-title {
+  font-size: 25px;
+  font-family: 'Reem Kufi Fun';
+  font-weight: 600;
+  color: #000;
+}
+ul.list-unstyled li {
+  margin: 12px 0;
+}
+
+.mega-menu {
+  width: 800px;
+}
+
+.mega-dropdown {
+  position: static !important;
+}
+
+.mega-menu .row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mega-menu .col-md-4 {
+  flex: 1;
+  padding: 15px;
+}
+.dropdown-menu.mega-menu.show {
+  width: 100%;
+  padding: 0 10px;
+}
+a.notification-btn i {
+  font-size: 28px;
+  margin: 13px 0 0 8px;
+}
+.newheader ul li a {
+  font-size: 17px;
+  font-weight: 400;
+}
+.newheader ul li.nav-item {
+  align-self: center;
+}
+ul.list-unstyled li a {
+  color:#6c6b6b;
+}
+
+
+#progress {
+  position: relative;
+  margin-bottom: 30px;
+}
+#progress-bar {
+  position: absolute;
+  background: lightseagreen;
+  height: 5px;
+  width: 0%;
+  top: 50%;
+  left: 0;
+}
+#progress-num {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+#progress-num::before {
+  content: "";
+  background-color: lightgray;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  z-index: -1;
+}
+#progress-num .step {
+  border: 3px solid lightgray;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  background-color: #fff;
+  font-family: sans-serif;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+#progress-num .step.active {
+  border-color: lightseagreen;
+  background-color: lightseagreen;
+  color: #fff;
+}
+
+/* sohel css */
+.star i {
+  color: rgba(255, 158, 0, 1);
+  margin: 0 3px;
+}
+.Product-img img {
+  width: 30px;
+}
+.Product-img span {
+  font-size: 20.233px;
+  margin-left: 2px;
+}
+.user-icon i {
+  margin-left: 37px;
+  font-size: 10px;
+}
+.user-icon span {
+  font-size: 12px;
+  font-family: poppins;
+  font-weight: bold;
 }

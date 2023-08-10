@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import Footer from "../../directives/footer";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
@@ -42,7 +42,7 @@ function Blog() {
 
   return (
     <>
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={about} />

@@ -381,6 +381,7 @@ function Header() {
                         <Link className="dropdown-item" to="/update-profile">
                           Profile
                         </Link>
+                        
                       </div>
                     </div>
                   </Nav.Link>

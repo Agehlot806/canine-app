@@ -13,14 +13,23 @@ import {
     MDBRow,
     MDBTypography,
 } from "mdb-react-ui-kit";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import Footer from "../../directives/footer";
 import { Button } from "react-bootstrap";
+import { useState } from "react";
 
 export default function Map() {
+    const [activetraker, setActivetraker] = useState(1);
+    const handletrakerNext = () => {
+        setActivetraker(prevActive => Math.min(prevActive + 1, steps.length));
+    };
+    const handletrakerPrev = () => {
+        setActivetraker(prevActive => Math.max(prevActive - 1, 1));
+    };
+    const steps = [1, 2, 3, 4]; // Define your steps here
     return (
         <>
-            <Header />
+            <Newheader />
             <section className="vh-100" style={{ backgroundColor: "#eee" }}>
                 <MDBContainer className="py-5 h-100">
                     <MDBRow className="justify-content-center align-items-center h-100">
@@ -46,7 +55,7 @@ export default function Map() {
 
                                     <hr className="my-4" />
 
-                                    <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
+                                    {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
                                         <span className="dot"></span>
                                         <hr className="flex-fill track-line" />
                                         <span className="dot"></span>
@@ -58,7 +67,18 @@ export default function Map() {
                                         <span className="d-flex justify-content-center align-items-center big-dot dot">
                                             <MDBIcon icon="check text-white" />
                                         </span>
+                                    </div> */}
+                                    <div id="progress">
+                                        <div id="progress-bar" style={{ width: ((activetraker - 1) / (steps.length - 1)) * 100 + '%' }}></div>
+                                        <ul id="progress-num">
+                                            {steps.map((step, index) => (
+                                                <li key={index} className={`step ${index < activetraker ? 'active' : ''}`}>
+                                                    {step}
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
+
 
                                     <div className="d-flex flex-row justify-content-between align-items-center">
                                         <div className="d-flex flex-column align-items-start">
@@ -73,15 +93,17 @@ export default function Map() {
                                             <span>15 Mar</span>
                                             <span>Order Dispatched</span>
                                         </div>
-                                        <div className="d-flex flex-column align-items-center">
-                                            <span>15 Mar</span>
-                                            <span>Out for delivery</span>
-                                        </div>
                                         <div className="d-flex flex-column align-items-end">
                                             <span>15 Mar</span>
                                             <span>Delivered</span>
                                         </div>
                                     </div>
+                                    <button id="progress-prev" className="btn" disabled={activetraker === 1} onClick={handletrakerPrev}>
+                                        Prev
+                                    </button>
+                                    <button id="progress-next" className="btn" disabled={activetraker === steps.length} onClick={handletrakerNext}>
+                                        Next
+                                    </button>
                                 </MDBCardBody>
                             </MDBCard>
                         </MDBCol>
