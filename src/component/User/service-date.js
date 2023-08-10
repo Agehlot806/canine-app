@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import { Button, Col, Container, Row } from "react-bootstrap";
 import service from "../../assets/images/banner/service.png";
 import { Form, Link } from "react-router-dom";
@@ -160,7 +160,7 @@ function Servicedate() {
   return (
     <>
       <Toaster />
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={service} />

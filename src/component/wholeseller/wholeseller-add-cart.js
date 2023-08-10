@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import productdetail from '../../assets/images/banner/productdetail.png'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import brandPro1 from '../../assets/images/img/brandPro1.png'
@@ -18,7 +18,7 @@ function WholesellerAddCart() {
     };
     return (
         <>
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={productdetail} />

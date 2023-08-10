@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import Carousel from "react-multi-carousel";
 import product from '../../assets/images/banner/product.png'
@@ -154,7 +154,7 @@ function Petcategory() {
     return (
         <>
             <Toaster />
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={product} />

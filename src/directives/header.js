@@ -406,14 +406,7 @@ function Header() {
                         <Link className="dropdown-item" to="/update-profile">
                           Profile
                         </Link>
-                        <Link className="dropdown-item">
-                          <button
-                          // onClick={logout}
-                          >
-                            {" "}
-                            Logout
-                          </button>
-                        </Link>
+                        
                       </div>
                     </div>
                   </Nav.Link>

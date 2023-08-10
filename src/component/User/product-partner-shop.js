@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import shop from '../../assets/images/banner/shop.png'
 import { Link } from 'react-router-dom'
@@ -35,7 +35,7 @@ function Productpartnershop() {
 
     return (
         <>
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={shop} />

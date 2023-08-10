@@ -1,12 +1,12 @@
 import React from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import contact from '../../assets/images/banner/contact.png'
 import Footer from '../../directives/footer'
 function Contact() {
     return (
         <>
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={contact} />

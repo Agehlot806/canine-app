@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import productdetail from "../../assets/images/banner/productdetail.png";
 import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
@@ -13,6 +13,18 @@ import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
+import LightGallery from 'lightgallery/react/Lightgallery.es5'
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import lgZoom from "lightgallery/plugins/zoom";
+import lgAutoplay from "lightgallery/plugins/autoplay";
+import lgVideo from "lightgallery/plugins/video";
+import lgShare from "lightgallery/plugins/share";
+import lgRotate from "lightgallery/plugins/rotate";
+import brandPro1 from '../../assets/images/img/brandPro1.png';
+import brandPro2 from '../../assets/images/img/brandPro2.png';
+import brandpro3 from '../../assets/images/img/brandPro3.png';
+import bannerPro from '../../assets/images/img/bannerPro.png'
+import pro from '../../assets/images/icon/pro.png'
 
 function Productdetail() {
   const { id } = useParams();
@@ -21,11 +33,12 @@ function Productdetail() {
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails?.variations ", productDetails);
   const [quantity, setQuantity] = useState(1);
+
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
   const handleDecrementone = () => {
-    if (quantity > 1) {
+    if (quantity > 0) {
       setQuantity(quantity - 1);
     }
   };
@@ -75,10 +88,29 @@ function Productdetail() {
     }
   };
 
+
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  const openLightbox = (imageSrc) => {
+    setSelectedImage(imageSrc);
+    setLightboxOpen(true);
+  };
+  const closeLightbox = () => {
+    setSelectedImage('');
+    setLightboxOpen(false);
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity);
+    }
+  };
+
   return (
     <>
       <Toaster />
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -96,7 +128,38 @@ function Productdetail() {
                     productDetails.image
                   }
                 />
+                {/* {lightboxOpen && (
+                  <div className="lightbox-overlay" onClick={closeLightbox}>
+                    <div className="lightbox-content">
+                      <img src={selectedImage} alt="Enlarged Image" />
+                    </div>
+                  </div>
+                )} */}
               </div>
+              {/* <div className="gallery-container">
+                <LightGallery
+                  speed={500}
+                  plugins={[lgThumbnail, lgZoom, lgAutoplay, lgVideo, lgShare, lgRotate]}
+                >
+                  <div className="row">
+                    <div className="col-lg-4">
+                      <a onClick={() => openLightbox(bannerPro)}>
+                        <img src={brandPro1} alt="Image 1" />
+                      </a>
+                    </div>
+                    <div className="col-lg-4">
+                      <a onClick={() => openLightbox(brandPro2)}>
+                        <img src={brandPro2} alt="Image 2" />
+                      </a>
+                    </div>
+                    <div className="col-lg-4">
+                      <a onClick={() => openLightbox(brandpro3)}>
+                        <img src={brandpro3} alt="Image 3" />
+                      </a>
+                    </div>
+                  </div>
+                </LightGallery>
+              </div> */}
               <div className="needplace">
                 <Row>
                   <Col sm={2} className="mb-3">
@@ -165,14 +228,18 @@ function Productdetail() {
                         {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
-                          // value={pet_id}
-                          // onChange={(e) => setpet_id(e.target.value)}
+                        // value={pet_id}
+                        // onChange={(e) => setpet_id(e.target.value)}
                         >
                           <option>Choose....</option>
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
+<<<<<<< HEAD
                               <option>{item.type}</option>
+=======
+                              <option >{item.type}</option>
+>>>>>>> origin/soniya
                             ))}
                         </select>
                         {/* {productDetails?.variations &&
@@ -193,19 +260,22 @@ function Productdetail() {
                         </select> */}
                       </div>
                     </Col>
-                    <Col sm={2}>
+                    <Col sm={6}>
                       <div className="quantity-btn">
-                        <form>
-                          <div className="form-group">
-                            <input
-                              type="number"
-                              className="form-control"
-                              id="exampleInputEmail1"
-                              aria-describedby="emailHelp"
-                              placeholder="Enter Quantity"
-                            />
-                          </div>
-                        </form>
+                        <button onClick={handleDecrementone}><i className="fa fa-minus"/></button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                autoComplete="new-number"
+                              />
+                            </div>
+                          </form>
+                        <button onClick={handleIncrementone}><i className="fa fa-plus"/></button>
                       </div>
                     </Col>
                   </Row>
@@ -220,11 +290,10 @@ function Productdetail() {
                       <Col lg={4}>
                         <h5>
                           {" "}
-                          {`₹${
-                            productDetails.price -
+                          {`₹${productDetails.price -
                             (productDetails.price * productDetails.discount) /
-                              100
-                          }`}
+                            100
+                            }`}
                         </h5>
                       </Col>
                       <Col lg={5}>
@@ -278,8 +347,64 @@ function Productdetail() {
               <p>{addToCartStatus}</p>
             </Button>
           </div>
-          <h1 className="main-head mt-4">Product details</h1>
-          <p>{productDetails.description}</p>
+          <div>
+            <h1 className="main-head mt-4">Product details</h1>
+            <p>{productDetails.description}</p>
+          </div>
+          <hr />
+          <div className="Product-Review">
+            <h1 className="main-head mt-4">Product Review</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+            <div className="row">
+              <div className="col-sm-2 col">
+                <div className="star">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div className="col-sm-2 col">
+                <div className="Product-img">
+                  <img src={pro} />
+                  <span>
+                    Wade Warren
+                  </span>
+                  <div className="user-icon">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span> 1 2 3 4 5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="row mt-3">
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+              <div className="col-sm-2 col">
+                <div className="star">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star-o" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div className="col-sm-2 col">
+                <div className="Product-img">
+                  <img src={pro} />
+                  <span>
+                    Wade Warren
+                  </span>
+                  <div className="user-icon">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span> 1 2 3 4 5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </Container>
       </section>
       <Container fluid className="p-0">

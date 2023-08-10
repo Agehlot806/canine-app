@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Col, Row, Container, Form, Button } from 'react-bootstrap'
 import CreditCardwholeseller from '../../assets/images/img/Credit CardWholeseller.png'
 import card from '../../assets/images/img/cards.png'
@@ -13,7 +13,7 @@ import paydone from '../../assets/images/icon/paydone.png'
 function Wholesellerpay() {
     return (
         <>
-            <Header />
+            <Newheader />
             <section className='section-padding '>
                 <Container>
                     <Row className='justify-content-center'>

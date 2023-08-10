@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import product from "../../assets/images/banner/product.png";
@@ -151,10 +151,17 @@ function Product(props) {
       });
   };
 
+  const colorPalette = [
+    'rgb(254, 231, 232)',
+    'rgb(200, 255, 186)',
+    'rgb(200, 200, 255)',
+    'rgb(199, 235, 255)',
+  ];  
+
   return (
     <>
       <Toaster />
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={product} />
@@ -1110,7 +1117,7 @@ function Product(props) {
                   {allproduct &&
                     allproduct.map((item) => (
                       <Col lg={4} sm={6} xs={6} className="mb-4">
-                        <div className="food-product" key={item.id}>
+                        <div className="food-product" key={item.id} style={{ backgroundColor: colorPalette[Math.floor(Math.random() * colorPalette.length)] }}>
                           <i
                             class="fa fa-heart-o"
                             onClick={(id) => addToWishlist(item.id)}
@@ -1177,7 +1184,7 @@ function Product(props) {
                 <div className="needplace">
                   <Row>
                     <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div className="food-product">
+                      <div className="food-product" style={{ backgroundColor: colorPalette[Math.floor(Math.random() * colorPalette.length)] }}>
                         <i class="fa fa-heart-o" />
                         <Link to="/product-details">
                           <div className="text-center">
@@ -1210,142 +1217,7 @@ function Product(props) {
                         </Link>
                       </div>
                     </Col>
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div className="food-product">
-                        <i class="fa fa-heart-o" />
-                        <Link to="/product-details">
-                          <div className="text-center">
-                            <img src={product1} />
-                          </div>
-                          <div>
-                            <h6>Farmina</h6>
-                            <p>asdsdsdadwe sdseded sded</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹999.00</p>
-                              </Col>
-                              <Col>
-                                <h5>20%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>₹100.00</h6>
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div className="food-product">
-                        <i class="fa fa-heart-o" />
-                        <Link to="/product-details">
-                          <div className="text-center">
-                            <img src={product1} />
-                          </div>
-                          <div>
-                            <h6>Farmina</h6>
-                            <p>asdsdsdadwe sdseded sded</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹999.00</p>
-                              </Col>
-                              <Col>
-                                <h5>20%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>₹100.00</h6>
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div className="food-product">
-                        <i class="fa fa-heart-o" />
-                        <Link to="/product-details">
-                          <div className="text-center">
-                            <img src={product1} />
-                          </div>
-                          <div>
-                            <h6>Farmina</h6>
-                            <p>asdsdsdadwe sdseded sded</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹999.00</p>
-                              </Col>
-                              <Col>
-                                <h5>20%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>₹100.00</h6>
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div className="food-product">
-                        <i class="fa fa-heart-o" />
-                        <Link to="/product-details">
-                          <div className="text-center">
-                            <img src={product1} />
-                          </div>
-                          <div>
-                            <h6>Farmina</h6>
-                            <p>asdsdsdadwe sdseded sded</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹999.00</p>
-                              </Col>
-                              <Col>
-                                <h5>20%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>₹100.00</h6>
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
+                   
                   </Row>
                 </div>
               </Container>

@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import HomeImg from '../../assets/images/img/home.png'
 import { Col, Container, Row, Button, Form, Nav, Table } from 'react-bootstrap'
 import logo from '../../assets/images/logo.png'
@@ -16,7 +16,7 @@ function Wholesellerdashboard() {
 
     return (
         <>
-            <Header />
+            <Newheader />
             <div className="home-bg">
                 <div className="home-section">
                     <Container className="p-0">

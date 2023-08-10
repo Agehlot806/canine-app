@@ -15,7 +15,7 @@ function Otp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const phone = await localStorage.getItem("phoneNo");
-    console.log("phone: ", phone);
+    console.log("phoneNo: ", phone);
     console.log("handleSubmit called"); // Add this
     const formData = new FormData();
     formData.append("phone", phone);

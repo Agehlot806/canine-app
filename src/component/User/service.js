@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import service from "../../assets/images/banner/service.png";
 import banner from "../../assets/images/banner/banner.png";
 import { Container, Row, Col } from "react-bootstrap";
@@ -33,7 +33,7 @@ function Service() {
   };
   return (
     <>
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={service} />

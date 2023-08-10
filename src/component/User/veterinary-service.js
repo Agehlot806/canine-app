@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import service from "../../assets/images/banner/service.png";
 import Footer from "../../directives/footer";
@@ -113,7 +113,7 @@ function Veterinaryservice() {
   return (
     <>
       <Toaster />
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={service} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import ourbrand from "../../assets/images/banner/ourbrand.png";
 import { Link, useParams } from "react-router-dom";
@@ -153,7 +153,7 @@ function Ourourbrand(props) {
 
   return (
     <>
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={ourbrand} />

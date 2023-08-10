@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
-import Header from '../../directives/header';
+import Newheader from '../../directives/newheader';;
 import { BASE_URL } from '../../Constant/Index';
 import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from 'react-hot-toast';
@@ -27,7 +27,7 @@ function Wishlistproduct() {
 
   const fetchWishlistData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/customer/wish-list/${storedUserId}`);
+      const response = await axios.get(`${BASE_URL}/customer/wish-list/1`);
       setWishlistData(response.data.data);
     } catch (error) {
       console.error('Error fetching wishlist data:', error);
@@ -52,7 +52,7 @@ function Wishlistproduct() {
   return (
     <>
       <Toaster />
-      <Header />
+      <Newheader />
       <section className='section-padding'>
         <Container>
           <h1 className='main-head'>Wishlist Products</h1>

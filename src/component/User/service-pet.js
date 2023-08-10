@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Col, Container, Row } from 'react-bootstrap'
 import banner from '../../assets/images/banner/banner.png'
 import cat from '../../assets/images/banner/cat.png'
@@ -10,7 +10,7 @@ import Footer from '../../directives/footer'
 function Servicepet() {
     return (
         <>
-            <Header />
+            <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={banner} />

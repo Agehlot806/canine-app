@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import React from "react";
+import Newheader from '../../directives/newheader';;
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Footer from "../../directives/footer";
 import axios from "axios";
@@ -48,7 +48,7 @@ function Updateprofile() {
 
   return (
     <>
-      <Header />
+      <Newheader />
       <section className="section-padding">
         <Container>
           <Row className="justify-content-center mt-3">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../directives/header";
+import Newheader from '../../directives/newheader';;
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
@@ -17,6 +17,8 @@ function Addcart() {
   // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
+  const [couponlist, setcouponlist] = useState([]);
+
   console.log("addToCartProduct: ", addToCartProduct);
 
   const customer_id = localStorage.getItem("userInfo");
@@ -35,6 +37,7 @@ function Addcart() {
   useEffect(() => {
     // getUserInfo()
     addToCartData();
+    couponlistdata();
   }, []);
 
   // storedUserId
@@ -61,6 +64,26 @@ function Addcart() {
         console.log(error);
       });
   };
+  const couponlistdata = async () => {
+    axios
+      .get(`${BASE_URL}/coupon/list`)
+      .then((response) => {
+        console.log(response);
+        setcouponlist(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const removeFromCart = async (productId) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}/customer/wish-list/remove_product/${productId}`);
+      console.log('Product removed from cart:', response.data);
+    } catch (error) {
+      console.error('Error removing product from cart:', error);
+    }
+  };
 
   const handleRemoveFromWishlist = async (id) => {
     try {
@@ -75,10 +98,9 @@ function Addcart() {
       }
     }
   };
-
   return (
     <>
-      <Header />
+      <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -110,7 +132,7 @@ function Addcart() {
                     </div>
                   </Col>
                   <Col lg={1} className="align-self-center">
-                    <div className="delete-addcard">
+                    <div className="delete-addcard" onClick={() => removeFromCart(item.id)}>
                       <i class="fa fa-trash-o" />
                     </div>
                   </Col>
@@ -145,7 +167,7 @@ function Addcart() {
                                     setcoupenCode(!coupencode);
                                   }}
                                   class="btn btn-primary btn-apply coupon"
-                                >
+                                  data-toggle="modal" data-target="#Coupon">
                                   Apply
                                 </button>
                               </span>
@@ -355,6 +377,109 @@ function Addcart() {
             </div>
           </div>
         </div>
+      </div>
+
+
+       {/* Modal */}
+       <div className="modal fade notification-area" id="Coupon" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-body">
+                            <h5>Coupon List</h5>
+                            {couponlist && couponlist.length > 0 ? (
+                                couponlist.map((item, index) => (
+                                    <div className="notification">
+                                        <Row>
+                                            <Col lg={12}>
+                                                <table>
+                                                  <tbody>
+                                                    <tr>
+                                                      <th>Title : </th>
+                                                      <td>{item.title}</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <th>Code : </th>
+                                                      <td>{item.code}</td>
+                                                    </tr>
+                                                     <tr>
+                                                      <th>Discount Type : </th>
+                                                      <td>{item.discount_type}</td>
+                                                    </tr>
+                                                     <tr>
+                                                      <th>Discount : </th>
+                                                      <td>{item.discount}</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <th>Min Purchase : </th>
+                                                      <td>{item.min_purchase}</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <th>Max Discount : </th>
+                                                      <td>{item.max_discount}</td>
+                                                    </tr>
+                                                     <tr>
+                                                      <th>Start Date : </th>
+                                                      <td>{item.start_date}</td>
+                                                    </tr>
+                                                     <tr>
+                                                      <th>Expire Date : </th>
+                                                      <td>{item.expire_date}</td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                            </Col>
+
+                                        </Row>
+                                    </div>
+                               ))
+                            ) : (
+                                <p className="emptyMSG">No Coupon List.</p>
+                            )} 
+
+                            {/* <div className='notification'>
+              <Row>
+                <Col lg={2}>
+                  <img src={pro} />
+                </Col>
+                <Col lg={10} className='align-self-center'>
+                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
+                </Col>
+              </Row>
+            </div>
+            <div className='notification'>
+              <Row>
+                <Col lg={2}>
+                  <img src={pro} />
+                </Col>
+                <Col lg={10} className='align-self-center'>
+                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
+                </Col>
+              </Row>
+            </div>
+            <div className='notification'>
+              <Row>
+                <Col lg={2}>
+                  <img src={pro} />
+                </Col>
+                <Col lg={10} className='align-self-center'>
+                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
+                </Col>
+              </Row>
+            </div> */}
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                        </div>
+                        {/* <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" className="btn btn-primary">Save changes</button>
+          </div> */}
+                    </div>
+                </div>
       </div>
     </>
   );

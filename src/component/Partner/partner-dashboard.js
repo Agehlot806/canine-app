@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../directives/header'
+import Newheader from '../../directives/newheader';
 import { Col, Container, Row, Button, Form, Nav, Table } from 'react-bootstrap'
 import HomeImg from '../../assets/images/img/home.png'
 import partner from '../../assets/images/img/partner.png'
@@ -8,7 +8,7 @@ import Footer from '../../directives/footer'
 function Partnerdashboard() {
     return (
         <>
-            <Header />
+            <Newheader />
             <div className="home-bg">
                 <div className="home-section">
                     <Container className="p-0">
