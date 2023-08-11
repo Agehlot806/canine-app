@@ -13,13 +13,13 @@ import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
-import LightGallery from 'lightgallery/react/Lightgallery.es5'
-import lgThumbnail from "lightgallery/plugins/thumbnail";
-import lgZoom from "lightgallery/plugins/zoom";
-import lgAutoplay from "lightgallery/plugins/autoplay";
-import lgVideo from "lightgallery/plugins/video";
-import lgShare from "lightgallery/plugins/share";
-import lgRotate from "lightgallery/plugins/rotate";
+// import LightGallery from 'lightgallery/react/Lightgallery.es5'
+// import lgThumbnail from "lightgallery/plugins/thumbnail";
+// import lgZoom from "lightgallery/plugins/zoom";
+// import lgAutoplay from "lightgallery/plugins/autoplay";
+// import lgVideo from "lightgallery/plugins/video";
+// import lgShare from "lightgallery/plugins/share";
+// import lgRotate from "lightgallery/plugins/rotate";
 import brandPro1 from '../../assets/images/img/brandPro1.png';
 import brandPro2 from '../../assets/images/img/brandPro2.png';
 import brandpro3 from '../../assets/images/img/brandPro3.png';

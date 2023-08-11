@@ -7,15 +7,15 @@ import OtpInput from "react-otp-input";
 
 function Otp() {
   const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("1234");
+  const [otp, setOtp] = useState(1234);
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(30);
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const phone = await localStorage.getItem("phoneNo");
-    console.log("phoneNo: ", phone);
+    const phone = await localStorage.getItem("phone");
+    console.log("phone: ", phone);
     console.log("handleSubmit called"); // Add this
     const formData = new FormData();
     formData.append("phone", phone);
@@ -27,12 +27,27 @@ function Otp() {
         formData
       );
       console.log(response.data);
+
       if (response.data.status == 200) {
-        await localStorage.setItem(
-          "userInfo",
-          // response.data.data
-          JSON.stringify(response.data.data[0].id)
-        );
+        try {
+          await localStorage.setItem(
+            "userInfo",
+            // response.data.data
+            JSON.stringify(response.data.data[0].id)
+            // || "userInfo",
+            // response.data.data
+            // JSON.stringify(response.data.data.id)
+          );
+        } catch (e) {
+          await localStorage.setItem(
+            "userInfo",
+            // response.data.data
+            JSON.stringify(response.data.data.id)
+            // || "userInfo",
+            // response.data.data
+            // JSON.stringify(response.data.data.id)
+          );
+        }
         console.log("response.data.data: ", response.data.data);
         navigate("/");
       }
@@ -87,7 +102,7 @@ function Otp() {
                         placeholder="Enter number"
                         value={phone}
                         maxLength="4"
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => setphone(e.target.value)}
                       />
                     </Form.Group> */}
                     <OtpInput
@@ -99,36 +114,7 @@ function Otp() {
                       // renderSeparator={<span>-</span>}
                       renderInput={(props) => <input {...props} />}
                     />
-                    {/* <div>
-                      <input
-                        className="otp"
-                        type="text"
-                        maxLength={1}
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                      <input
-                        className="otp"
-                        type="text"
-                        maxLength={1}
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                      <input
-                        className="otp"
-                        type="text"
-                        maxLength={1}
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                      <input
-                        className="otp"
-                        type="text"
-                        maxLength={1}
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div> */}
+
                     <div className="countdown-text">
                       <Row>
                         <Col>

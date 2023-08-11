@@ -41,7 +41,7 @@ import Servicepet from "./component/User/service-pet";
 import Userpaymethod from "./component/User/user-pay-method";
 import Userpay from "./component/User/user-pay";
 import Userupi from "./component/User/user-upi";
-import Map from "./component/User/map";
+import Map from "./component/User/track-your-order";
 import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
 import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
 import SalesmanAddcart from "./component/Salesman/salesman-add-cart";
@@ -55,6 +55,14 @@ import Shopbybrandlist from "./component/User/shop-by-brand-list";
 import Blog from "./component/User/blog";
 import Updateprofile from "./component/User/update-profile";
 import Blogdetails from "./component/User/blog-details";
+import Deliverydetails from "./component/User/delivery-details";
+import Internationalshipping from "./component/User/international-shipping";
+import Trackyourorder from "./component/User/track-your-order";
+import Return from "./component/User/return";
+import Findastore from "./component/User/find-a-store";
+import Careers from "./component/User/careers";
+import Offersdetails from "./component/User/offers-details";
+import Helpandfaqs from "./component/User/help-faqs";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -93,7 +101,10 @@ function App() {
           <Route path="/shop-by-brand" element={<Shopbybrand />} />
           <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
           <Route path="/product-by-partner" element={<Productbypartner />} />
-          <Route path="/product-partner-shop" element={<Productpartnershop />}/>
+          <Route
+            path="/product-partner-shop"
+            element={<Productpartnershop />}
+          />
           <Route path="/user-pay-method" element={<Userpaymethod />} />
           <Route path="/user-pay" element={<Userpay />} />
           <Route path="/user-upi" element={<Userupi />} />
@@ -106,8 +117,20 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog-details/:id" element={<Blogdetails />} />
           <Route path="/update-profile" element={<Updateprofile />} />
-          
+          {/* useful links footer */}
+          <Route path="/delivery-details" element={<Deliverydetails />} />
 
+          <Route
+            path="/international-shipping"
+            element={<Internationalshipping />}
+          />
+          <Route path="/payment-options" element={<paymentOptions />} />
+          <Route path="/track-your-order" element={<Trackyourorder />} />
+          <Route path="/return" element={<Return />} />
+          <Route path="/find-a-store" element={<Findastore />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/offers-details" element={<Offersdetails />} />
+          <Route path="/help-faqs" element={<Helpandfaqs />} />
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />

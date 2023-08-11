@@ -1,130 +1,128 @@
-import React, { useEffect, useState } from 'react'
-import Newheader from '../../directives/newheader';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import ourbrand from '../../assets/images/banner/ourbrand.png'
+import React, { useEffect, useState } from "react";
+import Newheader from "../../directives/newheader";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import ourbrand from "../../assets/images/banner/ourbrand.png";
 import brand1 from "../../assets/images/img/brand1.png";
 import brand2 from "../../assets/images/img/brand2.png";
 import brand3 from "../../assets/images/img/brand3.png";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import brandPro3 from "../../assets/images/img/brandPro3.png";
-import { BASE_URL } from '../../Constant/Index'
-import Footer from '../../directives/footer'
-import axios from 'axios';
+import { BASE_URL } from "../../Constant/Index";
+import Footer from "../../directives/footer";
+import axios from "axios";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 function Ourbrand() {
-    const [thirdbanner, setthirdbanner] = useState([]);
-    const [brands, setBrands] = useState([]);
+  const [thirdbanner, setthirdbanner] = useState([]);
+  const [brands, setBrands] = useState([]);
 
-    useEffect(() => {
-        thirdBanner();
-        fetchBrands();
-    }, []);
+  useEffect(() => {
+    thirdBanner();
+    fetchBrands();
+  }, []);
 
+  const thirdBanner = () => {
+    axios
+      .get(`${BASE_URL}/banners`)
+      .then((response) => {
+        console.log(response.data.data);
+        setthirdbanner(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
 
-    const thirdBanner = () => {
-        axios
-            .get(`${BASE_URL}/banners`)
-            .then((response) => {
-                console.log(response.data.data);
-                setthirdbanner(response.data.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    };
+  const fetchBrands = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/brand`);
+      setBrands(response.data.data);
 
-    const fetchBrands = async () => {
-        try {
-          const response = await axios.get(`${BASE_URL}/auth/brand`);
-          setBrands(response.data.data);
-    
-          // Handle response as needed
-        } catch (error) {
-          console.error(error);
-          // Handle error as needed
-        }
-      };
-      console.log("====================================");
-      console.log(brands);
-      console.log("====================================");
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+  console.log("====================================");
+  console.log(brands);
+  console.log("====================================");
 
+  return (
+    <>
+      <Newheader />
+      <Container fluid className="p-0">
+        <div className="all-bg">
+          <img src={ourbrand} />
+        </div>
+      </Container>
 
-    return (
-        <>
-            <Newheader />
-            <Container fluid className='p-0'>
-                <div className='all-bg'>
-                    <img src={ourbrand} />
-                </div>
-            </Container>
+      <section className="section-padding">
+        <Container>
+          <h1 className="main-head">Our Brands</h1>
+          <div className="needplace">
+            <Row>
+              {brands
+                ? brands.map(
+                    (brand) =>
+                      brand.canine == "1" && (
+                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                          <div key={brand.id} className="Brand-card brand-1">
+                            <Link to={`/our-our-brand/${brand.id}`}>
+                              <div className="brandLOGO">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/category/" +
+                                    brand.logo
+                                  }
+                                />
+                              </div>
+                              <div className="brand-main">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/category/" +
+                                    brand.image
+                                  }
+                                />
+                              </div>
+                              <div className="brand-text">
+                                <h5>{brand.title}</h5>
+                              </div>
+                            </Link>
+                          </div>
+                        </Col>
+                      )
+                  )
+                : null}
+            </Row>
+          </div>
+        </Container>
+      </section>
 
-            <section className="section-padding">
-                <Container>
-                    <h1 className="main-head">Our Brands</h1>
-                    <div className="needplace">
-                        <Row>
-                            {brands ? (
-                                brands.map((brand) => (
-                                    brand.canine == '1' && (
-                                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                                            <div key={brand.id} className="Brand-card brand-1">
-                                            <Link to={`/our-our-brand/${brand.id}`}>
-                                                <div className="brandLOGO">
-                                                    <img
-                                                        src={
-                                                            "https://canine.hirectjob.in/storage/app/public/category/" +
-                                                            brand.logo
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="brand-main">
-                                                    <img
-                                                        src={
-                                                            "https://canine.hirectjob.in/storage/app/public/category/" +
-                                                            brand.image
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="brand-text">
-                                                    <h5>{brand.title}</h5>
-                                                </div>
-                                            </Link>
-                                            </div>
-                                        </Col>
-                                    )
-                                ))
-                            ) : null}
-                        </Row>
+      <section className="section-padding">
+        <Container>
+          {thirdbanner
+            ? thirdbanner.map(
+                (item, index) =>
+                  item.title === "new" && (
+                    <div className="banner-bgmain" key={item.id}>
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        }
+                      />
                     </div>
-                </Container>
-            </section>
+                  )
+              )
+            : null}
+        </Container>
+      </section>
 
-            <section className="section-padding">
-                <Container>
-                    {thirdbanner
-                        ? thirdbanner.map(
-                            (item, index) =>
-                                item.title === "new" && (
-                                    <div className="banner-bgmain" key={item.id}>
-                                        <img
-                                            src={
-                                                "https://canine.hirectjob.in/storage/app/public/banner/" +
-                                                item.image
-                                            }
-                                        />
-                                    </div>
-                                )
-                        )
-                        : null}
-                </Container>
-            </section>
-
-            {/* <section className="section-padding">
+      {/* <section className="section-padding">
                 <Container>
                     <div className=" Newsletter-bg">
                         <Row>
@@ -153,9 +151,9 @@ function Ourbrand() {
                 </Container>
             </section> */}
 
-            <Footer />
-        </>
-    )
+      <Footer />
+    </>
+  );
 }
 
-export default Ourbrand
+export default Ourbrand;

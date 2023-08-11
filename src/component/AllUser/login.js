@@ -12,7 +12,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const customerData = new FormData();
-    customerData.append("cust_phone", "phone");
+    customerData.append("cust_phone", phone);
     try {
       const response = await axios.post(
         "https://canine.hirectjob.in/api/v1/auth/customer",
@@ -20,7 +20,7 @@ function Login() {
       );
       console.log(response.data);
       if (response.data.status == 200) {
-        await localStorage.setItem("phoneNo", phone);
+        await localStorage.setItem("phone", phone);
         navigate("/otp");
       }
       // Handle response as needed
