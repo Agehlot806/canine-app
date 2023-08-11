@@ -354,9 +354,9 @@ box-shadow: none !important;
 }
 .food-product i {
   float: right;
-  font-size: 30px;
+  font-size: 25px;
+  color: red;
 }
-
 .product-bag h6 {
   color: #000;
 }
@@ -703,7 +703,7 @@ box-shadow: none !important;
 }
 .productDetail-content i {
   color: red;
-  font-size: 30px;
+  font-size: 20px;
 }
 .productDetail-content span {
   font-size: 20px;
@@ -2725,4 +2725,21 @@ ul.list-unstyled li a {
   font-size: 12px;
   font-family: poppins;
   font-weight: bold;
+}
+
+/* === */
+.Emptycart {
+    text-align: center;
+}
+.Emptycart img {
+  width: 200px !important;
+  height: 200px !important;
+}
+.Emptycart p {
+  font-weight: bold;
+  font-size: 26px;
+  color: #000;
+}
+.navbar-toggler-icon {
+  background-image: var(--mdb-navbar-toggler-icon-bg) !important;
 }

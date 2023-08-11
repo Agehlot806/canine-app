@@ -586,9 +586,9 @@ function Petcategory() {
                     <Col lg={9}>
                         <section className="section-padding food">
                             <Container>
-                                <h1 className="main-head">
+                                {/* <h1 className="main-head">
                                     Dogs
-                                </h1>
+                                </h1> */}
                                 <div className="needplace">
                                     <div className='dog-categorys-area'>
                                         <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">

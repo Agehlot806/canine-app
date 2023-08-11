@@ -72,7 +72,11 @@ function Newheader() {
         } else {
             console.log("No user ID found in localStorage.");
         }
-    }
+    };
+
+    const customer_id = localStorage.getItem("userInfo");
+    let storedUserId = JSON.parse(customer_id);
+
     return (
         <>
             <Toaster />
@@ -90,7 +94,7 @@ function Newheader() {
                                 <Link className="nav-link" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="#">New</Link>
+                                <Link className="nav-link" to="/product">New</Link>
                             </li>
                             <li className="nav-item dropdown mega-dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="megaDropdown" role="button"
@@ -216,13 +220,16 @@ function Newheader() {
                                     <Link className="dropdown-item" to="/patners-product">Patners Product</Link>
                                 </div>
                             </li>
-                            <li className="nav-item dropdown">
+                            {/* <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Petcare
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <Link className="dropdown-item" to="/veterinary-service">Veterinary Service</Link>
                                 </div>
+                            </li> */}
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/service">Petcare</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/contact">Contact</Link>
@@ -245,11 +252,25 @@ function Newheader() {
                                     <i class="fa fa-bell-o" />
                                 </a>
                             </li>
-                            <li className='nav-item'>
-                                <button className="yellow-btn">
-                                    <Link to="/login">Sign In</Link>
-                                </button>
-                            </li>
+                            {storedUserId ? (
+                                <>
+                                    {/* Display Logout button if user is logged in */}
+                                    <li className="nav-item">
+                                        <button className="yellow-btn" onClick={logoutUser}>
+                                            Logout
+                                        </button>
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    {/* Display Sign In button if user is not logged in */}
+                                    <li className="nav-item">
+                                        <button className="yellow-btn">
+                                            <Link to="/login">Sign In</Link>
+                                        </button>
+                                    </li>
+                                </>
+                            )}
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle profile-icon" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src={pro} />
@@ -273,9 +294,9 @@ function Newheader() {
                                     <Link className="dropdown-item" to="/update-profile">
                                         Profile
                                     </Link>
-                                    <Link className="dropdown-item" onClick={logoutUser}>
+                                    {/* <Link className="dropdown-item" onClick={logoutUser}>
                                         Logout
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </li>
                         </ul>
@@ -313,36 +334,6 @@ function Newheader() {
                                 <p className="emptyMSG">No Notification</p>
                             )}
 
-                            {/* <div className='notification'>
-              <Row>
-                <Col lg={2}>
-                  <img src={pro} />
-                </Col>
-                <Col lg={10} className='align-self-center'>
-                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
-                </Col>
-              </Row>
-            </div>
-            <div className='notification'>
-              <Row>
-                <Col lg={2}>
-                  <img src={pro} />
-                </Col>
-                <Col lg={10} className='align-self-center'>
-                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
-                </Col>
-              </Row>
-            </div>
-            <div className='notification'>
-              <Row>
-                <Col lg={2}>
-                  <img src={pro} />
-                </Col>
-                <Col lg={10} className='align-self-center'>
-                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
-                </Col>
-              </Row>
-            </div> */}
                             <button
                                 type="button"
                                 className="btn btn-secondary"
@@ -351,10 +342,6 @@ function Newheader() {
                                 Close
                             </button>
                         </div>
-                        {/* <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div> */}
                     </div>
                 </div>
             </div>

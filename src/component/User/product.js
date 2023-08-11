@@ -35,10 +35,12 @@ const clinetreview = {
 function Product(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
+  const [itembannerdata, setitembannerdata] = useState([]);
 
   useEffect(() => {
     categoriesProduct();
     allProduct();
+    itemBanner();
   }, []);
 
   const categoriesProduct = async () => {
@@ -62,6 +64,14 @@ function Product(props) {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const itemBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      setitembannerdata(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
@@ -151,12 +161,13 @@ function Product(props) {
       });
   };
 
-  const colorPalette = [
-    'rgb(254, 231, 232)',
-    'rgb(200, 255, 186)',
-    'rgb(200, 200, 255)',
-    'rgb(199, 235, 255)',
-  ];  
+  const gradientColors = [
+    'linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)',
+    'linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)',
+    'linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)',
+    'linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)',
+    // Add more gradient colors as needed
+  ];
 
   return (
     <>
@@ -1117,7 +1128,7 @@ function Product(props) {
                   {allproduct &&
                     allproduct.map((item) => (
                       <Col lg={4} sm={6} xs={6} className="mb-4">
-                        <div className="food-product" key={item.id} style={{ backgroundColor: colorPalette[Math.floor(Math.random() * colorPalette.length)] }}>
+                        <div className="food-product" key={item.id} style={{ background: gradientColors[index % gradientColors.length] }}>
                           <i
                             class="fa fa-heart-o"
                             onClick={(id) => addToWishlist(item.id)}
@@ -1163,9 +1174,23 @@ function Product(props) {
               </Container>
             </section>
 
+
             <Container fluid className="p-0">
               <div className="all-bg">
-                <img src={bannerone} />
+                {itembannerdata ? (
+                  itembannerdata.map((item, index) => (
+                    item.type === 'item_wise' && (
+                      <Col sm={12} className="mb-4">
+                        <img src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        } />
+                      </Col>
+                    )
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Items Banner.</p>
+              )}
               </div>
             </Container>
 
@@ -1217,7 +1242,7 @@ function Product(props) {
                         </Link>
                       </div>
                     </Col>
-                   
+
                   </Row>
                 </div>
               </Container>

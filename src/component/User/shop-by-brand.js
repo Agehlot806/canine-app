@@ -75,16 +75,18 @@ function Shopbybrand() {
                                                     <div className="brandLOGO">
                                                         <img
                                                             src={
-                                                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
                                                                 brand.logo
-                                                            } />
+                                                            }
+                                                        />
                                                     </div>
                                                     <div className="brand-main">
                                                         <img
                                                             src={
-                                                                "https://canine.hirectjob.in/storage/app/public/category/" +
+                                                                "https://canine.hirectjob.in/storage/app/public/brand/" +
                                                                 brand.image
-                                                            } />
+                                                            }
+                                                        />
                                                     </div>
                                                     <div className="brand-text">
                                                         <h5>{brand.title}</h5>

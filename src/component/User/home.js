@@ -211,12 +211,16 @@ function Home(props) {
   // )}, ${Math.floor(Math.random() * 'linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)')})`;
 
 
-  const colorPalette = [
-    'rgb(254, 231, 232)',
-    'rgb(200, 255, 186)',
-    'rgb(200, 200, 255)',
-    'rgb(199, 235, 255)',
+ 
+
+  const gradientColors = [
+    'linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)',
+    'linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)',
+    'linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)',
+    'linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)',
+    // Add more gradient colors as needed
   ];
+  
   return (
     <>
       <Toaster />
@@ -444,14 +448,14 @@ function Home(props) {
           <div className="needplace">
             <Row>
               {allproduct &&
-                allproduct.map((item) => (
+                allproduct.map((item,index) => (
                   <Col lg={3} sm={6} xs={6} className="mb-4">
-                    <div className="food-product" key={item.id} style={{ backgroundColor: colorPalette[Math.floor(Math.random() * colorPalette.length)] }}>
-                      <Link to={`/product-details/${item.id}`}>
+                    <div className="food-product" key={item.id} style={{ background: gradientColors[index % gradientColors.length] }}>
                         <i
                           class="fa fa-heart-o"
                           onClick={() => addToWishlist(item.id)}
                         />
+                      <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">
                           <img
                             src={

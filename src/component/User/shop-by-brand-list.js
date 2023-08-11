@@ -5,6 +5,7 @@ import shopbybrand from '../../assets/images/banner/shopbybrand.png'
 import axios from 'axios';
 import { BASE_URL } from '../../Constant/Index';
 import { Link, useParams } from 'react-router-dom';
+import Footer from '../../directives/footer';
 
 function Shopbybrandlist() {
     const { id } = useParams();
@@ -41,7 +42,8 @@ function Shopbybrandlist() {
                     <h1 className="main-head">Shop By Brands List</h1>
                     <div className="needplace">
                         <Row>
-                            {brandproduct.map((item) => (
+                        {brandproduct && brandproduct.length > 0 ? (
+                brandproduct.map((item, index) => (
                                 <Col lg={3} sm={6} xs={6} className="mb-5">
                                     <div key={item.id} className="Brand-card brand-1">
                                         <Link to={item.product_url} >
@@ -58,12 +60,15 @@ function Shopbybrandlist() {
                                         </Link>
                                     </div>
                                 </Col>
-                            ))}
-
+                           ))
+                           ) : (
+                             <p className="emptyMSG">No Data Shop By Brand.</p>
+                           )}
                         </Row>
                     </div>
                 </Container>
             </section>
+            <Footer />
         </>
     )
 }

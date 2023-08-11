@@ -160,7 +160,7 @@ function Productdetail() {
                   </div>
                 </LightGallery>
               </div> */}
-              <div className="needplace">
+              {/* <div className="needplace">
                 <Row>
                   <Col sm={2} className="mb-3">
                     <div className="product-item-inner">
@@ -203,7 +203,7 @@ function Productdetail() {
                     </div>
                   </Col>
                 </Row>
-              </div>
+              </div> */}
             </Col>
             <Col lg={6}>
               <div className="productDetail-content">
@@ -211,15 +211,19 @@ function Productdetail() {
                   <Col lg={10}>
                     <h4>{productDetails.name}</h4>
                   </Col>
-                  <Col lg={2}>
+                  {/* <Col lg={2}>
                     <i className="fa fa-star" />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <p>
                   By <span>{productDetails.store_name}</span>
                 </p>
                 <span>
-                  <i className="fa fa-star" /> 4.5
+                <a><i className="fa fa-star" /></a>
+                <a><i className="fa fa-star" /></a>
+                <a><i className="fa fa-star" /></a>
+                <a><i className="fa fa-star" /></a>
+                  <a><i className="fa fa-star" /></a> 4.5
                 </span>
                 <div className="needplaceProduct">
                   <Row>
@@ -303,12 +307,12 @@ function Productdetail() {
                   <tbody>
                     <tr>
                       <th>Brand</th>
-                      <td>Mars Petcare Inc</td>
+                      <td>{productDetails.store_name}</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <th>Flavour</th>
                       <td>Chicken</td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <th>Diet type</th>
                       {/* <td>Non Vegetarian</td> */}

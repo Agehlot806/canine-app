@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import Newheader from '../../directives/newheader';;
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Footer from "../../directives/footer";
