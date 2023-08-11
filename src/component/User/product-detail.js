@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
@@ -20,11 +20,11 @@ import { Toaster, toast } from "react-hot-toast";
 // import lgVideo from "lightgallery/plugins/video";
 // import lgShare from "lightgallery/plugins/share";
 // import lgRotate from "lightgallery/plugins/rotate";
-import brandPro1 from '../../assets/images/img/brandPro1.png';
-import brandPro2 from '../../assets/images/img/brandPro2.png';
-import brandpro3 from '../../assets/images/img/brandPro3.png';
-import bannerPro from '../../assets/images/img/bannerPro.png'
-import pro from '../../assets/images/icon/pro.png'
+import brandPro1 from "../../assets/images/img/brandPro1.png";
+import brandPro2 from "../../assets/images/img/brandPro2.png";
+import brandpro3 from "../../assets/images/img/brandPro3.png";
+import bannerPro from "../../assets/images/img/bannerPro.png";
+import pro from "../../assets/images/icon/pro.png";
 
 function Productdetail() {
   const { id } = useParams();
@@ -69,7 +69,7 @@ function Productdetail() {
         `${BASE_URL}/customer/wish-list/add_product`,
         {
           item_name: productDetails.name,
-          variant: productDetails.variations || "Default", // You may need to update this based on your data
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
           image: productDetails.image,
           quantity: productDetails.quantity,
           price: productDetails.price,
@@ -88,15 +88,14 @@ function Productdetail() {
     }
   };
 
-
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState("");
   const openLightbox = (imageSrc) => {
     setSelectedImage(imageSrc);
     setLightboxOpen(true);
   };
   const closeLightbox = () => {
-    setSelectedImage('');
+    setSelectedImage("");
     setLightboxOpen(false);
   };
 
@@ -219,11 +218,22 @@ function Productdetail() {
                   By <span>{productDetails.store_name}</span>
                 </p>
                 <span>
-                <a><i className="fa fa-star" /></a>
-                <a><i className="fa fa-star" /></a>
-                <a><i className="fa fa-star" /></a>
-                <a><i className="fa fa-star" /></a>
-                  <a><i className="fa fa-star" /></a> 4.5
+                  <a>
+                    <i className="fa fa-star" />
+                  </a>
+                  <a>
+                    <i className="fa fa-star" />
+                  </a>
+                  <a>
+                    <i className="fa fa-star" />
+                  </a>
+                  <a>
+                    <i className="fa fa-star" />
+                  </a>
+                  <a>
+                    <i className="fa fa-star" />
+                  </a>{" "}
+                  4.5
                 </span>
                 <div className="needplaceProduct">
                   <Row>
@@ -232,14 +242,14 @@ function Productdetail() {
                         {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
-                        // value={pet_id}
-                        // onChange={(e) => setpet_id(e.target.value)}
+                          // value={pet_id}
+                          // onChange={(e) => setpet_id(e.target.value)}
                         >
                           <option>Choose....</option>
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
-                              <option >{item.type}</option>
+                              <option>{item.type}</option>
                             ))}
                         </select>
                         {/* {productDetails?.variations &&
@@ -262,20 +272,24 @@ function Productdetail() {
                     </Col>
                     <Col sm={6}>
                       <div className="quantity-btn">
-                        <button onClick={handleDecrementone}><i className="fa fa-minus"/></button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantity}
-                                onChange={handleQuantityChange}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                        <button onClick={handleIncrementone}><i className="fa fa-plus"/></button>
+                        <button onClick={handleDecrementone}>
+                          <i className="fa fa-minus" />
+                        </button>
+                        <form>
+                          <div className="form-group">
+                            <input
+                              type="tel"
+                              className="form-control"
+                              placeholder="Quantity"
+                              value={quantity}
+                              onChange={handleQuantityChange}
+                              autoComplete="new-number"
+                            />
+                          </div>
+                        </form>
+                        <button onClick={handleIncrementone}>
+                          <i className="fa fa-plus" />
+                        </button>
                       </div>
                     </Col>
                   </Row>
@@ -290,10 +304,11 @@ function Productdetail() {
                       <Col lg={4}>
                         <h5>
                           {" "}
-                          {`₹${productDetails.price -
+                          {`₹${
+                            productDetails.price -
                             (productDetails.price * productDetails.discount) /
-                            100
-                            }`}
+                              100
+                          }`}
                         </h5>
                       </Col>
                       <Col lg={5}>
@@ -354,7 +369,11 @@ function Productdetail() {
           <hr />
           <div className="Product-Review">
             <h1 className="main-head mt-4">Product Review</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s,
+            </p>
             <div className="row">
               <div className="col-sm-2 col">
                 <div className="star">
@@ -368,9 +387,7 @@ function Productdetail() {
               <div className="col-sm-2 col">
                 <div className="Product-img">
                   <img src={pro} />
-                  <span>
-                    Wade Warren
-                  </span>
+                  <span>Wade Warren</span>
                   <div className="user-icon">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span> 1 2 3 4 5</span>
@@ -380,7 +397,11 @@ function Productdetail() {
             </div>
             <hr />
             <div className="row mt-3">
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s,
+              </p>
               <div className="col-sm-2 col">
                 <div className="star">
                   <i class="fa fa-star" aria-hidden="true"></i>
@@ -393,9 +414,7 @@ function Productdetail() {
               <div className="col-sm-2 col">
                 <div className="Product-img">
                   <img src={pro} />
-                  <span>
-                    Wade Warren
-                  </span>
+                  <span>Wade Warren</span>
                   <div className="user-icon">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span> 1 2 3 4 5</span>
@@ -404,7 +423,6 @@ function Productdetail() {
               </div>
             </div>
           </div>
-
         </Container>
       </section>
       <Container fluid className="p-0">
