@@ -18,22 +18,28 @@ function Footer() {
                   <h5>{strings.usefulLinks}</h5>
                   <ul>
                     <li>
-                      <Link>{strings.deliveryDeatils}</Link>
+                      <Link to="/delivery-details">
+                        {strings.deliveryDeatils}
+                      </Link>
                     </li>
                     <li>
-                      <Link>{strings.internationalShipping}</Link>
+                      <Link to="/international-shipping">
+                        {strings.internationalShipping}
+                      </Link>
                     </li>
                     <li>
-                      <Link>{strings.paymentOption}</Link>
+                      <Link to="/payment-options">{strings.paymentOption}</Link>
                     </li>
                     <li>
-                      <Link>{strings.trackYourOrder}</Link>
+                      <Link to="/track-your-order">
+                        {strings.trackYourOrder}
+                      </Link>
                     </li>
                     <li>
-                      <Link>{strings.return}</Link>
+                      <Link to="/return">{strings.return}</Link>
                     </li>
                     <li>
-                      <Link>{strings.findaStore}</Link>
+                      <Link to="/find-a-Store">{strings.findaStore}</Link>
                     </li>
                   </ul>
                 </div>
@@ -43,16 +49,16 @@ function Footer() {
                   <h5>Information</h5>
                   <ul>
                     <li>
-                      <Link>Careers</Link>
+                      <Link to="/careers">Careers</Link>
                     </li>
                     <li>
                       <Link to="/about-us">AboutUs</Link>
                     </li>
                     <li>
-                      <Link to="/">{strings.offersDetails}</Link>
+                      <Link to="/offers-details">{strings.offersDetails}</Link>
                     </li>
                     <li>
-                      <Link to="/">{strings.helpandFAQs}</Link>
+                      <Link to="/help-faqs">{strings.helpandFAQs}</Link>
                     </li>
                     <li>
                       <Link to="/service">Our Services</Link>
@@ -77,7 +83,8 @@ function Footer() {
                     </li>
                     <li>
                       <Link>
-                        <i className="fa fa-phone" /> +00-000000000
+                        <i className="fa fa-phone" to="tel:0987654321" />{" "}
+                        +91-0987654321
                       </Link>
                     </li>
                     <li>
