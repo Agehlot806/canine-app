@@ -90,7 +90,12 @@ function Header() {
   //   clearTimeout(timeoutId); // Clear the timeout
   //   navigate("/login"); // Redirect to login page
   // };
-
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.stringify(customer_id);
+  console.log("storedUserId: ", storedUserId);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
   return (
     <>
       <Navbar expand="lg" className="navbar-area">
@@ -406,7 +411,6 @@ function Header() {
                         <Link className="dropdown-item" to="/update-profile">
                           Profile
                         </Link>
-                        
                       </div>
                     </div>
                   </Nav.Link>

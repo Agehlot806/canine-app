@@ -126,6 +126,8 @@ function Serviceaddpet() {
       </Container>
       <section className="section-padding">
         <Container>
+        <Row className="justify-content-center">
+                  <Col lg={8}>
           <div className="add-upload-area">
             <form>
               <div className="form-group add-upload">
@@ -141,7 +143,7 @@ function Serviceaddpet() {
                 />
               </div>
               <div className="needplace">
-                <Row>
+             
                   {selectedCategory && (
                     <div className="selectedCategory">
                       <h2>Avatar</h2>
@@ -154,9 +156,7 @@ function Serviceaddpet() {
                       />
                     </div>
                   )}
-                </Row>
-                <Row>
-                  <Col lg={10}>
+               
                     <div className="form-group">
                       <label>Pet type</label>
                       <ul className="nav nav-pills mb-3" role="tablist">
@@ -264,11 +264,12 @@ function Serviceaddpet() {
                     <div className="add-petbtn">
                       <Button onClick={handlePetsadd}>Add Pet</Button>
                     </div>
-                  </Col>
-                </Row>
+                  
               </div>
             </form>
-          </div>
+              </div>
+              </Col>
+                </Row>
         </Container>
       </section>
 

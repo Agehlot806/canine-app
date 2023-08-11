@@ -15,11 +15,13 @@ import {
 } from "mdb-react-ui-kit";
 import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useState } from "react";
 
 export default function Trackyourorder() {
   const [activetraker, setActivetraker] = useState(1);
+  const [trankershowData, settrankershowData] = useState(false);
+
   const handletrakerNext = () => {
     setActivetraker((prevActive) => Math.min(prevActive + 1, steps.length));
   };
@@ -27,10 +29,36 @@ export default function Trackyourorder() {
     setActivetraker((prevActive) => Math.max(prevActive - 1, 1));
   };
   const steps = [1, 2, 3, 4]; // Define your steps here
+
+  const handleButtonClick = () => {
+    settrankershowData(!trankershowData); 
+  };
+
   return (
     <>
       <Newheader />
-      <section className="vh-100" style={{ backgroundColor: "#eee" }}>
+
+ 
+      <section className="tracker-bg">
+        <div className="section-padding tracker-area">
+        <Container >
+          <Row className="justify-content-center">
+            <Col lg={6}>
+             
+            <div className="tranker-search">
+            <h4>Track Your Shipment</h4>
+          <form className="d-flex">
+            <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" />
+            <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button>
+          </form>
+          </div>
+            </Col>
+          </Row>
+        </Container>
+        </div>
+      </section>
+      {trankershowData && (
+      <section className="" style={{ backgroundColor: "#eee" }}>
         <MDBContainer className="py-5 h-100">
           <MDBRow className="justify-content-center align-items-center h-100">
             <MDBCol>
@@ -136,6 +164,7 @@ export default function Trackyourorder() {
           </MDBRow>
         </MDBContainer>
       </section>
+       )}
       <Footer />
 
       {/* Modal */}

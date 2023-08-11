@@ -2159,7 +2159,7 @@ a.placDate {
   font-weight: 600;
   font-size: 22.1195px;
   padding: 0 30px;
-  width: 300px;
+  width: 195px;
 }
 
 .add-petbtn button a {
@@ -2191,9 +2191,17 @@ a.placDate {
 .selectedCategory img {
   width: 100px;
 }
+.add-upload-area{
+  background: #fff;
+    border-bottom: 5px solid #008efd;
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    box-shadow: 0 19px 38px rgba(0,0,0,.3), 0 15px 12px rgba(0,0,0,.22);
+    padding: 60px;
+}
 .add-upload label {
-  width: 100%;
-  padding: 80px 0;
+  width: 605px;
+  padding: 30px 0;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -2253,6 +2261,7 @@ a.placDate {
   font-family: Poppins;
   font-weight: 500;
   color: #01162480;
+  width: 560px;
 }
 
 .add-upload-area .form-group input {
@@ -2264,6 +2273,7 @@ a.placDate {
   font-family: Poppins;
   font-weight: 500;
   color: #01162480;
+  width: 560px;
 }
 
 /* service pet */
@@ -2663,7 +2673,7 @@ ul.list-unstyled li a {
 }
 #progress-bar {
   position: absolute;
-  background: lightseagreen;
+  background: red;
   height: 5px;
   width: 0%;
   top: 50%;
@@ -2700,8 +2710,8 @@ ul.list-unstyled li a {
   z-index: 1;
 }
 #progress-num .step.active {
-  border-color: lightseagreen;
-  background-color: lightseagreen;
+  border-color: red;
+  background-color: red;
   color: #fff;
 }
 
@@ -2742,4 +2752,55 @@ ul.list-unstyled li a {
 }
 .navbar-toggler-icon {
   background-image: var(--mdb-navbar-toggler-icon-bg) !important;
+}
+
+
+/* tracker area */
+.tracker-bg {
+  background: url(../images/trackerbg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.tracker-area {
+  background-image: linear-gradient(180deg,rgba(37,27,17,.2),rgba(37,27,17,.2)),linear-gradient(180deg,rgba(37,27,17,0),rgba(37,27,17,.5));
+}
+
+.tranker-search input {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  height: 60px;
+}
+.tranker-search input::placeholder {
+  color: #000;
+}
+.tranker-search button {
+  border-radius: 4px;
+  background: red;
+  border: none;
+  color: #fff;
+  position: absolute;
+  right: 20px;
+  top: 47px;
+  width: 157px;
+  height: 45px;
+  font-size: 20px;
+  padding: 0;
+}
+.tranker-search button:hover {
+  background: red !important;
+  color: #fff !important;
+}
+.tranker-search h4 {
+  color: #fff;
+  font-weight: bold;
+  font-size: 25px;
+  margin: 0 0 10px;
+}
+.tranker-search {
+  position: relative;
+}
+.tranker-search {
+  position: relative;
+  margin: 80px 0;
 }
