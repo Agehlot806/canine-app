@@ -4,13 +4,14 @@ import productdetail from "../../assets/images/banner/productdetail.png";
 import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Footer from "../../directives/footer";
 import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
 import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
+import star from "../star";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 // import LightGallery from 'lightgallery/react/Lightgallery.es5'
@@ -25,6 +26,9 @@ import brandPro2 from "../../assets/images/img/brandPro2.png";
 import brandpro3 from "../../assets/images/img/brandPro3.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import pro from "../../assets/images/icon/pro.png";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { AiOutlineStar } from "react-icons/ai";
+import { styled } from "styled-components";
 
 function Productdetail() {
   const { id } = useParams();
@@ -32,6 +36,7 @@ function Productdetail() {
   const [productDetails, setProductDetails] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails?.variations ", productDetails);
+  const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrementone = () => {
@@ -79,8 +84,11 @@ function Productdetail() {
       );
 
       if (response.data.success) {
-        setAddToCartStatus("Added to cart!");
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
         toast.success("Added to cart!");
+        // Navigate("/addcart")
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -105,6 +113,22 @@ function Productdetail() {
       setQuantity(newQuantity);
     }
   };
+  const ratingStar = Array.from({ length: 5 }, (item, index) => {
+    let number = index + 0.5;
+    return (
+      <span key={index}>
+        {productDetails?.rating_count ||
+        productDetails?.status + 0.5 >= index + 1 ? (
+          <FaStar className="icon" />
+        ) : productDetails?.rating_count ||
+          productDetails?.status + 0.5 >= number ? (
+          <FaStarHalfAlt className="icon" />
+        ) : (
+          <AiOutlineStar className="icon" />
+        )}
+      </span>
+    );
+  });
 
   return (
     <>
@@ -217,7 +241,16 @@ function Productdetail() {
                 <p>
                   By <span>{productDetails.store_name}</span>
                 </p>
-                <span>
+                {/* <star stars={stars} reviews={reviews} />
+                 */}
+                <Wrapper>
+                  <div className="icon-style">
+                    {ratingStar}
+                    {/* {productDetails.reviews || 60} */}
+                    <p>({productDetails.reviews || 60} customer reviews)</p>
+                  </div>
+                </Wrapper>
+                {/* <span>
                   <a>
                     <i className="fa fa-star" />
                   </a>
@@ -234,7 +267,7 @@ function Productdetail() {
                     <i className="fa fa-star" />
                   </a>{" "}
                   4.5
-                </span>
+                </span> */}
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6}>
@@ -356,7 +389,7 @@ function Productdetail() {
           </Row>
           <div className="productBTNaddcard">
             <Button>
-              <Link to="/add-cart" onClick={handleAddToCart}>
+              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                 <i className="fa fa-shopping-bag" /> Add to cart
               </Link>
               <p>{addToCartStatus}</p>
@@ -676,5 +709,20 @@ function Productdetail() {
     </>
   );
 }
+const Wrapper = styled.section`
+  justify-content: flex-start;
+
+  icon {
+    font-size: 2rem;
+    color: orange;
+  }
+  .emty-icon {
+    font-size: 2.6rem;
+  }
+  p {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+`;
 
 export default Productdetail;

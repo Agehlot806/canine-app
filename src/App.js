@@ -90,7 +90,7 @@ function App() {
           <Route path="/patners-product" element={<Patnersproduct />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/veterinary-service" element={<Veterinaryservice />} />
-          <Route path="/add-cart" element={<Addcart />} />
+          <Route path="/add-cart/:id" element={<Addcart />} />
           <Route path="/service-date/:id" element={<Servicedate />} />
           <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
           <Route path="/pet-profile/" element={<Petprofile />} />

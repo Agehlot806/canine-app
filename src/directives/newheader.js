@@ -406,8 +406,8 @@ function Newheader() {
                     <input
                       type="text"
                       placeholder="Search by name"
-                      // value={searchTerm}
-                      // onChange={handleSearch}
+                    // value={searchTerm}
+                    // onChange={handleSearch}
                     />
                   </div>
                 </a>
@@ -423,20 +423,13 @@ function Newheader() {
               </li>
               {storedUserId ? (
                 // Display Logout button if user is logged in
+                <>
                 <li className="nav-item">
                   <button className="yellow-btn" onClick={logoutUser}>
                     Logout
                   </button>
                 </li>
-              ) : (
-                // Display Sign In button if user is not logged in
-                <li className="nav-item">
-                  <button className="yellow-btn">
-                    <Link to="/login">Sign In</Link>
-                  </button>
-                </li>
-              )}
-              <li className="nav-item dropdown">
+                 <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle profile-icon"
                   href="#"
@@ -469,6 +462,16 @@ function Newheader() {
                                     </Link> */}
                 </div>
               </li>
+                </>
+              ) : (
+                // Display Sign In button if user is not logged in
+                <li className="nav-item">
+                  <button className="yellow-btn">
+                    <Link to="/login">Sign In</Link>
+                  </button>
+                </li>
+              )}
+
             </ul>
           </div>
         </div>

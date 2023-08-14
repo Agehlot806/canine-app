@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
@@ -40,8 +40,6 @@ function Addcart() {
     couponlistdata();
   }, []);
 
-  // storedUserId
-
   //  const getUserInfo = async ()=>{
   //   const customerData = await localStorage.getItem("userInfo");
   //   console.log("customerData: ",customerData);
@@ -53,17 +51,34 @@ function Addcart() {
   // console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
-  const addToCartData = async () => {
-    axios
-      .get(`${BASE_URL}/customer/wish-list/add_to_card/2`)
-      .then((response) => {
-        console.log(response);
-        setAddToCartProduct(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const addToCartData = async () =>
+    // quantity,
+    // image,
+    // item_id,
+    // item_name,
+    // price,
+    // variant
+    {
+      axios
+        .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
+          product_id: id, // Replace this with the correct product_id you want to add
+          // user_id: storedUserId,
+          // quantity: quantity,
+          // image: image,
+          // item_id: item_id,
+          // item_name: item_name,
+          // price: price,
+          // variant: variant,
+        })
+        .then((response) => {
+          console.log(response);
+          setAddToCartProduct(response.data.data);
+          console.log("response.data.data: ", response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
   const couponlistdata = async () => {
     axios
       .get(`${BASE_URL}/coupon/list`)
@@ -76,12 +91,14 @@ function Addcart() {
       });
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (id) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/customer/wish-list/remove_product/${productId}`);
-      console.log('Product removed from cart:', response.data);
+      const response = await axios.delete(
+        `${BASE_URL}/customer/wish-list/remove_product/${productId}`
+      );
+      console.log("Product removed from cart:", response.data);
     } catch (error) {
-      console.error('Error removing product from cart:', error);
+      console.error("Error removing product from cart:", error);
     }
   };
 
@@ -132,67 +149,81 @@ function Addcart() {
                     </div>
                   </Col>
                   <Col lg={1} className="align-self-center">
-                    <div className="delete-addcard" onClick={() => removeFromCart(item.id)}>
+                    <div
+                      className="delete-addcard"
+                      onClick={() => removeFromCart(item.id)}
+                    >
                       <i class="fa fa-trash-o" />
                     </div>
                   </Col>
                   <hr />
                 </Row>
-
-                <div className="needplace">
-                  <Row className="justify-content-center">
-                    <Col lg={5}>
-                      {!coupencode ? (
-                        <div class="card mb-3">
-                          <div class="card-body">
-                            <form>
-                              <div class="form-group">
-                                <label>Have a Coupon Code?</label>
-                                <div class="input-group ">
-                                  <input
-                                    type="text"
-                                    class="form-control coupon"
-                                    name=""
-                                    placeholder="Coupon code"
-                                  />
-                                  <span class="input-group-append px-3">
-                                    <button
-                                      onClick={() => {
-                                        setcoupenCode(!coupencode);
-                                      }}
-                                      class="btn btn-primary btn-apply coupon"
-                                      data-toggle="modal" data-target="#Coupon">
-                                      Apply
-                                    </button>
-                                  </span>
-                                </div>
+              </Container>
+            ))
+          ) : (
+            <div className="Emptycart">
+              <img src={cart} />
+              <p className="emptyMSG">Cart is Empty</p>
+            </div>
+          )}
+          {addToCartProduct && addToCartProduct.length > 0 ? (
+            <Container>
+              <div className="needplace">
+                <Row className="justify-content-center">
+                  <Col lg={5}>
+                    {!coupencode ? (
+                      <div class="card mb-3">
+                        <div class="card-body">
+                          <form>
+                            <div class="form-group">
+                              <label>Have a Coupon Code?</label>
+                              <div class="input-group ">
+                                <input
+                                  type="text"
+                                  class="form-control coupon"
+                                  name=""
+                                  placeholder="Coupon code"
+                                />
+                                <span class="input-group-append px-3">
+                                  <button
+                                    onClick={() => {
+                                      setcoupenCode(!coupencode);
+                                    }}
+                                    class="btn btn-primary btn-apply coupon"
+                                    data-toggle="modal"
+                                    data-target="#Coupon"
+                                  >
+                                    Apply
+                                  </button>
+                                </span>
                               </div>
-                            </form>
-                          </div>
+                            </div>
+                          </form>
                         </div>
-                      ) : (
-                        <div className="add-cart-Voucher ">
-                          <Row>
-                            <Col>
-                              <img src={voch} />
-                            </Col>
-                            <Col className="align-self-center">
-                              <h5>Voucher Discount</h5>
-                            </Col>
-                            <Col className="align-self-center">
-                              <h6>$30.00</h6>
-                            </Col>
-                            <Col className="align-self-center">
-                              <button
-                                onClick={() => {
-                                  setcoupenCode(!coupencode);
-                                }}
-                                type="button"
-                                class="btn btn-danger"
-                              >
-                                X
-                              </button>
-                              {/* <button
+                      </div>
+                    ) : (
+                      <div className="add-cart-Voucher ">
+                        <Row>
+                          <Col>
+                            <img src={voch} />
+                          </Col>
+                          <Col className="align-self-center">
+                            <h5>Voucher Discount</h5>
+                          </Col>
+                          <Col className="align-self-center">
+                            <h6>$30.00</h6>
+                          </Col>
+                          <Col className="align-self-center">
+                            <button
+                              onClick={() => {
+                                setcoupenCode(!coupencode);
+                              }}
+                              type="button"
+                              class="btn btn-danger"
+                            >
+                              X
+                            </button>
+                            {/* <button
                             onClick={() => {
                               setcoupenCode(!coupencode);
                             }}
@@ -202,123 +233,131 @@ function Addcart() {
                           >
                             <span aria-hidden="true">&times;</span>
                           </button> */}
-                            </Col>
-                          </Row>
-                        </div>
-                      )}
-                    </Col>
-                  </Row>
-                </div>
-                <div className="needplace">
-                  <Row className="justify-content-center">
-                    <Col lg={8}>
-                      <div className="add-cart-total">
-                        <Row>
-                          <Col>
-                            <h5>Sub Total</h5>
-                          </Col>
-                          <Col>{/* <h5>₹{addToCartData[0]?.price}</h5> */}</Col>
-                        </Row>
-                        <hr />
-                        <Row>
-                          <Col>
-                            <h5>Tax(5%)</h5>
-                          </Col>
-                          <Col>
-                            {/* <h5>₹{addToCartData[0]?.price * 0.05}</h5> */}
                           </Col>
                         </Row>
-                        <hr />
-                        <Row>
-                          <Col>
-                            <h5>Rounding Adjust</h5>
-                          </Col>
-                          <Col>
-                            {/* <h5>
+                      </div>
+                    )}
+                  </Col>
+                </Row>
+              </div>
+            </Container>
+          ) : null}
+          {addToCartProduct && addToCartProduct.length > 0 ? (
+            <Container>
+              <div className="needplace">
+                <Row className="justify-content-center">
+                  <Col lg={8}>
+                    <div className="add-cart-total">
+                      <Row>
+                        <Col>
+                          <h5>Sub Total</h5>
+                        </Col>
+                        <Col>{/* <h5>₹{addToCartData[0]?.price}</h5> */}</Col>
+                      </Row>
+                      <hr />
+                      <Row>
+                        <Col>
+                          <h5>Tax(5%)</h5>
+                        </Col>
+                        <Col>
+                          {/* <h5>₹{addToCartData[0]?.price * 0.05}</h5> */}
+                        </Col>
+                      </Row>
+                      <hr />
+                      <Row>
+                        <Col>
+                          <h5>Rounding Adjust</h5>
+                        </Col>
+                        <Col>
+                          {/* <h5>
                           ₹{addToCartProduct[0].price} + 5% = ₹
                           {(addToCartProduct[0].price * 0.05).toFixed(2)}
                         </h5> */}
+                        </Col>
+                      </Row>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Container>
+          ) : null}
+          {addToCartProduct && addToCartProduct.length > 0 ? (
+            <Container>
+              <div className="needplace">
+                <div className="address">
+                  <h3>Address</h3>
+                  <div className="address-card">
+                    {/* <Row>
+                    <Col lg={10}> */}
+                    <p>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesettim Ipsum is simply dummy text of the printing and
+                      typesetting industry. Lorem Ipsum has been the industry's
+                      standard dummy text ever since the 1500s,
+                    </p>
+                    {/* </Col>
+              
+                  </Row> */}
+                  </div>
+                </div>
+              </div>
+            </Container>
+          ) : null}
+          {addToCartProduct && addToCartProduct.length > 0 ? (
+            <Container>
+              <div className="needplace">
+                <div className="address">
+                  <h3>Shipping Address</h3>
+                  <div className="address-card">
+                    <Row>
+                      <Col lg={10}>
+                        Lorem Ipsum is simply dummy text of the printing and
+                        typesettim Ipsum is simply dummy text of the printing
+                        and typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                      </Col>
+                      <Col lg={2}>
+                        <Button
+                          data-toggle="modal"
+                          data-target="#changeadress-model"
+                        >
+                          Change
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+            </Container>
+          ) : null}
+          {addToCartProduct && addToCartProduct.length > 0 ? (
+            <Container>
+              <div className="needplace">
+                <div className="totalPAY">
+                  <Row className="justify-content-center">
+                    <Col lg={10}>
+                      <div className="totelPAYCAR">
+                        <Row>
+                          <Col sm={6}>
+                            <h4>Total</h4>
+                            <h2>₹620.00</h2>
+                          </Col>
+                          <Col sm={6}>
+                            <Button>
+                              <Link to="/user-pay-method">Checkout</Link>
+                            </Button>
+                            <Button>
+                              <Link to="/product">Continue Shopping</Link>
+                            </Button>
                           </Col>
                         </Row>
                       </div>
                     </Col>
                   </Row>
                 </div>
-
-                <div className="needplace">
-                  <div className="address">
-                    <h3>Address</h3>
-                    <div className="address-card">
-                      {/* <Row>
-                    <Col lg={10}> */}
-                      <p>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesettim Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s,
-                      </p>
-                      {/* </Col>
-              
-                  </Row> */}
-                    </div>
-                  </div>
-                </div>
-                <div className="needplace">
-                  <div className="address">
-                    <h3>Shipping Address</h3>
-                    <div className="address-card">
-                      <Row>
-                        <Col lg={10}>
-                          Lorem Ipsum is simply dummy text of the printing and
-                          typesettim Ipsum is simply dummy text of the printing and
-                          typesetting industry. Lorem Ipsum has been the industry's
-                          standard dummy text ever since the 1500s,
-                        </Col>
-                        <Col lg={2}>
-                          <Button
-                            data-toggle="modal"
-                            data-target="#changeadress-model"
-                          >
-                            Change
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="needplace">
-                  <div className="totalPAY">
-                    <Row className="justify-content-center">
-                      <Col lg={10}>
-                        <div className="totelPAYCAR">
-                          <Row>
-                            <Col sm={6}>
-                              <h4>Total</h4>
-                              <h2>₹620.00</h2>
-                            </Col>
-                            <Col sm={6}>
-                              <Button>
-                                <Link to="/user-pay-method">Checkout</Link>
-                              </Button>
-                              <Button>
-                                <Link to="/product">Continue Shopping</Link>
-                              </Button>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </div>
-              </Container>
-            ))
-          ) : (
-            <div className="Emptycart">
-              <img src={cart} />
-              <p className="emptyMSG">Cart is Empty</p>
-            </div>
-          )}
+              </div>
+            </Container>
+          ) : null}
         </div>
       </section>
 
@@ -380,9 +419,15 @@ function Addcart() {
         </div>
       </div>
 
-
       {/* Modal */}
-      <div className="modal fade notification-area" id="Coupon" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div
+        className="modal fade notification-area"
+        id="Coupon"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-body">
@@ -429,7 +474,6 @@ function Addcart() {
                           </tbody>
                         </table>
                       </Col>
-
                     </Row>
                   </div>
                 ))
