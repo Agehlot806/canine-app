@@ -1538,7 +1538,9 @@ box-shadow: none !important;
 .Newsletter {
   padding: 40px 0;
 }
-
+.delete-addcard {
+  text-align: center;
+}
 .Newsletter h1 {
   text-align: center;
   font-family: David Libre;
