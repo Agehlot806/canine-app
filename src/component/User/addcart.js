@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Newheader from "../../directives/newheader";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
@@ -13,6 +13,8 @@ import { BASE_URL } from "../../Constant/Index";
 function Addcart() {
   const { id } = useParams();
   console.log("id", id);
+  // Create a ref to store the list of items in the cart
+  const cartItemsRef = useRef();
   const [quantity, setQuantity] = useState(1);
   // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
@@ -30,7 +32,7 @@ function Addcart() {
     setQuantity(quantity + 1);
   };
   const handleDecrementone = () => {
-    if (quantity > 1) {
+    if (quantity > 0) {
       setQuantity(quantity - 1);
     }
   };
@@ -40,16 +42,9 @@ function Addcart() {
     couponlistdata();
   }, []);
 
-  //  const getUserInfo = async ()=>{
-  //   const customerData = await localStorage.getItem("userInfo");
-  //   console.log("customerData: ",customerData);
-  //   if (customerData) {
-  //     setcustomer_id(JSON.parse(customerData).id)
-  //   }
-
-  // }
-  // console.log("customer_id: ", customer_id);
-  // ----------------------------------------
+  // useEffect(() => {
+  //   setAddToCartProduct(cartItemsRef.current);
+  // }, [cartItemsRef]);
 
   const addToCartData = async () =>
     // quantity,
@@ -61,17 +56,18 @@ function Addcart() {
     {
       axios
         .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-          product_id: id, // Replace this with the correct product_id you want to add
+          id: id, // Replace this with the correct product_id you want to add
           // user_id: storedUserId,
-          // quantity: quantity,
+          // price: price,
+          quantity: quantity,
           // image: image,
           // item_id: item_id,
           // item_name: item_name,
-          // price: price,
           // variant: variant,
         })
         .then((response) => {
           console.log(response);
+          // cartItemsRef.current = response.data.data;
           setAddToCartProduct(response.data.data);
           console.log("response.data.data: ", response.data.data);
         })
@@ -93,10 +89,20 @@ function Addcart() {
 
   const removeFromCart = async (id) => {
     try {
-      const response = await axios.delete(
-        `${BASE_URL}/customer/wish-list/remove_product/${productId}`
-      );
-      console.log("Product removed from cart:", response.data);
+      const response = await axios
+        .delete(`${BASE_URL}/customer/wish-list/remove_product/${id}`)
+        .then((response) => {
+          console.log(response);
+          window.location.reload(false);
+        });
+      // if (response.data.success) {
+      //   setAddToCartProduct(
+      //     (prevData) => prevData.filter((item) => item.id !== id)
+      //     // refresh
+      //   );
+      //   window.location.reload(false);
+      //   console.log("Product removed from cart:", response.data);
+      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -115,6 +121,20 @@ function Addcart() {
       }
     }
   };
+  // const calculateRoundingAdjust = () => {
+  //   if (addToCartProduct && addToCartProduct.length > 0) {
+  //     const subtotal = addToCartProduct[0]?.price;
+  //     const taxAmount = subtotal * 0.05;
+  //     const totalAmount = subtotal + taxAmount;
+
+  //     // Calculate the rounding adjust amount based on the sum of subtotal and taxAmount
+  //     const roundingAdjust = Math.round(totalAmount) - totalAmount;
+
+  //     return roundingAdjust.toFixed(2); // Format the rounding adjust to two decimal places
+  //   }
+
+  //   return "0.00";
+  // };
   return (
     <>
       <Newheader />
@@ -130,30 +150,58 @@ function Addcart() {
               <Container>
                 <Row>
                   <Col lg={2}>
-                    <img src={item.image} />
+                    <img
+                      src={
+                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                        item.image
+                      }
+                    />
                   </Col>
-                  <Col lg={7} className="align-self-center">
+                  <Col lg={6} className="align-self-center">
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
                   <Col lg={2} className="align-self-center">
                     <h3>₹{item.price}</h3>
+                    {/* <div className="quantity-btn">
+                      <button onClick={handleIncrementone}>
+                        <i className="fa fa-minus" />
+                      </button>
+                      <span>{item.quantity}</span>
+
+                      <button onClick={handleDecrementone}>
+                        <i className="fa fa-plus" />
+                      </button>
+                    </div> */}
                     <div className="quantity-btn">
                       <button onClick={handleDecrementone}>
                         <i className="fa fa-minus" />
                       </button>
-                      <span>{item.quantity}</span>
+                      <form>
+                        <div className="form-group">
+                          <input
+                            type="tel"
+                            className="form-control"
+                            placeholder="Quantity"
+                            value={quantity == 0 ? 1 : 1}
+                            // onChange={handleQuantityChange}
+                            autoComplete="new-number"
+                          />
+                        </div>
+                      </form>
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-plus" />
                       </button>
                     </div>
                   </Col>
-                  <Col lg={1} className="align-self-center">
+                  <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
-                      <i class="fa fa-trash-o" />
+                      <Link onClick={() => removeFromCart(item.id)}>
+                        <i class="fa fa-trash-o" />
+                      </Link>
                     </div>
                   </Col>
                   <hr />
@@ -252,7 +300,9 @@ function Addcart() {
                         <Col>
                           <h5>Sub Total</h5>
                         </Col>
-                        <Col>{/* <h5>₹{addToCartData[0]?.price}</h5> */}</Col>
+                        <Col>
+                          <h5>₹{addToCartProduct[0]?.price}</h5>
+                        </Col>
                       </Row>
                       <hr />
                       <Row>
@@ -260,7 +310,7 @@ function Addcart() {
                           <h5>Tax(5%)</h5>
                         </Col>
                         <Col>
-                          {/* <h5>₹{addToCartData[0]?.price * 0.05}</h5> */}
+                          <h5>₹{addToCartProduct[0]?.price * 0.05}</h5>
                         </Col>
                       </Row>
                       <hr />
@@ -269,10 +319,16 @@ function Addcart() {
                           <h5>Rounding Adjust</h5>
                         </Col>
                         <Col>
-                          {/* <h5>
-                          ₹{addToCartProduct[0].price} + 5% = ₹
-                          {(addToCartProduct[0].price * 0.05).toFixed(2)}
-                        </h5> */}
+                          <h5>
+                            ₹
+                            {/* {(
+                              (addToCartProduct[0]?.price ||
+                                addToCartProduct[0]?.price) +
+                              (taxAmount || addToCartProduct[0]?.price * 0.05) +
+                              calculateRoundingAdjust()
+                            ).toFixed(2)}{" "} */}
+                            {/* Calculate and display the Rounding Adjust */}
+                          </h5>
                         </Col>
                       </Row>
                     </div>
