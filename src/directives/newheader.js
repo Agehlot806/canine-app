@@ -9,13 +9,27 @@ import { Toaster, toast } from "react-hot-toast";
 function Newheader() {
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
-  const [searchTerm3, setSearchTerm3] = useState("");
-  const [searchapi3, setSearchApi3] = useState([]);
+  const [dogsubcategories, setdogsubcategories] = useState("");
+  const [storedUserId, setStoredUserId] = useState(null);
+  const [categories, setcategories] = useState([]);
+
 
   useEffect(() => {
     fetchBrands();
     allProductdata();
+    AllDogsubcategories();
+    categoriesProduct();
   }, []);
+
+  const categoriesProduct = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/categories`);
+      const jsonData = await response.json();
+      setcategories(jsonData.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const fetchBrands = async () => {
     try {
@@ -41,22 +55,6 @@ function Newheader() {
       });
   };
 
-  const handleSearch = (e) => {
-    const searchValue = e.target.value.toLowerCase();
-    setSearchTerm(searchValue);
-
-    if (searchValue === "") {
-      setAllProduct(allproduct);
-    } else {
-      const filteredProducts = allproduct.filter(
-        (product) =>
-          product.name && product.name.toLowerCase().includes(searchValue)
-      );
-      setAllProduct(filteredProducts);
-    }
-  };
-  const [searchTerm, setSearchTerm] = useState("");
-
   const logoutUser = () => {
     const customer_id = localStorage.getItem("userInfo");
     if (customer_id) {
@@ -73,12 +71,24 @@ function Newheader() {
     }
   };
 
-  const [storedUserId, setStoredUserId] = useState(null);
 
   useEffect(() => {
     const customer_id = localStorage.getItem("userInfo");
     setStoredUserId(JSON.parse(customer_id));
   }, []);
+
+  const AllDogsubcategories = async () => {
+    axios
+      .get(`${BASE_URL}/categories/subcategories`)
+      .then((response) => {
+        console.log(response);
+        console.log("Delete Successful");
+        setdogsubcategories(response.data.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -115,146 +125,110 @@ function Newheader() {
                 </Link>
               </li>
               <li className="nav-item dropdown mega-dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="megaDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Dog
-                </a>
+                {categories
+                  ? categories.map((item) =>
+                    item.name == "Dog" && (
+                      <Link
+                        className="nav-link dropdown-toggle"
+                        to=""
+                        id="megaDropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        {item.name}
+                      </Link>
+                    )
+                  ) : null
+                    }
                 <div
                   className="dropdown-menu mega-menu"
                   aria-labelledby="megaDropdown"
                 >
                   <div className="row">
                     <div className="col-md-4">
-                      <h5 className="mega-title">Dog Food</h5>
-                      <ul className="list-unstyled">
-                        <li>
-                          <Link to="">Dry Food</Link>
-                        </li>
-                        <li>
-                          <Link to="">Submenu Item 2</Link>
-                        </li>
-                        <li>
-                          <Link to="">Wet Food</Link>
-                        </li>
-                        <li>
-                          <Link to="">Premium Food</Link>
-                        </li>
-                        <li>
-                          <Link to="">Fresh Meals</Link>
-                        </li>
-                        <li>
-                          <Link to="">Vegetarian Food</Link>
-                        </li>
-                      </ul>
+                      <>
+                        <h5 className="mega-title">Dog Food</h5>
+                        <ul className="list-unstyled">
+                          {dogsubcategories
+                            ? dogsubcategories.map((item) =>
+                              item.name == "food" && (
+                                <li key={item.id}>
+                                  <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
+                                </li>
+                              )
+                            )
+                            : (
+                              <p className="emptyMSG">No Dog Food Sub Categories.</p>
+                            )}
+                        </ul>
+                      </>
                     </div>
+
                     <div className="col-md-4">
+
                       <h5 className="mega-title">Treats</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          {" "}
-                          <Link to="">Biscuits & Cookies</Link>
-                        </li>
-                        <li>
-                          {" "}
-                          <Link to="">Dental treats</Link>
-                        </li>
-                        <li>
-                          <Link to="">Freeze-Dried Treats</Link>
-                        </li>
-                        <li>
-                          <Link to="">Functional & Training Treats</Link>
-                        </li>
-                        <li>
-                          <Link to="">Jerkies</Link>
-                        </li>
-                        <li>
-                          <Link to="">Natural Treats</Link>
-                        </li>
-                        <li>
-                          <Link to="">Soft & Chewy Treats</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "treats" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Treats Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Supplies</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          {" "}
-                          <Link to="">Toys</Link>
-                        </li>
-                        <li>
-                          <Link to="">Bedding</Link>
-                        </li>
-                        <li>
-                          {" "}
-                          <Link to="">Bowls & Feeders</Link>
-                        </li>
-                        <li>
-                          {" "}
-                          <Link to="">Cleaning & Potty</Link>
-                        </li>
-                        <li>
-                          <Link to="">Training & Behaviour</Link>
-                        </li>
-                        <li>
-                          <Link to="">Carriers & Travel</Link>
-                        </li>
-                        <li>
-                          <Link to="">Grooming</Link>
-                        </li>
-                        <li>
-                          <Link to="">Gates, Crates & Pens</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "toys" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Supplies Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Accessories</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          {" "}
-                          <Link to="">Bows & Bandanas</Link>
-                        </li>
-                        <li>
-                          <Link to="">Collars & Leashes</Link>
-                        </li>
-                        <li>
-                          <Link to="">Harnesses</Link>
-                        </li>
-                        <li>
-                          {" "}
-                          <Link to="">Personalised Tags</Link>
-                        </li>
-                        <li>
-                          {" "}
-                          <Link to="">Sweaters, Raincoats & Shoes</Link>
-                        </li>
-                        <li>
-                          <Link to="">Harry Potter Limited Edition</Link>
-                        </li>
-                        <li>
-                          <Link to="">Tom & Jerry Limited Edition</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "accessories" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Accessories Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Health Care</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          <Link to="">Health Care Aids</Link>
-                        </li>
-                        <li>
-                          <Link to="">Vitamins & Supplements</Link>
-                        </li>
-                        <li>
-                          <Link to="">Flea & Tick</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "medicine" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Health Care Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                   </div>
@@ -276,84 +250,92 @@ function Newheader() {
                   className="dropdown-menu mega-menu"
                   aria-labelledby="megaDropdown"
                 >
-                  <div className="row">
+                   <div className="row">
                     <div className="col-md-4">
-                      <h5 className="mega-title">Cat Food & Treats</h5>
-                      <ul className="list-unstyled">
-                        <li>
-                          <Link to="/">Wet Food</Link>
-                        </li>
-                        <li>
-                          <Link to="">Treats</Link>
-                        </li>
-                      </ul>
+                      <>
+                        <h5 className="mega-title">Cat Food & Treats</h5>
+                        <ul className="list-unstyled">
+                          {dogsubcategories
+                            ? dogsubcategories.map((item) =>
+                              item.name == "food" && (
+                                <li key={item.id}>
+                                  <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
+                                </li>
+                              )
+                            )
+                            : (
+                              <p className="emptyMSG">No Dog Food Sub Categories.</p>
+                            )}
+                        </ul>
+                      </>
                     </div>
+
                     <div className="col-md-4">
+
                       <h5 className="mega-title">Cat Litter & Accessories</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          <Link to="">Cat Litter</Link>
-                        </li>
-                        <li>
-                          <Link to="">Cat Litter trays</Link>
-                        </li>
-                        <li>
-                          <Link to="">Cat Litter Scoops</Link>
-                        </li>
-                        <li>
-                          <Link to="">Cleaners & Deordorisers</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "treats" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Treats Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Cat Supplies</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          <Link to="">Toys</Link>
-                        </li>
-                        <li>
-                          <Link to="">Dinning Accessories</Link>
-                        </li>
-                        <li>
-                          <Link to="">Cat Grooming</Link>
-                        </li>
-                        <li>
-                          <Link to="">Carriers & Travel</Link>
-                        </li>
-                        <li>
-                          {" "}
-                          <Link to="">Furniture & Scratchers</Link>
-                        </li>
-                        <li>
-                          <Link to="">Cat Bedding</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "toys" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Supplies Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Cat Accessories</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          <Link to="">Cat Collars</Link>
-                        </li>
-                        <li>
-                          <Link to="">Cat Harness & Leash</Link>
-                        </li>
-                        <li>
-                          <Link to="">Personalised Tags</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "accessories" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Accessories Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Health Care</h5>
                       <ul className="list-unstyled">
-                        <li>
-                          <Link to="">Vitamins & Supplements</Link>
-                        </li>
-                        <li>
-                          <Link to="">Flea & Tick</Link>
-                        </li>
+                        {dogsubcategories
+                          ? dogsubcategories.map((item) =>
+                            item.name == "medicine" && (
+                              <li>
+                                <Link to="">{item.name}</Link>
+                              </li>
+                            )
+                          )
+                          : (
+                            <p className="emptyMSG">No Health Care Sub Categories.</p>
+                          )}
                       </ul>
                     </div>
+                 
                   </div>
                 </div>
               </li>
@@ -424,44 +406,44 @@ function Newheader() {
               {storedUserId ? (
                 // Display Logout button if user is logged in
                 <>
-                <li className="nav-item">
-                  <button className="yellow-btn" onClick={logoutUser}>
-                    Logout
-                  </button>
-                </li>
-                 <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle profile-icon"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <img src={pro} />
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to={`/pet-profile/`}>
-                    Pet Profile
-                  </Link>
-                  <Link className="dropdown-item" to="/all-veterinary">
-                    All Veterinary
-                  </Link>
-                  <Link className="dropdown-item" to="/all-service-booking">
-                    All Service Booking
-                  </Link>
-                  <Link className="dropdown-item" to="/wishlist-products">
-                    Wishlist Products
-                  </Link>
-                  <Link className="dropdown-item" to="/update-profile">
-                    Profile
-                  </Link>
-                  {/* <Link className="dropdown-item" onClick={logoutUser}>
+                  <li className="nav-item">
+                    <button className="yellow-btn" onClick={logoutUser}>
+                      Logout
+                    </button>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle profile-icon"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <img src={pro} />
+                    </a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <Link className="dropdown-item" to={`/pet-profile/`}>
+                        Pet Profile
+                      </Link>
+                      <Link className="dropdown-item" to="/all-veterinary">
+                        All Veterinary
+                      </Link>
+                      <Link className="dropdown-item" to="/all-service-booking">
+                        All Service Booking
+                      </Link>
+                      <Link className="dropdown-item" to="/wishlist-products">
+                        Wishlist Products
+                      </Link>
+                      <Link className="dropdown-item" to="/update-profile">
+                        Profile
+                      </Link>
+                      {/* <Link className="dropdown-item" onClick={logoutUser}>
                                         Logout
                                     </Link> */}
-                </div>
-              </li>
+                    </div>
+                  </li>
                 </>
               ) : (
                 // Display Sign In button if user is not logged in

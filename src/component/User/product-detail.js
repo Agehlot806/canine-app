@@ -80,6 +80,7 @@ function Productdetail() {
           price: productDetails.price,
           user_id: storedUserId,
           item_id: productDetails.id,
+
         }
       );
 
@@ -118,7 +119,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-        productDetails?.status + 0.5 >= index + 1 ? (
+          productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -183,50 +184,25 @@ function Productdetail() {
                   </div>
                 </LightGallery>
               </div> */}
-              {/* <div className="needplace">
+              <div className="needplace">
                 <Row>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className="product-item-inner">
-                      <img src={productItem} />
-                    </div>
-                  </Col>
+                  {productDetails?.images && productDetails?.images.length > 0 ? (
+                    productDetails?.images.map((item, index) => (
+                      <Col sm={2} className="mb-3" key={item.id}>
+                        <div className="product-item-inner">
+                          <img src={
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            productDetails.images[1]
+                          } />
+                        </div>
+                        { console.log("utyyyyyyyyyyyyyyyyyyyy",productDetails.images) }
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="emptyMSG">No Related Image.</p>
+                  )}
                 </Row>
-              </div> */}
+              </div>
             </Col>
             <Col lg={6}>
               <div className="productDetail-content">
@@ -275,8 +251,8 @@ function Productdetail() {
                         {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
-                          // value={pet_id}
-                          // onChange={(e) => setpet_id(e.target.value)}
+                        // value={pet_id}
+                        // onChange={(e) => setpet_id(e.target.value)}
                         >
                           <option>Choose....</option>
                           {productDetails?.variations &&
@@ -337,11 +313,10 @@ function Productdetail() {
                       <Col lg={4}>
                         <h5>
                           {" "}
-                          {`₹${
-                            productDetails.price -
+                          {`₹${productDetails.price -
                             (productDetails.price * productDetails.discount) /
-                              100
-                          }`}
+                            100
+                            }`}
                         </h5>
                       </Col>
                       <Col lg={5}>

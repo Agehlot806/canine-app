@@ -72,27 +72,27 @@ function Petcategory() {
     };
 
     const { id } = useParams();
-    console.log("idid", id);
+    console.log("categoriesID", id);
     
     const [petitemproduct, setpetitemproduct] = useState([]);
     const [subcategories, setsubcategories] = useState([]);
 
     useEffect(() => {
-        // allPetitemproduct();
+        allPetitemproduct();
         Allsubcategories();
     }, []);
-    // const allPetitemproduct = async () => {
-    // axios
-    //     .get(`${BASE_URL}/items/product/7/${subid}`)
-    //     .then((response) => {
-    //         console.log(response);
-    //         console.log("Delete Successful");
-    //         setpetitemproduct(response.data.data)
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
-    // };
+    const allPetitemproduct = async () => {
+    axios
+        .get(`${BASE_URL}/items/product/${id}/${subid}`)
+        .then((response) => {
+            console.log(response);
+            console.log("Delete Successful");
+            setpetitemproduct(response.data.data)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
 
     const Allsubcategories = async () => {
         axios
@@ -108,10 +108,10 @@ function Petcategory() {
     };
 
     // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
+    // const customer_id = localStorage.getItem("userInfo");
+    // console.log("=======>>>>>> id", customer_id);
+    // let storedUserId = JSON.parse(customer_id);
+    // console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
     const addToWishlist = async (item_id) => {
@@ -137,8 +137,8 @@ function Petcategory() {
 
     const [subid, setsubid] = useState("")
     const subcatid = (id) => {
-        console.log("testid", id);
         setsubid(id)
+        console.log("subcategoriesID", subid);
         axios
             .get(`${BASE_URL}/items/product/${id}/${subid}`)
             .then((response) => {
@@ -151,6 +151,7 @@ function Petcategory() {
 
     }
 
+    
     return (
         <>
             <Toaster />
@@ -594,9 +595,9 @@ function Petcategory() {
                                         <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             {subcategories && subcategories.length > 0 ? (
                                                 subcategories.map((item, index) => (
-                                                    <li className="nav-item">
+                                                    <li className="nav-item" key={item.id}>
                                                         <a className="nav-link" id="pills-home-tab" data-toggle="pill"
-                                                            onClick={(id) => subcatid(item.id)} href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                                                            onClick={(id) => subcatid(item.id, item.name)} href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
                                                             <img src={"https://canine.hirectjob.in//storage/app/public/category/" + item.image} />
                                                             <h6>{item.name}</h6>
                                                         </a>
