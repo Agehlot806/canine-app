@@ -9,6 +9,7 @@ import Footer from "../../directives/footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import { Toaster, toast } from "react-hot-toast";
 
 function Addcart() {
   const { id } = useParams();
@@ -38,6 +39,7 @@ function Addcart() {
     // getUserInfo()
     addToCartData();
     couponlistdata();
+    GetStateAll();
   }, []);
 
   //  const getUserInfo = async ()=>{
@@ -52,33 +54,33 @@ function Addcart() {
   // ----------------------------------------
 
   const addToCartData = async () =>
-    // quantity,
-    // image,
-    // item_id,
-    // item_name,
-    // price,
-    // variant
-    {
-      axios
-        .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-          product_id: id, // Replace this with the correct product_id you want to add
-          // user_id: storedUserId,
-          // quantity: quantity,
-          // image: image,
-          // item_id: item_id,
-          // item_name: item_name,
-          // price: price,
-          // variant: variant,
-        })
-        .then((response) => {
-          console.log(response);
-          setAddToCartProduct(response.data.data);
-          console.log("response.data.data: ", response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+  // quantity,
+  // image,
+  // item_id,
+  // item_name,
+  // price,
+  // variant
+  {
+    axios
+      .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
+        product_id: id, // Replace this with the correct product_id you want to add
+        // user_id: storedUserId,
+        // quantity: quantity,
+        // image: image,
+        // item_id: item_id,
+        // item_name: item_name,
+        // price: price,
+        // variant: variant,
+      })
+      .then((response) => {
+        console.log(response);
+        setAddToCartProduct(response.data.data);
+        console.log("response.data.data: ", response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const couponlistdata = async () => {
     axios
       .get(`${BASE_URL}/coupon/list`)
@@ -115,8 +117,88 @@ function Addcart() {
       }
     }
   };
+
+  const GetStateAll = async (e) => {
+    var headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    await fetch(`${BASE_URL}/auth/state`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((Response) => Response.json())
+      .then((Response) => {
+        setStateall(Response.state);
+        // console.log("99999999999999999999", Response);
+      })
+      .catch((error) => {
+        console.error("ERROR FOUND---->>>>" + error);
+      });
+  };
+
+  const GetdCityAll = (state) => {
+    axios
+      .get(`${BASE_URL}/auth/city?state=${state}`, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("responseresponse", response);
+        setStateallCity(response.data.state);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const Subscription = (event) => {
+    if (event.target.value) {
+      setstate(event.target.value);
+
+      GetdCityAll(event.target.value);
+    }
+  };
+
+  const [stateall, setStateall] = useState([]);
+  const [stateallCity, setStateallCity] = useState([]);
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
+  const [mobile, setmobile] = useState("");
+  const [house_no, sethouse_no] = useState("");
+  const [area, setarea] = useState("");
+  const [landmark, setlandmark] = useState("");
+  const [pincode, setpincode] = useState("");
+  const [state, setstate] = useState("");
+  const [city, setcity] = useState("");
+
+  const handleAddAddress = (event) => {
+    event.preventDefault();
+    const data = {
+      user_id: storedUserId,
+      first_name: first_name,
+      last_name: last_name,
+      mobile: mobile,
+      house_no: house_no,
+      area: area,
+      landmark: landmark,
+      state: state,
+      city: city,
+      pincode: pincode,
+    };
+    axios
+      .post(`${BASE_URL}/customer/address/add`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Add Address Successfully");
+        console.log("veterinary", data);
+      })
+      .catch((error) => {
+        toast.error("Field is required");
+      });
+  };
   return (
     <>
+    <Toaster />
       <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -287,17 +369,12 @@ function Addcart() {
                 <div className="address">
                   <h3>Address</h3>
                   <div className="address-card">
-                    {/* <Row>
-                    <Col lg={10}> */}
                     <p>
                       Lorem Ipsum is simply dummy text of the printing and
                       typesettim Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been the industry's
                       standard dummy text ever since the 1500s,
                     </p>
-                    {/* </Col>
-              
-                  </Row> */}
                   </div>
                 </div>
               </div>
@@ -384,40 +461,86 @@ function Addcart() {
             </div>
             <div className="modal-body">
               <div class="form-group">
-                <label for="exampleFormControlInput1">New address</label>
-                <input class="form-control" type="text" />
+                <label>First Name</label>
+                <input class="form-control" type="text" value={first_name}
+                  onChange={(e) => setfirst_name(e.target.value)} />
               </div>
               <div class="form-group">
-                <label for="exampleFormControlInput1">State</label>
+                <label>Last Name</label>
+                <input class="form-control" type="text"
+                  value={last_name}
+                  onChange={(e) => setlast_name(e.target.value)} />
+              </div>
+              <div class="form-group">
+                <label>Mobile</label>
+                <input class="form-control" type="number"
+                  value={mobile}
+                  onChange={(e) => setmobile(e.target.value)} />
+              </div>
+              <div class="form-group">
+                <label>Plat,House no,Building,Company</label>
+                <input class="form-control" type="text"
+                  value={house_no}
+                  onChange={(e) => sethouse_no(e.target.value)} />
+              </div>
+              <div class="form-group">
+                <label>Area, Street,Sector,Village</label>
+                <input class="form-control" type="text"
+                  value={area}
+                  onChange={(e) => setarea(e.target.value)} />
+              </div>
+              <div class="form-group">
+                <label>Landmark</label>
+                <input class="form-control" type="text"
+                  value={landmark}
+                  onChange={(e) => setlandmark(e.target.value)} />
+              </div>
+              {/* <div class="form-group">
+                <label>State</label>
                 <select
+                  onChange={Subscription}
+                  value={state}
+                  onInput={(e) => setstate(e.target.value)}
                   class="form-control"
                   aria-label="Default select example"
                 >
-                  <option>state</option>
+                  <option>Choose...</option>
+                  {stateall.map((items) => (
+                    <option value={items.id} key={items.id}>
+                      {items.state_name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div class="form-group">
-                <label for="exampleFormControlInput1">City</label>
+                <label>City</label>
                 <select
+                  value={city}
+                  onChange={(e) => setcity(e.target.value)}
                   class="form-control"
                   aria-label="Default select example"
                 >
-                  <option>City</option>
+                  <option>Choose...</option>
+                  {stateallCity.map((items) => (
+                    <option>{items.city_name}</option>
+                  ))}
                 </select>
-              </div>
+              </div> */}
               <div class="form-group">
                 <label for="exampleFormControlInput1">Pincode</label>
-                <input class="form-control" type="text" />
+                <input class="form-control" type="text" value={pincode}
+                  onChange={(e) => setpincode(e.target.value)} />
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" onClick={handleAddAddress}>
                 Update
               </button>
             </div>
           </div>
         </div>
       </div>
+
 
       {/* Modal */}
       <div
