@@ -411,7 +411,7 @@ function Home(props) {
             {categories &&
               categories.map((item) => (
                 <div className="Shop-Deals" key={item.id}>
-                  <Link to={`/pet-category/${item.id}`}>
+                  <Link to={`/pet-category/${item.name}/${item.id}`}>
                     <img
                       src={
                         "https://canine.hirectjob.in/storage/app/public/category/" +
