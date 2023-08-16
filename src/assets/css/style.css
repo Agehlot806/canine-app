@@ -669,7 +669,8 @@ box-shadow: none !important;
   border-radius: 85px;
   padding: 35px;
   border: 1px solid #e2e1ff;
-  width: 100%;
+  width: 500px;
+  height: 500px;
 }
 
 .product-item-inner {
@@ -2805,4 +2806,7 @@ ul.list-unstyled li a {
 .tranker-search {
   position: relative;
   margin: 80px 0;
+}
+.product-innerBanner {
+  position: relative;
 }

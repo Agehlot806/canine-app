@@ -190,7 +190,7 @@ function Newheader() {
                           ? dogsubcategories.map((item) =>
                             item.name == "toys" && (
                               <li>
-                                <Link to="">{item.name}</Link>
+                                <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
                               </li>
                             )
                           )
@@ -206,7 +206,7 @@ function Newheader() {
                           ? dogsubcategories.map((item) =>
                             item.name == "accessories" && (
                               <li>
-                                <Link to="">{item.name}</Link>
+                                <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
                               </li>
                             )
                           )
@@ -222,7 +222,7 @@ function Newheader() {
                           ? dogsubcategories.map((item) =>
                             item.name == "medicine" && (
                               <li>
-                                <Link to="">{item.name}</Link>
+                                <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
                               </li>
                             )
                           )
@@ -294,7 +294,7 @@ function Newheader() {
                           ? dogsubcategories.map((item) =>
                             item.name == "toys" && (
                               <li>
-                                <Link to="">{item.name}</Link>
+                                <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
                               </li>
                             )
                           )
@@ -310,7 +310,7 @@ function Newheader() {
                           ? dogsubcategories.map((item) =>
                             item.name == "accessories" && (
                               <li>
-                                <Link to="">{item.name}</Link>
+                                <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
                               </li>
                             )
                           )
@@ -326,7 +326,7 @@ function Newheader() {
                           ? dogsubcategories.map((item) =>
                             item.name == "medicine" && (
                               <li>
-                                <Link to="">{item.name}</Link>
+                                <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
                               </li>
                             )
                           )
