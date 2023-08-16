@@ -389,7 +389,12 @@ function Addcart() {
                         </Col>
                         <Col>
                           <h5>
-                            ₹
+                            ₹{" "}
+                            {
+                              // (addToCartProduct[0]?.price) +
+                              addToCartProduct[0]?.price * 0.05 +
+                                addToCartProduct[0]?.price
+                            }
                             {/* {(
                               (addToCartProduct[0]?.price ||
                                 addToCartProduct[0]?.price) +

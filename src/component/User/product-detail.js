@@ -30,7 +30,7 @@ function Productdetail() {
   const [productDetails, setProductDetails] = useState([]);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
-  console.log("productDetails?.variations ", productDetails);
+  console.log("productDetails ", productDetails);
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
 
@@ -116,17 +116,22 @@ function Productdetail() {
   });
 
   // Lightbox product =====
-  const [mainImage, setMainImage] = useState('');
+  const [mainImage, setMainImage] = useState("");
   useEffect(() => {
     if (productDetails.image) {
-      setMainImage("https://canine.hirectjob.in/storage/app/public/product/" + productDetails.image);
+      setMainImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+          productDetails.image
+      );
     }
   }, [productDetails]);
-  console.log('Main Image URL:', mainImage);
+  console.log("Main Image URL:", mainImage);
 
   const handleThumbnailClick = (index) => {
     const clickedImage = productDetails.images[index];
-    setMainImage("https://canine.hirectjob.in/storage/app/public/product/" + clickedImage);
+    setMainImage(
+      "https://canine.hirectjob.in/storage/app/public/product/" + clickedImage
+    );
   };
 
   const itemWiseBanner = async () => {
@@ -139,9 +144,6 @@ function Productdetail() {
       console.log(error);
     }
   };
-
-
-  
 
   return (
     <>
@@ -163,7 +165,8 @@ function Productdetail() {
                 </div>
                 <div className="needplace">
                   <Row>
-                    {productDetails?.images && productDetails?.images.length > 0 ? (
+                    {productDetails?.images &&
+                    productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
                         <Col sm={2} className="mb-3" key={index}>
                           <div
@@ -186,7 +189,6 @@ function Productdetail() {
                   </Row>
                 </div>
               </div>
-
             </Col>
             <Col lg={6}>
               <div className="productDetail-content">
@@ -420,31 +422,30 @@ function Productdetail() {
       </section>
 
       <Container fluid className="p-0">
-        <div className="product-innerBanner">
-          {/* <img src={product} /> */}
-
-        </div>
+        <div className="product-innerBanner">{/* <img src={product} /> */}</div>
       </Container>
 
-      {itemwiseonebanner ? itemwiseonebanner.map((item, index) =>
-        item.type === "item_wise" && (
-          <div className="product-innerBanner">
-            <img
-              src={
-                "https://canine.hirectjob.in/storage/app/public/banner/" +
-                item.image
-              }
-            />
-            <div className="home-content">
-              <h1>{item.title}</h1>
-              <p>{item.description}</p>
-              <Button>
-                Explore More <i className="fa fa-angle-right" />
-              </Button>
-            </div>
-          </div>
-        )
-      )
+      {itemwiseonebanner
+        ? itemwiseonebanner.map(
+            (item, index) =>
+              item.type === "item_wise" && (
+                <div className="product-innerBanner">
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/public/banner/" +
+                      item.image
+                    }
+                  />
+                  <div className="home-content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Button>
+                      Explore More <i className="fa fa-angle-right" />
+                    </Button>
+                  </div>
+                </div>
+              )
+          )
         : null}
 
       <section className="section-padding food">
@@ -481,7 +482,6 @@ function Productdetail() {
                   </Link>
                 </div>
               </Col>
-              
             </Row>
           </div>
         </Container>

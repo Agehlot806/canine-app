@@ -9,7 +9,9 @@ import { Toaster, toast } from "react-hot-toast";
 function Newheader() {
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
+  console.log("allproduct: ", allproduct);
   const [dogsubcategories, setdogsubcategories] = useState("");
+  console.log("dogsubcategories: ", dogsubcategories);
   const [storedUserId, setStoredUserId] = useState(null);
   const [categories, setcategories] = useState([]);
 
