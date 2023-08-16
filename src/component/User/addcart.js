@@ -33,7 +33,7 @@ function Addcart() {
     setQuantity(quantity + 1);
   };
   const handleDecrementone = () => {
-    if (quantity > 0) {
+    if (quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
@@ -251,7 +251,8 @@ function Addcart() {
                             type="tel"
                             className="form-control"
                             placeholder="Quantity"
-                            value={quantity == 0 ? 1 : 1}
+                            // value={quantity == 0 ? 1 : 1}
+                            value={quantity}
                             // onChange={handleQuantityChange}
                             autoComplete="new-number"
                           />

@@ -14,13 +14,6 @@ import axios from "axios";
 import star from "../star";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
-// import LightGallery from 'lightgallery/react/Lightgallery.es5'
-// import lgThumbnail from "lightgallery/plugins/thumbnail";
-// import lgZoom from "lightgallery/plugins/zoom";
-// import lgAutoplay from "lightgallery/plugins/autoplay";
-// import lgVideo from "lightgallery/plugins/video";
-// import lgShare from "lightgallery/plugins/share";
-// import lgRotate from "lightgallery/plugins/rotate";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import brandpro3 from "../../assets/images/img/brandPro3.png";
@@ -29,11 +22,13 @@ import pro from "../../assets/images/icon/pro.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import { styled } from "styled-components";
+// import Lightbox from 'react-image-lightbox';
 
 function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
+  const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails?.variations ", productDetails);
   const { stars, reviews } = Productdetail;
@@ -43,12 +38,13 @@ function Productdetail() {
     setQuantity(quantity + 1);
   };
   const handleDecrementone = () => {
-    if (quantity > 0) {
+    if (quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
   useEffect(() => {
     productData();
+    itemWiseBanner();
   }, []);
 
   const productData = async () => {
@@ -96,17 +92,6 @@ function Productdetail() {
     }
   };
 
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
-  const openLightbox = (imageSrc) => {
-    setSelectedImage(imageSrc);
-    setLightboxOpen(true);
-  };
-  const closeLightbox = () => {
-    setSelectedImage("");
-    setLightboxOpen(false);
-  };
-
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
     if (!isNaN(newQuantity)) {
@@ -130,6 +115,34 @@ function Productdetail() {
     );
   });
 
+  // Lightbox product =====
+  const [mainImage, setMainImage] = useState('');
+  useEffect(() => {
+    if (productDetails.image) {
+      setMainImage("https://canine.hirectjob.in/storage/app/public/product/" + productDetails.image);
+    }
+  }, [productDetails]);
+  console.log('Main Image URL:', mainImage);
+
+  const handleThumbnailClick = (index) => {
+    const clickedImage = productDetails.images[index];
+    setMainImage("https://canine.hirectjob.in/storage/app/public/product/" + clickedImage);
+  };
+
+  const itemWiseBanner = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/banners/`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 2);
+      setitemwiseonebanner(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  
+
   return (
     <>
       <Toaster />
@@ -144,70 +157,36 @@ function Productdetail() {
         <Container>
           <Row>
             <Col lg={6}>
-              <div className="product-item">
-                <img
-                  src={
-                    "https://canine.hirectjob.in//storage/app/public/product/" +
-                    productDetails.image
-                  }
-                />
-                {/* {lightboxOpen && (
-                  <div className="lightbox-overlay" onClick={closeLightbox}>
-                    <div className="lightbox-content">
-                      <img src={selectedImage} alt="Enlarged Image" />
-                    </div>
-                  </div>
-                )} */}
+              <div>
+                <div className="product-item">
+                  <img src={mainImage} alt="Product Image" />
+                </div>
+                <div className="needplace">
+                  <Row>
+                    {productDetails?.images && productDetails?.images.length > 0 ? (
+                      productDetails?.images.map((item, index) => (
+                        <Col sm={2} className="mb-3" key={index}>
+                          <div
+                            className="product-item-inner"
+                            onClick={() => handleThumbnailClick(index)}
+                          >
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/product/" +
+                                item
+                              }
+                              alt={`Image ${index}`}
+                            />
+                          </div>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Related Image.</p>
+                    )}
+                  </Row>
+                </div>
               </div>
-              {/* <div className="gallery-container">
-                <LightGallery
-                  speed={500}
-                  plugins={[lgThumbnail, lgZoom, lgAutoplay, lgVideo, lgShare, lgRotate]}
-                >
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <a onClick={() => openLightbox(bannerPro)}>
-                        <img src={brandPro1} alt="Image 1" />
-                      </a>
-                    </div>
-                    <div className="col-lg-4">
-                      <a onClick={() => openLightbox(brandPro2)}>
-                        <img src={brandPro2} alt="Image 2" />
-                      </a>
-                    </div>
-                    <div className="col-lg-4">
-                      <a onClick={() => openLightbox(brandpro3)}>
-                        <img src={brandpro3} alt="Image 3" />
-                      </a>
-                    </div>
-                  </div>
-                </LightGallery>
-              </div> */}
-              <div className="needplace">
-                <Row>
-                  {productDetails?.images &&
-                  productDetails?.images.length > 0 ? (
-                    productDetails?.images.map((item, index) => (
-                      <Col sm={2} className="mb-3" key={item.id}>
-                        <div className="product-item-inner">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails.images[1]
-                            }
-                          />
-                        </div>
-                        {console.log(
-                          "utyyyyyyyyyyyyyyyyyyyy",
-                          productDetails.images
-                        )}
-                      </Col>
-                    ))
-                  ) : (
-                    <p className="emptyMSG">No Related Image.</p>
-                  )}
-                </Row>
-              </div>
+
             </Col>
             <Col lg={6}>
               <div className="productDetail-content">
@@ -439,11 +418,34 @@ function Productdetail() {
           </div>
         </Container>
       </section>
+
       <Container fluid className="p-0">
         <div className="product-innerBanner">
-          <img src={product} />
+          {/* <img src={product} /> */}
+
         </div>
       </Container>
+
+      {itemwiseonebanner ? itemwiseonebanner.map((item, index) =>
+        item.type === "item_wise" && (
+          <div className="product-innerBanner">
+            <img
+              src={
+                "https://canine.hirectjob.in/storage/app/public/banner/" +
+                item.image
+              }
+            />
+            <div className="home-content">
+              <h1>{item.title}</h1>
+              <p>{item.description}</p>
+              <Button>
+                Explore More <i className="fa fa-angle-right" />
+              </Button>
+            </div>
+          </div>
+        )
+      )
+        : null}
 
       <section className="section-padding food">
         <Container>
@@ -460,7 +462,7 @@ function Productdetail() {
                       <img src={product1} />
                     </div>
                     <div>
-                      <h6>Farmina</h6>
+                      <h6>sas</h6>
                       <p>asdsdsdadwe sdseded sded</p>
                     </div>
                     <div className="product-bag">
@@ -478,210 +480,7 @@ function Productdetail() {
                   </Link>
                 </div>
               </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
+              
             </Row>
           </div>
         </Container>

@@ -669,7 +669,8 @@ a {
   border-radius: 85px;
   padding: 35px;
   border: 1px solid #e2e1ff;
-  width: 100%;
+  width: 500px;
+  height: 500px;
 }
 
 .product-item-inner {
@@ -2820,4 +2821,7 @@ ul.list-unstyled li a {
 }
 input[type="number"]::-webkit-inner-spin-button {
   display: none;
+}
+.product-innerBanner {
+  position: relative;
 }
