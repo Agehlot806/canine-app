@@ -2825,3 +2825,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .product-innerBanner {
   position: relative;
 }
+.social-media a svg {
+  font-size: 25px;
+}

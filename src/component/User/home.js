@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import HomeImg from "../../assets/images/img/home.png";
 import leftImg from "../../assets/images/img/left-img.png";
 import food from "../../assets/images/img/food.png";
@@ -216,7 +216,38 @@ function Home(props) {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+  const [addToCartStatus, setAddToCartStatus] = useState("");
 
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails.name,
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity: productDetails.quantity,
+          price: productDetails.price,
+          user_id: storedUserId,
+          item_id: productDetails.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+
+  const { id } = useParams();
+  console.log("id: ", id);
   return (
     <>
       <Toaster />
@@ -411,7 +442,7 @@ function Home(props) {
             {categories &&
               categories.map((item) => (
                 <div className="Shop-Deals" key={item.id}>
-                  <Link to={`/pet-category/${item.id}`}>
+                  <Link to={`/pet-category/${item.name}/${item.id}`}>
                     <img
                       src={
                         "https://canine.hirectjob.in/storage/app/public/category/" +
@@ -491,7 +522,7 @@ function Home(props) {
                               </h6>
                             </Col>
                             <Col>
-                              <Link to="">
+                              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                                 <img src={bag} />
                               </Link>
                             </Col>

@@ -454,6 +454,7 @@ function Productdetail() {
           </div>
           <div className="needplace">
             <Row>
+              
               <Col lg={3} sm={6} xs={6} className="mb-4">
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
