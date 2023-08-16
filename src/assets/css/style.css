@@ -150,7 +150,7 @@ a {
     rgba(0, 0, 0, 0.05);
 }
 .profile-icon {
-box-shadow: none !important;
+  box-shadow: none !important;
 }
 .profile-icon img {
   width: 55px;
@@ -176,7 +176,7 @@ box-shadow: none !important;
 }
 .home-content {
   position: absolute;
- top: 0;
+  top: 0;
   width: 40%;
   padding: 30px 35px;
 }
@@ -311,8 +311,8 @@ box-shadow: none !important;
 }
 
 .foodMore {
-    text-align: right;
-    /* margin: 25px 0; */
+  text-align: right;
+  /* margin: 25px 0; */
 }
 
 .all-btn a {
@@ -694,12 +694,12 @@ box-shadow: none !important;
   margin: 20px 0 0;
 }
 .product-item-inner img {
-    width: 80px;
-    height: 80px;
-    /* background: #f2d2dd; */
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid #d7cace99;
+  width: 80px;
+  height: 80px;
+  /* background: #f2d2dd; */
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #d7cace99;
 }
 .productDetail-content i {
   color: red;
@@ -735,15 +735,15 @@ box-shadow: none !important;
   padding: 8px 16px;
 }
 .product-Deals img {
-    width: 110px;
+  width: 110px;
 }
 .product-Deals {
-    text-align: center;
+  text-align: center;
 }
 .product-Deals h1 {
-    font-size: 25px;
-    margin: 12px 0 0;
-    color: #000;
+  font-size: 25px;
+  margin: 12px 0 0;
+  color: #000;
 }
 /* Contact area css  */
 .contact-card {
@@ -781,9 +781,9 @@ box-shadow: none !important;
   height: 60px;
 }
 .contact-form select {
-    box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000D;
-    border: none;
-    height: 60px;
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000d;
+  border: none;
+  height: 60px;
 }
 .contact-form textarea {
   box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000d;
@@ -976,7 +976,8 @@ box-shadow: none !important;
 .otp-area input {
   border-radius: 25px;
   background: #eee;
-  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px
+    rgba(0, 0, 0, 0.05);
   height: 70px;
   border: none;
   width: 90px !important;
@@ -1429,12 +1430,12 @@ box-shadow: none !important;
 
 /* add cart */
 .quantity-btn input {
-    width: 60px;
-    /* height: 40px;
+  width: 60px;
+  /* height: 40px;
     border-radius: 50px; */
 }
 .quantity-btn {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .quantity-btn button {
@@ -1575,12 +1576,12 @@ box-shadow: none !important;
 }
 
 .banner-video {
-    color: #fff;
+  color: #fff;
 }
 
 .video-content {
-    padding: 18px;
-    background: #008efd;
+  padding: 18px;
+  background: #008efd;
 }
 
 .banner-video video {
@@ -2193,13 +2194,13 @@ a.placDate {
 .selectedCategory img {
   width: 100px;
 }
-.add-upload-area{
+.add-upload-area {
   background: #fff;
-    border-bottom: 5px solid #008efd;
-    border-top-left-radius: 2%;
-    border-top-right-radius: 2%;
-    box-shadow: 0 19px 38px rgba(0,0,0,.3), 0 15px 12px rgba(0,0,0,.22);
-    padding: 60px;
+  border-bottom: 5px solid #008efd;
+  border-top-left-radius: 2%;
+  border-top-right-radius: 2%;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  padding: 60px;
 }
 .add-upload label {
   width: 605px;
@@ -2226,8 +2227,8 @@ a.placDate {
   overflow: hidden;
 }
 .add-upload-area a img {
-    width: 150px;
-    margin: 0 10px;
+  width: 150px;
+  margin: 0 10px;
 }
 .add-upload-area .form-group {
   margin: 35px 0;
@@ -2413,9 +2414,6 @@ a.placDate {
   text-align: center;
 }
 
-
-
-
 /* sohel css */
 .filter-product ul li {
   list-style: none;
@@ -2434,11 +2432,11 @@ a.placDate {
   left: 90%;
   display: inline-block;
   margin-top: -25px;
-  color: #1D1D1D;
+  color: #1d1d1d;
   transform: translateX(-50%);
 }
 .form-range input {
-  color: #4D4D4D;
+  color: #4d4d4d;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -2450,10 +2448,9 @@ a.placDate {
 .form-range {
   margin-bottom: 20px;
 }
-.form-range input:focus-visible{
+.form-range input:focus-visible {
   border: 1px solid #ddd;
 }
-
 
 /* All veterinary area css */
 .veterinary-card {
@@ -2490,8 +2487,6 @@ a.placDate {
   font-size: 18px;
   text-align: center;
 }
-
-
 
 .veterinary-status {
   float: right;
@@ -2589,15 +2584,17 @@ a.placDate {
   border-bottom: 5px solid #008efd;
   border-top-left-radius: 2%;
   border-top-right-radius: 2%;
-  box-shadow: 0 19px 38px rgba(0,0,0,.3), 0 15px 12px rgba(0,0,0,.22);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   padding: 60px 100px;
-} 
+}
 .allblogbtn {
   text-align: center;
   margin: 50px 0 0;
 }
 .allblogbtn button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #f1c21b;
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
+      var(--_p, 100%) / 300% no-repeat,
+    #f1c21b;
   color: #fff;
   border: none;
   transform: perspective(500px) rotateY(calc(330deg * var(--_i, -1)));
@@ -2609,7 +2606,7 @@ a.placDate {
   font-size: 22.1195px;
   padding: 0 30px;
 }
-.allblogbtn button a{
+.allblogbtn button a {
   color: #fff;
 }
 
@@ -2623,7 +2620,7 @@ a.placDate {
 /* Custom CSS to style the mega menu */
 .mega-title {
   font-size: 20px;
-  font-family: 'Reem Kufi Fun';
+  font-family: "Reem Kufi Fun";
   font-weight: 600;
   color: #000;
 }
@@ -2665,9 +2662,8 @@ a.notification-btn i {
   align-self: center;
 }
 ul.list-unstyled li a {
-  color:#6c6b6b;
+  color: #6c6b6b;
 }
-
 
 #progress {
   position: relative;
@@ -2741,7 +2737,7 @@ ul.list-unstyled li a {
 
 /* === */
 .Emptycart {
-    text-align: center;
+  text-align: center;
 }
 .Emptycart img {
   width: 200px !important;
@@ -2756,7 +2752,6 @@ ul.list-unstyled li a {
   background-image: var(--mdb-navbar-toggler-icon-bg) !important;
 }
 
-
 /* tracker area */
 .tracker-bg {
   background: url(../images/trackerbg.jpg);
@@ -2764,7 +2759,12 @@ ul.list-unstyled li a {
   background-repeat: no-repeat;
 }
 .tracker-area {
-  background-image: linear-gradient(180deg,rgba(37,27,17,.2),rgba(37,27,17,.2)),linear-gradient(180deg,rgba(37,27,17,0),rgba(37,27,17,.5));
+  background-image: linear-gradient(
+      180deg,
+      rgba(37, 27, 17, 0.2),
+      rgba(37, 27, 17, 0.2)
+    ),
+    linear-gradient(180deg, rgba(37, 27, 17, 0), rgba(37, 27, 17, 0.5));
 }
 
 .tranker-search input {
@@ -2805,4 +2805,19 @@ ul.list-unstyled li a {
 .tranker-search {
   position: relative;
   margin: 80px 0;
+}
+/* profile form update upload remove css */
+.image-preview {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.image-preview img {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+}
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
 }

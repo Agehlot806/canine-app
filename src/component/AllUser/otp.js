@@ -108,7 +108,10 @@ function Otp() {
                     <OtpInput
                       value={phone}
                       otpType="number"
-                      onChange={(e) => setPhone(e)}
+                      onChange={(e) => {
+                        const numericValue = e.replace(/\D/g, "");
+                        setPhone(numericValue);
+                      }}
                       OTPLength={4}
                       autoFocus
                       // renderSeparator={<span>-</span>}

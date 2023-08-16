@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import banner from "../../assets/images/banner/banner.png";
 import Avatar1 from "../../assets/images/icon/Avatar1.svg";
@@ -262,6 +262,12 @@ function Petprofile() {
                         placeholder="Pet Name"
                         value={pet_name}
                         onChange={(e) => setpet_name(e.target.value)}
+                        onKeyPress={(e) => {
+                          // Check if the pressed key is a character (letter)
+                          if (!/^[a-zA-Z ]+$/.test(e.key)) {
+                            e.preventDefault(); // Prevent input of non-character values
+                          }
+                        }}
                       />
                     </div>
                     <div className="add-petbtn">

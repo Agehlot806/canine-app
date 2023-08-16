@@ -13,7 +13,6 @@ function Newheader() {
   const [storedUserId, setStoredUserId] = useState(null);
   const [categories, setcategories] = useState([]);
 
-
   useEffect(() => {
     fetchBrands();
     allProductdata();
@@ -71,7 +70,6 @@ function Newheader() {
     }
   };
 
-
   useEffect(() => {
     const customer_id = localStorage.getItem("userInfo");
     setStoredUserId(JSON.parse(customer_id));
@@ -83,7 +81,7 @@ function Newheader() {
       .then((response) => {
         console.log(response);
         console.log("Delete Successful");
-        setdogsubcategories(response.data.data)
+        setdogsubcategories(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -126,22 +124,23 @@ function Newheader() {
               </li>
               <li className="nav-item dropdown mega-dropdown">
                 {categories
-                  ? categories.map((item) =>
-                    item.name == "Dog" && (
-                      <Link
-                        className="nav-link dropdown-toggle"
-                        to=""
-                        id="megaDropdown"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        {item.name}
-                      </Link>
+                  ? categories.map(
+                      (item) =>
+                        item.name == "Dog" && (
+                          <Link
+                            className="nav-link dropdown-toggle"
+                            to=""
+                            id="megaDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            {item.name}
+                          </Link>
+                        )
                     )
-                  ) : null
-                    }
+                  : null}
                 <div
                   className="dropdown-menu mega-menu"
                   aria-labelledby="megaDropdown"
@@ -151,84 +150,100 @@ function Newheader() {
                       <>
                         <h5 className="mega-title">Dog Food</h5>
                         <ul className="list-unstyled">
-                          {dogsubcategories
-                            ? dogsubcategories.map((item) =>
-                              item.name == "food" && (
-                                <li key={item.id}>
-                                  <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
-                                </li>
-                              )
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "food" && (
+                                  <li key={item.id}>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
                             )
-                            : (
-                              <p className="emptyMSG">No Dog Food Sub Categories.</p>
-                            )}
+                          ) : (
+                            <p className="emptyMSG">
+                              No Dog Food Sub Categories.
+                            </p>
+                          )}
                         </ul>
                       </>
                     </div>
 
                     <div className="col-md-4">
-
                       <h5 className="mega-title">Treats</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "treats" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "treats" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Treats Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">No Treats Sub Categories.</p>
+                        )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Supplies</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "toys" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "toys" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Supplies Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">
+                            No Supplies Sub Categories.
+                          </p>
+                        )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Accessories</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "accessories" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "accessories" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Accessories Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">
+                            No Accessories Sub Categories.
+                          </p>
+                        )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Health Care</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "medicine" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "medicine" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Health Care Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">
+                            No Health Care Sub Categories.
+                          </p>
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -250,92 +265,105 @@ function Newheader() {
                   className="dropdown-menu mega-menu"
                   aria-labelledby="megaDropdown"
                 >
-                   <div className="row">
+                  <div className="row">
                     <div className="col-md-4">
                       <>
                         <h5 className="mega-title">Cat Food & Treats</h5>
                         <ul className="list-unstyled">
-                          {dogsubcategories
-                            ? dogsubcategories.map((item) =>
-                              item.name == "food" && (
-                                <li key={item.id}>
-                                  <Link to={`/pet-category/${item.name}`}>{item.name}</Link>
-                                </li>
-                              )
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "food" && (
+                                  <li key={item.id}>
+                                    <Link to={`/pet-category/${item.name}`}>
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
                             )
-                            : (
-                              <p className="emptyMSG">No Dog Food Sub Categories.</p>
-                            )}
+                          ) : (
+                            <p className="emptyMSG">
+                              No Dog Food Sub Categories.
+                            </p>
+                          )}
                         </ul>
                       </>
                     </div>
 
                     <div className="col-md-4">
-
                       <h5 className="mega-title">Cat Litter & Accessories</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "treats" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "treats" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Treats Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">No Treats Sub Categories.</p>
+                        )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Cat Supplies</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "toys" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "toys" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Supplies Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">
+                            No Supplies Sub Categories.
+                          </p>
+                        )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Cat Accessories</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "accessories" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "accessories" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Accessories Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">
+                            No Accessories Sub Categories.
+                          </p>
+                        )}
                       </ul>
                     </div>
                     <div className="col-md-4">
                       <h5 className="mega-title">Health Care</h5>
                       <ul className="list-unstyled">
-                        {dogsubcategories
-                          ? dogsubcategories.map((item) =>
-                            item.name == "medicine" && (
-                              <li>
-                                <Link to="">{item.name}</Link>
-                              </li>
-                            )
+                        {dogsubcategories ? (
+                          dogsubcategories.map(
+                            (item) =>
+                              item.name == "medicine" && (
+                                <li>
+                                  <Link to="">{item.name}</Link>
+                                </li>
+                              )
                           )
-                          : (
-                            <p className="emptyMSG">No Health Care Sub Categories.</p>
-                          )}
+                        ) : (
+                          <p className="emptyMSG">
+                            No Health Care Sub Categories.
+                          </p>
+                        )}
                       </ul>
                     </div>
-                 
                   </div>
                 </div>
               </li>
@@ -388,8 +416,8 @@ function Newheader() {
                     <input
                       type="text"
                       placeholder="Search by name"
-                    // value={searchTerm}
-                    // onChange={handleSearch}
+                      // value={searchTerm}
+                      // onChange={handleSearch}
                     />
                   </div>
                 </a>
@@ -423,7 +451,10 @@ function Newheader() {
                     >
                       <img src={pro} />
                     </a>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdown"
+                    >
                       <Link className="dropdown-item" to={`/pet-profile/`}>
                         Pet Profile
                       </Link>
@@ -453,7 +484,6 @@ function Newheader() {
                   </button>
                 </li>
               )}
-
             </ul>
           </div>
         </div>

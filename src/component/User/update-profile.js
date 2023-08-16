@@ -5,6 +5,10 @@ import Footer from "../../directives/footer";
 import axios from "axios";
 
 function Updateprofile() {
+  // const [uploadField, setUploadField] = useState([{image:""}])
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState({ image: "" } || null);
+
   const [profileData, setProfileData] = useState({
     firstname: "",
     lastname: "",
@@ -31,12 +35,35 @@ function Updateprofile() {
             // Set other fields as needed
           });
           // Update the profileData state
+          if (profile.image) {
+            setImageUrl(profile.image);
+          }
         }
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+  // const addUploadFields = () => {
+  //   let newUpdloadField = {image:""}
+  //   setUploadFields([...uploadField, newUpdloadField]);
+  // };
+  // const removeUploadFields = (index) => {
+  //   let data = [...uploadField];
+  //   data.splice(index, 1);
+  //   setUploadFields(data)
+  // };
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+
+      // Create a preview URL for the selected image
+      const previewUrl = URL.createObjectURL(file);
+      setImageUrl(previewUrl);
+    }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -77,7 +104,7 @@ function Updateprofile() {
                           onChange={(e) =>
                             setProfileData({
                               ...profileData,
-                              f_name: e.target.value,
+                              f_name: e.target.value.replace(/[^A-Za-z]/, ""),
                             })
                           }
                         />
@@ -96,7 +123,7 @@ function Updateprofile() {
                           onChange={(e) =>
                             setProfileData({
                               ...profileData,
-                              l_name: e.target.value,
+                              l_name: e.target.value.replace(/[^A-Za-z]/, ""),
                             })
                           }
                         />
@@ -110,7 +137,7 @@ function Updateprofile() {
                     <Form.Control
                       name="email"
                       placeholder="Enter email"
-                      type="text"
+                      type="email"
                       value={profileData.email || ""}
                       onChange={(e) =>
                         setProfileData({
@@ -128,13 +155,15 @@ function Updateprofile() {
                     <Form.Control
                       name="phone"
                       placeholder="Enter phone"
-                      type="text"
+                      type="tel"
                       maxLength={10}
                       value={profileData.phone || ""}
                       onChange={(e) =>
                         setProfileData({
                           ...profileData,
-                          phone: e.target.value,
+                          phone: e.target.value
+                            .replace(/\D/g, "")
+                            .substring(0, 10),
                         })
                       }
                     />
@@ -143,9 +172,24 @@ function Updateprofile() {
                     <Form.Label>
                       Upload Image<span style={{ color: "#008efd" }}>*</span>
                     </Form.Label>
-
-                    <Form.Control type="file" />
+                    <Form.Control type="file" onChange={handleImageUpload} />
+                    {imageUrl !== null && imageUrl !== "" && (
+                      <div className="image-preview">
+                        <img src={imageUrl} alt="Uploaded" />
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => {
+                            setImageFile(null);
+                            setImageUrl("");
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    )}
                   </Form.Group>
+
                   <Button type="submit" className="mt-4">
                     Update Profile
                   </Button>

@@ -109,7 +109,7 @@ function App() {
           <Route path="/user-pay" element={<Userpay />} />
           <Route path="/user-upi" element={<Userupi />} />
           <Route path="/map" element={<Map />} />
-          <Route path="/pet-category/:id" element={<Petcategory />} />
+          <Route path="/pet-category/:name/:id" element={<Petcategory />} />
           <Route path="/cat-category" element={<Catcategory />} />
           <Route path="/all-veterinary" element={<Allveterinary />} />
           <Route path="/all-service-booking" element={<Allservicebooking />} />
