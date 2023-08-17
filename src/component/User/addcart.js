@@ -17,17 +17,18 @@ function Addcart() {
   // Create a ref to store the list of items in the cart
   const cartItemsRef = useRef();
   const [quantity, setQuantity] = useState(1);
+  const [selectQuantity, setSelectQuantity] = useState(1);
   // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   const [couponlist, setcouponlist] = useState([]);
 
-  console.log("addToCartProduct: ", addToCartProduct);
+  const originalPrice = addToCartProduct[0]?.price;
+  const updatedPrice = originalPrice * 1.05;
+  const priceWithoutCents = parseInt(updatedPrice);
 
   const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
 
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -48,35 +49,28 @@ function Addcart() {
   //   setAddToCartProduct(cartItemsRef.current);
   // }, [cartItemsRef]);
 
-  const addToCartData = async () =>
-    // quantity,
-    // image,
-    // item_id,
-    // item_name,
-    // price,
-    // variant
-    {
-      axios
-        .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-          id: id, // Replace this with the correct product_id you want to add
-          // user_id: storedUserId,
-          // price: price,
-          quantity: quantity,
-          // image: image,
-          // item_id: item_id,
-          // item_name: item_name,
-          // variant: variant,
-        })
-        .then((response) => {
-          console.log(response);
-          // cartItemsRef.current = response.data.data;
-          setAddToCartProduct(response.data.data);
-          console.log("response.data.data: ", response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+  const addToCartData = async () => {
+    axios
+      .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
+        id: id, // Replace this with the correct product_id you want to add
+        // user_id: storedUserId,
+        // price: price,
+        quantity: quantity,
+        // image: image,
+        // item_id: item_id,
+        // item_name: item_name,
+        // variant: variant,
+      })
+      .then((response) => {
+        console.log(response);
+        // cartItemsRef.current = response.data.data;
+        setAddToCartProduct(response.data.data);
+        console.log("response.data.data: ", response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const couponlistdata = async () => {
     axios
       .get(`${BASE_URL}/coupon/list`)
@@ -202,6 +196,50 @@ function Addcart() {
         toast.error("Field is required");
       });
   };
+
+  // order placed
+  const handleCheckOut = async () => {
+    try {
+      const response = await axios.post(`${BASE_URL}/customer/order/place`, {
+        user_id: storedUserId,
+        // coupon_discount_amount:,
+        // coupon_discount_title:,
+        // payment_status:,
+        // order_status:,
+        // total_tax_amount:,
+        // payment_method:,
+        // transaction_reference:,
+        // delivery_address_id:,
+        // coupon_code:coupencode,
+        // order_type:,
+        // checked:,
+        // store_id:,
+        // zone_id:,
+        // delivered_status:,
+        // delivery_address:,
+        // item_campaign_id:,
+        // order_amount:,
+        // variant: productDetails.variations || "Default", // You may need to update this based on your data
+        image: productDetails.image,
+        quantity: productDetails.quantity,
+        price: productDetails.price,
+        user_id: storedUserId,
+        item_id: productDetails.id,
+      });
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+
   return (
     <>
       <Toaster />
@@ -370,7 +408,8 @@ function Addcart() {
                           <h5>Sub Total</h5>
                         </Col>
                         <Col>
-                          <h5>₹{addToCartProduct[0]?.price}</h5>
+                          {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                          <h5>₹{originalPrice}</h5>
                         </Col>
                       </Row>
                       <hr />
@@ -379,7 +418,9 @@ function Addcart() {
                           <h5>Tax(5%)</h5>
                         </Col>
                         <Col>
-                          <h5>₹{addToCartProduct[0]?.price * 0.05}</h5>
+                          <h5>
+                            ₹{Math.floor(addToCartProduct[0]?.price * 0.05)}
+                          </h5>
                         </Col>
                       </Row>
                       <hr />
@@ -389,18 +430,7 @@ function Addcart() {
                         </Col>
                         <Col>
                           <h5>
-                            ₹{" "}
-                            {
-                              // (addToCartProduct[0]?.price) +
-                              addToCartProduct[0]?.price * 0.05 +
-                                addToCartProduct[0]?.price
-                            }
-                            {/* {(
-                              (addToCartProduct[0]?.price ||
-                                addToCartProduct[0]?.price) +
-                              (taxAmount || addToCartProduct[0]?.price * 0.05) +
-                              calculateRoundingAdjust()
-                            ).toFixed(2)}{" "} */}
+                            ₹{priceWithoutCents}
                             {/* Calculate and display the Rounding Adjust */}
                           </h5>
                         </Col>
@@ -465,7 +495,7 @@ function Addcart() {
                         <Row>
                           <Col sm={6}>
                             <h4>Total</h4>
-                            <h2>₹620.00</h2>
+                            <h2>₹{priceWithoutCents}</h2>
                           </Col>
                           <Col sm={6}>
                             <Button>

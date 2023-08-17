@@ -5,7 +5,12 @@ import app1 from "../assets/images/img/app1.png";
 import app2 from "../assets/images/img/app2.png";
 import strings from "../component/language";
 import { stringes } from "../utils";
-import { BiLogoFacebookCircle,BiLogoTwitter,BiLogoInstagramAlt } from "react-icons/bi";
+import {
+  BiLogoFacebookCircle,
+  BiLogoTwitter,
+  BiLogoInstagramAlt,
+} from "react-icons/bi";
+import WhatsAppWidget from "../chatwhatsapp";
 
 function Footer() {
   return (
@@ -84,13 +89,13 @@ function Footer() {
                     </li>
                     <li>
                       <Link to="tel:0987654321">
-                        <i className="fa fa-phone"  />{" "}
-                        +91-0987654321
+                        <i className="fa fa-phone" /> +91-0987654321
                       </Link>
                     </li>
                     <li>
                       <Link to="https://www.whatsapp.com/">
-                        <i className="fa fa-commenting-o" /> Chat Us
+                        <i className="fa fa-commenting-o" />
+                        <WhatsAppWidget />
                       </Link>
                     </li>
                   </ul>
@@ -113,13 +118,13 @@ function Footer() {
                     <li className="social-media">
                       <span>Follow Us On</span>
                       <Link to="https://www.facebook.com/">
-                      <BiLogoFacebookCircle/>
+                        <BiLogoFacebookCircle />
                       </Link>
                       <Link to="https://twitter.com/">
-                      <BiLogoTwitter/>
+                        <BiLogoTwitter />
                       </Link>
                       <Link to="https://www.instagram.com/">
-                      <BiLogoInstagramAlt/>
+                        <BiLogoInstagramAlt />
                       </Link>
                     </li>
                   </ul>

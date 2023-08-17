@@ -371,13 +371,13 @@ function Productdetail() {
             </p>
             <div className="row">
               <div className="col-sm-2 col">
-                <div className="star">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
+                <Wrapper>
+                  <div className="icon-style">
+                    {ratingStar}
+                    {/* {productDetails.reviews || 60} */}
+                    {/* <p>({productDetails.reviews || 60} customer reviews)</p> */}
+                  </div>
+                </Wrapper>
               </div>
               <div className="col-sm-2 col">
                 <div className="Product-img">
@@ -391,32 +391,6 @@ function Productdetail() {
               </div>
             </div>
             <hr />
-            <div className="row mt-3">
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s,
-              </p>
-              <div className="col-sm-2 col">
-                <div className="star">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-              </div>
-              <div className="col-sm-2 col">
-                <div className="Product-img">
-                  <img src={pro} />
-                  <span>Wade Warren</span>
-                  <div className="user-icon">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span> 1 2 3 4 5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </Container>
       </section>
@@ -455,7 +429,6 @@ function Productdetail() {
           </div>
           <div className="needplace">
             <Row>
-              
               <Col lg={3} sm={6} xs={6} className="mb-4">
                 <div className="food-product">
                   <i class="fa fa-heart-o" />

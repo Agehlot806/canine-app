@@ -30,7 +30,7 @@ function Login() {
     }
   };
   const handleChange = (e) => {
-    const inputValue = e.target.value;
+    const inputValue = e.target.value.replace(/\D/g, "");
     if (inputValue.length <= 10) {
       setPhone(inputValue);
     }

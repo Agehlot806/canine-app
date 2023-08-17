@@ -21,6 +21,7 @@ function Petcategory() {
   //   console.log("id", id);
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
+  console.log("brands: ", brands);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -29,7 +30,6 @@ function Petcategory() {
   const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
     useState(false);
   const [breed, setBreed] = useState([]);
-  setBreed;
   const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
   const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
     useState(false);
@@ -81,6 +81,8 @@ function Petcategory() {
   };
 
   const handleCheckboxClick = (event) => {
+    if (brand) {
+    }
     event.stopPropagation();
   };
 
@@ -113,7 +115,7 @@ function Petcategory() {
         console.log(error);
       });
   };
-
+ 
   const Allsubcategories = async () => {
     axios
       .get(`${BASE_URL}/categories/subcategories`)
@@ -443,70 +445,6 @@ function Petcategory() {
                                 {item.name}
                               </label>
                             </div>
-                            {/* <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  Large and Giant (13)
-                                </label>
-                              </div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  Medium (4)
-                                </label>
-                              </div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  Medium and Large (5)
-                                </label>
-                              </div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  Small (9)
-                                </label>
-                              </div> */}
                           </div>
                         ))}
                     </>

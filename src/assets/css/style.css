@@ -1993,7 +1993,7 @@ a.placDate {
 }
 
 .select-card1 {
-  background: linear-gradient(84deg, #eef 0%, rgba(238, 238, 255, 0.35) 100%);
+  background: #000;
 }
 
 .select-card2 {
@@ -2827,4 +2827,19 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .social-media a svg {
   font-size: 25px;
+}
+
+.payment-area .gpay-card-info-container.black, .gpay-card-info-animation-container.black{
+  background-color: transparent !important;
+
+}
+.payment-area .payment-area .gpay-card-info-container.black, .gpay-card-info-animation-container.black{
+  background-color: transparent !important;
+}
+.payment-btnNew {
+  background: #000;
+  width: 100%;
+  border-radius: 40px;
+  padding: 20px;
+  text-align: center;
 }
