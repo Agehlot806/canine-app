@@ -30,7 +30,7 @@ function Productdetail() {
   const [productDetails, setProductDetails] = useState([]);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
-  console.log("productDetails ", productDetails);
+  console.log("productDetails--- ", productDetails);
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
 
@@ -104,7 +104,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-        productDetails?.status + 0.5 >= index + 1 ? (
+          productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -122,7 +122,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -192,7 +192,7 @@ function Productdetail() {
                 <div className="needplace">
                   <Row>
                     {productDetails?.images &&
-                    productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
                         <Col sm={2} className="mb-3" key={index}>
                           <div
@@ -263,8 +263,8 @@ function Productdetail() {
                         {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
-                          // value={pet_id}
-                          // onChange={(e) => setpet_id(e.target.value)}
+                        // value={pet_id}
+                        // onChange={(e) => setpet_id(e.target.value)}
                         >
                           <option>Choose....</option>
                           {productDetails?.variations &&
@@ -325,11 +325,10 @@ function Productdetail() {
                       <Col lg={4}>
                         <h5>
                           {" "}
-                          {`₹${
-                            productDetails.price -
+                          {`₹${productDetails.price -
                             (productDetails.price * productDetails.discount) /
-                              100
-                          }`}
+                            100
+                            }`}
                         </h5>
                       </Col>
                       <Col lg={5}>
@@ -375,7 +374,7 @@ function Productdetail() {
               </div>
             </Col>
           </Row>
-          <div className="productBTNaddcard">
+          {productDetails.stock && productDetails.stock.length !== 0 ? (<div className="productBTNaddcard">
             <Button>
               <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                 <i className="fa fa-shopping-bag" /> Add to cart
@@ -383,7 +382,14 @@ function Productdetail() {
               <p>{addToCartStatus}</p>
             </Button>
           </div>
-          <div>
+          ) : (
+            <div className="sold-out-btn mt-3">
+              <Link>
+                Sold Out
+              </Link><br />
+              <Button data-toggle="modal" data-target="#soldoutModel">Notify Me When Available</Button>
+            </div>
+          )}          <div>
             <h1 className="main-head mt-4">Product details</h1>
             <p>{productDetails.description}</p>
           </div>
@@ -427,25 +433,25 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-            (item, index) =>
-              item.type === "item_wise" && (
-                <div className="product-innerBanner">
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/public/banner/" +
-                      item.image
-                    }
-                  />
-                  <div className="home-content">
-                    <h1>{item.title}</h1>
-                    <p>{item.description}</p>
-                    <Button>
-                      Explore More <i className="fa fa-angle-right" />
-                    </Button>
-                  </div>
+          (item, index) =>
+            item.type === "item_wise" && (
+              <div className="product-innerBanner">
+                <img
+                  src={
+                    "https://canine.hirectjob.in/storage/app/public/banner/" +
+                    item.image
+                  }
+                />
+                <div className="home-content">
+                  <h1>{item.title}</h1>
+                  <p>{item.description}</p>
+                  <Button>
+                    Explore More <i className="fa fa-angle-right" />
+                  </Button>
                 </div>
-              )
-          )
+              </div>
+            )
+        )
         : null}
 
       <section className="section-padding food">
@@ -455,64 +461,100 @@ function Productdetail() {
           </div>
           <div className="needplace">
             <Row>
-            {allrelatedproduct &&
-                    allrelatedproduct.map((item,index) => (
-                      <Col lg={3} sm={6} xs={6} className="mb-4">
-                        <div
-                          className="food-product"
-                          key={item.id}
-                          style={{
-                            background:
-                              gradientColors[index % gradientColors.length],
-                          }}
-                        >
-                          <i
-                            class="fa fa-heart-o"
-                            onClick={(id) => addToWishlist(item.id)}
+              {allrelatedproduct &&
+                allrelatedproduct.map((item, index) => (
+                  <Col lg={3} sm={6} xs={6} className="mb-4">
+                    <div
+                      className="food-product"
+                      key={item.id}
+                      style={{
+                        background:
+                          gradientColors[index % gradientColors.length],
+                      }}
+                    >
+                      <i
+                        class="fa fa-heart-o"
+                        onClick={(id) => addToWishlist(item.id)}
+                      />
+                      <Link to={`/product-details/${item.id}`}>
+                        <div className="text-center">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              item.image
+                            }
                           />
-                          <Link to={`/product-details/${item.id}`}>
-                            <div className="text-center">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/public/product/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <div>
-                              <h6>{item.name}</h6>
-                              <p>{item.description}</p>
-                            </div>
-                            <div className="product-bag">
-                              <Row>
-                                <Col>
-                                  <p>₹999.00</p>
-                                </Col>
-                                <Col>
-                                  <h5>{item.discount}%</h5>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col className="align-self-center">
-                                  <h6>₹{item.price}</h6>
-                                </Col>
-                                <Col>
-                                  <Link to="">
-                                    <img src={bag} />
-                                  </Link>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Link>
                         </div>
-                      </Col>
-                    ))}
+                        <div>
+                          <h6>{item.name}</h6>
+                          <p>{item.description}</p>
+                        </div>
+                        <div className="product-bag">
+                          <Row>
+                            <Col>
+                              <p>₹999.00</p>
+                            </Col>
+                            <Col>
+                              <h5>{item.discount}%</h5>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col className="align-self-center">
+                              <h6>₹{item.price}</h6>
+                            </Col>
+                            <Col>
+                              <Link to="">
+                                <img src={bag} />
+                              </Link>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Link>
+                    </div>
+                  </Col>
+                ))}
             </Row>
           </div>
         </Container>
       </section>
       <Footer />
+
+      {/* Modal */}
+      <div className="modal fade" id="soldoutModel" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                  >
+                    <option>Choose....</option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>        </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input type="email" className="form-control" placeholder="Enter Email" />
+                </div>
+                <div className="Notify-Me">
+                  <button type="submit" className="btn btn-primary" data-dismiss="modal">Notify Me When Available</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </>
+
+
   );
 }
 const Wrapper = styled.section`

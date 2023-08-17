@@ -240,6 +240,28 @@ function Addcart() {
     }
   };
 
+  const [addressContentVisible, setAddressContentVisible] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null)
+  const toggleAddressContent = () => {
+    setAddressContentVisible(!addressContentVisible);
+  };
+  
+  const addrss = [
+    {
+      id: 1,
+      add: 'From its medieval origins to the digital era, learn everything there is to know about the ubiquitous lorem ipsum passage.'
+    },
+    {
+      id: 2,
+      add: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..'
+    },
+    {
+      id: 3,
+      add: 'Lorem ipsum began as scrambled, nonsensical Latin derived from Ciceros 1st-century BC text De Finibus Bonorum et Malorum.'
+    },
+  ]
+
+
   return (
     <>
       <Toaster />
@@ -468,10 +490,9 @@ function Addcart() {
                   <div className="address-card">
                     <Row>
                       <Col lg={10}>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesettim Ipsum is simply dummy text of the printing
-                        and typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
+                      {
+                            selectedAddress !== null ? selectedAddress : 'Please select the address'
+                          }
                       </Col>
                       <Col lg={2}>
                         <Button
@@ -480,6 +501,31 @@ function Addcart() {
                         >
                           Change
                         </Button>
+                      </Col>
+                      <Col lg={12}>
+                        <div className="address-arrow">
+                          <button onClick={toggleAddressContent}>Select Address <i className="fa fa-arrow-down" aria-hidden="true"></i></button>
+                        </div>
+                        {addressContentVisible && (
+                          <div className="address-Content">
+                            {addrss.map((item) => (
+                              <div className="chk-address">
+                                <div className="chk-center">
+                                <input className="form-check-input" type="radio" name="exampleRadios" onClick={() => {
+                                  setSelectedAddress(item.add)
+                                  setAddressContentVisible(false)
+                                }} />
+                                </div>
+                                <div className="Daynamic-address">
+                                <span>
+                                  {item.add}
+                                </span>
+                                </div>
+                              </div>
+                            ))
+                            }
+                          </div>
+                        )}
                       </Col>
                     </Row>
                   </div>

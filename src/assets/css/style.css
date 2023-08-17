@@ -2879,3 +2879,53 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 15px 15px 0;
   transition: 0.5s;
 }
+
+.sold-out-btn {
+  text-align: center;
+}
+.sold-out-btn a {
+  background: green;
+  color: #fff;
+  border: none;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 22.1195px;
+  padding: 20px 60px;
+}
+.sold-out-btn button {
+  margin: 30px 0;
+  padding: 20px 65px;
+  font-size: 22px;
+  background: #000;
+}
+.Notify-Me button {
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #3b71ca;
+  color: #fff;
+  border: none;
+  transform: perspective(500px) rotateY(calc(330deg * var(--_i, -1)));
+  transition: 0.3s;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: 60px;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 20px;
+}
+.Notify-Me {
+  text-align: center;
+  margin: 30px 0;
+}
+.address-arrow {
+  margin-top: 10px;
+}
+.chk-address {
+  padding: 20px;
+  display: inline-flex;
+}
+.chk-center {
+  align-self: center;
+}
+.Daynamic-address {
+  margin: 0 10px;
+}
