@@ -300,8 +300,10 @@ function Addcart() {
                                   class="form-control coupon"
                                   name=""
                                   placeholder="Coupon code"
+                                  data-toggle="modal"
+                                  data-target="#Coupon"
                                 />
-                                <span class="input-group-append px-3">
+                                {/* <span class="input-group-append px-3">
                                   <button
                                     onClick={() => {
                                       setcoupenCode(!coupencode);
@@ -312,7 +314,7 @@ function Addcart() {
                                   >
                                     Apply
                                   </button>
-                                </span>
+                                </span> */}
                               </div>
                             </div>
                           </form>
@@ -670,6 +672,19 @@ function Addcart() {
                             </tr>
                           </tbody>
                         </table>
+
+                        <div className="text-center">
+                          <button
+                            onClick={() => {
+                              setcoupenCode(!coupencode);
+                            }}
+                            type="button"
+                            className="btn btn-primary btn-apply coupon"
+                            data-toggle="modal"
+                            data-target="#Coupon"
+                          >Apply</button>
+                        </div>
+                        
                       </Col>
                     </Row>
                   </div>
@@ -678,36 +693,6 @@ function Addcart() {
                 <p className="emptyMSG">No Coupon List.</p>
               )}
 
-              {/* <div className='notification'>
-              <Row>
-                <Col lg={2}>
-                  <img src={pro} />
-                </Col>
-                <Col lg={10} className='align-self-center'>
-                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
-                </Col>
-              </Row>
-            </div>
-            <div className='notification'>
-              <Row>
-                <Col lg={2}>
-                  <img src={pro} />
-                </Col>
-                <Col lg={10} className='align-self-center'>
-                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
-                </Col>
-              </Row>
-            </div>
-            <div className='notification'>
-              <Row>
-                <Col lg={2}>
-                  <img src={pro} />
-                </Col>
-                <Col lg={10} className='align-self-center'>
-                  <h6>Comment on your announce Alpina B12-Alpina...</h6>
-                </Col>
-              </Row>
-            </div> */}
               <button
                 type="button"
                 className="btn btn-secondary"

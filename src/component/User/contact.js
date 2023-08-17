@@ -1,9 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import contact from '../../assets/images/banner/contact.png'
 import Footer from '../../directives/footer'
+import strings from '../language';
+import { Link } from 'react-router-dom';
 function Contact() {
+    const [formData, setFormData] = useState({
+        name: "",
+        address: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+
+      const handleFormSubmit = (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
+    
+        // Do something with the form data, e.g., send it to a server
+        console.log("Form data:", formData);
+    
+        // Reset form fields
+        setFormData({
+          name: "",
+          address: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      };
+    
+      const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        // setFormData({
+        //   ...formData,
+        //   [name]: value,
+        // });
+        if (name === 'name') {
+            // Only allow characters in the name field
+            const regex = /^[a-zA-Z\s]*$/;
+            if (value === '' || regex.test(value)) {
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                });
+            }
+        } else if (name === 'phone') {
+            // Only allow numbers and limit to ten digits
+            const regex = /^[0-9]*$/;
+            if (value === '' || (regex.test(value) && value.length <= 10)) {
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                });
+            }
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
+      };
     return (
         <>
             <Newheader />
@@ -17,17 +74,20 @@ function Contact() {
                     <Row>
                         <Col lg={6} className="mb-4">
                             <div className='contact-card'>
+                                <Link to="tel:0987654321"> 
                                 <i className="fa fa-phone " />
                                 <h3>Phone</h3>
-                                <p>(+91)0000000000</p>
-                                <p>(+91)0000000000</p>
+                                <p >(+91){strings.mobile}</p>
+                                </Link>
                             </div>
                         </Col>
                         <Col lg={6} className="mb-4">
                             <div className='contact-card'>
                                 <i className="fa fa-envelope-o " />
+                                <Link to="mailto:info@canine.com">
                                 <h3>Email</h3>
                                 <p>info@canine.com</p>
+                                </Link>
                             </div>
                         </Col>
                         <Col lg={6} className="mb-4">
@@ -59,30 +119,56 @@ function Contact() {
                         <Row>
                             <Col lg={6}>
                                 <div className='contact-form'>
-                                <Form>
+                                <Form onSubmit={handleFormSubmit}>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Name</Form.Label>
-                                        <Form.Control placeholder="Enter name" />
+                                        <Form.Control
+                                            name="name"
+                                            placeholder="Enter name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Address</Form.Label>
-                                        <Form.Control placeholder="Enter address" />
+                                        <Form.Control
+                                            name="address"
+                                            placeholder="Enter address"
+                                            value={formData.address}
+                                            onChange={handleInputChange}
+                                            />
                                     </Form.Group>
                                     <Row className="mb-3">
                                         <Col>
                                             <Form.Label>Email</Form.Label>
-                                            <Form.Control placeholder="Enter email" />
+                                            <Form.Control
+                                                name="email"
+                                                placeholder="Enter email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                            />
                                         </Col>
                                         <Col>
                                             <Form.Label>Phone no</Form.Label>
-                                            <Form.Control placeholder="Enter phone" />
+                                            <Form.Control
+                                                name="phone"
+                                                placeholder="Enter phone"
+                                                value={formData.phone}
+                                                onChange={handleInputChange}
+                                            />
                                         </Col>
                                     </Row>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Message</Form.Label>
-                                        <Form.Control placeholder="Leave a comment here" as="textarea" />
+                                        <Form.Control
+                                            name="message"
+                                            placeholder="Leave a comment here"
+                                            as="textarea"
+                                            value={formData.message}
+                                            onChange={handleInputChange}
+                                            />
                                     </Form.Group>
-                                    <Button className='mt-4'>Submit</Button>
+                                    <Button type='submit' className='mt-4'>Submit</Button>
                                 </Form>
                                 </div>
                             </Col>

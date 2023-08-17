@@ -39,8 +39,6 @@ import Pay from "./component/Partner/pay";
 import Serviceaddpet from "./component/User/service-add-pet";
 import Servicepet from "./component/User/service-pet";
 import Userpaymethod from "./component/User/user-pay-method";
-import Userpay from "./component/User/user-pay";
-import Userupi from "./component/User/user-upi";
 import Map from "./component/User/track-your-order";
 import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
 import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
@@ -63,6 +61,7 @@ import Findastore from "./component/User/find-a-store";
 import Careers from "./component/User/careers";
 import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
+import Shipping from "./component/User/shipping";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -105,9 +104,9 @@ function App() {
             path="/product-partner-shop"
             element={<Productpartnershop />}
           />
+          <Route path="/shipping" element={<Shipping />} />
+
           <Route path="/user-pay-method" element={<Userpaymethod />} />
-          <Route path="/user-pay" element={<Userpay />} />
-          <Route path="/user-upi" element={<Userupi />} />
           <Route path="/map" element={<Map />} />
           <Route path="/pet-category/:name/:id" element={<Petcategory />} />
           <Route path="/cat-category" element={<Catcategory />} />
