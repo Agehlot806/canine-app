@@ -45,6 +45,7 @@ function Productdetail() {
   useEffect(() => {
     productData();
     itemWiseBanner();
+    fetchrelatedproduct();
   }, []);
 
   const productData = async () => {
@@ -144,10 +145,35 @@ function Productdetail() {
       console.log(error);
     }
   };
+  const [allrelatedproduct, setallrelatedproduct] = useState([]);
+
+  const fetchrelatedproduct = async () => {
+    axios
+      .get(`${BASE_URL}/items/product/2/8`)
+      .then((response) => {
+        console.log(response);
+        console.log("Delete Successful");
+        setallrelatedproduct(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    // Add more gradient colors as needed
+  ];
+
 
   return (
     <>
       <Toaster />
+
       <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -429,32 +455,58 @@ function Productdetail() {
           </div>
           <div className="needplace">
             <Row>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/product-details">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>sas</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
+            {allrelatedproduct &&
+                    allrelatedproduct.map((item,index) => (
+                      <Col lg={3} sm={6} xs={6} className="mb-4">
+                        <div
+                          className="food-product"
+                          key={item.id}
+                          style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}
+                        >
+                          <i
+                            class="fa fa-heart-o"
+                            onClick={(id) => addToWishlist(item.id)}
+                          />
+                          <Link to={`/product-details/${item.id}`}>
+                            <div className="text-center">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in//storage/app/public/product/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <div>
+                              <h6>{item.name}</h6>
+                              <p>{item.description}</p>
+                            </div>
+                            <div className="product-bag">
+                              <Row>
+                                <Col>
+                                  <p>₹999.00</p>
+                                </Col>
+                                <Col>
+                                  <h5>{item.discount}%</h5>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col className="align-self-center">
+                                  <h6>₹{item.price}</h6>
+                                </Col>
+                                <Col>
+                                  <Link to="">
+                                    <img src={bag} />
+                                  </Link>
+                                </Col>
+                              </Row>
+                            </div>
                           </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
+                        </div>
+                      </Col>
+                    ))}
             </Row>
           </div>
         </Container>

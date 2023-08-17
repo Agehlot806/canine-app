@@ -125,24 +125,17 @@ function Newheader() {
                 </Link>
               </li>
               <li className="nav-item dropdown mega-dropdown">
-                {categories
-                  ? categories.map(
-                      (item) =>
-                        item.name == "Dog" && (
-                          <Link
-                            className="nav-link dropdown-toggle"
-                            to=""
-                            id="megaDropdown"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            {item.name}
-                          </Link>
-                        )
-                    )
-                  : null}
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to=""
+                  id="megaDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Dog
+                </Link>
                 <div
                   className="dropdown-menu mega-menu"
                   aria-labelledby="megaDropdown"
@@ -418,8 +411,8 @@ function Newheader() {
                     <input
                       type="text"
                       placeholder="Search by name"
-                      // value={searchTerm}
-                      // onChange={handleSearch}
+                    // value={searchTerm}
+                    // onChange={handleSearch}
                     />
                   </div>
                 </a>

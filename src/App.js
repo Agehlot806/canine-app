@@ -61,6 +61,7 @@ import Findastore from "./component/User/find-a-store";
 import Careers from "./component/User/careers";
 import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
+import Shipping from "./component/User/shipping";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -103,6 +104,8 @@ function App() {
             path="/product-partner-shop"
             element={<Productpartnershop />}
           />
+          <Route path="/shipping" element={<Shipping />} />
+
           <Route path="/user-pay-method" element={<Userpaymethod />} />
           <Route path="/map" element={<Map />} />
           <Route path="/pet-category/:name/:id" element={<Petcategory />} />

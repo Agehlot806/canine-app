@@ -14,6 +14,7 @@ import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
+import _ from "lodash";
 
 const clinetreview = {
   desktop: {
@@ -168,6 +169,24 @@ function Product(props) {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 3;
+  useEffect(() => {
+    // Update the paginated categories whenever brandcategories or currentPage changes
+    pagination(currentPage);
+  }, [allproduct, currentPage]);
+
+  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  const pages = _.range(1, pageCount + 1);
+
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+    setPaginatedCategories(paginated);
+  };
 
   return (
     <>
@@ -1125,7 +1144,7 @@ function Product(props) {
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {allproduct &&
+                  {/* {allproduct &&
                     allproduct.map((item,index) => (
                       <Col lg={4} sm={6} xs={6} className="mb-4">
                         <div
@@ -1176,8 +1195,81 @@ function Product(props) {
                           </Link>
                         </div>
                       </Col>
-                    ))}
+                    ))} */}
+                  {paginatedCategories.map((item, index) => (
+                    <Col lg={4} sm={6} xs={6} className="mb-4">
+                      <div
+                        className="food-product"
+                        key={item.id}
+                        style={{
+                          background:
+                            gradientColors[index % gradientColors.length],
+                        }}
+                      >
+                        <i
+                          class="fa fa-heart-o"
+                          onClick={(id) => addToWishlist(item.id)}
+                        />
+                        <Link to={`/product-details/${item.id}`}>
+                          <div className="text-center">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <div>
+                            <h6>{item.name}</h6>
+                            <p>{item.description}</p>
+                          </div>
+                          <div className="product-bag">
+                            <Row>
+                              <Col>
+                                <p>₹999.00</p>
+                              </Col>
+                              <Col>
+                                <h5>{item.discount}%</h5>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col className="align-self-center">
+                                <h6>₹{item.price}</h6>
+                              </Col>
+                              <Col>
+                                <Link to="">
+                                  <img src={bag} />
+                                </Link>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Link>
+                      </div>
+                    </Col>
+                  ))}
                 </Row>
+
+                <div className="pagination-area">
+                  <ul className="pagination">
+                    {pages.map((page) => (
+                      <li
+                        key={page}
+                        className={
+                          page === currentPage
+                            ? "page-item active"
+                            : "page-item"
+                        }
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => pagination(page)}
+                        >
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </Container>
             </section>
 

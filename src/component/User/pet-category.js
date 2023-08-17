@@ -227,28 +227,28 @@ function Petcategory() {
                     <>
                       {brands
                         ? brands.map(
-                            (item) =>
-                              item.canine == "0" && (
-                                <div>
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
+                          (item) =>
+                            item.canine == "0" && (
+                              <div>
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="defaultCheck1"
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="defaultCheck1"
                                   >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id="defaultCheck1"
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="defaultCheck1"
-                                    >
-                                      {item.title}
-                                    </label>
-                                  </div>
+                                    {item.title}
+                                  </label>
                                 </div>
-                              )
-                          )
+                              </div>
+                            )
+                        )
                         : null}
                     </>
                   )}
@@ -268,24 +268,24 @@ function Petcategory() {
                     <>
                       {subcategories && subcategories.length > 0
                         ? subcategories.map((item) => (
-                            <div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
                               >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {item.name}
-                                </label>
-                              </div>
-                              {/* <div
+                                {item.name}
+                              </label>
+                            </div>
+                            {/* <div
                           className="form-check"
                           onClick={handleCheckboxClick}
                         >
@@ -349,8 +349,8 @@ function Petcategory() {
                             Jerkies (45)
                           </label>
                         </div> */}
-                            </div>
-                          ))
+                          </div>
+                        ))
                         : null}
                     </>
                   )}
@@ -445,6 +445,7 @@ function Petcategory() {
                                 {item.name}
                               </label>
                             </div>
+                           
                           </div>
                         ))}
                     </>
@@ -605,9 +606,6 @@ function Petcategory() {
           <Col lg={9}>
             <section className="section-padding food">
               <Container>
-                {/* <h1 className="main-head">
-                                    Dogs
-                                </h1> */}
                 <div className="needplace">
                   <div className="dog-categorys-area">
                     <ul
@@ -619,9 +617,8 @@ function Petcategory() {
                         subcategories.map((item, index) => (
                           <li className="nav-item" key={item.id}>
                             <a
-                              className={`nav-link ${
-                                item.id == id ? "active" : ""
-                              }`}
+                              className={`nav-link ${item.id == id ? "active" : ""
+                                }`}
                               id="pills-home-tab"
                               data-toggle="pill"
                               onClick={(id) => subcatid(item.id, item.name)}
@@ -629,6 +626,8 @@ function Petcategory() {
                               role="tab"
                               aria-controls="pills-home"
                               aria-selected="true"
+
+
                             >
                               <img
                                 src={
@@ -646,7 +645,7 @@ function Petcategory() {
                     </ul>
                     <div className="tab-content" id="pills-tabContent">
                       <div
-                        className="tab-pane fade show"
+                        className="tab-pane fade"
                         id="pills-home"
                         role="tabpanel"
                         aria-labelledby="pills-home-tab"
@@ -684,10 +683,9 @@ function Petcategory() {
                                       </Row>
                                       <Row>
                                         <Col className="align-self-center">
-                                          <h6>{`₹${
-                                            item.price -
+                                          <h6>{`₹${item.price -
                                             (item.price * item.discount) / 100
-                                          }`}</h6>
+                                            }`}</h6>
                                         </Col>
                                         <Col>
                                           <Link to="">
@@ -710,173 +708,9 @@ function Petcategory() {
                     </div>
                   </div>
                 </div>
+
               </Container>
             </section>
-
-            {/* <Container fluid className='p-0'>
-                            <div className='all-bg'>
-                                <img src={bannerone} />
-                            </div>
-                        </Container> */}
-
-            {/* <section className="section-padding food">
-                            <Container>
-                                <Row>
-                                    <Col lg={6} sm={6}>
-                                        <h3>Related products</h3>
-                                    </Col>
-                                    <Col lg={6} sm={6}>
-                                        <div className='see-allbtn'>
-                                            <Link to="">See All</Link>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <div className="needplace">
-                                    <Row>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Container>
-                        </section> */}
           </Col>
         </Row>
       </Container>
