@@ -4,7 +4,7 @@ import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
-import cart from "../../assets/images/icon/cart.png";
+import cart from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
@@ -204,7 +204,7 @@ function Addcart() {
         console.log("SuccessfullyAddress", data);
       })
       .catch((error) => {
-        toast.error("Field is required");
+        // toast.error("Field is required");
       });
   };
 
@@ -276,14 +276,14 @@ function Addcart() {
         console.log(error);
       });
   };
-  console.log("address list",addresslist);
+  console.log("address list", addresslist);
 
 
   const handleDeleteAddress = (id) => {
     axios.delete(`https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`)
       .then(response => {
         toast.success('Address deleted successfully');
-        console.log('Address deleted successfully:', response.data.message);        
+        console.log('Address deleted successfully:', response.data.message);
         setaddresslist(prevAddressList =>
           prevAddressList.filter(item => item.id !== id)
         );
@@ -293,6 +293,71 @@ function Addcart() {
       });
   };
 
+
+
+
+  // ============================================================
+
+  const [profileData, setProfileData] = useState({
+    first_name: "",
+    last_name: "",
+    mobile: "", // Initialize with default value
+    house_no: "", // Initialize with default value
+    area: "",
+    landmark: "",
+    pincode: "",
+    state: "",
+    city: "",
+    // Add more fields here as needed
+  });
+  console.log("profileData: ", profileData);
+
+
+  useEffect(() => {
+    // Fetch profile data from the API
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/customer/address/list/${storedUserId}`)
+      .then((response) => {
+        if (response.data.status === "200") {
+          console.log("response.data: ", response.data);
+          setProfileData({
+            first_name: response.data.data[0].first_name,
+            last_name: response.data.data[0].last_name,
+            mobile: response.data.data[0].mobile, // Set email from response
+            house_no: response.data.data[0].house_no, // Set phone from response
+            area: response.data.data[0].area,
+            landmark: response.data.data[0].landmark,
+            pincode: response.data.data[0].pincode,
+            state: response.data.data[0].state,
+            city: response.data.data[0].city,
+
+            // Set other fields as needed
+          });
+          // Update the profileData state
+          // if (profile.image) {
+          //   setImageUrl(profile.image);
+          // }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        profileData // Send the profileData object in the request
+      );
+      if (response.data.message === "Successfully updated!") {
+        console.log("Profile updated successfully!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <Toaster />
@@ -304,6 +369,7 @@ function Addcart() {
       </Container>
       <section className="section-padding">
         <div className="add-cart">
+
           {addToCartProduct && addToCartProduct.length > 0 ? (
             addToCartProduct.map((item, index) => (
               <Container>
@@ -585,7 +651,10 @@ function Addcart() {
                                           </tr>
                                         </table>
                                         <div className="address-delete">
-                                          <i className="fa fa-trash" onClick={() => handleDeleteAddress(item.id)}/>
+                                          <i className="fa fa-trash" onClick={() => handleDeleteAddress(item.id)} />&nbsp; &nbsp;
+                                          {/* <i className="fa fa-edit" data-toggle="modal"
+                                            data-target="#update-model" /> */}
+
                                         </div>
                                       </div>
 
@@ -607,32 +676,34 @@ function Addcart() {
             </Container>
           ) : null}
           {addToCartProduct && addToCartProduct.length > 0 ? (
-            <Container>
-              <div className="needplace">
-                <div className="totalPAY">
-                  <Row className="justify-content-center">
-                    <Col lg={10}>
-                      <div className="totelPAYCAR">
-                        <Row>
-                          <Col sm={6}>
-                            <h4>Total</h4>
-                            <h2>₹{priceWithoutCents}</h2>
-                          </Col>
-                          <Col sm={6}>
-                            <Button>
-                              <Link to="/user-pay-method">Checkout</Link>
-                            </Button>
-                            <Button>
-                              <Link to="/product">Continue Shopping</Link>
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Col>
-                  </Row>
+            addToCartProduct.map((item, index) => (
+              <Container>
+                <div className="needplace">
+                  <div className="totalPAY">
+                    <Row className="justify-content-center">
+                      <Col lg={10}>
+                        <div className="totelPAYCAR">
+                          <Row>
+                            <Col sm={6}>
+                              <h4>Total</h4>
+                              <h2>₹{priceWithoutCents}</h2>
+                            </Col>
+                            <Col sm={6}>
+                              <Button>
+                                <Link to="/user-pay-method">Checkout</Link>
+                              </Button>
+                              <Button>
+                                <Link to="/product">Continue Shopping</Link>
+                              </Button>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
                 </div>
-              </div>
-            </Container>
+              </Container>
+            ))
           ) : null}
         </div>
       </section>
@@ -766,6 +837,191 @@ function Addcart() {
                 onClick={handleAddAddress}
               >
                 Add +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade editAddress"
+        id="update-model"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Update Address
+              </h5>
+            </div>
+            <div className="modal-body">
+              <div class="form-group">
+                <label>First Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="first_name"
+                  value={profileData.first_name || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      first_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Enter last name"
+                  name="last_name"
+                  value={profileData.last_name || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      last_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Mobile</label>
+                <input
+                  type="tel"
+                  name="mobile"
+                  class="form-control"
+                  maxLength={10}
+                  value={profileData.mobile || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      mobile: e.target.value
+                        .replace(/\D/g, "")
+                        .substring(0, 10),
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Plat,House no,Building,Company</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="house_no"
+                  value={profileData.house_no || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      house_no: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Area, Street,Sector,Village</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="area"
+                  value={profileData.area || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      area: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Landmark</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="landmark"
+                  value={profileData.landmark || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      landmark: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                />
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label>State</label>
+                    <select
+                      className="form-control"
+                      onChange={Subscription}
+                      value={state}
+                      onInput={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          state: e.target.value.replace(/[^A-Za-z]/, ""),
+                        })
+                      }
+                    >
+                      <option>State Choose...</option>
+                      {stateall.map((items) => (
+                        <option value={profileData.state || ""} key={items.id}>
+                          {items.state_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group">
+                    <label>City</label>
+                    <select
+                      className="form-control"
+                      onInput={(e) => setSelectedCity(e.target.value)}
+                      
+                      name={city}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          city: e.target.value.replace(/[^A-Za-z]/, ""),
+                        })
+                      }
+                    >
+                      <option>City Choose...</option>
+                      {stateallCity.map((items) => (
+                        <option value={profileData.city || ""}key={items.id}>{items.city_name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Pincode</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={profileData.pincode || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      pincode: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleFormSubmit}
+              >
+                Update +
               </button>
             </div>
           </div>

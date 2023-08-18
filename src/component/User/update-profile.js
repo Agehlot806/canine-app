@@ -19,10 +19,13 @@ function Updateprofile() {
   });
   console.log("profileData: ", profileData);
 
+
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
   useEffect(() => {
     // Fetch profile data from the API
     axios
-      .get("https://canine.hirectjob.in/api/v1/auth/my_profile/244")
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
       .then((response) => {
         if (response.data.status === "200") {
           console.log("response.data: ", response.data);
