@@ -130,10 +130,10 @@ function Petcategory() {
   };
 
   // storedUserId
-  // const customer_id = localStorage.getItem("userInfo");
-  // console.log("=======>>>>>> id", customer_id);
-  // let storedUserId = JSON.parse(customer_id);
-  // console.log("customer_id: ", customer_id);
+  const customer_id = localStorage.getItem("userInfo");
+  console.log("=======>>>>>> id", customer_id);
+  let storedUserId = JSON.parse(customer_id);
+  console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   const addToWishlist = async (item_id) => {
@@ -659,7 +659,7 @@ function Petcategory() {
                                     class="fa fa-heart-o"
                                     onClick={(id) => addToWishlist(item.id)}
                                   />
-                                  <Link to="/product-details">
+                                  <Link to={`/product-details/${item.id}`}>
                                     <div className="text-center">
                                       <img
                                         src={
