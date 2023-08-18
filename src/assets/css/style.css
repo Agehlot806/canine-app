@@ -2067,6 +2067,10 @@ a.placDate {
   font-size: 20px;
 }
 
+.payment-done button a{
+  color: #000;
+}
+
 .payment-done p {
   margin: 20px 0 40px;
 }
