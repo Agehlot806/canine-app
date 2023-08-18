@@ -24,9 +24,17 @@ function Addcart() {
   const [couponlist, setcouponlist] = useState([]);
   const [itemQuantities, setItemQuantities] = useState({});
 
-  const originalPrice = addToCartProduct[0]?.price;
+  // const originalPrice = addToCartProduct[0]?.price;
+
+  let originalPrice = 0;
+
   const updatedPrice = originalPrice * 1.05;
   const priceWithoutCents = parseInt(updatedPrice);
+  addToCartProduct.forEach((el) => {
+    let allPrice = parseInt(el.price) + parseInt(originalPrice);
+    originalPrice = allPrice;
+  });
+  console.log("originalPrice: ", originalPrice);
 
   // const customer_id = localStorage.getItem("userInfo");
   // let storedUserId = JSON.parse(customer_id);
@@ -278,23 +286,22 @@ function Addcart() {
   };
   console.log("address list", addresslist);
 
-
   const handleDeleteAddress = (id) => {
-    axios.delete(`https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`)
-      .then(response => {
-        toast.success('Address deleted successfully');
-        console.log('Address deleted successfully:', response.data.message);
-        setaddresslist(prevAddressList =>
-          prevAddressList.filter(item => item.id !== id)
+    axios
+      .delete(
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+      )
+      .then((response) => {
+        toast.success("Address deleted successfully");
+        console.log("Address deleted successfully:", response.data.message);
+        setaddresslist((prevAddressList) =>
+          prevAddressList.filter((item) => item.id !== id)
         );
       })
-      .catch(error => {
-        console.error('Error deleting address:', error);
+      .catch((error) => {
+        console.error("Error deleting address:", error);
       });
   };
-
-
-
 
   // ============================================================
 
@@ -312,11 +319,12 @@ function Addcart() {
   });
   console.log("profileData: ", profileData);
 
-
   useEffect(() => {
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/customer/address/list/${storedUserId}`)
+      .get(
+        `https://canine.hirectjob.in/api/v1/customer/address/list/${storedUserId}`
+      )
       .then((response) => {
         if (response.data.status === "200") {
           console.log("response.data: ", response.data);
@@ -369,7 +377,6 @@ function Addcart() {
       </Container>
       <section className="section-padding">
         <div className="add-cart">
-
           {addToCartProduct && addToCartProduct.length > 0 ? (
             addToCartProduct.map((item, index) => (
               <Container>
@@ -423,7 +430,7 @@ function Addcart() {
                   <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -539,9 +546,7 @@ function Addcart() {
                           <h5>Tax(5%)</h5>
                         </Col>
                         <Col>
-                          <h5>
-                            ₹{Math.floor(addToCartProduct[0]?.price * 0.05)}
-                          </h5>
+                          <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
                         </Col>
                       </Row>
                       <hr />
@@ -551,7 +556,10 @@ function Addcart() {
                         </Col>
                         <Col>
                           <h5>
-                            ₹{priceWithoutCents}
+                            ₹
+                            {`${parseInt(
+                              originalPrice * 0.05 + originalPrice
+                            )}`}
                             {/* Calculate and display the Rounding Adjust */}
                           </h5>
                         </Col>
@@ -570,17 +578,18 @@ function Addcart() {
                   <div className="address-card">
                     {console.log("addresslist", addresslist)}
                     {addresslist && addresslist.length > 1 ? (
-                      addresslist.map((item, index) => (
-                        index === 0 && (
-                          <p key={item.id}>
-                            {item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}
-                          </p>
-                        )
-                      ))
+                      addresslist.map(
+                        (item, index) =>
+                          index === 0 && (
+                            <p key={item.id}>
+                              {item.house_no} {item.area} {item.landmark}{" "}
+                              {item.city} {item.state} {item.pincode}
+                            </p>
+                          )
+                      )
                     ) : (
                       <p>No data to display</p>
                     )}
-
                   </div>
                 </div>
               </div>
@@ -596,9 +605,14 @@ function Addcart() {
                       <Col lg={10}>
                         {selectedAddress ? (
                           <div className="selectedAddress-area">
-                            <p>{selectedAddress.first_name} {selectedAddress.last_name}</p>
                             <p>
-                              {selectedAddress.house_no} {selectedAddress.area} {selectedAddress.landmark} {selectedAddress.city} {selectedAddress.state} {selectedAddress.pincode}
+                              {selectedAddress.first_name}{" "}
+                              {selectedAddress.last_name}
+                            </p>
+                            <p>
+                              {selectedAddress.house_no} {selectedAddress.area}{" "}
+                              {selectedAddress.landmark} {selectedAddress.city}{" "}
+                              {selectedAddress.state} {selectedAddress.pincode}
                             </p>
                             <p>Mobile: {selectedAddress.mobile}</p>
                           </div>
@@ -617,9 +631,18 @@ function Addcart() {
                       <Col lg={12}>
                         <div className="address-arrow">
                           <button onClick={toggleAddressContent}>
-                            Select Address <i className={`fa ${addressContentVisible ? 'fa-arrow-up' : 'fa-arrow-down'}`} aria-hidden="true"></i>
+                            Select Address{" "}
+                            <i
+                              className={`fa ${
+                                addressContentVisible
+                                  ? "fa-arrow-up"
+                                  : "fa-arrow-down"
+                              }`}
+                              aria-hidden="true"
+                            ></i>
                           </button>
-                        </div><br />
+                        </div>
+                        <br />
                         <Row>
                           {addressContentVisible && (
                             <Col lg={12}>
@@ -632,18 +655,27 @@ function Addcart() {
                                           className="form-check-input"
                                           type="radio"
                                           name="exampleRadios"
-                                          onClick={() => handleAddressClick(index)}
+                                          onClick={() =>
+                                            handleAddressClick(index)
+                                          }
                                         />
                                       </div>
                                       <div className="Daynamic-address">
                                         <table>
                                           <tr>
                                             <th>Name:&nbsp;</th>
-                                            <td>{item.first_name}&nbsp;{item.last_name}</td>
+                                            <td>
+                                              {item.first_name}&nbsp;
+                                              {item.last_name}
+                                            </td>
                                           </tr>
                                           <tr>
                                             <th>Address:&nbsp;</th>
-                                            <td>{item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}</td>
+                                            <td>
+                                              {item.house_no} {item.area}{" "}
+                                              {item.landmark} {item.city}{" "}
+                                              {item.state} {item.pincode}
+                                            </td>
                                           </tr>
                                           <tr>
                                             <th>Mobile:&nbsp;</th>
@@ -651,13 +683,17 @@ function Addcart() {
                                           </tr>
                                         </table>
                                         <div className="address-delete">
-                                          <i className="fa fa-trash" onClick={() => handleDeleteAddress(item.id)} />&nbsp; &nbsp;
+                                          <i
+                                            className="fa fa-trash"
+                                            onClick={() =>
+                                              handleDeleteAddress(item.id)
+                                            }
+                                          />
+                                          &nbsp; &nbsp;
                                           {/* <i className="fa fa-edit" data-toggle="modal"
                                             data-target="#update-model" /> */}
-
                                         </div>
                                       </div>
-
                                     </div>
                                   ))
                                 ) : (
@@ -667,7 +703,6 @@ function Addcart() {
                             </Col>
                           )}
                         </Row>
-
                       </Col>
                     </Row>
                   </div>
@@ -675,36 +710,39 @@ function Addcart() {
               </div>
             </Container>
           ) : null}
-          {addToCartProduct && addToCartProduct.length > 0 ? (
-            addToCartProduct.map((item, index) => (
-              <Container>
-                <div className="needplace">
-                  <div className="totalPAY">
-                    <Row className="justify-content-center">
-                      <Col lg={10}>
-                        <div className="totelPAYCAR">
-                          <Row>
-                            <Col sm={6}>
-                              <h4>Total</h4>
-                              <h2>₹{priceWithoutCents}</h2>
-                            </Col>
-                            <Col sm={6}>
-                              <Button>
-                                <Link to="/user-pay-method">Checkout</Link>
-                              </Button>
-                              <Button>
-                                <Link to="/product">Continue Shopping</Link>
-                              </Button>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
+          {addToCartProduct && addToCartProduct.length > 0 && (
+            <Container>
+              <div className="needplace">
+                <div className="totalPAY">
+                  <Row className="justify-content-center">
+                    <Col lg={10}>
+                      <div className="totelPAYCAR">
+                        <Row>
+                          <Col sm={6}>
+                            <h4>Total</h4>
+                            <h2>
+                              ₹{" "}
+                              {`${parseInt(
+                                originalPrice * 0.05 + originalPrice
+                              )}`}
+                            </h2>
+                          </Col>
+                          <Col sm={6}>
+                            <Button>
+                              <Link to="/user-pay-method">Checkout</Link>
+                            </Button>
+                            <Button>
+                              <Link to="/product">Continue Shopping</Link>
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
-              </Container>
-            ))
-          ) : null}
+              </div>
+            </Container>
+          )}
         </div>
       </section>
 
@@ -983,7 +1021,6 @@ function Addcart() {
                     <select
                       className="form-control"
                       onInput={(e) => setSelectedCity(e.target.value)}
-                      
                       name={city}
                       onChange={(e) =>
                         setProfileData({
@@ -994,7 +1031,9 @@ function Addcart() {
                     >
                       <option>City Choose...</option>
                       {stateallCity.map((items) => (
-                        <option value={profileData.city || ""}key={items.id}>{items.city_name}</option>
+                        <option value={profileData.city || ""} key={items.id}>
+                          {items.city_name}
+                        </option>
                       ))}
                     </select>
                   </div>
