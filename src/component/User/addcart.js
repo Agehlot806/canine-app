@@ -22,6 +22,7 @@ function Addcart() {
   const [coupencode, setcoupenCode] = useState(false);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   const [couponlist, setcouponlist] = useState([]);
+  const [itemQuantities, setItemQuantities] = useState({});
 
   const originalPrice = addToCartProduct[0]?.price;
   const updatedPrice = originalPrice * 1.05;
@@ -29,6 +30,13 @@ function Addcart() {
 
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity);
+    }
+  };
 
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -202,24 +210,6 @@ function Addcart() {
     try {
       const response = await axios.post(`${BASE_URL}/customer/order/place`, {
         user_id: storedUserId,
-        // coupon_discount_amount:,
-        // coupon_discount_title:,
-        // payment_status:,
-        // order_status:,
-        // total_tax_amount:,
-        // payment_method:,
-        // transaction_reference:,
-        // delivery_address_id:,
-        // coupon_code:coupencode,
-        // order_type:,
-        // checked:,
-        // store_id:,
-        // zone_id:,
-        // delivered_status:,
-        // delivery_address:,
-        // item_campaign_id:,
-        // order_amount:,
-        // variant: productDetails.variations || "Default", // You may need to update this based on your data
         image: productDetails.image,
         quantity: productDetails.quantity,
         price: productDetails.price,
@@ -241,26 +231,25 @@ function Addcart() {
   };
 
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(null)
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const toggleAddressContent = () => {
     setAddressContentVisible(!addressContentVisible);
   };
-  
+
   const addrss = [
     {
       id: 1,
-      add: 'From its medieval origins to the digital era, learn everything there is to know about the ubiquitous lorem ipsum passage.'
+      add: "From its medieval origins to the digital era, learn everything there is to know about the ubiquitous lorem ipsum passage.",
     },
     {
       id: 2,
-      add: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..'
+      add: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..",
     },
     {
       id: 3,
-      add: 'Lorem ipsum began as scrambled, nonsensical Latin derived from Ciceros 1st-century BC text De Finibus Bonorum et Malorum.'
+      add: "Lorem ipsum began as scrambled, nonsensical Latin derived from Ciceros 1st-century BC text De Finibus Bonorum et Malorum.",
     },
-  ]
-
+  ];
 
   return (
     <>
@@ -311,9 +300,9 @@ function Addcart() {
                             type="tel"
                             className="form-control"
                             placeholder="Quantity"
-                            // value={quantity == 0 ? 1 : 1}
-                            value={quantity}
-                            // onChange={handleQuantityChange}
+                            // value={itemQuantities[item.id] || 1}
+                            value={item.quantity}
+                            onChange={handleQuantityChange}
                             autoComplete="new-number"
                           />
                         </div>
@@ -490,9 +479,9 @@ function Addcart() {
                   <div className="address-card">
                     <Row>
                       <Col lg={10}>
-                      {
-                            selectedAddress !== null ? selectedAddress : 'Please select the address'
-                          }
+                        {selectedAddress !== null
+                          ? selectedAddress
+                          : "Please select the address"}
                       </Col>
                       <Col lg={2}>
                         <Button
@@ -504,26 +493,34 @@ function Addcart() {
                       </Col>
                       <Col lg={12}>
                         <div className="address-arrow">
-                          <button onClick={toggleAddressContent}>Select Address <i className="fa fa-arrow-down" aria-hidden="true"></i></button>
+                          <button onClick={toggleAddressContent}>
+                            Select Address{" "}
+                            <i
+                              className="fa fa-arrow-down"
+                              aria-hidden="true"
+                            ></i>
+                          </button>
                         </div>
                         {addressContentVisible && (
                           <div className="address-Content">
                             {addrss.map((item) => (
                               <div className="chk-address">
                                 <div className="chk-center">
-                                <input className="form-check-input" type="radio" name="exampleRadios" onClick={() => {
-                                  setSelectedAddress(item.add)
-                                  setAddressContentVisible(false)
-                                }} />
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="exampleRadios"
+                                    onClick={() => {
+                                      setSelectedAddress(item.add);
+                                      setAddressContentVisible(false);
+                                    }}
+                                  />
                                 </div>
                                 <div className="Daynamic-address">
-                                <span>
-                                  {item.add}
-                                </span>
+                                  <span>{item.add}</span>
                                 </div>
                               </div>
-                            ))
-                            }
+                            ))}
                           </div>
                         )}
                       </Col>
@@ -758,9 +755,10 @@ function Addcart() {
                             className="btn btn-primary btn-apply coupon"
                             data-toggle="modal"
                             data-target="#Coupon"
-                          >Apply</button>
+                          >
+                            Apply
+                          </button>
                         </div>
-                        
                       </Col>
                     </Row>
                   </div>

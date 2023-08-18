@@ -28,11 +28,18 @@ function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
+  console.log(
+    "productDetails.variations[0].type: ",
+    productDetails?.variations?.type
+  );
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails--- ", productDetails);
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
+  console.log("quantity: ", quantity);
+  const [selectedVariant, setSelectedVariant] = useState([]);
+  console.log("selectedVariant: ", selectedVariant);
 
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -70,13 +77,13 @@ function Productdetail() {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
           user_id: storedUserId,
-          item_id: productDetails.id,
+          item_id: productDetails?.id,
         }
       );
 
@@ -104,7 +111,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-          productDetails?.status + 0.5 >= index + 1 ? (
+        productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -122,7 +129,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -168,7 +175,19 @@ function Productdetail() {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
-
+  const Amount = Math.floor(
+    productDetails.price * quantity -
+      (productDetails.price * quantity * productDetails.discount) / 100
+  ).toFixed(2);
+  const formattedAmount = Number(Amount).toString();
+  // const savedAmount = (
+  //   productDetails.price * quantity -
+  //   (productDetails.price * quantity * productDetails.discount) / 100
+  // ).toFixed(2);
+  const savedAmount = Math.floor(
+    productDetails.price * quantity - Amount
+  ).toFixed(2);
+  const formattedSavedAmount = Number(savedAmount).toString();
 
   return (
     <>
@@ -192,7 +211,7 @@ function Productdetail() {
                 <div className="needplace">
                   <Row>
                     {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                    productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
                         <Col sm={2} className="mb-3" key={index}>
                           <div
@@ -222,40 +241,18 @@ function Productdetail() {
                   <Col lg={10}>
                     <h4>{productDetails.name}</h4>
                   </Col>
-                  {/* <Col lg={2}>
-                    <i className="fa fa-star" />
-                  </Col> */}
                 </Row>
                 <p>
                   By <span>{productDetails.store_name}</span>
                 </p>
-                {/* <star stars={stars} reviews={reviews} />
-                 */}
+
                 <Wrapper>
                   <div className="icon-style">
                     {ratingStar}
-                    {/* {productDetails.reviews || 60} */}
                     <p>({productDetails.reviews || 60} customer reviews)</p>
                   </div>
                 </Wrapper>
-                {/* <span>
-                  <a>
-                    <i className="fa fa-star" />
-                  </a>
-                  <a>
-                    <i className="fa fa-star" />
-                  </a>
-                  <a>
-                    <i className="fa fa-star" />
-                  </a>
-                  <a>
-                    <i className="fa fa-star" />
-                  </a>
-                  <a>
-                    <i className="fa fa-star" />
-                  </a>{" "}
-                  4.5
-                </span> */}
+
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6}>
@@ -263,8 +260,8 @@ function Productdetail() {
                         {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
                           className="form-control"
-                        // value={pet_id}
-                        // onChange={(e) => setpet_id(e.target.value)}
+                          value={selectedVariant}
+                          onChange={(e) => setSelectedVariant(e.target.value)}
                         >
                           <option>Choose....</option>
                           {productDetails?.variations &&
@@ -279,16 +276,6 @@ function Productdetail() {
         {variation.type} - ₹{variation.price} (Stock: {variation.stock})
       </option>
     ))} */}
-
-                        {/* <label >Size</label> */}
-                        {/* <select className="form-control"> */}
-                        {/* <option>Select size</option>
-                          <option>5KG</option>
-                          <option>10KG</option>
-                          <option>15KG</option>
-                          <option>20KG</option>
-                          <option>30KG</option>
-                        </select> */}
                       </div>
                     </Col>
                     <Col sm={6}>
@@ -323,16 +310,15 @@ function Productdetail() {
                         {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
                       </Col>
                       <Col lg={4}>
-                        <h5>
-                          {" "}
-                          {`₹${productDetails.price -
-                            (productDetails.price * productDetails.discount) /
-                            100
-                            }`}
-                        </h5>
+                        <h5>{`₹${formattedAmount}`}</h5>
                       </Col>
                       <Col lg={5}>
-                        <h6>Your save 100 RS</h6>
+                        <h6>
+                          Your save
+                          {formattedSavedAmount >= 0
+                            ? "₹" + formattedSavedAmount
+                            : "No savings"}
+                        </h6>
                       </Col>
                     </Row>
                   </div>
@@ -374,22 +360,25 @@ function Productdetail() {
               </div>
             </Col>
           </Row>
-          {productDetails.stock && productDetails.stock.length !== 0 ? (<div className="productBTNaddcard">
-            <Button>
-              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
-                <i className="fa fa-shopping-bag" /> Add to cart
-              </Link>
-              <p>{addToCartStatus}</p>
-            </Button>
-          </div>
+          {productDetails.stock && productDetails.stock.length !== 0 ? (
+            <div className="productBTNaddcard">
+              <Button>
+                <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                  <i className="fa fa-shopping-bag" /> Add to cart
+                </Link>
+                <p>{addToCartStatus}</p>
+              </Button>
+            </div>
           ) : (
             <div className="sold-out-btn mt-3">
-              <Link>
-                Sold Out
-              </Link><br />
-              <Button data-toggle="modal" data-target="#soldoutModel">Notify Me When Available</Button>
+              <Link>Sold Out</Link>
+              <br />
+              <Button data-toggle="modal" data-target="#soldoutModel">
+                Notify Me When Available
+              </Button>
             </div>
-          )}          <div>
+          )}{" "}
+          <div>
             <h1 className="main-head mt-4">Product details</h1>
             <p>{productDetails.description}</p>
           </div>
@@ -433,25 +422,25 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-          (item, index) =>
-            item.type === "item_wise" && (
-              <div className="product-innerBanner">
-                <img
-                  src={
-                    "https://canine.hirectjob.in/storage/app/public/banner/" +
-                    item.image
-                  }
-                />
-                <div className="home-content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button>
+            (item, index) =>
+              item.type === "item_wise" && (
+                <div className="product-innerBanner">
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/public/banner/" +
+                      item.image
+                    }
+                  />
+                  <div className="home-content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Button>
+                      Explore More <i className="fa fa-angle-right" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )
-        )
+              )
+          )
         : null}
 
       <section className="section-padding food">
@@ -520,41 +509,53 @@ function Productdetail() {
       <Footer />
 
       {/* Modal */}
-      <div className="modal fade" id="soldoutModel" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
-
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
               <form>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                  >
+                  <select className="form-control">
                     <option>Choose....</option>
                     {productDetails?.variations &&
                       productDetails?.variations.map((item) => (
                         <option>{item.type}</option>
                       ))}
-                  </select>        </div>
+                  </select>{" "}
+                </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputPassword1">Email</label>
-                  <input type="email" className="form-control" placeholder="Enter Email" />
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                  />
                 </div>
                 <div className="Notify-Me">
-                  <button type="submit" className="btn btn-primary" data-dismiss="modal">Notify Me When Available</button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Notify Me When Available
+                  </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-
     </>
-
-
   );
 }
 const Wrapper = styled.section`
