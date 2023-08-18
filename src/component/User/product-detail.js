@@ -49,6 +49,8 @@ function Productdetail() {
       setQuantity(quantity - 1);
     }
   };
+
+  
   useEffect(() => {
     productData();
     itemWiseBanner();
@@ -377,7 +379,7 @@ function Productdetail() {
                 Notify Me When Available
               </Button>
             </div>
-          )}{" "}
+          )}
           <div>
             <h1 className="main-head mt-4">Product details</h1>
             <p>{productDetails.description}</p>

@@ -1482,9 +1482,9 @@ a {
 }
 
 .address-card {
-  border-radius: 80px;
+  border-radius: 50px;
   background: #f2f2f2;
-  padding: 50px;
+  padding: 25px 25px 10px;
   font-family: Poppins;
 }
 
@@ -2924,12 +2924,31 @@ input[type="number"]::-webkit-inner-spin-button {
   margin-top: 10px;
 }
 .chk-address {
-  padding: 20px;
+  padding: 25px;
   display: inline-flex;
+  background: linear-gradient( 180deg, #c6ecfc 0%, rgba(198, 236, 252, 0.43) 100% );
+  border-radius: 35px;
+  width: 100%;
+  margin: 0 0 20px;
 }
-.chk-center {
-  align-self: center;
-}
+
 .Daynamic-address {
   margin: 0 10px;
+}
+
+.selectedAddress-area p {
+  margin: 0;
+  font-weight: bold;
+}
+.address-card p {
+  font-weight: bold;
+}
+
+.address-delete i {
+  color: #c32525;
+  font-size: 20px;
+  margin: 10px 0;
+}
+.address-delete i:hover {
+  font-size: 25px ;
 }

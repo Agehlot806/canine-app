@@ -28,8 +28,8 @@ function Addcart() {
   const updatedPrice = originalPrice * 1.05;
   const priceWithoutCents = parseInt(updatedPrice);
 
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
+  // const customer_id = localStorage.getItem("userInfo");
+  // let storedUserId = JSON.parse(customer_id);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -50,7 +50,8 @@ function Addcart() {
     // getUserInfo()
     addToCartData();
     couponlistdata();
-    GetStateAll();
+    GetdataAll();
+    allAddressList();
   }, []);
 
   // useEffect(() => {
@@ -126,10 +127,12 @@ function Addcart() {
     }
   };
 
-  const GetStateAll = async (e) => {
+  const [selectedCity, setSelectedCity] = useState("");
+  console.log("selectedCity: ", selectedCity);
+  const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Data": "application/json",
     };
     await fetch(`${BASE_URL}/auth/state`, {
       method: "GET",
@@ -137,22 +140,22 @@ function Addcart() {
     })
       .then((Response) => Response.json())
       .then((Response) => {
-        setStateall(Response.state);
-        // console.log("99999999999999999999", Response);
+        setStateall(Response?.data ? Response?.data : []);
+        console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
       });
   };
 
-  const GetdCityAll = (state) => {
+  const Getdatacity = (state) => {
     axios
       .get(`${BASE_URL}/auth/city?state=${state}`, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
         console.log("responseresponse", response);
-        setStateallCity(response.data.state);
+        setStateallCity(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -163,7 +166,7 @@ function Addcart() {
     if (event.target.value) {
       setstate(event.target.value);
 
-      GetdCityAll(event.target.value);
+      Getdatacity(event.target.value);
     }
   };
 
@@ -197,8 +200,8 @@ function Addcart() {
       .post(`${BASE_URL}/customer/address/add`, data)
       .then((response) => {
         setResponseMessage(response.data.message);
-        toast.success("Add Address Successfully");
-        console.log("veterinary", data);
+        toast.success("Successfully added!");
+        console.log("SuccessfullyAddress", data);
       })
       .catch((error) => {
         toast.error("Field is required");
@@ -230,26 +233,65 @@ function Addcart() {
     }
   };
 
-  const [addressContentVisible, setAddressContentVisible] = useState(false);
+  // const [addressContentVisible, setAddressContentVisible] = useState(false);
+  // const toggleAddressContent = () => {
+  //   setAddressContentVisible(!addressContentVisible);
+  // };
+
+  // const [selectedAddress, setSelectedAddress] = useState(null);
+
+  // const handleAddressClick = (index) => {
+  //   setSelectedAddress(addresslist[index]);
+  // };
+
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [addressContentVisible, setAddressContentVisible] = useState(false);
+
+  const handleAddressClick = (index) => {
+    setSelectedAddress(addresslist[index]);
+    setAddressContentVisible(false); // Hide the address content after selecting an address
+  };
+
   const toggleAddressContent = () => {
     setAddressContentVisible(!addressContentVisible);
   };
 
-  const addrss = [
-    {
-      id: 1,
-      add: "From its medieval origins to the digital era, learn everything there is to know about the ubiquitous lorem ipsum passage.",
-    },
-    {
-      id: 2,
-      add: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua..",
-    },
-    {
-      id: 3,
-      add: "Lorem ipsum began as scrambled, nonsensical Latin derived from Ciceros 1st-century BC text De Finibus Bonorum et Malorum.",
-    },
-  ];
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  console.log("=======>>>>>> id", customer_id);
+  let storedUserId = JSON.parse(customer_id);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
+
+  const [addresslist, setaddresslist] = useState([]);
+  const allAddressList = async () => {
+    axios
+      .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
+      .then((response) => {
+        console.log(response);
+        console.log("address list Successful");
+        setaddresslist(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  console.log("address list",addresslist);
+
+
+  const handleDeleteAddress = (id) => {
+    axios.delete(`https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`)
+      .then(response => {
+        toast.success('Address deleted successfully');
+        console.log('Address deleted successfully:', response.data.message);        
+        setaddresslist(prevAddressList =>
+          prevAddressList.filter(item => item.id !== id)
+        );
+      })
+      .catch(error => {
+        console.error('Error deleting address:', error);
+      });
+  };
 
   return (
     <>
@@ -315,7 +357,7 @@ function Addcart() {
                   <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -460,12 +502,19 @@ function Addcart() {
                 <div className="address">
                   <h3>Address</h3>
                   <div className="address-card">
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesettim Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s,
-                    </p>
+                    {console.log("addresslist", addresslist)}
+                    {addresslist && addresslist.length > 1 ? (
+                      addresslist.map((item, index) => (
+                        index === 0 && (
+                          <p key={item.id}>
+                            {item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}
+                          </p>
+                        )
+                      ))
+                    ) : (
+                      <p>No data to display</p>
+                    )}
+
                   </div>
                 </div>
               </div>
@@ -479,50 +528,77 @@ function Addcart() {
                   <div className="address-card">
                     <Row>
                       <Col lg={10}>
-                        {selectedAddress !== null
-                          ? selectedAddress
-                          : "Please select the address"}
+                        {selectedAddress ? (
+                          <div className="selectedAddress-area">
+                            <p>{selectedAddress.first_name} {selectedAddress.last_name}</p>
+                            <p>
+                              {selectedAddress.house_no} {selectedAddress.area} {selectedAddress.landmark} {selectedAddress.city} {selectedAddress.state} {selectedAddress.pincode}
+                            </p>
+                            <p>Mobile: {selectedAddress.mobile}</p>
+                          </div>
+                        ) : (
+                          <p>No address selected</p>
+                        )}
                       </Col>
                       <Col lg={2}>
                         <Button
                           data-toggle="modal"
                           data-target="#changeadress-model"
                         >
-                          Change
+                          Add +
                         </Button>
                       </Col>
                       <Col lg={12}>
                         <div className="address-arrow">
                           <button onClick={toggleAddressContent}>
-                            Select Address{" "}
-                            <i
-                              className="fa fa-arrow-down"
-                              aria-hidden="true"
-                            ></i>
+                            Select Address <i className={`fa ${addressContentVisible ? 'fa-arrow-up' : 'fa-arrow-down'}`} aria-hidden="true"></i>
                           </button>
-                        </div>
-                        {addressContentVisible && (
-                          <div className="address-Content">
-                            {addrss.map((item) => (
-                              <div className="chk-address">
-                                <div className="chk-center">
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="exampleRadios"
-                                    onClick={() => {
-                                      setSelectedAddress(item.add);
-                                      setAddressContentVisible(false);
-                                    }}
-                                  />
-                                </div>
-                                <div className="Daynamic-address">
-                                  <span>{item.add}</span>
-                                </div>
+                        </div><br />
+                        <Row>
+                          {addressContentVisible && (
+                            <Col lg={12}>
+                              <div className="address-Content">
+                                {addresslist && addresslist.length > 0 ? (
+                                  addresslist.map((item, index) => (
+                                    <div className="chk-address" key={item.id}>
+                                      <div className="chk-center">
+                                        <input
+                                          className="form-check-input"
+                                          type="radio"
+                                          name="exampleRadios"
+                                          onClick={() => handleAddressClick(index)}
+                                        />
+                                      </div>
+                                      <div className="Daynamic-address">
+                                        <table>
+                                          <tr>
+                                            <th>Name:&nbsp;</th>
+                                            <td>{item.first_name}&nbsp;{item.last_name}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>Address:&nbsp;</th>
+                                            <td>{item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}</td>
+                                          </tr>
+                                          <tr>
+                                            <th>Mobile:&nbsp;</th>
+                                            <td>{item.mobile}</td>
+                                          </tr>
+                                        </table>
+                                        <div className="address-delete">
+                                          <i className="fa fa-trash" onClick={() => handleDeleteAddress(item.id)}/>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  ))
+                                ) : (
+                                  <p>No Addresses Available</p>
+                                )}
                               </div>
-                            ))}
-                          </div>
-                        )}
+                            </Col>
+                          )}
+                        </Row>
+
                       </Col>
                     </Row>
                   </div>
@@ -576,11 +652,8 @@ function Addcart() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Edit For New Address
+                New Address Add
               </h5>
-              {/* <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button> */}
             </div>
             <div className="modal-body">
               <div class="form-group">
@@ -637,37 +710,45 @@ function Addcart() {
                   onChange={(e) => setlandmark(e.target.value)}
                 />
               </div>
-              {/* <div class="form-group">
-                <label>State</label>
-                <select
-                  onChange={Subscription}
-                  value={state}
-                  onInput={(e) => setstate(e.target.value)}
-                  class="form-control"
-                  aria-label="Default select example"
-                >
-                  <option>Choose...</option>
-                  {stateall.map((items) => (
-                    <option value={items.id} key={items.id}>
-                      {items.state_name}
-                    </option>
-                  ))}
-                </select>
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label>State</label>
+                    <select
+                      className="form-control"
+                      onChange={Subscription}
+                      value={state}
+                      onInput={(e) => setstate(e.target.value)}
+                    >
+                      <option>State Choose...</option>
+                      {stateall.map((items) => (
+                        <option value={items.id} key={items.id}>
+                          {items.state_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group">
+                    <label>City</label>
+                    <select
+                      className="form-control"
+                      onInput={(e) => setSelectedCity(e.target.value)}
+                      value={selectedCity}
+                      onChange={(e) => setcity(e.target.value)}
+                    >
+                      <option>City Choose...</option>
+                      {stateallCity.map((items) => (
+                        <option>{items.city_name}</option>
+                      ))}
+                    </select>
+                    {/* {formValid.cityname && (
+                        <span style={{ color: "red" }}>City is required</span>
+                      )} */}
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label>City</label>
-                <select
-                  value={city}
-                  onChange={(e) => setcity(e.target.value)}
-                  class="form-control"
-                  aria-label="Default select example"
-                >
-                  <option>Choose...</option>
-                  {stateallCity.map((items) => (
-                    <option>{items.city_name}</option>
-                  ))}
-                </select>
-              </div> */}
               <div class="form-group">
                 <label for="exampleFormControlInput1">Pincode</label>
                 <input
@@ -684,7 +765,7 @@ function Addcart() {
                 className="btn btn-primary"
                 onClick={handleAddAddress}
               >
-                Update
+                Add +
               </button>
             </div>
           </div>
