@@ -94,7 +94,7 @@ function Footer() {
                     </li>
                     <li>
                       <Link to="https://www.whatsapp.com/">
-                        <i className="fa fa-commenting-o" />
+                        {/* <i className="fa fa-commenting-o" /> */}
                         <WhatsAppWidget />
                       </Link>
                     </li>

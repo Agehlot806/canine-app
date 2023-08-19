@@ -6,10 +6,11 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 import cart from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
+import { loadRazorpay } from "../../utils";
 
 function Addcart() {
   const { id } = useParams();
@@ -23,7 +24,57 @@ function Addcart() {
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   const [couponlist, setcouponlist] = useState([]);
   const [itemQuantities, setItemQuantities] = useState({});
+  const [paymentId, setPaymentId] = useState("");
 
+  const redirectToShipping = () => {
+    Navigate("/shipping");
+  };
+
+  const handlePayment = async () => {
+    try {
+      // const response = await loadRazorpay();
+      loadRazorpay()
+        .then((response) => {
+          console.log("response handlePayment: ", response);
+          // Code to execute after the script has loaded
+        })
+        .catch((error) => {
+          console.error("Error loading Razorpay script:", error);
+        });
+
+      const options = {
+        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        amount: 10000, // Amount in paise (100 INR)
+        currency: "INR",
+        name: "HEllo world",
+        description: "Test Payment",
+        image: "https://your_logo_url.png",
+        // order_id: response.id, // Order ID obtained from Razorpay
+        handler: (response) => {
+          setPaymentId(response.razorpay_payment_id);
+          // Handle the success callback
+          window.location.href = "/shipping";
+          console.log("Payment Successful:", response);
+        },
+
+        prefill: {
+          email: "test@example.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "1234, Demo Address",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Razorpay Load Error:", error);
+    }
+  };
   // const originalPrice = addToCartProduct[0]?.price;
 
   let originalPrice = 0;
@@ -728,8 +779,12 @@ function Addcart() {
                             </h2>
                           </Col>
                           <Col sm={6}>
-                            <Button>
-                              <Link to="/user-pay-method">Checkout</Link>
+                            <Button onClick={() => handlePayment()}>
+                              {/* <Link
+                                // to="/user-pay-method"
+                              > */}
+                              Checkout
+                              {/* </Link> */}
                             </Button>
                             <Button>
                               <Link to="/product">Continue Shopping</Link>
