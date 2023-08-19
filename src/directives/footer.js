@@ -89,6 +89,12 @@ function Footer() {
                         <i className="fa fa-phone" /> +91-0987654321
                       </Link>
                     </li>
+                    <li>
+                      <Link to="https://www.whatsapp.com/">
+                        {/* <i className="fa fa-commenting-o" /> */}
+                        <WhatsAppWidget />
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </Col>
