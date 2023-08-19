@@ -34,7 +34,7 @@ function Footer() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/user-pay-method">{strings.paymentOption}</Link>
+                      <Link to="/payment-option">{strings.paymentOption}</Link>
                     </li>
                     <li>
                       <Link to="/track-your-order">
@@ -42,7 +42,7 @@ function Footer() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/return">{strings.return}</Link>
+                      <Link to="/return-policy">Return Policy</Link>
                     </li>
                     <li>
                       <Link to="/find-a-Store">{strings.findaStore}</Link>
@@ -54,9 +54,6 @@ function Footer() {
                 <div className="footer-list">
                   <h5>Information</h5>
                   <ul>
-                    <li>
-                      <Link to="/careers">Careers</Link>
-                    </li>
                     <li>
                       <Link to="/about-us">AboutUs</Link>
                     </li>
@@ -90,12 +87,6 @@ function Footer() {
                     <li>
                       <Link to="tel:0987654321">
                         <i className="fa fa-phone" /> +91-0987654321
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="https://www.whatsapp.com/">
-                        <i className="fa fa-commenting-o" />
-                        <WhatsAppWidget />
                       </Link>
                     </li>
                   </ul>

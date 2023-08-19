@@ -2,9 +2,8 @@ import React from "react";
 import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
-import { Col, Container, Row } from "react-bootstrap";
 
-const Careers = () => {
+const Paymentoption = () => {
   return (
     <>
       {" "}
@@ -24,4 +23,4 @@ const Careers = () => {
   );
 };
 
-export default Careers;
+export default Paymentoption;

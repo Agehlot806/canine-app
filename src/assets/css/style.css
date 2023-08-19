@@ -2952,3 +2952,18 @@ input[type="number"]::-webkit-inner-spin-button {
 .address-delete i:hover {
   font-size: 25px ;
 }
+
+.faqs-area .accordion-item {
+    /* border-radius: 35px; */
+    margin: 13px 0;
+}
+.faqs-area .accordion-header {
+ 
+  /* border-radius: 42px !important; */
+}
+.faqs-area .accordion-header button{
+ 
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}

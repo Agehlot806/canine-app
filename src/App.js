@@ -56,12 +56,12 @@ import Blogdetails from "./component/User/blog-details";
 import Deliverydetails from "./component/User/delivery-details";
 import Internationalshipping from "./component/User/international-shipping";
 import Trackyourorder from "./component/User/track-your-order";
-import Return from "./component/User/return";
 import Findastore from "./component/User/find-a-store";
-import Careers from "./component/User/careers";
 import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
+import Returnpolicy from "./component/User/return-policy";
+import Paymentoption from "./component/User/payment-option";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -118,6 +118,9 @@ function App() {
           <Route path="/update-profile" element={<Updateprofile />} />
           {/* useful links footer */}
           <Route path="/delivery-details" element={<Deliverydetails />} />
+          <Route path="/return-policy" element={<Returnpolicy />} />
+
+          
 
           <Route
             path="/international-shipping"
@@ -125,10 +128,10 @@ function App() {
           />
           <Route path="/payment-options" element={<paymentOptions />} />
           <Route path="/track-your-order" element={<Trackyourorder />} />
-          <Route path="/return" element={<Return />} />
           <Route path="/find-a-store" element={<Findastore />} />
-          <Route path="/careers" element={<Careers />} />
           <Route path="/offers-details" element={<Offersdetails />} />
+          <Route path="/payment-option" element={<Paymentoption />} />
+
           <Route path="/help-faqs" element={<Helpandfaqs />} />
 
           {/* All Login Users */}

@@ -46,6 +46,11 @@ function Addcart() {
     }
   };
 
+  const fieldpagerefresh = () => {
+    window.location.reload(false);
+  }
+
+
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -305,67 +310,29 @@ function Addcart() {
 
   // ============================================================
 
-  const [profileData, setProfileData] = useState({
-    first_name: "",
-    last_name: "",
-    mobile: "", // Initialize with default value
-    house_no: "", // Initialize with default value
-    area: "",
-    landmark: "",
-    pincode: "",
-    state: "",
-    city: "",
-    // Add more fields here as needed
-  });
+  const [profileData, setProfileData] = useState({});
   console.log("profileData: ", profileData);
-
-  useEffect(() => {
-    // Fetch profile data from the API
-    axios
-      .get(
-        `https://canine.hirectjob.in/api/v1/customer/address/list/${storedUserId}`
-      )
-      .then((response) => {
-        if (response.data.status === "200") {
-          console.log("response.data: ", response.data);
-          setProfileData({
-            first_name: response.data.data[0].first_name,
-            last_name: response.data.data[0].last_name,
-            mobile: response.data.data[0].mobile, // Set email from response
-            house_no: response.data.data[0].house_no, // Set phone from response
-            area: response.data.data[0].area,
-            landmark: response.data.data[0].landmark,
-            pincode: response.data.data[0].pincode,
-            state: response.data.data[0].state,
-            city: response.data.data[0].city,
-
-            // Set other fields as needed
-          });
-          // Update the profileData state
-          // if (profile.image) {
-          //   setImageUrl(profile.image);
-          // }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
-        profileData // Send the profileData object in the request
+        'https://canine.hirectjob.in/api/v1/customer/address/update',
+        profileData // Send the updated profileData in the request body
       );
-      if (response.data.message === "Successfully updated!") {
-        console.log("Profile updated successfully!");
+      console.log('response in edit', response);
+      if (response.data.status === 200) {
+        console.log('Profile updated successfully!');
+        setaddresslist((prevAddressList) =>
+          prevAddressList.filter((item) => item.id !== id)
+        );
+        fieldpagerefresh(); // Call fieldpagerefresh here
       }
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <>
       <Toaster />
@@ -430,7 +397,7 @@ function Addcart() {
                   <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -624,6 +591,7 @@ function Addcart() {
                         <Button
                           data-toggle="modal"
                           data-target="#changeadress-model"
+
                         >
                           Add +
                         </Button>
@@ -633,11 +601,10 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${
-                                addressContentVisible
+                              className={`fa ${addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                              }`}
+                                }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -690,8 +657,11 @@ function Addcart() {
                                             }
                                           />
                                           &nbsp; &nbsp;
-                                          {/* <i className="fa fa-edit" data-toggle="modal"
-                                            data-target="#update-model" /> */}
+                                          <i className="fa fa-edit" data-toggle="modal"
+                                            onClick={() => {
+                                              setProfileData(item)
+                                            }}
+                                            data-target="#update-model" />
                                         </div>
                                       </div>
                                     </div>
@@ -708,6 +678,7 @@ function Addcart() {
                   </div>
                 </div>
               </div>
+
             </Container>
           ) : null}
           {addToCartProduct && addToCartProduct.length > 0 && (
@@ -873,6 +844,7 @@ function Addcart() {
                 type="button"
                 className="btn btn-primary"
                 onClick={handleAddAddress}
+                onInput={fieldpagerefresh}
               >
                 Add +
               </button>
@@ -880,7 +852,7 @@ function Addcart() {
           </div>
         </div>
       </div>
-
+      {/* update-model */}
       <div
         className="modal fade editAddress"
         id="update-model"
@@ -1059,8 +1031,9 @@ function Addcart() {
                 type="button"
                 className="btn btn-primary"
                 onClick={handleFormSubmit}
+                data-dismiss="modal"
               >
-                Update +
+                Update
               </button>
             </div>
           </div>
