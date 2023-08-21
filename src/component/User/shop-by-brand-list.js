@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Newheader from '../../directives/newheader';
 import { Container, Row, Col } from 'react-bootstrap'
 import shopbybrand from '../../assets/images/banner/shopbybrand.png'
@@ -27,6 +27,7 @@ function Shopbybrandlist() {
                 console.error("Error fetching data:", error);
             });
     };
+    console.log("brandproductbrandproductbrandproductbrandproduct",brandproduct);
 
     return (
         <>
@@ -42,28 +43,28 @@ function Shopbybrandlist() {
                     <h1 className="main-head">Shop By Brands List</h1>
                     <div className="needplace">
                         <Row>
-                        {brandproduct && brandproduct.length > 0 ? (
-                brandproduct.map((item, index) => (
-                                <Col lg={3} sm={6} xs={6} className="mb-5">
-                                    <div key={item.id} className="Brand-card brand-1">
-                                        <Link to={item.product_url} >
-                                            <div className="brand-main">
-                                                {/* <img
+                            {brandproduct && brandproduct.length > 0 ? (
+                                brandproduct.map((item, index) => (
+                                    <Col lg={3} sm={6} xs={6} className="mb-5">
+                                        <div key={item.id} className="Brand-card brand-1">
+                                            <Link to={item.product_url} >
+                                                <div className="brand-main">
+                                                    <img
                                                     src={
                                                         "https://canine.hirectjob.in/storage/app/public/category/" +
                                                         item.image
-                                                    } /> */}
-                                            </div>
-                                            <div className="brand-text">
-                                                <h5>{item.title}</h5>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </Col>
-                           ))
-                           ) : (
-                             <p className="emptyMSG">No Data Shop By Brand.</p>
-                           )}
+                                                    } />
+                                                </div>
+                                                <div className="brand-text">
+                                                    <h5>{item.title}</h5>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </Col>
+                                ))
+                            ) : (
+                                <p className="emptyMSG">No Data Shop By Brand.</p>
+                            )}
                         </Row>
                     </div>
                 </Container>

@@ -93,42 +93,17 @@ function Shipping() {
                                     </Col>
                                     <Col lg={6} className="align-self-center">
                                         <h2>{item.item_name}</h2>
-                                        {/* <p>with paneer or cottage cheese.</p> */}
+                                        <p>with paneer or cottage cheese.</p>
                                     </Col>
                                     <Col lg={2} className="align-self-center">
                                         <h3>₹{item.price}</h3>
-                                        {/* <div className="quantity-btn">
-                                            <button onClick={handleDecrementone}>
-                                                <i className="fa fa-minus" />
-                                            </button>
-                                            <form>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="tel"
-                                                        className="form-control"
-                                                        placeholder="Quantity"
-                                                        // value={itemQuantities[item.id] || 1}
-                                                        value={item.quantity}
-                                                        onChange={handleQuantityChange}
-                                                        autoComplete="new-number"
-                                                    />
-                                                </div>
-                                            </form>
-                                            <button onClick={handleIncrementone}>
-                                                <i className="fa fa-plus" />
-                                            </button>
-                                        </div> */}
                                     </Col>
                                     <Col lg={2} className="align-self-center">
-                                        <div
-                                            className="delete-addcard"
-                                        // onClick={() => removeFromCart(item.id)}
-                                        >
-                                            <Link onClick={() => removeFromCart(item.id)}>
-                                                <i class="fa fa-trash-o" />
-                                            </Link>
-                                        </div>
-                                    </Col>
+                                <div className="myorder-btn">
+                                    <Button><Link to="/order-view-details">View</Link></Button>
+                                    <Button><Link to="/track-your-order">Track</Link></Button>
+                                </div>
+                            </Col>
                                     <hr />
                                 </Row>
                             </Container>

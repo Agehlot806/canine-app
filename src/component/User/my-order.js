@@ -57,7 +57,7 @@ function Myorder() {
                                     <Col lg={2} className="align-self-center">
                                         <div className="myorder-btn">
                                             <Button><Link to="/order-view-details">View</Link></Button>
-                                            <Button>Track</Button>
+                                            <Button><Link to="/track-your-order">Track</Link></Button>
                                         </div>
                                     </Col>
                                     <hr />
@@ -87,7 +87,7 @@ function Myorder() {
                             <Col lg={2} className="align-self-center">
                                 <div className="myorder-btn">
                                     <Button><Link to="/order-view-details">View</Link></Button>
-                                    <Button>Track</Button>
+                                    <Button><Link to="/track-your-order">Track</Link></Button>
                                 </div>
                             </Col>
                         </Row>
@@ -109,7 +109,7 @@ function Myorder() {
                             <Col lg={2} className="align-self-center">
                                 <div className="myorder-btn">
                                     <Button><Link to="/order-view-details">View</Link></Button>
-                                    <Button>Track</Button>
+                                    <Button><Link to="/track-your-order">Track</Link></Button>
                                 </div>
                             </Col>
                         </Row>
@@ -132,7 +132,7 @@ function Myorder() {
                             <Col lg={2} className="align-self-center">
                                 <div className="myorder-btn">
                                     <Button><Link to="/order-view-details">View</Link></Button>
-                                    <Button>Track</Button>
+                                    <Button><Link to="/track-your-order">Track</Link></Button>
                                 </div>
                             </Col>
                         </Row>

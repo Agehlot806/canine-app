@@ -30,6 +30,8 @@ function Petcategory() {
   const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
     useState(false);
   const [breed, setBreed] = useState([]);
+  const [healthcondition, setHealthcondition] = useState([]);
+  const [lifestage, setlifestage] = useState([]);
   const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
   const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
     useState(false);
@@ -96,6 +98,11 @@ function Petcategory() {
   useEffect(() => {
     allPetitemproduct();
     Allsubcategories();
+    fetchBrands();
+    fetchBreed();
+    fetchHealthcondition();
+    fetchLifestage();
+    allProduct();
   }, []);
 
   useEffect(() => {
@@ -128,6 +135,8 @@ function Petcategory() {
         console.log(error);
       });
   };
+
+
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
@@ -169,10 +178,6 @@ function Petcategory() {
         console.log(error);
       });
   };
-  useEffect(() => {
-    fetchBrands();
-    fetchBreed();
-  }, []);
   const fetchBrands = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
@@ -196,8 +201,105 @@ function Petcategory() {
     }
   };
 
-  // filter code ==========================
+  const fetchHealthcondition = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/health_condition`);
+      setHealthcondition(response.data.data);
 
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+
+  const fetchLifestage = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/life_stage/1`);
+      setlifestage(response.data.data);
+
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+
+  // filter code ==========================
+  const [allproduct, setallproduct] = useState([]);
+  const [dataList, setDataList] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedlifeStage, setSelectedlifeStage] = useState(null);
+
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/items/latest`);
+      setallproduct(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, []);
+
+  const handleDataListBrand = (brand_id) => {
+    const filteredData = allproduct.filter((item) => item.brand_id === brand_id);
+    setDataList(filteredData);
+    setSelectedBrand(brand_id);
+  };
+
+  const handleClearFilter = () => {
+    setDataList([]);
+    setSelectedBrand(null);
+  };
+
+  const handleSelectedlifeStage = (lifeStage_id) => {
+    const filteredData = allproduct.filter((item) => item.lifeStage_id === lifeStage_id);
+    setDataList(filteredData);
+    setSelectedlifeStage(lifeStage_id);
+  };
+
+  const handleClearFilterlifeStage = () => {
+    setDataList([]);
+    setSelectedlifeStage(null);
+  };
+
+  const allProduct = async () => {
+    axios
+      .get(`${BASE_URL}/items/latest`)
+      .then((response) => {
+        console.log(response);
+        console.log("All Product Successful");
+        setallproduct(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+  const [filter, setFilter] = useState(false);
+
+  const handleDataList = async (brand_id) => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/items/latest`
+      );
+      const jsonData = await response.json();
+      // Access nested data
+      const nestedData = jsonData.data;
+      // Filter the nested data based on brand
+      const filteredData = nestedData.filter((item) => item.brand_id == brand_id);
+      setDataList(filteredData);
+      setFilter(true);
+    } catch (error) {
+      // console.log("Errorr", error);
+    }
+  };
 
   const applyFilters = ({
     selectedBrands,
@@ -344,6 +446,36 @@ function Petcategory() {
     // Add more gradient colors as needed
   ];
 
+
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails.name,
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity: productDetails.quantity,
+          price: productDetails.price,
+          user_id: storedUserId,
+          item_id: productDetails.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
   return (
     <>
       <Toaster />
@@ -386,7 +518,14 @@ function Petcategory() {
                                     className="form-check-input"
                                     type="checkbox"
                                     id="defaultCheck1"
-                                    onClick={handleFilterClick}
+                                    checked={selectedBrand !== null}
+                                    onChange={() => {
+                                      if (selectedBrand === null) {
+                                        handleDataListBrand(allproduct[0].brand_id); // Set initial brand ID
+                                      } else {
+                                        handleClearFilter();
+                                      }
+                                    }}
                                   />
                                   <label
                                     className="form-check-label"
@@ -484,25 +623,36 @@ function Petcategory() {
                   </div>
                   {lifestageDropdownVisible && (
                     <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                            onClick={handleFilterClick}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            All (10)
-                          </label>
-                        </div>
-                      </div>
+                      {lifestage && lifestage.length > 0
+                        ? lifestage.map((item) => (
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                checked={selectedBrand !== null}
+                                    onChange={() => {
+                                      if (selectedBrand === null) {
+                                        handleSelectedlifeStage(allproduct[0].lifeStage_id); // Set initial brand ID
+                                      } else {
+                                        handleClearFilterlifeStage();
+                                      }
+                                    }}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {item.name}
+                              </label>
+                            </div>
+                          </div>
+                        ))
+                        : null}
                     </>
                   )}
                 </div>
@@ -558,93 +708,28 @@ function Petcategory() {
                   </div>
                   {healthDropdownVisible && (
                     <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                            onClick={handleFilterClick}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            222
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                            onClick={handleFilterClick}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                            onClick={handleFilterClick}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                            onClick={handleFilterClick}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                            onClick={handleFilterClick}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                      </div>
+                      {healthcondition &&
+                        healthcondition.map((item) => (
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onClick={handleFilterClick}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {item.title}
+                              </label>
+                            </div>
+                          </div>
+                        ))}
                     </>
                   )}
                 </div>
@@ -863,6 +948,70 @@ function Petcategory() {
                     ))}
                   </Row>
                 </div>
+
+                <Row>
+                  {(selectedBrand !== null ? dataList : allproduct).map((item, index) => (
+                    <Col lg={4} sm={6} xs={6} className="mb-4" key={item.id}>
+                      <div
+                        className="food-product"
+                        key={item.id}
+                        style={{
+                          background:
+                            gradientColors[index % gradientColors.length],
+                        }}
+                      >
+                        <i
+                          class="fa fa-heart-o"
+                          onClick={() => addToWishlist(item.id)}
+                        />
+                        <Link to={`/product-details/${item.id}`}>
+                          <div className="text-center">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <div>
+                            <h6>{item.name}</h6>
+                            <p>{item.description}</p>
+                          </div>
+                          <div className="product-bag">
+                            <Row>
+                              <Col>
+                                <p>₹{item.price}</p>
+                              </Col>
+                              <Col>
+                                <h5>{item.discount}%</h5>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col className="align-self-center">
+                                <h6>
+                                  {/* {`₹${(item.price * item.discount) / 100}`} */}
+                                  {`₹${item.price -
+                                    (item.price * item.discount) / 100
+                                    }`}
+                                </h6>
+                              </Col>
+                              <Col>
+                                <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                                  <img src={bag} />
+                                </Link>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Link>
+                      </div>
+                    </Col>
+                  ))}
+                  {dataList.length === 0 && selectedBrand !== null && (
+                    <div>No data available for the selected brand.</div>
+                  )}
+
+                </Row>
+
 
               </Container>
             </section>

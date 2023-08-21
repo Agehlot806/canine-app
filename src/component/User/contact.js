@@ -5,6 +5,9 @@ import contact from '../../assets/images/banner/contact.png'
 import Footer from '../../directives/footer'
 import strings from '../language';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from "../../Constant/Index";
+import { toast } from 'react-hot-toast';
+
 function Contact() {
     const [formData, setFormData] = useState({
         name: "",
@@ -12,25 +15,46 @@ function Contact() {
         email: "",
         phone: "",
         message: "",
-      });
+    });
 
-      const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission behavior
-    
-        // Do something with the form data, e.g., send it to a server
-        console.log("Form data:", formData);
-    
-        // Reset form fields
-        setFormData({
-          name: "",
-          address: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
-      };
-    
-      const handleInputChange = (event) => {
+
+        try {
+            // Create form data
+            const formDataToSend = {
+                name: formData.name,
+                address: formData.address,
+                email: formData.email,
+                phone: formData.phone,
+                message: formData.message,
+            };
+
+            const response = await fetch("https://canine.hirectjob.in/api/v1/auth/contact_us", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json", // Set appropriate content type
+                },
+                body: JSON.stringify(formDataToSend),
+            });
+
+            if (response.ok) {
+                // Successful response
+                const responseData = await response.json();
+                console.log("API response:", responseData);
+                toast.success("Submit Successfull");
+            } else {
+                // Handle error response
+                console.error("API error:", response.status, response.statusText);
+            }
+        } catch (error) {
+            toast.error("Please Enter All Fields");
+        }
+    };
+
+
+
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
         // setFormData({
         //   ...formData,
@@ -60,7 +84,7 @@ function Contact() {
                 [name]: value,
             });
         }
-      };
+    };
     return (
         <>
             <Newheader />
@@ -74,10 +98,10 @@ function Contact() {
                     <Row>
                         <Col lg={6} className="mb-4">
                             <div className='contact-card'>
-                                <Link to="tel:0987654321"> 
-                                <i className="fa fa-phone " />
-                                <h3>Phone</h3>
-                                <p >(+91){strings.mobile}</p>
+                                <Link to="tel:0987654321">
+                                    <i className="fa fa-phone " />
+                                    <h3>Phone</h3>
+                                    <p >(+91){strings.mobile}</p>
                                 </Link>
                             </div>
                         </Col>
@@ -85,8 +109,8 @@ function Contact() {
                             <div className='contact-card'>
                                 <i className="fa fa-envelope-o " />
                                 <Link to="mailto:info@canine.com">
-                                <h3>Email</h3>
-                                <p>info@canine.com</p>
+                                    <h3>Email</h3>
+                                    <p>info@canine.com</p>
                                 </Link>
                             </div>
                         </Col>
@@ -119,57 +143,57 @@ function Contact() {
                         <Row>
                             <Col lg={6}>
                                 <div className='contact-form'>
-                                <Form onSubmit={handleFormSubmit}>
-                                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Name</Form.Label>
-                                        <Form.Control
-                                            name="name"
-                                            placeholder="Enter name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Address</Form.Label>
-                                        <Form.Control
-                                            name="address"
-                                            placeholder="Enter address"
-                                            value={formData.address}
-                                            onChange={handleInputChange}
-                                            />
-                                    </Form.Group>
-                                    <Row className="mb-3">
-                                        <Col>
-                                            <Form.Label>Email</Form.Label>
+                                    <Form onSubmit={handleFormSubmit}>
+                                        <Form.Group className="mb-3" controlId="formGridAddress1">
+                                            <Form.Label>Name</Form.Label>
                                             <Form.Control
-                                                name="email"
-                                                placeholder="Enter email"
-                                                value={formData.email}
+                                                name="name"
+                                                placeholder="Enter name"
+                                                value={formData.name}
                                                 onChange={handleInputChange}
                                             />
-                                        </Col>
-                                        <Col>
-                                            <Form.Label>Phone no</Form.Label>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3" controlId="formGridAddress1">
+                                            <Form.Label>Address</Form.Label>
                                             <Form.Control
-                                                name="phone"
-                                                placeholder="Enter phone"
-                                                value={formData.phone}
+                                                name="address"
+                                                placeholder="Enter address"
+                                                value={formData.address}
                                                 onChange={handleInputChange}
                                             />
-                                        </Col>
-                                    </Row>
-                                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Message</Form.Label>
-                                        <Form.Control
-                                            name="message"
-                                            placeholder="Leave a comment here"
-                                            as="textarea"
-                                            value={formData.message}
-                                            onChange={handleInputChange}
+                                        </Form.Group>
+                                        <Row className="mb-3">
+                                            <Col>
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control
+                                                    name="email"
+                                                    placeholder="Enter email"
+                                                    value={formData.email}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Phone no</Form.Label>
+                                                <Form.Control
+                                                    name="phone"
+                                                    placeholder="Enter phone"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Form.Group className="mb-3" controlId="formGridAddress1">
+                                            <Form.Label>Message</Form.Label>
+                                            <Form.Control
+                                                name="message"
+                                                placeholder="Leave a comment here"
+                                                as="textarea"
+                                                value={formData.message}
+                                                onChange={handleInputChange}
                                             />
-                                    </Form.Group>
-                                    <Button type='submit' className='mt-4'>Submit</Button>
-                                </Form>
+                                        </Form.Group>
+                                        <Button type='submit' className='mt-4'>Submit</Button>
+                                    </Form>
                                 </div>
                             </Col>
                             <Col lg={6}>

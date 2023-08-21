@@ -108,19 +108,12 @@ function Wholeseller() {
                                                     value={state}
                                                 >
                                                     <option>Choose...</option>
-                                                    {stateall.map((items) => (
+                                                    {/* {stateall.map((items) => (
                                                         <option value={items.id} key={items.id}>
                                                             {items.state_name}
                                                         </option>
-                                                    ))}
+                                                    ))} */}
                                                 </Form.Select>
-                                                {error && state.length <= 0 ? (
-                                                    <span className="validationErr">
-                                                        State is required.
-                                                    </span>
-                                                ) : (
-                                                    ""
-                                                )}
                                             </Form.Group>
                                             <Form.Group as={Col}>
                                                 <Form.Label>
@@ -131,17 +124,11 @@ function Wholeseller() {
                                                     
                                                 >
                                                     <option>Choose...</option>
-                                                    {stateallCity.map((items) => (
+                                                    {/* {stateallCity.map((items) => (
                                                         <option>{items.city_name}</option>
-                                                    ))}
+                                                    ))} */}
                                                 </Form.Select>
-                                                {error && city.length <= 0 ? (
-                                                    <span className="validationErr">
-                                                        City is required.
-                                                    </span>
-                                                ) : (
-                                                    ""
-                                                )}
+                                                
                                             </Form.Group>
                                         </Row>
                                         <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -171,9 +158,6 @@ function Wholeseller() {
                                             <Button variant="primary" type="submit">
                                                 Login
                                             </Button>
-                                            <div className='login-btns'>
-                                                <Link to='/other-login'>Other Login</Link>
-                                            </div>
                                         </div>
                                     </Form>
                                 </div>
