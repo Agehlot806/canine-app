@@ -16,14 +16,12 @@ function Addcart() {
   const { id } = useParams();
   console.log("id", id);
   // Create a ref to store the list of items in the cart
-  const cartItemsRef = useRef();
   const [quantity, setQuantity] = useState(1);
-  const [selectQuantity, setSelectQuantity] = useState(1);
+  const [addToCartProduct, setAddToCartProduct] = useState([]);
+  console.log("addToCartProduct: ", addToCartProduct);
   // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
-  const [addToCartProduct, setAddToCartProduct] = useState([]);
   const [couponlist, setcouponlist] = useState([]);
-  const [itemQuantities, setItemQuantities] = useState({});
   const [paymentId, setPaymentId] = useState("");
 
   const redirectToShipping = () => {
@@ -97,18 +95,26 @@ function Addcart() {
     }
   };
 
+  const handleIncrementone = (index) => {
+    const updatedCart = [...addToCartProduct];
+    updatedCart[index].quantity += 1;
+    updatedCart[index].price +=
+      updatedCart[index].price / (updatedCart[index].quantity - 1); // Update the price per item
+    setAddToCartProduct(updatedCart);
+  };
+
+  const handleDecrementone = (index) => {
+    const updatedCart = [...addToCartProduct];
+    if (updatedCart[index].quantity > 1) {
+      updatedCart[index].quantity -= 1;
+      updatedCart[index].price =
+        updatedCart[index].price *
+        (updatedCart[index].quantity / (updatedCart[index].quantity + 1)); // Update the price
+      setAddToCartProduct(updatedCart);
+    }
+  };
   const fieldpagerefresh = () => {
     window.location.reload(false);
-  }
-
-
-  const handleIncrementone = () => {
-    setQuantity(quantity + 1);
-  };
-  const handleDecrementone = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
   };
   useEffect(() => {
     // getUserInfo()
@@ -125,19 +131,37 @@ function Addcart() {
   const addToCartData = async () => {
     axios
       .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-        id: id, // Replace this with the correct product_id you want to add
+        // id: id, // Replace this with the correct product_id you want to add
         // user_id: storedUserId,
         // price: price,
-        quantity: quantity,
+        // quantity: quantity,
         // image: image,
         // item_id: item_id,
         // item_name: item_name,
         // variant: variant,
+        params: {
+          id: id, // Replace this with the correct product_id you want to add
+          quantity: quantity,
+        },
       })
+
       .then((response) => {
         console.log(response);
+        const newCartItems = response.data.data.map((item) => ({
+          id: item.id,
+          item_name: item.item_name,
+          image: item.image,
+          price: item.price,
+          quantity: item.quantity, // Assuming the response already includes the quantity
+        }));
+
+        // Update the addToCartProduct state by adding the new cart items
+        setAddToCartProduct([...addToCartProduct, ...newCartItems]);
+
+        // Clear the quantity input field after adding the item to the cart
+        setQuantity(1);
         // cartItemsRef.current = response.data.data;
-        setAddToCartProduct(response.data.data);
+        // setAddToCartProduct(response.data.data);
         console.log("response.data.data: ", response.data.data);
       })
       .catch((error) => {
@@ -368,12 +392,12 @@ function Addcart() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'https://canine.hirectjob.in/api/v1/customer/address/update',
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      console.log('response in edit', response);
+      console.log("response in edit", response);
       if (response.data.status === 200) {
-        console.log('Profile updated successfully!');
+        console.log("Profile updated successfully!");
         setaddresslist((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -424,7 +448,7 @@ function Addcart() {
                       </button>
                     </div> */}
                     <div className="quantity-btn">
-                      <button onClick={handleDecrementone}>
+                      <button onClick={() => handleDecrementone(index)}>
                         <i className="fa fa-minus" />
                       </button>
                       <form>
@@ -440,7 +464,7 @@ function Addcart() {
                           />
                         </div>
                       </form>
-                      <button onClick={handleIncrementone}>
+                      <button onClick={() => handleIncrementone(index)}>
                         <i className="fa fa-plus" />
                       </button>
                     </div>
@@ -448,7 +472,7 @@ function Addcart() {
                   <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -642,7 +666,6 @@ function Addcart() {
                         <Button
                           data-toggle="modal"
                           data-target="#changeadress-model"
-
                         >
                           Add +
                         </Button>
@@ -652,10 +675,11 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${addressContentVisible
+                              className={`fa ${
+                                addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                                }`}
+                              }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -708,11 +732,14 @@ function Addcart() {
                                             }
                                           />
                                           &nbsp; &nbsp;
-                                          <i className="fa fa-edit" data-toggle="modal"
+                                          <i
+                                            className="fa fa-edit"
+                                            data-toggle="modal"
                                             onClick={() => {
-                                              setProfileData(item)
+                                              setProfileData(item);
                                             }}
-                                            data-target="#update-model" />
+                                            data-target="#update-model"
+                                          />
                                         </div>
                                       </div>
                                     </div>
@@ -729,7 +756,6 @@ function Addcart() {
                   </div>
                 </div>
               </div>
-
             </Container>
           ) : null}
           {addToCartProduct && addToCartProduct.length > 0 && (
