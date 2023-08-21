@@ -81,7 +81,7 @@ function Petcategory() {
   };
 
   const handleCheckboxClick = (event) => {
-    if (brand) {
+    if (brands) {
     }
     event.stopPropagation();
   };
@@ -115,7 +115,7 @@ function Petcategory() {
         console.log(error);
       });
   };
- 
+
   const Allsubcategories = async () => {
     axios
       .get(`${BASE_URL}/categories/subcategories`)
@@ -132,7 +132,7 @@ function Petcategory() {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   console.log("=======>>>>>> id", customer_id);
-  let storedUserId = JSON.parse(customer_id);
+  let storedUserId = JSON.stringify(customer_id);
   console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
@@ -196,6 +196,154 @@ function Petcategory() {
     }
   };
 
+  // filter code ==========================
+
+
+  const applyFilters = ({
+    selectedBrands,
+    lifeStage,
+    productType,
+    breed,
+    healthCondition,
+    specialDiet,
+    selectedVegOptions,
+    minPrice,
+    maxPrice,
+    products,
+  }) => {
+    return products.filter((product) => {
+      const brandFilter = !selectedBrands || selectedBrands.includes(product["brand"]);
+      const vegFilter = !selectedVegOptions || selectedVegOptions.includes(product["veg"]);
+      const maxPriceFilter = maxPrice === null || product["price"] < maxPrice;
+      const minPriceFilter = minPrice === null || product["price"] > minPrice;
+      const lifeStageFilter = !lifeStage || lifeStage.includes(product["life-stage"]);
+      const breedFilter = !breed || breed.includes(product["breed"]);
+      const healthConditionFilter = !healthCondition || healthCondition.includes(product["health-condition"]);
+      const specialDietFilter = !specialDiet || specialDiet.includes(product["special-diet"]);
+      return brandFilter && vegFilter && maxPriceFilter && minPriceFilter && lifeStageFilter && breedFilter && healthConditionFilter && specialDietFilter;
+    });
+  };
+  const products = [
+    {
+      "name": "Product 1",
+      "brand": "Brand A",
+      "veg": true,
+      "price": 4999,
+      "life-stage": "adult",
+      "product-type": "dry-dog-food",
+      "breed": "boxer",
+      "health-condition": "sensitive",
+      "special-diet": "low-gain",
+    },
+    {
+      "name": "Product 2",
+      "brand": "Brand B",
+      "veg": false,
+      "price": 2999,
+      "life-stage": "puppy",
+      "product-type": "greavy-dog-food",
+      "breed": "boxer",
+      "health-condition": "weaning",
+      "special-diet": "gain-free",
+    },
+    {
+      "name": "Product 3",
+      "brand": "Brand C",
+      "veg": true,
+      "price": 3999,
+      "life-stage": "adult",
+      "product-type": "dry-dog-food",
+      "breed": "pug",
+      "health-condition": "weaning",
+      "special-diet": "low-gain",
+    },
+    {
+      "name": "Product 4",
+      "brand": "Brand B",
+      "veg": false,
+      "price": 5999,
+      "life-stage": "puppy",
+      "product-type": "greavy-dog-food",
+      "breed": "pug",
+      "health-condition": "sensitive",
+      "special-diet": "gain-free",
+    },
+    {
+      "name": "Product 5",
+      "brand": "Brand A",
+      "veg": true,
+      "price": 6999,
+      "life-stage": "adult",
+      "product-type": "dry-dog-food",
+      "breed": "boxer",
+      "health-condition": "weaning",
+      "special-diet": "low-gain",
+    },
+    {
+      "name": "Product 6",
+      "brand": "Brand C",
+      "veg": false,
+      "price": 2999,
+      "life-stage": "adult",
+      "product-type": "dry-dog-food",
+      "breed": "boxer",
+      "health-condition": "weaning",
+      "special-diet": "low-gain",
+    },
+    {
+      "name": "Product 7",
+      "brand": "Brand C",
+      "veg": false,
+      "price": 3999,
+      "life-stage": "puppy",
+      "product-type": "dry-dog-food",
+      "breed": "pug",
+      "health-condition": "weaning",
+      "special-diet": "gain-free",
+    },
+    // More products...
+  ];
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const handleFilterClick = () => {
+    const filtered = applyFilters({
+      selectedBrands: ["Brand A", "Brand B", "Brand C"],
+      selectedVegOptions: [true, false],
+      lifeStage: ["puppy", "adult"],
+      products: products,
+      maxPrice: 5000,
+      minPrice: 0,
+      productType: ["dry-dog-food", "greavy-dog-food"],
+      breed: ["boxer", "pug"],
+      healthCondition: ["weaning", "sensitive"],
+      specialDiet: ["low-gain", "gain-free"],
+    });
+    setFilteredProducts(filtered);
+  };
+  console.log("Filtered Products:");
+  filteredProducts.forEach((product, index) => {
+    console.log(`${index + 1}: Name: ${product["name"]}`);
+    printAdditionalInfo(product);
+    console.log(""); // Add an empty line for separation
+  });
+  function printAdditionalInfo(product) {
+    console.log(`   Brand: ${product["brand"]}`);
+    console.log(`   Veg: ${product["veg"]}`);
+    console.log(`   Price: ${product["price"]}`);
+    console.log(`   Life Stage: ${product["life-stage"]}`);
+    console.log(`   Product Type: ${product["product-type"]}`);
+    console.log(`   Breed: ${product["breed"]}`);
+    console.log(`   Health Condition: ${product["health-condition"]}`);
+    console.log(`   Special Diet: ${product["special-diet"]}`);
+  }
+
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    // Add more gradient colors as needed
+  ];
+
   return (
     <>
       <Toaster />
@@ -228,7 +376,7 @@ function Petcategory() {
                       {brands
                         ? brands.map(
                           (item) =>
-                            item.canine == "0" && (
+                            item.canine == "1" && (
                               <div>
                                 <div
                                   className="form-check"
@@ -238,6 +386,7 @@ function Petcategory() {
                                     className="form-check-input"
                                     type="checkbox"
                                     id="defaultCheck1"
+                                    onClick={handleFilterClick}
                                   />
                                   <label
                                     className="form-check-label"
@@ -277,6 +426,7 @@ function Petcategory() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
+                                onClick={handleFilterClick}
                               />
                               <label
                                 className="form-check-label"
@@ -285,70 +435,7 @@ function Petcategory() {
                                 {item.name}
                               </label>
                             </div>
-                            {/* <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Buscuits and Cookies (58)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Dental Treats (55)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Freeze-Dried Treats (12)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Jerkies (45)
-                          </label>
-                        </div> */}
+
                           </div>
                         ))
                         : null}
@@ -368,11 +455,16 @@ function Petcategory() {
                   </div>
                   {priceDropdownVisible && (
                     <>
-                      <div className="form-range" onClick={handleCheckboxClick}>
+                      <div className="form-range" onClick={handleFilterClick}
+                      // onClick={handleCheckboxClick}
+
+                      >
                         <span>₹</span>
                         <input type="number" placeholder="From" />
                       </div>
-                      <div className="form-range" onClick={handleCheckboxClick}>
+                      <div className="form-range" onClick={handleFilterClick}
+                      // onClick={handleCheckboxClick}
+                      >
                         <span>₹</span>
                         <input type="number" placeholder="From" />
                       </div>
@@ -401,6 +493,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -437,6 +530,7 @@ function Petcategory() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
+                                onClick={handleFilterClick}
                               />
                               <label
                                 className="form-check-label"
@@ -445,7 +539,7 @@ function Petcategory() {
                                 {item.name}
                               </label>
                             </div>
-                           
+
                           </div>
                         ))}
                     </>
@@ -473,6 +567,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -489,6 +584,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -505,6 +601,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -521,6 +618,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -537,6 +635,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -571,6 +670,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -587,6 +687,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={handleFilterClick}
                           />
                           <label
                             className="form-check-label"
@@ -707,6 +808,60 @@ function Petcategory() {
                       </div>
                     </div>
                   </div>
+                </div>
+                <div>
+                  <Row>
+                    {filteredProducts.map((item, index) => (
+                      <Col lg={4} sm={6} xs={6} className="mb-4" >
+                        <div className="food-product" key={index} style={{
+                          background:
+                            gradientColors[index % gradientColors.length],
+                        }}>
+                          <i
+                            class="fa fa-heart-o"
+                            onClick={(id) => addToWishlist(item.id)}
+                          />
+                          {/* <Link to={`/product-details/${item.id}`}> */}
+                          <div className="text-center">
+                            {/* <img
+                                        src={
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
+                                          item.image
+                                        }
+                                      /> */}
+                          </div>
+                          <div>
+                            <h6>{item.name}</h6>
+                            <p>{item.brand}</p>
+                            <p>{item.veg.toString()}</p>
+                          </div>
+                          <div className="product-bag">
+                            <Row>
+                              <Col>
+                                {/* <p>₹{product.price}</p> */}
+                              </Col>
+                              <Col>
+                                <h5>₹{item.price}</h5>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col className="align-self-center">
+                                {/* <h6>{`₹${item.price -
+                                            (item.price * item.discount) / 100
+                                            }`}</h6> */}
+                              </Col>
+                              <Col>
+                                <Link to="">
+                                  <img src={bag} />
+                                </Link>
+                              </Col>
+                            </Row>
+                          </div>
+                          {/* </Link> */}
+                        </div>
+                      </Col>
+                    ))}
+                  </Row>
                 </div>
 
               </Container>

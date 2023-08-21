@@ -459,6 +459,9 @@ function Newheader() {
                       <Link className="dropdown-item" to="/all-service-booking">
                         All Service Booking
                       </Link>
+                      <Link className="dropdown-item" to="/my-orders">
+                        My Orders
+                      </Link>
                       <Link className="dropdown-item" to="/wishlist-products">
                         Wishlist Products
                       </Link>

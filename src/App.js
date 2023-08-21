@@ -62,6 +62,8 @@ import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
 import Returnpolicy from "./component/User/return-policy";
 import Paymentoption from "./component/User/payment-option";
+import Myorder from "./component/User/my-order";
+import Orderviewdetails from "./component/User/order-view-details";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -133,6 +135,10 @@ function App() {
           <Route path="/payment-option" element={<Paymentoption />} />
 
           <Route path="/help-faqs" element={<Helpandfaqs />} />
+          <Route path="/my-orders" element={<Myorder />} />
+          <Route path="/order-view-details" element={<Orderviewdetails />} />
+
+
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />

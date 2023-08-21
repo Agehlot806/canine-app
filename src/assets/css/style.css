@@ -2967,3 +2967,20 @@ input[type="number"]::-webkit-inner-spin-button {
   font-weight: 600;
   color: #000;
 }
+
+.myorder-btn button {
+  margin: 0 2px;
+  padding: 4px 14px;
+  font-size: 18px;
+}
+.myorder-list img {
+  width: 100px;
+  margin: 10px 0;
+}
+.myorder-btn button a {
+  color: #fff;
+}
+.order-ids button {
+  margin: 2px 0;
+  padding: 4px 12px;
+}
