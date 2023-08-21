@@ -11,6 +11,7 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 import { loadRazorpay } from "../../utils";
+import paydone from "../../assets/images/icon/paydone.png";
 
 function Addcart() {
   const { id } = useParams();
@@ -777,12 +778,16 @@ function Addcart() {
                           </Col>
                           <Col sm={6}>
                             <Button onClick={() => handlePayment()}>
-                              {/* <Link
+                              Checkout
+                            </Button>
+                            {/* <Button data-toggle="modal" data-target="#cod"> */}
+                            {/* <Link
+
                                 // to="/user-pay-method"
                               > */}
-                              Checkout
-                              {/* </Link> */}
-                            </Button>
+                            {/* Checkout */}
+                            {/* </Link> */}
+                            {/* </Button> */}
                             <Button>
                               <Link to="/product">Continue Shopping</Link>
                             </Button>
@@ -800,6 +805,49 @@ function Addcart() {
 
       <Footer />
 
+      {/* Modal */}
+      {/* <div
+        className="modal fade"
+        id="cod"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      data-dismiss="modal"
+                      onClick={() => handlePayment()}
+                    />
+                    <p>Online Payment</p>
+                  </div>
+                </div>
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                    />
+                    <p>Cash On Delivery</p>
+                  </div>
+                </div>
+                <Button>
+                  <Link to="/shipping">Done</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
       {/* Modal */}
       <div
         className="modal fade editAddress"
