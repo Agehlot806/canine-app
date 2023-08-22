@@ -50,7 +50,7 @@ function Productdetail() {
     }
   };
 
-  
+
   useEffect(() => {
     productData();
     itemWiseBanner();
@@ -113,7 +113,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-        productDetails?.status + 0.5 >= index + 1 ? (
+          productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -131,11 +131,21 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
   console.log("Main Image URL:", mainImage);
+  const [singleImage, setsingleImage] = useState("");
+
+  useEffect(() => {
+    if (productDetails.image) {
+      setsingleImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+        productDetails.image
+      );
+    }
+  }, [productDetails]);
 
   const handleThumbnailClick = (index) => {
     const clickedImage = productDetails.images[index];
@@ -179,7 +189,7 @@ function Productdetail() {
   ];
   const Amount = Math.floor(
     productDetails.price * quantity -
-      (productDetails.price * quantity * productDetails.discount) / 100
+    (productDetails.price * quantity * productDetails.discount) / 100
   ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   // const savedAmount = (
@@ -190,6 +200,25 @@ function Productdetail() {
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
+
+  const addToWishlist = async (item_id) => {
+    const formData = new FormData();
+    formData.append("user_id", storedUserId);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success("Added successfully");
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
+  };
 
   return (
     <>
@@ -211,10 +240,17 @@ function Productdetail() {
                   <img src={mainImage} alt="Product Image" />
                 </div>
                 <div className="needplace">
+
                   <Row>
+                    {/* <Col sm={2} className="mb-3">
+                      <div
+                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
+                        <img src={singleImage} />
+                      </div></Col> */}
                     {productDetails?.images &&
-                    productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
+                        
                         <Col sm={2} className="mb-3" key={index}>
                           <div
                             className="product-item-inner"
@@ -424,25 +460,25 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-            (item, index) =>
-              item.type === "item_wise" && (
-                <div className="product-innerBanner">
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/public/banner/" +
-                      item.image
-                    }
-                  />
-                  <div className="home-content">
-                    <h1>{item.title}</h1>
-                    <p>{item.description}</p>
-                    <Button>
-                      Explore More <i className="fa fa-angle-right" />
-                    </Button>
-                  </div>
+          (item, index) =>
+            item.type === "item_wise" && (
+              <div className="product-innerBanner">
+                <img
+                  src={
+                    "https://canine.hirectjob.in/storage/app/public/banner/" +
+                    item.image
+                  }
+                />
+                <div className="home-content">
+                  <h1>{item.title}</h1>
+                  <p>{item.description}</p>
+                  <Button>
+                    Explore More <i className="fa fa-angle-right" />
+                  </Button>
                 </div>
-              )
-          )
+              </div>
+            )
+        )
         : null}
 
       <section className="section-padding food">

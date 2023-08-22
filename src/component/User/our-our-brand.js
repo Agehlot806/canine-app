@@ -117,10 +117,12 @@ function Ourourbrand(props) {
         console.log(error);
       });
   };
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
-    formData.append("user_id", 1);
+    formData.append("user_id", storedUserId);
     formData.append("item_id", item_id);
     axios
       .post(`${BASE_URL}/customer/wish-list/add`, formData, {

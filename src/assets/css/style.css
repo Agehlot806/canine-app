@@ -419,6 +419,7 @@ a {
 .brand-main img {
   width: 150px;
   height: 150px;
+  margin: 14px 0 0;
 }
 
 .brand-text {
@@ -1462,12 +1463,14 @@ a {
 .add-cart img {
   width: 100px;
   height: 100px;
+  margin: 10px 0 0;
 }
 
 .add-cart hr {
   border-top: 1.5px solid #000;
   opacity: 1;
 }
+
 
 .add-cart-total {
   text-align: center;
@@ -2968,6 +2971,23 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #000;
 }
 
+.myorder-list {
+  padding: 18px;
+  margin: 18px 0;
+  border-radius: 14px;
+  background: #fff;
+  border-bottom: 5px solid #008efd;
+  border-top-left-radius: 2%;
+  border-top-right-radius: 2%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.myorder-list h3 {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  margin: 10px 0 8px;
+}
 .myorder-btn button {
   margin: 0 2px;
   padding: 4px 14px;
@@ -2975,7 +2995,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .myorder-list img {
   width: 100px;
-  margin: 10px 0;
+  margin: 10px 0 0;
+}
+.myorder-list hr {
+  border-top: 1.5px solid #000;
+  opacity: 1;
 }
 .myorder-btn button a {
   color: #fff;

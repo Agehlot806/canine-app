@@ -408,10 +408,10 @@ function Petcategory() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const handleFilterClick = () => {
     const filtered = applyFilters({
-      selectedBrands: ["Brand A", "Brand B", "Brand C"],
-      selectedVegOptions: [true, false],
+      // selectedBrands: ["Brand A", "Brand B", "Brand C"],
+      // selectedVegOptions: [true, false],
       lifeStage: ["puppy", "adult"],
-      products: products,
+      products: allproduct,
       maxPrice: 5000,
       minPrice: 0,
       productType: ["dry-dog-food", "greavy-dog-food"],

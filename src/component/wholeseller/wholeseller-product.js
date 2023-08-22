@@ -63,7 +63,67 @@ function Wholesellerproduct(props) {
                 console.log(error);
             });
     };
-
+    const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
+    const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
+      useState(false);
+    const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
+    const [lifestageDropdownVisible, setLifestageDropdownVisible] =
+      useState(false);
+    const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
+      useState(false);
+    const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
+    const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
+      useState(false);
+    const [vegNonvegDropdownVisible, setVegNonvegDropdownVisible] =
+      useState(false);
+    const [groomingFeatureDropdownVisible, setGroomingFeatureDropdownVisible] =
+      useState(false);
+    const [groomingToolsDropdownVisible, setGroomingToolsDropdownVisible] =
+      useState(false);
+    const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] =
+      useState(false);
+    const handleParentClick = (dropdownName) => {
+      switch (dropdownName) {
+        case "brand":
+          setBrandDropdownVisible(!brandDropdownVisible);
+          break;
+        case "productType":
+          setProductTypeDropdownVisible(!productTypeDropdownVisible);
+          break;
+        case "price":
+          setPriceDropdownVisible(!priceDropdownVisible);
+          break;
+        case "lifestage":
+          setLifestageDropdownVisible(!lifestageDropdownVisible);
+          break;
+        case "breedType":
+          setBreedTypeDropdownVisible(!breedTypeDropdownVisible);
+          break;
+        case "health":
+          setHealthDropdownVisible(!healthDropdownVisible);
+          break;
+        case "specialDiet":
+          setSpecialDietDropdownVisible(!specialDietDropdownVisible);
+          break;
+        case "veg-Non-veg":
+          setVegNonvegDropdownVisible(!vegNonvegDropdownVisible);
+          break;
+        case "groomingFeature":
+          setGroomingFeatureDropdownVisible(!groomingFeatureDropdownVisible);
+          break;
+        case "groomingTools":
+          setGroomingToolsDropdownVisible(!groomingToolsDropdownVisible);
+          break;
+        case "accessoryType":
+          setAccessoryTypeDropdownVisible(!accessoryTypeDropdownVisible);
+        default:
+          break;
+      }
+    };
+    const handleCheckboxClick = (event) => {
+      event.stopPropagation();
+    };
+  
 
 
     return (
@@ -77,36 +137,906 @@ function Wholesellerproduct(props) {
 
             <Container>
                 <Row>
-                    <Col lg={3}>
-                        <section className='section-padding'>
-                            <div className='filter-product'>
-                                <h3>Filters</h3>
-                                <hr />
-                                <Form.Select aria-label="Default select example">
-                                    <option>Brand</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                                <hr />
-                                <Form.Select aria-label="Default select example">
-                                    <option>Product Type</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                                <hr />
-                                <Form.Select aria-label="Default select example">
-                                    <option>Price </option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                                <hr />
-
-                            </div>
-                        </section>
-                    </Col>
+                <Col lg={3}>
+            <section className="section-padding">
+              <div className="filter-product">
+                <h3>Filters</h3>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("brand")}
+                  className="main-chk"
+                >
+                  Brand
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {brandDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Awesome Pawsome (2)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Basil (14)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Boltz (1)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Canine Craving (10)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Chip Chops (24)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("productType")}
+                  className="main-chk"
+                >
+                  Product Type
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {productTypeDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Buscuits & Cookies (4)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Buscuits and Cookies (58)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Dental Treats (55)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Freeze-Dried Treats (12)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Jerkies (45)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("price")}
+                  className="main-chk"
+                >
+                  Price
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {priceDropdownVisible && (
+                    <>
+                      <div className="form-range" onClick={handleCheckboxClick}>
+                        <span>₹</span>
+                        <input type="number" placeholder="From" />
+                      </div>
+                      <div className="form-range" onClick={handleCheckboxClick}>
+                        <span>₹</span>
+                        <input type="number" placeholder="From" />
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("lifestage")}
+                  className="main-chk"
+                >
+                  Lifestage
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {lifestageDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            All (10)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("breedType")}
+                  className="main-chk"
+                >
+                  Breed Type
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {breedTypeDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            All (180)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Large and Giant (13)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Medium (4)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Medium and Large (5)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Small (9)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("health")}
+                  className="main-chk"
+                >
+                  Health Condition
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {healthDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            222
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("specialDiet")}
+                  className="main-chk"
+                >
+                  Special Diet
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {specialDietDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Gluten-Free (7)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Gluten-Free (12)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Grain-free and Gluten-free (3)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Hypoallergenic (1)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Vegan (12)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("veg-Non-veg")}
+                  className="main-chk"
+                >
+                  Veg/Non-veg
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {vegNonvegDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Non-Veg (219)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            Veg (73)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("groomingFeature")}
+                  className="main-chk"
+                >
+                  Grooming Feature
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {groomingFeatureDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("groomingTools")}
+                  className="main-chk"
+                >
+                  Grooming Tools
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {groomingToolsDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("accessoryType")}
+                  className="main-chk"
+                >
+                  Accessory Type
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {accessoryTypeDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="defaultCheck1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="defaultCheck1"
+                          >
+                            223
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+              </div>
+            </section>
+          </Col>
                     <Col lg={9}>
                         <section className="section-padding">
                             <Container>

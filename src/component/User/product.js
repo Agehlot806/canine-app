@@ -198,6 +198,7 @@ function Product(props) {
         </div>
       </Container>
 
+
       <Container>
         <Row>
           <Col lg={3}>
@@ -1295,60 +1296,6 @@ function Product(props) {
               </div>
             </Container>
 
-            <section className="section-padding food">
-              <Container>
-                <Row>
-                  <Col lg={6} sm={6}>
-                    <h3>Related products</h3>
-                  </Col>
-                  <Col lg={6} sm={6}>
-                    <div className="see-allbtn">
-                      <Link to="">See All</Link>
-                    </div>
-                  </Col>
-                </Row>
-                <div className="needplace">
-                  <Row>
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div
-                        className="food-product"
-                      >
-                        <i class="fa fa-heart-o" />
-                        <Link to="/product-details">
-                          <div className="text-center">
-                            <img src={product1} />
-                          </div>
-                          <div>
-                            <h6>Farmina</h6>
-                            <p>asdsdsdadwe sdseded sded</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹999.00</p>
-                              </Col>
-                              <Col>
-                                <h5>20%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>₹100.00</h6>
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              </Container>
-            </section>
           </Col>
         </Row>
       </Container>

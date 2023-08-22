@@ -23,7 +23,7 @@ function Otherlogin() {
                                         <Link to='/wholeseller-login'>
                                             <div className='otherLogin-card otherLogin1'>
                                                 <img src={loicon1} />
-                                                <h5>login as a Wholesales</h5>
+                                                <h5>Login for Wholesales</h5>
                                             </div>
                                         </Link>
                                     </Col>
@@ -31,7 +31,7 @@ function Otherlogin() {
                                     <Link to='https://canine.hirectjob.in/store/apply'>
                                         <div className='otherLogin-card otherLogin2'>
                                             <img src={loicon2} />
-                                            <h5>login as a become a partner</h5>
+                                            <h5>Login for Partner</h5>
                                         </div>
                                         </Link>
                                     </Col>
@@ -39,7 +39,7 @@ function Otherlogin() {
                                     <Link to='https://canine.hirectjob.in/deliveryman/apply'>
                                         <div className='otherLogin-card otherLogin3'>
                                             <img src={loicon3} />
-                                            <h5>login as a become a Salesman</h5>
+                                            <h5>login for Salesman</h5>
                                         </div>
                                         </Link>
                                     </Col>

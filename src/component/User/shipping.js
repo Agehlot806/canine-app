@@ -22,52 +22,40 @@ function Shipping() {
     console.log("customer_id: ", customer_id);
     // ----------------------------------------
 
-    const [addToCartProduct, setAddToCartProduct] = useState([]);
 
     useEffect(() => {
-        addToCartData();
         allAddressList();
+        allOrders();
     }, []);
 
-    const addToCartData = async () => {
+    const [addresslist, setaddresslist] = useState([]);
+    const [allorder, setallorder] = useState([]);
+
+    const allAddressList = async () => {
         axios
-            .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-                // id: id, // Replace this with the correct product_id you want to add
-                // user_id: storedUserId,
-                // price: price,
-                // quantity: quantity,
-                // image: image,
-                // item_id: item_id,
-                // item_name: item_name,
-                // variant: variant,
-            })
+            .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
             .then((response) => {
                 console.log(response);
-                // cartItemsRef.current = response.data.data;
-                setAddToCartProduct(response.data.data);
-                console.log("response.data.data: ", response.data.data);
+                console.log("address list Successful");
+                setaddresslist(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-
-    const [addresslist, setaddresslist] = useState([]);
-  const allAddressList = async () => {
-    axios
-      .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
-      .then((response) => {
-        console.log(response);
-        console.log("address list Successful");
-        setaddresslist(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  console.log("address list",addresslist);
-
+    const allOrders = async () => {
+        axios
+            .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
+            .then((response) => {
+                console.log(response);
+                console.log("Order List Successful");
+                setallorder(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
     return (
         <>
             <Newheader />
@@ -78,44 +66,59 @@ function Shipping() {
             </Container>
 
             <section className="section-padding">
-                <div className="add-cart">
-                    {addToCartProduct && addToCartProduct.length > 0 ? (
-                        addToCartProduct.map((item, index) => (
-                            <Container>
-                                <Row>
-                                    <Col lg={2}>
-                                        <img
-                                            src={
-                                                "https://canine.hirectjob.in//storage/app/public/product/" +
-                                                item.image
-                                            }
-                                        />
-                                    </Col>
-                                    <Col lg={6} className="align-self-center">
-                                        <h2>{item.item_name}</h2>
-                                        <p>with paneer or cottage cheese.</p>
-                                    </Col>
-                                    <Col lg={2} className="align-self-center">
-                                        <h3>₹{item.price}</h3>
-                                    </Col>
-                                    <Col lg={2} className="align-self-center">
-                                <div className="myorder-btn">
-                                    <Button><Link to="/order-view-details">View</Link></Button>
-                                    <Button><Link to="/track-your-order">Track</Link></Button>
-                                </div>
-                            </Col>
-                                    <hr />
-                                </Row>
-                            </Container>
-                        ))
-                    ) : (
-                        <div className="Emptycart">
-                            <img src={cart} />
-                            <p className="emptyMSG">Cart is Empty</p>
-                        </div>
-                    )}
-                </div>
+                <Container>
+                    <div className="add-cart">
+                        {allorder && allorder.length > 0 ? (
+                            allorder.map((order) => (
+                                <div key={order.id}>
+                                    {order.callback && order.callback.length > 0 ? (
+                                        <div>
+                                            {order.callback.map((callbackItem) => {
+                                                const itemDetails = JSON.parse(callbackItem.item_details); // Parse the JSON string
 
+                                                return (
+                                                    <div key={callbackItem.id}>
+                                                        <Row>
+                                                            <Col lg={2}>
+                                                                <img
+                                                                    src={
+                                                                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                                                                        itemDetails.image
+                                                                    }
+                                                                    alt={itemDetails.name}
+                                                                />
+                                                            </Col>
+                                                            <Col lg={6} className="align-self-center">
+                                                                <h2>{itemDetails.name}</h2>
+                                                                <p>{itemDetails.description}</p>
+                                                            </Col>
+                                                            <Col lg={2} className="align-self-center">
+                                                                <h3>₹{callbackItem.price}</h3>
+                                                            </Col>
+                                                            <Col lg={2} className="align-self-center">
+                                                                <div className="myorder-btn">
+                                                                    <Button>
+                                                                        <Link to="/order-view-details">View</Link>
+                                                                    </Button>
+                                                                    <Button>
+                                                                        <Link to="/track-your-order">Track</Link>
+                                                                    </Button>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+                                                    </div>
+                                                );
+                                            })}
+                                            <hr />
+                                        </div>
+                                    ) : null}
+                                </div>
+                            ))
+                        ) : (
+                            <p>No orders available</p>
+                        )}
+                    </div>
+                </Container>
             </section>
 
             <section className='section-padding'>
@@ -273,30 +276,30 @@ function Shipping() {
                                 <div className='order-details'>
                                     <h4>Address</h4>
                                     <p>
-                                    {addresslist && addresslist.length > 1 ? (
-                      addresslist.map((item, index) => (
-                        index === 0 && (
-                          <p key={item.id}>
-                            {item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}
-                          </p>
-                        )
-                      ))
-                    ) : (
-                      <p>No data to display</p>
-                    )}
+                                        {addresslist && addresslist.length > 1 ? (
+                                            addresslist.map((item, index) => (
+                                                index === 0 && (
+                                                    <p key={item.id}>
+                                                        {item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}
+                                                    </p>
+                                                )
+                                            ))
+                                        ) : (
+                                            <p>No data to display</p>
+                                        )}
                                     </p>
                                     <h4>shipping Address</h4>
                                     <p>{addresslist && addresslist.length > 1 ? (
-                      addresslist.map((item, index) => (
-                        index === 1 && (
-                          <p key={item.id}>
-                            {item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}
-                          </p>
-                        )
-                      ))
-                    ) : (
-                      <p>No data to display</p>
-                    )}</p>
+                                        addresslist.map((item, index) => (
+                                            index === 1 && (
+                                                <p key={item.id}>
+                                                    {item.house_no} {item.area} {item.landmark} {item.city} {item.state} {item.pincode}
+                                                </p>
+                                            )
+                                        ))
+                                    ) : (
+                                        <p>No data to display</p>
+                                    )}</p>
                                 </div>
                                 {/* <div className='order-main-deals'>
                                 <img src={orders} />

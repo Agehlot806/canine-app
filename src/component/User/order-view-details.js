@@ -4,9 +4,33 @@ import logo from '../../assets/images/logo.png'
 import invoice from '../../assets/images/icon/invoice.png'
 import Newheader from '../../directives/newheader'
 import Footer from '../../directives/footer'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 function Orderviewdetails() {
+    const [orderDetails, setorderDetails] = useState([]);
+
+    const { id } = useParams();
+    console.log("order id ", id);
+    
+    useEffect(() => {
+        orderViewdetails();
+      }, []);
+    
+      const orderViewdetails = async () => {
+        axios
+          .get(`${BASE_URL}/items/details/${id}`)
+          .then((response) => {
+            console.log("=======> ", response);
+            console.log("order Details Successful");
+            setorderDetails(response.data.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
     return (
         <>
             <Newheader />
@@ -126,7 +150,9 @@ function Orderviewdetails() {
                                             </tr>
                                             <tr>
                                                 <th>Discount <br />
-                                                    <p>Promo Code: 554dffd</p></th>
+                                                    <p>Promo Code: 554dffd</p>
+                                                    <p>delivery_charge</p></th>
+
                                                 <td>$20</td>
                                             </tr>
                                             <tr>
