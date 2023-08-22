@@ -24,6 +24,11 @@ function Addcart() {
   const [coupencode, setcoupenCode] = useState(false);
   const [couponlist, setcouponlist] = useState([]);
   const [paymentId, setPaymentId] = useState("");
+  const [selectedInput, setSelectedInput] = useState("");
+
+  const handleRadioChange = (event) => {
+    setSelectedInput(event.target.checked);
+  };
 
   const redirectToShipping = () => {
     Navigate("/shipping");
@@ -777,17 +782,17 @@ function Addcart() {
                             </h2>
                           </Col>
                           <Col sm={6}>
-                            <Button onClick={() => handlePayment()}>
+                            {/* <Button onClick={() => handlePayment()}>
                               Checkout
-                            </Button>
-                            {/* <Button data-toggle="modal" data-target="#cod"> */}
-                            {/* <Link
+                            </Button> */}
+                            <Button data-toggle="modal" data-target="#cod">
+                              {/* <Link
 
                                 // to="/user-pay-method"
                               > */}
-                            {/* Checkout */}
-                            {/* </Link> */}
-                            {/* </Button> */}
+                              Checkout
+                              {/* </Link> */}
+                            </Button>
                             <Button>
                               <Link to="/product">Continue Shopping</Link>
                             </Button>
@@ -806,7 +811,7 @@ function Addcart() {
       <Footer />
 
       {/* Modal */}
-      {/* <div
+      <div
         className="modal fade"
         id="cod"
         tabIndex={-1}
@@ -836,18 +841,21 @@ function Addcart() {
                       className="form-check-input"
                       type="radio"
                       name="exampleRadios"
+                      value="second"
+                      checked={selectedInput}
+                      onChange={handleRadioChange}
                     />
                     <p>Cash On Delivery</p>
                   </div>
                 </div>
-                <Button>
-                  <Link to="/shipping">Done</Link>
+                <Button disabled={!selectedInput}>
+                  <Link to="/shipping">pay</Link>
                 </Button>
               </div>
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
       {/* Modal */}
       <div
         className="modal fade editAddress"

@@ -43,7 +43,8 @@ import Map from "./component/User/track-your-order";
 import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
 import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
 import SalesmanAddcart from "./component/Salesman/salesman-add-cart";
-import Wholeseller from "./component/AllUser/wholeseller";
+import Wholeseller from "./component/wholeseller/wholeseller-login";
+import WholesellerSignUp from "./component/wholeseller/wholeseller-signup";
 import Catcategory from "./component/User/cat-category";
 import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
@@ -122,8 +123,6 @@ function App() {
           <Route path="/delivery-details" element={<Deliverydetails />} />
           <Route path="/return-policy" element={<Returnpolicy />} />
 
-          
-
           <Route
             path="/international-shipping"
             element={<Internationalshipping />}
@@ -138,13 +137,13 @@ function App() {
           <Route path="/my-orders" element={<Myorder />} />
           <Route path="/order-view-details" element={<Orderviewdetails />} />
 
-
-
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/other-login" element={<Otherlogin />} />
           <Route path="/wholeseller-login" element={<Wholeseller />} />
+          <Route path="/wholeseller-signup" element={<WholesellerSignUp />} />
+
           <Route path="/otp" element={<Otp />} />
           <Route path="/partners-login" element={<Partners />} />
           <Route path="/salesman-login" element={<Salesman />} />
