@@ -7,29 +7,50 @@ import Footer from '../../directives/footer'
 import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import axios from 'axios'
+import { BASE_URL } from '../../Constant/Index'
 
 function Orderviewdetails() {
+    const [allorder, setallorder] = useState([]);
     const [orderDetails, setorderDetails] = useState([]);
 
     const { id } = useParams();
     console.log("order id ", id);
-    
+
     useEffect(() => {
         orderViewdetails();
-      }, []);
-    
-      const orderViewdetails = async () => {
+        allOrders();
+    }, []);
+
+    // storedUserId
+    const customer_id = localStorage.getItem("userInfo");
+    let storedUserId = JSON.parse(customer_id);
+    // =----------------------------
+    const allOrders = async () => {
         axios
-          .get(`${BASE_URL}/items/details/${id}`)
-          .then((response) => {
-            console.log("=======> ", response);
-            console.log("order Details Successful");
-            setorderDetails(response.data.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
+            .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
+            .then((response) => {
+                console.log(response);
+                console.log("Order List Successful");
+                setallorder(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const orderViewdetails = async () => {
+        axios
+            .get(`${BASE_URL}/customer/order/detail/${id}`)
+            .then((response) => {
+                console.log("=======> ", response);
+                console.log("order Details Successful");
+                setorderDetails(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <>
@@ -37,6 +58,7 @@ function Orderviewdetails() {
             <section className='section-padding'>
                 <Container>
                     <h1 className='main-head'>Orders View</h1>
+
                     <div className='oder-detail-card'>
                         <Row>
                             <Col lg={5}>
@@ -62,77 +84,35 @@ function Orderviewdetails() {
                         <Row>
                             <Col lg={5}>
                                 <div className='order-minicard'>
-                                    <Row>
-                                        <h6>Order ID : 125683</h6>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>1 X Food bowl</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>$138.00</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <Button>Buy it again</Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>1 X Food bowl</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>$138.00</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <Button>Buy it again</Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <hr />
-                                    <Row>
-                                        <h6>Order ID : 125683</h6>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>1 X Food bowl</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>$138.00</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <Button>Buy it again</Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>1 X Food bowl</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <p>$138.00</p>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div className='order-ids'>
-                                                <Button>Buy it again</Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
+                                    {orderDetails && orderDetails.length > 0 ? (
+                                        orderDetails.map((order) => {
+                                            const itemDetails = JSON.parse(order.item_details);
+
+                                            return (
+                                                <div key={order.id}>
+                                                    <Row>
+                                                        <h6>Order ID: {order.order_id}</h6>
+                                                        <Col sm={9}>
+                                                            <div className='order-ids'>
+                                                                <p>Product name: <span>{itemDetails.name}</span></p>
+                                                                <p>Price: <span>₹{order.price}</span></p>
+                                                                <p>quantity: <span>{order.quantity}</span></p>
+                                                            </div>
+                                                        </Col>
+
+                                                        <Col sm={3}>
+                                                            <div className='order-ids'>
+                                                                <Button>Buy it again</Button>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <hr />
+                                                </div>
+                                            );
+                                        })
+                                    ) : (
+                                        <p>No orders available</p>
+                                    )}
                                 </div>
                             </Col>
                             <Col lg={7} className='align-self-center'>
@@ -141,7 +121,7 @@ function Orderviewdetails() {
                                         <tbody>
                                             <tr>
                                                 <th>Sub Total</th>
-                                                <td>$50</td>
+                                                <td>₹{orderDetails.reduce((total, order) => total + parseFloat(order.price), 0)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Moving Cart <br />
@@ -165,6 +145,8 @@ function Orderviewdetails() {
                             </Col>
                         </Row>
                     </div>
+
+
                 </Container>
             </section>
             <Footer />

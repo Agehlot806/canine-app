@@ -290,17 +290,23 @@ function Addcart() {
       city: city,
       pincode: pincode,
     };
+  
+    console.log("Data being sent:", data); // Add this line for debugging
+  
     axios
       .post(`${BASE_URL}/customer/address/add`, data)
       .then((response) => {
+        console.log("Response from server:", response.data); // Add this line for debugging
         setResponseMessage(response.data.message);
         toast.success("Successfully added!");
         console.log("SuccessfullyAddress", data);
+        allAddressList();
       })
       .catch((error) => {
-        // toast.error("Field is required");
+        console.error("Error:", error); // Add this line for debugging
       });
   };
+  
 
   // order placed
   const handleCheckOut = async () => {
@@ -478,7 +484,7 @@ function Addcart() {
                   <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -681,11 +687,10 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${
-                                addressContentVisible
+                              className={`fa ${addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                              }`}
+                                }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -894,14 +899,16 @@ function Addcart() {
               <div class="form-group">
                 <label>Mobile</label>
                 <input
-                  class="form-control"
                   type="number"
+                  name="mobile"
+                  class="form-control"
+                  maxLength={10}
                   value={mobile}
                   onChange={(e) => setmobile(e.target.value)}
                 />
               </div>
               <div class="form-group">
-                <label>Plat,House no,Building,Company</label>
+                <label>flat,House no,Building,Company</label>
                 <input
                   class="form-control"
                   type="text"
@@ -981,7 +988,8 @@ function Addcart() {
                 type="button"
                 className="btn btn-primary"
                 onClick={handleAddAddress}
-                onInput={fieldpagerefresh}
+
+                data-dismiss="modal"
               >
                 Add +
               </button>
@@ -1008,7 +1016,7 @@ function Addcart() {
             <div className="modal-body">
               <div class="form-group">
                 <label>First Name</label>
-                <input
+                {/* <input
                   class="form-control"
                   type="text"
                   name="first_name"
@@ -1017,6 +1025,18 @@ function Addcart() {
                     setProfileData({
                       ...profileData,
                       first_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                /> */}
+                <input
+                  className="form-control"
+                  type="text"
+                  name="first_name"
+                  value={profileData.first_name || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      first_name: e.target.value,
                     })
                   }
                 />
@@ -1032,7 +1052,7 @@ function Addcart() {
                   onChange={(e) =>
                     setProfileData({
                       ...profileData,
-                      last_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                      last_name: e.target.value,
                     })
                   }
                 />
@@ -1056,7 +1076,7 @@ function Addcart() {
                 />
               </div>
               <div class="form-group">
-                <label>Plat,House no,Building,Company</label>
+                <label>flat,House no,Building,Company</label>
                 <input
                   class="form-control"
                   type="text"
@@ -1065,7 +1085,7 @@ function Addcart() {
                   onChange={(e) =>
                     setProfileData({
                       ...profileData,
-                      house_no: e.target.value.replace(/[^A-Za-z]/, ""),
+                      house_no: e.target.value,
                     })
                   }
                 />
@@ -1080,7 +1100,7 @@ function Addcart() {
                   onChange={(e) =>
                     setProfileData({
                       ...profileData,
-                      area: e.target.value.replace(/[^A-Za-z]/, ""),
+                      area: e.target.value,
                     })
                   }
                 />
@@ -1095,7 +1115,7 @@ function Addcart() {
                   onChange={(e) =>
                     setProfileData({
                       ...profileData,
-                      landmark: e.target.value.replace(/[^A-Za-z]/, ""),
+                      landmark: e.target.value,
                     })
                   }
                 />
@@ -1107,17 +1127,16 @@ function Addcart() {
                     <select
                       className="form-control"
                       onChange={Subscription}
-                      value={state}
-                      onInput={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          state: e.target.value.replace(/[^A-Za-z]/, ""),
-                        })
-                      }
+                      value={profileData.state || ""} 
+                      // onChange={(e) => 
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
-                      <option>State Choose...</option>
+                      <option value="">State Choose...</option>
                       {stateall.map((items) => (
-                        <option value={profileData.state || ""} key={items.id}>
+                        <option value={items.state_name} key={items.id}> 
                           {items.state_name}
                         </option>
                       ))}
@@ -1130,17 +1149,18 @@ function Addcart() {
                     <select
                       className="form-control"
                       onInput={(e) => setSelectedCity(e.target.value)}
-                      name={city}
+                      value={profileData.city || ""} 
                       onChange={(e) =>
                         setProfileData({
                           ...profileData,
-                          city: e.target.value.replace(/[^A-Za-z]/, ""),
+                          city: e.target.value,
                         })
                       }
+                     
                     >
-                      <option>City Choose...</option>
+                      <option value="">City Choose...</option> 
                       {stateallCity.map((items) => (
-                        <option value={profileData.city || ""} key={items.id}>
+                        <option value={items.city_name} key={items.id}> 
                           {items.city_name}
                         </option>
                       ))}
@@ -1157,7 +1177,7 @@ function Addcart() {
                   onChange={(e) =>
                     setProfileData({
                       ...profileData,
-                      pincode: e.target.value.replace(/[^A-Za-z]/, ""),
+                      pincode: e.target.value,
                     })
                   }
                 />

@@ -56,6 +56,12 @@ function Shipping() {
                 console.log(error);
             });
     };
+
+    const getDateFromCreatedAt = (createdAt) => {
+        const dateObject = new Date(createdAt);
+        return dateObject.toLocaleDateString();
+    };
+
     return (
         <>
             <Newheader />
@@ -68,54 +74,35 @@ function Shipping() {
             <section className="section-padding">
                 <Container>
                     <div className="add-cart">
-                        {allorder && allorder.length > 0 ? (
-                            allorder.map((order) => (
-                                <div key={order.id}>
-                                    {order.callback && order.callback.length > 0 ? (
-                                        <div>
-                                            {order.callback.map((callbackItem) => {
-                                                const itemDetails = JSON.parse(callbackItem.item_details); // Parse the JSON string
-
-                                                return (
-                                                    <div key={callbackItem.id}>
-                                                        <Row>
-                                                            <Col lg={2}>
-                                                                <img
-                                                                    src={
-                                                                        "https://canine.hirectjob.in//storage/app/public/product/" +
-                                                                        itemDetails.image
-                                                                    }
-                                                                    alt={itemDetails.name}
-                                                                />
-                                                            </Col>
-                                                            <Col lg={6} className="align-self-center">
-                                                                <h2>{itemDetails.name}</h2>
-                                                                <p>{itemDetails.description}</p>
-                                                            </Col>
-                                                            <Col lg={2} className="align-self-center">
-                                                                <h3>₹{callbackItem.price}</h3>
-                                                            </Col>
-                                                            <Col lg={2} className="align-self-center">
-                                                                <div className="myorder-btn">
-                                                                    <Button>
-                                                                        <Link to="/order-view-details">View</Link>
-                                                                    </Button>
-                                                                    <Button>
-                                                                        <Link to="/track-your-order">Track</Link>
-                                                                    </Button>
-                                                                </div>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                );
-                                            })}
-                                            <hr />
-                                        </div>
-                                    ) : null}
+                    {allorder && allorder.length > 0 ? (
+                            allorder.map((item, index) => (
+                                <div className='myorder-list'>
+                                    <Row className='justify-content-center'>
+                                        <Col lg={2}>
+                                            <img src={logo} />
+                                        </Col>
+                                        <Col lg={6}>
+                                            <h3>Order Id: {item.id}</h3>
+                                            <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
+                                            <h3>Payment Method: {item.payment_method}</h3>
+                                            <h3>Order Amount: ₹{item.order_amount}</h3>
+                                        </Col>
+                                    
+                                        <Col lg={2} className="align-self-center">
+                                            <div className="myorder-btn">
+                                                <Button>
+                                                    <Link to={`/order-view-details/${item.id}`}>View</Link>
+                                                </Button>
+                                                <Button>
+                                                    <Link to="/track-your-order">Track</Link>
+                                                </Button>
+                                            </div>
+                                        </Col>
+                                    </Row>
                                 </div>
                             ))
                         ) : (
-                            <p>No orders available</p>
+                            <p className="emptyMSG">No Order list</p>
                         )}
                     </div>
                 </Container>

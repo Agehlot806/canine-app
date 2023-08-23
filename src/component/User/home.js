@@ -248,6 +248,9 @@ function Home(props) {
 
   const { id } = useParams();
   console.log("id: ", id);
+
+
+  
   return (
     <>
       <Toaster />
@@ -414,6 +417,7 @@ function Home(props) {
         </Container>
       </section> */}
 
+
       <section className="section-padding">
         <Container>
           <Row>
@@ -429,7 +433,7 @@ function Home(props) {
             ssr={true} // means to render carousel on server-side.
             infinite={true}
             autoPlay={props.deviceType !== "mobile" ? true : false}
-            autoPlaySpeed={2000}
+            autoPlaySpeed={7000}
             keyBoardControl={true}
             customTransition="all 1s"
             transitionDuration={1000}

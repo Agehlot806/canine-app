@@ -22,7 +22,8 @@ import pro from "../../assets/images/icon/pro.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import { styled } from "styled-components";
-// import Lightbox from 'react-image-lightbox';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css'; // Import the CSS for the lightbox styles
 
 function Productdetail() {
   const { id } = useParams();
@@ -125,34 +126,7 @@ function Productdetail() {
     );
   });
 
-  // Lightbox product =====
-  const [mainImage, setMainImage] = useState("");
-  useEffect(() => {
-    if (productDetails.image) {
-      setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
-      );
-    }
-  }, [productDetails]);
-  console.log("Main Image URL:", mainImage);
-  const [singleImage, setsingleImage] = useState("");
 
-  useEffect(() => {
-    if (productDetails.image) {
-      setsingleImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
-      );
-    }
-  }, [productDetails]);
-
-  const handleThumbnailClick = (index) => {
-    const clickedImage = productDetails.images[index];
-    setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" + clickedImage
-    );
-  };
 
   const itemWiseBanner = async () => {
     try {
@@ -220,6 +194,52 @@ function Productdetail() {
       });
   };
 
+
+
+  // Lightbox product =====
+  // const [mainImage, setMainImage] = useState("");
+  // useEffect(() => {
+  //   if (productDetails.image) {
+  //     setMainImage(
+  //       "https://canine.hirectjob.in/storage/app/public/product/" +
+  //       productDetails.image
+  //     );
+  //   }
+  // }, [productDetails]);
+  // console.log("Main Image URL:", mainImage);
+
+  // const handleThumbnailClick = (index) => {
+  //   const clickedImage = productDetails.images[index];
+  //   setMainImage(
+  //     "https://canine.hirectjob.in/storage/app/public/product/" + clickedImage
+  //   );
+  // };
+
+
+  const [mainImage, setMainImage] = useState("");
+  const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (productDetails.image) {
+      setMainImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+        productDetails.image
+      );
+    }
+  }, [productDetails]);
+
+  const handleThumbnailClick = (index) => {
+    setMainImage(
+      "https://canine.hirectjob.in/storage/app/public/product/" + productDetails.images[index]
+    );
+  };
+
+  const handleMainImageClick = () => {
+    setLightboxIsOpen(true);
+    setLightboxImageIndex(productDetails.images.indexOf(mainImage));
+  };
+
   return (
     <>
       <Toaster />
@@ -234,19 +254,14 @@ function Productdetail() {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6}>
+            {/* <Col lg={6}>
               <div>
                 <div className="product-item">
-                  <img src={mainImage} alt="Product Image" />
+                  <img src={mainImage} alt="Product Image"  onClick={handleMainImageClick}/>
                 </div>
                 <div className="needplace">
 
                   <Row>
-                    {/* <Col sm={2} className="mb-3">
-                      <div
-                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
-                        <img src={singleImage} />
-                      </div></Col> */}
                     {productDetails?.images &&
                       productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
@@ -269,15 +284,92 @@ function Productdetail() {
                     ) : (
                       <p className="emptyMSG">No Related Image.</p>
                     )}
+
+
                   </Row>
+
+                  
                 </div>
+
+                
               </div>
+            </Col> */}
+            <Col lg={6}>
+              <>
+                <div>
+                  <div className="product-item" >
+                    <img src={mainImage} alt="Product Image" onClick={handleMainImageClick} />
+                  </div>
+                  <div className="needplace">
+                    <Row>
+                      {productDetails?.images && productDetails?.images.length > 0 ? (
+                        productDetails.images.map((item, index) => (
+                          <Col sm={2} className="mb-3" key={index}>
+                            <div
+                              className="product-item-inner"
+                              onClick={() => handleThumbnailClick(index)}
+                            >
+                              <img
+                                src={"https://canine.hirectjob.in/storage/app/public/product/" + item}
+                                alt={`Image ${index}`}
+                              />
+                            </div>
+                          </Col>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Related Image.</p>
+                      )}
+                    </Row>
+                  </div>
+                </div>
+
+                {lightboxIsOpen && (
+                  <Lightbox
+                    mainSrc={
+                      "https://canine.hirectjob.in/storage/app/public/product/" +
+                      productDetails.images[lightboxImageIndex]
+                    }
+                    nextSrc={
+                      "https://canine.hirectjob.in/storage/app/public/product/" +
+                      productDetails.images[(lightboxImageIndex + 1) % productDetails.images.length]
+                    }
+                    prevSrc={
+                      "https://canine.hirectjob.in/storage/app/public/product/" +
+                      productDetails.images[(lightboxImageIndex + productDetails.images.length - 1) % productDetails.images.length]
+                    }
+                    onCloseRequest={() => setLightboxIsOpen(false)}
+                    onMovePrevRequest={() =>
+                      setLightboxImageIndex(
+                        (lightboxImageIndex + productDetails.images.length - 1) % productDetails.images.length
+                      )
+                    }
+                    onMoveNextRequest={() =>
+                      setLightboxImageIndex(
+                        (lightboxImageIndex + 1) % productDetails.images.length
+                      )
+                    }
+                  />
+                )}
+              </>
             </Col>
             <Col lg={6}>
               <div className="productDetail-content">
                 <Row>
-                  <Col lg={10}>
+                  <Col lg={9}>
                     <h4>{productDetails.name}</h4>
+                  </Col>
+                  <Col lg={3}>
+                  <p>
+       {productDetails.veg == 0 ? (
+          <span>
+            <span className="non-vegetarian">●</span>
+          </span>
+        ) : (
+          <span>
+            <span className="vegetarian">●</span>
+          </span>
+        )}
+      </p>
                   </Col>
                 </Row>
                 <p>
@@ -372,114 +464,107 @@ function Productdetail() {
                       <th>Flavour</th>
                       <td>Chicken</td>
                     </tr> */}
-                    <tr>
-                      <th>Diet type</th>
-                      {/* <td>Non Vegetarian</td> */}
-                      <td>
-                        {productDetails.Veg === "0"
-                          ? "Vegetarian"
-                          : "Non Vegetarian"}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Age Range</th>
-                      <td>Adult</td>
-                    </tr>
-                    <tr>
-                      <th>Traget Species</th>
-                      <td>Dog</td>
-                    </tr>
-                    <tr>
-                      <th>Item From</th>
-                      <td>Pellet</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </div>
-            </Col>
-          </Row>
-          {productDetails.stock && productDetails.stock.length !== 0 ? (
-            <div className="productBTNaddcard">
-              <Button>
-                <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
-                  <i className="fa fa-shopping-bag" /> Add to cart
-                </Link>
-                <p>{addToCartStatus}</p>
-              </Button>
+                  <tr>
+                    <th>Age Range</th>
+                    <td>Adult</td>
+                  </tr>
+                  <tr>
+                    <th>Traget Species</th>
+                    <td>Dog</td>
+                  </tr>
+                  <tr>
+                    <th>Item From</th>
+                    <td>Pellet</td>
+                  </tr>
+                </tbody>
+              </Table>
             </div>
-          ) : (
-            <div className="sold-out-btn mt-3">
-              <Link>Sold Out</Link>
-              <br />
-              <Button data-toggle="modal" data-target="#soldoutModel">
-                Notify Me When Available
-              </Button>
-            </div>
-          )}
-          <div>
-            <h1 className="main-head mt-4">Product details</h1>
-            <p>{productDetails.description}</p>
+          </Col>
+        </Row>
+        {productDetails.stock && productDetails.stock.length !== 0 ? (
+          <div className="productBTNaddcard">
+            <Button>
+              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                <i className="fa fa-shopping-bag" /> Add to cart
+              </Link>
+              <p>{addToCartStatus}</p>
+            </Button>
           </div>
-          <hr />
-          <div className="Product-Review">
-            <h1 className="main-head mt-4">Product Review</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s,
-            </p>
-            <div className="row">
-              <div className="col-sm-2 col">
-                <Wrapper>
-                  <div className="icon-style">
-                    {ratingStar}
-                    {/* {productDetails.reviews || 60} */}
-                    {/* <p>({productDetails.reviews || 60} customer reviews)</p> */}
-                  </div>
-                </Wrapper>
-              </div>
-              <div className="col-sm-2 col">
-                <div className="Product-img">
-                  <img src={pro} />
-                  <span>Wade Warren</span>
-                  <div className="user-icon">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span> 1 2 3 4 5</span>
-                  </div>
+        ) : (
+          <div className="sold-out-btn mt-3">
+            <Link>Sold Out</Link>
+            <br />
+            <Button data-toggle="modal" data-target="#soldoutModel">
+              Notify Me When Available
+            </Button>
+          </div>
+        )}
+        <div>
+          <h1 className="main-head mt-4">Product details</h1>
+          <p>{productDetails.description}</p>
+        </div>
+        <hr />
+        <div className="Product-Review">
+          <h1 className="main-head mt-4">Product Review</h1>
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s,
+          </p>
+          <div className="row">
+            <div className="col-sm-2 col">
+              <Wrapper>
+                <div className="icon-style">
+                  {ratingStar}
+                  {/* {productDetails.reviews || 60} */}
+                  {/* <p>({productDetails.reviews || 60} customer reviews)</p> */}
+                </div>
+              </Wrapper>
+            </div>
+            <div className="col-sm-2 col">
+              <div className="Product-img">
+                <img src={pro} />
+                <span>Wade Warren</span>
+                <div className="user-icon">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <span> 1 2 3 4 5</span>
                 </div>
               </div>
             </div>
-            <hr />
           </div>
-        </Container>
-      </section>
+          <hr />
+        </div>
+      </Container>
+    </section >
 
       <Container fluid className="p-0">
         <div className="product-innerBanner">{/* <img src={product} /> */}</div>
       </Container>
 
-      {itemwiseonebanner
-        ? itemwiseonebanner.map(
-          (item, index) =>
-            item.type === "item_wise" && (
-              <div className="product-innerBanner">
-                <img
-                  src={
-                    "https://canine.hirectjob.in/storage/app/public/banner/" +
-                    item.image
-                  }
-                />
-                <div className="home-content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button>
-                </div>
+  {
+    itemwiseonebanner
+      ? itemwiseonebanner.map(
+        (item, index) =>
+          item.type === "item_wise" && (
+            <div className="product-innerBanner">
+              <img
+                src={
+                  "https://canine.hirectjob.in/storage/app/public/banner/" +
+                  item.image
+                }
+              />
+              <div className="home-content">
+                <h1>{item.title}</h1>
+                <p>{item.description}</p>
+                <Button>
+                  Explore More <i className="fa fa-angle-right" />
+                </Button>
               </div>
-            )
-        )
-        : null}
+            </div>
+          )
+      )
+      : null
+  }
 
       <section className="section-padding food">
         <Container>
@@ -530,7 +615,7 @@ function Productdetail() {
                               <h6>₹{item.price}</h6>
                             </Col>
                             <Col>
-                              <Link to="">
+                            <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                                 <img src={bag} />
                               </Link>
                             </Col>
@@ -546,53 +631,53 @@ function Productdetail() {
       </section>
       <Footer />
 
-      {/* Modal */}
-      <div
-        className="modal fade"
-        id="soldoutModel"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h4>{productDetails.name}</h4>
-              <p>{productDetails.description}</p>
-              <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select className="form-control">
-                    <option>Choose....</option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form>
+  {/* Modal */ }
+  <div
+    className="modal fade"
+    id="soldoutModel"
+    tabIndex={-1}
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div className="modal-dialog" role="document">
+      <div className="modal-content">
+        <div className="modal-body">
+          <h4>{productDetails.name}</h4>
+          <p>{productDetails.description}</p>
+          <form>
+            <div className="form-group">
+              <label htmlFor="exampleInputEmail1">Variations</label>
+              <select className="form-control">
+                <option>Choose....</option>
+                {productDetails?.variations &&
+                  productDetails?.variations.map((item) => (
+                    <option>{item.type}</option>
+                  ))}
+              </select>{" "}
             </div>
-          </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter Email"
+              />
+            </div>
+            <div className="Notify-Me">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                data-dismiss="modal"
+              >
+                Notify Me When Available
+              </button>
+            </div>
+          </form>
         </div>
       </div>
+    </div>
+  </div>
     </>
   );
 }

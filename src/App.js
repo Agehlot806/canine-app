@@ -79,7 +79,7 @@ const ScrollToTop = () => {
 
 function App() {
   return (
-    <>
+    <div className="cursor-area" >
       <BrowserRouter>
         <ScrollToTop /> {/* Add ScrollToTop component here */}
         <Routes>
@@ -135,7 +135,7 @@ function App() {
 
           <Route path="/help-faqs" element={<Helpandfaqs />} />
           <Route path="/my-orders" element={<Myorder />} />
-          <Route path="/order-view-details" element={<Orderviewdetails />} />
+          <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />
@@ -187,7 +187,7 @@ function App() {
           <Route path="/pay" element={<Pay />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
