@@ -122,6 +122,12 @@ function WholesellerSignUp() {
       Getdatacity(event.target.value);
     }
   };
+  const imageuploadhandler = (e) =>{
+    setUpload1(e.target.files[0])
+      }
+      const imageuploadhandlersecond = (e) =>{
+        setUpload2(e.target.files[0])
+          }
 
   return (
     <>
@@ -271,7 +277,7 @@ function WholesellerSignUp() {
                         <Form.Control
                           type="file"
                           multiple
-                          onChange={(e) => setUpload1(e.target.files)}
+                          onChange={imageuploadhandler}
                         />
                       </Form.Group>
                       <Form.Group as={Col} controlId="formGridCity">
@@ -279,7 +285,7 @@ function WholesellerSignUp() {
                         <Form.Control
                           type="file"
                           multiple
-                          onChange={(e) => setUpload2(e.target.files)}
+                          onChange={imageuploadhandlersecond}
                         />
                       </Form.Group>
                     </Row>

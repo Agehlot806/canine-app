@@ -1,18 +1,39 @@
-import React, { useState } from 'react'
-import Newheader from '../../directives/newheader';
-import productdetail from '../../assets/images/banner/productdetail.png'
-import product from '../../assets/images/banner/product.png'
-import productItem from '../../assets/images/img/brandPro1.png'
-import { Container, Row, Col, Table, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import Footer from '../../directives/footer'
-import product1 from '../../assets/images/img/product1.png'
-import product2 from '../../assets/images/img/product2.png'
-import product3 from '../../assets/images/img/product3.png'
-import bag from '../../assets/images/icon/bag.png'
+import React, { useEffect, useState } from "react";
+import Newheader from "../../directives/newheader";
+import productdetail from "../../assets/images/banner/productdetail.png";
+import product from "../../assets/images/banner/product.png";
+import productItem from "../../assets/images/img/brandPro1.png";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import Footer from "../../directives/footer";
+import product1 from "../../assets/images/img/product1.png";
+import product2 from "../../assets/images/img/product2.png";
+import product3 from "../../assets/images/img/product3.png";
+import bag from "../../assets/images/icon/bag.png";
+import Wholeheader from "../../directives/wholesalesheader";
+import { AiOutlineStar } from "react-icons/ai";
+import axios from "axios";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { BASE_URL } from "../../Constant/Index";
+import { styled } from "styled-components";
 
 function WholesellerproductDetails() {
+  const { id } = useParams();
+  console.log("id: ", id);
+  const [productDetails, setProductDetails] = useState([]);
+  console.log(
+    "productDetails.variations[0].type: ",
+    productDetails?.variations?.type
+  );
+  const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  console.log("productDetails--- ", productDetails);
+  // const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
+  console.log("quantity: ", quantity);
+  const [selectedVariant, setSelectedVariant] = useState([]);
+  console.log("selectedVariant: ", selectedVariant);
+
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -21,11 +42,180 @@ function WholesellerproductDetails() {
       setQuantity(quantity - 1);
     }
   };
+
+  useEffect(() => {
+    productData();
+    itemWiseBanner();
+    fetchrelatedproduct();
+  }, []);
+
+  const productData = async () => {
+    axios
+      .get(`${BASE_URL}/items/details/${id}`)
+      .then((response) => {
+        console.log("=======> ", response);
+        console.log("Delete Successful");
+        setProductDetails(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  console.log("customer_id: ", customer_id);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
+          user_id: storedUserId,
+          item_id: productDetails?.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity);
+    }
+  };
+  const ratingStar = Array.from({ length: 5 }, (item, index) => {
+    let number = index + 0.5;
+    return (
+      <span key={index}>
+        {productDetails?.rating_count ||
+        productDetails?.status + 0.5 >= index + 1 ? (
+          <FaStar className="icon" />
+        ) : productDetails?.rating_count ||
+          productDetails?.status + 0.5 >= number ? (
+          <FaStarHalfAlt className="icon" />
+        ) : (
+          <AiOutlineStar className="icon" />
+        )}
+      </span>
+    );
+  });
+
+  // Lightbox product =====
+  const [mainImage, setMainImage] = useState("");
+  useEffect(() => {
+    if (productDetails.image) {
+      setMainImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+          productDetails.image
+      );
+    }
+  }, [productDetails]);
+  console.log("Main Image URL:", mainImage);
+  const [singleImage, setsingleImage] = useState("");
+
+  useEffect(() => {
+    if (productDetails.image) {
+      setsingleImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+          productDetails.image
+      );
+    }
+  }, [productDetails]);
+
+  const handleThumbnailClick = (index) => {
+    const clickedImage = productDetails.images[index];
+    setMainImage(
+      "https://canine.hirectjob.in/storage/app/public/product/" + clickedImage
+    );
+  };
+
+  const itemWiseBanner = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/banners/`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 2);
+      setitemwiseonebanner(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [allrelatedproduct, setallrelatedproduct] = useState([]);
+
+  const fetchrelatedproduct = async () => {
+    axios
+      .get(`${BASE_URL}/items/product/2/8`)
+      .then((response) => {
+        console.log(response);
+        console.log("Delete Successful");
+        setallrelatedproduct(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    // Add more gradient colors as needed
+  ];
+  const Amount = Math.floor(
+    productDetails.price * quantity -
+      (productDetails.price * quantity * productDetails.discount) / 100
+  ).toFixed(2);
+  const formattedAmount = Number(Amount).toString();
+  // const savedAmount = (
+  //   productDetails.price * quantity -
+  //   (productDetails.price * quantity * productDetails.discount) / 100
+  // ).toFixed(2);
+  const savedAmount = Math.floor(
+    productDetails.price * quantity - Amount
+  ).toFixed(2);
+  const formattedSavedAmount = Number(savedAmount).toString();
+
+  const addToWishlist = async (item_id) => {
+    const formData = new FormData();
+    formData.append("user_id", storedUserId);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success("Added successfully");
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
+  };
   return (
     <>
-      <Newheader />
-      <Container fluid className='p-0'>
-        <div className='all-bg'>
+      <Wholeheader />
+      <Container fluid className="p-0">
+        <div className="all-bg">
           <img src={productdetail} />
         </div>
       </Container>
@@ -33,109 +223,126 @@ function WholesellerproductDetails() {
         <Container>
           <Row>
             <Col lg={6}>
-              <div className="product-item">
-                <img src={productItem} />
-              </div>
-              <div className="needplace">
-                <Row>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                  <Col sm={2} className="mb-3">
-                    <div className='product-item-inner'>
-                      <img src={productItem} />
-                    </div>
-                  </Col>
-                </Row>
+              <div>
+                <div className="product-item">
+                  <img src={mainImage} alt="Product Image" />
+                </div>
+                <div className="needplace">
+                  <Row>
+                    {/* <Col sm={2} className="mb-3">
+                      <div
+                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
+                        <img src={singleImage} />
+                      </div></Col> */}
+                    {productDetails?.images &&
+                    productDetails?.images.length > 0 ? (
+                      productDetails?.images.map((item, index) => (
+                        <Col sm={2} className="mb-3" key={index}>
+                          <div
+                            className="product-item-inner"
+                            onClick={() => handleThumbnailClick(index)}
+                          >
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/product/" +
+                                item
+                              }
+                              alt={`Image ${index}`}
+                            />
+                          </div>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Related Image.</p>
+                    )}
+                  </Row>
+                </div>
               </div>
             </Col>
             <Col lg={6}>
-              <div className='productDetail-content'>
+              <div className="productDetail-content">
                 <Row>
                   <Col lg={10}>
-                    <h4>ACANA Singles Grain Free Limited Ingredient Diet Duck and Pear Formula Dog Treats</h4>
-                  </Col>
-                  <Col lg={2}>
-                    <i className="fa fa-star" />
+                    <h4>{productDetails.name}</h4>
                   </Col>
                 </Row>
-                <p>By <span>Brand name</span></p>
-                <span><i className="fa fa-star" /> 4.5</span>
+                <p>
+                  By <span>{productDetails.store_name}</span>
+                </p>
+
+                <Wrapper>
+                  <div className="icon-style">
+                    {ratingStar}
+                    <p>({productDetails.reviews || 60} customer reviews)</p>
+                  </div>
+                </Wrapper>
+
                 <div className="needplaceProduct">
-                  <h6>Size</h6>
                   <Row>
-                    <Col sm={2}>
-                      <div className='product-item-inner'>
-                        <img src={productItem} />
-                        <h5>1 KG</h5>
+                    <Col sm={6}>
+                      <div className="form-group">
+                        {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
+                        <select
+                          className="form-control"
+                          value={selectedVariant}
+                          onChange={(e) => setSelectedVariant(e.target.value)}
+                        >
+                          <option>Choose....</option>
+                          {productDetails?.variations &&
+                            productDetails?.variations.map((item) => (
+                              // <a onClick={(e) => setpet_id(item)}>
+                              <option>{item.type}</option>
+                            ))}
+                        </select>
+                        {/* {productDetails?.variations &&
+    productDetails?.variations.map((variation) => (
+      <option key={variation.type} value={variation.type}>
+        {variation.type} - ₹{variation.price} (Stock: {variation.stock})
+      </option>
+    ))} */}
                       </div>
                     </Col>
-                    <Col sm={2}>
-                      <div className='product-item-inner'>
-                        <img src={productItem} />
-                        <h5>5 KG</h5>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
-                      <div className='product-item-inner'>
-                        <img src={productItem} />
-                        <h5>10 KG</h5>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
+                    <Col sm={6}>
                       <div className="quantity-btn">
+                        <button onClick={handleDecrementone}>
+                          <i className="fa fa-minus" />
+                        </button>
                         <form>
                           <div className="form-group">
-                            <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Quantity" />
+                            <input
+                              type="tel"
+                              className="form-control"
+                              placeholder="Quantity"
+                              value={quantity}
+                              onChange={handleQuantityChange}
+                              autoComplete="new-number"
+                            />
                           </div>
                         </form>
+                        <button onClick={handleIncrementone}>
+                          <i className="fa fa-plus" />
+                        </button>
                       </div>
                     </Col>
                   </Row>
                 </div>
                 <div className="needplaceProduct">
-                  <div className='product-deatils-price'>
+                  <div className="product-deatils-price">
                     <Row>
                       <Col lg={3}>
-                        <p>₹999.00</p>
+                        <p>{`₹${productDetails.whole_price}`}</p>
+                        {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
                       </Col>
                       <Col lg={4}>
-                        <h5>₹520.00</h5>
+                        <h5>{`₹${formattedAmount}`}</h5>
                       </Col>
                       <Col lg={5}>
-                        <h6>Your save 100 RS</h6>
+                        <h6>
+                          Your save
+                          {formattedSavedAmount >= 0
+                            ? "₹" + formattedSavedAmount
+                            : "No savings"}
+                        </h6>
                       </Col>
                     </Row>
                   </div>
@@ -145,15 +352,20 @@ function WholesellerproductDetails() {
                   <tbody>
                     <tr>
                       <th>Brand</th>
-                      <td>Mars Petcare Inc</td>
+                      <td>{productDetails.store_name}</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <th>Flavour</th>
                       <td>Chicken</td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <th>Diet type</th>
-                      <td>Non Vegetarian</td>
+                      {/* <td>Non Vegetarian</td> */}
+                      <td>
+                        {productDetails.Veg === "0"
+                          ? "Vegetarian"
+                          : "Non Vegetarian"}
+                      </td>
                     </tr>
                     <tr>
                       <th>Age Range</th>
@@ -172,17 +384,42 @@ function WholesellerproductDetails() {
               </div>
             </Col>
           </Row>
-          <div className='productBTNaddcard'>
-            <Button><Link to='/wholeseller-add-cart'><i className="fa fa-shopping-bag" /> Add to cart</Link></Button>
-
+          {productDetails.stock && productDetails.stock.length !== 0 ? (
+            <div className="productBTNaddcard">
+              <Button>
+                <Link to={`/wholeseller-add-cart/${id}`} onClick={handleAddToCart}>
+                  <i className="fa fa-shopping-bag" /> Add to cart
+                </Link>
+                <p>{addToCartStatus}</p>
+              </Button>
+            </div>
+          ) : (
+            <div className="sold-out-btn mt-3">
+              <Link>Sold Out</Link>
+              <br />
+              <Button data-toggle="modal" data-target="#soldoutModel">
+                Notify Me When Available
+              </Button>
+            </div>
+          )}
+          {/* </Row> */}
+          <div className="productBTNaddcard">
+            {/* <Button>
+              <Link to="/wholeseller-add-cart">
+                <i className="fa fa-shopping-bag" /> Add to cart
+              </Link>
+            </Button> */}
           </div>
           <h1 className="main-head mt-4">Product details</h1>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s,
           </p>
         </Container>
       </section>
-      <Container fluid className='p-0'>
-        <div className='product-innerBanner'>
+      <Container fluid className="p-0">
+        <div className="product-innerBanner">
           <img src={product} />
         </div>
       </Container>
@@ -198,7 +435,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -207,8 +444,14 @@ function WholesellerproductDetails() {
                     </div>
                     <div className="product-bag">
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -218,7 +461,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -235,8 +478,14 @@ function WholesellerproductDetails() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -246,7 +495,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -263,8 +512,14 @@ function WholesellerproductDetails() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -274,7 +529,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -291,8 +546,14 @@ function WholesellerproductDetails() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -302,7 +563,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -319,8 +580,14 @@ function WholesellerproductDetails() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -330,7 +597,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -347,8 +614,14 @@ function WholesellerproductDetails() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
@@ -358,7 +631,7 @@ function WholesellerproductDetails() {
                 <div className="food-product">
                   <i class="fa fa-heart-o" />
                   <Link to="/">
-                    <div className='text-center'>
+                    <div className="text-center">
                       <img src={product1} />
                     </div>
                     <div>
@@ -375,21 +648,41 @@ function WholesellerproductDetails() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                        <Col><Link to=''><img src={bag} /></Link></Col>
+                        <Col className="align-self-center">
+                          <h6>₹100.00</h6>
+                        </Col>
+                        <Col>
+                          <Link to="">
+                            <img src={bag} />
+                          </Link>
+                        </Col>
                       </Row>
                     </div>
                   </Link>
                 </div>
               </Col>
-
             </Row>
           </div>
         </Container>
       </section>
       <Footer />
     </>
-  )
+  );
 }
+const Wrapper = styled.section`
+  justify-content: flex-start;
 
-export default WholesellerproductDetails
+  icon {
+    font-size: 2rem;
+    color: orange;
+  }
+  .emty-icon {
+    font-size: 2.6rem;
+  }
+  p {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+`;
+
+export default WholesellerproductDetails;

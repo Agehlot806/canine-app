@@ -11,6 +11,7 @@ import Footer from "../../directives/footer";
 import { Link } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
+import Wholeheader from "../../directives/wholesalesheader";
 
 function Wholesellerdashboard() {
   const wsalerId = localStorage.getItem("WholesellerId");
@@ -20,14 +21,14 @@ function Wholesellerdashboard() {
 
   return (
     <>
-      <Newheader />
+      <Wholeheader />
       <div className="home-bg">
         <div className="home-section">
           <Container className="p-0">
             <Row>
               <Col lg={6} className="align-self-center">
                 <div className="home-content">
-                  <h1>
+                  {/* <h1>
                     Taking care <br />
                     for your Smart Dog !
                   </h1>
@@ -37,7 +38,7 @@ function Wholesellerdashboard() {
                   </p>
                   <Button>
                     Explore More <i className="fa fa-angle-right" />
-                  </Button>
+                  </Button> */}
                 </div>
               </Col>
               <Col lg={6}>

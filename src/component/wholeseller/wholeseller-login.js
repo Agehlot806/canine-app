@@ -10,32 +10,31 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-
-    try {
-      const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/wholesaler_login", // Update the API endpoint
-        formData
-      );
-      console.log(response.data);
-      if (response.data.status === "200") {
+    axios
+    .post(" https://canine.hirectjob.in/api/v1/auth/wholesaler_login", formData)
+    .then((response) => {
+      console.log("tarun",response);
+      localStorage.setItem("WholesellerId", response.data.data[0].id);
+      localStorage.setItem("verifiedId", response.data.data[0].verified);
+      if(response.data.message === 'Login Successfull'){
         navigate("/wholeseller-dashboard");
-        localStorage.setItem("WholesellerId", response.data.data.id);
-        localStorage.setItem("WholesellerEmail", response.data.data.email);
-        localStorage.setItem("WholesellerPhone", response.data.data.phone);
-        // Successful login logic
-        // For example: navigate to a dashboard or profile page
+        toast.success("Successfully");
       }
-      // Handle other responses as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
+      if(response.data.message === 'User Not Exit'){
+        toast.error("User Not Exit");
+      }
+      // Handle the response as needed
+      //
+    })
+    .catch((error) => {
+      console.log(error);
+      // Handle errors if any
+    });
   };
 
   return (

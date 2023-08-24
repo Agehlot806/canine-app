@@ -155,11 +155,11 @@ function App() {
           />
           <Route path="/wholeseller-product" element={<Wholesellerproduct />} />
           <Route
-            path="/wholeseller-product-details"
+            path="/wholeseller-product-details/:id"
             element={<WholesellerproductDetails />}
           />
           <Route
-            path="/wholeseller-add-cart"
+            path="/wholeseller-add-cart/:id"
             element={<WholesellerAddCart />}
           />
           <Route

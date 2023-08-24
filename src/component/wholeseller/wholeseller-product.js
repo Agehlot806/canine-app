@@ -13,6 +13,7 @@ import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
+import Wholeheader from '../../directives/wholesalesheader';
 
 const clinetreview = {
     desktop: {
@@ -128,7 +129,7 @@ function Wholesellerproduct(props) {
 
     return (
         <>
-            <Newheader />
+            <Wholeheader/>
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={product} />
@@ -1082,7 +1083,7 @@ function Wholesellerproduct(props) {
                                         <Col lg={4} sm={6} xs={6} className="mb-4">
                                             <div className="food-product" key={item.id}>
                                                 <i class="fa fa-heart-o" />
-                                                <Link to="/wholeseller-product-details">
+                                                <Link to={`/wholeseller-product-details/${item.id}`}>
                                                     <div className='text-center'>
                                                         <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
                                                     </div>
@@ -1100,7 +1101,7 @@ function Wholesellerproduct(props) {
                                                             </Col>
                                                         </Row>
                                                         <Row>
-                                                            <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
+                                                            <Col className='align-self-center'><h6>₹{item.whole_price}</h6></Col>
                                                             <Col><Link to=''><img src={bag} /></Link></Col>
                                                         </Row>
                                                     </div>
