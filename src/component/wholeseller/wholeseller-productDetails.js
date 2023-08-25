@@ -20,11 +20,16 @@ import { styled } from "styled-components";
 function WholesellerproductDetails() {
   const { id } = useParams();
   console.log("id: ", id);
+  const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
+console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
   const [productDetails, setProductDetails] = useState([]);
   console.log(
     "productDetails.variations[0].type: ",
     productDetails?.variations?.type
   );
+  const demousercheck= ()=>{
+    toast.error("Added to cart! NOT ACCESS");
+  }
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails--- ", productDetails);
@@ -35,7 +40,9 @@ function WholesellerproductDetails() {
   console.log("selectedVariant: ", selectedVariant);
 
   const handleIncrementone = () => {
-    setQuantity(quantity + 1);
+    if(verifiredIdaccess === 1){
+      setQuantity(quantity + 1);
+    }
   };
   const handleDecrementone = () => {
     if (quantity > 1) {
@@ -385,14 +392,22 @@ function WholesellerproductDetails() {
             </Col>
           </Row>
           {productDetails.stock && productDetails.stock.length !== 0 ? (
-            <div className="productBTNaddcard">
-              <Button>
-                <Link to={`/wholeseller-add-cart/${id}`} onClick={handleAddToCart}>
-                  <i className="fa fa-shopping-bag" /> Add to cart
-                </Link>
-                <p>{addToCartStatus}</p>
-              </Button>
-            </div>
+           <div className="productBTNaddcard">
+           {verifiredIdaccess === 1 ? (
+  <Button>
+    <Link to={`/wholeseller-add-cart/${id}`} onClick={handleAddToCart}>
+      <i className="fa fa-shopping-bag" /> Add to cart
+    </Link>
+  </Button>
+) : (
+  <Button onClick={demousercheck}>
+    <Link>
+      <i className="fa fa-shopping-bag" /> Add to cart
+    </Link>
+  </Button>
+)}
+<p>{addToCartStatus}</p>
+          </div>
           ) : (
             <div className="sold-out-btn mt-3">
               <Link>Sold Out</Link>

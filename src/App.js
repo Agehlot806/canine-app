@@ -107,7 +107,7 @@ function App() {
             path="/product-partner-shop"
             element={<Productpartnershop />}
           />
-          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/shipping/:id" element={<Shipping />} />
 
           <Route path="/user-pay-method" element={<Userpaymethod />} />
           <Route path="/map" element={<Map />} />

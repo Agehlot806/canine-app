@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import Wholeheader from "../../directives/wholesalesheader";
+import paydone from "../../assets/images/icon/paydone.png";
 
 function Wholesellerdashboard() {
   const wsalerId = localStorage.getItem("WholesellerId");

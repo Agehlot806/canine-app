@@ -43,7 +43,7 @@ function Orderviewdetails() {
         axios
             .get(`${BASE_URL}/customer/order/detail/${id}`)
             .then((response) => {
-                console.log("=======> ", response);
+                console.log("=======>???????????????????????????????? ", response);
                 console.log("order Details Successful");
                 setorderDetails(response.data.data);
             })
@@ -86,7 +86,7 @@ function Orderviewdetails() {
                                 <div className='order-minicard'>
                                     {orderDetails && orderDetails.length > 0 ? (
                                         orderDetails.map((order) => {
-                                            const itemDetails = JSON.parse(order.item_details);
+                                          
 
                                             return (
                                                 <div key={order.id}>
@@ -94,7 +94,7 @@ function Orderviewdetails() {
                                                         <h6>Order ID: {order.order_id}</h6>
                                                         <Col sm={9}>
                                                             <div className='order-ids'>
-                                                                <p>Product name: <span>{itemDetails.name}</span></p>
+                                                                <p>Product name: <span>{order.variant}</span></p>
                                                                 <p>Price: <span>₹{order.price}</span></p>
                                                                 <p>quantity: <span>{order.quantity}</span></p>
                                                             </div>

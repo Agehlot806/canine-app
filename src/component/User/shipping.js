@@ -62,6 +62,18 @@ function Shipping() {
         return dateObject.toLocaleDateString();
     };
 
+
+    // const Alldatamodeler1 = () => {
+    //     fetch(` https://sahadev.techpanda.art/api/cta-filter/${loginIduser}`)
+    //       .then((Response) => Response.json())
+    //       .then((response) => {
+    //         console.log("tarun categorys", response);
+    //         setMyactivity1(response.results)
+    //       }).catch((error) => {
+    //         console.log("error", error);
+    //       })
+    //   }
+
     return (
         <>
             <Newheader />

@@ -6,7 +6,7 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 import cart from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
@@ -19,7 +19,7 @@ function Addcart() {
   // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(1);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
-  console.log("addToCartProduct: ", addToCartProduct);
+  // console.log("addToCartProduct: ", addToCartProduct);
   // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
   const [couponlist, setcouponlist] = useState([]);
@@ -39,7 +39,7 @@ function Addcart() {
       // const response = await loadRazorpay();
       loadRazorpay()
         .then((response) => {
-          console.log("response handlePayment: ", response);
+          // console.log("response handlePayment: ", response);
           // Code to execute after the script has loaded
         })
         .catch((error) => {
@@ -89,7 +89,9 @@ function Addcart() {
     let allPrice = parseInt(el.price) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
-  console.log("originalPrice: ", originalPrice);
+  const taxamound = Math.floor(originalPrice * 0.05);
+  console.log("allPrice: ", originalPrice);
+  console.log("taxamound: ", taxamound);
 
   // const customer_id = localStorage.getItem("userInfo");
   // let storedUserId = JSON.parse(customer_id);
@@ -133,6 +135,7 @@ function Addcart() {
   // useEffect(() => {
   //   setAddToCartProduct(cartItemsRef.current);
   // }, [cartItemsRef]);
+  const [sendcartdata, setSandCartData] = useState([]);
 
   const addToCartData = async () => {
     axios
@@ -152,7 +155,19 @@ function Addcart() {
       })
 
       .then((response) => {
-        console.log(response);
+        console.log(
+          "addtocard show data>>>>?????565756756?????7878?????",
+          response
+        );
+        const newCartsend = response.data.data.map((item) => ({
+          item_id: item.item_id,
+          variant: item.variant,
+          price: item.price,
+          quantity: item.quantity, // Assuming the response already includes the quantity
+        }));
+
+        setSandCartData([...newCartsend]);
+
         const newCartItems = response.data.data.map((item) => ({
           id: item.id,
           item_name: item.item_name,
@@ -168,7 +183,7 @@ function Addcart() {
         setQuantity(1);
         // cartItemsRef.current = response.data.data;
         // setAddToCartProduct(response.data.data);
-        console.log("response.data.data: ", response.data.data);
+        // console.log("response.data.data: ", response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -214,8 +229,8 @@ function Addcart() {
     } catch (error) {
       console.error("Error removing item from wishlist:", error);
       if (error.response) {
-        console.log("Response status:", error.response.status);
-        console.log("Response data:", error.response.data);
+        // console.log("Response status:", error.response.status);
+        // console.log("Response data:", error.response.data);
         toast.success("Your Product deleted successfully");
       }
     }
@@ -235,7 +250,7 @@ function Addcart() {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        console.log("99999999999999999999", Response);
+        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -248,7 +263,7 @@ function Addcart() {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
-        console.log("responseresponse", response);
+        // console.log("responseresponse", response);
         setStateallCity(response.data.data);
       })
       .catch((error) => {
@@ -290,23 +305,22 @@ function Addcart() {
       city: city,
       pincode: pincode,
     };
-  
-    console.log("Data being sent:", data); // Add this line for debugging
-  
+
+    // console.log("Data being sent:", data); // Add this line for debugging
+
     axios
       .post(`${BASE_URL}/customer/address/add`, data)
       .then((response) => {
-        console.log("Response from server:", response.data); // Add this line for debugging
+        // console.log("Response from server:", response.data); // Add this line for debugging
         setResponseMessage(response.data.message);
         toast.success("Successfully added!");
-        console.log("SuccessfullyAddress", data);
+        // console.log("SuccessfullyAddress", data);
         allAddressList();
       })
       .catch((error) => {
         console.error("Error:", error); // Add this line for debugging
       });
   };
-  
 
   // order placed
   const handleCheckOut = async () => {
@@ -358,9 +372,9 @@ function Addcart() {
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
+  // console.log("=======>>>>>> id", customer_id);
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
+  // console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   const [addresslist, setaddresslist] = useState([]);
@@ -385,7 +399,7 @@ function Addcart() {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        console.log("Address deleted successfully:", response.data.message);
+        // console.log("Address deleted successfully:", response.data.message);
         setaddresslist((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -407,7 +421,7 @@ function Addcart() {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      console.log("response in edit", response);
+      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setaddresslist((prevAddressList) =>
@@ -418,6 +432,66 @@ function Addcart() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const shippingpage = useNavigate("");
+
+  const handleSendRequest = async () => {
+    const cartData = sendcartdata.map((item) => ({
+      product_id: item.item_id,
+      variation: item.variant,
+      price: item.price,
+      quantity: item.quantity,
+      tax_amount: taxamound,
+      discount_on_item: disscountvalue,
+    }));
+    const requestData = {
+      user_id: customer_id,
+      coupon_discount_amount: 200,
+      coupon_discount_title: "coupan",
+      payment_status: "confirm",
+      order_status: "pending",
+      total_tax_amount: 160,
+      payment_method: "online",
+      transaction_reference: "sadgash23asds",
+      delivery_address_id: 2,
+      coupon_code: "sdf42",
+      order_type: "delivery",
+      checked: 1,
+      store_id: 1,
+      zone_id: 2,
+      delivered_status: "undelivered",
+      delivery_address: "Delhi city 389",
+      item_campaign_id: "",
+      order_amount: parseInt(
+        originalPrice * 0.05 + originalPrice - disscountvalue
+      ),
+      cart: cartData,
+    };
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log("responseData???>>>>", responseData);
+        shippingpage("/shipping/" + responseData.data.order_id);
+      })
+      .catch((error) => {
+        console.error("Error sending request:", error);
+      });
+  };
+  const disscountvalue = localStorage.getItem("disconut");
+  console.log("disscountvalue", disscountvalue);
+  const coupendisscount = (dis) => {
+    setcoupenCode(!coupencode);
+    localStorage.setItem("disconut", dis);
+    console.log("disccount?????", dis);
   };
 
   return (
@@ -484,7 +558,7 @@ function Addcart() {
                   <Col lg={2} className="align-self-center">
                     <div
                       className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -612,7 +686,9 @@ function Addcart() {
                           <h5>
                             ₹
                             {`${parseInt(
-                              originalPrice * 0.05 + originalPrice
+                              originalPrice * 0.05 +
+                                originalPrice -
+                                disscountvalue
                             )}`}
                             {/* Calculate and display the Rounding Adjust */}
                           </h5>
@@ -687,10 +763,11 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${addressContentVisible
+                              className={`fa ${
+                                addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                                }`}
+                              }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -790,9 +867,12 @@ function Addcart() {
                             {/* <Button onClick={() => handlePayment()}>
                               Checkout
                             </Button> */}
-                            <Button data-toggle="modal" data-target="#cod">
+                            <Button
+                              data-toggle="modal"
+                              data-target="#cod"
+                              // onClick={handleAddToCart}
+                            >
                               {/* <Link
-
                                 // to="/user-pay-method"
                               > */}
                               Checkout
@@ -812,9 +892,7 @@ function Addcart() {
           )}
         </div>
       </section>
-
       <Footer />
-
       {/* Modal */}
       <div
         className="modal fade"
@@ -853,8 +931,45 @@ function Addcart() {
                     <p>Cash On Delivery</p>
                   </div>
                 </div>
-                <Button disabled={!selectedInput}>
-                  <Link to="/shipping">pay</Link>
+                <Button
+                  disabled={!selectedInput}
+                  data-toggle="modal"
+                  data-target="#paysubmit"
+                  data-dismiss="modal"
+                >
+                  <Link>pay</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Modal */}
+      {/* Modal */}
+      <div
+        className="modal fade"
+        id="paysubmit"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <img src={paydone} />
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesettingLorem Ipsum is simply dummy text of the printing
+                  and typesetting
+                </p>
+                <Button
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={handleSendRequest}
+                >
+                  <Link to="/shipping">Done</Link>
                 </Button>
               </div>
             </div>
@@ -988,7 +1103,6 @@ function Addcart() {
                 type="button"
                 className="btn btn-primary"
                 onClick={handleAddAddress}
-
                 data-dismiss="modal"
               >
                 Add +
@@ -1127,8 +1241,8 @@ function Addcart() {
                     <select
                       className="form-control"
                       onChange={Subscription}
-                      value={profileData.state || ""} 
-                      // onChange={(e) => 
+                      value={profileData.state || ""}
+                      // onChange={(e) =>
                       // setProfileData ({
                       //   ...profileData,
                       //   state: e.target.value,
@@ -1136,7 +1250,7 @@ function Addcart() {
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
-                        <option value={items.state_name} key={items.id}> 
+                        <option value={items.state_name} key={items.id}>
                           {items.state_name}
                         </option>
                       ))}
@@ -1149,18 +1263,17 @@ function Addcart() {
                     <select
                       className="form-control"
                       onInput={(e) => setSelectedCity(e.target.value)}
-                      value={profileData.city || ""} 
+                      value={profileData.city || ""}
                       onChange={(e) =>
                         setProfileData({
                           ...profileData,
                           city: e.target.value,
                         })
                       }
-                     
                     >
-                      <option value="">City Choose...</option> 
+                      <option value="">City Choose...</option>
                       {stateallCity.map((items) => (
-                        <option value={items.city_name} key={items.id}> 
+                        <option value={items.city_name} key={items.id}>
                           {items.city_name}
                         </option>
                       ))}
@@ -1254,13 +1367,14 @@ function Addcart() {
 
                         <div className="text-center">
                           <button
-                            onClick={() => {
-                              setcoupenCode(!coupencode);
-                            }}
+                            // onClick={() => {
+                            //   setcoupenCode(!coupencode);
+                            // }}
+                            onClick={(e) => coupendisscount(item.discount)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
-                            data-toggle="modal"
-                            data-target="#Coupon"
+                            // data-toggle="modal"
+                            // data-target="#Coupon"
                           >
                             Apply
                           </button>
