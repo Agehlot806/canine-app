@@ -509,7 +509,7 @@ function Addcart() {
             addToCartProduct.map((item, index) => (
               <Container>
                 <Row>
-                  <Col lg={2}>
+                  <Col lg={2} sm={2} xs={2}>
                     <img
                       src={
                         "https://canine.hirectjob.in//storage/app/public/product/" +
@@ -517,11 +517,11 @@ function Addcart() {
                       }
                     />
                   </Col>
-                  <Col lg={6} className="align-self-center">
+                  <Col lg={6} sm={5} xs={4} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
-                  <Col lg={2} className="align-self-center">
+                  <Col lg={2} sm={3} xs={4} className="align-self-center addCARThead">
                     <h3>₹{item.price}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
@@ -555,7 +555,7 @@ function Addcart() {
                       </button>
                     </div>
                   </Col>
-                  <Col lg={2} className="align-self-center">
+                  <Col lg={2} sm={2} xs={2} className="align-self-center">
                     <div
                       className="delete-addcard"
                       // onClick={() => removeFromCart(item.id)}
@@ -732,7 +732,7 @@ function Addcart() {
                   <h3>Shipping Address</h3>
                   <div className="address-card">
                     <Row>
-                      <Col lg={10}>
+                      <Col lg={10} sm={9}>
                         {selectedAddress ? (
                           <div className="selectedAddress-area">
                             <p>
@@ -750,7 +750,7 @@ function Addcart() {
                           <p>No address selected</p>
                         )}
                       </Col>
-                      <Col lg={2}>
+                      <Col lg={2} sm={3}>
                         <Button
                           data-toggle="modal"
                           data-target="#changeadress-model"
@@ -758,7 +758,7 @@ function Addcart() {
                           Add +
                         </Button>
                       </Col>
-                      <Col lg={12}>
+                      <Col lg={12} sm={12}>
                         <div className="address-arrow">
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}

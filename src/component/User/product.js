@@ -42,6 +42,11 @@ function Product(props) {
     categoriesProduct();
     allProduct();
     itemBanner();
+    allBrandshow()
+    allLifesageshow()
+    allBreedshow()
+    allHealthconditionshow();
+   
   }, []);
 
   const categoriesProduct = async () => {
@@ -74,6 +79,8 @@ function Product(props) {
       console.error(error);
     }
   };
+
+
 
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
@@ -170,24 +177,168 @@ function Product(props) {
     // Add more gradient colors as needed
   ];
 
-  const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 3;
-  useEffect(() => {
-    // Update the paginated categories whenever brandcategories or currentPage changes
-    pagination(currentPage);
-  }, [allproduct, currentPage]);
+  // const [paginatedCategories, setPaginatedCategories] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const pageSize = 3;
+  // useEffect(() => {
+  //   // Update the paginated categories whenever brandcategories or currentPage changes
+  //   pagination(currentPage);
+  // }, [allproduct, currentPage]);
 
-  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
-  const pages = _.range(1, pageCount + 1);
+  // const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  // const pages = _.range(1, pageCount + 1);
 
-  const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
-    const startIndex = (pageNo - 1) * pageSize;
-    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
-    setPaginatedCategories(paginated);
+  // const pagination = (pageNo) => {
+  //   setCurrentPage(pageNo);
+  //   const startIndex = (pageNo - 1) * pageSize;
+  //   const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+  //   setPaginatedCategories(paginated);
+  // };
+
+  /////tarunbirla////
+
+  const [allbrand, setAllBrand] = useState("")
+  const [alllifesage, setAlllifesage] = useState("")
+  const [allbreed, setAllBreed] = useState("")
+  const [allhealth, setAllHealth] = useState("")
+  const allBrandshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
+      .then((response) => {
+        // console.log("responseresponse?????",response);
+        setAllBrand(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
+  const allLifesageshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAlllifesage(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const allBreedshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAllBreed(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
+  const allHealthconditionshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAllHealth(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
+  const [selectedBrandIds, setSelectedBrandIds] = useState([]);
+  const [selectedlifeIds, setSelectedLifeIds] = useState([]);
+  const [selectedbreedIds, setSelectedbreedIds] = useState([]);
+  const [selectedhealthIds, setSelectedhealthIds] = useState([]);
+  const handleDataListBrand = (brand_id) => {
+    setSelectedBrandIds((prevSelectedBrandIds) => 
+     prevSelectedBrandIds.includes(brand_id)
+        ? prevSelectedBrandIds.filter((id) => id !== brand_id)
+        : [...prevSelectedBrandIds, brand_id]
+
+      );
+      filterProducts(); // Pass the updated brand IDs to filter function
+  };
+
+  const Lifesatedataselect = (name) => {
+    setSelectedLifeIds((prevSelectedLifedIds) =>
+      prevSelectedLifedIds.includes(name)
+        ? prevSelectedLifedIds.filter((id) => id !== name)
+        : [...prevSelectedLifedIds, name]
+    );
+    filterProducts();
+  };
+
+  const allbreedselect = (name) => {
+    setSelectedbreedIds((prevSelectedBreedIds) =>
+      prevSelectedBreedIds.includes(name)
+        ? prevSelectedBreedIds.filter((id) => id !== name)
+        : [...prevSelectedBreedIds, name]
+    );
+    filterProducts();
+  };
+
+  const healthcoditionselect = (name) => {
+    setSelectedhealthIds((prevSelectedBreedIds) =>
+      prevSelectedBreedIds.includes(name)
+        ? prevSelectedBreedIds.filter((id) => id !== name)
+        : [...prevSelectedBreedIds, name]
+    );
+    filterProducts();
+  };
+
+  const filterProducts = async () => {
+
+    try {
+      const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
+      const products = response.data.data; // Make sure to adapt this according to your API response
+      const filteredProducts = applyFilters({
+        selectedBrands: selectedBrandIds.length ===0 ? null:selectedBrandIds,
+        selectLifeStageFilterList: selectedlifeIds.length === 0 ? null : selectedlifeIds,
+        selectBreedFilterList: selectedbreedIds.length === 0 ? null : selectedbreedIds,
+        selectHealthConditionFilterList:selectedhealthIds.length === 0 ? null :selectedhealthIds,
+        products: products,
+      });
+      console.log("/////", filteredProducts);
+      console.log("======", products);
+      setallproduct(filteredProducts)
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+  };
+  const applyFilters = ({
+    selectedBrands,
+    selectLifeStageFilterList,
+    selectBreedFilterList,
+    selectHealthConditionFilterList,
+    products,
+
+  }) => {
+    return products.filter(product => {
+      const brandFilter = !selectedBrands || selectedBrands.includes(product.brand_id);
+      const lifeStageFilter = !selectLifeStageFilterList || selectLifeStageFilterList.includes(product.lifeStage_id);
+      const breedFilter = !selectBreedFilterList || selectBreedFilterList.includes(product.Petsbreeds_id);
+      const healthConditionFilter = !selectHealthConditionFilterList || selectHealthConditionFilterList.includes(product.helthCondition_id);
+      return (
+        brandFilter &&
+        lifeStageFilter &&
+        healthConditionFilter &&
+        breedFilter
+      );
+    });
+  };
   return (
     <>
       <Toaster />
@@ -219,189 +370,34 @@ function Product(props) {
                   {brandDropdownVisible && (
                     <>
                       <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Awesome Pawsome (2)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Basil (14)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Boltz (1)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Canine Craving (10)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Chip Chops (24)
-                          </label>
-                        </div>
+                        {allbrand ? (
+                          allbrand.map((items) => (
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onChange={(e) => handleDataListBrand(items.title)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {items.title}
+                              </label>
+                            </div>
+
+                          ))
+                        ) : ""}
                       </div>
                     </>
                   )}
                 </div>
                 <hr />
-                <div
-                  onClick={() => handleParentClick("productType")}
-                  className="main-chk"
-                >
-                  Product Type
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {productTypeDropdownVisible && (
-                    <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Buscuits & Cookies (4)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Buscuits and Cookies (58)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Dental Treats (55)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Freeze-Dried Treats (12)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Jerkies (45)
-                          </label>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr />
+
                 <div
                   onClick={() => handleParentClick("price")}
                   className="main-chk"
@@ -414,14 +410,20 @@ function Product(props) {
                   </div>
                   {priceDropdownVisible && (
                     <>
-                      <div className="form-range" onClick={handleCheckboxClick}>
-                        <span>₹</span>
-                        <input type="number" placeholder="From" />
+                      <div>
+
+                        <div className="form-range" onClick={handleCheckboxClick}>
+                          <span>₹</span>
+                          <input type="number" 
+                          placeholder="From" />
+                        </div>
+                        <div className="form-range" onClick={handleCheckboxClick}>
+                          <span>₹</span>
+                          <input type="number"
+                             placeholder="From" />
+                        </div>
                       </div>
-                      <div className="form-range" onClick={handleCheckboxClick}>
-                        <span>₹</span>
-                        <input type="number" placeholder="From" />
-                      </div>
+
                     </>
                   )}
                 </div>
@@ -439,22 +441,29 @@ function Product(props) {
                   {lifestageDropdownVisible && (
                     <>
                       <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            All (10)
-                          </label>
-                        </div>
+                        {alllifesage ? (
+                          alllifesage.map((items) => (
+
+
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onChange={(e) => Lifesatedataselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
+                        ) : ""}
                       </div>
                     </>
                   )}
@@ -473,86 +482,29 @@ function Product(props) {
                   {breedTypeDropdownVisible && (
                     <>
                       <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            All (180)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Large and Giant (13)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Medium (4)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Medium and Large (5)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Small (9)
-                          </label>
-                        </div>
+                        {allbreed ? (
+                          allbreed.map((items) => (
+
+
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onChange={(e) => allbreedselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
+                        ) : ""}
                       </div>
                     </>
                   )}
@@ -571,189 +523,35 @@ function Product(props) {
                   {healthDropdownVisible && (
                     <>
                       <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            222
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
+                        {allhealth ? (
+                          allhealth.map((items) => (
+
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onClick={(e) => healthcoditionselect(items.title)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {items.title}
+                              </label>
+                            </div>
+                          ))
+                        ) : ""}
+
                       </div>
                     </>
                   )}
                 </div>
                 <hr />
-                <div
-                  onClick={() => handleParentClick("specialDiet")}
-                  className="main-chk"
-                >
-                  Special Diet
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {specialDietDropdownVisible && (
-                    <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Gluten-Free (7)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Gluten-Free (12)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Grain-free and Gluten-free (3)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Hypoallergenic (1)
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            Vegan (12)
-                          </label>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr />
+
                 <div
                   onClick={() => handleParentClick("veg-Non-veg")}
                   className="main-chk"
@@ -804,300 +602,9 @@ function Product(props) {
                   )}
                 </div>
                 <hr />
-                <div
-                  onClick={() => handleParentClick("groomingFeature")}
-                  className="main-chk"
-                >
-                  Grooming Feature
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {groomingFeatureDropdownVisible && (
-                    <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr />
-                <div
-                  onClick={() => handleParentClick("groomingTools")}
-                  className="main-chk"
-                >
-                  Grooming Tools
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {groomingToolsDropdownVisible && (
-                    <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr />
-                <div
-                  onClick={() => handleParentClick("accessoryType")}
-                  className="main-chk"
-                >
-                  Accessory Type
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {accessoryTypeDropdownVisible && (
-                    <>
-                      <div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                        <div
-                          className="form-check"
-                          onClick={handleCheckboxClick}
-                        >
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="defaultCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="defaultCheck1"
-                          >
-                            223
-                          </label>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr />
+
+
+
               </div>
             </section>
           </Col>
@@ -1197,7 +704,7 @@ function Product(props) {
                         </div>
                       </Col>
                     ))} */}
-                  {paginatedCategories.map((item, index) => (
+                  {allproduct.map((item, index) => (
                     <Col lg={4} sm={6} xs={6} className="mb-4">
                       <div
                         className="food-product"
@@ -1250,7 +757,7 @@ function Product(props) {
                   ))}
                 </Row>
 
-                <div className="pagination-area">
+                {/* <div className="pagination-area">
                   <ul className="pagination">
                     {pages.map((page) => (
                       <li
@@ -1270,7 +777,7 @@ function Product(props) {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </Container>
             </section>
 

@@ -254,47 +254,7 @@ function Productdetail() {
       <section className="section-padding">
         <Container>
           <Row>
-            {/* <Col lg={6}>
-              <div>
-                <div className="product-item">
-                  <img src={mainImage} alt="Product Image"  onClick={handleMainImageClick}/>
-                </div>
-                <div className="needplace">
-
-                  <Row>
-                    {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
-                      productDetails?.images.map((item, index) => (
-                        
-                        <Col sm={2} className="mb-3" key={index}>
-                          <div
-                            className="product-item-inner"
-                            onClick={() => handleThumbnailClick(index)}
-                          >
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/product/" +
-                                item
-                              }
-                              alt={`Image ${index}`}
-                            />
-                          </div>
-                        </Col>
-                      ))
-                    ) : (
-                      <p className="emptyMSG">No Related Image.</p>
-                    )}
-
-
-                  </Row>
-
-                  
-                </div>
-
-                
-              </div>
-            </Col> */}
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <>
                 <div>
                   <div className="product-item" >
@@ -304,7 +264,7 @@ function Productdetail() {
                     <Row>
                       {productDetails?.images && productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
-                          <Col sm={2} className="mb-3" key={index}>
+                          <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
                             <div
                               className="product-item-inner"
                               onClick={() => handleThumbnailClick(index)}
@@ -352,24 +312,24 @@ function Productdetail() {
                 )}
               </>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <div className="productDetail-content">
                 <Row>
-                  <Col lg={9}>
+                  <Col lg={9} sm={9} xs={9}>
                     <h4>{productDetails.name}</h4>
                   </Col>
-                  <Col lg={3}>
-                  <p>
-       {productDetails.veg == 0 ? (
-          <span>
-            <span className="non-vegetarian">●</span>
-          </span>
-        ) : (
-          <span>
-            <span className="vegetarian">●</span>
-          </span>
-        )}
-      </p>
+                  <Col lg={3} sm={3} xs={3}>
+                    <p>
+                      {productDetails.veg == 0 ? (
+                        <span>
+                          <span className="non-vegetarian">●</span>
+                        </span>
+                      ) : (
+                        <span>
+                          <span className="vegetarian">●</span>
+                        </span>
+                      )}
+                    </p>
                   </Col>
                 </Row>
                 <p>
@@ -385,7 +345,7 @@ function Productdetail() {
 
                 <div className="needplaceProduct">
                   <Row>
-                    <Col sm={6}>
+                    <Col sm={6} xs={6}>
                       <div className="form-group">
                         {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
                         <select
@@ -408,7 +368,7 @@ function Productdetail() {
     ))} */}
                       </div>
                     </Col>
-                    <Col sm={6}>
+                    <Col sm={6} xs={6}>
                       <div className="quantity-btn">
                         <button onClick={handleDecrementone}>
                           <i className="fa fa-minus" />
@@ -435,14 +395,14 @@ function Productdetail() {
                 <div className="needplaceProduct">
                   <div className="product-deatils-price">
                     <Row>
-                      <Col lg={3}>
+                      <Col lg={3} sm={3} xs={3}>
                         <p>{`₹${productDetails.price}`}</p>
                         {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
                       </Col>
-                      <Col lg={4}>
+                      <Col lg={4} sm={4} xs={3}>
                         <h5>{`₹${formattedAmount}`}</h5>
                       </Col>
-                      <Col lg={5}>
+                      <Col lg={5} sm={5} xs={3}>
                         <h6>
                           Your save
                           {formattedSavedAmount >= 0
@@ -464,107 +424,107 @@ function Productdetail() {
                       <th>Flavour</th>
                       <td>Chicken</td>
                     </tr> */}
-                  <tr>
-                    <th>Age Range</th>
-                    <td>Adult</td>
-                  </tr>
-                  <tr>
-                    <th>Traget Species</th>
-                    <td>Dog</td>
-                  </tr>
-                  <tr>
-                    <th>Item From</th>
-                    <td>Pellet</td>
-                  </tr>
-                </tbody>
-              </Table>
+                    <tr>
+                      <th>Age Range</th>
+                      <td>Adult</td>
+                    </tr>
+                    <tr>
+                      <th>Traget Species</th>
+                      <td>Dog</td>
+                    </tr>
+                    <tr>
+                      <th>Item From</th>
+                      <td>Pellet</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            </Col>
+          </Row>
+          {productDetails.stock && productDetails.stock.length !== 0 ? (
+            <div className="productBTNaddcard">
+              <Button>
+                <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                  <i className="fa fa-shopping-bag" /> Add to cart
+                </Link>
+                <p>{addToCartStatus}</p>
+              </Button>
             </div>
-          </Col>
-        </Row>
-        {productDetails.stock && productDetails.stock.length !== 0 ? (
-          <div className="productBTNaddcard">
-            <Button>
-              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
-                <i className="fa fa-shopping-bag" /> Add to cart
-              </Link>
-              <p>{addToCartStatus}</p>
-            </Button>
-          </div>
-        ) : (
-          <div className="sold-out-btn mt-3">
-            <Link>Sold Out</Link>
-            <br />
-            <Button data-toggle="modal" data-target="#soldoutModel">
-              Notify Me When Available
-            </Button>
-          </div>
-        )}
-        <div>
-          <h1 className="main-head mt-4">Product details</h1>
-          <p>{productDetails.description}</p>
-        </div>
-        <hr />
-        <div className="Product-Review">
-          <h1 className="main-head mt-4">Product Review</h1>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
-          <div className="row">
-            <div className="col-sm-2 col">
-              <Wrapper>
-                <div className="icon-style">
-                  {ratingStar}
-                  {/* {productDetails.reviews || 60} */}
-                  {/* <p>({productDetails.reviews || 60} customer reviews)</p> */}
-                </div>
-              </Wrapper>
+          ) : (
+            <div className="sold-out-btn mt-3">
+              <Link>Sold Out</Link>
+              <br />
+              <Button data-toggle="modal" data-target="#soldoutModel">
+                Notify Me When Available
+              </Button>
             </div>
-            <div className="col-sm-2 col">
-              <div className="Product-img">
-                <img src={pro} />
-                <span>Wade Warren</span>
-                <div className="user-icon">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span> 1 2 3 4 5</span>
+          )}
+          <div>
+            <h1 className="main-head mt-4">Product details</h1>
+            <p>{productDetails.description}</p>
+          </div>
+          <hr />
+          <div className="Product-Review">
+            <h1 className="main-head mt-4">Product Review</h1>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s,
+            </p>
+            <div className="row">
+              <div className="col-sm-3 col">
+                <Wrapper>
+                  <div className="icon-style">
+                    {ratingStar}
+                    {/* {productDetails.reviews || 60} */}
+                    {/* <p>({productDetails.reviews || 60} customer reviews)</p> */}
+                  </div>
+                </Wrapper>
+              </div>
+              <div className="col-sm-5 col">
+                <div className="Product-img">
+                  <img src={pro} />
+                  <span>Wade Warren</span>
+                  <div className="user-icon">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span> 1 2 3 4 5</span>
+                  </div>
                 </div>
               </div>
             </div>
+            <hr />
           </div>
-          <hr />
-        </div>
-      </Container>
-    </section >
+        </Container>
+      </section >
 
       <Container fluid className="p-0">
         <div className="product-innerBanner">{/* <img src={product} /> */}</div>
       </Container>
 
-  {
-    itemwiseonebanner
-      ? itemwiseonebanner.map(
-        (item, index) =>
-          item.type === "item_wise" && (
-            <div className="product-innerBanner">
-              <img
-                src={
-                  "https://canine.hirectjob.in/storage/app/public/banner/" +
-                  item.image
-                }
-              />
-              <div className="home-content">
-                <h1>{item.title}</h1>
-                <p>{item.description}</p>
-                <Button>
-                  Explore More <i className="fa fa-angle-right" />
-                </Button>
-              </div>
-            </div>
+      {
+        itemwiseonebanner
+          ? itemwiseonebanner.map(
+            (item, index) =>
+              item.type === "item_wise" && (
+                <div className="product-innerBanner">
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/public/banner/" +
+                      item.image
+                    }
+                  />
+                  <div className="home-content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Button>
+                      Explore More <i className="fa fa-angle-right" />
+                    </Button>
+                  </div>
+                </div>
+              )
           )
-      )
-      : null
-  }
+          : null
+      }
 
       <section className="section-padding food">
         <Container>
@@ -603,19 +563,19 @@ function Productdetail() {
                         </div>
                         <div className="product-bag">
                           <Row>
-                            <Col>
+                            <Col lg={6} sm={6} xs={6}>
                               <p>₹999.00</p>
                             </Col>
-                            <Col>
+                            <Col lg={6} sm={6} xs={6}>
                               <h5>{item.discount}%</h5>
                             </Col>
                           </Row>
                           <Row>
-                            <Col className="align-self-center">
+                            <Col lg={6} sm={6} xs={6} className="align-self-center">
                               <h6>₹{item.price}</h6>
                             </Col>
-                            <Col>
-                            <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                            <Col lg={6} sm={6} xs={6}>
+                              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                                 <img src={bag} />
                               </Link>
                             </Col>
@@ -631,53 +591,53 @@ function Productdetail() {
       </section>
       <Footer />
 
-  {/* Modal */ }
-  <div
-    className="modal fade"
-    id="soldoutModel"
-    tabIndex={-1}
-    role="dialog"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div className="modal-dialog" role="document">
-      <div className="modal-content">
-        <div className="modal-body">
-          <h4>{productDetails.name}</h4>
-          <p>{productDetails.description}</p>
-          <form>
-            <div className="form-group">
-              <label htmlFor="exampleInputEmail1">Variations</label>
-              <select className="form-control">
-                <option>Choose....</option>
-                {productDetails?.variations &&
-                  productDetails?.variations.map((item) => (
-                    <option>{item.type}</option>
-                  ))}
-              </select>{" "}
+      {/* Modal */}
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select className="form-control">
+                    <option>Choose....</option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form>
             </div>
-            <div className="form-group">
-              <label htmlFor="exampleInputPassword1">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter Email"
-              />
-            </div>
-            <div className="Notify-Me">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                data-dismiss="modal"
-              >
-                Notify Me When Available
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
     </>
   );
 }

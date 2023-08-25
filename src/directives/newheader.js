@@ -94,7 +94,7 @@ function Newheader() {
     <>
       <Toaster />
       <nav className="navbar navbar-expand-lg navbar-light newheader">
-        <div className="container">
+        <div className="container-fluid">
           <a className="navbar-brand" href="#">
             {" "}
             <Link to="/" className="logoBG">

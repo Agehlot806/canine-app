@@ -61,11 +61,11 @@ const clinetreview = {
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 2,
+    items: 4,
     slidesToSlide: 1, // optional, default to 1.
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 540, min: 0 },
     items: 1,
     slidesToSlide: 1, // optional, default to 1.
   },
@@ -167,6 +167,22 @@ function Home(props) {
     }
   };
 
+  const renderBlogDescription = (description) => {
+    const maxCharacters = 50; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   const thirdBanner = () => {
     axios
       .get(`${BASE_URL}/banners`)
@@ -250,173 +266,58 @@ function Home(props) {
   console.log("id: ", id);
 
 
-  
+
   return (
     <>
       <Toaster />
       <Newheader />
-      <div className="">
-        <div className="home-section">
-          <Container fluid className="p-0">
-            {/* <Row>
-              <Col lg={6} className="align-self-center">
-                <div className="home-content">
-                  <h1>Taking care <br />
-                    for your Smart Dog !</h1>
-                  <p>Human–canine bonding is the relationship between dogs and humans.</p>
-                  <Button>Explore More <i className="fa fa-angle-right" /></Button>
-                </div>
-              </Col>
-              <Col lg={6}>
-                <img src={HomeImg} />
-              </Col>
-            </Row> */}
-            <Carousel
-              swipeable={true}
-              draggable={true}
-              showDots={true}
-              responsive={homeslider}
-              ssr={true} // means to render carousel on server-side.
-              infinite={true}
-              autoPlay={props.deviceType !== "mobile" ? true : false}
-              autoPlaySpeed={2000}
-              keyBoardControl={true}
-              customTransition="all 1s"
-              transitionDuration={1000}
-              containerClass="carousel-container"
-              removeArrowOnDeviceType={["tablet", "mobile"]}
-              deviceType={props.deviceType}
-              // dotListClass="custom-dot-list-style"
-              itemClass="carousel-item-padding-40-px"
-            >
-              {homebanner &&
-                homebanner.map((item) => (
-                  <div>
-                    {/* <Row> */}
-                    {/* <Col lg={6} className="align-self-center">
-                        <div className="home-content">
-                          <h1>{item.title}</h1>
-                          <p>{item.description}</p>
-                          <Button>
-                            Explore More <i className="fa fa-angle-right" />
-                          </Button>
-                        </div>
-                      </Col>
-                      <Col lg={6}>
-                        <img src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
-                          item.image
-                        } />
-                      </Col> */}
-                    {/* <Col lg={12}> */}
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/banner/" +
-                            item.image
-                          }
-                        />
-                      </div>
-                      <Row>
-                        <Col lg={6}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    {/* </Col>
-                    </Row> */}
+      <div className="home-section">
+        <Container fluid className="p-0">
+          <Carousel
+            swipeable={true}
+            draggable={true}
+            showDots={true}
+            responsive={homeslider}
+            ssr={true} // means to render carousel on server-side.
+            infinite={true}
+            autoPlay={props.deviceType !== "mobile" ? true : false}
+            autoPlaySpeed={2000}
+            keyBoardControl={true}
+            customTransition="all 1s"
+            transitionDuration={1000}
+            containerClass="carousel-container"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            deviceType={props.deviceType}
+            // dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+          >
+            {homebanner &&
+              homebanner.map((item) => (
+                <div className="home-img">
+                  <div className="">
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/banner/" +
+                        item.image
+                      }
+                    />
                   </div>
-                ))}
-              {/* <div>
-                <Row>
-                  <Col lg={6}>
-                    <img src={HomeImg} />
-                  </Col>
-                  <Col lg={6} className="align-self-center">
-                    <div className="home-content">
-                      <h1>
-                        Taking care <br />
-                        for your Smart Dog !
-                      </h1>
-                      <p>
-                        Human–canine bonding is the relationship between dogs
-                        and humans.
-                      </p>
-                      <Button>
-                        Explore More <i className="fa fa-angle-right" />
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-              <div>
-                <Row>
-                  <Col lg={6} className="align-self-center">
-                    <div className="home-content">
-                      <h1>
-                        Taking care <br />
-                        for your Smart Dog !
-                      </h1>
-                      <p>
-                        Human–canine bonding is the relationship between dogs
-                        and humans.
-                      </p>
-                      <Button>
-                        Explore More <i className="fa fa-angle-right" />
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col lg={6}>
-                    <img src={HomeImg} />
-                  </Col>
-                </Row>
-              </div> */}
-            </Carousel>
-          </Container>
-        </div>
-      </div>
-
-      {/* <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6}>
-              <div className="aboutpage-img">
-                <img src={aboutpage} />
-              </div>
-            </Col>
-            <Col lg={6} className="align-self-center">
-              <div className="aboutPage-content">
-                <h1 className="main-head">Pet care, up close and personal.</h1>
-                <p>
-                  But this isn’t just about our fresh new look. As you’ll see
-                  below, we’ve hired more qualified advisors, expanded our
-                  range, built a pet-first navigation, and launched new services
-                  like on-demand healthcare and insurance. There’s much more to
-                  come, but we hope you think we’re headed in the right
-                  direction.
-                </p>
-                <ul>
-                  <li>Adipiscing elit pellentesque</li>
-                  <li>Posuere ac ut consequat</li>
-                </ul>
-                <Button>
-                  <Link to="/about-us">
-                    Read More <i className="fa fa-angle-right" />
-                  </Link>
-                </Button>
-              </div>
-            </Col>
-          </Row>
+                  <Row>
+                    <Col lg={7}>
+                      <div className="home-content">
+                        <h1>{item.title}</h1>
+                        <p>{item.description}</p>
+                        <Button>
+                          Explore More <i className="fa fa-angle-right" />
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              ))}
+          </Carousel>
         </Container>
-      </section> */}
-
+      </div>
 
       <section className="section-padding">
         <Container>
@@ -464,11 +365,11 @@ function Home(props) {
       <section className="section-padding food">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6} xs={6}>
               {/* <h5>Dog Nutrients & Food </h5> */}
               <h1 className="main-head">Latest all Products</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/product">
                   View More <i className="fa fa-angle-right" />
@@ -508,24 +409,23 @@ function Home(props) {
                         </div>
                         <div className="product-bag">
                           <Row>
-                            <Col>
+                            <Col lg={6} sm={6} xs={6}>
                               <p>₹{item.price}</p>
                             </Col>
-                            <Col>
+                            <Col lg={6} sm={6} xs={6}>
                               <h5>{item.discount}%</h5>
                             </Col>
                           </Row>
                           <Row>
-                            <Col className="align-self-center">
+                            <Col lg={6} sm={6} xs={6} className="align-self-center">
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
-                                  item.price -
+                                {`₹${item.price -
                                   (item.price * item.discount) / 100
-                                }`}
+                                  }`}
                               </h6>
                             </Col>
-                            <Col>
+                            <Col lg={6} sm={6} xs={6}>
                               <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                                 <img src={bag} />
                               </Link>
@@ -544,10 +444,10 @@ function Home(props) {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6} xs={6}>
               <h1 className="main-head">Our Brand</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/our-brand">See all</Link>
               </div>
@@ -556,11 +456,116 @@ function Home(props) {
           <Row className="mt-4">
             {brands
               ? brands.map(
+                (brand) =>
+                  brand.canine == "1" && (
+                    <Col lg={3} sm={6} xs={6} className="mb-5">
+                      <div key={brand.id} className="Brand-card brand-1">
+                        <Link to={`/our-our-brand/${brand.id}`}>
+                          <div className="brandLOGO">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                brand.logo
+                              }
+                            />
+                          </div>
+                          <div className="brand-main">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                brand.image
+                              }
+                            />
+                          </div>
+                          <div className="brand-text">
+                            <h5>{brand.title}</h5>
+                          </div>
+                        </Link>
+                      </div>
+                    </Col>
+                  )
+              )
+              : null}
+          </Row>
+        </Container>
+      </section>
+
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <Col lg={6} className="mb-4">
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          item.image
+                        }
+                      />
+                    </Col>
+                  )
+              )
+              : null}
+            <Col lg={6} className="align-self-center">
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                    (item, index) =>
+                      item.type === "store_wise" && (
+                        <Col sm={12} className="mb-4">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/banner/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                      )
+                  )
+                  : null}
+                {homebanner
+                  ? homebanner.map(
+                    (item, index) =>
+                      item.type === "item_wise" && (
+                        <Col sm={12} className="mb-4">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/banner/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                      )
+                  )
+                  : null}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="section-padding">
+        <Container>
+          <Row>
+            <Col lg={6} sm={6} xs={6}>
+              <h1 className="main-head">Shop By Brands</h1>
+            </Col>
+            <Col lg={6} sm={6} xs={6}>
+              <div className="foodMore">
+                <Link to="/shop-by-brand">See all</Link>
+              </div>
+            </Col>
+          </Row>
+          <div className="needplace">
+            <Row>
+              {brands
+                ? brands.map(
                   (brand) =>
-                    brand.canine == "1" && (
+                    brand.canine == "0" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
                         <div key={brand.id} className="Brand-card brand-1">
-                          <Link to={`/our-our-brand/${brand.id}`}>
+                          <Link to={`/shop-by-brand-list/${brand.id}`}>
                             <div className="brandLOGO">
                               <img
                                 src={
@@ -585,111 +590,6 @@ function Home(props) {
                       </Col>
                     )
                 )
-              : null}
-          </Row>
-        </Container>
-      </section>
-
-      <section className="section-padding thirdbnner-area">
-        <Container>
-          <Row>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <Col lg={6}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/banner/" +
-                            item.image
-                          }
-                        />
-                      </Col>
-                    )
-                )
-              : null}
-            <Col lg={6} className="align-self-center">
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "store_wise" && (
-                          <Col sm={12} className="mb-4">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/banner/" +
-                                item.image
-                              }
-                            />
-                          </Col>
-                        )
-                    )
-                  : null}
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "item_wise" && (
-                          <Col sm={12} className="mb-4">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/banner/" +
-                                item.image
-                              }
-                            />
-                          </Col>
-                        )
-                    )
-                  : null}
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6}>
-              <h1 className="main-head">Shop By Brands</h1>
-            </Col>
-            <Col lg={6}>
-              <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {brands
-                ? brands.map(
-                    (brand) =>
-                      brand.canine == "0" && (
-                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div key={brand.id} className="Brand-card brand-1">
-                            <Link to={`/shop-by-brand-list/${brand.id}`}>
-                              <div className="brandLOGO">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                    brand.logo
-                                  }
-                                />
-                              </div>
-                              <div className="brand-main">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                    brand.image
-                                  }
-                                />
-                              </div>
-                              <div className="brand-text">
-                                <h5>{brand.title}</h5>
-                              </div>
-                            </Link>
-                          </div>
-                        </Col>
-                      )
-                  )
                 : null}
             </Row>
           </div>
@@ -699,10 +599,10 @@ function Home(props) {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6} xs={6}>
               <h1 className="main-head">Product By Partner</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/product-by-partner">See all</Link>
               </div>
@@ -710,7 +610,7 @@ function Home(props) {
           </Row>
           <div className="needplace">
             <Row>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
+              <Col lg={3} sm={6} xs={6} className="mb-4">
                 <a href="/product-by-partner">
                   <div className="ProductPartner-card">
                     <img src={loicon1} />
@@ -718,7 +618,7 @@ function Home(props) {
                   </div>
                 </a>
               </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
+              <Col lg={3} sm={6} xs={6} className="mb-4">
                 <a href="/product-by-partner">
                   <div className="ProductPartner-card">
                     <img src={loicon2} />
@@ -726,7 +626,7 @@ function Home(props) {
                   </div>
                 </a>
               </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
+              <Col lg={3} sm={6} xs={6} className="mb-4">
                 <a href="/product-by-partner">
                   <div className="ProductPartner-card">
                     <img src={loicon1} />
@@ -734,7 +634,7 @@ function Home(props) {
                   </div>
                 </a>
               </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
+              <Col lg={3} sm={6} xs={6} className="mb-4">
                 <a href="/product-by-partner">
                   <div className="ProductPartner-card">
                     <img src={loicon2} />
@@ -753,6 +653,7 @@ function Home(props) {
             <Row>
               <Col lg={5} className="p-0">
                 <div className="video-content">
+                  
                   <h1 className="main-head">Samantha & Maya’s Pet Grooming</h1>
                   <p>
                     When it comes to cats, everyone knows taste is what’s most
@@ -783,7 +684,7 @@ function Home(props) {
             <Row>
               {blog && blog.length > 0 ? (
                 blog.map((item, index) => (
-                  <Col lg={4}>
+                  <Col lg={4} sm={6} className="mb-4">
                     <div className="blog-card">
                       <img
                         src={
@@ -792,7 +693,8 @@ function Home(props) {
                         }
                       />
                       <h3>{item.title}</h3>
-                      <p>{item.description}</p>
+                      <p>{renderBlogDescription(item.description)}</p>
+                      <Link to={`/blog-details/${item.id}`}>Read More</Link>
                     </div>
                   </Col>
                 ))

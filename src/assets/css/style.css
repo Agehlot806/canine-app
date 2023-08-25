@@ -177,7 +177,7 @@ a {
 .home-content {
   position: absolute;
   top: 0;
-  width: 40%;
+  width: 65%;
   padding: 30px 35px;
 }
 .home-content button {
@@ -214,7 +214,6 @@ a {
 .home-content h1 {
   font-weight: 600;
   font-size: 44px;
-  line-height: 66px;
   letter-spacing: 0.05em;
   color: #ffffff;
 }
@@ -1415,7 +1414,7 @@ a {
 /* === blog ===== */
 .blog-card {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 0 20px;
+  padding: 20px;
   height: 100%;
   border-radius: 8px;
 }
@@ -1423,6 +1422,8 @@ a {
 .blog-card img {
   width: 100px;
   margin: 0 0 10px;
+  border-radius: 50%;
+  height: 100px;
 }
 
 .blog-card h3 {
@@ -1466,7 +1467,7 @@ a {
 .add-cart img {
   width: 100px;
   height: 100px;
-  margin: 10px 0 0;
+  margin: 10px 0;
 }
 
 .add-cart hr {
@@ -2686,7 +2687,7 @@ ul.list-unstyled li a {
 }
 #progress-bar {
   position: absolute;
-  background: red;
+  background: #008efd;
   height: 5px;
   width: 0%;
   top: 50%;
@@ -2723,8 +2724,8 @@ ul.list-unstyled li a {
   z-index: 1;
 }
 #progress-num .step.active {
-  border-color: red;
-  background-color: red;
+  border-color: #008efd;
+  background-color: #008efd;
   color: #fff;
 }
 
@@ -2793,7 +2794,7 @@ ul.list-unstyled li a {
 }
 .tranker-search button {
   border-radius: 4px;
-  background: red;
+  background: #008efd;
   border: none;
   color: #fff;
   position: absolute;
@@ -2805,7 +2806,7 @@ ul.list-unstyled li a {
   padding: 0;
 }
 .tranker-search button:hover {
-  background: red !important;
+  background: #008efd !important;
   color: #fff !important;
 }
 .tranker-search h4 {
@@ -3037,3 +3038,4 @@ main {
   margin: 1rem auto;
   color: white;
 }
+

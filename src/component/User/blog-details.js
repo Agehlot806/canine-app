@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../directives/header";
 import Footer from "../../directives/footer";
 import { Container, Row, Col } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 // import blog1 from "../../assets/images/img/blog.png";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Newheader from "../../directives/newheader";
 
 function Blogdetails() {
   const { id } = useParams();
