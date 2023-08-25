@@ -12,7 +12,7 @@ function Wholeheader() {
   console.log("allproduct: ", allproduct);
   const [dogsubcategories, setdogsubcategories] = useState("");
   console.log("dogsubcategories: ", dogsubcategories);
-  const [storedUserId, setStoredUserId] = useState(null);
+  const [storedWholesellerId, setStoredWholesellerId] = useState(null);
   const [categories, setcategories] = useState([]);
 
   useEffect(() => {
@@ -57,12 +57,14 @@ function Wholeheader() {
   };
 
   const logoutUser = () => {
-    const customer_id = localStorage.getItem("userInfo");
-    if (customer_id) {
+    const storedWholesellerId = Number(
+      localStorage.getItem("UserWholesellerId")
+    );
+    if (storedWholesellerId) {
       try {
         localStorage.removeItem("userInfo");
-        console.log("Logged out user with ID: ", customer_id);
-        setStoredUserId(null); // Reset the storedUserId state
+        console.log("Logged out Wholeseller with ID: ", storedWholesellerId);
+        setStoredWholesellerId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
@@ -73,8 +75,10 @@ function Wholeheader() {
   };
 
   useEffect(() => {
-    const customer_id = localStorage.getItem("userInfo");
-    setStoredUserId(JSON.parse(customer_id));
+    const storedWholesellerId = Number(
+      localStorage.getItem("UserWholesellerId")
+    );
+    setStoredWholesellerId(storedWholesellerId);
   }, []);
 
   const AllDogsubcategories = async () => {
@@ -114,18 +118,18 @@ function Wholeheader() {
           </button>
           <div className="collapse navbar-collapse" id="megaMenu">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/wholeseller-dashboard">
-                Dashboard
+                  Dashboard
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/wholeseller-home">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/product">
+                <Link className="nav-link" to="/wholeseller-product">
                   New
                 </Link>
               </li>
@@ -156,7 +160,7 @@ function Wholeheader() {
                                 item.name == "food" && (
                                   <li key={item.id}>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/wholeseller-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -275,7 +279,9 @@ function Wholeheader() {
                               (item) =>
                                 item.name == "food" && (
                                   <li key={item.id}>
-                                    <Link to={`/pet-category/${item.name}`}>
+                                    <Link
+                                      to={`/wholeseller-pet-category/${item.name}`}
+                                    >
                                       {item.name}
                                     </Link>
                                   </li>
@@ -380,13 +386,13 @@ function Wholeheader() {
                   Products
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="/product">
+                  <Link className="dropdown-item" to="/wholeseller-product">
                     All Product
                   </Link>
-                  <Link className="dropdown-item" to="/canine-product">
+                  <Link className="dropdown-item" to="">
                     Canine Product
                   </Link>
-                  <Link className="dropdown-item" to="/patners-product">
+                  <Link className="dropdown-item" to="">
                     Patners Product
                   </Link>
                 </div>
@@ -399,13 +405,13 @@ function Wholeheader() {
                                     <Link className="dropdown-item" to="/veterinary-service">Veterinary Service</Link>
                                 </div>
                             </li> */}
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/service">
                   Petcare
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">
+                <Link className="nav-link" to="/wholeseller-contact">
                   Contact
                 </Link>
               </li>
@@ -431,7 +437,7 @@ function Wholeheader() {
                   <i class="fa fa-bell-o" />
                 </a>
               </li>
-              {storedUserId ? (
+              {storedWholesellerId ? (
                 // Display Logout button if user is logged in
                 <>
                   <li className="nav-item">
@@ -439,6 +445,19 @@ function Wholeheader() {
                       Logout
                     </button>
                   </li>
+                  {/* <li className="nav-item">
+                    <a
+                      className="nav-link dropdown-toggle profile-icon"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <img src={pro} />
+                    </a>
+                  </li> */}
                   <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle profile-icon"
@@ -455,27 +474,48 @@ function Wholeheader() {
                       className="dropdown-menu"
                       aria-labelledby="navbarDropdown"
                     >
-                      <Link className="dropdown-item" to={`/pet-profile/`}>
+                      <Link
+                        className="dropdown-item"
+                        to="/wholeseller-dashboard"
+                      >
+                        Dashboard
+                      </Link>
+                      <Link
+                        className="dropdown-item"
+                        to="/wholeseller-transition-history"
+                      >
+                        Transition History
+                      </Link>
+                      {/* <Link className="dropdown-item" to={`/pet-profile/`}>
                         Pet Profile
-                      </Link>
-                      <Link className="dropdown-item" to="/all-veterinary">
+                      </Link> */}
+                      {/* <Link className="dropdown-item" to="/all-veterinary">
                         All Veterinary
-                      </Link>
-                      <Link className="dropdown-item" to="/all-service-booking">
+                      </Link> */}
+                      {/* <Link className="dropdown-item" to="/all-service-booking">
                         All Service Booking
-                      </Link>
-                      <Link className="dropdown-item" to="/my-orders">
+                      </Link> */}
+                      <Link
+                        className="dropdown-item"
+                        to="/wholeseller-my-orders"
+                      >
                         My Orders
                       </Link>
-                      <Link className="dropdown-item" to="/wishlist-products">
+                      <Link
+                        className="dropdown-item"
+                        to="/wholeseller-wishlist-product"
+                      >
                         Wishlist Products
                       </Link>
-                      <Link className="dropdown-item" to="/update-profile">
+                      <Link
+                        className="dropdown-item"
+                        to="/wholeseller-update-profile"
+                      >
                         Profile
                       </Link>
-                      {/* <Link className="dropdown-item" onClick={logoutUser}>
-                                        Logout
-                                    </Link> */}
+                      {/* //  <Link className="dropdown-item" onClick={logoutUser}>
+                                        // Logout
+                                    // </Link>  */}
                     </div>
                   </li>
                 </>
@@ -483,7 +523,7 @@ function Wholeheader() {
                 // Display Sign In button if user is not logged in
                 <li className="nav-item">
                   <button className="yellow-btn">
-                    <Link to="/login">Sign In</Link>
+                    <Link to="/wholeseller-login">Sign In</Link>
                   </button>
                 </li>
               )}

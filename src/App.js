@@ -25,7 +25,11 @@ import Otp from "./component/AllUser/otp";
 import Partners from "./component/AllUser/partners";
 import Salesman from "./component/AllUser/salesman";
 import Signup from "./component/AllUser/signup";
+import WholeSellerPetcategory from "./component/wholeseller/wholeseller-pet-category";
+import WholesellerContact from "./component/wholeseller/wholeseller-contact";
+import WholesellerHome from "./component/wholeseller/wholeseller-home";
 import Wholesellerdashboard from "./component/wholeseller/wholeseller-dashboard";
+import WholesellerTransitionHistory from "./component/wholeseller/wholeseller-transition-history";
 import Wholesellerproduct from "./component/wholeseller/wholeseller-product";
 import WholesellerproductDetails from "./component/wholeseller/wholeseller-productDetails";
 import WholesellerAddCart from "./component/wholeseller/wholeseller-add-cart";
@@ -50,6 +54,7 @@ import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
 import Petprofile from "./component/User/pet-profile";
 import Wishlistproduct from "./component/User/wishlist-product";
+import WholesellerWishlistproduct from "./component/wholeseller/wholeseller-wishlist-product";
 import Shopbybrandlist from "./component/User/shop-by-brand-list";
 import Blog from "./component/User/blog";
 import Updateprofile from "./component/User/update-profile";
@@ -61,9 +66,12 @@ import Findastore from "./component/User/find-a-store";
 import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
+import WholeSellerShipping from "./component/wholeseller/wholeseller-shipping";
 import Returnpolicy from "./component/User/return-policy";
 import Paymentoption from "./component/User/payment-option";
 import Myorder from "./component/User/my-order";
+import WholesellerMyorder from "./component/wholeseller/wholeseller-my-orders";
+import WholeSellerUpdateprofile from "./component/wholeseller/wholeseller-update-profile";
 import Orderviewdetails from "./component/User/order-view-details";
 
 // ScrollToTop component
@@ -79,7 +87,7 @@ const ScrollToTop = () => {
 
 function App() {
   return (
-    <div className="cursor-area" >
+    <div className="cursor-area">
       <BrowserRouter>
         <ScrollToTop /> {/* Add ScrollToTop component here */}
         <Routes>
@@ -135,7 +143,10 @@ function App() {
 
           <Route path="/help-faqs" element={<Helpandfaqs />} />
           <Route path="/my-orders" element={<Myorder />} />
-          <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
+          <Route
+            path="/order-view-details/:id"
+            element={<Orderviewdetails />}
+          />
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />
@@ -153,11 +164,38 @@ function App() {
             path="/wholeseller-dashboard"
             element={<Wholesellerdashboard />}
           />
+          <Route
+            path="/wholeseller-pet-category/:name/:id"
+            element={<WholeSellerPetcategory />}
+          />
+          <Route
+            path="/wholeseller-my-orders"
+            element={<WholesellerMyorder />}
+          />
+          <Route
+            path="/wholeseller-update-profile"
+            element={<WholeSellerUpdateprofile />}
+          />
+          <Route
+            path="/wholeseller-wishlist-product"
+            element={<WholesellerWishlistproduct />}
+          />
+          <Route
+            path="/wholeseller-productDetails/:id"
+            element={<WholesellerproductDetails />}
+          />
+          <Route path="/wholeseller-contact" element={<WholesellerContact />} />
+          <Route
+            path="/wholeseller-transition-history"
+            element={<WholesellerTransitionHistory />}
+          />
           <Route path="/wholeseller-product" element={<Wholesellerproduct />} />
           <Route
             path="/wholeseller-product-details/:id"
             element={<WholesellerproductDetails />}
           />
+          <Route path="/wholeseller-home" element={<WholesellerHome />} />
+
           <Route
             path="/wholeseller-add-cart/:id"
             element={<WholesellerAddCart />}
@@ -167,6 +205,10 @@ function App() {
             element={<WholesellerPaymentMethod />}
           />
           <Route path="/wholeseller-pay" element={<Wholesellerpay />} />
+          <Route
+            path="/wholeseller-shipping/:id"
+            element={<WholeSellerShipping />}
+          />
 
           {/* Sales Man flow  */}
           <Route path="/salesman-dashboad" element={<DashboadSalesman />} />

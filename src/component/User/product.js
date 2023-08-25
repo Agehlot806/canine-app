@@ -198,7 +198,6 @@ function Product(props) {
         </div>
       </Container>
 
-
       <Container>
         <Row>
           <Col lg={3}>
@@ -221,7 +220,7 @@ function Product(props) {
                       <div>
                         <div
                           className="form-check"
-                          onClick={handleCheckboxClick}
+                          // onClick={handleCheckboxClick}
                         >
                           <input
                             className="form-check-input"
@@ -1295,7 +1294,6 @@ function Product(props) {
                 )}
               </div>
             </Container>
-
           </Col>
         </Row>
       </Container>

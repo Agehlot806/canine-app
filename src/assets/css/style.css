@@ -178,7 +178,7 @@ a {
   position: absolute;
   top: 0;
   width: 40%;
-  padding: 30px 35px;
+  /* padding: 30px 35px; */
 }
 .home-content button {
   background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)

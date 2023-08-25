@@ -10,31 +10,34 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
     axios
-    .post(" https://canine.hirectjob.in/api/v1/auth/wholesaler_login", formData)
-    .then((response) => {
-      console.log("tarun",response);
-      localStorage.setItem("WholesellerId", response.data.data[0].id);
-      localStorage.setItem("verifiedId", response.data.data[0].verified);
-      if(response.data.message === 'Login Successfull'){
-        navigate("/wholeseller-dashboard");
-        toast.success("Successfully");
-      }
-      if(response.data.message === 'User Not Exit'){
-        toast.error("User Not Exit");
-      }
-      // Handle the response as needed
-      //
-    })
-    .catch((error) => {
-      console.log(error);
-      // Handle errors if any
-    });
+      .post(
+        " https://canine.hirectjob.in/api/v1/auth/wholesaler_login",
+        formData
+      )
+      .then((response) => {
+        console.log("tarun", response);
+        localStorage.setItem("UserWholesellerId", response.data.data[0].id);
+        localStorage.setItem("verifiedId", response.data.data[0].verified);
+        if (response.data.message === "Login Successfull") {
+          navigate("/wholeseller-dashboard");
+          toast.success("Successfully");
+        }
+        if (response.data.message === "User Not Exit") {
+          toast.error("User Not Exit");
+        }
+        // Handle the response as needed
+        //
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle errors if any
+      });
   };
 
   return (

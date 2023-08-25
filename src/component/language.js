@@ -22,7 +22,7 @@ let strings = new LocalizedStrings({
     // contact ------------
     contactUs: "Contact Us",
     mail: "Mail Us",
-    mobile: "+00-000000000",
+    mobile: "9087654321",
     chatUs: "Chat Us",
     downloadTheApps: "Download The Apps",
     // -----------------------------------

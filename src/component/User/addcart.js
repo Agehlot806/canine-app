@@ -19,8 +19,6 @@ function Addcart() {
   // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(1);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
-  // console.log("addToCartProduct: ", addToCartProduct);
-  // const [customer_id, setcustomer_id] = useState("");
   const [coupencode, setcoupenCode] = useState(false);
   const [couponlist, setcouponlist] = useState([]);
   const [paymentId, setPaymentId] = useState("");
@@ -92,9 +90,6 @@ function Addcart() {
   const taxamound = Math.floor(originalPrice * 0.05);
   console.log("allPrice: ", originalPrice);
   console.log("taxamound: ", taxamound);
-
-  // const customer_id = localStorage.getItem("userInfo");
-  // let storedUserId = JSON.parse(customer_id);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
