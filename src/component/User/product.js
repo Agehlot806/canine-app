@@ -349,7 +349,6 @@ function Product(props) {
         </div>
       </Container>
 
-
       <Container>
         <Row>
           <Col lg={3}>
@@ -802,7 +801,6 @@ function Product(props) {
                 )}
               </div>
             </Container>
-
           </Col>
         </Row>
       </Container>

@@ -1,5 +1,5 @@
 import React from "react";
-import Newheader from "../../directives/newheader";
+import Wholeheader from "../../directives/wholesalesheader";
 import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
@@ -11,14 +11,11 @@ import Footer from "../../directives/footer";
 import { Link } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
-import Wholeheader from "../../directives/wholesalesheader";
 import paydone from "../../assets/images/icon/paydone.png";
 
 function Wholesellerdashboard() {
-  const wsalerId = localStorage.getItem("WholesellerId");
-  let storedUserId = JSON.stringify(wsalerId);
-  console.log("storedUserId: ", storedUserId);
-  console.log("wsalerId: ", wsalerId);
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
 
   return (
     <>

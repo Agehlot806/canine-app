@@ -22,8 +22,8 @@ import pro from "../../assets/images/icon/pro.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import { styled } from "styled-components";
-import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css'; // Import the CSS for the lightbox styles
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css"; // Import the CSS for the lightbox styles
 
 function Productdetail() {
   const { id } = useParams();
@@ -50,7 +50,6 @@ function Productdetail() {
       setQuantity(quantity - 1);
     }
   };
-
 
   useEffect(() => {
     productData();
@@ -114,7 +113,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-          productDetails?.status + 0.5 >= index + 1 ? (
+        productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -125,8 +124,6 @@ function Productdetail() {
       </span>
     );
   });
-
-
 
   const itemWiseBanner = async () => {
     try {
@@ -163,7 +160,7 @@ function Productdetail() {
   ];
   const Amount = Math.floor(
     productDetails.price * quantity -
-    (productDetails.price * quantity * productDetails.discount) / 100
+      (productDetails.price * quantity * productDetails.discount) / 100
   ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   // const savedAmount = (
@@ -194,8 +191,6 @@ function Productdetail() {
       });
   };
 
-
-
   // Lightbox product =====
   // const [mainImage, setMainImage] = useState("");
   // useEffect(() => {
@@ -215,7 +210,6 @@ function Productdetail() {
   //   );
   // };
 
-
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
@@ -224,14 +218,15 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" + productDetails.images[index]
+      "https://canine.hirectjob.in/storage/app/public/product/" +
+        productDetails.images[index]
     );
   };
 
@@ -257,12 +252,17 @@ function Productdetail() {
             <Col lg={6} sm={6}>
               <>
                 <div>
-                  <div className="product-item" >
-                    <img src={mainImage} alt="Product Image" onClick={handleMainImageClick} />
+                  <div className="product-item">
+                    <img
+                      src={mainImage}
+                      alt="Product Image"
+                      onClick={handleMainImageClick}
+                    />
                   </div>
                   <div className="needplace">
                     <Row>
-                      {productDetails?.images && productDetails?.images.length > 0 ? (
+                      {productDetails?.images &&
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
                             <div
@@ -270,7 +270,10 @@ function Productdetail() {
                               onClick={() => handleThumbnailClick(index)}
                             >
                               <img
-                                src={"https://canine.hirectjob.in/storage/app/public/product/" + item}
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/product/" +
+                                  item
+                                }
                                 alt={`Image ${index}`}
                               />
                             </div>
@@ -291,16 +294,26 @@ function Productdetail() {
                     }
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
-                      productDetails.images[(lightboxImageIndex + 1) % productDetails.images.length]
+                      productDetails.images[
+                        (lightboxImageIndex + 1) % productDetails.images.length
+                      ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
-                      productDetails.images[(lightboxImageIndex + productDetails.images.length - 1) % productDetails.images.length]
+                      productDetails.images[
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
+                      ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
                     onMovePrevRequest={() =>
                       setLightboxImageIndex(
-                        (lightboxImageIndex + productDetails.images.length - 1) % productDetails.images.length
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>

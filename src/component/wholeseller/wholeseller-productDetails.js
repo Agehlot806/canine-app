@@ -20,16 +20,25 @@ import { styled } from "styled-components";
 function WholesellerproductDetails() {
   const { id } = useParams();
   console.log("id: ", id);
+  // *************************
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
+  // **********************
+
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
-console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
+  console.log("vrifiredIdaccessvrifiredIdaccess", verifiredIdaccess);
   const [productDetails, setProductDetails] = useState([]);
+  const categoryid = productDetails.category_id;
+  const itemsid = productDetails.id;
+  console.log("categoryiddd: ", categoryid);
+  console.log("productDetailsssssssssss: ", productDetails);
   console.log(
     "productDetails.variations[0].type: ",
     productDetails?.variations?.type
   );
-  const demousercheck= ()=>{
+  const demousercheck = () => {
     toast.error("Added to cart! NOT ACCESS");
-  }
+  };
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails--- ", productDetails);
@@ -40,7 +49,7 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
   console.log("selectedVariant: ", selectedVariant);
 
   const handleIncrementone = () => {
-    if(verifiredIdaccess === 1){
+    if (verifiredIdaccess === 1) {
       setQuantity(quantity + 1);
     }
   };
@@ -69,9 +78,6 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
         console.log(error);
       });
   };
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
 
   const handleAddToCart = async () => {
     try {
@@ -83,7 +89,7 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
           image: productDetails?.image,
           quantity: quantity,
           price: formattedAmount,
-          user_id: storedUserId,
+          user_id: storedWholesellerId,
           item_id: productDetails?.id,
         }
       );
@@ -164,7 +170,7 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
     }
   };
   const [allrelatedproduct, setallrelatedproduct] = useState([]);
-
+  console.log("allrelatedproduct: ", allrelatedproduct);
   const fetchrelatedproduct = async () => {
     axios
       .get(`${BASE_URL}/items/product/2/8`)
@@ -202,7 +208,7 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
-    formData.append("user_id", storedUserId);
+    formData.append("UserWholesellerId", storedWholesellerId);
     formData.append("item_id", item_id);
     axios
       .post(`${BASE_URL}/customer/wish-list/add`, formData, {
@@ -392,22 +398,25 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
             </Col>
           </Row>
           {productDetails.stock && productDetails.stock.length !== 0 ? (
-           <div className="productBTNaddcard">
-           {verifiredIdaccess === 1 ? (
-  <Button>
-    <Link to={`/wholeseller-add-cart/${id}`} onClick={handleAddToCart}>
-      <i className="fa fa-shopping-bag" /> Add to cart
-    </Link>
-  </Button>
-) : (
-  <Button onClick={demousercheck}>
-    <Link>
-      <i className="fa fa-shopping-bag" /> Add to cart
-    </Link>
-  </Button>
-)}
-<p>{addToCartStatus}</p>
-          </div>
+            <div className="productBTNaddcard">
+              {verifiredIdaccess === 1 ? (
+                <Button>
+                  <Link
+                    to={`/wholeseller-add-cart/${id}`}
+                    onClick={handleAddToCart}
+                  >
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                </Button>
+              ) : (
+                <Button onClick={demousercheck}>
+                  <Link>
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                </Button>
+              )}
+              <p>{addToCartStatus}</p>
+            </div>
           ) : (
             <div className="sold-out-btn mt-3">
               <Link>Sold Out</Link>
@@ -446,236 +455,61 @@ console.log("vrifiredIdaccessvrifiredIdaccess",verifiredIdaccess);
           </div>
           <div className="needplace">
             <Row>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
+              {allrelatedproduct &&
+                allrelatedproduct.map((item, index) => (
+                  <Col lg={3} sm={6} xs={6} className="mb-4">
+                    <div
+                      className="food-product"
+                      key={item.id}
+                      style={{
+                        background:
+                          gradientColors[index % gradientColors.length],
+                      }}
+                    >
+                      <i
+                        class="fa fa-heart-o"
+                        onClick={(id) => addToWishlist(item.id)}
+                      />
+                      <Link to={`/product-details/${item.id}`}>
+                        <div className="text-center">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <div>
+                          <h6>{item.name}</h6>
+                          <p>{item.description}</p>
+                        </div>
+                        <div className="product-bag">
+                          <Row>
+                            <Col>
+                              <p>₹999.00</p>
+                            </Col>
+                            <Col>
+                              <h5>{item.discount}%</h5>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col className="align-self-center">
+                              <h6>₹{item.price}</h6>
+                            </Col>
+                            <Col>
+                              <Link
+                                to={`/add-cart/${id}`}
+                                onClick={handleAddToCart}
+                              >
+                                <img src={bag} />
+                              </Link>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Link>
                     </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <div className="food-product">
-                  <i class="fa fa-heart-o" />
-                  <Link to="/">
-                    <div className="text-center">
-                      <img src={product1} />
-                    </div>
-                    <div>
-                      <h6>Farmina</h6>
-                      <p>asdsdsdadwe sdseded sded</p>
-                    </div>
-                    <div className="product-bag">
-                      <Row>
-                        <Col>
-                          <p>₹999.00</p>
-                        </Col>
-                        <Col>
-                          <h5>20%</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col className="align-self-center">
-                          <h6>₹100.00</h6>
-                        </Col>
-                        <Col>
-                          <Link to="">
-                            <img src={bag} />
-                          </Link>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Link>
-                </div>
-              </Col>
+                  </Col>
+                ))}
             </Row>
           </div>
         </Container>

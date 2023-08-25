@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Newheader from "../../directives/newheader";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
@@ -33,7 +32,7 @@ function WholesellerAddCart() {
   };
 
   const redirectToShipping = () => {
-    Navigate("/shipping");
+    Navigate("/wholeseler-shipping");
   };
   let originalPrice = 0;
 
@@ -59,7 +58,7 @@ function WholesellerAddCart() {
       discount_on_item: disscountvalue,
     }));
     const requestData = {
-      user_id: customer_id,
+      user_id: storedWholesellerId,
       coupon_discount_amount: 200,
       coupon_discount_title: "coupan",
       payment_status: "confirm",
@@ -93,7 +92,7 @@ function WholesellerAddCart() {
       })
       .then((responseData) => {
         console.log("responseData???>>>>", responseData);
-        shippingpage("/shipping/" + responseData.data.order_id);
+        shippingpage("/wholeseller-shipping/" + responseData.data.order_id);
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -130,7 +129,7 @@ function WholesellerAddCart() {
         handler: (response) => {
           setPaymentId(response.razorpay_payment_id);
           // Handle the success callback
-          window.location.href = "/shipping";
+          window.location.href = "/wholeseller-shipping";
           console.log("Payment Successful:", response);
         },
 
@@ -154,11 +153,8 @@ function WholesellerAddCart() {
   };
   // const originalPrice = addToCartProduct[0]?.price;
 
-
-  
-
-  // const customer_id = localStorage.getItem("userInfo");
-  // let storedUserId = JSON.parse(customer_id);
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -202,20 +198,23 @@ function WholesellerAddCart() {
 
   const addToCartData = async () => {
     axios
-      .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-        // id: id, // Replace this with the correct product_id you want to add
-        // user_id: storedUserId,
-        // price: price,
-        // quantity: quantity,
-        // image: image,
-        // item_id: item_id,
-        // item_name: item_name,
-        // variant: variant,
-        params: {
-          id: id, // Replace this with the correct product_id you want to add
-          quantity: quantity,
-        },
-      })
+      .get(
+        `${BASE_URL}/customer/wish-list/add_to_card/${storedWholesellerId}`,
+        {
+          // id: id, // Replace this with the correct product_id you want to add
+          // user_id: storedWholesellerId,
+          // price: price,
+          // quantity: quantity,
+          // image: image,
+          // item_id: item_id,
+          // item_name: item_name,
+          // variant: variant,
+          params: {
+            id: id, // Replace this with the correct product_id you want to add
+            quantity: quantity,
+          },
+        }
+      )
 
       .then((response) => {
         console.log(
@@ -357,7 +356,7 @@ function WholesellerAddCart() {
   const handleAddAddress = (event) => {
     event.preventDefault();
     const data = {
-      user_id: storedUserId,
+      user_id: storedWholesellerId,
       first_name: first_name,
       last_name: last_name,
       mobile: mobile,
@@ -384,11 +383,10 @@ function WholesellerAddCart() {
   const handleCheckOut = async () => {
     try {
       const response = await axios.post(`${BASE_URL}/customer/order/place`, {
-        user_id: storedUserId,
+        user_id: storedWholesellerId,
         image: productDetails.image,
         quantity: productDetails.quantity,
         price: productDetails.price,
-        user_id: storedUserId,
         item_id: productDetails.id,
       });
 
@@ -428,17 +426,10 @@ function WholesellerAddCart() {
     setAddressContentVisible(!addressContentVisible);
   };
 
-  // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
-  let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
-  // ----------------------------------------
-
   const [addresslist, setaddresslist] = useState([]);
   const allAddressList = async () => {
     axios
-      .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
+      .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
@@ -882,11 +873,144 @@ function WholesellerAddCart() {
             </Container>
           )}
         </div>
-
       </section>
 
       <Footer />
-
+      {/* Modal add address */}
+      <div
+        className="modal fade editAddress"
+        id="changeadress-model"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                New Address Add
+              </h5>
+            </div>
+            <div className="modal-body">
+              <div class="form-group">
+                <label>First Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={first_name}
+                  onChange={(e) => setfirst_name(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={last_name}
+                  onChange={(e) => setlast_name(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <label>Mobile</label>
+                <input
+                  type="number"
+                  name="mobile"
+                  class="form-control"
+                  maxLength={10}
+                  value={mobile}
+                  onChange={(e) => setmobile(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <label>flat,House no,Building,Company</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={house_no}
+                  onChange={(e) => sethouse_no(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <label>Area, Street,Sector,Village</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={area}
+                  onChange={(e) => setarea(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <label>Landmark</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={landmark}
+                  onChange={(e) => setlandmark(e.target.value)}
+                />
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label>State</label>
+                    <select
+                      className="form-control"
+                      onChange={Subscription}
+                      value={state}
+                      onInput={(e) => setstate(e.target.value)}
+                    >
+                      <option>State Choose...</option>
+                      {stateall.map((items) => (
+                        <option value={items.id} key={items.id}>
+                          {items.state_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group">
+                    <label>City</label>
+                    <select
+                      className="form-control"
+                      onInput={(e) => setSelectedCity(e.target.value)}
+                      value={selectedCity}
+                      onChange={(e) => setcity(e.target.value)}
+                    >
+                      <option>City Choose...</option>
+                      {stateallCity.map((items) => (
+                        <option>{items.city_name}</option>
+                      ))}
+                    </select>
+                    {/* {formValid.cityname && (
+                        <span style={{ color: "red" }}>City is required</span>
+                      )} */}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Pincode</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={pincode}
+                  onChange={(e) => setpincode(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleAddAddress}
+                data-dismiss="modal"
+              >
+                Add +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Modal */}
       <div
         className="modal fade editAddress"

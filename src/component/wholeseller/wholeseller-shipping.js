@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import Newheader from "../../directives/newheader";
+import Wholeheader from "../../directives/wholesalesheader";
 import { Col, Container, Row, Button, Table } from "react-bootstrap";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
@@ -14,11 +14,9 @@ import { BASE_URL } from "../../Constant/Index";
 import { Link } from "react-router-dom";
 
 function WholeSellerShipping() {
-  // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
-  let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
+  // storedWholesellerId
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
   useEffect(() => {
@@ -31,7 +29,7 @@ function WholeSellerShipping() {
 
   const allAddressList = async () => {
     axios
-      .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
+      .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
@@ -44,7 +42,7 @@ function WholeSellerShipping() {
 
   const allOrders = async () => {
     axios
-      .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
+      .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
       .then((response) => {
         console.log(response);
         console.log("Order List Successful");
@@ -62,7 +60,7 @@ function WholeSellerShipping() {
 
   return (
     <>
-      <Newheader />
+      <Wholeheader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
