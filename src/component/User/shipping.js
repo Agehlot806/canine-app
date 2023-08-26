@@ -90,17 +90,17 @@ function Shipping() {
                             allorder.map((item, index) => (
                                 <div className='myorder-list'>
                                     <Row className='justify-content-center'>
-                                        <Col lg={2}>
+                                        <Col lg={2} sm={2}>
                                             <img src={logo} />
                                         </Col>
-                                        <Col lg={6}>
+                                        <Col lg={6} sm={6}>
                                             <h3>Order Id: {item.id}</h3>
                                             <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
                                             <h3>Payment Method: {item.payment_method}</h3>
                                             <h3>Order Amount: ₹{item.order_amount}</h3>
                                         </Col>
                                     
-                                        <Col lg={2} className="align-self-center">
+                                        <Col lg={4} sm={4} className="align-self-center">
                                             <div className="myorder-btn">
                                                 <Button>
                                                     <Link to={`/order-view-details/${item.id}`}>View</Link>
@@ -257,7 +257,7 @@ function Shipping() {
                     <h1 className="main-head text-center mb-3">Order Details</h1>
                     <div className='order-area-detials'>
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={4} sm={4}>
                                 <div className='order-details'>
                                     <h6>ORDER NUMBER</h6>
                                     <p>4797290627</p>
@@ -271,7 +271,7 @@ function Shipping() {
                                     <p>10 Feb 2023 10:20 AM</p>
                                 </div>
                             </Col>
-                            <Col lg={8} className='align-self-center'>
+                            <Col lg={8} sm={8} className='align-self-center'>
                                 <div className='order-details'>
                                     <h4>Address</h4>
                                     <p>
@@ -312,12 +312,12 @@ function Shipping() {
             <section className='section-padding'>
                 <Container>
                     <Row>
-                        <Col lg={6} className='align-self-center'>
+                        <Col lg={6} sm={6} className='align-self-center'>
                             <div className='Re-order'>
                                 <Button>Re Order</Button>
                             </div>
                         </Col>
-                        <Col lg={6}>
+                        <Col lg={6} sm={6}>
                             <div className='order-main-deals'>
                                 <img src={orders} />
                             </div>

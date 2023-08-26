@@ -2765,7 +2765,6 @@ ul.list-unstyled li a {
   color: #000;
 }
 .navbar-toggler-icon {
-  background-image: var(--mdb-navbar-toggler-icon-bg) !important;
 }
 
 /* tracker area */
@@ -2993,7 +2992,7 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 10px 0 8px;
 }
 .myorder-btn button {
-  margin: 0 2px;
+  margin: 0 4px;
   padding: 4px 14px;
   font-size: 18px;
 }
@@ -3038,4 +3037,9 @@ main {
   margin: 1rem auto;
   color: white;
 }
-
+.navbar-toggler {
+  border: none !important;
+}
+.Track-Your {
+  display: flex;
+}

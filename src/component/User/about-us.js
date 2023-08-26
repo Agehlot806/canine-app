@@ -106,21 +106,21 @@ function Aboutus() {
                     </div>
                     <div className="needplace">
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={4} sm={6} xs={6} className='mb-3' >
                                 <div className="needplace-card">
                                     <img src={icon1} />
                                     <h4>Tailor-made insurance</h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur eiusmod tempor incididunt</p>
                                 </div>
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={4} sm={6} xs={6} className='mb-3'>
                                 <div className="needplace-card">
                                     <img src={icon2} />
                                     <h4>On-demand healthcare</h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur eiusmod tempor incididunt</p>
                                 </div>
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={4} sm={6} xs={6} className='mb-3'>
                                 <div className="needplace-card">
                                     <img src={icon3} />
                                     <h4>Tailor-made insurance</h4>
@@ -140,25 +140,25 @@ function Aboutus() {
                     </div>
                     <div className="needplace">
                         <Row>
-                            <Col lg={3}>
+                            <Col lg={3} sm={3} className='mb-3'>
                                 <div className="about-choose">
                                     <h5>Best In Industry</h5>
                                     <p>Lorem ipsum dolor sit amet, consectetur.</p>
                                 </div>
                             </Col>
-                            <Col lg={3}>
+                            <Col lg={3} sm={3} className='mb-3'>
                                 <div className="about-choose">
                                     <h5>Customer Support</h5>
                                     <p>Lorem ipsum dolor sit amet, consectetur.</p>
                                 </div>
                             </Col>
-                            <Col lg={3}>
+                            <Col lg={3} sm={3} className='mb-3'>
                                 <div className="about-choose">
                                     <h5>Emergency Services</h5>
                                     <p>Lorem ipsum dolor sit amet, consectetur.</p>
                                 </div>
                             </Col>
-                            <Col lg={3}>
+                            <Col lg={3} sm={3} className='mb-3'>
                                 <div className="about-choose">
                                     <h5>Veterinary Help</h5>
                                     <p>Lorem ipsum dolor sit amet, consectetur.</p>

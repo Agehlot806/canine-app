@@ -54,6 +54,9 @@
     .totelPAYCAR button {
         font-size: 16px;
     }
+    .myorder-btn button {
+        font-size: 15px;
+    }
 }
 
 @media only screen and (max-width: 912px) {
@@ -82,6 +85,14 @@
 
     .Newsletter-bg img {
         width: 400px;
+    }
+
+    .dowload-invioce {
+        text-align: left;
+        margin: 0 0 20px;
+    }
+    .order-table {
+        margin: 16px 0 0;
     }
 }
 
@@ -389,6 +400,39 @@
         font-size: 18px;
         margin: 0 0 10px;
     }
+    .Track-Your {
+        display: block;
+    }
+    .tranker-search button {
+        position: relative;
+        right: 0;
+        top: 10px;
+        width: 150px;
+    }
+    .tracker-content span {
+        font-size: 12px;
+    }
+    .tracker-content {
+        margin: 0 0 20px;
+    }
+    .tranker-head span {
+        font-size: 12px;
+    }
+    .cancel-btn {
+        font-size: 10px !important;
+    }
+    .needplace-card {
+        padding: 10px;
+    }
+    .needplace-card img {
+        width: 50px;
+    }
+    .needplace-card h4 {
+        font-size: 15px;
+    }
+    .needplace-card p {
+        font-size: 12px;
+    }
 }
 
 
@@ -437,9 +481,12 @@
         height: 100px;
     }
 
-
+    .payment-done p {
+        margin: 15px 0;
+        font-size: 14px;
+    }
     p {
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .video-right img {

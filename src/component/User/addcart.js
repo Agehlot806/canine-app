@@ -488,6 +488,48 @@ function Addcart() {
     localStorage.setItem("disconut", dis);
     console.log("disccount?????", dis);
   };
+  const [first_nameError, setFirst_nameError] = useState('');
+  
+  const [last_nameError, setLast_nameError] = useState('');
+  
+  const [mobileError, setMobileError] = useState('');
+ 
+  const [house_noError,setHouse_noError] = useState ("")
+ 
+  const [areaError,setAreaError] = useState("")
+ 
+  const [landmarkError,setLandmarkError] = useState("")
+ 
+  const [pincodeError,setPincodeError] = useState("")
+
+  const [stateError,setStateError] = useState("")
+
+  const [cityError,setCityError] = useState("")
+ 
+  const [isFormValid, setIsFormValid] = useState(false);
+  
+  
+  
+  
+  
+  
+  const validateForm = () => {
+    if (
+      first_name.trim() === '' ||
+      last_name.trim() === '' ||
+      mobile.trim() === '' ||
+      house_no.trim() === '' ||
+      area.trim() === '' ||
+      landmark.trim() === '' ||
+      state.trim() === '' ||
+      selectedCity.trim() === '' ||
+      pincode.trim() === ''
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  };
 
   return (
     <>
@@ -994,8 +1036,19 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={first_name}
-                  onChange={(e) => setfirst_name(e.target.value)}
+                  onChange={(e) => {
+                    setfirst_name(e.target.value)
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (first_name.trim() === '') {
+                      setFirst_nameError('First Name is required');
+                    } else {
+                      setFirst_nameError('');
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{first_nameError}</span>
               </div>
               <div class="form-group">
                 <label>Last Name</label>
@@ -1003,8 +1056,18 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={last_name}
-                  onChange={(e) => setlast_name(e.target.value)}
+                  onChange={(e) => {setlast_name(e.target.value)
+                    validateForm();
+                  }}
+                  onBlur={()=>{
+                    if(last_name.trim() === ''){
+                      setLast_nameError('Last Name is required');
+                    }else{
+                      setLast_nameError('');
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{last_nameError}</span>
               </div>
               <div class="form-group">
                 <label>Mobile</label>
@@ -1014,8 +1077,22 @@ function Addcart() {
                   class="form-control"
                   maxLength={10}
                   value={mobile}
-                  onChange={(e) => setmobile(e.target.value)}
+                  onChange={(e) =>{ setmobile(e.target.value)
+                    validateForm();
+                    const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric character
+                    if (numericValue.length <= 10) {
+                      setmobile(numericValue);
+                    }
+                  }}
+                  onBlur={()=>{
+                    if(mobile.trim() === ''){
+                      setMobileError('Mobile Number is required')
+                    }else{
+                      setMobileError('')
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{mobileError}</span>
               </div>
               <div class="form-group">
                 <label>flat,House no,Building,Company</label>
@@ -1023,8 +1100,18 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={house_no}
-                  onChange={(e) => sethouse_no(e.target.value)}
+                  onChange={(e) => {sethouse_no(e.target.value)
+                    validateForm();
+                  }}
+                  onBlur={()=>{
+                    if(house_no.trim() === ''){
+                      setHouse_noError('House no, flat, Building, Company Number is required')
+                    }else{
+                      setHouse_noError('')
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{house_noError}</span>
               </div>
               <div class="form-group">
                 <label>Area, Street,Sector,Village</label>
@@ -1032,8 +1119,18 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={area}
-                  onChange={(e) => setarea(e.target.value)}
+                  onChange={(e) => {setarea(e.target.value)
+                    validateForm();
+                  }}
+                  onBlur={()=>{
+                    if(area.trim() === ''){
+                      setAreaError('Area, Street, Sector, Village is required')
+                    }else{
+                      setAreaError('')
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{areaError}</span>
               </div>
               <div class="form-group">
                 <label>Landmark</label>
@@ -1041,8 +1138,18 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={landmark}
-                  onChange={(e) => setlandmark(e.target.value)}
+                  onChange={(e) => {setlandmark(e.target.value)
+                    validateForm();
+                  }}
+                  onBlur={()=>{
+                    if(landmark.trim() === ''){
+                      setLandmarkError('Landmark is required')
+                    }else{
+                      setLandmarkError('')
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{landmarkError}</span>
               </div>
               <div className="row">
                 <div className="col">
@@ -1052,7 +1159,17 @@ function Addcart() {
                       className="form-control"
                       onChange={Subscription}
                       value={state}
-                      onInput={(e) => setstate(e.target.value)}
+                      onInput={(e) => {setstate(e.target.value)
+                        validateForm();
+                      }}
+                      onBlur={() => {
+                        if (state.trim() === '') {
+                          setStateError('State is required');
+                        } else {
+                          setStateError('');
+                        }
+                      }}
+                      
                     >
                       <option>State Choose...</option>
                       {stateall.map((items) => (
@@ -1061,6 +1178,7 @@ function Addcart() {
                         </option>
                       ))}
                     </select>
+                    <span style={{ color: 'red' }}>{stateError}</span>
                   </div>
                 </div>
                 <div className="col">
@@ -1070,16 +1188,23 @@ function Addcart() {
                       className="form-control"
                       onInput={(e) => setSelectedCity(e.target.value)}
                       value={selectedCity}
-                      onChange={(e) => setcity(e.target.value)}
+                      onChange={(e) => {setcity(e.target.value)
+                        validateForm();
+                      }}
+                      onBlur={()=>{
+                        if(city.trim() === ''){
+                          setCityError('City is required')
+                        }else{
+                          setCityError('')
+                        }
+                      }}
                     >
                       <option>City Choose...</option>
                       {stateallCity.map((items) => (
                         <option>{items.city_name}</option>
                       ))}
                     </select>
-                    {/* {formValid.cityname && (
-                        <span style={{ color: "red" }}>City is required</span>
-                      )} */}
+                    <span style={{ color: 'red' }}>{cityError}</span>
                   </div>
                 </div>
               </div>
@@ -1089,8 +1214,18 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={pincode}
-                  onChange={(e) => setpincode(e.target.value)}
+                  onChange={(e) =>{ setpincode(e.target.value)
+                    validateForm();
+                  }}
+                  onBlur={()=>{
+                    if(pincode.trim() === ''){
+                      setPincodeError('Pincode is required')
+                    }else{
+                      setPincodeError('')
+                    }
+                  }}
                 />
+                <span style={{ color: 'red' }}>{pincodeError}</span>
               </div>
             </div>
             <div className="modal-footer">
@@ -1099,6 +1234,18 @@ function Addcart() {
                 className="btn btn-primary"
                 onClick={handleAddAddress}
                 data-dismiss="modal"
+                disabled={
+                  !isFormValid ||
+                  first_name.trim() === '' || // Add this condition
+                  last_name.trim() === '' || // Add similar conditions for other fields
+                  mobile.trim() === '' ||
+                  house_no.trim() === '' ||
+                  area.trim() === '' ||
+                  landmark.trim() === '' ||
+                  state.trim() === '' ||
+                  selectedCity.trim() === '' ||
+                  pincode.trim() === ''
+                }
               >
                 Add +
               </button>
