@@ -7,6 +7,25 @@ import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 
 function WholesellerSignUp() {
+  const handleFirstNameChange = (e) => {
+    const inputValue = e.target.value;
+    if (/^[a-zA-Z ]*$/.test(inputValue)) {
+      setFirstName(inputValue);
+    }
+  };
+
+  const handleLastNameChange = (e) => {
+    const inputValue = e.target.value;
+    if (/^[a-zA-Z ]*$/.test(inputValue)) {
+      setLastName(inputValue);
+    }
+  };
+  const [isEmailValid, setIsEmailValid] = useState(true); // Add this line
+  const isEmailFormatValid = (email) => {
+    const hasCapitalLetter = /[A-Z]/.test(email);
+    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) && !hasCapitalLetter;
+  };
+
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,12 +44,19 @@ function WholesellerSignUp() {
   const [stateallCity, setStateallCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   console.log("selectedCity: ", selectedCity);
+  const [isPasswordValid, setIsPasswordValid] = useState(true); // State to track password validity
+  const [hasSpecialCharacter, setHasSpecialCharacter] = useState(true); // State to track presence of a special character
 
   const [city, setcity] = useState("");
   const [error, seterror] = useState(false);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    if (password.length < 8) {
+      setIsPasswordValid(false);
+      return;
+    }
     const WholesellerData = new FormData();
     WholesellerData.append("WholesellerEmail", email);
     WholesellerData.append("WholesellerPassword", email);
@@ -122,12 +148,6 @@ function WholesellerSignUp() {
       Getdatacity(event.target.value);
     }
   };
-  const imageuploadhandler = (e) =>{
-    setUpload1(e.target.files[0])
-      }
-      const imageuploadhandlersecond = (e) =>{
-        setUpload2(e.target.files[0])
-          }
 
   return (
     <>
@@ -152,7 +172,7 @@ function WholesellerSignUp() {
                         name="f_name"
                         placeholder="First Name"
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChange={handleFirstNameChange}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -161,7 +181,7 @@ function WholesellerSignUp() {
                         name="l_name"
                         placeholder="Last Name"
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
+                        onChange={handleLastNameChange}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -179,16 +199,32 @@ function WholesellerSignUp() {
                         name="email"
                         placeholder="Email ID"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setIsEmailValid(isEmailFormatValid(e.target.value));
+                        }}
+                        isInvalid={!isEmailValid}
                       />
+                      {!isEmailValid && (
+                        <Form.Control.Feedback type="invalid">
+                          {/[A-Z]/.test(email) && !email.includes('@')
+                            ? "Email should not contain capital letters and must include '@'."
+                            : "Please enter a valid email address."}
+                        </Form.Control.Feedback>
+                      )}
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
-                        type="number"
+                        type="tel"
                         name="phone"
                         placeholder="Mobile Number"
                         value={mobileNumber}
-                        onChange={(e) => setMobileNumber(e.target.value)}
+                        onChange={(e) => {
+                          const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric characters
+                          if (numericValue.length <= 10) {
+                            setMobileNumber(numericValue);
+                          }
+                        }}
                       />
                     </Form.Group>
                     <div className="row">
@@ -239,20 +275,32 @@ function WholesellerSignUp() {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
-                        type="number"
+                        type="tel"
                         name="aadhar_number"
                         placeholder="Aadhar Number"
                         value={aadharNumber}
-                        onChange={(e) => setAadharNumber(e.target.value)}
+                        onChange={(e) => {
+                          const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric characters
+
+                          if (numericValue.length <= 12) {
+                            setAadharNumber(numericValue);
+                          }
+                        }}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
-                        type="number"
+                        type="tel"
                         name="gst_number"
                         placeholder="GST Number"
                         value={gstNumber}
-                        onChange={(e) => setGstNumber(e.target.value)}
+                        onChange={(e) => {
+                          const numericValue = e.target.value.replace(/[^a-zA-Z0-9]/g, ""); // Remove non-numeric characters
+
+                          if (numericValue.length <= 15) {
+                            setGstNumber(numericValue);
+                          }
+                        }}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -264,12 +312,22 @@ function WholesellerSignUp() {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                          setPassword(e.target.value)
+                          setIsPasswordValid(e.target.value.length >= 8);
+                          setHasSpecialCharacter(/[^A-Za-z0-9]/.test(e.target.value));
+                        }}
+                        isInvalid={!isPasswordValid || !hasSpecialCharacter}
                       />
+                      {(!isPasswordValid || !hasSpecialCharacter) && (
+                        <Form.Control.Feedback type="invalid">
+                          Your password should be at least 8 characters and contain at least one special character.
+                        </Form.Control.Feedback>
+                      )}
                     </Form.Group>
                     <Row className="mb-3">
                       <Form.Group as={Col} controlId="formGridState">
@@ -277,7 +335,7 @@ function WholesellerSignUp() {
                         <Form.Control
                           type="file"
                           multiple
-                          onChange={imageuploadhandler}
+                          onChange={(e) => setUpload1(e.target.files)}
                         />
                       </Form.Group>
                       <Form.Group as={Col} controlId="formGridCity">
@@ -285,7 +343,7 @@ function WholesellerSignUp() {
                         <Form.Control
                           type="file"
                           multiple
-                          onChange={imageuploadhandlersecond}
+                          onChange={(e) => setUpload2(e.target.files)}
                         />
                       </Form.Group>
                     </Row>

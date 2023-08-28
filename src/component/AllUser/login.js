@@ -30,7 +30,7 @@ function Login() {
     }
   };
   const handleChange = (e) => {
-    const inputValue = e.target.value.replace(/\D/g, "");
+    const inputValue = e.target.value.replace(/[^0-9+]/g, "");
     if (inputValue.length <= 10) {
       setPhone(inputValue);
     }
@@ -58,7 +58,7 @@ function Login() {
                       <Form.Label>Mobile No</Form.Label>
                       <Form.Control
                         input
-                        type="number"
+                        type="tel"
                         placeholder="Enter number"
                         value={phone}
                         maxLength="10"

@@ -77,6 +77,8 @@ function Home(props) {
   const [allproduct, setallproduct] = useState([]);
   console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
+  const [allVendorShop, setAllVendorShop] = useState([]);
+  console.log("allVendorShop: ", allVendorShop);
   const [brands, setBrands] = useState([]);
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
@@ -133,6 +135,7 @@ function Home(props) {
     allProduct();
     thirdBanner();
     fetchBlogs();
+    AllVendorHomePage();
   }, []);
 
   const categoriesProduct = async () => {
@@ -189,6 +192,19 @@ function Home(props) {
       .then((response) => {
         console.log(response.data.data);
         setthirdbanner(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  // all venders
+  const AllVendorHomePage = () => {
+    axios
+      .get(`${BASE_URL}/vendor/all_vendor`)
+      .then((response) => {
+        console.log("vendor", response.data.data);
+        setAllVendorShop(response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -264,8 +280,6 @@ function Home(props) {
 
   const { id } = useParams();
   console.log("id: ", id);
-
-
 
   return (
     <>
@@ -417,16 +431,25 @@ function Home(props) {
                             </Col>
                           </Row>
                           <Row>
-                            <Col lg={6} sm={6} xs={6} className="align-self-center">
+                            <Col
+                              lg={6}
+                              sm={6}
+                              xs={6}
+                              className="align-self-center"
+                            >
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${item.price -
+                                {`₹${
+                                  item.price -
                                   (item.price * item.discount) / 100
-                                  }`}
+                                }`}
                               </h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
-                              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                              <Link
+                                to={`/add-cart/${id}`}
+                                onClick={handleAddToCart}
+                              >
                                 <img src={bag} />
                               </Link>
                             </Col>
@@ -456,116 +479,11 @@ function Home(props) {
           <Row className="mt-4">
             {brands
               ? brands.map(
-                (brand) =>
-                  brand.canine == "1" && (
-                    <Col lg={3} sm={6} xs={6} className="mb-5">
-                      <div key={brand.id} className="Brand-card brand-1">
-                        <Link to={`/our-our-brand/${brand.id}`}>
-                          <div className="brandLOGO">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                brand.logo
-                              }
-                            />
-                          </div>
-                          <div className="brand-main">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                brand.image
-                              }
-                            />
-                          </div>
-                          <div className="brand-text">
-                            <h5>{brand.title}</h5>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
-                  )
-              )
-              : null}
-          </Row>
-        </Container>
-      </section>
-
-      <section className="section-padding thirdbnner-area">
-        <Container>
-          <Row>
-            {homebanner
-              ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <Col lg={6} className="mb-4">
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
-                          item.image
-                        }
-                      />
-                    </Col>
-                  )
-              )
-              : null}
-            <Col lg={6} className="align-self-center">
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "store_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/banner/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "item_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/banner/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Shop By Brands</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {brands
-                ? brands.map(
                   (brand) =>
-                    brand.canine == "0" && (
+                    brand.canine == "1" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
                         <div key={brand.id} className="Brand-card brand-1">
-                          <Link to={`/shop-by-brand-list/${brand.id}`}>
+                          <Link to={`/our-our-brand/${brand.id}`}>
                             <div className="brandLOGO">
                               <img
                                 src={
@@ -590,6 +508,111 @@ function Home(props) {
                       </Col>
                     )
                 )
+              : null}
+          </Row>
+        </Container>
+      </section>
+
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            {homebanner
+              ? homebanner.map(
+                  (item, index) =>
+                    item.type === "default" && (
+                      <Col lg={6} className="mb-4">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/banner/" +
+                            item.image
+                          }
+                        />
+                      </Col>
+                    )
+                )
+              : null}
+            <Col lg={6} className="align-self-center">
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "store_wise" && (
+                          <Col sm={12} className="mb-4">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/banner/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "item_wise" && (
+                          <Col sm={12} className="mb-4">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/banner/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="section-padding">
+        <Container>
+          <Row>
+            <Col lg={6} sm={6} xs={6}>
+              <h1 className="main-head">Shop By Brands</h1>
+            </Col>
+            <Col lg={6} sm={6} xs={6}>
+              <div className="foodMore">
+                <Link to="/shop-by-brand">See all</Link>
+              </div>
+            </Col>
+          </Row>
+          <div className="needplace">
+            <Row>
+              {brands
+                ? brands.map(
+                    (brand) =>
+                      brand.canine == "0" && (
+                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                          <div key={brand.id} className="Brand-card brand-1">
+                            <Link to={`/shop-by-brand-list/${brand.id}`}>
+                              <div className="brandLOGO">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                    brand.logo
+                                  }
+                                />
+                              </div>
+                              <div className="brand-main">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                    brand.image
+                                  }
+                                />
+                              </div>
+                              <div className="brand-text">
+                                <h5>{brand.title}</h5>
+                              </div>
+                            </Link>
+                          </div>
+                        </Col>
+                      )
+                  )
                 : null}
             </Row>
           </div>
@@ -610,38 +633,26 @@ function Home(props) {
           </Row>
           <div className="needplace">
             <Row>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon1} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon2} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon1} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-4">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon2} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
+              {allVendorShop && allVendorShop.length > 0 ? (
+                allVendorShop.map((item) => (
+                  <Col lg={3} sm={6} xs={6} className="mb-5">
+                    <a href="/product-by-partner">
+                      <div className="ProductPartner-card">
+                        {/* <img src={item.logo} /> */}
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/vendor/" +
+                            item.logo
+                          }
+                        />
+                        <h3 className="text-dark">{item.name}</h3>
+                      </div>
+                    </a>
+                  </Col>
+                ))
+              ) : (
+                <p className="emptyMSG">No Product By Partner Data.</p>
+              )}
             </Row>
           </div>
         </Container>
@@ -653,7 +664,6 @@ function Home(props) {
             <Row>
               <Col lg={5} className="p-0">
                 <div className="video-content">
-                  
                   <h1 className="main-head">Samantha & Maya’s Pet Grooming</h1>
                   <p>
                     When it comes to cats, everyone knows taste is what’s most

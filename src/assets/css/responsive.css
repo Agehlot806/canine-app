@@ -54,6 +54,21 @@
     .totelPAYCAR button {
         font-size: 16px;
     }
+    .myorder-btn button {
+        font-size: 15px;
+    }
+    .add-upload label {
+        width: 100%;
+    }
+    .add-upload-area .form-group ul li a {
+        margin: 10px;
+    }
+    .add-upload-area .form-group select {
+        width: 100%;
+    }
+    .add-upload-area .form-group input {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 912px) {
@@ -82,6 +97,22 @@
 
     .Newsletter-bg img {
         width: 400px;
+    }
+    .Newsletter-bg {
+        text-align: center;
+    }
+    .home-content {
+    left: 20px;
+}
+    .dowload-invioce {
+        text-align: left;
+        margin: 0 0 20px;
+    }
+    .order-table {
+        margin: 16px 0 0;
+    }
+    .contact-form {
+        margin: 0 0 25px;
     }
 }
 
@@ -127,6 +158,26 @@
     .quantity-btn input {
         width: 32px;
         height: 26px;
+    }
+    .contact-card i {
+        height: 50px;
+        width: 50px;
+        font-size: 20px;
+    }
+    .contact-card h3 {
+        font-size: 14px;
+    }
+    .contact-card p {
+        font-size: 12px;
+    }
+    .contact-form {
+        padding: 20px;
+    }
+    .contact-form input {
+        height: 46px;
+    }
+    .contact-form textarea {
+        height: 46px;
     }
     .add-cart-total h5 {
         font-size: 13px;
@@ -227,6 +278,7 @@
 
     .foodMore {
         margin: 0 0 20px;
+        text-align: left;
     }
 
     .Newsletter-bg {
@@ -245,6 +297,9 @@
     .home-content h1 {
         font-size: 15px;
         margin: 0;
+    }
+    .veterinary-head-text {
+        padding: 15px 0px;
     }
     .addCARThead h2 {
         font-size: 13px;
@@ -339,7 +394,7 @@
     }
 
     .brand-bg h5 {
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .brand-bg p {
@@ -347,7 +402,7 @@
     }
 
     .brand-bg a img {
-        width: 20px;
+        width: 16px;
     }
     .product-item-inner img {
         width: 65px;
@@ -389,6 +444,53 @@
         font-size: 18px;
         margin: 0 0 10px;
     }
+    .Track-Your {
+        display: block;
+    }
+    .tranker-search button {
+        position: relative;
+        right: 0;
+        top: 10px;
+        width: 150px;
+    }
+    .tracker-content span {
+        font-size: 12px;
+    }
+    .tracker-content {
+        margin: 0 0 20px;
+    }
+    .tranker-head span {
+        font-size: 12px;
+    }
+    .cancel-btn {
+        font-size: 10px !important;
+    }
+    .needplace-card {
+        padding: 10px;
+    }
+    .needplace-card img {
+        width: 50px;
+    }
+    .needplace-card h4 {
+        font-size: 15px;
+    }
+    .needplace-card p {
+        font-size: 12px;
+    }
+    .add-upload label {
+        border-radius: 15px;
+        font-size: 32px;
+    }
+    .add-upload-area .form-group label {
+        font-size: 14px;
+    }
+    .add-upload-area .form-group ul li a {
+        border-radius: 8px;
+        width: 100px;
+        height: 38px;
+        font-size: 15px;
+    }
+    
 }
 
 
@@ -437,9 +539,12 @@
         height: 100px;
     }
 
-
+    .payment-done p {
+        margin: 15px 0;
+        font-size: 14px;
+    }
     p {
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .video-right img {

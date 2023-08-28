@@ -48,7 +48,7 @@ function Service() {
           <div className="needplace">
             <Row>
               {allservice.map((item) => (
-                <Col lg={4} className="mb-4">
+                <Col lg={4} sm={6} className="mb-4">
                   <div className="service-card" key={item.id}>
                     <Link to={`/service-date/${item.id}`}>
                       <img
@@ -82,7 +82,7 @@ function Service() {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={7} className="align-self-center">
+            <Col lg={7} sm={7} className="align-self-center">
               <div className="service-Visit">
                 <h1 className="main-head">Each Visit Also Includes</h1>
                 <p>
@@ -109,7 +109,7 @@ function Service() {
                 </ul>
               </div>
             </Col>
-            <Col lg={5}>
+            <Col lg={5} sm={5}>
               <div className="aboutpage-img">
                 <img src={servicepage} />
               </div>

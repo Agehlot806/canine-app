@@ -16,6 +16,7 @@ import Servicedate from "./component/User/service-date";
 import Shopbybrand from "./component/User/shop-by-brand";
 import Ourourbrand from "./component/User/our-our-brand";
 import Productbypartner from "./component/User/product-by-partner";
+import WholesellerProductbypartner from "./component/wholeseller/wholeseller-productbypartner";
 import Productpartnershop from "./component/User/product-partner-shop";
 import Ourbrand from "./component/User/our-brand";
 import Petcategory from "./component/User/pet-category";
@@ -67,6 +68,7 @@ import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
 import WholeSellerShipping from "./component/wholeseller/wholeseller-shipping";
+import WholeSellerPayLater from "./component/wholeseller/wholeseller-paylater";
 import Returnpolicy from "./component/User/return-policy";
 import Paymentoption from "./component/User/payment-option";
 import Myorder from "./component/User/my-order";
@@ -112,6 +114,7 @@ function App() {
           <Route path="/shop-by-brand" element={<Shopbybrand />} />
           <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
           <Route path="/product-by-partner" element={<Productbypartner />} />
+
           <Route
             path="/product-partner-shop"
             element={<Productpartnershop />}
@@ -196,7 +199,10 @@ function App() {
             element={<WholesellerproductDetails />}
           />
           <Route path="/wholeseller-home" element={<WholesellerHome />} />
-
+          <Route
+            path="/wholeseller-product-by-partner"
+            element={<WholesellerProductbypartner />}
+          />
           <Route
             path="/wholeseller-add-cart/:id"
             element={<WholesellerAddCart />}
@@ -210,7 +216,10 @@ function App() {
             path="/wholeseller-shipping/:id"
             element={<WholeSellerShipping />}
           />
-
+          <Route
+            path="/wholeseller-paylater/:id"
+            element={<WholeSellerPayLater />}
+          />
           {/* Sales Man flow  */}
           <Route path="/salesman-login" element={<SalesmanLogin />} />
           <Route path="/salesman-dashboad" element={<DashboadSalesman />} />

@@ -31,7 +31,7 @@ function Allveterinary() {
             <Row>
               {veterinaryget &&
                 veterinaryget.map((item) => (
-                  <Col lg={4} className="mb-4">
+                  <Col lg={4} sm={6} className="mb-4">
                     <div
                       className="veterinary-card veterinary-bg1"
                       key={item.id}

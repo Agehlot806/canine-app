@@ -77,6 +77,8 @@ function WholesellerHome(props) {
   const [allproduct, setallproduct] = useState([]);
   console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
+  const [allVendorShop, setAllVendorShop] = useState([]);
+  console.log("allVendorShop: ", allVendorShop);
   const [brands, setBrands] = useState([]);
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
@@ -133,6 +135,7 @@ function WholesellerHome(props) {
     allProduct();
     thirdBanner();
     fetchBlogs();
+    AllVendorHomePage();
   }, []);
 
   const categoriesProduct = async () => {
@@ -173,6 +176,19 @@ function WholesellerHome(props) {
       .then((response) => {
         console.log(response.data.data);
         setthirdbanner(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  // all venders
+  const AllVendorHomePage = () => {
+    axios
+      .get(`${BASE_URL}/vendor/all_vendor`)
+      .then((response) => {
+        console.log("vendor", response.data.data);
+        setAllVendorShop(response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -461,11 +477,11 @@ function WholesellerHome(props) {
       <section className="section-padding food">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               {/* <h5>Dog Nutrients & Food </h5> */}
               <h1 className="main-head">Latest all Products</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <div className="foodMore">
                 <Link to="/wholeseller-product">
                   View More <i className="fa fa-angle-right" />
@@ -504,22 +520,23 @@ function WholesellerHome(props) {
                           <p>{item.description}</p>
                         </div>
                         <div className="product-bag">
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <p>₹{item.price}</p>
                             </Col>
                             <Col>
                               <h5>{item.discount}%</h5>
                             </Col>
-                          </Row>
+                          </Row> */}
                           <Row>
                             <Col className="align-self-center">
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
+                                {/* {`₹${
                                   item.price -
                                   (item.price * item.discount) / 100
-                                }`}
+                                }`} */}
+                                ₹{item.price}
                               </h6>
                             </Col>
                             <Col>
@@ -544,10 +561,10 @@ function WholesellerHome(props) {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <h1 className="main-head">Our Brand</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <div className="foodMore">
                 <Link to="/our-brand">See all</Link>
               </div>
@@ -597,7 +614,7 @@ function WholesellerHome(props) {
               ? homebanner.map(
                   (item, index) =>
                     item.type === "default" && (
-                      <Col lg={6}>
+                      <Col lg={6} className="mb-4">
                         <img
                           src={
                             "https://canine.hirectjob.in/storage/app/public/banner/" +
@@ -648,10 +665,10 @@ function WholesellerHome(props) {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <h1 className="main-head">Shop By Brands</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <div className="foodMore">
                 <Link to="/shop-by-brand">See all</Link>
               </div>
@@ -699,49 +716,37 @@ function WholesellerHome(props) {
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <h1 className="main-head">Product By Partner</h1>
             </Col>
-            <Col lg={6}>
+            <Col lg={6} sm={6}>
               <div className="foodMore">
-                <Link to="/product-by-partner">See all</Link>
+                <Link to="/wholeseller-product-by-partner">See all</Link>
               </div>
             </Col>
           </Row>
           <div className="needplace">
             <Row>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon1} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon2} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon1} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon2} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
+              {allVendorShop && allVendorShop.length > 0 ? (
+                allVendorShop.map((item) => (
+                  <Col lg={3} sm={6} xs={6} className="mb-5">
+                    <a href="/wholeseller-product-by-partner">
+                      <div className="ProductPartner-card">
+                        {/* <img src={item.logo} /> */}
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/vendor/" +
+                            item.logo
+                          }
+                        />
+                        <h3 className="text-dark">{item.name}</h3>
+                      </div>
+                    </a>
+                  </Col>
+                ))
+              ) : (
+                <p className="emptyMSG">No Product By Partner Data.</p>
+              )}
             </Row>
           </div>
         </Container>
@@ -783,7 +788,7 @@ function WholesellerHome(props) {
             <Row>
               {blog && blog.length > 0 ? (
                 blog.map((item, index) => (
-                  <Col lg={4}>
+                  <Col lg={4} sm={6} className="mb-4">
                     <div className="blog-card">
                       <img
                         src={
