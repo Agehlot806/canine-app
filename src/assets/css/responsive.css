@@ -57,6 +57,18 @@
     .myorder-btn button {
         font-size: 15px;
     }
+    .add-upload label {
+        width: 100%;
+    }
+    .add-upload-area .form-group ul li a {
+        margin: 10px;
+    }
+    .add-upload-area .form-group select {
+        width: 100%;
+    }
+    .add-upload-area .form-group input {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 912px) {
@@ -93,6 +105,9 @@
     }
     .order-table {
         margin: 16px 0 0;
+    }
+    .contact-form {
+        margin: 0 0 25px;
     }
 }
 
@@ -138,6 +153,26 @@
     .quantity-btn input {
         width: 32px;
         height: 26px;
+    }
+    .contact-card i {
+        height: 50px;
+        width: 50px;
+        font-size: 20px;
+    }
+    .contact-card h3 {
+        font-size: 14px;
+    }
+    .contact-card p {
+        font-size: 12px;
+    }
+    .contact-form {
+        padding: 20px;
+    }
+    .contact-form input {
+        height: 46px;
+    }
+    .contact-form textarea {
+        height: 46px;
     }
     .add-cart-total h5 {
         font-size: 13px;
@@ -256,6 +291,9 @@
     .home-content h1 {
         font-size: 15px;
         margin: 0;
+    }
+    .veterinary-head-text {
+        padding: 15px 0px;
     }
     .addCARThead h2 {
         font-size: 13px;
@@ -433,6 +471,20 @@
     .needplace-card p {
         font-size: 12px;
     }
+    .add-upload label {
+        border-radius: 15px;
+        font-size: 32px;
+    }
+    .add-upload-area .form-group label {
+        font-size: 14px;
+    }
+    .add-upload-area .form-group ul li a {
+        border-radius: 8px;
+        width: 100px;
+        height: 38px;
+        font-size: 15px;
+    }
+    
 }
 
 

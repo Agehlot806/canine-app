@@ -31,7 +31,7 @@ function Allservicebooking() {
                         <Row>
                             {allservicebooking &&
                                 allservicebooking.map((item) => (
-                                    <Col lg={4} className='mb-4'>
+                                    <Col lg={4} sm={6} className='mb-4'>
                                         <div className='veterinary-card veterinary-bg1' key={item.id}>
                                             <div className='veterinary-status'>
                                                 <h6>{item.date}</h6>

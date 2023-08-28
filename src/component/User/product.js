@@ -541,9 +541,9 @@ function Product(props) {
                           <input type="number"
                              placeholder="From"  onChange={maxprice} />
                         </div>
-                        <div className="form-range" >
+                        <div className="form-range text-center" >
                           {/* <span>₹</span> */}
-                       <button onClick={applyprice}>Apply</button>
+                       <button className="Apply-price" onClick={applyprice}>Apply</button>
                         </div>
                       </div>
 
@@ -855,27 +855,6 @@ function Product(props) {
               </Container>
             </section>
 
-            <Container fluid className="p-0">
-              <div className="all-bg">
-                {itembannerdata ? (
-                  itembannerdata.map(
-                    (item, index) =>
-                      item.type === "item_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/banner/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                ) : (
-                  <p className="emptyMSG">No Items Banner.</p>
-                )}
-              </div>
-            </Container>
 
           </Col>
         </Row>
