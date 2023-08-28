@@ -20,6 +20,7 @@ function Petcategory() {
   //     const { id } = useParams();
   //   console.log("id", id);
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
+  const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
   console.log("brands: ", brands);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
@@ -66,6 +67,9 @@ function Petcategory() {
       case "specialDiet":
         setSpecialDietDropdownVisible(!specialDietDropdownVisible);
         break;
+        case "cate":
+          setCateDropdownVisible(!cateDropdownVisible);
+          break;
       case "veg-Non-veg":
         setVegNonvegDropdownVisible(!vegNonvegDropdownVisible);
         break;
@@ -83,8 +87,6 @@ function Petcategory() {
   };
 
   const handleCheckboxClick = (event) => {
-    if (brands) {
-    }
     event.stopPropagation();
   };
 
@@ -92,31 +94,117 @@ function Petcategory() {
   console.log("name: ", name);
   console.log("id", id);
 
-  const [petitemproduct, setpetitemproduct] = useState([]);
-  const [subcategories, setsubcategories] = useState([]);
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  console.log("=======>>>>>> id", customer_id);
+  let storedUserId = JSON.stringify(customer_id);
+  console.log("customer_id: ", customer_id);
+  // ----------------------------------------
+
+
+
+ 
+ 
+  
+
+ 
+
+
+  // filter code ==========================
+  const [allproduct, setallproduct] = useState([])
 
   useEffect(() => {
-    allPetitemproduct();
-    Allsubcategories();
-    fetchBrands();
-    fetchBreed();
-    fetchHealthcondition();
-    fetchLifestage();
+ 
     allProduct();
+    allBrandshow()
+    allLifesageshow()
+    allBreedshow()
+    allsubcategary()
+    allHealthconditionshow()
+    Allsubcategories()
   }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      subcatid(id);
-    }, 1000);
-  }, [id]);
-  const allPetitemproduct = async () => {
+  const allProduct = async () => {
     axios
-      .get(`${BASE_URL}/items/product/${id}/${subid}`)
+      .get(`${BASE_URL}/items/latest`)
       .then((response) => {
         console.log(response);
-        console.log("Delete Successful");
-        setpetitemproduct(response.data.data);
+        console.log("All Product Successful");
+        setallproduct(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
+
+////filter tarun//
+const [allbrand, setAllBrand] = useState("")
+  const [alllifesage, setAlllifesage] = useState("")
+  const [allbreed, setAllBreed] = useState("")
+  const [allsubcate, setAllSubcate] = useState("")
+  const [allhealth, setAllHealth] = useState("")
+  const [subcategories, setsubcategories] = useState([]);
+
+
+  const allBrandshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
+      .then((response) => {
+        // console.log("responseresponse?????",response);
+        setAllBrand(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const allLifesageshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAlllifesage(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const allBreedshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAllBreed(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+  const allsubcategary = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/categories`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAllSubcate(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const allHealthconditionshow = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAllHealth(response.data.data);
+        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -136,307 +224,163 @@ function Petcategory() {
       });
   };
 
-
-
-  // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
-  let storedUserId = JSON.stringify(customer_id);
-  console.log("customer_id: ", customer_id);
-  // ----------------------------------------
-
-  const addToWishlist = async (item_id) => {
-    const formData = new FormData();
-    formData.append("user_id", storedUserId);
-    formData.append("item_id", item_id);
-    axios
-      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        console.log("response143", response);
-        if (response.data.message) {
-          toast.success("Added successfully");
-        }
-      })
-      .catch((error) => {
-        toast.error("Already in your wishlist");
-      });
-  };
-
-  const [subid, setsubid] = useState("");
-  const subcatid = async (id) => {
-    setsubid(id);
-    console.log("subcategoriesID", subid);
-    await axios
-      .get(`${BASE_URL}/items/product/${id}/${subid}`)
-      .then((response) => {
-        console.log(response);
-        setpetitemproduct(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const fetchBrands = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/auth/brand`);
-      setBrands(response.data.data);
-
-      // Handle response as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
-  };
-  const fetchBreed = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/auth/breed/1`);
-      setBreed(response.data.data);
-
-      // Handle response as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
-  };
-
-  const fetchHealthcondition = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/auth/health_condition`);
-      setHealthcondition(response.data.data);
-
-      // Handle response as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
-  };
-
-  const fetchLifestage = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/auth/life_stage/1`);
-      setlifestage(response.data.data);
-
-      // Handle response as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
-  };
-
-  // filter code ==========================
-  const [allproduct, setallproduct] = useState([]);
-  const [dataList, setDataList] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [selectedlifeStage, setSelectedlifeStage] = useState(null);
-
-
-  const fetchAllProducts = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/items/latest`);
-      setallproduct(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllProducts();
-  }, []);
+  const [selectedBrandIds, setSelectedBrandIds] = useState([]);
+  const [selectedlifeIds, setSelectedLifeIds] = useState([]);
+  const [selectedbreedIds, setSelectedbreedIds] = useState([]);
+  const [selectedcateIds, setSelectedcateIds] = useState([]);
+  const [selectedhealthIds, setSelectedhealthIds] = useState([]);
+  const [selectedvegIds, setSelectedvegIds] = useState([]);
+  const [selectedsubcateIds, setSelectedsubcateIds] = useState([]);
+ 
+  const [minpricevalue, setMinpricevalue] = useState([])
+  const [maxpricevalue, setMaxpricevalue] = useState([])
+  const minprice = (e) => {
+    setMinpricevalue(e.target.value)
+  }
+  const maxprice = (e) => {
+    setMaxpricevalue(e.target.value)
+  }
 
   const handleDataListBrand = (brand_id) => {
-    const filteredData = allproduct.filter((item) => item.brand_id === brand_id);
-    setDataList(filteredData);
-    setSelectedBrand(brand_id);
+    setSelectedBrandIds((prevSelectedBrandIds) => {
+      const updatedBrandIds = prevSelectedBrandIds.includes(brand_id)
+        ? prevSelectedBrandIds.filter((id) => id !== brand_id)
+        : [...prevSelectedBrandIds, brand_id];
+      filterProducts(updatedBrandIds); // Pass the updated brand IDs to filter function
+      return updatedBrandIds;
+    });
   };
 
-  const handleClearFilter = () => {
-    setDataList([]);
-    setSelectedBrand(null);
+  const Lifesatedataselect = (name) => {
+    setSelectedLifeIds((prevSelectedLifeIds) => {
+      const updatedLifeIds = prevSelectedLifeIds.includes(name)
+        ? prevSelectedLifeIds.filter((id) => id !== name)
+        : [...prevSelectedLifeIds, name];
+      filterProducts(undefined, updatedLifeIds);
+      return updatedLifeIds;
+    });
   };
 
-  const handleSelectedlifeStage = (lifeStage_id) => {
-    const filteredData = allproduct.filter((item) => item.lifeStage_id === lifeStage_id);
-    setDataList(filteredData);
-    setSelectedlifeStage(lifeStage_id);
+  const allbreedselect = (name) => {
+    setSelectedbreedIds((prevSelectedBreedIds) => {
+      const updatedBreedIds = prevSelectedBreedIds.includes(name)
+        ? prevSelectedBreedIds.filter((id) => id !== name)
+        : [...prevSelectedBreedIds, name];
+      filterProducts(undefined, undefined, updatedBreedIds);
+      return updatedBreedIds;
+    });
+  };
+  const allcateselect = (name) => {
+    setSelectedcateIds((prevSelectedBreedIds) => {
+      const updatedcateIds = prevSelectedBreedIds.includes(name)
+        ? prevSelectedBreedIds.filter((id) => id !== name)
+        : [...prevSelectedBreedIds, name];
+      filterProducts(undefined, undefined, undefined, updatedcateIds);
+      return updatedcateIds;
+    });
   };
 
-  const handleClearFilterlifeStage = () => {
-    setDataList([]);
-    setSelectedlifeStage(null);
+  const allhealthselect = (name) => {
+    setSelectedhealthIds((prevSelectedhealthIds) => {
+      const updatedhealthIds = prevSelectedhealthIds.includes(name)
+        ? prevSelectedhealthIds.filter((id) => id !== name)
+        : [...prevSelectedhealthIds, name];
+      filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+      return updatedhealthIds;
+    });
+  };
+    const allsubcateselect = (name) => {  
+    setSelectedsubcateIds((prevSelectedhealthIds) => {
+      const updatesubcateIds = prevSelectedhealthIds.includes(name)
+        ? prevSelectedhealthIds.filter((id) => id !== name)
+        : [...prevSelectedhealthIds, name];
+      filterProducts(undefined, undefined, undefined, undefined,undefined,undefined, updatesubcateIds);
+      return updatesubcateIds;
+    });
   };
 
-  const allProduct = async () => {
-    axios
-      .get(`${BASE_URL}/items/latest`)
-      .then((response) => {
-        console.log(response);
-        console.log("All Product Successful");
-        setallproduct(response.data.data);
-        // Perform any additional actions after successful deletion
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const vegnonveghandler = (value) => {
+    setSelectedvegIds((prevSelectedvegIds) => {
+      const updatedvegIds = prevSelectedvegIds.includes(value)
+        ? prevSelectedvegIds.filter((id) => id !== value)
+        : [...prevSelectedvegIds, value];
+      filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+      return updatedvegIds;
+    });
   };
+  const applyprice = ()=>{
+    filterProducts();
+  }
 
-
-  const [filter, setFilter] = useState(false);
-
-  const handleDataList = async (brand_id) => {
+  console.log("/////",selectedsubcateIds);
+  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds,updatedvegIds,updatesubcateIds) => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/items/latest`
-      );
-      const jsonData = await response.json();
-      // Access nested data
-      const nestedData = jsonData.data;
-      // Filter the nested data based on brand
-      const filteredData = nestedData.filter((item) => item.brand_id == brand_id);
-      setDataList(filteredData);
-      setFilter(true);
+      const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
+      const products = response.data.data;
+      const filteredProducts = applyFilters({
+        selectedBrands: updatedBrandIds || selectedBrandIds,
+        selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
+        selectBreedFilterList: updatedBreedIds || selectedbreedIds,
+        selectcate: updatedcateIds || selectedcateIds,
+        selecthealth: updatedhealthIds || selectedhealthIds,
+        selectedVegOptions:updatedvegIds|| selectedvegIds,
+        selectedsubcate:updatesubcateIds|| selectedsubcateIds,
+        minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
+        maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
+        // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
+        // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+        // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
+        products: products,
+      });
+      console.log("/////", filteredProducts);
+      console.log("======", products);
+      setallproduct(filteredProducts)
     } catch (error) {
-      // console.log("Errorr", error);
+      console.error('Error:', error);
     }
+
   };
 
   const applyFilters = ({
     selectedBrands,
-    lifeStage,
-    productType,
-    breed,
-    healthCondition,
-    specialDiet,
+    selectLifeStageFilterList,
+    selectBreedFilterList,
+    selectcate,
+    selecthealth,
     selectedVegOptions,
+    selectedsubcate,
     minPrice,
     maxPrice,
     products,
   }) => {
-    return products.filter((product) => {
-      const brandFilter = !selectedBrands || selectedBrands.includes(product["brand"]);
-      const vegFilter = !selectedVegOptions || selectedVegOptions.includes(product["veg"]);
-      const maxPriceFilter = maxPrice === null || product["price"] < maxPrice;
-      const minPriceFilter = minPrice === null || product["price"] > minPrice;
-      const lifeStageFilter = !lifeStage || lifeStage.includes(product["life-stage"]);
-      const breedFilter = !breed || breed.includes(product["breed"]);
-      const healthConditionFilter = !healthCondition || healthCondition.includes(product["health-condition"]);
-      const specialDietFilter = !specialDiet || specialDiet.includes(product["special-diet"]);
-      return brandFilter && vegFilter && maxPriceFilter && minPriceFilter && lifeStageFilter && breedFilter && healthConditionFilter && specialDietFilter;
+    const selectedBrandSet = new Set(selectedBrands);
+    const selectedLifeStageSet = new Set(selectLifeStageFilterList);
+    const selectedBreedSet = new Set(selectBreedFilterList);
+    const selectedcateSet = new Set(selectcate);
+    const selectedhealthSet = new Set(selecthealth);
+    const selectedvegSet = new Set(selectedVegOptions);
+    const selectedsubcateSet = new Set(selectedsubcate);
+
+    return products.filter(product => {
+      const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
+      const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
+      const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
+      const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
+      const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
+      const subcateFilter = selectedsubcate.length === 0 || selectedsubcateSet.has(product.sub_category.toString());
+      const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
+      const price = parseFloat(product.price);  // Parse the price to a number
+      const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+      const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
+      // const price = parseFloat(product.price);  // Parse the price to a number
+      // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+      // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
+      // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
+      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter&&Filterveg&&minPriceFilter&& maxPriceFilter&&subcateFilter;
     });
   };
-  const products = [
-    {
-      "name": "Product 1",
-      "brand": "Brand A",
-      "veg": true,
-      "price": 4999,
-      "life-stage": "adult",
-      "product-type": "dry-dog-food",
-      "breed": "boxer",
-      "health-condition": "sensitive",
-      "special-diet": "low-gain",
-    },
-    {
-      "name": "Product 2",
-      "brand": "Brand B",
-      "veg": false,
-      "price": 2999,
-      "life-stage": "puppy",
-      "product-type": "greavy-dog-food",
-      "breed": "boxer",
-      "health-condition": "weaning",
-      "special-diet": "gain-free",
-    },
-    {
-      "name": "Product 3",
-      "brand": "Brand C",
-      "veg": true,
-      "price": 3999,
-      "life-stage": "adult",
-      "product-type": "dry-dog-food",
-      "breed": "pug",
-      "health-condition": "weaning",
-      "special-diet": "low-gain",
-    },
-    {
-      "name": "Product 4",
-      "brand": "Brand B",
-      "veg": false,
-      "price": 5999,
-      "life-stage": "puppy",
-      "product-type": "greavy-dog-food",
-      "breed": "pug",
-      "health-condition": "sensitive",
-      "special-diet": "gain-free",
-    },
-    {
-      "name": "Product 5",
-      "brand": "Brand A",
-      "veg": true,
-      "price": 6999,
-      "life-stage": "adult",
-      "product-type": "dry-dog-food",
-      "breed": "boxer",
-      "health-condition": "weaning",
-      "special-diet": "low-gain",
-    },
-    {
-      "name": "Product 6",
-      "brand": "Brand C",
-      "veg": false,
-      "price": 2999,
-      "life-stage": "adult",
-      "product-type": "dry-dog-food",
-      "breed": "boxer",
-      "health-condition": "weaning",
-      "special-diet": "low-gain",
-    },
-    {
-      "name": "Product 7",
-      "brand": "Brand C",
-      "veg": false,
-      "price": 3999,
-      "life-stage": "puppy",
-      "product-type": "dry-dog-food",
-      "breed": "pug",
-      "health-condition": "weaning",
-      "special-diet": "gain-free",
-    },
-    // More products...
-  ];
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const handleFilterClick = () => {
-    const filtered = applyFilters({
-      // selectedBrands: ["Brand A", "Brand B", "Brand C"],
-      // selectedVegOptions: [true, false],
-      lifeStage: ["puppy", "adult"],
-      products: allproduct,
-      maxPrice: 5000,
-      minPrice: 0,
-      productType: ["dry-dog-food", "greavy-dog-food"],
-      breed: ["boxer", "pug"],
-      healthCondition: ["weaning", "sensitive"],
-      specialDiet: ["low-gain", "gain-free"],
-    });
-    setFilteredProducts(filtered);
-  };
-  console.log("Filtered Products:");
-  filteredProducts.forEach((product, index) => {
-    console.log(`${index + 1}: Name: ${product["name"]}`);
-    printAdditionalInfo(product);
-    console.log(""); // Add an empty line for separation
-  });
-  function printAdditionalInfo(product) {
-    console.log(`   Brand: ${product["brand"]}`);
-    console.log(`   Veg: ${product["veg"]}`);
-    console.log(`   Price: ${product["price"]}`);
-    console.log(`   Life Stage: ${product["life-stage"]}`);
-    console.log(`   Product Type: ${product["product-type"]}`);
-    console.log(`   Breed: ${product["breed"]}`);
-    console.log(`   Health Condition: ${product["health-condition"]}`);
-    console.log(`   Special Diet: ${product["special-diet"]}`);
-  }
+
+ 
 
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
@@ -446,36 +390,45 @@ function Petcategory() {
     // Add more gradient colors as needed
   ];
 
+  
+/////pagination//
 
-  const [addToCartStatus, setAddToCartStatus] = useState("");
+const [paginatedCategories, setPaginatedCategories] = useState([]);
+const [currentPage, setCurrentPage] = useState(1);
+const pageSize = 6;
+useEffect(() => {
+  // Update the paginated categories whenever brandcategories or currentPage changes
+  pagination(currentPage);
+}, [allproduct, currentPage]);
 
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product`,
-        {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
-          user_id: storedUserId,
-          item_id: productDetails.id,
-        }
-      );
+const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+const pages = _.range(1, pageCount + 1);
 
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
-  };
+const pagination = (pageNo) => {
+  setCurrentPage(pageNo);
+  const startIndex = (pageNo - 1) * pageSize;
+  const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+  setPaginatedCategories(paginated);
+};
+
+const [subid, setsubid] = useState("");
+const [petitemproduct, setpetitemproduct] = useState([]);
+
+const subcatid = async (id) => {
+  setsubid(id);
+  console.log("subcategoriesID", subid);
+  await axios
+    .get(`${BASE_URL}/items/product/${id}/${subid}`)
+    .then((response) => {
+      console.log(response);
+      setpetitemproduct(response.data.data);
+      setallproduct(petitemproduct)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+ 
   return (
     <>
       <Toaster />
@@ -488,10 +441,11 @@ function Petcategory() {
 
       <Container>
         <Row>
-          <Col lg={3}>
+        <Col lg={3}>
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
+                
                 <hr />
                 <div
                   onClick={() => handleParentClick("brand")}
@@ -505,39 +459,32 @@ function Petcategory() {
                   </div>
                   {brandDropdownVisible && (
                     <>
-                      {brands
-                        ? brands.map(
-                          (item) =>
-                            item.canine == "1" && (
-                              <div>
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="defaultCheck1"
-                                    checked={selectedBrand !== null}
-                                    onChange={() => {
-                                      if (selectedBrand === null) {
-                                        handleDataListBrand(allproduct[0].brand_id); // Set initial brand ID
-                                      } else {
-                                        handleClearFilter();
-                                      }
-                                    }}
-                                  />
-                                  <label
-                                    className="form-check-label"
-                                    htmlFor="defaultCheck1"
-                                  >
-                                    {item.title}
-                                  </label>
-                                </div>
-                              </div>
-                            )
-                        )
-                        : null}
+                      <div>
+                        {allbrand ? (
+                          allbrand.map((items) => (
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                        
+
+                                onClick={(e) => handleDataListBrand(items.title)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {items.title}
+                              </label>
+                            </div>
+
+                          ))
+                        ) : ""}
+                      </div>
                     </>
                   )}
                 </div>
@@ -553,10 +500,49 @@ function Petcategory() {
                     </span>
                   </div>
                   {productTypeDropdownVisible && (
+                     <>
+                     <div>
+                       {subcategories ? (
+                         subcategories.map((items) => (
+                           <div
+                             className="form-check"
+                             onClick={handleCheckboxClick}
+                           >
+                             <input
+                               className="form-check-input"
+                               type="checkbox"
+                               onClick={(e) => allsubcateselect(items.name)}
+                             />
+                             <label
+                               className="form-check-label"
+              
+                             >
+                               {items.name}
+                             </label>
+                           </div>
+
+                         ))
+                       ) : ""}
+                     </div>
+                   </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("cate")}
+                  className="main-chk"
+                >
+                  Category
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {cateDropdownVisible && (
                     <>
-                      {subcategories && subcategories.length > 0
-                        ? subcategories.map((item) => (
-                          <div>
+                      <div>
+                        {allsubcate ? (
+                          allsubcate.map((items) => (
                             <div
                               className="form-check"
                               onClick={handleCheckboxClick}
@@ -565,23 +551,26 @@ function Petcategory() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
-                                onClick={handleFilterClick}
+                        
+
+                                onClick={(e) => allcateselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
                                 htmlFor="defaultCheck1"
                               >
-                                {item.name}
+                                {items.name}
                               </label>
                             </div>
 
-                          </div>
-                        ))
-                        : null}
+                          ))
+                        ) : ""}
+                      </div>
                     </>
                   )}
                 </div>
                 <hr />
+
                 <div
                   onClick={() => handleParentClick("price")}
                   className="main-chk"
@@ -594,19 +583,24 @@ function Petcategory() {
                   </div>
                   {priceDropdownVisible && (
                     <>
-                      <div className="form-range" onClick={handleFilterClick}
-                      // onClick={handleCheckboxClick}
+                      <div>
 
-                      >
-                        <span>₹</span>
-                        <input type="number" placeholder="From" />
+                        <div className="form-range" onClick={handleCheckboxClick}>
+                          <span>₹</span>
+                          <input type="number" 
+                          placeholder="From"  onChange={minprice} />
+                        </div>
+                        <div className="form-range" onClick={handleCheckboxClick}>
+                          <span>₹</span>
+                          <input type="number"
+                             placeholder="From"  onChange={maxprice} />
+                        </div>
+                        <div className="form-range" >
+                          {/* <span>₹</span> */}
+                       <button onClick={applyprice}>Apply</button>
+                        </div>
                       </div>
-                      <div className="form-range" onClick={handleFilterClick}
-                      // onClick={handleCheckboxClick}
-                      >
-                        <span>₹</span>
-                        <input type="number" placeholder="From" />
-                      </div>
+
                     </>
                   )}
                 </div>
@@ -623,9 +617,11 @@ function Petcategory() {
                   </div>
                   {lifestageDropdownVisible && (
                     <>
-                      {lifestage && lifestage.length > 0
-                        ? lifestage.map((item) => (
-                          <div>
+                      <div>
+                        {alllifesage ? (
+                          alllifesage.map((items) => (
+
+
                             <div
                               className="form-check"
                               onClick={handleCheckboxClick}
@@ -634,25 +630,18 @@ function Petcategory() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
-                                checked={selectedBrand !== null}
-                                    onChange={() => {
-                                      if (selectedBrand === null) {
-                                        handleSelectedlifeStage(allproduct[0].lifeStage_id); // Set initial brand ID
-                                      } else {
-                                        handleClearFilterlifeStage();
-                                      }
-                                    }}
+                                onChange={(e) => Lifesatedataselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
                                 htmlFor="defaultCheck1"
                               >
-                                {item.name}
+                                {items.name}
                               </label>
                             </div>
-                          </div>
-                        ))
-                        : null}
+                          ))
+                        ) : ""}
+                      </div>
                     </>
                   )}
                 </div>
@@ -669,9 +658,11 @@ function Petcategory() {
                   </div>
                   {breedTypeDropdownVisible && (
                     <>
-                      {breed &&
-                        breed.map((item) => (
-                          <div>
+                      <div>
+                        {allbreed ? (
+                          allbreed.map((items) => (
+
+
                             <div
                               className="form-check"
                               onClick={handleCheckboxClick}
@@ -680,18 +671,18 @@ function Petcategory() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
-                                onClick={handleFilterClick}
+                                onChange={(e) => allbreedselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
                                 htmlFor="defaultCheck1"
                               >
-                                {item.name}
+                                {items.name}
                               </label>
                             </div>
-
-                          </div>
-                        ))}
+                          ))
+                        ) : ""}
+                      </div>
                     </>
                   )}
                 </div>
@@ -708,9 +699,10 @@ function Petcategory() {
                   </div>
                   {healthDropdownVisible && (
                     <>
-                      {healthcondition &&
-                        healthcondition.map((item) => (
-                          <div>
+                      <div>
+                        {allhealth ? (
+                          allhealth.map((items) => (
+
                             <div
                               className="form-check"
                               onClick={handleCheckboxClick}
@@ -719,26 +711,29 @@ function Petcategory() {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
-                                onClick={handleFilterClick}
+                                onClick={(e) => allhealthselect(items.title)}
                               />
                               <label
                                 className="form-check-label"
                                 htmlFor="defaultCheck1"
                               >
-                                {item.title}
+                                {items.title}
                               </label>
                             </div>
-                          </div>
-                        ))}
+                          ))
+                        ) : ""}
+
+                      </div>
                     </>
                   )}
                 </div>
                 <hr />
+
                 <div
                   onClick={() => handleParentClick("veg-Non-veg")}
                   className="main-chk"
                 >
-                  Veg/Non-veg
+                  Veg/Nonveg
                   <div className="i-con">
                     <span>
                       <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -755,7 +750,7 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
-                            onClick={handleFilterClick}
+                            onClick={(e)=>vegnonveghandler("1")}
                           />
                           <label
                             className="form-check-label"
@@ -772,7 +767,8 @@ function Petcategory() {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
-                            onClick={handleFilterClick}
+                            onClick={(e)=>vegnonveghandler("0")}
+
                           />
                           <label
                             className="form-check-label"
@@ -786,6 +782,9 @@ function Petcategory() {
                   )}
                 </div>
                 <hr />
+
+
+
               </div>
             </section>
           </Col>
@@ -794,7 +793,7 @@ function Petcategory() {
               <Container>
                 <div className="needplace">
                   <div className="dog-categorys-area">
-                    <ul
+                  <ul
                       className="nav nav-pills mb-3"
                       id="pills-tab"
                       role="tablist"
@@ -803,11 +802,11 @@ function Petcategory() {
                         subcategories.map((item, index) => (
                           <li className="nav-item" key={item.id}>
                             <a
-                              className={`nav-link ${item.id == id ? "active" : ""
-                                }`}
+                 className={`nav-link ${item.id == id ? "active" : ""
+                }`}
                               id="pills-home-tab"
                               data-toggle="pill"
-                              onClick={(id) => subcatid(item.id, item.name)}
+                              onClick={(e) => allsubcateselect(item.name)}
                               href="#pills-home"
                               role="tab"
                               aria-controls="pills-home"
@@ -837,58 +836,7 @@ function Petcategory() {
                         aria-labelledby="pills-home-tab"
                       >
                         <Row>
-                          {petitemproduct && petitemproduct.length > 0 ? (
-                            petitemproduct.map((item, index) => (
-                              <Col lg={4} sm={6} xs={6} className="mb-4">
-                                <div className="food-product" key={item.id}>
-                                  <i
-                                    class="fa fa-heart-o"
-                                    onClick={(id) => addToWishlist(item.id)}
-                                  />
-                                  <Link to={`/product-details/${item.id}`}>
-                                    <div className="text-center">
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in//storage/app/public/product/" +
-                                          item.image
-                                        }
-                                      />
-                                    </div>
-                                    <div>
-                                      <h6>{item.name}</h6>
-                                      <p>{item.description}</p>
-                                    </div>
-                                    <div className="product-bag">
-                                      <Row>
-                                        <Col>
-                                          <p>₹{item.price}</p>
-                                        </Col>
-                                        <Col>
-                                          <h5>{item.discount}%</h5>
-                                        </Col>
-                                      </Row>
-                                      <Row>
-                                        <Col className="align-self-center">
-                                          <h6>{`₹${item.price -
-                                            (item.price * item.discount) / 100
-                                            }`}</h6>
-                                        </Col>
-                                        <Col>
-                                          <Link to="">
-                                            <img src={bag} />
-                                          </Link>
-                                        </Col>
-                                      </Row>
-                                    </div>
-                                  </Link>
-                                </div>
-                              </Col>
-                            ))
-                          ) : (
-                            <p className="emptyMSG">
-                              No Sub Categories Product.
-                            </p>
-                          )}
+                      
                         </Row>
                       </div>
                     </div>
@@ -896,62 +844,8 @@ function Petcategory() {
                 </div>
                 <div>
                   <Row>
-                    {filteredProducts.map((item, index) => (
-                      <Col lg={4} sm={6} xs={6} className="mb-4" >
-                        <div className="food-product" key={index} style={{
-                          background:
-                            gradientColors[index % gradientColors.length],
-                        }}>
-                          <i
-                            class="fa fa-heart-o"
-                            onClick={(id) => addToWishlist(item.id)}
-                          />
-                          {/* <Link to={`/product-details/${item.id}`}> */}
-                          <div className="text-center">
-                            {/* <img
-                                        src={
-                                          "https://canine.hirectjob.in//storage/app/public/product/" +
-                                          item.image
-                                        }
-                                      /> */}
-                          </div>
-                          <div>
-                            <h6>{item.name}</h6>
-                            <p>{item.brand}</p>
-                            <p>{item.veg.toString()}</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                {/* <p>₹{product.price}</p> */}
-                              </Col>
-                              <Col>
-                                <h5>₹{item.price}</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                {/* <h6>{`₹${item.price -
-                                            (item.price * item.discount) / 100
-                                            }`}</h6> */}
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                          {/* </Link> */}
-                        </div>
-                      </Col>
-                    ))}
-                  </Row>
-                </div>
-
-                <Row>
-                  {(selectedBrand !== null ? dataList : allproduct).map((item, index) => (
-                    <Col lg={4} sm={6} xs={6} className="mb-4" key={item.id}>
+                  {paginatedCategories.map((item, index) => (
+                    <Col lg={4} sm={6} xs={6} className="mb-4">
                       <div
                         className="food-product"
                         key={item.id}
@@ -962,7 +856,7 @@ function Petcategory() {
                       >
                         <i
                           class="fa fa-heart-o"
-                          onClick={() => addToWishlist(item.id)}
+                          onClick={(id) => addToWishlist(item.id)}
                         />
                         <Link to={`/product-details/${item.id}`}>
                           <div className="text-center">
@@ -980,7 +874,7 @@ function Petcategory() {
                           <div className="product-bag">
                             <Row>
                               <Col>
-                                <p>₹{item.price}</p>
+                                <p>₹999.00</p>
                               </Col>
                               <Col>
                                 <h5>{item.discount}%</h5>
@@ -988,15 +882,10 @@ function Petcategory() {
                             </Row>
                             <Row>
                               <Col className="align-self-center">
-                                <h6>
-                                  {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                  {`₹${item.price -
-                                    (item.price * item.discount) / 100
-                                    }`}
-                                </h6>
+                                <h6>₹{item.price}</h6>
                               </Col>
                               <Col>
-                                <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                                <Link to="">
                                   <img src={bag} />
                                 </Link>
                               </Col>
@@ -1006,9 +895,32 @@ function Petcategory() {
                       </div>
                     </Col>
                   ))}
-                  {dataList.length === 0 && selectedBrand !== null && (
-                    <div>No data available for the selected brand.</div>
-                  )}
+                  </Row>
+                  <div className="pagination-area">
+                  <ul className="pagination">
+                    {pages.map((page) => (
+                      <li
+                        key={page}
+                        className={
+                          page === currentPage
+                            ? "page-item active"
+                            : "page-item"
+                        }
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => pagination(page)}
+                        >
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                </div>
+
+                <Row>
+
 
                 </Row>
 
