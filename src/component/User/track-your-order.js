@@ -1,21 +1,8 @@
 import React from "react";
 import "../../assets/css/order-tracker.css";
-import {
-  // Button,
-  MDBCard,
-  MDBCardBody,
-  MDBCardFooter,
-  MDBCardHeader,
-  MDBCardImage,
-  MDBCol,
-  MDBContainer,
-  MDBIcon,
-  MDBRow,
-  MDBTypography,
-} from "mdb-react-ui-kit";
 import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
 import { useState } from "react";
 
 export default function Trackyourorder() {
@@ -31,66 +18,66 @@ export default function Trackyourorder() {
   const steps = [1, 2, 3, 4]; // Define your steps here
 
   const handleButtonClick = () => {
-    settrankershowData(!trankershowData); 
+    settrankershowData(!trankershowData);
   };
 
-  
+
   return (
     <>
       <Newheader />
 
- 
+
       <section className="tracker-bg">
         <div className="section-padding tracker-area">
-        <Container >
-          <Row className="justify-content-center">
-            <Col lg={6}>
-             
-            <div className="tranker-search">
-            <h4>Track Your Shipment</h4>
-          <form className="d-flex">
-            <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" />
-            <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button>
-          </form>
-          </div>
-            </Col>
-          </Row>
-        </Container>
+          <Container >
+            <Row className="justify-content-center">
+              <Col lg={6}>
+
+                <div className="tranker-search">
+                  <h4>Track Your Shipment</h4>
+                  <form className="Track-Your">
+                    <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" />
+                    <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button>
+                  </form>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </div>
       </section>
       {trankershowData && (
-      <section className="" style={{ backgroundColor: "#eee" }}>
-        <MDBContainer className="py-5 h-100">
-          <MDBRow className="justify-content-center align-items-center h-100">
-            <MDBCol>
-              <MDBCard
-                className="card-stepper"
-                style={{ borderRadius: "10px" }}
-              >
-                <MDBCardBody className="p-4">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="d-flex flex-column">
-                      <span className="lead fw-normal">
-                        Your order has been delivered
-                      </span>
-                      <span className="text-muted small">
-                        by DHFL on 21 Jan, 2020
-                      </span>
+        <section className="" style={{ backgroundColor: "#eee" }}>
+          <Container className="py-5 h-100">
+            <Row className="justify-content-center align-items-center h-100">
+              <Col>
+                <Card
+                  className="card-stepper"
+                  style={{ borderRadius: "10px" }}
+                >
+                  <Card.Body className="p-4">
+                    <div className="d-flex justify-content-between align-items-center tranker-head">
+                      <div className="d-flex flex-column">
+                        <span className="lead fw-normal">
+                          Your order has been delivered
+                        </span>
+                        <span className="text-muted small">
+                          by DHFL on 21 Jan, 2020
+                        </span>
+                      </div>
+                      <div>
+                        <Button
+                          className="cancel-btn"
+                          data-toggle="modal"
+                          data-target="#cancle-order-Modal"
+                        >
+                          Cancel Order
+                        </Button>
+                      </div>
                     </div>
-                    <div>
-                      <Button
-                        className="cancel-btn"
-                        data-toggle="modal"
-                        data-target="#cancle-order-Modal"
-                      >
-                        Cancel Order
-                      </Button>
-                    </div>
-                  </div>
 
-                  <hr className="my-4" />
+                    <hr className="my-4" />
 
-                  {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
+                    {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
                                         <span className="dot"></span>
                                         <hr className="flex-fill track-line" />
                                         <span className="dot"></span>
@@ -103,69 +90,68 @@ export default function Trackyourorder() {
                                             <MDBIcon icon="check text-white" />
                                         </span>
                                     </div> */}
-                  <div id="progress">
-                    <div
-                      id="progress-bar"
-                      style={{
-                        width:
-                          ((activetraker - 1) / (steps.length - 1)) * 100 + "%",
-                      }}
-                    ></div>
-                    <ul id="progress-num">
-                      {steps.map((step, index) => (
-                        <li
-                          key={index}
-                          className={`step ${
-                            index < activetraker ? "active" : ""
-                          }`}
-                        >
-                          {step}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <div id="progress">
+                      <div
+                        id="progress-bar"
+                        style={{
+                          width:
+                            ((activetraker - 1) / (steps.length - 1)) * 100 + "%",
+                        }}
+                      ></div>
+                      <ul id="progress-num">
+                        {steps.map((step, index) => (
+                          <li
+                            key={index}
+                            className={`step ${index < activetraker ? "active" : ""
+                              }`}
+                          >
+                            {step}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                  <div className="d-flex flex-row justify-content-between align-items-center">
-                    <div className="d-flex flex-column align-items-start">
-                      <span>15 Mar</span>
-                      <span>Order placed</span>
+                    <div className="d-flex flex-row justify-content-between align-items-center tracker-content">
+                      <div className="d-flex flex-column align-items-start">
+                        <span>15 Mar</span>
+                        <span>Order placed</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-center">
+                        <span>15 Mar</span>
+                        <span>Order placed</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-center align-items-center">
+                        <span>15 Mar</span>
+                        <span>Order Dispatched</span>
+                      </div>
+                      <div className="d-flex flex-column align-items-end">
+                        <span>15 Mar</span>
+                        <span>Delivered</span>
+                      </div>
                     </div>
-                    <div className="d-flex flex-column justify-content-center">
-                      <span>15 Mar</span>
-                      <span>Order placed</span>
-                    </div>
-                    <div className="d-flex flex-column justify-content-center align-items-center">
-                      <span>15 Mar</span>
-                      <span>Order Dispatched</span>
-                    </div>
-                    <div className="d-flex flex-column align-items-end">
-                      <span>15 Mar</span>
-                      <span>Delivered</span>
-                    </div>
-                  </div>
-                  <button
-                    id="progress-prev"
-                    className="btn"
-                    disabled={activetraker === 1}
-                    onClick={handletrakerPrev}
-                  >
-                    Prev
-                  </button>
-                  <button
-                    id="progress-next"
-                    className="btn"
-                    disabled={activetraker === steps.length}
-                    onClick={handletrakerNext}
-                  >
-                    Next
-                  </button>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </section>
-       )}
+                    <button
+                      id="progress-prev"
+                      className="btn"
+                      disabled={activetraker === 1}
+                      onClick={handletrakerPrev}
+                    >
+                      Prev
+                    </button>
+                    <button
+                      id="progress-next"
+                      className="btn"
+                      disabled={activetraker === steps.length}
+                      onClick={handletrakerNext}
+                    >
+                      Next
+                    </button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      )}
       <Footer />
 
       {/* Modal */}

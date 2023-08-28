@@ -94,7 +94,7 @@ function Updateprofile() {
               <div className="contact-form">
                 <Form onSubmit={handleFormSubmit}>
                   <Row>
-                    <Col>
+                    <Col lg={6} sm={6} xs={12}>
                       <Form.Group className="mb-3" controlId="formGridEmail">
                         <Form.Label>
                           First Name<span style={{ color: "#008efd" }}>*</span>
@@ -113,7 +113,7 @@ function Updateprofile() {
                         />
                       </Form.Group>
                     </Col>
-                    <Col>
+                    <Col lg={6} sm={6} xs={12}>
                       <Form.Group className="mb-3" controlId="formGridEmail">
                         <Form.Label>
                           Last Name<span style={{ color: "#008efd" }}>*</span>

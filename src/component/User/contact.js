@@ -96,7 +96,7 @@ function Contact() {
             <section className='section-padding'>
                 <Container>
                     <Row>
-                        <Col lg={6} className="mb-4">
+                        <Col lg={6} sm={6} xs={6} className="mb-4">
                             <div className='contact-card'>
                                 <Link to="tel:0987654321">
                                     <i className="fa fa-phone " />
@@ -105,7 +105,7 @@ function Contact() {
                                 </Link>
                             </div>
                         </Col>
-                        <Col lg={6} className="mb-4">
+                        <Col lg={6} sm={6} xs={6} className="mb-4">
                             <div className='contact-card'>
                                 <i className="fa fa-envelope-o " />
                                 <Link to="mailto:info@canine.com">
@@ -114,14 +114,14 @@ function Contact() {
                                 </Link>
                             </div>
                         </Col>
-                        <Col lg={6} className="mb-4">
+                        <Col lg={6} sm={6} xs={6} className="mb-4">
                             <div className='contact-card'>
                                 <i className="fa fa-map-marker " />
                                 <h3>Address</h3>
                                 <p>Canine Products Borvali<br />(Mumbai)</p>
                             </div>
                         </Col>
-                        <Col lg={6} className="mb-4">
+                        <Col lg={6} sm={6} xs={6} className="mb-4">
                             <div className='contact-card'>
                                 <i className="fa fa-clock-o" />
                                 <h3>Open Hours</h3>
@@ -163,7 +163,7 @@ function Contact() {
                                             />
                                         </Form.Group>
                                         <Row className="mb-3">
-                                            <Col>
+                                            <Col lg={6} sm={6} xs={12}>
                                                 <Form.Label>Email</Form.Label>
                                                 <Form.Control
                                                     name="email"
@@ -172,7 +172,7 @@ function Contact() {
                                                     onChange={handleInputChange}
                                                 />
                                             </Col>
-                                            <Col>
+                                            <Col lg={6} sm={6} xs={12}>
                                                 <Form.Label>Phone no</Form.Label>
                                                 <Form.Control
                                                     name="phone"

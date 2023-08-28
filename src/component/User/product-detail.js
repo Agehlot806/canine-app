@@ -113,7 +113,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-        productDetails?.status + 0.5 >= index + 1 ? (
+          productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -160,7 +160,7 @@ function Productdetail() {
   ];
   const Amount = Math.floor(
     productDetails.price * quantity -
-      (productDetails.price * quantity * productDetails.discount) / 100
+    (productDetails.price * quantity * productDetails.discount) / 100
   ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   // const savedAmount = (
@@ -218,7 +218,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -226,7 +226,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -235,6 +235,9 @@ function Productdetail() {
     setLightboxImageIndex(productDetails.images.indexOf(mainImage));
   };
 
+  const handleVariantChange = (e) => {
+    setSelectedVariant(e.target.value);
+  };
   return (
     <>
       <Toaster />
@@ -262,7 +265,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
                             <div
@@ -295,16 +298,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex + 1) % productDetails.images.length
+                      (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                          productDetails.images.length
+                      (lightboxImageIndex +
+                        productDetails.images.length -
+                        1) %
+                      productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -313,7 +316,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                          productDetails.images.length
+                        productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -359,8 +362,7 @@ function Productdetail() {
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6} xs={6}>
-                      <div className="form-group">
-                        {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
+                      {/* <div className="form-group">
                         <select
                           className="form-control"
                           value={selectedVariant}
@@ -369,16 +371,44 @@ function Productdetail() {
                           <option>Choose....</option>
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
-                              // <a onClick={(e) => setpet_id(item)}>
                               <option>{item.type}</option>
                             ))}
                         </select>
-                        {/* {productDetails?.variations &&
-    productDetails?.variations.map((variation) => (
-      <option key={variation.type} value={variation.type}>
-        {variation.type} - ₹{variation.price} (Stock: {variation.stock})
-      </option>
-    ))} */}
+                      </div> */}
+                      <div>
+                        {/* <select
+                          className="form-control"
+                          value={selectedVariant}
+                          onChange={handleVariantChange}
+                        >
+                          <option>Choose....</option>
+                          {productDetails?.variations &&
+                            productDetails?.variations.map((item, index) => (
+                              <option key={index} value={item.type}>
+                                {item.type}
+                              </option>
+                            ))}
+                        </select> */}
+                        <div>
+                          
+                          <div className="tab-container">
+                          <h6>Variations</h6>
+                            <Row>
+                              {productDetails?.variations &&
+                                productDetails.variations.map((item, index) => (
+                                  <Col lg={3} key={index}>
+                                    <div
+                                      className={`tab-variations ${selectedVariant === item.type ? 'active' : ''}`}
+                                      onClick={() => setSelectedVariant(item.type)}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  </Col>
+                                ))}
+                            </Row>
+                          </div>
+                        </div>
+
                       </div>
                     </Col>
                     <Col sm={6} xs={6}>

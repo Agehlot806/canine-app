@@ -46,7 +46,7 @@ function Product(props) {
     allLifesageshow()
     allBreedshow()
     allHealthconditionshow();
-   
+    allsubcategary()
   }, []);
 
   const categoriesProduct = async () => {
@@ -83,6 +83,7 @@ function Product(props) {
 
 
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
+  const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -130,7 +131,10 @@ function Product(props) {
       case "groomingFeature":
         setGroomingFeatureDropdownVisible(!groomingFeatureDropdownVisible);
         break;
-      case "groomingTools":
+      case "cate":
+        setCateDropdownVisible(!cateDropdownVisible);
+        break;
+        case "groomingTools":
         setGroomingToolsDropdownVisible(!groomingToolsDropdownVisible);
         break;
       case "accessoryType":
@@ -177,30 +181,32 @@ function Product(props) {
     // Add more gradient colors as needed
   ];
 
-  // const [paginatedCategories, setPaginatedCategories] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const pageSize = 3;
-  // useEffect(() => {
-  //   // Update the paginated categories whenever brandcategories or currentPage changes
-  //   pagination(currentPage);
-  // }, [allproduct, currentPage]);
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+  useEffect(() => {
+    // Update the paginated categories whenever brandcategories or currentPage changes
+    pagination(currentPage);
+  }, [allproduct, currentPage]);
 
-  // const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
-  // const pages = _.range(1, pageCount + 1);
+  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  const pages = _.range(1, pageCount + 1);
 
-  // const pagination = (pageNo) => {
-  //   setCurrentPage(pageNo);
-  //   const startIndex = (pageNo - 1) * pageSize;
-  //   const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
-  //   setPaginatedCategories(paginated);
-  // };
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+    setPaginatedCategories(paginated);
+  };
 
   /////tarunbirla////
 
   const [allbrand, setAllBrand] = useState("")
   const [alllifesage, setAlllifesage] = useState("")
   const [allbreed, setAllBreed] = useState("")
+  const [allsubcate, setAllSubcate] = useState("")
   const [allhealth, setAllHealth] = useState("")
+
   const allBrandshow = async () => {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
@@ -233,7 +239,6 @@ function Product(props) {
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -241,6 +246,17 @@ function Product(props) {
   };
 
 
+  const allsubcategary = async () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/categories`)
+      .then((response) => {
+        console.log("responseresponse?????", response);
+        setAllSubcate(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const allHealthconditionshow = async () => {
     axios
@@ -255,59 +271,100 @@ function Product(props) {
       });
   };
 
-
-
   const [selectedBrandIds, setSelectedBrandIds] = useState([]);
   const [selectedlifeIds, setSelectedLifeIds] = useState([]);
   const [selectedbreedIds, setSelectedbreedIds] = useState([]);
+  const [selectedcateIds, setSelectedcateIds] = useState([]);
   const [selectedhealthIds, setSelectedhealthIds] = useState([]);
-  const handleDataListBrand = (brand_id) => {
-    setSelectedBrandIds((prevSelectedBrandIds) => 
-     prevSelectedBrandIds.includes(brand_id)
-        ? prevSelectedBrandIds.filter((id) => id !== brand_id)
-        : [...prevSelectedBrandIds, brand_id]
+  const [selectedvegIds, setSelectedvegIds] = useState([]);
+ 
+  const [minpricevalue, setMinpricevalue] = useState([])
+  const [maxpricevalue, setMaxpricevalue] = useState([])
+  const minprice = (e) => {
+    setMinpricevalue(e.target.value)
+  }
+  const maxprice = (e) => {
+    setMaxpricevalue(e.target.value)
+  }
 
-      );
-      filterProducts(); // Pass the updated brand IDs to filter function
+  const handleDataListBrand = (brand_id) => {
+    setSelectedBrandIds((prevSelectedBrandIds) => {
+      const updatedBrandIds = prevSelectedBrandIds.includes(brand_id)
+        ? prevSelectedBrandIds.filter((id) => id !== brand_id)
+        : [...prevSelectedBrandIds, brand_id];
+      filterProducts(updatedBrandIds); // Pass the updated brand IDs to filter function
+      return updatedBrandIds;
+    });
   };
 
   const Lifesatedataselect = (name) => {
-    setSelectedLifeIds((prevSelectedLifedIds) =>
-      prevSelectedLifedIds.includes(name)
-        ? prevSelectedLifedIds.filter((id) => id !== name)
-        : [...prevSelectedLifedIds, name]
-    );
-    filterProducts();
+    setSelectedLifeIds((prevSelectedLifeIds) => {
+      const updatedLifeIds = prevSelectedLifeIds.includes(name)
+        ? prevSelectedLifeIds.filter((id) => id !== name)
+        : [...prevSelectedLifeIds, name];
+      filterProducts(undefined, updatedLifeIds);
+      return updatedLifeIds;
+    });
   };
 
   const allbreedselect = (name) => {
-    setSelectedbreedIds((prevSelectedBreedIds) =>
-      prevSelectedBreedIds.includes(name)
+    setSelectedbreedIds((prevSelectedBreedIds) => {
+      const updatedBreedIds = prevSelectedBreedIds.includes(name)
         ? prevSelectedBreedIds.filter((id) => id !== name)
-        : [...prevSelectedBreedIds, name]
-    );
-    filterProducts();
+        : [...prevSelectedBreedIds, name];
+      filterProducts(undefined, undefined, updatedBreedIds);
+      return updatedBreedIds;
+    });
+  };
+  const allcateselect = (name) => {
+    setSelectedcateIds((prevSelectedBreedIds) => {
+      const updatedcateIds = prevSelectedBreedIds.includes(name)
+        ? prevSelectedBreedIds.filter((id) => id !== name)
+        : [...prevSelectedBreedIds, name];
+      filterProducts(undefined, undefined, undefined, updatedcateIds);
+      return updatedcateIds;
+    });
   };
 
-  const healthcoditionselect = (name) => {
-    setSelectedhealthIds((prevSelectedBreedIds) =>
-      prevSelectedBreedIds.includes(name)
-        ? prevSelectedBreedIds.filter((id) => id !== name)
-        : [...prevSelectedBreedIds, name]
-    );
-    filterProducts();
+  const allhealthselect = (name) => {
+    setSelectedhealthIds((prevSelectedhealthIds) => {
+      const updatedhealthIds = prevSelectedhealthIds.includes(name)
+        ? prevSelectedhealthIds.filter((id) => id !== name)
+        : [...prevSelectedhealthIds, name];
+      filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+      return updatedhealthIds;
+    });
   };
 
-  const filterProducts = async () => {
+  const vegnonveghandler = (value) => {
+    setSelectedvegIds((prevSelectedvegIds) => {
+      const updatedvegIds = prevSelectedvegIds.includes(value)
+        ? prevSelectedvegIds.filter((id) => id !== value)
+        : [...prevSelectedvegIds, value];
+      filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+      return updatedvegIds;
+    });
+  };
+  const applyprice = ()=>{
+    filterProducts();
+  }
 
+  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds,updatedvegIds) => {
     try {
       const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
-      const products = response.data.data; // Make sure to adapt this according to your API response
+      const products = response.data.data;
       const filteredProducts = applyFilters({
-        selectedBrands: selectedBrandIds.length ===0 ? null:selectedBrandIds,
-        selectLifeStageFilterList: selectedlifeIds.length === 0 ? null : selectedlifeIds,
-        selectBreedFilterList: selectedbreedIds.length === 0 ? null : selectedbreedIds,
-        selectHealthConditionFilterList:selectedhealthIds.length === 0 ? null :selectedhealthIds,
+        selectedBrands: updatedBrandIds || selectedBrandIds,
+        selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
+        selectBreedFilterList: updatedBreedIds || selectedbreedIds,
+        selectcate: updatedcateIds || selectedcateIds,
+        selecthealth: updatedhealthIds || selectedhealthIds,
+        selectedVegOptions:updatedvegIds|| selectedvegIds,
+        minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
+        maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
+        // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
+        // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+        // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
       console.log("/////", filteredProducts);
@@ -318,27 +375,44 @@ function Product(props) {
     }
 
   };
+
   const applyFilters = ({
     selectedBrands,
     selectLifeStageFilterList,
     selectBreedFilterList,
-    selectHealthConditionFilterList,
+    selectcate,
+    selecthealth,
+    selectedVegOptions,
+    minPrice,
+    maxPrice,
     products,
-
   }) => {
+    const selectedBrandSet = new Set(selectedBrands);
+    const selectedLifeStageSet = new Set(selectLifeStageFilterList);
+    const selectedBreedSet = new Set(selectBreedFilterList);
+    const selectedcateSet = new Set(selectcate);
+    const selectedhealthSet = new Set(selecthealth);
+    const selectedvegSet = new Set(selectedVegOptions);
+
     return products.filter(product => {
-      const brandFilter = !selectedBrands || selectedBrands.includes(product.brand_id);
-      const lifeStageFilter = !selectLifeStageFilterList || selectLifeStageFilterList.includes(product.lifeStage_id);
-      const breedFilter = !selectBreedFilterList || selectBreedFilterList.includes(product.Petsbreeds_id);
-      const healthConditionFilter = !selectHealthConditionFilterList || selectHealthConditionFilterList.includes(product.helthCondition_id);
-      return (
-        brandFilter &&
-        lifeStageFilter &&
-        healthConditionFilter &&
-        breedFilter
-      );
+      const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
+      const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
+      const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
+      const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
+      const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
+      const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
+      const price = parseFloat(product.price);  // Parse the price to a number
+      const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+      const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
+      // const price = parseFloat(product.price);  // Parse the price to a number
+      // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+      // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
+      // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
+      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter&&Filterveg&&minPriceFilter&& maxPriceFilter;
     });
   };
+
+
   return (
     <>
       <Toaster />
@@ -349,12 +423,14 @@ function Product(props) {
         </div>
       </Container>
 
+
       <Container>
         <Row>
           <Col lg={3}>
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
+                
                 <hr />
                 <div
                   onClick={() => handleParentClick("brand")}
@@ -379,13 +455,57 @@ function Product(props) {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
-                                onChange={(e) => handleDataListBrand(items.title)}
+                        
+
+                                onClick={(e) => handleDataListBrand(items.title)}
                               />
                               <label
                                 className="form-check-label"
                                 htmlFor="defaultCheck1"
                               >
                                 {items.title}
+                              </label>
+                            </div>
+
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("cate")}
+                  className="main-chk"
+                >
+                  Category
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {cateDropdownVisible && (
+                    <>
+                      <div>
+                        {allsubcate ? (
+                          allsubcate.map((items) => (
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                        
+
+                                onClick={(e) => allcateselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
+                              >
+                                {items.name}
                               </label>
                             </div>
 
@@ -414,12 +534,16 @@ function Product(props) {
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
                           <input type="number" 
-                          placeholder="From" />
+                          placeholder="From"  onChange={minprice} />
                         </div>
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
                           <input type="number"
-                             placeholder="From" />
+                             placeholder="From"  onChange={maxprice} />
+                        </div>
+                        <div className="form-range text-center" >
+                          {/* <span>₹</span> */}
+                       <button className="Apply-price" onClick={applyprice}>Apply</button>
                         </div>
                       </div>
 
@@ -533,7 +657,7 @@ function Product(props) {
                                 className="form-check-input"
                                 type="checkbox"
                                 id="defaultCheck1"
-                                onClick={(e) => healthcoditionselect(items.title)}
+                                onClick={(e) => allhealthselect(items.title)}
                               />
                               <label
                                 className="form-check-label"
@@ -555,7 +679,7 @@ function Product(props) {
                   onClick={() => handleParentClick("veg-Non-veg")}
                   className="main-chk"
                 >
-                  Veg/Non-veg
+                  Veg/Nonveg
                   <div className="i-con">
                     <span>
                       <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -572,6 +696,7 @@ function Product(props) {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={(e)=>vegnonveghandler("1")}
                           />
                           <label
                             className="form-check-label"
@@ -588,6 +713,8 @@ function Product(props) {
                             className="form-check-input"
                             type="checkbox"
                             id="defaultCheck1"
+                            onClick={(e)=>vegnonveghandler("0")}
+
                           />
                           <label
                             className="form-check-label"
@@ -651,59 +778,7 @@ function Product(props) {
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {/* {allproduct &&
-                    allproduct.map((item,index) => (
-                      <Col lg={4} sm={6} xs={6} className="mb-4">
-                        <div
-                          className="food-product"
-                          key={item.id}
-                          style={{
-                            background:
-                              gradientColors[index % gradientColors.length],
-                          }}
-                        >
-                          <i
-                            class="fa fa-heart-o"
-                            onClick={(id) => addToWishlist(item.id)}
-                          />
-                          <Link to={`/product-details/${item.id}`}>
-                            <div className="text-center">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/public/product/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <div>
-                              <h6>{item.name}</h6>
-                              <p>{item.description}</p>
-                            </div>
-                            <div className="product-bag">
-                              <Row>
-                                <Col>
-                                  <p>₹999.00</p>
-                                </Col>
-                                <Col>
-                                  <h5>{item.discount}%</h5>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col className="align-self-center">
-                                  <h6>₹{item.price}</h6>
-                                </Col>
-                                <Col>
-                                  <Link to="">
-                                    <img src={bag} />
-                                  </Link>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Link>
-                        </div>
-                      </Col>
-                    ))} */}
-                  {allproduct.map((item, index) => (
+                  {paginatedCategories.map((item, index) => (
                     <Col lg={4} sm={6} xs={6} className="mb-4">
                       <div
                         className="food-product"
@@ -756,7 +831,7 @@ function Product(props) {
                   ))}
                 </Row>
 
-                {/* <div className="pagination-area">
+                <div className="pagination-area">
                   <ul className="pagination">
                     {pages.map((page) => (
                       <li
@@ -776,31 +851,11 @@ function Product(props) {
                       </li>
                     ))}
                   </ul>
-                </div> */}
+                </div>
               </Container>
             </section>
 
-            <Container fluid className="p-0">
-              <div className="all-bg">
-                {itembannerdata ? (
-                  itembannerdata.map(
-                    (item, index) =>
-                      item.type === "item_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/banner/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                ) : (
-                  <p className="emptyMSG">No Items Banner.</p>
-                )}
-              </div>
-            </Container>
+
           </Col>
         </Row>
       </Container>
