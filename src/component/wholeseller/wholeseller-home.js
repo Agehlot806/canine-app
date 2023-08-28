@@ -721,7 +721,7 @@ function WholesellerHome(props) {
             </Col>
             <Col lg={6}>
               <div className="foodMore">
-                <Link to="/product-by-partner">See all</Link>
+                <Link to="/wholeseller-product-by-partner">See all</Link>
               </div>
             </Col>
           </Row>
@@ -730,7 +730,7 @@ function WholesellerHome(props) {
               {allVendorShop && allVendorShop.length > 0 ? (
                 allVendorShop.map((item) => (
                   <Col lg={3} sm={6} xs={6} className="mb-5">
-                    <a href="/product-by-partner">
+                    <a href="/wholeseller-product-by-partner">
                       <div className="ProductPartner-card">
                         {/* <img src={item.logo} /> */}
                         <img
@@ -747,30 +747,6 @@ function WholesellerHome(props) {
               ) : (
                 <p className="emptyMSG">No Product By Partner Data.</p>
               )}
-              {/* <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon2} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon1} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col>
-              <Col lg={3} sm={6} xs={6} className="mb-5">
-                <a href="/product-by-partner">
-                  <div className="ProductPartner-card">
-                    <img src={loicon2} />
-                    <h3 className="text-dark">Shop Name</h3>
-                  </div>
-                </a>
-              </Col> */}
             </Row>
           </div>
         </Container>

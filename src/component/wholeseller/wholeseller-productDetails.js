@@ -28,10 +28,11 @@ function WholesellerproductDetails() {
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
   console.log("vrifiredIdaccessvrifiredIdaccess", verifiredIdaccess);
   const [productDetails, setProductDetails] = useState([]);
+  // console.log("productDetailss: ", productDetails?.variations[0]?.type);
   const categoryid = productDetails.category_id;
   const itemsid = productDetails.id;
   console.log("categoryiddd: ", categoryid);
-  console.log("productDetailsssssssssss: ", productDetails);
+  // console.log("productDetailsssssssssss: ", productDetails);
   console.log(
     "productDetails.variations[0].type: ",
     productDetails?.variations?.type
@@ -47,6 +48,7 @@ function WholesellerproductDetails() {
   const [minOrder, setMinOrder] = useState(100);
   console.log("quantity: ", quantity);
   const [selectedVariant, setSelectedVariant] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
   console.log("selectedVariant: ", selectedVariant);
 
   // const handleIncrementone = () => {
@@ -91,6 +93,13 @@ function WholesellerproductDetails() {
       setQuantity(fetchedProductDetails.min_order);
     }
   }, []);
+  useEffect(() => {
+    if (productDetails?.variations && productDetails.variations.length > 0) {
+      const defaultVariant = productDetails.variations[0];
+      setSelectedVariant(defaultVariant.type);
+      setSelectedVariantPrice(defaultVariant.price);
+    }
+  }, [productDetails]);
 
   useEffect(() => {
     productData();
@@ -121,7 +130,7 @@ function WholesellerproductDetails() {
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: Amount,
+          price: formattedAmount,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
         }
@@ -226,20 +235,18 @@ function WholesellerproductDetails() {
     // Add more gradient colors as needed
   ];
   let wholesellervariationprice = 0;
+  console.log("wholesellervariationprice: ", wholesellervariationprice);
 
-  if (
-    productDetails &&
-    productDetails.variations &&
-    productDetails.variations.length > 0
-  ) {
-    wholesellervariationprice = productDetails.variations[0].price;
+  if (selectedVariantPrice !== null) {
+    wholesellervariationprice = selectedVariantPrice;
   }
-
-  const Amount = Math.floor(
-    wholesellervariationprice * quantity -
-      (wholesellervariationprice * quantity) / 100
-  ).toFixed(2);
+  const Amount = (wholesellervariationprice * quantity).toFixed(2);
+  // const Amount = (
+  //   wholesellervariationprice * quantity -
+  //   (wholesellervariationprice * quantity) / 100
+  // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+  console.log("formattedAmount: ", formattedAmount);
   // const savedAmount = (
   //   wholesellervariationprice * quantity -
   //   (wholesellervariationprice * quantity * productDetails.discount) / 100
@@ -337,14 +344,14 @@ function WholesellerproductDetails() {
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6}>
-                      <div className="form-group">
-                        {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
-                        <select
+                      {/* <div className="form-group"> */}
+                      {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
+                      {/* <select
                           className="form-control"
                           value={selectedVariant}
                           onChange={(e) => setSelectedVariant(e.target.value)}
                         >
-                          {/* <option>Choose....</option> */}
+                          // <option>Choose....</option> 
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
@@ -356,8 +363,35 @@ function WholesellerproductDetails() {
                                 {item.type}
                               </option>
                             ))}
-                        </select>
+                        </select> */}
+                      <div className="tab-container">
+                        <h6>Variations</h6>
+                        <Row>
+                          {/* {productDetails && productDetails.length > 0 ? (
+            productDetails.map((item, index) => ( */}
+                          {productDetails?.variations &&
+                            productDetails?.variations.length > 0 &&
+                            productDetails.variations.map((item, index) => (
+                              <Col lg={3} key={index}>
+                                <div
+                                  className={`tab-variations ${
+                                    selectedVariant === item.type
+                                      ? "active"
+                                      : ""
+                                  }`}
+                                  onClick={() => {
+                                    setSelectedVariant(item.type);
+                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                  }}
+                                >
+                                  {item.type}
+                                </div>
+                              </Col>
+                            ))}
+                        </Row>
                       </div>
+                      {/* </div> */}
+                      {/* </div> */}
                     </Col>
                     <Col sm={6}>
                       <div className="quantity-btn">

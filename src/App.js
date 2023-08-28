@@ -16,6 +16,7 @@ import Servicedate from "./component/User/service-date";
 import Shopbybrand from "./component/User/shop-by-brand";
 import Ourourbrand from "./component/User/our-our-brand";
 import Productbypartner from "./component/User/product-by-partner";
+import WholesellerProductbypartner from "./component/wholeseller/wholeseller-productbypartner";
 import Productpartnershop from "./component/User/product-partner-shop";
 import Ourbrand from "./component/User/our-brand";
 import Petcategory from "./component/User/pet-category";
@@ -112,6 +113,7 @@ function App() {
           <Route path="/shop-by-brand" element={<Shopbybrand />} />
           <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
           <Route path="/product-by-partner" element={<Productbypartner />} />
+
           <Route
             path="/product-partner-shop"
             element={<Productpartnershop />}
@@ -196,7 +198,10 @@ function App() {
             element={<WholesellerproductDetails />}
           />
           <Route path="/wholeseller-home" element={<WholesellerHome />} />
-
+          <Route
+            path="/wholeseller-product-by-partner"
+            element={<WholesellerProductbypartner />}
+          />
           <Route
             path="/wholeseller-add-cart/:id"
             element={<WholesellerAddCart />}
@@ -210,7 +215,7 @@ function App() {
             path="/wholeseller-shipping/:id"
             element={<WholeSellerShipping />}
           />
-<Route
+          <Route
             path="/wholeseller-paylater/:id"
             element={<WholeSellerPayLater />}
           />
