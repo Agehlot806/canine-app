@@ -4,6 +4,7 @@ import login from "../../assets/images/img/login.png";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import {Toaster, toast } from "react-hot-toast";
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -15,41 +16,43 @@ function Login() {
     const hasCapitalLetter = /[A-Z]/.test(email); // Check for capital letters
     return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) && !hasCapitalLetter;
   };
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isEmailFormatValid(email)) {
-      setIsEmailValid(false);
-      return; // Don't proceed if email is invalid
-    }
-    if (password.length < 8 || !hasSpecialCharacter) {
-      setIsPasswordValid(false);
-      return; // Don't proceed if password is invalid
-    }
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-    try {
-      const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/wholesaler_login", // Update the API endpoint
+    axios
+      .post(
+        " https://canine.hirectjob.in/api/v1/auth/wholesaler_login",
         formData
-      );
-      console.log(response.data);
-      if (response.data.status === "200") {
-        navigate("/wholeseller-dashboard");
-        localStorage.setItem("WholesellerId", response.data.data.id);
-        localStorage.setItem("WholesellerEmail", response.data.data.email);
-        localStorage.setItem("WholesellerPhone", response.data.data.phone);
-        // Successful login logic
-        // For example: navigate to a dashboard or profile page
-      }
-      // Handle other responses as needed
-    } catch (error) {
-      console.error(error);
-      // Handle error as needed
-    }
+      )
+      .then((response) => {
+        console.log("tarun", response);
+        localStorage.setItem("UserWholesellerId", response.data.data[0].id);
+        localStorage.setItem("verifiedId", response.data.data[0].verified);
+        if (response.data.message === "Login Successfull") {
+          navigate("/wholeseller-dashboard");
+          toast.success("Successfully");
+        }
+        if (response.data.message === "User Not Exit") {
+          toast.error("User Not Exit");
+        }
+        if(response.data.message === "Your Password Not Match"){
+          toast.error("Your Password Not Match");
+
+        }
+        // Handle the response as needed
+        //
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle errors if any
+      });
   };
   return (
     <>
+    <Toaster />
       <div className="users-bg">
         <Container>
           <div className="text-center">
