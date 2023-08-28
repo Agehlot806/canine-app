@@ -67,6 +67,7 @@ import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
 import WholeSellerShipping from "./component/wholeseller/wholeseller-shipping";
+import WholeSellerPayLater from "./component/wholeseller/wholeseller-paylater";
 import Returnpolicy from "./component/User/return-policy";
 import Paymentoption from "./component/User/payment-option";
 import Myorder from "./component/User/my-order";
@@ -209,7 +210,10 @@ function App() {
             path="/wholeseller-shipping/:id"
             element={<WholeSellerShipping />}
           />
-
+<Route
+            path="/wholeseller-paylater/:id"
+            element={<WholeSellerPayLater />}
+          />
           {/* Sales Man flow  */}
           <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
           <Route

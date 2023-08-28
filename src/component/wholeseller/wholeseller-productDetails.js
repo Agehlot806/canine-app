@@ -43,21 +43,54 @@ function WholesellerproductDetails() {
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails--- ", productDetails);
   // const { stars, reviews } = Productdetail;
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(100);
+  const [minOrder, setMinOrder] = useState(100);
   console.log("quantity: ", quantity);
   const [selectedVariant, setSelectedVariant] = useState([]);
   console.log("selectedVariant: ", selectedVariant);
 
-  const handleIncrementone = () => {
-    if (verifiredIdaccess === 1) {
-      setQuantity(quantity + 1);
+  // const handleIncrementone = () => {
+  //   if (verifiredIdaccess === 1) {
+  //     setQuantity(quantity + 1);
+  //   }
+  // };
+  // const handleDecrementone = () => {
+  //   if (quantity > 1) {
+  //     setQuantity(quantity - 1);
+  //   }
+  // };
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity) && newQuantity >= minOrder) {
+      setQuantity(newQuantity);
     }
   };
-  const handleDecrementone = () => {
-    if (quantity > 1) {
+
+  const handleIncrementOne = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrementOne = () => {
+    if (quantity > minOrder) {
       setQuantity(quantity - 1);
     }
   };
+  useEffect(() => {
+    const fetchedProductDetails = {
+      // Your fetched product details here
+      min_order: 105, // Simulated min_order for example
+    };
+
+    setProductDetails(fetchedProductDetails);
+
+    if (
+      fetchedProductDetails?.min_order !== null &&
+      fetchedProductDetails?.min_order > 0
+    ) {
+      setMinOrder(fetchedProductDetails.min_order);
+      setQuantity(fetchedProductDetails.min_order);
+    }
+  }, []);
 
   useEffect(() => {
     productData();
@@ -88,7 +121,7 @@ function WholesellerproductDetails() {
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price: Amount,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
         }
@@ -107,12 +140,12 @@ function WholesellerproductDetails() {
     }
   };
 
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseInt(event.target.value, 10);
-    if (!isNaN(newQuantity)) {
-      setQuantity(newQuantity);
-    }
-  };
+  // const handleQuantityChange = (event) => {
+  //   const newQuantity = parseInt(event.target.value, 10);
+  //   if (!isNaN(newQuantity)) {
+  //     setQuantity(newQuantity);
+  //   }
+  // };
   const ratingStar = Array.from({ length: 5 }, (item, index) => {
     let number = index + 0.5;
     return (
@@ -192,19 +225,30 @@ function WholesellerproductDetails() {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+  let wholesellervariationprice = 0;
+
+  if (
+    productDetails &&
+    productDetails.variations &&
+    productDetails.variations.length > 0
+  ) {
+    wholesellervariationprice = productDetails.variations[0].price;
+  }
+
   const Amount = Math.floor(
-    productDetails.price * quantity -
-      (productDetails.price * quantity * productDetails.discount) / 100
+    wholesellervariationprice * quantity -
+      (wholesellervariationprice * quantity) / 100
   ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   // const savedAmount = (
-  //   productDetails.price * quantity -
-  //   (productDetails.price * quantity * productDetails.discount) / 100
+  //   wholesellervariationprice * quantity -
+  //   (wholesellervariationprice * quantity * productDetails.discount) / 100
   // ).toFixed(2);
-  const savedAmount = Math.floor(
-    productDetails.price * quantity - Amount
-  ).toFixed(2);
-  const formattedSavedAmount = Number(savedAmount).toString();
+
+  // const savedAmount = Math.floor(
+  //   wholesellervariationprice * quantity - Amount
+  // ).toFixed(2);
+  // const formattedSavedAmount = Number(savedAmount).toString();
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -300,24 +344,24 @@ function WholesellerproductDetails() {
                           value={selectedVariant}
                           onChange={(e) => setSelectedVariant(e.target.value)}
                         >
-                          <option>Choose....</option>
+                          {/* <option>Choose....</option> */}
                           {productDetails?.variations &&
                             productDetails?.variations.map((item) => (
                               // <a onClick={(e) => setpet_id(item)}>
-                              <option>{item.type}</option>
+                              <option
+                                key={item.type}
+                                value={item.type}
+                                selected={item.type === "1kg"}
+                              >
+                                {item.type}
+                              </option>
                             ))}
                         </select>
-                        {/* {productDetails?.variations &&
-    productDetails?.variations.map((variation) => (
-      <option key={variation.type} value={variation.type}>
-        {variation.type} - ₹{variation.price} (Stock: {variation.stock})
-      </option>
-    ))} */}
                       </div>
                     </Col>
                     <Col sm={6}>
                       <div className="quantity-btn">
-                        <button onClick={handleDecrementone}>
+                        <button onClick={handleDecrementOne}>
                           <i className="fa fa-minus" />
                         </button>
                         <form>
@@ -332,7 +376,7 @@ function WholesellerproductDetails() {
                             />
                           </div>
                         </form>
-                        <button onClick={handleIncrementone}>
+                        <button onClick={handleIncrementOne}>
                           <i className="fa fa-plus" />
                         </button>
                       </div>
@@ -342,21 +386,25 @@ function WholesellerproductDetails() {
                 <div className="needplaceProduct">
                   <div className="product-deatils-price">
                     <Row>
-                      <Col lg={3}>
-                        <p>{`₹${productDetails.whole_price}`}</p>
-                        {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
-                      </Col>
+                      {/* <Col lg={3}> */}
+                      {/* <p>{`₹${productDetails.whole_price}`}</p> */}
+                      {/* <p>{`₹${wholesellervariationprice}`}</p> */}
+                      {/* {console.log(
+                          "productDetails?.variations?.price: ",
+                          productDetails?.variations?.price
+                        )} */}
+                      {/* </Col> */}
                       <Col lg={4}>
-                        <h5>{`₹${formattedAmount}`}</h5>
+                        <h5>{`₹${wholesellervariationprice}`}</h5>
                       </Col>
-                      <Col lg={5}>
+                      {/* <Col lg={5}>
                         <h6>
                           Your save
                           {formattedSavedAmount >= 0
                             ? "₹" + formattedSavedAmount
                             : "No savings"}
                         </h6>
-                      </Col>
+                      </Col> */}
                     </Row>
                   </div>
                 </div>

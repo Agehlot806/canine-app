@@ -13,6 +13,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { loadRazorpay } from "../../utils";
 import { useEffect } from "react";
 import paydone from "../../assets/images/icon/paydone.png";
+import moment from "moment";
 
 function WholesellerAddCart() {
   const { id } = useParams();
@@ -34,6 +35,13 @@ function WholesellerAddCart() {
   const redirectToShipping = () => {
     Navigate("/wholeseler-shipping");
   };
+  // ************************
+  // let wholesellervariationprice = 0;
+
+  // if (addToCartProduct && addToCartProduct.length > 0) {
+  //   wholesellervariationprice = addToCartProduct[0].whole_price;
+  // }
+
   let originalPrice = 0;
 
   const updatedPrice = originalPrice * 1.05;
@@ -64,7 +72,7 @@ function WholesellerAddCart() {
       payment_status: "confirm",
       order_status: "pending",
       total_tax_amount: 160,
-      payment_method: "online",
+      payment_method: "P",
       transaction_reference: "sadgash23asds",
       delivery_address_id: 2,
       coupon_code: "sdf42",
@@ -352,6 +360,7 @@ function WholesellerAddCart() {
   const [pincode, setpincode] = useState("");
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
+  const [paylaterMessage, setPaylaterMessage] = useState("");
 
   const handleAddAddress = (event) => {
     event.preventDefault();
@@ -482,6 +491,43 @@ function WholesellerAddCart() {
       console.error(error);
     }
   };
+
+  // paylater handel
+  //
+
+  const handlePaylater = () => {
+    const currentDate = new Date(); // Get the current date
+    const formattedDate = `${currentDate.getDate()}-${
+      currentDate.getMonth() + 1
+    }-${currentDate.getFullYear()}`; // Format as "DD-MM-YYYY"
+
+    const data = {
+      user_id: storedWholesellerId,
+      amount: parseInt(originalPrice * 0.05 + originalPrice - disscountvalue),
+      paydate: formattedDate, // Formatted current date
+    };
+
+    fetch(`${BASE_URL}/paylater_update`, {
+      method: "POST",
+      // mode: "no-cors",
+      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        setPaylaterMessage(responseData.message);
+        // toast.success("Successfully added!");
+        console.log("SuccessfullyPaylater", data);
+      })
+      .catch((error) => {
+        console.log("error failed", error);
+        // toast.error("Field is required");
+      });
+  };
+
   return (
     <>
       <Wholeheader />
@@ -1092,6 +1138,20 @@ function WholesellerAddCart() {
                     <p>Online Payment</p>
                   </div>
                 </div>
+                {/* <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      value="second"
+                      checked={selectedInput}
+                      onChange={handleRadioChange}
+                    />
+                    <p>Canine Pay Later</p>
+                    <p>₹ 100000 Available</p>
+                  </div>
+                </div> */}
                 <div className="select-card select-card3">
                   <div className="selct-card-text">
                     <input
@@ -1102,7 +1162,8 @@ function WholesellerAddCart() {
                       checked={selectedInput}
                       onChange={handleRadioChange}
                     />
-                    <p>Cash On Delivery</p>
+                    {/* <p>Cash On Delivery</p> */}
+                    <p>Canine Pay Later</p>
                   </div>
                 </div>
                 <Button
@@ -1141,7 +1202,10 @@ function WholesellerAddCart() {
                 <Button
                   data-dismiss="modal"
                   aria-label="Close"
-                  onClick={handleSendRequest}
+                  onClick={() => {
+                    handleSendRequest();
+                    handlePaylater(); // Pass the 'event' parameter here if needed
+                  }}
                 >
                   <Link to="/wholeseller-shipping">Done</Link>
                 </Button>
