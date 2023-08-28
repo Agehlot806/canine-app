@@ -454,14 +454,12 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                                id="defaultCheck1"
                         
 
                                 onClick={(e) => handleDataListBrand(items.title)}
                               />
                               <label
                                 className="form-check-label"
-                                htmlFor="defaultCheck1"
                               >
                                 {items.title}
                               </label>
@@ -496,14 +494,12 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                                id="defaultCheck1"
                         
 
                                 onClick={(e) => allcateselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
-                                htmlFor="defaultCheck1"
                               >
                                 {items.name}
                               </label>
@@ -575,12 +571,10 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                                id="defaultCheck1"
                                 onChange={(e) => Lifesatedataselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
-                                htmlFor="defaultCheck1"
                               >
                                 {items.name}
                               </label>
@@ -616,12 +610,10 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                                id="defaultCheck1"
                                 onChange={(e) => allbreedselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
-                                htmlFor="defaultCheck1"
                               >
                                 {items.name}
                               </label>
@@ -656,12 +648,10 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                                id="defaultCheck1"
                                 onClick={(e) => allhealthselect(items.title)}
                               />
                               <label
                                 className="form-check-label"
-                                htmlFor="defaultCheck1"
                               >
                                 {items.title}
                               </label>
@@ -695,12 +685,10 @@ function Product(props) {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            id="defaultCheck1"
                             onClick={(e)=>vegnonveghandler("1")}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
                           >
                             Non-Veg (219)
                           </label>
@@ -712,13 +700,11 @@ function Product(props) {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            id="defaultCheck1"
                             onClick={(e)=>vegnonveghandler("0")}
 
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="defaultCheck1"
                           >
                             Veg (73)
                           </label>
