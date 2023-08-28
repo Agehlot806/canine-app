@@ -73,6 +73,7 @@ import Myorder from "./component/User/my-order";
 import WholesellerMyorder from "./component/wholeseller/wholeseller-my-orders";
 import WholeSellerUpdateprofile from "./component/wholeseller/wholeseller-update-profile";
 import Orderviewdetails from "./component/User/order-view-details";
+import SalesmanLogin from "./component/Salesman/SalesmanLogin";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -157,7 +158,7 @@ function App() {
 
           <Route path="/otp" element={<Otp />} />
           <Route path="/partners-login" element={<Partners />} />
-          <Route path="/salesman-login" element={<Salesman />} />
+          <Route path="/salesman-signup" element={<Salesman />} />
 
           {/* Wholeseller flow  */}
           <Route
@@ -211,6 +212,7 @@ function App() {
           />
 
           {/* Sales Man flow  */}
+          <Route path="/salesman-login" element={<SalesmanLogin />} />
           <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
           <Route
             path="/salesman-add-product"

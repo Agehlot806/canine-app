@@ -36,7 +36,7 @@ function Otherlogin() {
                                         </Link>
                                     </Col>
                                     <Col lg={6} className='mb-3'>
-                                    <Link to='https://canine.hirectjob.in/deliveryman/apply'>
+                                    <Link to='/salesman-login'>
                                         <div className='otherLogin-card otherLogin3'>
                                             <img src={loicon3} />
                                             <h5>login for Salesman</h5>
