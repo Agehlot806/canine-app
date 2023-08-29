@@ -27,13 +27,13 @@ import brand3 from "../../assets/images/img/brand3.png";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import brandPro3 from "../../assets/images/img/brandPro3.png";
-import Footer from "../../directives/footer";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import loicon1 from "../../assets/images/img/loicon1.png";
 import loicon2 from "../../assets/images/img/loicon2.png";
 import aboutpage from "../../assets/images/img/aboutpage.png";
 import toast, { Toaster } from "react-hot-toast";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 const homeslider = {
   desktop: {
@@ -183,16 +183,15 @@ function WholesellerHome(props) {
   };
 
   // all venders
-  const AllVendorHomePage = () => {
-    axios
-      .get(`${BASE_URL}/vendor/all_vendor`)
-      .then((response) => {
-        console.log("vendor", response.data.data);
-        setAllVendorShop(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+  const AllVendorHomePage = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/vendor/all_vendor`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 4);
+      setAllVendorShop(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // storedWholesellerId
@@ -735,7 +734,7 @@ function WholesellerHome(props) {
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/vendor/" +
+                            "https://canine.hirectjob.in/storage/app/public/store/" +
                             item.logo
                           }
                         />
@@ -950,7 +949,7 @@ function WholesellerHome(props) {
         </Container>
       </section>
 
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

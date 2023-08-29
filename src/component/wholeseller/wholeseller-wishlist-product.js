@@ -6,7 +6,7 @@ import Wholeheader from "../../directives/wholesalesheader";
 import { BASE_URL } from "../../Constant/Index";
 import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
-import Footer from "../../directives/footer";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholesellerWishlistproduct() {
   const [wishlistData, setWishlistData] = useState([]);
@@ -141,7 +141,7 @@ function WholesellerWishlistproduct() {
         </Container>
       </section>
 
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

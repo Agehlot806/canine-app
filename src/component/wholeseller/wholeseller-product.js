@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom'
 import product1 from '../../assets/images/img/product1.png'
 import product2 from '../../assets/images/img/product2.png'
 import product3 from '../../assets/images/img/product3.png'
-import Footer from '../../directives/footer'
 import productdetail from '../../assets/images/banner/productdetail.png'
 import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
 import Wholeheader from '../../directives/wholesalesheader';
+import Wholesallerfooter from '../../directives/wholesaller-Footer';
 
 const clinetreview = {
   desktop: {
@@ -867,7 +867,7 @@ function Wholesellerproduct(props) {
 
 
 
-      <Footer />
+      <Wholesallerfooter />
     </>
   )
 }

@@ -227,7 +227,7 @@ function WholesellerSignUp() {
                         }}
                       />
                     </Form.Group>
-                    <div className="row">
+                    <div className="row mb-3">
                       <div className="col">
                         <div className="form-group">
                           <select

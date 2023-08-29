@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import shop from '../../assets/images/banner/shop.png'
-import { Link } from 'react-router-dom'
+import { Link ,useParams} from 'react-router-dom'
 import filter from '../../assets/images/icon/filter.png'
 import product1 from "../../assets/images/img/product1.png";
 import bag from "../../assets/images/icon/bag.png";
@@ -14,12 +14,16 @@ import bannerPro from "../../assets/images/img/bannerPro.png";
 
 
 function Productpartnershop() {
+    const { id } = useParams();
+    console.log("vendorlistid: ", id);
+
     const [thirdbanner, setthirdbanner] = useState([]);
+    const [vendorItemList, setVendorItemList] = useState([]);
 
     useEffect(() => {
         thirdBanner();
+        VendorItems();
     }, []);
-
 
     const thirdBanner = () => {
         axios
@@ -33,6 +37,26 @@ function Productpartnershop() {
             });
     };
 
+    const gradientColors = [
+        "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+        "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+        "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+        "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+        // Add more gradient colors as needed
+    ];
+
+    // vendor item 
+    const VendorItems = () => {
+        axios
+            .get(`${BASE_URL}/vendor/get-items-list/${id}`)
+            .then((response) => {
+                console.log("vendor", response.data.data);
+                setVendorItemList(response.data.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    };
     return (
         <>
             <Newheader />
@@ -77,460 +101,57 @@ function Productpartnershop() {
                     <Col lg={9}>
 
                         <section className='section-padding'>
-                            <Container>
-                                <Row>
-                                    <Col lg={6}>
-                                        <h1 className="main-head">Shop Name</h1>
-                                    </Col>
-                                    <Col lg={6}>
-                                        <div className='side-filter'>
-                                            <form className="form-inline my-2 my-lg-0">
-                                                <div className="left-inner-addon input-container">
-                                                    <i className="fa fa-search" />
-                                                    <input placeholder="Search" type="search" className="form-control" aria-label="Search" />
-                                                </div>
-
-                                            </form>
-
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Container>
                             <div className="needplace">
                                 <Container>
                                     <Row>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
+                                        {vendorItemList && vendorItemList.length > 0 ? (
+                                            vendorItemList.map((item, index) => (
+                                                <Col lg={4} sm={6} xs={6} className="mb-4">
+                                                    <div className="food-product"
+                                                        style={{ background: gradientColors[index % gradientColors.length], }}>
+                                                        <i class="fa fa-heart-o" />
+                                                        <Link to="/product-details">
+                                                            <div className="text-center">
+                                                                <img
+                                                                    src={
+                                                                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                                                                        item.image
+                                                                    }
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <h6>{item.name}</h6>
+                                                                <p>{item.description}</p>
+                                                            </div>
+                                                            <div className="product-bag">
+                                                                <Row>
+                                                                    <Col>
+                                                                        <p>₹{item.price}</p>
+                                                                    </Col>
+                                                                    <Col>
+                                                                        <h5>{item.discount}</h5>
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row>
+                                                                    <Col className="align-self-center">
+                                                                        <h6>{`₹${item.price -
+                                                                            (item.price * item.discount) / 100
+                                                                            }`}</h6>
+                                                                    </Col>
+                                                                    <Col>
+                                                                        <Link to="">
+                                                                            <img src={bag} />
+                                                                        </Link>
+                                                                    </Col>
+                                                                </Row>
+                                                            </div>
+                                                        </Link>
                                                     </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className="text-center">
-                                                        <img
-                                                            src={product1}
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Canine Products</h6>
-                                                        <p>Lorem Ipsum is simply dummy</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="align-self-center">
-                                                                <h6>₹620.00</h6>
-                                                            </Col>
-                                                            <Col>
-                                                                <Link to="">
-                                                                    <img src={bag} />
-                                                                </Link>
-                                                            </Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
+                                                </Col>
+                                            ))
+                                        ) : (
+                                            <p className="emptyMSG">No Product By Partner Data.</p>
+                                        )}
                                     </Row>
                                 </Container>
                             </div>

@@ -5,7 +5,6 @@ import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import Footer from "../../directives/footer";
 import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
@@ -16,6 +15,7 @@ import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholesellerproductDetails() {
   const { id } = useParams();
@@ -372,7 +372,7 @@ function WholesellerproductDetails() {
                           {productDetails?.variations &&
                             productDetails?.variations.length > 0 &&
                             productDetails.variations.map((item, index) => (
-                              <Col lg={3} key={index}>
+                              <Col lg={3} sm={3} xs={3} key={index}>
                                 <div
                                   className={`tab-variations ${
                                     selectedVariant === item.type
@@ -596,7 +596,7 @@ function WholesellerproductDetails() {
           </div>
         </Container>
       </section>
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

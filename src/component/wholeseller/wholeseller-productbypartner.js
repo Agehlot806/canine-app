@@ -10,7 +10,7 @@ import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import Footer from "../../directives/footer";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholesellerProductbypartner() {
   const { id } = useParams();
@@ -252,7 +252,7 @@ function WholesellerProductbypartner() {
           </div>
         </Container>
       </section>
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

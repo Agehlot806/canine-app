@@ -7,9 +7,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../Constant/Index';
 import brandPro1 from "../../assets/images/img/brandPro1.png";
-import Footer from '../../directives/footer';
 import cart from "../../assets/images/icon/cart.png";
 import logo from "../../assets/images/logo.png";
+import Wholesallerfooter from '../../directives/wholesaller-Footer';
 
 function WholesellerMyorder() {
    
@@ -84,7 +84,7 @@ function WholesellerMyorder() {
                     </div>
                 </Container>
             </section>
-            <Footer />
+            <Wholesallerfooter />
         </>
     )
 }

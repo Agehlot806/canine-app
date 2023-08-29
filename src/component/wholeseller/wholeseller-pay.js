@@ -5,8 +5,8 @@ import CreditCardwholeseller from '../../assets/images/img/Credit CardWholeselle
 import card from '../../assets/images/img/cards.png'
 import card1 from '../../assets/images/img/card1.png'
 import card2 from '../../assets/images/img/card2.png'
-import Footer from '../../directives/footer'
 import paydone from '../../assets/images/icon/paydone.png'
+import Wholesallerfooter from '../../directives/wholesaller-Footer';
 
 
 
@@ -56,7 +56,7 @@ function Wholesellerpay() {
                     </Row>
                 </Container>
             </section>
-            <Footer />
+            <Wholesallerfooter />
 
 
 
