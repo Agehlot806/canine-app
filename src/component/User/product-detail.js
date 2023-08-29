@@ -40,6 +40,7 @@ function Productdetail() {
   const [quantity, setQuantity] = useState(1);
   console.log("quantity: ", quantity);
   const [selectedVariant, setSelectedVariant] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
   console.log("selectedVariant: ", selectedVariant);
 
   const handleIncrementone = () => {
@@ -50,6 +51,13 @@ function Productdetail() {
       setQuantity(quantity - 1);
     }
   };
+  useEffect(() => {
+    if (productDetails?.variations && productDetails.variations.length > 0) {
+      const defaultVariant = productDetails.variations[0];
+      setSelectedVariant(defaultVariant.type);
+      setSelectedVariantPrice(defaultVariant.price);
+    }
+  }, [productDetails]);
 
   useEffect(() => {
     productData();
@@ -113,7 +121,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-          productDetails?.status + 0.5 >= index + 1 ? (
+        productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -158,9 +166,18 @@ function Productdetail() {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+  let uservariationprice = 0;
+
+  if (selectedVariantPrice !== null) {
+    uservariationprice = selectedVariantPrice;
+  }
+  // const Amount = (wholesellervariationprice * quantity).toFixed(2);
+  // const formattedAmount = Number(Amount).toString();
+  // console.log("formattedAmount: ", formattedAmount);
+
   const Amount = Math.floor(
-    productDetails.price * quantity -
-    (productDetails.price * quantity * productDetails.discount) / 100
+    uservariationprice * quantity -
+      (uservariationprice * quantity * productDetails.discount) / 100
   ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   // const savedAmount = (
@@ -218,7 +235,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -226,7 +243,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -265,9 +282,15 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
-                          <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
+                          <Col
+                            lg={2}
+                            sm={3}
+                            xs={3}
+                            className="mb-3"
+                            key={index}
+                          >
                             <div
                               className="product-item-inner"
                               onClick={() => handleThumbnailClick(index)}
@@ -298,16 +321,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex + 1) % productDetails.images.length
+                        (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex +
-                        productDetails.images.length -
-                        1) %
-                      productDetails.images.length
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -316,7 +339,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                        productDetails.images.length
+                          productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -362,44 +385,25 @@ function Productdetail() {
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6} xs={6}>
-                      {/* <div className="form-group">
-                        <select
-                          className="form-control"
-                          value={selectedVariant}
-                          onChange={(e) => setSelectedVariant(e.target.value)}
-                        >
-                          <option>Choose....</option>
-                          {productDetails?.variations &&
-                            productDetails?.variations.map((item) => (
-                              <option>{item.type}</option>
-                            ))}
-                        </select>
-                      </div> */}
                       <div>
-                        {/* <select
-                          className="form-control"
-                          value={selectedVariant}
-                          onChange={handleVariantChange}
-                        >
-                          <option>Choose....</option>
-                          {productDetails?.variations &&
-                            productDetails?.variations.map((item, index) => (
-                              <option key={index} value={item.type}>
-                                {item.type}
-                              </option>
-                            ))}
-                        </select> */}
                         <div>
-                          
                           <div className="tab-container">
-                          <h6>Variations</h6>
+                            <h6>Variations</h6>
                             <Row>
                               {productDetails?.variations &&
+                                productDetails?.variations.length > 0 &&
                                 productDetails.variations.map((item, index) => (
                                   <Col lg={3} key={index}>
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type ? 'active' : ''}`}
-                                      onClick={() => setSelectedVariant(item.type)}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
                                     >
                                       {item.type}
                                     </div>
@@ -408,7 +412,6 @@ function Productdetail() {
                             </Row>
                           </div>
                         </div>
-
                       </div>
                     </Col>
                     <Col sm={6} xs={6}>
@@ -439,7 +442,7 @@ function Productdetail() {
                   <div className="product-deatils-price">
                     <Row>
                       <Col lg={3} sm={3} xs={3}>
-                        <p>{`₹${productDetails.price}`}</p>
+                        <p>{`₹${uservariationprice}`}</p>
                         {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
                       </Col>
                       <Col lg={4} sm={4} xs={3}>
@@ -538,15 +541,14 @@ function Productdetail() {
             <hr />
           </div>
         </Container>
-      </section >
+      </section>
 
       <Container fluid className="p-0">
         <div className="product-innerBanner">{/* <img src={product} /> */}</div>
       </Container>
 
-      {
-        itemwiseonebanner
-          ? itemwiseonebanner.map(
+      {itemwiseonebanner
+        ? itemwiseonebanner.map(
             (item, index) =>
               item.type === "item_wise" && (
                 <div className="product-innerBanner">
@@ -566,8 +568,7 @@ function Productdetail() {
                 </div>
               )
           )
-          : null
-      }
+        : null}
 
       <section className="section-padding food">
         <Container>
@@ -614,11 +615,19 @@ function Productdetail() {
                             </Col>
                           </Row>
                           <Row>
-                            <Col lg={6} sm={6} xs={6} className="align-self-center">
+                            <Col
+                              lg={6}
+                              sm={6}
+                              xs={6}
+                              className="align-self-center"
+                            >
                               <h6>₹{item.price}</h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
-                              <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                              <Link
+                                to={`/add-cart/${id}`}
+                                onClick={handleAddToCart}
+                              >
                                 <img src={bag} />
                               </Link>
                             </Col>
