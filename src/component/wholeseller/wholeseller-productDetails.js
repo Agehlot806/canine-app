@@ -241,10 +241,6 @@ function WholesellerproductDetails() {
     wholesellervariationprice = selectedVariantPrice;
   }
   const Amount = (wholesellervariationprice * quantity).toFixed(2);
-  // const Amount = (
-  //   wholesellervariationprice * quantity -
-  //   (wholesellervariationprice * quantity) / 100
-  // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   console.log("formattedAmount: ", formattedAmount);
   // const savedAmount = (
@@ -344,31 +340,9 @@ function WholesellerproductDetails() {
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6}>
-                      {/* <div className="form-group"> */}
-                      {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
-                      {/* <select
-                          className="form-control"
-                          value={selectedVariant}
-                          onChange={(e) => setSelectedVariant(e.target.value)}
-                        >
-                          // <option>Choose....</option> 
-                          {productDetails?.variations &&
-                            productDetails?.variations.map((item) => (
-                              // <a onClick={(e) => setpet_id(item)}>
-                              <option
-                                key={item.type}
-                                value={item.type}
-                                selected={item.type === "1kg"}
-                              >
-                                {item.type}
-                              </option>
-                            ))}
-                        </select> */}
                       <div className="tab-container">
                         <h6>Variations</h6>
                         <Row>
-                          {/* {productDetails && productDetails.length > 0 ? (
-            productDetails.map((item, index) => ( */}
                           {productDetails?.variations &&
                             productDetails?.variations.length > 0 &&
                             productDetails.variations.map((item, index) => (
@@ -390,8 +364,6 @@ function WholesellerproductDetails() {
                             ))}
                         </Row>
                       </div>
-                      {/* </div> */}
-                      {/* </div> */}
                     </Col>
                     <Col sm={6}>
                       <div className="quantity-btn">

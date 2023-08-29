@@ -175,8 +175,14 @@ function WholesellerAddCart() {
     const updatedCart = [...addToCartProduct];
     updatedCart[index].quantity += 1;
     updatedCart[index].price +=
-      updatedCart[index].price / (updatedCart[index].quantity - 1); // Update the price per item
+      updatedCart[index].price / (updatedCart[index].quantity - 1);
+
+    const updatedSendCart = [...sendcartdata];
+    updatedSendCart[index].quantity += 1;
+    updatedSendCart[index].price = updatedCart[index].price; // Update the price in sendcartdata
+
     setAddToCartProduct(updatedCart);
+    setSandCartData(updatedSendCart); // Update sendcartdata
   };
 
   const handleDecrementone = (index) => {
@@ -185,8 +191,14 @@ function WholesellerAddCart() {
       updatedCart[index].quantity -= 1;
       updatedCart[index].price =
         updatedCart[index].price *
-        (updatedCart[index].quantity / (updatedCart[index].quantity + 1)); // Update the price
+        (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
+
+      const updatedSendCart = [...sendcartdata];
+      updatedSendCart[index].quantity -= 1;
+      updatedSendCart[index].price = updatedCart[index].price; // Update the price in sendcartdata
+
       setAddToCartProduct(updatedCart);
+      setSandCartData(updatedSendCart); // Update sendcartdata
     }
   };
   const fieldpagerefresh = () => {
