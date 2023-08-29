@@ -37,7 +37,7 @@ function Footer() {
                       <Link to="/payment-option">{strings.paymentOption}</Link>
                     </li>
                     <li>
-                      <Link to="/track-your-order">
+                      <Link to="/track-your-order/:id">
                         {strings.trackYourOrder}
                       </Link>
                     </li>

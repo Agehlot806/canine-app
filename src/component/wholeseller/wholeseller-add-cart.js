@@ -560,7 +560,7 @@ function WholesellerAddCart() {
             addToCartProduct.map((item, index) => (
               <Container>
                 <Row>
-                  <Col lg={2}>
+                  <Col lg={2} sm={2}>
                     <img
                       src={
                         "https://canine.hirectjob.in//storage/app/public/product/" +
@@ -568,11 +568,11 @@ function WholesellerAddCart() {
                       }
                     />
                   </Col>
-                  <Col lg={6} className="align-self-center">
+                  <Col lg={6} sm={6} className="align-self-center">
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
-                  <Col lg={2} className="align-self-center">
+                  <Col lg={2} sm={2} className="align-self-center">
                     <h3>₹{item.price}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
@@ -606,7 +606,7 @@ function WholesellerAddCart() {
                       </button>
                     </div>
                   </Col>
-                  <Col lg={2} className="align-self-center">
+                  <Col lg={2} sm={2} className="align-self-center">
                     <div
                       className="delete-addcard"
                       // onClick={() => removeFromCart(item.id)}
