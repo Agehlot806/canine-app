@@ -34,9 +34,11 @@ const SalesmanLogin = () => {
       .post(`${BASE_URL}/auth/delivery-man/login`, formData)
       .then((response) => {
         console.log("tarun", response);
-        if (response.data.status === 200) {
-          localStorage.setItem("salesmanId", response.data.data.id);
-          localStorage.setItem("salesmanPhone", response.data.data.phone);
+        if (response.data.status === "200") {
+          localStorage.setItem("salesmanId", response.data.data[0].id);
+          localStorage.setItem("salesmanPhone", response.data.data[0].phone);
+          localStorage.setItem("loginType", 'salesman');
+          localStorage.setItem("verifiedId", response.data.data[0].status);
           navigate("/salesman-dashboad");
           toast.success("Successfully");
         }

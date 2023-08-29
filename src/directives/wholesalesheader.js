@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 
-function Wholeheader() {
+function Wholeheader(props) {
+  const navigate = useNavigate()
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
   console.log("allproduct: ", allproduct);
   const [dogsubcategories, setdogsubcategories] = useState("");
   console.log("dogsubcategories: ", dogsubcategories);
   const [storedWholesellerId, setStoredWholesellerId] = useState(null);
+  console.log('storedWholesellerId', storedWholesellerId)
   const [categories, setcategories] = useState([]);
+  const loginType = localStorage.getItem('loginType')
 
   useEffect(() => {
     fetchBrands();
@@ -58,14 +61,18 @@ function Wholeheader() {
 
   const logoutUser = () => {
     const storedWholesellerId = Number(
-      localStorage.getItem("UserWholesellerId")
+      localStorage.getItem(loginType === 'salesman' ? "salesmanId" : "UserWholesellerId")
     );
     if (storedWholesellerId) {
       try {
         localStorage.removeItem("userInfo");
+        localStorage.removeItem('salesmanId')
         console.log("Logged out Wholeseller with ID: ", storedWholesellerId);
         setStoredWholesellerId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
+        if(loginType === 'salesman'){
+          navigate('/salesman-login',{replace: true})
+        }
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
       }
@@ -76,7 +83,7 @@ function Wholeheader() {
 
   useEffect(() => {
     const storedWholesellerId = Number(
-      localStorage.getItem("UserWholesellerId")
+      localStorage.getItem(loginType === 'salesman' ? "salesmanId" : "UserWholesellerId")
     );
     setStoredWholesellerId(storedWholesellerId);
   }, []);
@@ -124,8 +131,8 @@ function Wholeheader() {
                 </Link>
               </li> */}
               <li className="nav-item">
-                <Link className="nav-link" to="/wholeseller-home">
-                  Home
+                <Link className="nav-link" to={loginType === 'salesman' ? '/salesman-dashboad' : "/wholeseller-home"}>
+                  {loginType === 'salesman' ? 'Dashboard' : 'Home'}
                 </Link>
               </li>
               <li className="nav-item">
@@ -476,31 +483,31 @@ function Wholeheader() {
                     >
                       <Link
                         className="dropdown-item"
-                        to="/wholeseller-dashboard"
+                        to={loginType === 'salesman' ? '/salesman-dashboad/' : "/wholeseller-dashboard"}
                       >
                         Dashboard
                       </Link>
                       <Link
                         className="dropdown-item"
-                        to="/wholeseller-transition-history"
+                        to={loginType === 'salesman' ? '/salesman-dashboad/' :"/wholeseller-transition-history"}
                       >
                         Transition History
                       </Link>
                       <Link
                         className="dropdown-item"
-                        to="/wholeseller-my-orders"
+                        to={loginType === 'salesman' ? '/salesman-dashboad/' :"/wholeseller-my-orders"}
                       >
                         My Orders
                       </Link>
                       <Link
                         className="dropdown-item"
-                        to="/wholeseller-wishlist-product"
+                        to={loginType === 'salesman' ? '/salesman-dashboad/' :"/wholeseller-wishlist-product"}
                       >
                         Wishlist Products
                       </Link>
                       <Link
                         className="dropdown-item"
-                        to="/wholeseller-update-profile"
+                        to={loginType === 'salesman' ? '/salesman-dashboad/' :"/wholeseller-update-profile"}
                       >
                         Profile
                       </Link>
@@ -514,7 +521,7 @@ function Wholeheader() {
                 // Display Sign In button if user is not logged in
                 <li className="nav-item">
                   <button className="yellow-btn">
-                    <Link to="/wholeseller-login">Sign In</Link>
+                    <Link to={loginType === 'salesman' ? "/salesman-login" : "/wholeseller-login"}>Sign In</Link>
                   </button>
                 </li>
               )}
