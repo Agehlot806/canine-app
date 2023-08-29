@@ -3,22 +3,68 @@ import "../../assets/css/order-tracker.css";
 import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
+import { useParams } from "react-router-dom";
 
 export default function Trackyourorder() {
-  const [activetraker, setActivetraker] = useState(1);
+  const { id } = useParams();
+  const [trackingValue, setTrackingValue] = useState([]);
+  useEffect(() => {
+    if (id) {
+      setTrackingValue(id);
+    }
+  }, [id]);
+  const handleInputChange = (e) => {
+    setTrackingValue(e.target.value);
+  };
   const [trankershowData, settrankershowData] = useState(false);
-
-  const handletrakerNext = () => {
-    setActivetraker((prevActive) => Math.min(prevActive + 1, steps.length));
+  const [steps, setSteps] = useState([
+    'Pending',
+    'Confirmed',
+    'Processing',
+    'Handover',
+    'Picked Up',
+    'Delivered'
+  ]);
+  const [orderData, setOrderData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const trackingtargetvaluenumber = () => {
+    // Fetch order data from an API endpoint
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/tracking/${trackingValue}`)
+      .then(response => response.json())
+      .then(data => {
+        setOrderData(data.data[0]);
+        setIsLoading(false);
+        settrankershowData(!trankershowData)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      });
   };
-  const handletrakerPrev = () => {
-    setActivetraker((prevActive) => Math.max(prevActive - 1, 1));
+  const getCurrentStepIndex = () => {
+    if (orderData.delivered_status === 'delivered') {
+      return steps.length;
+    }
+    else if (orderData.picked_up && new Date(orderData.picked_up) <= new Date()) {
+      return 5; // Delivered
+    }
+    else if (orderData.handover && new Date(orderData.handover) <= new Date()) {
+      return 4; // Picked Up
+    }
+    else if (orderData.processing && new Date(orderData.processing) <= new Date()) {
+      return 3; // Handover
+    }
+    else if (orderData.confirmed && new Date(orderData.confirmed) <= new Date()) {
+      return 2; // Processing
+    }
+    else if (orderData.pending && new Date(orderData.pending) <= new Date()) {
+      return 1; // Confirmed
+    } else {
+      return 0; // Pending
+    }
   };
-  const steps = [1, 2, 3, 4]; // Define your steps here
-
   const handleButtonClick = () => {
-    settrankershowData(!trankershowData);
   };
 
 
@@ -35,9 +81,11 @@ export default function Trackyourorder() {
 
                 <div className="tranker-search">
                   <h4>Track Your Shipment</h4>
-                  <form className="Track-Your">
-                    <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" />
-                    <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button>
+                  <form className="d-flex">
+                    <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" value={trackingValue}
+                      onChange={handleInputChange} />
+                    <button type="button" className="btn" onClick={trackingtargetvaluenumber}>Track</button>
+                    {/* <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button> */}
                   </form>
                 </div>
               </Col>
@@ -90,61 +138,51 @@ export default function Trackyourorder() {
                                             <MDBIcon icon="check text-white" />
                                         </span>
                                     </div> */}
-                    <div id="progress">
+                   <div id="progress">
                       <div
                         id="progress-bar"
                         style={{
-                          width:
-                            ((activetraker - 1) / (steps.length - 1)) * 100 + "%",
+                          width: (getCurrentStepIndex() - 1) / (steps.length - 1) * 100 + '%',
+                          backgroundColor: 'blue',
                         }}
                       ></div>
                       <ul id="progress-num">
                         {steps.map((step, index) => (
                           <li
                             key={index}
-                            className={`step ${index < activetraker ? "active" : ""
-                              }`}
+                            className={`step ${index === 0 ? 'active' : ''} ${index < getCurrentStepIndex() ? 'active' : ''}`}
                           >
-                            {step}
+                            {/* {step} */}
                           </li>
                         ))}
                       </ul>
                     </div>
-
                     <div className="d-flex flex-row justify-content-between align-items-center tracker-content">
-                      <div className="d-flex flex-column align-items-start">
-                        <span>15 Mar</span>
-                        <span>Order placed</span>
-                      </div>
-                      <div className="d-flex flex-column justify-content-center">
-                        <span>15 Mar</span>
-                        <span>Order placed</span>
-                      </div>
-                      <div className="d-flex flex-column justify-content-center align-items-center">
-                        <span>15 Mar</span>
-                        <span>Order Dispatched</span>
-                      </div>
-                      <div className="d-flex flex-column align-items-end">
-                        <span>15 Mar</span>
-                        <span>Delivered</span>
-                      </div>
+                      {isLoading ? (
+                        <p>Loading...</p>
+                      ) : (
+                        steps.map((step, index) => (
+                          <div
+                            key={index}
+                            className={`d-flex flex-column ${index === getCurrentStepIndex() - 1 ? 'align-items-center' : 'align-items-' +
+                              (index < getCurrentStepIndex() - 1 ? 'start' : 'end')
+                              }`}
+                          >
+                            {step === 'Picked Up' && orderData.picked_up ? (
+                              <span>{orderData.picked_up} - Picked Up</span>
+                            ) : (
+                              <span>{orderData[step.toLowerCase()]} - {step}</span>
+                            )}
+                          </div>
+                        ))
+                      )}
                     </div>
-                    <button
-                      id="progress-prev"
-                      className="btn"
-                      disabled={activetraker === 1}
-                      onClick={handletrakerPrev}
-                    >
-                      Prev
-                    </button>
-                    <button
-                      id="progress-next"
-                      className="btn"
-                      disabled={activetraker === steps.length}
-                      onClick={handletrakerNext}
-                    >
-                      Next
-                    </button>
+
+
+
+
+
+
                   </Card.Body>
                 </Card>
               </Col>
