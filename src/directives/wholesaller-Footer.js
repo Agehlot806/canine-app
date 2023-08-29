@@ -12,7 +12,7 @@ import {
 } from "react-icons/bi";
 import WhatsAppWidget from "../chatwhatsapp";
 
-function Footer() {
+function Wholesallerfooter() {
   return (
     <>
       <footer className="footer-bg">
@@ -24,28 +24,28 @@ function Footer() {
                   <h5>{strings.usefulLinks}</h5>
                   <ul>
                     <li>
-                      <Link to="/delivery-details">
+                      <Link to="/wholesallerdeliverydetails">
                         {strings.deliveryDeatils}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/international-shipping">
+                      <Link to="/wholesallerinternationalshipping">
                         {strings.internationalShipping}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/payment-option">{strings.paymentOption}</Link>
+                      <Link to="/wholesallerpaymentoptionfooter">{strings.paymentOption}</Link>
                     </li>
                     <li>
-                      <Link to="/track-your-order/:id">
+                      <Link to="/wholesallertrackyourorde">
                         {strings.trackYourOrder}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/return-policy">Return Policy</Link>
+                      <Link to="/wholesallerreturnpolicy">Return Policy</Link>
                     </li>
                     <li>
-                      <Link to="/find-a-Store">{strings.findaStore}</Link>
+                      <Link to="/wholesallerfindastore">{strings.findaStore}</Link>
                     </li>
                   </ul>
                 </div>
@@ -55,22 +55,16 @@ function Footer() {
                   <h5>Information</h5>
                   <ul>
                     <li>
-                      <Link to="/about-us">AboutUs</Link>
+                      <Link to="/wholesalleraboutus">AboutUs</Link>
                     </li>
                     <li>
-                      <Link to="/offers-details">{strings.offersDetails}</Link>
+                      <Link to="/wholesallerhelpandfaqs">{strings.helpandFAQs}</Link>
                     </li>
                     <li>
-                      <Link to="/help-faqs">{strings.helpandFAQs}</Link>
+                      <Link to="">Products</Link>
                     </li>
                     <li>
-                      <Link to="/service">Our Services</Link>
-                    </li>
-                    <li>
-                      <Link to="/product">Products</Link>
-                    </li>
-                    <li>
-                      <Link to="/blog">{strings.blog}</Link>
+                      <Link to="">{strings.blog}</Link>
                     </li>
                   </ul>
                 </div>
@@ -135,4 +129,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Wholesallerfooter;

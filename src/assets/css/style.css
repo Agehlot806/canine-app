@@ -3068,3 +3068,12 @@ button.Apply-price {
   padding: 5px;
   border-radius: 6px;
 }
+
+.partner-oneshop table tbody tr th {
+    font-size: 19px;
+    font-weight: 600;
+}
+.partner-oneshop table tbody tr td {
+  font-size: 18px;
+  color: #737373;
+}

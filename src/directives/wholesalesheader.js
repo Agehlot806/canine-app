@@ -118,11 +118,11 @@ function Wholeheader() {
           </button>
           <div className="collapse navbar-collapse" id="megaMenu">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/wholeseller-dashboard">
                   Dashboard
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link className="nav-link" to="/wholeseller-home">
                   Home
@@ -474,22 +474,18 @@ function Wholeheader() {
                       className="dropdown-menu"
                       aria-labelledby="navbarDropdown"
                     >
-                      
+                      <Link
+                        className="dropdown-item"
+                        to="/wholeseller-dashboard"
+                      >
+                        Dashboard
+                      </Link>
                       <Link
                         className="dropdown-item"
                         to="/wholeseller-transition-history"
                       >
                         Transition History
                       </Link>
-                      {/* <Link className="dropdown-item" to={`/pet-profile/`}>
-                        Pet Profile
-                      </Link> */}
-                      {/* <Link className="dropdown-item" to="/all-veterinary">
-                        All Veterinary
-                      </Link> */}
-                      {/* <Link className="dropdown-item" to="/all-service-booking">
-                        All Service Booking
-                      </Link> */}
                       <Link
                         className="dropdown-item"
                         to="/wholeseller-my-orders"

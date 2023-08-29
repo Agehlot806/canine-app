@@ -1,15 +1,13 @@
 import React from "react";
-import Wholeheader from "../../directives/wholesalesheader";
+import Newheader from "../../directives/newheader";
 import cart from "../../assets/images/icon/cart.png";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
-const WholesellerTransitionHistory = () => {
+const Wholesallerinternationalshipping = () => {
   return (
     <>
-      <Wholeheader />
-
-      {/* --------------section-------------------- */}
-
+      {" "}
+      <Newheader />
       <section className="section-padding">
         <div className="Emptycart">
           <div class="d-flex justify-content-around">
@@ -20,9 +18,9 @@ const WholesellerTransitionHistory = () => {
           </div>
         </div>
       </section>
-      {/* --------------footer-------------------- */}
       <Wholesallerfooter />
     </>
   );
 };
-export default WholesellerTransitionHistory;
+
+export default Wholesallerinternationalshipping;

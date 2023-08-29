@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
-import Footer from "../../directives/footer";
 // import { Link, useParams } from 'react-router-dom'
 import cart from "../../assets/images/icon/cart1.png";
 import Wholeheader from "../../directives/wholesalesheader";
@@ -14,6 +13,7 @@ import { loadRazorpay } from "../../utils";
 import { useEffect } from "react";
 import paydone from "../../assets/images/icon/paydone.png";
 import moment from "moment";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholesellerAddCart() {
   const { id } = useParams();
@@ -175,8 +175,17 @@ function WholesellerAddCart() {
     const updatedCart = [...addToCartProduct];
     updatedCart[index].quantity += 1;
     updatedCart[index].price +=
-      updatedCart[index].price / (updatedCart[index].quantity - 1); // Update the price per item
+      updatedCart[index].price / (updatedCart[index].quantity - 1);
+
+    const updatedSendCart = [...sendcartdata];
+    updatedSendCart[index].quantity += 1;
+
+    // Calculate the new price with tax included
+    const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+    updatedSendCart[index].price = priceWithTax;
+
     setAddToCartProduct(updatedCart);
+    setSandCartData(updatedSendCart); // Update sendcartdata
   };
 
   const handleDecrementone = (index) => {
@@ -185,8 +194,17 @@ function WholesellerAddCart() {
       updatedCart[index].quantity -= 1;
       updatedCart[index].price =
         updatedCart[index].price *
-        (updatedCart[index].quantity / (updatedCart[index].quantity + 1)); // Update the price
+        (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
+
+      const updatedSendCart = [...sendcartdata];
+      updatedSendCart[index].quantity -= 1;
+
+      // Calculate the new price with tax included
+      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      updatedSendCart[index].price = priceWithTax;
+
       setAddToCartProduct(updatedCart);
+      setSandCartData(updatedSendCart); // Update sendcartdata
     }
   };
   const fieldpagerefresh = () => {
@@ -542,7 +560,7 @@ function WholesellerAddCart() {
             addToCartProduct.map((item, index) => (
               <Container>
                 <Row>
-                  <Col lg={2}>
+                  <Col lg={2} sm={2}>
                     <img
                       src={
                         "https://canine.hirectjob.in//storage/app/public/product/" +
@@ -550,11 +568,11 @@ function WholesellerAddCart() {
                       }
                     />
                   </Col>
-                  <Col lg={6} className="align-self-center">
+                  <Col lg={6} sm={6} className="align-self-center">
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
-                  <Col lg={2} className="align-self-center">
+                  <Col lg={2} sm={2} className="align-self-center">
                     <h3>₹{item.price}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
@@ -588,7 +606,7 @@ function WholesellerAddCart() {
                       </button>
                     </div>
                   </Col>
-                  <Col lg={2} className="align-self-center">
+                  <Col lg={2} sm={2} className="align-self-center">
                     <div
                       className="delete-addcard"
                       // onClick={() => removeFromCart(item.id)}
@@ -738,7 +756,7 @@ function WholesellerAddCart() {
                   <h3>Address</h3>
                   <div className="address-card">
                     {console.log("addresslist", addresslist)}
-                    {addresslist && addresslist.length > 1 ? (
+                    {addresslist && addresslist.length > 0 ? (
                       addresslist.map(
                         (item, index) =>
                           index === 0 && (
@@ -921,7 +939,7 @@ function WholesellerAddCart() {
         </div>
       </section>
 
-      <Footer />
+      <Wholesallerfooter />
       {/* Modal add address */}
       <div
         className="modal fade editAddress"

@@ -5,7 +5,6 @@ import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import Footer from "../../directives/footer";
 import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
@@ -16,6 +15,7 @@ import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholesellerproductDetails() {
   const { id } = useParams();
@@ -241,10 +241,6 @@ function WholesellerproductDetails() {
     wholesellervariationprice = selectedVariantPrice;
   }
   const Amount = (wholesellervariationprice * quantity).toFixed(2);
-  // const Amount = (
-  //   wholesellervariationprice * quantity -
-  //   (wholesellervariationprice * quantity) / 100
-  // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   console.log("formattedAmount: ", formattedAmount);
   // const savedAmount = (
@@ -344,35 +340,13 @@ function WholesellerproductDetails() {
                 <div className="needplaceProduct">
                   <Row>
                     <Col sm={6}>
-                      {/* <div className="form-group"> */}
-                      {/* <p>{`₹${productDetails.choice_options.name}`}</p> */}
-                      {/* <select
-                          className="form-control"
-                          value={selectedVariant}
-                          onChange={(e) => setSelectedVariant(e.target.value)}
-                        >
-                          // <option>Choose....</option> 
-                          {productDetails?.variations &&
-                            productDetails?.variations.map((item) => (
-                              // <a onClick={(e) => setpet_id(item)}>
-                              <option
-                                key={item.type}
-                                value={item.type}
-                                selected={item.type === "1kg"}
-                              >
-                                {item.type}
-                              </option>
-                            ))}
-                        </select> */}
                       <div className="tab-container">
                         <h6>Variations</h6>
                         <Row>
-                          {/* {productDetails && productDetails.length > 0 ? (
-            productDetails.map((item, index) => ( */}
                           {productDetails?.variations &&
                             productDetails?.variations.length > 0 &&
                             productDetails.variations.map((item, index) => (
-                              <Col lg={3} key={index}>
+                              <Col lg={3} sm={3} xs={3} key={index}>
                                 <div
                                   className={`tab-variations ${
                                     selectedVariant === item.type
@@ -390,8 +364,6 @@ function WholesellerproductDetails() {
                             ))}
                         </Row>
                       </div>
-                      {/* </div> */}
-                      {/* </div> */}
                     </Col>
                     <Col sm={6}>
                       <div className="quantity-btn">
@@ -596,7 +568,7 @@ function WholesellerproductDetails() {
           </div>
         </Container>
       </section>
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

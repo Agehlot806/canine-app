@@ -95,7 +95,7 @@ function Newheader(props) {
     <>
       <Toaster />
       <nav className="navbar navbar-expand-lg navbar-light newheader">
-        <div className="container-fluid">
+        <div className="container">
           <a className="navbar-brand" href="#">
             {" "}
             <Link

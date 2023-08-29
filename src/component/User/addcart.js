@@ -81,7 +81,7 @@ function Addcart() {
 
   let originalPrice = 0;
 
-  const updatedPrice = originalPrice * 1.05;
+  const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
     let allPrice = parseInt(el.price) + parseInt(originalPrice);
@@ -102,8 +102,17 @@ function Addcart() {
     const updatedCart = [...addToCartProduct];
     updatedCart[index].quantity += 1;
     updatedCart[index].price +=
-      updatedCart[index].price / (updatedCart[index].quantity - 1); // Update the price per item
+      updatedCart[index].price / (updatedCart[index].quantity - 1);
+
+    const updatedSendCart = [...sendcartdata];
+    updatedSendCart[index].quantity += 1;
+
+    // Calculate the new price with tax included
+    const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+    updatedSendCart[index].price = priceWithTax;
+
     setAddToCartProduct(updatedCart);
+    setSandCartData(updatedSendCart); // Update sendcartdata
   };
 
   const handleDecrementone = (index) => {
@@ -112,10 +121,20 @@ function Addcart() {
       updatedCart[index].quantity -= 1;
       updatedCart[index].price =
         updatedCart[index].price *
-        (updatedCart[index].quantity / (updatedCart[index].quantity + 1)); // Update the price
+        (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
+
+      const updatedSendCart = [...sendcartdata];
+      updatedSendCart[index].quantity -= 1;
+
+      // Calculate the new price with tax included
+      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      updatedSendCart[index].price = priceWithTax;
+
       setAddToCartProduct(updatedCart);
+      setSandCartData(updatedSendCart); // Update sendcartdata
     }
   };
+
   const fieldpagerefresh = () => {
     window.location.reload(false);
   };
@@ -127,22 +146,11 @@ function Addcart() {
     allAddressList();
   }, []);
 
-  // useEffect(() => {
-  //   setAddToCartProduct(cartItemsRef.current);
-  // }, [cartItemsRef]);
   const [sendcartdata, setSandCartData] = useState([]);
 
   const addToCartData = async () => {
     axios
       .get(`${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`, {
-        // id: id, // Replace this with the correct product_id you want to add
-        // user_id: storedUserId,
-        // price: price,
-        // quantity: quantity,
-        // image: image,
-        // item_id: item_id,
-        // item_name: item_name,
-        // variant: variant,
         params: {
           id: id, // Replace this with the correct product_id you want to add
           quantity: quantity,
@@ -318,39 +326,28 @@ function Addcart() {
   };
 
   // order placed
-  const handleCheckOut = async () => {
-    try {
-      const response = await axios.post(`${BASE_URL}/customer/order/place`, {
-        user_id: storedUserId,
-        image: productDetails.image,
-        quantity: productDetails.quantity,
-        price: productDetails.price,
-        user_id: storedUserId,
-        item_id: productDetails.id,
-      });
+  // const handleCheckOut = async () => {
+  //   try {
+  //     const response = await axios.post(`${BASE_URL}/customer/order/place`, {
+  //       user_id: storedUserId,
+  //       image: productDetails.image,
+  //       quantity: productDetails.quantity,
+  //       price: productDetails.price,
+  //       user_id: storedUserId,
+  //       item_id: productDetails.id,
+  //     });
 
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
-  };
-
-  // const [addressContentVisible, setAddressContentVisible] = useState(false);
-  // const toggleAddressContent = () => {
-  //   setAddressContentVisible(!addressContentVisible);
-  // };
-
-  // const [selectedAddress, setSelectedAddress] = useState(null);
-
-  // const handleAddressClick = (index) => {
-  //   setSelectedAddress(addresslist[index]);
+  //     if (response.data.success) {
+  //       const updatedCart = [...addToCartStatus, productDetails];
+  //       setAddToCartStatus(updatedCart);
+  //       // setAddToCartStatus("Added to cart!");
+  //       toast.success("Added to cart!");
+  //       // Navigate("/addcart")
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding to cart:", error);
+  //     setAddToCartStatus("Error adding to cart");
+  //   }
   // };
 
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -488,42 +485,37 @@ function Addcart() {
     localStorage.setItem("disconut", dis);
     console.log("disccount?????", dis);
   };
-  const [first_nameError, setFirst_nameError] = useState('');
-  
-  const [last_nameError, setLast_nameError] = useState('');
-  
-  const [mobileError, setMobileError] = useState('');
- 
-  const [house_noError,setHouse_noError] = useState ("")
- 
-  const [areaError,setAreaError] = useState("")
- 
-  const [landmarkError,setLandmarkError] = useState("")
- 
-  const [pincodeError,setPincodeError] = useState("")
+  const [first_nameError, setFirst_nameError] = useState("");
 
-  const [stateError,setStateError] = useState("")
+  const [last_nameError, setLast_nameError] = useState("");
 
-  const [cityError,setCityError] = useState("")
- 
+  const [mobileError, setMobileError] = useState("");
+
+  const [house_noError, setHouse_noError] = useState("");
+
+  const [areaError, setAreaError] = useState("");
+
+  const [landmarkError, setLandmarkError] = useState("");
+
+  const [pincodeError, setPincodeError] = useState("");
+
+  const [stateError, setStateError] = useState("");
+
+  const [cityError, setCityError] = useState("");
+
   const [isFormValid, setIsFormValid] = useState(false);
-  
-  
-  
-  
-  
-  
+
   const validateForm = () => {
     if (
-      first_name.trim() === '' ||
-      last_name.trim() === '' ||
-      mobile.trim() === '' ||
-      house_no.trim() === '' ||
-      area.trim() === '' ||
-      landmark.trim() === '' ||
-      state.trim() === '' ||
-      selectedCity.trim() === '' ||
-      pincode.trim() === ''
+      first_name.trim() === "" ||
+      last_name.trim() === "" ||
+      mobile.trim() === "" ||
+      house_no.trim() === "" ||
+      area.trim() === "" ||
+      landmark.trim() === "" ||
+      state.trim() === "" ||
+      selectedCity.trim() === "" ||
+      pincode.trim() === ""
     ) {
       setIsFormValid(false);
     } else {
@@ -554,22 +546,23 @@ function Addcart() {
                       }
                     />
                   </Col>
-                  <Col lg={6} sm={5} xs={4} className="align-self-center addCARThead">
+                  <Col
+                    lg={6}
+                    sm={5}
+                    xs={4}
+                    className="align-self-center addCARThead"
+                  >
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
-                  <Col lg={2} sm={3} xs={4} className="align-self-center addCARThead">
+                  <Col
+                    lg={2}
+                    sm={3}
+                    xs={4}
+                    className="align-self-center addCARThead"
+                  >
                     <h3>₹{item.price}</h3>
-                    {/* <div className="quantity-btn">
-                      <button onClick={handleIncrementone}>
-                        <i className="fa fa-minus" />
-                      </button>
-                      <span>{item.quantity}</span>
 
-                      <button onClick={handleDecrementone}>
-                        <i className="fa fa-plus" />
-                      </button>
-                    </div> */}
                     <div className="quantity-btn">
                       <button onClick={() => handleDecrementone(index)}>
                         <i className="fa fa-minus" />
@@ -580,7 +573,6 @@ function Addcart() {
                             type="tel"
                             className="form-control"
                             placeholder="Quantity"
-                            // value={itemQuantities[item.id] || 1}
                             value={item.quantity}
                             onChange={handleQuantityChange}
                             autoComplete="new-number"
@@ -1037,18 +1029,18 @@ function Addcart() {
                   type="text"
                   value={first_name}
                   onChange={(e) => {
-                    setfirst_name(e.target.value)
+                    setfirst_name(e.target.value);
                     validateForm();
                   }}
                   onBlur={() => {
-                    if (first_name.trim() === '') {
-                      setFirst_nameError('First Name is required');
+                    if (first_name.trim() === "") {
+                      setFirst_nameError("First Name is required");
                     } else {
-                      setFirst_nameError('');
+                      setFirst_nameError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{first_nameError}</span>
+                <span style={{ color: "red" }}>{first_nameError}</span>
               </div>
               <div class="form-group">
                 <label>Last Name</label>
@@ -1056,18 +1048,19 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={last_name}
-                  onChange={(e) => {setlast_name(e.target.value)
+                  onChange={(e) => {
+                    setlast_name(e.target.value);
                     validateForm();
                   }}
-                  onBlur={()=>{
-                    if(last_name.trim() === ''){
-                      setLast_nameError('Last Name is required');
-                    }else{
-                      setLast_nameError('');
+                  onBlur={() => {
+                    if (last_name.trim() === "") {
+                      setLast_nameError("Last Name is required");
+                    } else {
+                      setLast_nameError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{last_nameError}</span>
+                <span style={{ color: "red" }}>{last_nameError}</span>
               </div>
               <div class="form-group">
                 <label>Mobile</label>
@@ -1077,22 +1070,23 @@ function Addcart() {
                   class="form-control"
                   maxLength={10}
                   value={mobile}
-                  onChange={(e) =>{ setmobile(e.target.value)
+                  onChange={(e) => {
+                    setmobile(e.target.value);
                     validateForm();
                     const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric character
                     if (numericValue.length <= 10) {
                       setmobile(numericValue);
                     }
                   }}
-                  onBlur={()=>{
-                    if(mobile.trim() === ''){
-                      setMobileError('Mobile Number is required')
-                    }else{
-                      setMobileError('')
+                  onBlur={() => {
+                    if (mobile.trim() === "") {
+                      setMobileError("Mobile Number is required");
+                    } else {
+                      setMobileError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{mobileError}</span>
+                <span style={{ color: "red" }}>{mobileError}</span>
               </div>
               <div class="form-group">
                 <label>flat,House no,Building,Company</label>
@@ -1100,18 +1094,21 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={house_no}
-                  onChange={(e) => {sethouse_no(e.target.value)
+                  onChange={(e) => {
+                    sethouse_no(e.target.value);
                     validateForm();
                   }}
-                  onBlur={()=>{
-                    if(house_no.trim() === ''){
-                      setHouse_noError('House no, flat, Building, Company Number is required')
-                    }else{
-                      setHouse_noError('')
+                  onBlur={() => {
+                    if (house_no.trim() === "") {
+                      setHouse_noError(
+                        "House no, flat, Building, Company Number is required"
+                      );
+                    } else {
+                      setHouse_noError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{house_noError}</span>
+                <span style={{ color: "red" }}>{house_noError}</span>
               </div>
               <div class="form-group">
                 <label>Area, Street,Sector,Village</label>
@@ -1119,18 +1116,19 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={area}
-                  onChange={(e) => {setarea(e.target.value)
+                  onChange={(e) => {
+                    setarea(e.target.value);
                     validateForm();
                   }}
-                  onBlur={()=>{
-                    if(area.trim() === ''){
-                      setAreaError('Area, Street, Sector, Village is required')
-                    }else{
-                      setAreaError('')
+                  onBlur={() => {
+                    if (area.trim() === "") {
+                      setAreaError("Area, Street, Sector, Village is required");
+                    } else {
+                      setAreaError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{areaError}</span>
+                <span style={{ color: "red" }}>{areaError}</span>
               </div>
               <div class="form-group">
                 <label>Landmark</label>
@@ -1138,18 +1136,19 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={landmark}
-                  onChange={(e) => {setlandmark(e.target.value)
+                  onChange={(e) => {
+                    setlandmark(e.target.value);
                     validateForm();
                   }}
-                  onBlur={()=>{
-                    if(landmark.trim() === ''){
-                      setLandmarkError('Landmark is required')
-                    }else{
-                      setLandmarkError('')
+                  onBlur={() => {
+                    if (landmark.trim() === "") {
+                      setLandmarkError("Landmark is required");
+                    } else {
+                      setLandmarkError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{landmarkError}</span>
+                <span style={{ color: "red" }}>{landmarkError}</span>
               </div>
               <div className="row">
                 <div className="col">
@@ -1159,17 +1158,17 @@ function Addcart() {
                       className="form-control"
                       onChange={Subscription}
                       value={state}
-                      onInput={(e) => {setstate(e.target.value)
+                      onInput={(e) => {
+                        setstate(e.target.value);
                         validateForm();
                       }}
                       onBlur={() => {
-                        if (state.trim() === '') {
-                          setStateError('State is required');
+                        if (state.trim() === "") {
+                          setStateError("State is required");
                         } else {
-                          setStateError('');
+                          setStateError("");
                         }
                       }}
-                      
                     >
                       <option>State Choose...</option>
                       {stateall.map((items) => (
@@ -1178,7 +1177,7 @@ function Addcart() {
                         </option>
                       ))}
                     </select>
-                    <span style={{ color: 'red' }}>{stateError}</span>
+                    <span style={{ color: "red" }}>{stateError}</span>
                   </div>
                 </div>
                 <div className="col">
@@ -1188,14 +1187,15 @@ function Addcart() {
                       className="form-control"
                       onInput={(e) => setSelectedCity(e.target.value)}
                       value={selectedCity}
-                      onChange={(e) => {setcity(e.target.value)
+                      onChange={(e) => {
+                        setcity(e.target.value);
                         validateForm();
                       }}
-                      onBlur={()=>{
-                        if(city.trim() === ''){
-                          setCityError('City is required')
-                        }else{
-                          setCityError('')
+                      onBlur={() => {
+                        if (city.trim() === "") {
+                          setCityError("City is required");
+                        } else {
+                          setCityError("");
                         }
                       }}
                     >
@@ -1204,7 +1204,7 @@ function Addcart() {
                         <option>{items.city_name}</option>
                       ))}
                     </select>
-                    <span style={{ color: 'red' }}>{cityError}</span>
+                    <span style={{ color: "red" }}>{cityError}</span>
                   </div>
                 </div>
               </div>
@@ -1214,18 +1214,19 @@ function Addcart() {
                   class="form-control"
                   type="text"
                   value={pincode}
-                  onChange={(e) =>{ setpincode(e.target.value)
+                  onChange={(e) => {
+                    setpincode(e.target.value);
                     validateForm();
                   }}
-                  onBlur={()=>{
-                    if(pincode.trim() === ''){
-                      setPincodeError('Pincode is required')
-                    }else{
-                      setPincodeError('')
+                  onBlur={() => {
+                    if (pincode.trim() === "") {
+                      setPincodeError("Pincode is required");
+                    } else {
+                      setPincodeError("");
                     }
                   }}
                 />
-                <span style={{ color: 'red' }}>{pincodeError}</span>
+                <span style={{ color: "red" }}>{pincodeError}</span>
               </div>
             </div>
             <div className="modal-footer">
@@ -1236,15 +1237,15 @@ function Addcart() {
                 data-dismiss="modal"
                 disabled={
                   !isFormValid ||
-                  first_name.trim() === '' || // Add this condition
-                  last_name.trim() === '' || // Add similar conditions for other fields
-                  mobile.trim() === '' ||
-                  house_no.trim() === '' ||
-                  area.trim() === '' ||
-                  landmark.trim() === '' ||
-                  state.trim() === '' ||
-                  selectedCity.trim() === '' ||
-                  pincode.trim() === ''
+                  first_name.trim() === "" || // Add this condition
+                  last_name.trim() === "" || // Add similar conditions for other fields
+                  mobile.trim() === "" ||
+                  house_no.trim() === "" ||
+                  area.trim() === "" ||
+                  landmark.trim() === "" ||
+                  state.trim() === "" ||
+                  selectedCity.trim() === "" ||
+                  pincode.trim() === ""
                 }
               >
                 Add +
