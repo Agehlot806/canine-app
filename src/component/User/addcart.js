@@ -81,7 +81,7 @@ function Addcart() {
 
   let originalPrice = 0;
 
-  const updatedPrice = originalPrice * 1.05;
+  const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
     let allPrice = parseInt(el.price) + parseInt(originalPrice);
@@ -106,7 +106,10 @@ function Addcart() {
 
     const updatedSendCart = [...sendcartdata];
     updatedSendCart[index].quantity += 1;
-    updatedSendCart[index].price = updatedCart[index].price; // Update the price in sendcartdata
+
+    // Calculate the new price with tax included
+    const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+    updatedSendCart[index].price = priceWithTax;
 
     setAddToCartProduct(updatedCart);
     setSandCartData(updatedSendCart); // Update sendcartdata
@@ -122,7 +125,10 @@ function Addcart() {
 
       const updatedSendCart = [...sendcartdata];
       updatedSendCart[index].quantity -= 1;
-      updatedSendCart[index].price = updatedCart[index].price; // Update the price in sendcartdata
+
+      // Calculate the new price with tax included
+      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      updatedSendCart[index].price = priceWithTax;
 
       setAddToCartProduct(updatedCart);
       setSandCartData(updatedSendCart); // Update sendcartdata

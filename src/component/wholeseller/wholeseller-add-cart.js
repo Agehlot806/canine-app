@@ -179,7 +179,10 @@ function WholesellerAddCart() {
 
     const updatedSendCart = [...sendcartdata];
     updatedSendCart[index].quantity += 1;
-    updatedSendCart[index].price = updatedCart[index].price; // Update the price in sendcartdata
+
+    // Calculate the new price with tax included
+    const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+    updatedSendCart[index].price = priceWithTax;
 
     setAddToCartProduct(updatedCart);
     setSandCartData(updatedSendCart); // Update sendcartdata
@@ -195,7 +198,10 @@ function WholesellerAddCart() {
 
       const updatedSendCart = [...sendcartdata];
       updatedSendCart[index].quantity -= 1;
-      updatedSendCart[index].price = updatedCart[index].price; // Update the price in sendcartdata
+
+      // Calculate the new price with tax included
+      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      updatedSendCart[index].price = priceWithTax;
 
       setAddToCartProduct(updatedCart);
       setSandCartData(updatedSendCart); // Update sendcartdata
