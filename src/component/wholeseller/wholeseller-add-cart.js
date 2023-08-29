@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
-import Footer from "../../directives/footer";
 // import { Link, useParams } from 'react-router-dom'
 import cart from "../../assets/images/icon/cart1.png";
 import Wholeheader from "../../directives/wholesalesheader";
@@ -14,6 +13,7 @@ import { loadRazorpay } from "../../utils";
 import { useEffect } from "react";
 import paydone from "../../assets/images/icon/paydone.png";
 import moment from "moment";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholesellerAddCart() {
   const { id } = useParams();
@@ -750,7 +750,7 @@ function WholesellerAddCart() {
                   <h3>Address</h3>
                   <div className="address-card">
                     {console.log("addresslist", addresslist)}
-                    {addresslist && addresslist.length > 1 ? (
+                    {addresslist && addresslist.length > 0 ? (
                       addresslist.map(
                         (item, index) =>
                           index === 0 && (
@@ -933,7 +933,7 @@ function WholesellerAddCart() {
         </div>
       </section>
 
-      <Footer />
+      <Wholesallerfooter />
       {/* Modal add address */}
       <div
         className="modal fade editAddress"

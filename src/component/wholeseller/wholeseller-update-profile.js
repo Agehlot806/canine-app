@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Wholeheader from "../../directives/wholesalesheader";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import Footer from "../../directives/footer";
 import axios from "axios";
 
 function WholeSellerUpdateprofile() {
@@ -205,7 +204,7 @@ function WholeSellerUpdateprofile() {
           </Row>
         </Container>
       </section>
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

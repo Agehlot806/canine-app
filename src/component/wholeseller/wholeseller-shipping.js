@@ -7,11 +7,11 @@ import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
 import icon from "../../assets/images/icon/pro.png";
 import orders from "../../assets/images/img/orders.png";
-import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Link } from "react-router-dom";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function WholeSellerShipping() {
   // storedWholesellerId
@@ -326,7 +326,7 @@ function WholeSellerShipping() {
           </Row>
         </Container>
       </section>
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import HomeImg from "../../assets/images/img/home.png";
 import leftImg from "../../assets/images/img/left-img.png";
 import food from "../../assets/images/img/food.png";
@@ -72,13 +72,14 @@ const clinetreview = {
 };
 
 function Home(props) {
+  const navigate = useNavigate()
   const [categories, setcategories] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
-  console.log("allVendorShop: ", allVendorShop);
+  // console.log("allVendorShop: ", allVendorShop);
   const [brands, setBrands] = useState([]);
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
@@ -198,17 +199,16 @@ function Home(props) {
       });
   };
 
-  // all venders
-  const AllVendorHomePage = () => {
-    axios
-      .get(`${BASE_URL}/vendor/all_vendor`)
-      .then((response) => {
-        console.log("vendor", response.data.data);
-        setAllVendorShop(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+  // all vender
+  const AllVendorHomePage = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/vendor/all_vendor`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 4);
+      setAllVendorShop(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // storedUserId
@@ -635,13 +635,20 @@ function Home(props) {
             <Row>
               {allVendorShop && allVendorShop.length > 0 ? (
                 allVendorShop.map((item) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-5">
-                    <a href="/product-by-partner">
+                  <Col lg={3} sm={6} xs={6} className="mb-5" key={item.id}>
+                    {/* <Link to={`/product-partner-Oneshop/${item.id}`}> */}
+                    <a onClick={() => {
+                      navigate('/product-partner-Oneshop',{
+                        state: {
+                          item : item
+                        }
+                      })
+                    }}>
                       <div className="ProductPartner-card">
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/vendor/" +
+                            "https://canine.hirectjob.in/storage/app/public/store/" +
                             item.logo
                           }
                         />

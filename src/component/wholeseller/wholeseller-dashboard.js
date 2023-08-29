@@ -7,11 +7,11 @@ import icon from "../../assets/images/icon/pro.png";
 import arrow from "../../assets/images/icon/arrow.png";
 import invoice from "../../assets/images/icon/invoice.png";
 import orders from "../../assets/images/img/orders.png";
-import Footer from "../../directives/footer";
 import { Link } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import paydone from "../../assets/images/icon/paydone.png";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 
 function Wholesellerdashboard() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
@@ -130,7 +130,7 @@ function Wholesellerdashboard() {
                     <h1>Total Order</h1>
                   </div>
                   <Row>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} sm={6} className="mb-4">
                       <div className="order-card order-bg1">
                         <div className="order-status">
                           <h6>Completed</h6>
@@ -194,7 +194,7 @@ function Wholesellerdashboard() {
                         </div>
                       </div>
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} sm={6} className="mb-4">
                       <div className="order-card order-bg2">
                         <div className="order-status">
                           <h6>Pending</h6>
@@ -258,7 +258,7 @@ function Wholesellerdashboard() {
                         </div>
                       </div>
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} sm={6} className="mb-4">
                       <div className="order-card order-bg3">
                         <div className="order-status">
                           <h6>Pending</h6>
@@ -322,7 +322,7 @@ function Wholesellerdashboard() {
                         </div>
                       </div>
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} sm={6} className="mb-4">
                       <div className="order-card order-bg1">
                         <div className="order-status">
                           <h6>Completed</h6>
@@ -386,7 +386,7 @@ function Wholesellerdashboard() {
                         </div>
                       </div>
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} sm={6} className="mb-4">
                       <div className="order-card order-bg2">
                         <div className="order-status">
                           <h6>Pending</h6>
@@ -450,7 +450,7 @@ function Wholesellerdashboard() {
                         </div>
                       </div>
                     </Col>
-                    <Col lg={4} className="mb-4">
+                    <Col lg={4} sm={6} className="mb-4">
                       <div className="order-card order-bg3">
                         <div className="order-status">
                           <h6>Pending</h6>
@@ -1243,7 +1243,7 @@ function Wholesellerdashboard() {
           </div>
         </Container>
       </section>
-      <Footer />
+      <Wholesallerfooter />
     </>
   );
 }
