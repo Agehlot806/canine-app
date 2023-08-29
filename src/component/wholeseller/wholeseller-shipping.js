@@ -10,8 +10,9 @@ import orders from "../../assets/images/img/orders.png";
 import cart from "../../assets/images/icon/cart.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import moment from "moment";
 
 function WholeSellerShipping() {
   // storedWholesellerId
@@ -23,7 +24,8 @@ function WholeSellerShipping() {
     allAddressList();
     allOrders();
   }, []);
-
+  const { id } = useParams();
+  console.log("id: ", id);
   const [addresslist, setaddresslist] = useState([]);
   const [allorder, setallorder] = useState([]);
 
@@ -255,16 +257,45 @@ function WholeSellerShipping() {
             <Row>
               <Col lg={4}>
                 <div className="order-details">
-                  <h6>ORDER NUMBER</h6>
-                  <p>4797290627</p>
-                  <h6>PAYMENT</h6>
-                  <p>Paid: Using Upi</p>
-                  <h6>Date</h6>
-                  <p>10 Feb 2023 10:20 AM</p>
-                  <h6>Phone Number</h6>
-                  <p>10 Feb 2023 10:20 AM</p>
-                  <h6>Deliver To</h6>
-                  <p>10 Feb 2023 10:20 AM</p>
+                  {allorder && allorder.length > 0 ? (
+                    allorder.map((item, index) => {
+                      console.log("Desired ID:", id);
+                      console.log("Item ID:", item.id);
+                      // Convert item.created_at to a JavaScript Date object
+                      const createdDate = new Date(item.created_at);
+
+                      // Calculate the 7th day date after item.created_at
+                      const seventhDayDate = new Date(createdDate);
+                      seventhDayDate.setDate(createdDate.getDate() + 7);
+
+                      if (item.id == id) {
+                        console.log("Match found for ID:", id);
+                        return (
+                          <div key={index}>
+                            <>
+                              <h6>ORDER NUMBER</h6>
+                              <p>{item.id}</p>
+                              <h6>PAYMENT</h6>
+                              <p>Paid: Using Upi</p>
+                              <h6>Date</h6>
+                              <p>
+                                {moment(item.created_at).format("YYYY-MM-DD")}
+                              </p>
+                              <h6>Phone Number</h6>
+                              <p>{item.phone || "number not available"}</p>
+                              <h6>Deliver To</h6>
+                              <p>{seventhDayDate.toDateString()}</p>
+                            </>
+                          </div>
+                        );
+                      } else {
+                        console.log("No match for ID:", id);
+                        return null; // If no match, return null or an empty fragment
+                      }
+                    })
+                  ) : (
+                    <p className="emptyMSG">No Order list</p>
+                  )}
                 </div>
               </Col>
               <Col lg={8} className="align-self-center">
