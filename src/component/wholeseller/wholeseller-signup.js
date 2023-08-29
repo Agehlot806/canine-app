@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import login from "../../assets/images/img/login.png";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 
 function WholesellerSignUp() {
+  const { state } = useLocation();
+console.log('state in sellarw,hole', state)
   const handleFirstNameChange = (e) => {
     const inputValue = e.target.value;
     if (/^[a-zA-Z ]*$/.test(inputValue)) {
@@ -40,10 +42,9 @@ function WholesellerSignUp() {
   const [upload1, setUpload1] = useState(null);
   const [upload2, setUpload2] = useState(null);
   const [stateall, setStateall] = useState([]);
-  const [state, setstate] = useState("");
+  const [stateData, setstateData] = useState("");
   const [stateallCity, setStateallCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const [isPasswordValid, setIsPasswordValid] = useState(true); // State to track password validity
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(true); // State to track presence of a special character
 
@@ -62,12 +63,13 @@ function WholesellerSignUp() {
     WholesellerData.append("WholesellerPassword", email);
 
     const formData = new FormData();
+    formData.append("seller_id", state.salesmanId ? state.salesmanId : '');
     formData.append("f_name", firstName);
     formData.append("l_name", lastName);
     formData.append("dateofbirth", dateOfBirth);
     formData.append("email", email);
     formData.append("phone", mobileNumber);
-    formData.append("state", state);
+    formData.append("state", stateData);
     formData.append("city", selectedCity);
     formData.append("business_name", businessName);
     formData.append("aadhar_number", aadharNumber);
@@ -96,7 +98,11 @@ function WholesellerSignUp() {
           console.log("response.data.status: ", response.data.status);
           localStorage.setItem("WholesellerEmail", email);
           localStorage.setItem("WholesellerPassword", password);
+          if(state.type == 'salesman'){
+            navigate("/salesman-dashboad");
+          }else {
           navigate("/wholeseller-login");
+          }
         }
       })
       .catch((error) => {
@@ -143,7 +149,7 @@ function WholesellerSignUp() {
 
   const Subscription = (event) => {
     if (event.target.value) {
-      setstate(event.target.value);
+      setstateData(event.target.value);
 
       Getdatacity(event.target.value);
     }
@@ -233,7 +239,7 @@ function WholesellerSignUp() {
                           <select
                             className="form-control"
                             onChange={Subscription}
-                            value={state}
+                            value={stateData}
                           >
                             <option>State Choose...</option>
                             {stateall.map((items) => (

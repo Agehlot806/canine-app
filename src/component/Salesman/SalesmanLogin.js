@@ -5,6 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
+import toast from "react-hot-toast";
 
 const SalesmanLogin = () => {
   const navigate = useNavigate();
@@ -23,6 +24,9 @@ const SalesmanLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(phone == '' && password == ''){
+      toast.error('ffff')
+    }else {
     const formData = new FormData();
     formData.append("phone", phone);
     formData.append("password", password);
@@ -32,6 +36,7 @@ const SalesmanLogin = () => {
         console.log("tarun", response);
         if (response.data.status === 200) {
           localStorage.setItem("salesmanId", response.data.data.id);
+          localStorage.setItem("salesmanPhone", response.data.data.phone);
           navigate("/salesman-dashboad");
           toast.success("Successfully");
         }
@@ -45,6 +50,7 @@ const SalesmanLogin = () => {
         console.log(error);
         // Handle errors if any
       });
+    }
   };
   return (
     <div className="users-bg">

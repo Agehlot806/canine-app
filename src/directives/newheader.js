@@ -6,7 +6,7 @@ import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 
-function Newheader() {
+function Newheader(props) {
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
   console.log("allproduct: ", allproduct);
@@ -14,6 +14,7 @@ function Newheader() {
   console.log("dogsubcategories: ", dogsubcategories);
   const [storedUserId, setStoredUserId] = useState(null);
   const [categories, setcategories] = useState([]);
+  const salesmanId = localStorage.getItem("salesmanId");
 
   useEffect(() => {
     fetchBrands();
@@ -97,7 +98,10 @@ function Newheader() {
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             {" "}
-            <Link to="/" className="logoBG">
+            <Link
+              to={props.type == "salesman" ? "/salesman-dashboad" : "/"}
+              className="logoBG"
+            >
               <img src={logo} />
             </Link>
           </a>
@@ -115,8 +119,11 @@ function Newheader() {
           <div className="collapse navbar-collapse" id="megaMenu">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">
-                  Home
+                <Link
+                  className="nav-link"
+                  to={props.type == "salesman" ? "/salesman-dashboad" : "/"}
+                >
+                  {props.type == "salesman" ? "Dashboard" : "Home"}
                 </Link>
               </li>
               <li className="nav-item">
@@ -411,8 +418,8 @@ function Newheader() {
                     <input
                       type="text"
                       placeholder="Search by name"
-                    // value={searchTerm}
-                    // onChange={handleSearch}
+                      // value={searchTerm}
+                      // onChange={handleSearch}
                     />
                   </div>
                 </a>
