@@ -175,10 +175,16 @@ function Productdetail() {
   // const formattedAmount = Number(Amount).toString();
   // console.log("formattedAmount: ", formattedAmount);
 
+  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+
   const Amount = Math.floor(
-    uservariationprice * quantity -
-      (uservariationprice * quantity * productDetails.discount) / 100
+    uservariationprice - (uservariationprice * productDetails.discount) / 100
   ).toFixed(2);
+
+  // const Amount = Math.floor(
+  //   uservariationprice * quantity -
+  //     (uservariationprice * quantity * productDetails.discount) / 100
+  // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   // const savedAmount = (
   //   productDetails.price * quantity -

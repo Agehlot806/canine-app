@@ -4,7 +4,7 @@ import login from "../../assets/images/img/login.png";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import {Toaster, toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -14,7 +14,10 @@ function Login() {
   const [isEmailValid, setIsEmailValid] = useState(true); // State to track email validity
   const isEmailFormatValid = (email) => {
     const hasCapitalLetter = /[A-Z]/.test(email); // Check for capital letters
-    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) && !hasCapitalLetter;
+    return (
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) &&
+      !hasCapitalLetter
+    );
   };
 
   const handleSubmit = (e) => {
@@ -31,7 +34,7 @@ function Login() {
         console.log("tarun", response);
         localStorage.setItem("UserWholesellerId", response.data.data[0].id);
         localStorage.setItem("verifiedId", response.data.data[0].verified);
-        localStorage.setItem("loginType", 'wholeseller');
+        localStorage.setItem("loginType", "wholeseller");
         if (response.data.message === "Login Successfull") {
           navigate("/wholeseller-dashboard");
           toast.success("Successfully");
@@ -39,9 +42,8 @@ function Login() {
         if (response.data.message === "User Not Exit") {
           toast.error("User Not Exit");
         }
-        if(response.data.message === "Your Password Not Match"){
+        if (response.data.message === "Your Password Not Match") {
           toast.error("Your Password Not Match");
-
         }
         // Handle the response as needed
         //
@@ -53,7 +55,7 @@ function Login() {
   };
   return (
     <>
-    <Toaster />
+      <Toaster />
       <div className="users-bg">
         <Container>
           <div className="text-center">
@@ -99,13 +101,16 @@ function Login() {
                         onChange={(e) => {
                           setPassword(e.target.value);
                           setIsPasswordValid(e.target.value.length >= 8);
-                          setHasSpecialCharacter(/[^A-Za-z0-9]/.test(e.target.value));
+                          setHasSpecialCharacter(
+                            /[^A-Za-z0-9]/.test(e.target.value)
+                          );
                         }}
                         isInvalid={!isPasswordValid || !hasSpecialCharacter}
                       />
                       {(!isPasswordValid || !hasSpecialCharacter) && (
                         <Form.Control.Feedback type="invalid">
-                          Your password should be at least 8 characters and contain at least one special character.
+                          Your password should be at least 8 characters and
+                          contain at least one special character.
                         </Form.Control.Feedback>
                       )}
                     </Form.Group>
