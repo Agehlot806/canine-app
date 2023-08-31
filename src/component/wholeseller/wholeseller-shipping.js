@@ -89,7 +89,9 @@ function WholeSellerShipping() {
                     <Col lg={2} className="align-self-center">
                       <div className="myorder-btn">
                         <Button>
-                          <Link to={`/order-view-details/${item.id}`}>
+                          <Link
+                            to={`/wholesaler-order-view-details/${item.id}`}
+                          >
                             View
                           </Link>
                         </Button>
@@ -108,7 +110,7 @@ function WholeSellerShipping() {
         </Container>
       </section>
 
-      <section className="section-padding">
+      {/* <section className="section-padding">
         <Container>
           <div className="oder-detail-card">
             <Row>
@@ -249,7 +251,7 @@ function WholeSellerShipping() {
             </Row>
           </div>
         </Container>
-      </section>
+      </section> */}
       <section className="section-padding">
         <Container>
           <h1 className="main-head text-center mb-3">Order Details</h1>

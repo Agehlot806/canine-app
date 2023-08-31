@@ -77,7 +77,7 @@ import WholeSellerUpdateprofile from "./component/wholeseller/wholeseller-update
 import Orderviewdetails from "./component/User/order-view-details";
 import SalesmanLogin from "./component/Salesman/SalesmanLogin";
 import Partneroneshop from "./component/User/partner-oneshop";
-import Wholesallerfooter from "../src/directives/wholesaller-Footer"
+import Wholesallerfooter from "../src/directives/wholesaller-Footer";
 import Wholesallerdeliverydetails from "./component/wholeseller/wholesaller-Delivery-details";
 import Wholesallerinternationalshipping from "./component/wholeseller/wholesaller-International-shipping";
 import Wholesallerpaymentoptionfooter from "./component/wholeseller/wholesaller-payment-footer";
@@ -86,7 +86,7 @@ import Wholesallerreturnpolicy from "./component/wholeseller/wholesaller-return-
 import Wholesallerfindastore from "./component/wholeseller/wholesaller-Find-a-store";
 import Wholesalleraboutus from "./component/wholeseller/wholesaller-about-us";
 import Wholesallerhelpandfaqs from "./component/wholeseller/wholesaller-Help&Faqs";
-
+import WholesalerOrderviewdetails from "./component/wholeseller/wholesaler-order-view-details";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -130,10 +130,7 @@ function App() {
             path="/product-partner-shop/:id"
             element={<Productpartnershop />}
           />
-           <Route
-            path="/product-partner-Oneshop"
-            element={<Partneroneshop />}
-          />
+          <Route path="/product-partner-Oneshop" element={<Partneroneshop />} />
           <Route path="/shipping/:id" element={<Shipping />} />
 
           <Route path="/user-pay-method" element={<Userpaymethod />} />
@@ -162,10 +159,6 @@ function App() {
 
           <Route path="/help-faqs" element={<Helpandfaqs />} />
           <Route path="/my-orders" element={<Myorder />} />
-          <Route
-            path="/order-view-details/:id"
-            element={<Orderviewdetails />}
-          />
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />
@@ -235,18 +228,46 @@ function App() {
             path="/wholeseller-paylater/:id"
             element={<WholeSellerPayLater />}
           />
+          <Route
+            path="/order-view-details/:id"
+            element={<Orderviewdetails />}
+          />
+          <Route
+            path="/wholesaler-order-view-details/:id"
+            element={<WholesalerOrderviewdetails />}
+          />
 
           {/* wholesaller Footer  */}
-          <Route path="/wholesallerfooter" element={<Wholesallerfooter/>}/>
-          <Route path="/wholesallerdeliverydetails" element={<Wholesallerdeliverydetails/>}/>
-          <Route path="/wholesallerinternationalshipping" element={<Wholesallerinternationalshipping/>}/>
-          <Route path="/wholesallerpaymentoptionfooter" element={<Wholesallerpaymentoptionfooter/>}/>
-          <Route path="/wholesallertrackyourorde" element={<Wholesallertrackyourorder/>}/>
-          <Route path="/wholesallerreturnpolicy" element={<Wholesallerreturnpolicy/>}/>
-          <Route path="/wholesallerfindastore" element={<Wholesallerfindastore/>}/>
-          <Route path="/wholesalleraboutus" element={<Wholesalleraboutus/>}/>
-          <Route path="/wholesallerhelpandfaqs" element={<Wholesallerhelpandfaqs/>}/>
-
+          <Route path="/wholesallerfooter" element={<Wholesallerfooter />} />
+          <Route
+            path="/wholesallerdeliverydetails"
+            element={<Wholesallerdeliverydetails />}
+          />
+          <Route
+            path="/wholesallerinternationalshipping"
+            element={<Wholesallerinternationalshipping />}
+          />
+          <Route
+            path="/wholesallerpaymentoptionfooter"
+            element={<Wholesallerpaymentoptionfooter />}
+          />
+          <Route
+            path="/wholesallertrackyourorde"
+            element={<Wholesallertrackyourorder />}
+          />
+          <Route
+            path="/wholesallerreturnpolicy"
+            element={<Wholesallerreturnpolicy />}
+          />
+          <Route
+            path="/wholesallerfindastore"
+            element={<Wholesallerfindastore />}
+          />
+          <Route path="/wholesalleraboutus" element={<Wholesalleraboutus />} />
+          <Route
+            path="/wholesallerhelpandfaqs"
+            element={<Wholesallerhelpandfaqs />}
+          />
 
           {/* Sales Man flow  */}
           <Route path="/salesman-login" element={<SalesmanLogin />} />

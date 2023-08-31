@@ -123,7 +123,7 @@ function Shipping() {
         </Container>
       </section>
 
-      <section className="section-padding">
+      {/* <section className="section-padding">
         <Container>
           <div className="oder-detail-card">
             <Row>
@@ -264,7 +264,7 @@ function Shipping() {
             </Row>
           </div>
         </Container>
-      </section>
+      </section> */}
       <section className="section-padding">
         <Container>
           <h1 className="main-head text-center mb-3">Order Details</h1>
