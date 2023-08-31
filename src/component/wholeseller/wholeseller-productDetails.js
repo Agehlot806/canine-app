@@ -16,6 +16,7 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import toast from "react-hot-toast";
 
 function WholesellerproductDetails() {
   const { id } = useParams();

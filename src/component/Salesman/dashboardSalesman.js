@@ -11,6 +11,7 @@ import orders from "../../assets/images/img/orders.png";
 import Footer from "../../directives/footer";
 import { Link, useNavigate } from "react-router-dom";
 import invoice from "../../assets/images/icon/invoice.png";
+import Wholeheader from "../../directives/wholesalesheader";
 
 function DashboadSalesman() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function DashboadSalesman() {
   };
   return (
     <>
-      <Newheader type={"salesman"} />
+      <Wholeheader type={"salesman"} />
       <div className="home-bg">
         <div className="home-section">
           <Container className="p-0">

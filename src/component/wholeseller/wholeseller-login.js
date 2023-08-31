@@ -31,6 +31,7 @@ function Login() {
         console.log("tarun", response);
         localStorage.setItem("UserWholesellerId", response.data.data[0].id);
         localStorage.setItem("verifiedId", response.data.data[0].verified);
+        localStorage.setItem("loginType", 'wholeseller');
         if (response.data.message === "Login Successfull") {
           navigate("/wholeseller-dashboard");
           toast.success("Successfully");
