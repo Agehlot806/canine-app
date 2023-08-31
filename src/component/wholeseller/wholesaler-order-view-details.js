@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 
-function Orderviewdetails() {
+function WholesalerOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
   // console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
@@ -49,13 +49,13 @@ function Orderviewdetails() {
     ? formatted.slice(0, -2)
     : formatted;
 
-  // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
+  // storedWholesellerId
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
   // =----------------------------
   const allOrders = async () => {
     axios
-      .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
+      .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
       .then((response) => {
         console.log(response);
         console.log("Order List Successful");
@@ -248,4 +248,4 @@ function Orderviewdetails() {
   );
 }
 
-export default Orderviewdetails;
+export default WholesalerOrderviewdetails;
