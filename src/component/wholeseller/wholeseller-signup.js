@@ -8,7 +8,7 @@ import axios from "axios";
 
 function WholesellerSignUp() {
   const { state } = useLocation();
-console.log('state in sellarw,hole', state)
+  console.log("state in sellarw,hole", state);
   const handleFirstNameChange = (e) => {
     const inputValue = e.target.value;
     if (/^[a-zA-Z ]*$/.test(inputValue)) {
@@ -25,7 +25,10 @@ console.log('state in sellarw,hole', state)
   const [isEmailValid, setIsEmailValid] = useState(true); // Add this line
   const isEmailFormatValid = (email) => {
     const hasCapitalLetter = /[A-Z]/.test(email);
-    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) && !hasCapitalLetter;
+    return (
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i.test(email) &&
+      !hasCapitalLetter
+    );
   };
 
   const navigate = useNavigate();
@@ -63,7 +66,11 @@ console.log('state in sellarw,hole', state)
     WholesellerData.append("WholesellerPassword", email);
 
     const formData = new FormData();
-    formData.append("seller_id", state.salesmanId ? state.salesmanId : '');
+    if (state !== null) {
+      formData.append("seller_id", state?.salesmanId ? state?.salesmanId : "");
+    } else {
+      formData.append("seller_id", "");
+    }
     formData.append("f_name", firstName);
     formData.append("l_name", lastName);
     formData.append("dateofbirth", dateOfBirth);
@@ -98,10 +105,14 @@ console.log('state in sellarw,hole', state)
           console.log("response.data.status: ", response.data.status);
           localStorage.setItem("WholesellerEmail", email);
           localStorage.setItem("WholesellerPassword", password);
-          if(state.type == 'salesman'){
-            navigate("/salesman-dashboad");
-          }else {
-          navigate("/wholeseller-login");
+          if (state !== null) {
+            if (state.type == "salesman") {
+              navigate("/salesman-dashboad");
+            } else {
+              navigate("/wholeseller-login");
+            }
+          } else {
+            navigate("/wholeseller-login");
           }
         }
       })
@@ -213,7 +224,7 @@ console.log('state in sellarw,hole', state)
                       />
                       {!isEmailValid && (
                         <Form.Control.Feedback type="invalid">
-                          {/[A-Z]/.test(email) && !email.includes('@')
+                          {/[A-Z]/.test(email) && !email.includes("@")
                             ? "Email should not contain capital letters and must include '@'."
                             : "Please enter a valid email address."}
                         </Form.Control.Feedback>
@@ -226,7 +237,10 @@ console.log('state in sellarw,hole', state)
                         placeholder="Mobile Number"
                         value={mobileNumber}
                         onChange={(e) => {
-                          const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric characters
+                          const numericValue = e.target.value.replace(
+                            /[^0-9+]/g,
+                            ""
+                          ); // Remove non-numeric characters
                           if (numericValue.length <= 10) {
                             setMobileNumber(numericValue);
                           }
@@ -286,7 +300,10 @@ console.log('state in sellarw,hole', state)
                         placeholder="Aadhar Number"
                         value={aadharNumber}
                         onChange={(e) => {
-                          const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric characters
+                          const numericValue = e.target.value.replace(
+                            /[^0-9+]/g,
+                            ""
+                          ); // Remove non-numeric characters
 
                           if (numericValue.length <= 12) {
                             setAadharNumber(numericValue);
@@ -301,7 +318,10 @@ console.log('state in sellarw,hole', state)
                         placeholder="GST Number"
                         value={gstNumber}
                         onChange={(e) => {
-                          const numericValue = e.target.value.replace(/[^a-zA-Z0-9]/g, ""); // Remove non-numeric characters
+                          const numericValue = e.target.value.replace(
+                            /[^a-zA-Z0-9]/g,
+                            ""
+                          ); // Remove non-numeric characters
 
                           if (numericValue.length <= 15) {
                             setGstNumber(numericValue);
@@ -314,6 +334,9 @@ console.log('state in sellarw,hole', state)
                         type="number"
                         name="pincode"
                         placeholder="Pincode"
+                        onChange={(e) => {
+                          setPincode(e.target.value)
+                        }}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -323,15 +346,18 @@ console.log('state in sellarw,hole', state)
                         placeholder="Password"
                         value={password}
                         onChange={(e) => {
-                          setPassword(e.target.value)
+                          setPassword(e.target.value);
                           setIsPasswordValid(e.target.value.length >= 8);
-                          setHasSpecialCharacter(/[^A-Za-z0-9]/.test(e.target.value));
+                          setHasSpecialCharacter(
+                            /[^A-Za-z0-9]/.test(e.target.value)
+                          );
                         }}
                         isInvalid={!isPasswordValid || !hasSpecialCharacter}
                       />
                       {(!isPasswordValid || !hasSpecialCharacter) && (
                         <Form.Control.Feedback type="invalid">
-                          Your password should be at least 8 characters and contain at least one special character.
+                          Your password should be at least 8 characters and
+                          contain at least one special character.
                         </Form.Control.Feedback>
                       )}
                     </Form.Group>

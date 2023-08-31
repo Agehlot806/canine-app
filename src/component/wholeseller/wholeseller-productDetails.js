@@ -23,6 +23,7 @@ function WholesellerproductDetails() {
   console.log("id: ", id);
   // *************************
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  const salesmanId = localStorage.getItem('salesmanId')
   console.log("storedWholesellerId: ", storedWholesellerId);
   // **********************
 
@@ -134,6 +135,7 @@ function WholesellerproductDetails() {
           price: formattedAmount,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
+          seller_id: salesmanId ? Number(salesmanId) : ''
         }
       );
 

@@ -27,6 +27,7 @@ function WholesellerAddCart() {
   const [couponlist, setcouponlist] = useState([]);
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
+  const loginType = localStorage.getItem('loginType')
 
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
@@ -67,12 +68,13 @@ function WholesellerAddCart() {
     }));
     const requestData = {
       user_id: storedWholesellerId,
+      seller_id: Number(salesmanId),
       coupon_discount_amount: 200,
       coupon_discount_title: "coupan",
-      payment_status: "confirm",
+      payment_status: "unpaid",
       order_status: "pending",
       total_tax_amount: 160,
-      payment_method: "P",
+      payment_method: "offline",
       transaction_reference: "sadgash23asds",
       delivery_address_id: 2,
       coupon_code: "sdf42",
@@ -100,7 +102,12 @@ function WholesellerAddCart() {
       })
       .then((responseData) => {
         console.log("responseData???>>>>", responseData);
-        shippingpage("/wholeseller-shipping/" + responseData.data.order_id);
+        if(loginType == 'salesman'){
+          shippingpage('/salesman-dashboad')
+        }else {
+
+          shippingpage("/wholeseller-shipping/" + responseData.data.order_id);
+        }
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -162,6 +169,7 @@ function WholesellerAddCart() {
   // const originalPrice = addToCartProduct[0]?.price;
 
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  const salesmanId = localStorage.getItem('salesmanId')
   console.log("storedWholesellerId: ", storedWholesellerId);
 
   const handleQuantityChange = (event) => {

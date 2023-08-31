@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
@@ -12,14 +12,69 @@ import Footer from "../../directives/footer";
 import { Link, useNavigate } from "react-router-dom";
 import invoice from "../../assets/images/icon/invoice.png";
 import Wholeheader from "../../directives/wholesalesheader";
+import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
+import moment from "moment";
 
 function DashboadSalesman() {
   const navigate = useNavigate();
+  const [wholeSellerList, setWholeSellerList] = useState([]);
+  const [orderList, setOrderList] = useState([]);
+  const [totalTransactions, setTotalTransactions] = useState(0);
   const salesmanId = localStorage.getItem("salesmanId");
+
+  useEffect(() => {
+    getWholesellerList();
+    getOrders();
+  }, []);
 
   const handleAddProduct = async (id) => {
     await localStorage.setItem("wholeSellerId", id);
-    navigate('/wholeseller-product')
+    await localStorage.setItem("UserWholesellerId", id);
+    navigate("/wholeseller-product");
+  };
+
+  const getWholesellerList = async () => {
+    await axios
+      .get(`${BASE_URL}/auth/wholesaler_list/${salesmanId}`)
+      .then((res) => {
+        console.log("res in list", res);
+        setWholeSellerList(res.data.data);
+      })
+      .catch((error) => {
+        console.log("Error in whol list", error);
+      });
+  };
+
+  const getOrders = async () => {
+    await axios
+      .get(`${BASE_URL}/auth/seller_orders/${salesmanId}`)
+      .then((res) => {
+        console.log("res in orderList", res);
+        if (res.data.status === "200") {
+          setOrderList(res.data.data);
+          const orderList = res.data.data;
+          let subtotal = 0;
+          for (let index = 0; index < orderList.length; index++) {
+            const element = orderList[index];
+            let total =
+              parseInt(element.order_amount) +
+              parseInt(element.total_tax_amount) -
+              parseInt(element.coupon_discount_amount);
+            if (subtotal === 0) {
+              subtotal = total;
+            } else {
+              subtotal = total + subtotal;
+            }
+          }
+          setTotalTransactions(subtotal);
+
+          console.log("subtotal", subtotal);
+        }
+      })
+      .catch((error) => {
+        console.log("error in orderList", error);
+      });
   };
   return (
     <>
@@ -65,7 +120,7 @@ function DashboadSalesman() {
                   aria-selected="true"
                 >
                   <h3>Total Wholeseller</h3>
-                  <h5>50</h5>
+                  <h5>{wholeSellerList?.length}</h5>
                   <p>+10.80%</p>
                 </a>
               </li>
@@ -80,7 +135,7 @@ function DashboadSalesman() {
                   aria-selected="false"
                 >
                   <h3>Transactions</h3>
-                  <h5>$22k</h5>
+                  <h5>₹{totalTransactions}</h5>
                   <p>+10.80%</p>
                 </a>
               </li>
@@ -95,7 +150,7 @@ function DashboadSalesman() {
                   aria-selected="false"
                 >
                   <h3>Total order</h3>
-                  <h5>20</h5>
+                  <h5>{orderList?.length}</h5>
                   <p>+10.80%</p>
                 </a>
               </li>
@@ -110,7 +165,7 @@ function DashboadSalesman() {
                   aria-selected="false"
                 >
                   <h3>Completed Order</h3>
-                  <h5>10</h5>
+                  <h5>0</h5>
                   <p>+10.80%</p>
                 </a>
               </li>
@@ -199,7 +254,7 @@ function DashboadSalesman() {
                       >
                         <div className="needplace">
                           <Row>
-                            {[1, 1, 1, 1, 1, 1].map((item) => {
+                            {wholeSellerList.map((item) => {
                               return (
                                 <Col lg={4} className="mb-4">
                                   <div className="Wholeseller-card wholeseller-bg1">
@@ -216,7 +271,9 @@ function DashboadSalesman() {
                                           </Col>
                                           <Col sm={9}>
                                             <div className="wholeseller-detail">
-                                              <h6>Nity Make</h6>
+                                              <h6>
+                                                {item.f_name + "" + item.l_name}
+                                              </h6>
                                               <a>
                                                 <i className="fa fa-star" />
                                               </a>
@@ -243,7 +300,7 @@ function DashboadSalesman() {
                                       <div className="Wholeseller-btn">
                                         <Button
                                           onClick={() => {
-                                            handleAddProduct(item);
+                                            handleAddProduct(item.id);
                                           }}
                                         >
                                           Add Product
@@ -407,159 +464,34 @@ function DashboadSalesman() {
                     <h1>Transactions</h1>
                   </div>
                   <div className="needplace">
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="Transactions-card">
-                      <Row>
-                        <Col lg={2}>
-                          <img src={pro} />
-                        </Col>
-                        <Col lg={8} className="align-self-center">
-                          <h5>John Smith</h5>
-                          <p>10 May 10:30 PM</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center">
-                          <div className="Transactions-icon">
-                            <img src={arrow} />
-                            <h5>$30.00</h5>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
+                    {orderList
+                      ? orderList.map((item) => {
+                          return (
+                            <div className="Transactions-card">
+                              <Row>
+                                <Col lg={2}>
+                                  <img src={pro} />
+                                </Col>
+                                <Col lg={8} className="align-self-center">
+                                  <h5>John Smith</h5>
+                                  <p>{moment(item.pending).format("LLL")}</p>
+                                </Col>
+                                <Col lg={2} className="align-self-center">
+                                  <div className="Transactions-icon">
+                                    <img src={arrow} />
+                                    <h5>
+                                      ₹
+                                      {parseInt(item.order_amount) +
+                                        parseInt(item.total_tax_amount) -
+                                        parseInt(item.coupon_discount_amount)}
+                                    </h5>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          );
+                        })
+                      : null}
                   </div>
                 </div>
               </div>
@@ -574,147 +506,39 @@ function DashboadSalesman() {
                     <h1>Total Order</h1>
                   </div>
                   <div className="needplace">
-                    <div className="oder-detail-card mb-4">
-                      <Link to="">
-                        <Row>
-                          <Col lg={5}>
-                            <div className="product-details">
-                              <div>
-                                <img src={logo} />
-                              </div>
-                              <div>
-                                <h5>Canine Products</h5>
-                                <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                              </div>
-                            </div>
-                          </Col>
-                          <Col lg={7}>
-                            <div className="dowload-invioce">
-                              <Button className="invoice-1">
-                                <img src={invoice} /> download invoice
-                              </Button>
-                              <Button className="invoice-2">
-                                <img src={invoice} /> download summary
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={5}>
-                            <div className="order-minicard">
-                              <Row>
-                                <h6>Order ID : 125683</h6>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>1 X Food bowl</p>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>$138.00</p>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>1 X Food bowl</p>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>$138.00</p>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <hr />
-                              <Row>
-                                <h6>Order ID : 125683</h6>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>1 X Food bowl</p>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>$138.00</p>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>1 X Food bowl</p>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>$138.00</p>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <hr />
-                              <Row>
-                                <h6>Order ID : 125683</h6>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>1 X Food bowl</p>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>$138.00</p>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>1 X Food bowl</p>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div className="order-ids">
-                                    <p>$138.00</p>
-                                  </div>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Col>
-                          <Col lg={7} className="align-self-center">
-                            <div className="order-table">
-                              <Table responsive>
-                                <tbody>
-                                  <tr>
-                                    <th>Sub Total</th>
-                                    <td>$50</td>
-                                  </tr>
-                                  <tr>
-                                    <th>
-                                      Moving Cart <br />
-                                      <p>Additional Services</p>
-                                    </th>
-                                    <td>$10</td>
-                                  </tr>
-                                  <tr>
-                                    <th>
-                                      Discount <br />
-                                      <p>Promo Code: 554dffd</p>
-                                    </th>
-                                    <td>$20</td>
-                                  </tr>
-                                  <tr>
-                                    <th>Total</th>
-                                    <td>$138.00</td>
-                                  </tr>
-                                </tbody>
-                              </Table>
-                            </div>
-                          </Col>
-                        </Row>
-                      </Link>
+                  <div className='needplace'>
+                        {orderList && orderList.length > 0 ? (
+                            orderList.map((item, index) => (
+                                <div className='myorder-list'>
+                                    <Row className='justify-content-center'>
+                                        <Col lg={2}>
+                                            <img src={logo} />
+                                        </Col>
+                                        <Col lg={6}>
+                                            <h3>Order Id: {item.id}</h3>
+                                            <h3>Date: {item.created_at}</h3>
+                                            <h3>Payment Method: {item.payment_method}</h3>
+                                            <h3>Order Amount: ₹{item.order_amount}</h3>
+                                        </Col>
+                                    
+                                        <Col lg={2} className="align-self-center">
+                                            <div className="myorder-btn">
+                                                <Button>
+                                                    <Link to={`/order-view-details/${item.id}`}>View</Link>
+                                                </Button>
+                                                <Button>
+                                                    <Link to="/track-your-order">Track</Link>
+                                                </Button>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="emptyMSG">No Order list</p>
+                        )}
                     </div>
-                    <div className="oder-detail-card mb-4">
+                    {/* <div className="oder-detail-card mb-4">
                       <Row>
                         <Col lg={5}>
                           <div className="product-details">
@@ -989,7 +813,7 @@ function DashboadSalesman() {
                           </div>
                         </Col>
                       </Row>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="needplace">
                     <Row>
