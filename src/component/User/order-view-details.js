@@ -12,7 +12,7 @@ import { BASE_URL } from "../../Constant/Index";
 
 function Orderviewdetails() {
   const [allorder, setallorder] = useState([]);
-  // console.log("allorder: ", allorder);
+  console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
   // console.log("orderDetails: ", orderDetails);
 
@@ -51,7 +51,9 @@ function Orderviewdetails() {
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
+  const loginType = localStorage.getItem("loginType");
+  const wholesellerId = localStorage.getItem("UserWholesellerId");
+  let storedUserId = loginType == 'salesman' ? parseInt(wholesellerId) : JSON.parse(customer_id);
   // =----------------------------
   const allOrders = async () => {
     axios

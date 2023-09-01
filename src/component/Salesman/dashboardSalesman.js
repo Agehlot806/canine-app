@@ -20,6 +20,7 @@ function DashboadSalesman() {
   const navigate = useNavigate();
   const [wholeSellerList, setWholeSellerList] = useState([]);
   const [orderList, setOrderList] = useState([]);
+  const [completedOders, setCompletedOders] = useState([])
   const [totalTransactions, setTotalTransactions] = useState(0);
   const salesmanId = localStorage.getItem("salesmanId");
 
@@ -54,6 +55,10 @@ function DashboadSalesman() {
         if (res.data.status === "200") {
           setOrderList(res.data.data);
           const orderList = res.data.data;
+          const completeOrdes = orderList.filter((el) => {
+            return el.delivered !== null
+          })
+          setCompletedOders(completeOrdes)
           let subtotal = 0;
           for (let index = 0; index < orderList.length; index++) {
             const element = orderList[index];
@@ -165,7 +170,7 @@ function DashboadSalesman() {
                   aria-selected="false"
                 >
                   <h3>Completed Order</h3>
-                  <h5>0</h5>
+                  <h5>{completedOders?.length}</h5>
                   <p>+10.80%</p>
                 </a>
               </li>
@@ -506,314 +511,40 @@ function DashboadSalesman() {
                     <h1>Total Order</h1>
                   </div>
                   <div className="needplace">
-                  <div className='needplace'>
-                        {orderList && orderList.length > 0 ? (
-                            orderList.map((item, index) => (
-                                <div className='myorder-list'>
-                                    <Row className='justify-content-center'>
-                                        <Col lg={2}>
-                                            <img src={logo} />
-                                        </Col>
-                                        <Col lg={6}>
-                                            <h3>Order Id: {item.id}</h3>
-                                            <h3>Date: {item.created_at}</h3>
-                                            <h3>Payment Method: {item.payment_method}</h3>
-                                            <h3>Order Amount: ₹{item.order_amount}</h3>
-                                        </Col>
-                                    
-                                        <Col lg={2} className="align-self-center">
-                                            <div className="myorder-btn">
-                                                <Button>
-                                                    <Link to={`/order-view-details/${item.id}`}>View</Link>
-                                                </Button>
-                                                <Button>
-                                                    <Link to="/track-your-order">Track</Link>
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
+                    <div className="needplace">
+                      {orderList && orderList.length > 0 ? (
+                        orderList.map((item, index) => (
+                          <div className="myorder-list">
+                            <Row className="justify-content-center">
+                              <Col lg={2}>
+                                <img src={logo} />
+                              </Col>
+                              <Col lg={6}>
+                                <h3>Order Id: {item.id}</h3>
+                                <h3>Date: {item.created_at}</h3>
+                                <h3>Payment Method: {item.payment_method}</h3>
+                                <h3>Order Amount: ₹{item.order_amount}</h3>
+                              </Col>
+
+                              <Col lg={2} className="align-self-center">
+                                <div className="myorder-btn">
+                                  <Button>
+                                    <Link to={`/order-view-details/${item.id}`}>
+                                      View
+                                    </Link>
+                                  </Button>
+                                  <Button>
+                                    <Link to="/track-your-order">Track</Link>
+                                  </Button>
                                 </div>
-                            ))
-                        ) : (
-                            <p className="emptyMSG">No Order list</p>
-                        )}
+                              </Col>
+                            </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
                     </div>
-                    {/* <div className="oder-detail-card mb-4">
-                      <Row>
-                        <Col lg={5}>
-                          <div className="product-details">
-                            <div>
-                              <img src={logo} />
-                            </div>
-                            <div>
-                              <h5>Canine Products</h5>
-                              <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col lg={7}>
-                          <div className="dowload-invioce">
-                            <Button className="invoice-1">
-                              <img src={invoice} /> download invoice
-                            </Button>
-                            <Button className="invoice-2">
-                              <img src={invoice} /> download summary
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={5}>
-                          <div className="order-minicard">
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Col>
-                        <Col lg={7} className="align-self-center">
-                          <div className="order-table">
-                            <Table responsive>
-                              <tbody>
-                                <tr>
-                                  <th>Sub Total</th>
-                                  <td>$50</td>
-                                </tr>
-                                <tr>
-                                  <th>
-                                    Moving Cart <br />
-                                    <p>Additional Services</p>
-                                  </th>
-                                  <td>$10</td>
-                                </tr>
-                                <tr>
-                                  <th>
-                                    Discount <br />
-                                    <p>Promo Code: 554dffd</p>
-                                  </th>
-                                  <td>$20</td>
-                                </tr>
-                                <tr>
-                                  <th>Total</th>
-                                  <td>$138.00</td>
-                                </tr>
-                              </tbody>
-                            </Table>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                    <div className="oder-detail-card mb-4">
-                      <Row>
-                        <Col lg={5}>
-                          <div className="product-details">
-                            <div>
-                              <img src={logo} />
-                            </div>
-                            <div>
-                              <h5>Canine Products</h5>
-                              <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col lg={7}>
-                          <div className="dowload-invioce">
-                            <Button className="invoice-1">
-                              <img src={invoice} /> download invoice
-                            </Button>
-                            <Button className="invoice-2">
-                              <img src={invoice} /> download summary
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={5}>
-                          <div className="order-minicard">
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Col>
-                        <Col lg={7} className="align-self-center">
-                          <div className="order-table">
-                            <Table responsive>
-                              <tbody>
-                                <tr>
-                                  <th>Sub Total</th>
-                                  <td>$50</td>
-                                </tr>
-                                <tr>
-                                  <th>
-                                    Moving Cart <br />
-                                    <p>Additional Services</p>
-                                  </th>
-                                  <td>$10</td>
-                                </tr>
-                                <tr>
-                                  <th>
-                                    Discount <br />
-                                    <p>Promo Code: 554dffd</p>
-                                  </th>
-                                  <td>$20</td>
-                                </tr>
-                                <tr>
-                                  <th>Total</th>
-                                  <td>$138.00</td>
-                                </tr>
-                              </tbody>
-                            </Table>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div> */}
                   </div>
                   <div className="needplace">
                     <Row>
@@ -856,7 +587,49 @@ function DashboadSalesman() {
                 id="Balance"
                 role="tabpanel"
                 aria-labelledby="pills-Balance-tab"
-              ></div>
+              >
+                <div className="needplace">
+                  <div className="dash-head">
+                    <h1>Completed Order</h1>
+                  </div>
+                  <div className="needplace">
+                    <div className="needplace">
+                      {completedOders && completedOders.length > 0 ? (
+                        completedOders.map((item, index) => (
+                          <div className="myorder-list">
+                            <Row className="justify-content-center">
+                              <Col lg={2}>
+                                <img src={logo} />
+                              </Col>
+                              <Col lg={6}>
+                                <h3>Order Id: {item.id}</h3>
+                                <h3>Date: {item.created_at}</h3>
+                                <h3>Payment Method: {item.payment_method}</h3>
+                                <h3>Order Amount: ₹{item.order_amount}</h3>
+                              </Col>
+
+                              <Col lg={2} className="align-self-center">
+                                <div className="myorder-btn">
+                                  <Button>
+                                    <Link to={`/order-view-details/${item.id}`}>
+                                      View
+                                    </Link>
+                                  </Button>
+                                  <Button>
+                                    <Link to="/track-your-order">Track</Link>
+                                  </Button>
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </Container>
