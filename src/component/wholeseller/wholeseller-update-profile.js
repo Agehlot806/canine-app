@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Wholeheader from "../../directives/wholesalesheader";
+import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
+import { useNavigate } from "react-router-dom";
 
 function WholeSellerUpdateprofile() {
   // const [uploadField, setUploadField] = useState([{image:""}])
+  const navigator = useNavigate();
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
+  console.log(imageUrl);
 
   const [profileData, setProfileData] = useState({
-    firstname: "",
-    lastname: "",
+    f_name: "",
+    l_name: "",
     email: "", // Initialize with default value
     phone: "", // Initialize with default value
     image: "",
@@ -18,16 +23,24 @@ function WholeSellerUpdateprofile() {
   });
   console.log("profileData: ", profileData);
 
+  const loginType = localStorage.getItem("loginType");
+  const salesmanId = localStorage.getItem("salesmanId");
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   useEffect(() => {
+    if (loginType == "salesman") {
+      getSalesmanProfile();
+    } else {
+      getWholesellerProfile();
+    }
+  }, []);
+
+  const getWholesellerProfile = async () => {
     // Fetch profile data from the API
-    axios
-      .get(
-        `https://canine.hirectjob.in/api/v1/auth/my_profile/${storedWholesellerId}`
-      )
+    await axios
+      .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
       .then((response) => {
         if (response.data.status === "200") {
           console.log("response.data: ", response.data);
@@ -48,19 +61,35 @@ function WholeSellerUpdateprofile() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
 
-  // const addUploadFields = () => {
-  //   let newUpdloadField = {image:""}
-  //   setUploadFields([...uploadField, newUpdloadField]);
-  // };
-  // const removeUploadFields = (index) => {
-  //   let data = [...uploadField];
-  //   data.splice(index, 1);
-  //   setUploadFields(data)
-  // };
+  const getSalesmanProfile = async () => {
+    await axios
+      .get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
+      .then((response) => {
+        if (response.data.status === "200") {
+          console.log("response.data: ", response.data);
+          setProfileData({
+            f_name: response.data.data[0].f_name,
+            l_name: response.data.data[0].l_name,
+            email: response.data.data[0].email, // Set email from response
+            phone: response.data.data[0].phone, // Set phone from response
+            image: response.data.data[0].image,
+            // Set other fields as needed
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+    setProfileData({
+      ...profileData,
+      image: e.target.files[0],
+    });
     if (file) {
       setImageFile(file);
 
@@ -85,6 +114,25 @@ function WholeSellerUpdateprofile() {
     }
   };
 
+  const handleSalesmanUpdate = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("f_name", profileData.f_name);
+    formData.append("l_name", profileData.l_name);
+    formData.append("email", profileData.email);
+    formData.append("image", profileData.image);
+    formData.append("phone", profileData.phone);
+    await axios
+      .post(`${BASE_URL}/auth/delivery-man/deliveryman_update`, formData)
+      .then((res) => {
+        console.log("res in profile", res);
+        navigator("/salesman-dashboad");
+      })
+      .catch((error) => {
+        console.log("error in profile", error);
+      });
+  };
+
   return (
     <>
       <Wholeheader />
@@ -94,7 +142,15 @@ function WholeSellerUpdateprofile() {
             <Col lg={10}>
               <h1 className="main-head text-center">Profile</h1>
               <div className="contact-form">
-                <Form onSubmit={handleFormSubmit}>
+                <Form
+                  onSubmit={(e) => {
+                    if (loginType == "salesman") {
+                      handleSalesmanUpdate(e);
+                    } else {
+                      handleFormSubmit(e);
+                    }
+                  }}
+                >
                   <Row>
                     <Col>
                       <Form.Group className="mb-3" controlId="formGridEmail">
@@ -162,6 +218,7 @@ function WholeSellerUpdateprofile() {
                       placeholder="Enter phone"
                       type="tel"
                       maxLength={10}
+                      disabled={loginType == "salesman" ? true : false}
                       value={profileData.phone || ""}
                       onChange={(e) =>
                         setProfileData({
@@ -178,7 +235,7 @@ function WholeSellerUpdateprofile() {
                       Upload Image<span style={{ color: "#008efd" }}>*</span>
                     </Form.Label>
                     <Form.Control type="file" onChange={handleImageUpload} />
-                    {imageUrl !== null && imageUrl !== "" && (
+                    {imageUrl.image !== null && imageUrl.image !== "" ? (
                       <div className="image-preview">
                         <img src={imageUrl} alt="Uploaded" />
                         <Button
@@ -191,6 +248,16 @@ function WholeSellerUpdateprofile() {
                         >
                           Remove
                         </Button>
+                      </div>
+                    ) : (
+                      <div className="image-preview">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
+                            profileData.image
+                          }
+                          alt="profile"
+                        />
                       </div>
                     )}
                   </Form.Group>

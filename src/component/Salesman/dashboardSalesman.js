@@ -277,7 +277,7 @@ function DashboadSalesman() {
                                           <Col sm={9}>
                                             <div className="wholeseller-detail">
                                               <h6>
-                                                {item.f_name + "" + item.l_name}
+                                                {item.f_name + " " + item.l_name}
                                               </h6>
                                               <a>
                                                 <i className="fa fa-star" />
@@ -320,140 +320,6 @@ function DashboadSalesman() {
                           </Row>
                         </div>
                       </div>
-                      <div
-                        className="tab-pane fade"
-                        id="Add New Wholeseller"
-                        role="tabpanel"
-                        aria-labelledby="Add New Wholeseller-tab"
-                      >
-                        <div className="Add-New-Wholeseller">
-                          <div className="needplace">
-                            <Row>
-                              <Col lg={7}>
-                                <div className="form-area">
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Control
-                                        type="text"
-                                        placeholder="Full Name"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Control
-                                        type="date"
-                                        placeholder="Date of Birth"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Control
-                                        type="email"
-                                        placeholder="Email ID"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Control
-                                        type="text"
-                                        placeholder="Business Name"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Label>Country</Form.Label>
-                                      <Form.Select defaultValue="Choose...">
-                                        <option>Choose...</option>
-                                        <option>...</option>
-                                      </Form.Select>
-                                    </Form.Group>
-                                    <Row className="mb-3">
-                                      <Form.Group as={Col}>
-                                        <Form.Label>
-                                          State
-                                          <span style={{ color: "red" }}>
-                                            *
-                                          </span>
-                                        </Form.Label>
-                                        <Form.Select aria-label="Default select example">
-                                          <option>Choose...</option>
-                                          <option value="State">State</option>
-                                        </Form.Select>
-                                      </Form.Group>
-                                      <Form.Group as={Col}>
-                                        <Form.Label>
-                                          City
-                                          <span style={{ color: "red" }}>
-                                            *
-                                          </span>
-                                        </Form.Label>
-                                        <Form.Select aria-label="Default select example">
-                                          <option>Choose...</option>
-                                        </Form.Select>
-                                      </Form.Group>
-                                    </Row>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Control
-                                        type="number"
-                                        placeholder="GST Number"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Control
-                                        type="number"
-                                        placeholder="Pincode"
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="formGroupEmail"
-                                    >
-                                      <Form.Label>Currency</Form.Label>
-                                      <Form.Select defaultValue="Choose...">
-                                        <option>Choose...</option>
-                                        <option>...</option>
-                                      </Form.Select>
-                                    </Form.Group>
-                                    <Row className="mb-3">
-                                      <Form.Group
-                                        as={Col}
-                                        controlId="formGridState"
-                                      >
-                                        <Form.Label>Upload 1</Form.Label>
-                                        <Form.Control type="file" />
-                                      </Form.Group>
-                                      <Form.Group
-                                        as={Col}
-                                        controlId="formGridCity"
-                                      >
-                                        <Form.Label>Upload 2</Form.Label>
-                                        <Form.Control type="file" />
-                                      </Form.Group>
-                                    </Row>
-                                  </Form>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -478,7 +344,7 @@ function DashboadSalesman() {
                                   <img src={pro} />
                                 </Col>
                                 <Col lg={8} className="align-self-center">
-                                  <h5>John Smith</h5>
+                                  <h5>{item.user_id[0]?.f_name + " " + item?.user_id[0]?.l_name}</h5>
                                   <p>{moment(item.pending).format("LLL")}</p>
                                 </Col>
                                 <Col lg={2} className="align-self-center">
@@ -521,7 +387,7 @@ function DashboadSalesman() {
                               </Col>
                               <Col lg={6}>
                                 <h3>Order Id: {item.id}</h3>
-                                <h3>Date: {item.created_at}</h3>
+                                <h3>Date: {moment(item.pending).format('LLL')}</h3>
                                 <h3>Payment Method: {item.payment_method}</h3>
                                 <h3>Order Amount: ₹{item.order_amount}</h3>
                               </Col>
