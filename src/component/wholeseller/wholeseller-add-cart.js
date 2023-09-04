@@ -27,7 +27,7 @@ function WholesellerAddCart() {
   const [couponlist, setcouponlist] = useState([]);
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
-  const loginType = localStorage.getItem('loginType')
+  const loginType = localStorage.getItem("loginType");
 
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
@@ -102,10 +102,9 @@ function WholesellerAddCart() {
       })
       .then((responseData) => {
         console.log("responseData???>>>>", responseData);
-        if(loginType == 'salesman'){
-          shippingpage('/salesman-dashboad')
-        }else {
-
+        if (loginType == "salesman") {
+          shippingpage("/salesman-dashboad");
+        } else {
           shippingpage("/wholeseller-shipping/" + responseData.data.order_id);
         }
       })
@@ -169,7 +168,7 @@ function WholesellerAddCart() {
   // const originalPrice = addToCartProduct[0]?.price;
 
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  const salesmanId = localStorage.getItem('salesmanId')
+  const salesmanId = localStorage.getItem("salesmanId");
   console.log("storedWholesellerId: ", storedWholesellerId);
 
   const handleQuantityChange = (event) => {
@@ -909,7 +908,7 @@ function WholesellerAddCart() {
               <div class="form-group">
                 <label>Mobile</label>
                 <input
-                  type="number"
+                  type="tel"
                   name="mobile"
                   class="form-control"
                   maxLength={10}
