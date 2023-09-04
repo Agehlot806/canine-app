@@ -26,7 +26,7 @@ function WholeSellerUpdateprofile() {
     // Fetch profile data from the API
     axios
       .get(
-        `https://canine.hirectjob.in/api/v1/auth/my_profile/${storedWholesellerId}`
+        `https://canine.hirectjob.in/api/v1/auth/delivery-man/deliveryman_profile/${storedWholesellerId}`
       )
       .then((response) => {
         if (response.data.status === "200") {
@@ -74,7 +74,7 @@ function WholeSellerUpdateprofile() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/update-profile",
+        "https://canine.hirectjob.in/api/v1/auth/delivery-man/deliveryman_update",
         profileData // Send the profileData object in the request
       );
       if (response.data.message === "Successfully updated!") {

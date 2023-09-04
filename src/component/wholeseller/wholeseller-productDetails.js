@@ -23,7 +23,7 @@ function WholesellerproductDetails() {
   console.log("id: ", id);
   // *************************
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  const salesmanId = localStorage.getItem('salesmanId')
+  const salesmanId = localStorage.getItem("salesmanId");
   console.log("storedWholesellerId: ", storedWholesellerId);
   // **********************
 
@@ -107,7 +107,27 @@ function WholesellerproductDetails() {
     productData();
     itemWiseBanner();
     fetchrelatedproduct();
+    fetchBreed();
   }, []);
+
+  const [latestDetails, setLatestDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/items/latest/`);
+        setLatestDetails(response.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProductData(); // Call the fetchProductData function when the component mounts
+  }, [id]);
 
   const productData = async () => {
     axios
@@ -135,7 +155,7 @@ function WholesellerproductDetails() {
           price: formattedAmount,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
-          seller_id: salesmanId ? Number(salesmanId) : ''
+          seller_id: salesmanId ? Number(salesmanId) : "",
         }
       );
 
@@ -228,6 +248,19 @@ function WholesellerproductDetails() {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const [tragetSpecies, setTragetSpecies] = useState([]);
+  const fetchBreed = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/breed/1`);
+      const names = response.data.data.map((item) => item.name);
+      setTragetSpecies(names);
+
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
   };
 
   const gradientColors = [
@@ -418,39 +451,40 @@ function WholesellerproductDetails() {
                   </div>
                 </div>
                 <h5>About Us</h5>
-                <Table responsive>
-                  <tbody>
-                    <tr>
-                      <th>Brand</th>
-                      <td>{productDetails.store_name}</td>
-                    </tr>
-                    {/* <tr>
-                      <th>Flavour</th>
-                      <td>Chicken</td>
-                    </tr> */}
-                    <tr>
-                      <th>Diet type</th>
-                      {/* <td>Non Vegetarian</td> */}
-                      <td>
-                        {productDetails.Veg === "0"
-                          ? "Vegetarian"
-                          : "Non Vegetarian"}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Age Range</th>
-                      <td>Adult</td>
-                    </tr>
-                    <tr>
-                      <th>Traget Species</th>
-                      <td>Dog</td>
-                    </tr>
-                    <tr>
-                      <th>Item From</th>
-                      <td>Pellet</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                {console.log("latestDetails.id: ", latestDetails.id)}
+                {console.log("latestDetails: ", latestDetails)}
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : error ? (
+                  <p>Error: {error.message}</p>
+                ) : latestDetails.length > 0 ? (
+                  <table responsive>
+                    <tbody>
+                      <tr>
+                        <th>Brand</th>
+                        <td>{latestDetails[0].brand_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Age Range</th>
+                        <td>{latestDetails[0].lifeStage_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Health Condition</th>
+                        <td>{latestDetails[0].helthCondition_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Target Species</th>
+                        <td>{latestDetails[0].Petsbreeds_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Item From</th>
+                        <td>Pellet</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No data available for this product.</p>
+                )}
               </div>
             </Col>
           </Row>
