@@ -832,6 +832,7 @@ const subcatid = async (id) => {
                 <div>
                   <Row>
                   {paginatedCategories.map((item, index) => (
+                    item.category_id == id &&( 
                     <Col lg={4} sm={6} xs={6} className="mb-4">
                       <div
                         className="food-product"
@@ -881,6 +882,7 @@ const subcatid = async (id) => {
                         </Link>
                       </div>
                     </Col>
+                    )
                   ))}
                   </Row>
                   <div className="pagination-area">
