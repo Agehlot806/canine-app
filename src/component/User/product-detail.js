@@ -63,7 +63,28 @@ function Productdetail() {
     productData();
     itemWiseBanner();
     fetchrelatedproduct();
+    fetchBreed();
+    fetchLifestage();
+    // fetchProductData();
   }, []);
+  const [latestDetails, setLatestDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/items/latest/`);
+        setLatestDetails(response.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProductData(); // Call the fetchProductData function when the component mounts
+  }, [id]);
 
   const productData = async () => {
     axios
@@ -158,6 +179,51 @@ function Productdetail() {
         console.log(error);
       });
   };
+  const [tragetSpecies, setTragetSpecies] = useState([]);
+  const fetchBreed = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/breed/1`);
+      const names = response.data.data.map((item) => item.name);
+      setTragetSpecies(names);
+
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+  const [ageRange, setAgeRange] = useState([]);
+  const fetchLifestage = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/life_stage/1`);
+      const ageDog = response.data.data.map((item) => item.name);
+      setAgeRange(ageDog);
+
+      // Handle response as needed
+    } catch (error) {
+      console.error(error);
+      // Handle error as needed
+    }
+  };
+  // const [latestDetails, setLatestDetails] = useState([]);
+  // const fetchProductData = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/items/latest/${id}`);
+  //     const extractedDetails = response.data.data.map((item) => ({
+  //       brand_id: item.brand_id,
+  //       lifeStage_id: item.lifeStage_id,
+  //       helthCondition_id: item.helthCondition_id,
+  //       Petsbreeds_id: item.Petsbreeds_id,
+  //     }));
+  //     setLatestDetails(extractedDetails);
+
+  //     // Handle response as needed
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Handle error as needed
+  //   }
+  // };
+  // const filteredItems = latestDetails.filter((item) => item.id === id);
 
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
@@ -466,30 +532,40 @@ function Productdetail() {
                   </div>
                 </div>
                 <h5>About Us</h5>
-                <Table responsive>
-                  <tbody>
-                    <tr>
-                      <th>Brand</th>
-                      <td>{productDetails.store_name}</td>
-                    </tr>
-                    {/* <tr>
-                      <th>Flavour</th>
-                      <td>Chicken</td>
-                    </tr> */}
-                    <tr>
-                      <th>Age Range</th>
-                      <td>Adult</td>
-                    </tr>
-                    <tr>
-                      <th>Traget Species</th>
-                      <td>Dog</td>
-                    </tr>
-                    <tr>
-                      <th>Item From</th>
-                      <td>Pellet</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                {console.log("latestDetails.id: ", latestDetails.id)}
+                {console.log("latestDetails: ", latestDetails)}
+                {isLoading ? (
+                  <p>Loading...</p>
+                ) : error ? (
+                  <p>Error: {error.message}</p>
+                ) : latestDetails.length > 0 ? (
+                  <table responsive>
+                    <tbody>
+                      <tr>
+                        <th>Brand</th>
+                        <td>{latestDetails[0].brand_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Age Range</th>
+                        <td>{latestDetails[0].lifeStage_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Health Condition</th>
+                        <td>{latestDetails[0].helthCondition_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Target Species</th>
+                        <td>{latestDetails[0].Petsbreeds_id}</td>
+                      </tr>
+                      <tr>
+                        <th>Item From</th>
+                        <td>Pellet</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>No data available for this product.</p>
+                )}
               </div>
             </Col>
           </Row>
