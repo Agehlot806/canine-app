@@ -1065,7 +1065,7 @@ function Addcart() {
               <div class="form-group">
                 <label>Mobile</label>
                 <input
-                  type="number"
+                  type="tel"
                   name="mobile"
                   class="form-control"
                   maxLength={10}

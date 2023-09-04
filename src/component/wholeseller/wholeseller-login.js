@@ -19,6 +19,14 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isEmailFormatValid(email)) {
+      setIsEmailValid(false);
+      return; // Don't proceed if email is invalid
+    }
+    if (password.length < 8 || !hasSpecialCharacter) {
+      setIsPasswordValid(false);
+      return; // Don't proceed if password is invalid
+    }
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
