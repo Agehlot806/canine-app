@@ -67,24 +67,6 @@ function Productdetail() {
     fetchLifestage();
     // fetchProductData();
   }, []);
-  const [latestDetails, setLatestDetails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/items/latest/`);
-        setLatestDetails(response.data.data);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchProductData(); // Call the fetchProductData function when the component mounts
-  }, [id]);
 
   const productData = async () => {
     axios
@@ -205,25 +187,6 @@ function Productdetail() {
       // Handle error as needed
     }
   };
-  // const [latestDetails, setLatestDetails] = useState([]);
-  // const fetchProductData = async () => {
-  //   try {
-  //     const response = await axios.get(`${BASE_URL}/items/latest/${id}`);
-  //     const extractedDetails = response.data.data.map((item) => ({
-  //       brand_id: item.brand_id,
-  //       lifeStage_id: item.lifeStage_id,
-  //       helthCondition_id: item.helthCondition_id,
-  //       Petsbreeds_id: item.Petsbreeds_id,
-  //     }));
-  //     setLatestDetails(extractedDetails);
-
-  //     // Handle response as needed
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle error as needed
-  //   }
-  // };
-  // const filteredItems = latestDetails.filter((item) => item.id === id);
 
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
@@ -532,35 +495,29 @@ function Productdetail() {
                   </div>
                 </div>
                 <h5>About Us</h5>
-                {console.log("latestDetails.id: ", latestDetails.id)}
-                {console.log("latestDetails: ", latestDetails)}
-                {isLoading ? (
-                  <p>Loading...</p>
-                ) : error ? (
-                  <p>Error: {error.message}</p>
-                ) : latestDetails.length > 0 ? (
+                {productDetails ? (
                   <Table responsive>
                     <tbody>
                       <tr>
                         <th>Brand</th>
-                        <td>{latestDetails[0].brand_id}</td>
+                        <td>{productDetails?.brand_id}</td>
                       </tr>
                       <tr>
                         <th>Age Range</th>
-                        <td>{latestDetails[0].lifeStage_id}</td>
+                        <td>{productDetails?.lifeStage_id}</td>
                       </tr>
                       <tr>
                         <th>Health Condition</th>
-                        <td>{latestDetails[0].helthCondition_id}</td>
+                        <td>{productDetails?.helthCondition_id}</td>
                       </tr>
                       <tr>
                         <th>Target Species</th>
-                        <td>{latestDetails[0].Petsbreeds_id}</td>
+                        <td>{productDetails?.Petsbreeds_id}</td>
                       </tr>
-                      <tr>
-                        <th>Item From</th>
-                        <td>Pellet</td>
-                      </tr>
+                      {/* <tr>
+                          <th>Item From</th>
+                          <td>Pellet</td>
+                        </tr> */}
                     </tbody>
                   </Table>
                 ) : (

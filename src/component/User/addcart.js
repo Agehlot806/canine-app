@@ -20,9 +20,16 @@ function Addcart() {
   const [quantity, setQuantity] = useState(1);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   const [coupencode, setcoupenCode] = useState(false);
+  console.log("coupencode: ", coupencode);
   const [couponlist, setcouponlist] = useState([]);
+  console.log("couponlist: ", couponlist);
+  const [appliedCoupon, setAppliedCoupon] = useState(false);
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
+
+  // const firstDiscount = couponlist.length > 0 ? couponlist[0] : null;
+  // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
+  // const firstDiscountAmount = firstDiscount ? firstDiscount.discount : "";
 
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
@@ -325,31 +332,6 @@ function Addcart() {
       });
   };
 
-  // order placed
-  // const handleCheckOut = async () => {
-  //   try {
-  //     const response = await axios.post(`${BASE_URL}/customer/order/place`, {
-  //       user_id: storedUserId,
-  //       image: productDetails.image,
-  //       quantity: productDetails.quantity,
-  //       price: productDetails.price,
-  //       user_id: storedUserId,
-  //       item_id: productDetails.id,
-  //     });
-
-  //     if (response.data.success) {
-  //       const updatedCart = [...addToCartStatus, productDetails];
-  //       setAddToCartStatus(updatedCart);
-  //       // setAddToCartStatus("Added to cart!");
-  //       toast.success("Added to cart!");
-  //       // Navigate("/addcart")
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding to cart:", error);
-  //     setAddToCartStatus("Error adding to cart");
-  //   }
-  // };
-
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -364,9 +346,7 @@ function Addcart() {
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
-  // console.log("=======>>>>>> id", customer_id);
   let storedUserId = JSON.parse(customer_id);
-  // console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   const [addresslist, setaddresslist] = useState([]);
@@ -405,6 +385,8 @@ function Addcart() {
 
   const [profileData, setProfileData] = useState({});
   console.log("profileData: ", profileData);
+  const data = localStorage.getItem("disconut");
+  const disscountvalue = JSON.parse(data);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -435,28 +417,28 @@ function Addcart() {
       price: item.price,
       quantity: item.quantity,
       tax_amount: taxamound,
-      discount_on_item: disscountvalue,
+      discount_on_item: disscountvalue?.discount,
     }));
     const requestData = {
       user_id: customer_id,
-      coupon_discount_amount: 200,
-      coupon_discount_title: "coupan",
+      coupon_discount_amount: disscountvalue?.discount,
+      coupon_discount_title: disscountvalue?.title,
       payment_status: "confirm",
       order_status: "pending",
-      total_tax_amount: 160,
-      payment_method: "online",
-      transaction_reference: "sadgash23asds",
+      total_tax_amount: taxamound,
+      payment_method: selectedInput ? "offline" : "online",
+      transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
-      coupon_code: "sdf42",
+      coupon_code: disscountvalue?.code,
       order_type: "delivery",
-      checked: 1,
+      checked: selectedInput,
       store_id: 1,
       zone_id: 2,
       delivered_status: "undelivered",
-      delivery_address: "Delhi city 389",
+      delivery_address: deliveryAddress,
       item_campaign_id: "",
       order_amount: parseInt(
-        originalPrice * 0.05 + originalPrice - disscountvalue
+        originalPrice * 0.05 + originalPrice - disscountvalue?.discount
       ),
       cart: cartData,
     };
@@ -478,12 +460,28 @@ function Addcart() {
         console.error("Error sending request:", error);
       });
   };
-  const disscountvalue = localStorage.getItem("disconut");
+  function formatAddress(selectedAddress) {
+    return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
+  }
+
+  // ...
+
+  // Use the formatAddress function to get the selected address as a single string
+  const deliveryAddress = selectedAddress
+    ? formatAddress(selectedAddress)
+    : "No address selected";
+
   console.log("disscountvalue", disscountvalue);
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
-    localStorage.setItem("disconut", dis);
+    localStorage.setItem("disconut", JSON.stringify(dis));
+    setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
     console.log("disccount?????", dis);
+  };
+  const clearCoupon = () => {
+    setcoupenCode(!coupencode);
+    setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [first_nameError, setFirst_nameError] = useState("");
 
@@ -647,31 +645,22 @@ function Addcart() {
                             <img src={voch} />
                           </Col>
                           <Col className="align-self-center">
-                            <h5>Voucher Discount</h5>
+                            <h5>{disscountvalue?.title}</h5>
                           </Col>
                           <Col className="align-self-center">
-                            <h6>$30.00</h6>
+                            <h6>₹{disscountvalue?.discount}</h6>
                           </Col>
                           <Col className="align-self-center">
                             <button
-                              onClick={() => {
-                                setcoupenCode(!coupencode);
-                              }}
+                              // onClick={() => {
+                              //   setcoupenCode(!coupencode);
+                              // }}
+                              onClick={clearCoupon}
                               type="button"
                               class="btn btn-danger"
                             >
                               X
                             </button>
-                            {/* <button
-                            onClick={() => {
-                              setcoupenCode(!coupencode);
-                            }}
-                            type="button"
-                            class="close"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button> */}
                           </Col>
                         </Row>
                       </div>
@@ -699,6 +688,20 @@ function Addcart() {
                       <hr />
                       <Row>
                         <Col>
+                          <h5>Coupon Discount</h5>
+                        </Col>
+                        <Col>
+                          <h5>
+                            ₹
+                            {appliedCoupon
+                              ? parseInt(disscountvalue?.discount)
+                              : 0}
+                          </h5>
+                        </Col>
+                      </Row>
+                      <hr />
+                      <Row>
+                        <Col>
                           <h5>Tax(5%)</h5>
                         </Col>
                         <Col>
@@ -706,6 +709,7 @@ function Addcart() {
                         </Col>
                       </Row>
                       <hr />
+
                       <Row>
                         <Col>
                           <h5>Rounding Adjust</h5>
@@ -716,7 +720,7 @@ function Addcart() {
                             {`${parseInt(
                               originalPrice * 0.05 +
                                 originalPrice -
-                                disscountvalue
+                                disscountvalue?.discount
                             )}`}
                             {/* Calculate and display the Rounding Adjust */}
                           </h5>
@@ -1467,7 +1471,7 @@ function Addcart() {
               <h5>Coupon List</h5>
               {couponlist && couponlist.length > 0 ? (
                 couponlist.map((item, index) => (
-                  <div className="notification">
+                  <div className="notification" key={index}>
                     <Row>
                       <Col lg={12}>
                         <table>
@@ -1512,7 +1516,7 @@ function Addcart() {
                             // onClick={() => {
                             //   setcoupenCode(!coupencode);
                             // }}
-                            onClick={(e) => coupendisscount(item.discount)}
+                            onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
                             // data-toggle="modal"
