@@ -4,13 +4,17 @@ import login from "../../assets/images/img/login.png";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import { Toaster, toast } from "react-hot-toast";
 function Login() {
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (phone.length !== 10) {
+      // Check if the phone number has 10 digits
+      toast.error("Please enter a valid 10-digit mobile number."); // Show the error message using react-hot-toast
+      return;
+    }
     const customerData = new FormData();
     customerData.append("cust_phone", phone);
     try {
@@ -35,9 +39,9 @@ function Login() {
       setPhone(inputValue);
     }
   };
-
   return (
     <>
+    <Toaster/>
       <div className="users-bg">
         <Container>
           <div className="text-center">
@@ -52,7 +56,6 @@ function Login() {
                     Enter your mobile number to Sign up/Sign in to your logo
                     account
                   </p>
-
                   <Form>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Label>Mobile No</Form.Label>
@@ -78,7 +81,7 @@ function Login() {
                         type="submit"
                         onClick={handleSubmit}
                       >
-                        <Link to="/otp">Login</Link>{" "}
+                        <Link to="">Login</Link>{" "}
                       </Button>
                       <div className="login-btns">
                         <Link to="/other-login">Other Login</Link>
@@ -99,5 +102,4 @@ function Login() {
     </>
   );
 }
-
 export default Login;

@@ -575,11 +575,11 @@ function WholesellerAddCart() {
                       }
                     />
                   </Col>
-                  <Col lg={6} sm={6} className="align-self-center">
+                  <Col lg={6} sm={5} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
-                  <Col lg={2} sm={2} className="align-self-center">
+                  <Col lg={2} sm={3} xs={6} className="align-self-center addCARThead">
                     <h3>₹{item.price}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
@@ -613,7 +613,7 @@ function WholesellerAddCart() {
                       </button>
                     </div>
                   </Col>
-                  <Col lg={2} sm={2} className="align-self-center">
+                  <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
                       // onClick={() => removeFromCart(item.id)}

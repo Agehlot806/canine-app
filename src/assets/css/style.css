@@ -1833,6 +1833,15 @@ a {
 .partner-img img {
   width: 500px;
 }
+.Members-card h5 {
+  color: #000;
+  font-weight: bold;
+  margin: 4px 0 14px;
+}
+.Members-card h5 span{
+  color: gray;
+  font-weight: 500;
+}
 
 .Members-card {
   border-radius: 35px;
@@ -1847,6 +1856,7 @@ a {
   color: rgba(2, 29, 41, 0.75);
   font-size: 18px;
   font-weight: 500;
+  margin: 0;
 }
 
 .Members-monthly {

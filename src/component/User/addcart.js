@@ -538,7 +538,7 @@ function Addcart() {
             addToCartProduct.map((item, index) => (
               <Container>
                 <Row>
-                  <Col lg={2} sm={2} xs={2}>
+                  <Col lg={2} sm={2}>
                     <img
                       src={
                         "https://canine.hirectjob.in//storage/app/public/product/" +
@@ -549,7 +549,6 @@ function Addcart() {
                   <Col
                     lg={6}
                     sm={5}
-                    xs={4}
                     className="align-self-center addCARThead"
                   >
                     <h2>{item.item_name}</h2>
@@ -558,7 +557,7 @@ function Addcart() {
                   <Col
                     lg={2}
                     sm={3}
-                    xs={4}
+                    xs={6}
                     className="align-self-center addCARThead"
                   >
                     <h3>₹{item.price}</h3>
@@ -584,7 +583,7 @@ function Addcart() {
                       </button>
                     </div>
                   </Col>
-                  <Col lg={2} sm={2} xs={2} className="align-self-center">
+                  <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
                       // onClick={() => removeFromCart(item.id)}
