@@ -556,6 +556,13 @@ function Wholeheader(props) {
                                     // </Link>  */}
                     </div>
                   </li>
+                  <li className="nav-item">
+                <Link to="/wholeseller-add-cart"
+                  className="notification-btn"
+                >
+                  <i class="fa fa-shopping-cart" /> Cart
+                </Link>
+              </li>
                 </>
               ) : (
                 // Display Sign In button if user is not logged in
@@ -573,6 +580,7 @@ function Wholeheader(props) {
                   </button>
                 </li>
               )}
+               
             </ul>
           </div>
         </div>

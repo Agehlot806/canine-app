@@ -123,148 +123,6 @@ function Shipping() {
         </Container>
       </section>
 
-      {/* <section className="section-padding">
-        <Container>
-          <div className="oder-detail-card">
-            <Row>
-              <Col lg={5}>
-                <div className="product-details">
-                  <div>
-                    <img src={logo} />
-                  </div>
-                  <div>
-                    <h5>Canine Products</h5>
-                    <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={7}>
-                <div className="dowload-invioce">
-                  <Button className="invoice-1">
-                    <img src={invoice} /> download invoice
-                  </Button>
-                  <Button className="invoice-2">
-                    <img src={invoice} /> download summary
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={5}>
-                <div className="order-minicard">
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col lg={7} className="align-self-center">
-                <div className="order-table">
-                  <Table responsive>
-                    <tbody>
-                      <tr>
-                        <th>Sub Total</th>
-                        <td>$50</td>
-                      </tr>
-                      <tr>
-                        <th>
-                          Moving Cart <br />
-                          <p>Additional Services</p>
-                        </th>
-                        <td>$10</td>
-                      </tr>
-                      <tr>
-                        <th>
-                          Discount <br />
-                          <p>Promo Code: 554dffd</p>
-                        </th>
-                        <td>$20</td>
-                      </tr>
-                      <tr>
-                        <th>Total</th>
-                        <td>$138.00</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </section> */}
       <section className="section-padding">
         <Container>
           <h1 className="main-head text-center mb-3">Order Details</h1>
@@ -291,7 +149,7 @@ function Shipping() {
                               <h6>ORDER NUMBER</h6>
                               <p>{item.id}</p>
                               <h6>PAYMENT</h6>
-                              <p>Paid: Using Upi</p>
+                              <p>{item.payment_method}</p>
                               <h6>Date</h6>
                               <p>
                                 {moment(item.created_at).format("YYYY-MM-DD")}
@@ -332,25 +190,23 @@ function Shipping() {
                     )}
                   </p>
                   <h4>shipping Address</h4>
-                  <p>
-                    {addresslist && addresslist.length > 1 ? (
-                      addresslist.map(
-                        (item, index) =>
-                          index === 1 && (
-                            <p key={item.id}>
-                              {item.house_no} {item.area} {item.landmark}{" "}
-                              {item.city} {item.state} {item.pincode}
-                            </p>
-                          )
-                      )
-                    ) : (
-                      <p>No data to display</p>
-                    )}
-                  </p>
+                  {allorder && allorder.length > 0 ? (
+                    allorder.map((item, index) => {
+                      const createdDate = new Date(item.created_at);
+                      const seventhDayDate = new Date(createdDate);
+                      seventhDayDate.setDate(createdDate.getDate() + 7);
+                      if (item.id == id) {
+                        return (
+                          <><p>{item.delivery_address}</p></>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })
+                  ) : (
+                    <p className="emptyMSG">No Shipping Address</p>
+                  )}
                 </div>
-                {/* <div className='order-main-deals'>
-                                <img src={orders} />
-                            </div> */}
               </Col>
             </Row>
           </div>
