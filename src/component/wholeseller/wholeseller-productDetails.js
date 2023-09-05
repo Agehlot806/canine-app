@@ -83,6 +83,7 @@ function WholesellerproductDetails() {
     const fetchedProductDetails = {
       // Your fetched product details here
       min_order: 105, // Simulated min_order for example
+      categoryid: productDetails.category_id,
     };
 
     setProductDetails(fetchedProductDetails);
@@ -109,25 +110,6 @@ function WholesellerproductDetails() {
     fetchrelatedproduct();
     fetchBreed();
   }, []);
-
-  const [latestDetails, setLatestDetails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/items/latest/`);
-        setLatestDetails(response.data.data);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchProductData(); // Call the fetchProductData function when the component mounts
-  }, [id]);
 
   const productData = async () => {
     axios
@@ -451,35 +433,34 @@ function WholesellerproductDetails() {
                   </div>
                 </div>
                 <h5>About Us</h5>
-                {console.log("latestDetails.id: ", latestDetails.id)}
-                {console.log("latestDetails: ", latestDetails)}
-                {isLoading ? (
-                  <p>Loading...</p>
-                ) : error ? (
-                  <p>Error: {error.message}</p>
-                ) : latestDetails.length > 0 ? (
+                {console.log(
+                  "productDetails.brand_id: ",
+                  productDetails.brand_id
+                )}
+
+                {productDetails ? (
                   <table responsive>
                     <tbody>
                       <tr>
                         <th>Brand</th>
-                        <td>{latestDetails[0].brand_id}</td>
+                        <td>{productDetails?.brand_id}</td>
                       </tr>
                       <tr>
                         <th>Age Range</th>
-                        <td>{latestDetails[0].lifeStage_id}</td>
+                        <td>{productDetails?.lifeStage_id}</td>
                       </tr>
                       <tr>
                         <th>Health Condition</th>
-                        <td>{latestDetails[0].helthCondition_id}</td>
+                        <td>{productDetails?.helthCondition_id}</td>
                       </tr>
                       <tr>
                         <th>Target Species</th>
-                        <td>{latestDetails[0].Petsbreeds_id}</td>
+                        <td>{productDetails?.Petsbreeds_id}</td>
                       </tr>
-                      <tr>
-                        <th>Item From</th>
-                        <td>Pellet</td>
-                      </tr>
+                      {/* <tr>
+                          <th>Item From</th>
+                          <td>Pellet</td>
+                        </tr> */}
                     </tbody>
                   </table>
                 ) : (

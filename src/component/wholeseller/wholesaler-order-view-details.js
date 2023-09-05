@@ -33,14 +33,14 @@ function WholesalerOrderviewdetails() {
   //   0
   // );allorder
 
-  let couponDiscount = orderDetails.coupon_discount_amount || 200;
+  // let couponDiscount = orderDetails.coupon_discount_amount || 200;
 
   let deliveryCharge = orderDetails.reduce(
     (total, order) => total + parseFloat(order.delivery_charge == 0 ? 60 : 60),
     0
   );
 
-  const AddAllServiceCharges = subTotal + couponDiscount + deliveryCharge;
+  const AddAllServiceCharges = subTotal + deliveryCharge;
   const formatted = AddAllServiceCharges.toLocaleString(undefined, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
@@ -185,14 +185,14 @@ function WholesalerOrderviewdetails() {
                                   </th>
                                             <td>{ item.}</td>
                                 </tr> */}
-                                <tr>
+                                {/* <tr>
                                   <th>
                                     Discount <br />
                                     <p>Promo Code: {item.coupon_code}</p>
                                   </th>
 
                                   <td>₹{couponDiscount}</td>
-                                </tr>
+                                </tr> */}
                                 <tr>
                                   <th>Delivery Charge</th>
                                   <td>₹{deliveryCharge}</td>

@@ -14,7 +14,7 @@ function Orderviewdetails() {
   const [allorder, setallorder] = useState([]);
   console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
-  // console.log("orderDetails: ", orderDetails);
+  console.log("orderDetails: ", orderDetails);
 
   const { id } = useParams();
   console.log("order id ", id);
@@ -24,7 +24,7 @@ function Orderviewdetails() {
     allOrders();
   }, []);
   let subTotal = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.price),
+    (total, order) => total + parseFloat(order.total_add_on_price),
     0
   );
 
@@ -33,14 +33,14 @@ function Orderviewdetails() {
   //   0
   // );allorder
 
-  let couponDiscount = orderDetails.coupon_discount_amount || 200;
+  let couponDiscount = parseFloat(orderDetails[0]?.discount_on_item);
 
   let deliveryCharge = orderDetails.reduce(
     (total, order) => total + parseFloat(order.delivery_charge == 0 ? 60 : 60),
     0
   );
 
-  const AddAllServiceCharges = subTotal + couponDiscount + deliveryCharge;
+  const AddAllServiceCharges = subTotal + deliveryCharge;
   const formatted = AddAllServiceCharges.toLocaleString(undefined, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
@@ -53,7 +53,8 @@ function Orderviewdetails() {
   const customer_id = localStorage.getItem("userInfo");
   const loginType = localStorage.getItem("loginType");
   const wholesellerId = localStorage.getItem("UserWholesellerId");
-  let storedUserId = loginType == 'salesman' ? parseInt(wholesellerId) : JSON.parse(customer_id);
+  let storedUserId =
+    loginType == "salesman" ? parseInt(wholesellerId) : JSON.parse(customer_id);
   // =----------------------------
   const allOrders = async () => {
     axios
@@ -132,7 +133,9 @@ function Orderviewdetails() {
                                 </p>
                                 <p>
                                   Price:{" "}
-                                  <span>₹{parseFloat(order.price, 0)}</span>
+                                  <span>
+                                    ₹{parseFloat(order.total_add_on_price, 0)}
+                                  </span>
                                 </p>
                                 <p>
                                   quantity: <span>{order.quantity}</span>
@@ -169,16 +172,18 @@ function Orderviewdetails() {
                             <>
                               <tbody>
                                 <tr>
-                                  <th>Sub Total</th>
-                                  {/* <td>
+                                  <th>Total</th>
+                                  <td>
                                     ₹
-                                    {orderDetails.reduce(
-                                      (total, order) =>
-                                        total + parseFloat(order.price),
-                                      0
+                                    {parseInt(
+                                      orderDetails.reduce(
+                                        (total, order) =>
+                                          total + parseFloat(order.price),
+                                        0
+                                      )
                                     )}
-                                  </td> */}
-                                  <td>₹{subTotal}</td>
+                                  </td>
+                                  {/* <td>₹{subTotal}</td> */}
                                 </tr>
                                 {/* <tr>
                                   <th>
@@ -193,8 +198,16 @@ function Orderviewdetails() {
                                     <p>Promo Code: {item.coupon_code}</p>
                                   </th>
 
-                                  <td>₹{couponDiscount}</td>
+                                  <td>
+                                    <span style={{ fontSize: 20 }}>{"-"}</span>{" "}
+                                    ₹{couponDiscount}
+                                  </td>
                                 </tr>
+                                <tr>
+                                  <th>Sub Total</th>
+                                  <td>₹{subTotal}</td>
+                                </tr>
+
                                 <tr>
                                   <th>Delivery Charge</th>
                                   <td>₹{deliveryCharge}</td>
