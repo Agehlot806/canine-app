@@ -6,9 +6,10 @@ import partner from '../../assets/images/img/partner.png'
 import Footer from '../../directives/footer'
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import { useNavigate } from "react-router-dom";
 
 function Partnerdashboard() {
-
+    const navigate = useNavigate();
 
     const gradientColors = [
         "linear-gradient(180deg, #f9e1dd 0%, rgba(249, 225, 221, 0) 100%)",
@@ -36,6 +37,36 @@ function Partnerdashboard() {
             });
     }, []);
 
+    const [planData, setPlanData] = useState({});
+    useEffect(() => {
+        fetchPurchaceplan();
+      }, []);
+    const fetchPurchaceplan = async () => {
+      try {
+        const response = await axios.post('https://canine.hirectjob.in/api/v1/auth/purchace_plan', {
+        });
+        const data = response.data;
+        localStorage.setItem('planData', JSON.stringify(data));
+        console.log('Plan data stored in local storage:', data);
+        setPlanData(data);
+      } catch (error) {
+        console.error('Error fetching plan data from API:', error);
+      }
+    };
+    const handleMorePlanClick = () => {
+      const storedPlanData = localStorage.getItem('planData');
+      if (storedPlanData) {
+        const parsedPlanData = JSON.parse(storedPlanData);
+        localStorage.setItem('vendor_id', parsedPlanData.vendor_id);
+        localStorage.setItem('plan_name', parsedPlanData.plan_name);
+        localStorage.setItem('plan_price', parsedPlanData.plan_price);
+        localStorage.setItem('plan_type', parsedPlanData.plan_type);
+        localStorage.setItem('plan_purchase_date', parsedPlanData.plan_purchase_date);
+        localStorage.setItem('plan_expaire_date', parsedPlanData.plan_expaire_date);
+        console.log('local storage:', parsedPlanData);
+        navigate("/plan-buy");
+      }
+    };
     return (
         <>
             <Newheader />
@@ -84,7 +115,7 @@ function Partnerdashboard() {
                                     <ul>
                                         <li><i class="fa fa-check-circle" /> {subscription.description}</li>
                                     </ul>
-                                    <Button>More Plan</Button>
+                                    <Button onClick={handleMorePlanClick}>More Plan</Button>
                                 </div>
                             </Col>
                         ))}

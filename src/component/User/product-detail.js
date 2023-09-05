@@ -539,7 +539,7 @@ function Productdetail() {
                 ) : error ? (
                   <p>Error: {error.message}</p>
                 ) : latestDetails.length > 0 ? (
-                  <table responsive>
+                  <Table responsive>
                     <tbody>
                       <tr>
                         <th>Brand</th>
@@ -562,7 +562,7 @@ function Productdetail() {
                         <td>Pellet</td>
                       </tr>
                     </tbody>
-                  </table>
+                  </Table>
                 ) : (
                   <p>No data available for this product.</p>
                 )}

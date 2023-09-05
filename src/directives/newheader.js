@@ -418,8 +418,8 @@ function Newheader(props) {
                     <input
                       type="text"
                       placeholder="Search by name"
-                      // value={searchTerm}
-                      // onChange={handleSearch}
+                    // value={searchTerm}
+                    // onChange={handleSearch}
                     />
                   </div>
                 </a>
@@ -480,6 +480,13 @@ function Newheader(props) {
                                     </Link> */}
                     </div>
                   </li>
+                  <li className="nav-item">
+                <Link to="/add-cart"
+                  className="notification-btn"
+                >
+                  <i class="fa fa-shopping-cart" /> Cart
+                </Link>
+              </li>
                 </>
               ) : (
                 // Display Sign In button if user is not logged in
@@ -489,6 +496,8 @@ function Newheader(props) {
                   </button>
                 </li>
               )}
+
+             
             </ul>
           </div>
         </div>

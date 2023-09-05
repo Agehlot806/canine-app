@@ -636,7 +636,9 @@ a {
   text-align: center;
   margin: 30px 0;
 }
-
+.productDetail-content .table>:not(caption)>*>* {
+  padding: 10px 0 !important;
+}
 .productBTNaddcard button {
   background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
       var(--_p, 100%) / 300% no-repeat,
@@ -2679,16 +2681,19 @@ ul.list-unstyled li {
   width: 100%;
   padding: 0 10px;
 }
+.notification-btn {
+  color: #000;
+}
 a.notification-btn i {
-  font-size: 28px;
+  font-size: 22px;
   margin: 13px 0 0 8px;
 }
 .newheader ul li a {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
 }
 .newheader ul li.nav-item {
-  align-self: center;
+  text-align: left;
 }
 ul.list-unstyled li a {
   color: #6c6b6b;

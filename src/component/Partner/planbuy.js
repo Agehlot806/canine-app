@@ -15,12 +15,6 @@ function Planbuy() {
                     <Container className="p-0">
                         <Row>
                             <Col lg={6} className="align-self-center">
-                                <div className="home-content">
-                                    <h1>Taking care <br />
-                                        for your Smart Dog !</h1>
-                                    <p>Human–canine bonding is the relationship between dogs and humans.</p>
-                                    <Button>Explore More <i className="fa fa-angle-right" /></Button>
-                                </div>
                             </Col>
                             <Col lg={6}>
                                 <img src={HomeImg} />

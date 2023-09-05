@@ -115,6 +115,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/veterinary-service" element={<Veterinaryservice />} />
           <Route path="/add-cart/:id" element={<Addcart />} />
+          <Route path="/add-cart" element={<Addcart />} />
           <Route path="/service-date/:id" element={<Servicedate />} />
           <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
           <Route path="/pet-profile/" element={<Petprofile />} />
@@ -215,6 +216,10 @@ function App() {
             path="/wholeseller-add-cart/:id"
             element={<WholesellerAddCart />}
           />
+           <Route
+            path="/wholeseller-add-cart"
+            element={<WholesellerAddCart />}
+          />
           <Route
             path="/wholeseller-payment-method"
             element={<WholesellerPaymentMethod />}
@@ -287,6 +292,7 @@ function App() {
           <Route path="/plan-buy" element={<Planbuy />} />
           <Route path="/partner-card" element={<Partnercard />} />
           <Route path="/pay" element={<Pay />} />
+          
         </Routes>
       </BrowserRouter>
     </div>
