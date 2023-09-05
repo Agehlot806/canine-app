@@ -1726,7 +1726,6 @@ a {
   font-size: 13px;
   font-weight: 600;
   margin: 0 6px;
-  width: 125px;
   height: 45px;
 }
 
@@ -3093,4 +3092,13 @@ button.Apply-price {
 .partner-oneshop table tbody tr td {
   font-size: 18px;
   color: #737373;
+}
+.partner-img {
+  width: 100%;
+}
+.Members-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 0 16px;
 }
