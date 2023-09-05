@@ -26,10 +26,10 @@ function Login() {
       setIsEmailValid(false);
       return; // Don't proceed if email is invalid
     }
-    if (password.length < 8 || !hasSpecialCharacter) {
-      setIsPasswordValid(false);
-      return; // Don't proceed if password is invalid
-    }
+    // if (password.length < 8 || !hasSpecialCharacter) {
+    //   setIsPasswordValid(false);
+    //   return; 
+    // }
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
@@ -108,10 +108,10 @@ function Login() {
                         value={password}
                         onChange={(e) => {
                           setPassword(e.target.value);
-                          setIsPasswordValid(e.target.value.length >= 8);
-                          setHasSpecialCharacter(
-                            /[^A-Za-z0-9]/.test(e.target.value)
-                          );
+                          // setIsPasswordValid(e.target.value.length >= 6);
+                          // setHasSpecialCharacter(
+                          //   /[^A-Za-z0-9]/.test(e.target.value)
+                          // );
                         }}
                         isInvalid={!isPasswordValid || !hasSpecialCharacter}
                       />

@@ -2,13 +2,13 @@ import React from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
-import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import Wholeheader from "../../directives/wholesalesheader";
 
 function WholesalerOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
@@ -78,10 +78,38 @@ function WholesalerOrderviewdetails() {
         console.log(error);
       });
   };
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
+          user_id: storedUserId,
+          item_id: productDetails?.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
 
   return (
     <>
-      <Newheader />
+      <Wholeheader />
       <section className="section-padding">
         <Container>
           <h1 className="main-head">Orders View</h1>
@@ -140,7 +168,10 @@ function WholesalerOrderviewdetails() {
 
                             <Col sm={3}>
                               <div className="order-ids">
-                                <Button>Buy it again</Button>
+                                <Button>
+                                  <Link to={`/wholeseller-add-cart/${id}`} onClick={handleAddToCart}>
+                                    Buy it again
+                                </Link></Button>
                               </div>
                             </Col>
                           </Row>
