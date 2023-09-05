@@ -28,7 +28,7 @@ function Otherlogin() {
                                         </Link>
                                     </Col>
                                     <Col lg={6} className='mb-3'>
-                                    <Link to='https://canine.hirectjob.in/store/apply'>
+                                    <Link to='/partners-login'>
                                         <div className='otherLogin-card otherLogin2'>
                                             <img src={loicon2} />
                                             <h5>Login for Partner</h5>

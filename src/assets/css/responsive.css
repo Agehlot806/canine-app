@@ -148,8 +148,8 @@
         padding-bottom: 30px;
     }
     .add-cart img {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
     }
     .addCARThead h2 {
         font-size: 16px;
@@ -166,7 +166,7 @@
         height: 26px;
     }
     .quantity-btn {
-        margin: 15px 0 0;
+        margin: 0 -8px 15px;
     }
     .contact-card i {
         height: 50px;
@@ -289,7 +289,10 @@
         margin: 0 0 20px;
         text-align: left;
     }
-
+    .delete-addcard {
+        text-align: right;
+        margin: 10px 0;
+    }
     .Newsletter-bg {
         text-align: center;
     }
@@ -300,9 +303,11 @@
         font-size: 20px;
     }
     .add-cart img {
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
     }
+  
+    
     .home-content h1 {
         font-size: 15px;
         margin: 0;

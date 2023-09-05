@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo.png";
 import login from "../../assets/images/img/login.png";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
-
+import { Toaster, toast } from "react-hot-toast";
 function WholesellerSignUp() {
+  // const { addToast } = useToaster();
   const { state } = useLocation();
   console.log("state in sellarw,hole", state);
   const handleFirstNameChange = (e) => {
@@ -15,7 +16,6 @@ function WholesellerSignUp() {
       setFirstName(inputValue);
     }
   };
-
   const handleLastNameChange = (e) => {
     const inputValue = e.target.value;
     if (/^[a-zA-Z ]*$/.test(inputValue)) {
@@ -30,7 +30,6 @@ function WholesellerSignUp() {
       !hasCapitalLetter
     );
   };
-
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -50,13 +49,30 @@ function WholesellerSignUp() {
   const [selectedCity, setSelectedCity] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true); // State to track password validity
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(true); // State to track presence of a special character
-
   const [city, setcity] = useState("");
   const [error, seterror] = useState(false);
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    if (
+      !firstName ||
+      !lastName ||
+      !dateOfBirth ||
+      !email ||
+      !mobileNumber ||
+      !stateData ||
+      !selectedCity ||
+      !businessName ||
+      !aadharNumber ||
+      !gstNumber ||
+      !pincode ||
+      !password ||
+      !upload1 ||
+      !upload2
+    ) {
+      toast.error("Please fill in all required fields."); // Display error toast
+      return;
+    }
+console.log('errorerrorerror',toast)
     if (password.length < 8) {
       setIsPasswordValid(false);
       return;
@@ -64,7 +80,6 @@ function WholesellerSignUp() {
     const WholesellerData = new FormData();
     WholesellerData.append("WholesellerEmail", email);
     WholesellerData.append("WholesellerPassword", email);
-
     const formData = new FormData();
     if (state !== null) {
       formData.append("seller_id", state?.salesmanId ? state?.salesmanId : "");
@@ -86,16 +101,13 @@ function WholesellerSignUp() {
     formData.append("role", 1);
     formData.append("upload1", upload1);
     formData.append("upload2", upload2);
-
     // Append multiple files to the formData for upload1 and upload2
     // for (const file of upload1) {
     //   formData.append("upload1", file);
     // }
-
     // for (const file of upload2) {
     //   formData.append("upload2", file);
     // }
-
     axios
       .post(`${BASE_URL}/auth/wholesaler_register`, formData)
       .then((response) => {
@@ -124,7 +136,6 @@ function WholesellerSignUp() {
   useEffect(() => {
     GetdataAll();
   }, []);
-
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -143,7 +154,6 @@ function WholesellerSignUp() {
         console.error("ERROR FOUND---->>>>" + error);
       });
   };
-
   const Getdatacity = (state) => {
     axios
       .get(`${BASE_URL}/auth/city?state=${state}`, {
@@ -157,17 +167,16 @@ function WholesellerSignUp() {
         console.log(error);
       });
   };
-
   const Subscription = (event) => {
     if (event.target.value) {
       setstateData(event.target.value);
-
       Getdatacity(event.target.value);
     }
   };
 
   return (
     <>
+       <Toaster />
       <div className="users-bg">
         <Container>
           <div className="text-center">
@@ -304,7 +313,6 @@ function WholesellerSignUp() {
                             /[^0-9+]/g,
                             ""
                           ); // Remove non-numeric characters
-
                           if (numericValue.length <= 12) {
                             setAadharNumber(numericValue);
                           }
@@ -322,7 +330,6 @@ function WholesellerSignUp() {
                             /[^a-zA-Z0-9]/g,
                             ""
                           ); // Remove non-numeric characters
-
                           if (numericValue.length <= 15) {
                             setGstNumber(numericValue);
                           }
@@ -381,9 +388,19 @@ function WholesellerSignUp() {
                     </Row>
                     <div className="login-btns">
                       <Button variant="primary" type="submit">
-                        Login
+                        SignUp
                       </Button>
                     </div>
+                    {/* {error && (
+                      <div className="error-message">
+                        Please fill in all required fields.
+                      </div>
+                    )} */}
+                    {/* <ToastContainer
+                      position="top-right"
+                      autoClose={5000}
+                      containerId="form-toast"
+                    /> */}
                   </Form>
                 </div>
               </Col>
@@ -399,5 +416,5 @@ function WholesellerSignUp() {
     </>
   );
 }
-
 export default WholesellerSignUp;
+
