@@ -20,7 +20,7 @@ function DashboadSalesman() {
   const navigate = useNavigate();
   const [wholeSellerList, setWholeSellerList] = useState([]);
   const [orderList, setOrderList] = useState([]);
-  const [completedOders, setCompletedOders] = useState([])
+  const [completedOders, setCompletedOders] = useState([]);
   const [totalTransactions, setTotalTransactions] = useState(0);
   const salesmanId = localStorage.getItem("salesmanId");
 
@@ -56,9 +56,9 @@ function DashboadSalesman() {
           setOrderList(res.data.data);
           const orderList = res.data.data;
           const completeOrdes = orderList.filter((el) => {
-            return el.delivered !== null
-          })
-          setCompletedOders(completeOrdes)
+            return el.delivered !== null;
+          });
+          setCompletedOders(completeOrdes);
           let subtotal = 0;
           for (let index = 0; index < orderList.length; index++) {
             const element = orderList[index];
@@ -277,7 +277,9 @@ function DashboadSalesman() {
                                           <Col sm={9}>
                                             <div className="wholeseller-detail">
                                               <h6>
-                                                {item.f_name + " " + item.l_name}
+                                                {item.f_name +
+                                                  " " +
+                                                  item.l_name}
                                               </h6>
                                               <a>
                                                 <i className="fa fa-star" />
@@ -344,7 +346,11 @@ function DashboadSalesman() {
                                   <img src={pro} />
                                 </Col>
                                 <Col lg={8} className="align-self-center">
-                                  <h5>{item.user_id[0]?.f_name + " " + item?.user_id[0]?.l_name}</h5>
+                                  <h5>
+                                    {item.user_id[0]?.f_name +
+                                      " " +
+                                      item?.user_id[0]?.l_name}
+                                  </h5>
                                   <p>{moment(item.pending).format("LLL")}</p>
                                 </Col>
                                 <Col lg={2} className="align-self-center">
@@ -387,17 +393,34 @@ function DashboadSalesman() {
                               </Col>
                               <Col lg={6}>
                                 <h3>Order Id: {item.id}</h3>
-                                <h3>Date: {moment(item.pending).format('LLL')}</h3>
+                                <h3>
+                                  Date: {moment(item.pending).format("LLL")}
+                                </h3>
                                 <h3>Payment Method: {item.payment_method}</h3>
-                                <h3>Order Amount: ₹{item.order_amount}</h3>
+                                <h3>
+                                  Order Amount: ₹{" "}
+                                  {parseInt(item.order_amount) +
+                                    parseInt(item.total_tax_amount) -
+                                    parseInt(item.coupon_discount_amount)}
+                                </h3>
                               </Col>
 
                               <Col lg={2} className="align-self-center">
                                 <div className="myorder-btn">
                                   <Button>
-                                    <Link to={`/order-view-details/${item.id}`}>
+                                    <a
+                                      onClick={() => {
+                                        localStorage.setItem(
+                                          "UserWholesellerId",
+                                          item?.user_id[0]?.id
+                                        );
+                                        navigate(
+                                          `/order-view-details/${item.id}`
+                                        );
+                                      }}
+                                    >
                                       View
-                                    </Link>
+                                    </a>
                                   </Button>
                                   <Button>
                                     <Link to="/track-your-order">Track</Link>
@@ -469,9 +492,16 @@ function DashboadSalesman() {
                               </Col>
                               <Col lg={6}>
                                 <h3>Order Id: {item.id}</h3>
-                                <h3>Date: {item.created_at}</h3>
+                                <h3>
+                                  Date: {moment(item.pending).format("LLL")}
+                                </h3>
                                 <h3>Payment Method: {item.payment_method}</h3>
-                                <h3>Order Amount: ₹{item.order_amount}</h3>
+                                <h3>
+                                  Order Amount: ₹{" "}
+                                  {parseInt(item.order_amount) +
+                                    parseInt(item.total_tax_amount) -
+                                    parseInt(item.coupon_discount_amount)}
+                                </h3>
                               </Col>
 
                               <Col lg={2} className="align-self-center">

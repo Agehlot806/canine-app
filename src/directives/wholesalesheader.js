@@ -117,7 +117,7 @@ function Wholeheader(props) {
         <div className="container">
           <a className="navbar-brand" href="#">
             {" "}
-            <Link to="/" className="logoBG">
+            <Link to={loginType == 'salesman' ? "/salesman-dashboad" : "/"}className="logoBG">
               <img src={logo} />
             </Link>
           </a>
