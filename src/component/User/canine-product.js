@@ -55,7 +55,7 @@ function Canineproduct(props) {
             .get(`${BASE_URL}/items/latest`)
             .then((response) => {
                 console.log(response);
-                console.log("Delete Successful");
+                console.log("all product Successful");
                 setallproduct(response.data.data)
                 // Perform any additional actions after successful deletion
             })
@@ -147,204 +147,46 @@ function Canineproduct(props) {
                         <section className="section-padding food">
                             <Container>
                                 <Row>
-                                    {allproduct && allproduct.map((item) => (
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product" key={item.id}>
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>{item.name}</h6>
-                                                        <p>{item.description}</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                    ))}
+                                    {allproduct
+                                        ? allproduct.map(
+                                            (item, index) =>
+                                                item.module_id === 1 && (
+                                                    <Col lg={4} sm={6} xs={6} className="mb-4">
+                                                        <div className="food-product" key={item.id}>
+                                                            <i class="fa fa-heart-o" />
+                                                            <Link to={`/product-details/${item.id}`}>
+                                                                <div className='text-center'>
+                                                                    <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
+                                                                </div>
+                                                                <div>
+                                                                    <h6>{item.name}</h6>
+                                                                    <p>{item.description}</p>
+                                                                </div>
+                                                                <div className="product-bag">
+                                                                    <Row>
+                                                                        <Col>
+                                                                            <p>₹999.00</p>
+                                                                        </Col>
+                                                                        <Col>
+                                                                            <h5>20%</h5>
+                                                                        </Col>
+                                                                    </Row>
+                                                                    <Row>
+                                                                        <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
+                                                                        <Col><Link to=''><img src={bag} /></Link></Col>
+                                                                    </Row>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    </Col>
+                                                )
+                                        )
+                                        : null}
                                 </Row>
                             </Container>
                         </section>
 
-                        <Container fluid className='p-0'>
-                            <div className='all-bg'>
-                                <img src={bannerone} />
-                            </div>
-                        </Container>
 
-                        <section className="section-padding food">
-                            <Container>
-                                <Row>
-                                    <Col lg={6} sm={6}>
-                                        <h3>Related products</h3>
-                                    </Col>
-                                    <Col lg={6} sm={6}>
-                                        <div className='see-allbtn'>
-                                            <Link to="">See All</Link>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <div className="needplace">
-                                    <Row>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                        <Col lg={4} sm={6} xs={6} className="mb-4">
-                                            <div className="food-product">
-                                                <i class="fa fa-heart-o" />
-                                                <Link to="/product-details">
-                                                    <div className='text-center'>
-                                                        <img src={product1} />
-                                                    </div>
-                                                    <div>
-                                                        <h6>Farmina</h6>
-                                                        <p>asdsdsdadwe sdseded sded</p>
-                                                    </div>
-                                                    <div className="product-bag">
-                                                        <Row>
-                                                            <Col>
-                                                                <p>₹999.00</p>
-                                                            </Col>
-                                                            <Col>
-                                                                <h5>20%</h5>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className='align-self-center'><h6>₹100.00</h6></Col>
-                                                            <Col><Link to=''><img src={bag} /></Link></Col>
-                                                        </Row>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Container>
-                        </section>
                     </Col>
                 </Row>
             </Container >

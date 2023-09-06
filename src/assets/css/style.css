@@ -1058,7 +1058,7 @@ a {
 
 .order-card {
   border-radius: 32.601px;
-  padding: 0 10px 25px;
+  padding: 0 0px 25px;
 }
 
 .order-bg1 {
@@ -1121,7 +1121,7 @@ a {
   background: #fff;
   box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px
     rgba(0, 0, 0, 0.05);
-  padding: 15px 15px 0.5px;
+  padding: 15px;
 }
 
 .order-content p {
@@ -1161,12 +1161,13 @@ a {
 
 .order-card.order-bg1 .order-status h6 {
   background: #07b12c;
-  width: 100px;
-  padding: 4px;
-  border-radius: 12px 16px 16px 0;
-  color: #fff;
-  font-weight: 100;
-  font-size: 12px;
+    width: 100px;
+    padding: 4px;
+    border-radius: 25px 16px 16px 0;
+    color: #fff;
+    font-weight: 100;
+    font-size: 15px;
+    text-align: center;
 }
 
 .order-card button {
@@ -1298,9 +1299,11 @@ a {
 }
 
 .oder-detail-card a {
-  color: #000;
+  color: #fff;
 }
-
+.oder-detail-card a:hover {
+  color: #fff;
+}
 .product-details {
   display: inline-flex;
 }
