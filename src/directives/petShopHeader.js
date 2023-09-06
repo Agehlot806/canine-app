@@ -5,6 +5,7 @@ import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import { useCartContext } from "../component/context/addToCartContext";
 
 function PetShopHeader(props) {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function PetShopHeader(props) {
   console.log("dogsubcategories: ", dogsubcategories);
   const [storedWholesellerId, setStoredWholesellerId] = useState(null);
   const [categories, setcategories] = useState([]);
+  const { cartData, dataLengthpetshop, addToCartData } = useCartContext();
   const loginType = localStorage.getItem("loginType");
 
   useEffect(() => {
@@ -22,6 +24,7 @@ function PetShopHeader(props) {
     allProductdata();
     AllDogsubcategories();
     categoriesProduct();
+    addToCartData();
   }, []);
 
   const categoriesProduct = async () => {
@@ -73,13 +76,13 @@ function PetShopHeader(props) {
         localStorage.removeItem("wholeSellerId");
         localStorage.removeItem("WholesellerEmail");
         localStorage.removeItem("WholesellerPassword");
-        localStorage.removeItem("verifiedId")
-        localStorage.removeItem('loginType')
+        localStorage.removeItem("verifiedId");
+        localStorage.removeItem("loginType");
         // localStorage.clear('')
         console.log("Logged out Wholeseller with ID: ", storedWholesellerId);
         setStoredWholesellerId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
-        navigate('/login')
+        navigate("/login");
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
       }
@@ -117,7 +120,10 @@ function PetShopHeader(props) {
         <div className="container">
           <a className="navbar-brand" href="#">
             {" "}
-            <Link to={loginType == 'salesman' ? "/salesman-dashboad" : "/"}className="logoBG">
+            <Link
+              to={loginType == "salesman" ? "/salesman-dashboad" : "/"}
+              className="logoBG"
+            >
               <img src={logo} />
             </Link>
           </a>
@@ -557,12 +563,11 @@ function PetShopHeader(props) {
                     </div>
                   </li>
                   <li className="nav-item">
-                <Link to="/petshop-add-cart"
-                  className="notification-btn"
-                >
-                  <i class="fa fa-shopping-cart" /> Cart
-                </Link>
-              </li>
+                    <Link to="/add-cart" className="notification-btn">
+                      <i class="fa fa-shopping-cart" />{" "}
+                      <span className="cart-countpetshop">{dataLengthpetshop}</span>{" "}
+                    </Link>
+                  </li>
                 </>
               ) : (
                 // Display Sign In button if user is not logged in
@@ -580,7 +585,6 @@ function PetShopHeader(props) {
                   </button>
                 </li>
               )}
-               
             </ul>
           </div>
         </div>

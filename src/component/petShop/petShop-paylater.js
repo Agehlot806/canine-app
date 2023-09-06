@@ -138,7 +138,7 @@ function PetshopPayLater() {
             </Row>
             <Row>
               <Col lg={5}>
-                <div className="order-minicard">
+                {/* <div className="order-minicard">
                   <Row>
                     <h6>Order ID : 125683</h6>
                     <Col>
@@ -216,6 +216,124 @@ function PetshopPayLater() {
                       </div>
                     </Col>
                   </Row>
+                </div> */}
+                <div className="payment-time">
+                  <div className="dropdown">
+                    <button
+                      className="btn dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Select Payment Time
+                    </button>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                        />
+                        <label className="form-check-label">15 Days</label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                        />
+                        <label className="form-check-label">30 Days</label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                        />
+                        <label className="form-check-label">45 Days</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dropdown">
+                    <button
+                      className="btn dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Select Payment Mode
+                    </button>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                        />
+                        <label className="form-check-label">UPI</label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                        />
+                        <label className="form-check-label">Cheque</label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                        />
+                        <label className="form-check-label">Cash</label>
+                      </div>
+                     
+                    </div>
+                  </div>
+
+                  <div>
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="inlineRadio1"
+                            defaultValue="option1"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="inlineRadio1"
+                          >
+                            Without GST
+                          </label>
+                        </div>
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="inlineRadio2"
+                            defaultValue="option2"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="inlineRadio2"
+                          >
+                            GST
+                          </label>
+                        </div>
+                      </div>
                 </div>
               </Col>
               <Col lg={7} className="align-self-center">

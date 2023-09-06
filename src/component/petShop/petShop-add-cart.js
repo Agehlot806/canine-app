@@ -28,6 +28,7 @@ function PetshopAddCart() {
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
   const loginType = localStorage.getItem("loginType");
+  const [dataLengthpetshop, setDataLengthpetshop] = useState(0);
 
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
@@ -250,6 +251,7 @@ function PetshopAddCart() {
       )
 
       .then((response) => {
+        setDataLengthpetshop(response.data.data.length);
         console.log(
           "addtocard show data>>>>?????565756756?????7878?????",
           response
@@ -555,7 +557,7 @@ function PetshopAddCart() {
 
   return (
     <>
-      <PetShopHeader />
+      <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -579,7 +581,12 @@ function PetshopAddCart() {
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>
-                  <Col lg={2} sm={3} xs={6} className="align-self-center addCARThead">
+                  <Col
+                    lg={2}
+                    sm={3}
+                    xs={6}
+                    className="align-self-center addCARThead"
+                  >
                     <h3>₹{item.price}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
