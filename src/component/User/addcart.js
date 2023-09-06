@@ -232,19 +232,7 @@ function Addcart() {
     }
   };
 
-  const handleRemoveFromWishlist = async (id) => {
-    try {
-      await axios.delete(`${BASE_URL}/customer/wish-list/remove/7/1`);
-      setWishlistData((prevData) => prevData.filter((item) => item.id !== id));
-    } catch (error) {
-      console.error("Error removing item from wishlist:", error);
-      if (error.response) {
-        // console.log("Response status:", error.response.status);
-        // console.log("Response data:", error.response.data);
-        toast.success("Your Product deleted successfully");
-      }
-    }
-  };
+
 
   const [selectedCity, setSelectedCity] = useState("");
   console.log("selectedCity: ", selectedCity);
@@ -301,7 +289,8 @@ function Addcart() {
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
 
-  const handleAddAddress = (event) => {
+  
+  const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
       user_id: storedUserId,
@@ -316,21 +305,18 @@ function Addcart() {
       pincode: pincode,
     };
 
-    // console.log("Data being sent:", data); // Add this line for debugging
+    try {
+      const response = await axios.post(`${BASE_URL}/customer/address/add`, data);
+      setResponseMessage(response.data.message);
+      toast.success('Successfully added!');
 
-    axios
-      .post(`${BASE_URL}/customer/address/add`, data)
-      .then((response) => {
-        // console.log("Response from server:", response.data); // Add this line for debugging
-        setResponseMessage(response.data.message);
-        toast.success("Successfully added!");
-        // console.log("SuccessfullyAddress", data);
-        allAddressList();
-      })
-      .catch((error) => {
-        console.error("Error:", error); // Add this line for debugging
-      });
+      // Call allAddressList to update the address list
+      await allAddressList();
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
