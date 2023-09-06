@@ -154,6 +154,7 @@ function Addcart() {
   }, []);
 
   const [sendcartdata, setSandCartData] = useState([]);
+  const [dataLength, setDataLength] = useState(0);
 
   const addToCartData = async () => {
     axios
@@ -165,6 +166,7 @@ function Addcart() {
       })
 
       .then((response) => {
+        setDataLength(response.data.data.length);
         console.log(
           "addtocard show data>>>>?????565756756?????7878?????",
           response
@@ -510,7 +512,7 @@ function Addcart() {
   return (
     <>
       <Toaster />
-      <Newheader />
+      <Newheader dataLength={dataLength} />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -530,11 +532,7 @@ function Addcart() {
                       }
                     />
                   </Col>
-                  <Col
-                    lg={6}
-                    sm={5}
-                    className="align-self-center addCARThead"
-                  >
+                  <Col lg={6} sm={5} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
                     {/* <p>with paneer or cottage cheese.</p> */}
                   </Col>

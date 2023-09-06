@@ -9,10 +9,13 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-step-progress-bar/styles.css";
 import "react-image-lightbox/style.css";
+import {CartProvider} from './component/context/addToCartContext'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+   <CartProvider>
+      <App />
+      </CartProvider>
   </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function
