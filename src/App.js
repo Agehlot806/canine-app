@@ -216,7 +216,7 @@ function App() {
             path="/wholeseller-add-cart/:id"
             element={<WholesellerAddCart />}
           />
-           <Route
+          <Route
             path="/wholeseller-add-cart"
             element={<WholesellerAddCart />}
           />
@@ -292,7 +292,6 @@ function App() {
           <Route path="/plan-buy" element={<Planbuy />} />
           <Route path="/partner-card" element={<Partnercard />} />
           <Route path="/pay" element={<Pay />} />
-          
         </Routes>
       </BrowserRouter>
     </div>

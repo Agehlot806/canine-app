@@ -5,8 +5,10 @@ import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import {useCartContext} from '../component/context/addToCartContext'
 
 function Newheader(props) {
+  // const { dataLength } = props;
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
   console.log("allproduct: ", allproduct);
@@ -15,12 +17,15 @@ function Newheader(props) {
   const [storedUserId, setStoredUserId] = useState(null);
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
+  const { cartData, dataLength, addToCartData } = useCartContext();
+
 
   useEffect(() => {
     fetchBrands();
     allProductdata();
     AllDogsubcategories();
     categoriesProduct();
+    addToCartData()
   }, []);
 
   const categoriesProduct = async () => {
@@ -418,8 +423,8 @@ function Newheader(props) {
                     <input
                       type="text"
                       placeholder="Search by name"
-                    // value={searchTerm}
-                    // onChange={handleSearch}
+                      // value={searchTerm}
+                      // onChange={handleSearch}
                     />
                   </div>
                 </a>
@@ -481,12 +486,11 @@ function Newheader(props) {
                     </div>
                   </li>
                   <li className="nav-item">
-                <Link to="/add-cart"
-                  className="notification-btn"
-                >
-                  <i class="fa fa-shopping-cart" /> Cart
-                </Link>
-              </li>
+                    <Link to="/add-cart" className="notification-btn">
+                      <i class="fa fa-shopping-cart" /> <span className="cart-count">{dataLength}</span>{" "}
+                     
+                    </Link>
+                  </li>
                 </>
               ) : (
                 // Display Sign In button if user is not logged in
@@ -496,8 +500,6 @@ function Newheader(props) {
                   </button>
                 </li>
               )}
-
-             
             </ul>
           </div>
         </div>

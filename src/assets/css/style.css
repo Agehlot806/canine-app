@@ -636,7 +636,7 @@ a {
   text-align: center;
   margin: 30px 0;
 }
-.productDetail-content .table>:not(caption)>*>* {
+.productDetail-content .table > :not(caption) > * > * {
   padding: 10px 0 !important;
 }
 .productBTNaddcard button {
@@ -1375,7 +1375,7 @@ a {
   font-weight: 400;
   margin: 4px 0;
 }
-.order-ids p span{
+.order-ids p span {
   color: #0b154d;
   font-weight: 400;
   opacity: 0.5;
@@ -1479,7 +1479,6 @@ a {
   border-top: 1.5px solid #000;
   opacity: 1;
 }
-
 
 .add-cart-total {
   text-align: center;
@@ -1839,7 +1838,7 @@ a {
   font-weight: bold;
   margin: 4px 0 14px;
 }
-.Members-card h5 span{
+.Members-card h5 span {
   color: gray;
   font-weight: 500;
 }
@@ -2042,7 +2041,7 @@ a.placDate {
 }
 
 .select-card.select-card4 img {
-    width: 150px;
+  width: 150px;
 }
 
 .pay-btn {
@@ -2088,7 +2087,7 @@ a.placDate {
   font-size: 20px;
 }
 
-.payment-done button a{
+.payment-done button a {
   color: #000;
 }
 
@@ -2682,6 +2681,7 @@ ul.list-unstyled li {
 }
 .notification-btn {
   color: #000;
+  
 }
 a.notification-btn i {
   font-size: 22px;
@@ -2693,6 +2693,16 @@ a.notification-btn i {
 }
 .newheader ul li.nav-item {
   text-align: left;
+}
+.cart-count {
+  background-color: #f00;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0 5px;
+  font-size: 9px;
+  position: absolute;
+  top: 15px;
+    right: 12%;
 }
 ul.list-unstyled li a {
   color: #6c6b6b;
@@ -2860,11 +2870,12 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 25px;
 }
 
-.payment-area .gpay-card-info-container.black, .gpay-card-info-animation-container.black{
+.payment-area .gpay-card-info-container.black,
+.gpay-card-info-animation-container.black {
   background-color: transparent !important;
-
 }
-.payment-area .payment-area .gpay-card-info-container.black, .gpay-card-info-animation-container.black{
+.payment-area .payment-area .gpay-card-info-container.black,
+.gpay-card-info-animation-container.black {
   background-color: transparent !important;
 }
 .payment-btnNew {
@@ -2901,7 +2912,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .order-area-detials {
   border-radius: 10px;
-  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 2px 6px 2px rgba(60, 64, 67, 0.15);
   height: 100%;
   padding: 15px 15px 0;
   transition: 0.5s;
@@ -2927,7 +2939,9 @@ input[type="number"]::-webkit-inner-spin-button {
   background: #000;
 }
 .Notify-Me button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #3b71ca;
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
+      var(--_p, 100%) / 300% no-repeat,
+    #3b71ca;
   color: #fff;
   border: none;
   transform: perspective(500px) rotateY(calc(330deg * var(--_i, -1)));
@@ -2949,7 +2963,11 @@ input[type="number"]::-webkit-inner-spin-button {
 .chk-address {
   padding: 25px;
   display: inline-flex;
-  background: linear-gradient( 180deg, #c6ecfc 0%, rgba(198, 236, 252, 0.43) 100% );
+  background: linear-gradient(
+    180deg,
+    #c6ecfc 0%,
+    rgba(198, 236, 252, 0.43) 100%
+  );
   border-radius: 35px;
   width: 100%;
   margin: 0 0 20px;
@@ -2973,19 +2991,17 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 10px 0;
 }
 .address-delete i:hover {
-  font-size: 25px ;
+  font-size: 25px;
 }
 
 .faqs-area .accordion-item {
-    /* border-radius: 35px; */
-    margin: 13px 0;
+  /* border-radius: 35px; */
+  margin: 13px 0;
 }
 .faqs-area .accordion-header {
- 
   /* border-radius: 42px !important; */
 }
-.faqs-area .accordion-header button{
- 
+.faqs-area .accordion-header button {
   font-size: 20px;
   font-weight: 600;
   color: #000;
@@ -3005,7 +3021,7 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #000;
   font-size: 16px;
   font-weight: 500;
-  letter-spacing: .12em;
+  letter-spacing: 0.12em;
   margin: 10px 0 8px;
 }
 .myorder-btn button {
@@ -3043,7 +3059,7 @@ span.vegetarian {
 }
 .cursor-area {
   /* ... your component's styles ... */
-  cursor: url(../images/icon/dog-cursor.jpg),auto;
+  cursor: url(../images/icon/dog-cursor.jpg), auto;
 }
 
 main {
@@ -3072,8 +3088,8 @@ main {
   border: 1px solid gray;
 }
 .tab-variations.active {
-  background-color: #ffc934; 
-  color: #000; 
+  background-color: #ffc934;
+  color: #000;
 }
 .navbar-toggler-icon {
   background-image: var(--mdb-navbar-toggler-icon-bg) !important;
@@ -3086,8 +3102,8 @@ button.Apply-price {
 }
 
 .partner-oneshop table tbody tr th {
-    font-size: 19px;
-    font-weight: 600;
+  font-size: 19px;
+  font-weight: 600;
 }
 .partner-oneshop table tbody tr td {
   font-size: 18px;
