@@ -1,5 +1,4 @@
 import React from 'react'
-import Newheader from '../../directives/newheader';
 import { Col, Row, Container, Form, Button } from 'react-bootstrap'
 import CreditCardwholeseller from '../../assets/images/img/Credit CardWholeseller.png'
 import card from '../../assets/images/img/cards.png'
@@ -7,13 +6,14 @@ import card1 from '../../assets/images/img/card1.png'
 import card2 from '../../assets/images/img/card2.png'
 import { Link } from 'react-router-dom'
 import Wholesallerfooter from '../../directives/wholesaller-Footer';
+import PetShopHeader from '../../directives/petShopHeader';
 
 
 
-function WholesellerPaymentMethod() {
+function PetshopPaymentMethod() {
     return (
         <>
-            <Newheader />
+            <PetShopHeader />
             <section className='section-padding '>
                 <Container>
                     <Row className='justify-content-center'>
@@ -40,7 +40,7 @@ function WholesellerPaymentMethod() {
                                 </div>
                             </div>
                             <div className='pay-btn'>
-                            <Button><Link to="/wholeseller-pay">Pay</Link></Button>
+                            <Button><Link to="/petshop-pay">Pay</Link></Button>
                             </div>
                         </Col>
                     </Row>
@@ -51,4 +51,4 @@ function WholesellerPaymentMethod() {
     )
 }
 
-export default WholesellerPaymentMethod
+export default PetshopPaymentMethod;

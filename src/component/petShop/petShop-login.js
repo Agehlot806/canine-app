@@ -5,7 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
-function Login() {
+function PetshopLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +44,7 @@ function Login() {
         localStorage.setItem("verifiedId", response.data.data[0].verified);
         localStorage.setItem("loginType", "wholeseller");
         if (response.data.message === "Login Successfull") {
-          navigate("/wholeseller-dashboard");
+          navigate("/petshop-dashboard");
           toast.success("Successfully");
         }
         if (response.data.message === "User Not Exit") {
@@ -75,7 +75,7 @@ function Login() {
                 <div className="form-area">
                   <h1 className="main-head">Let’s get started</h1>
                   <p>
-                    Enter your credentials to Sign in to your wholesaler account
+                    Enter your credentials to Sign in to your pet shop account
                   </p>
                   <Form>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
@@ -131,7 +131,7 @@ function Login() {
                         Login
                       </Button>
                       <div className="login-btns">
-                        <Link to="/wholeseller-signup">SignUp</Link>
+                        <Link to="/petshop-signup">SignUp</Link>
                       </div>
                     </div>
                   </Form>
@@ -149,4 +149,4 @@ function Login() {
     </>
   );
 }
-export default Login;
+export default PetshopLogin;

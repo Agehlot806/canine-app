@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-function WholesellerSignUp() {
+function PetshopSignUp() {
   // const { addToast } = useToaster();
   const { state } = useLocation();
   console.log("state in sellarw,hole", state);
@@ -121,10 +121,10 @@ console.log('errorerrorerror',toast)
             if (state.type == "salesman") {
               navigate("/salesman-dashboad");
             } else {
-              navigate("/wholeseller-login");
+              navigate("/petshop-login");
             }
           } else {
-            navigate("/wholeseller-login");
+            navigate("/petshop-login");
           }
         }
       })
@@ -416,5 +416,5 @@ console.log('errorerrorerror',toast)
     </>
   );
 }
-export default WholesellerSignUp;
+export default PetshopSignUp;
 

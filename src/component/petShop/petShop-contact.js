@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Wholeheader from "../../directives/wholesalesheader";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import contact from "../../assets/images/banner/contact.png";
 import strings from "../language";
@@ -7,8 +6,9 @@ import { Link } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import { toast } from "react-hot-toast";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesellerContact() {
+function PetshopContact() {
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -92,7 +92,7 @@ function WholesellerContact() {
   // ----------------------------------------
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={contact} />
@@ -2133,4 +2133,4 @@ function WholesellerContact() {
   );
 }
 
-export default WholesellerContact;
+export default PetshopContact;

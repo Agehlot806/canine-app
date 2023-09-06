@@ -20,10 +20,10 @@ function Otherlogin() {
                             <Col lg={6}>
                                 <Row className='justify-content-center'>
                                     <Col lg={6} className='mb-3'>
-                                        <Link to='/wholeseller-login'>
+                                        <Link to='/petshop-login'>
                                             <div className='otherLogin-card otherLogin1'>
                                                 <img src={loicon1} />
-                                                <h5>Login for Wholesales</h5>
+                                                <h5>Login for Pet Shop</h5>
                                             </div>
                                         </Link>
                                     </Col>

@@ -16,7 +16,7 @@ import Servicedate from "./component/User/service-date";
 import Shopbybrand from "./component/User/shop-by-brand";
 import Ourourbrand from "./component/User/our-our-brand";
 import Productbypartner from "./component/User/product-by-partner";
-import WholesellerProductbypartner from "./component/wholeseller/wholeseller-productbypartner";
+import WholesellerProductbypartner from "./component/petShop/petShop-productbypartner";
 import Productpartnershop from "./component/User/product-partner-shop";
 import Ourbrand from "./component/User/our-brand";
 import Petcategory from "./component/User/pet-category";
@@ -26,16 +26,16 @@ import Otp from "./component/AllUser/otp";
 import Partners from "./component/AllUser/partners";
 import Salesman from "./component/AllUser/salesman";
 import Signup from "./component/AllUser/signup";
-import WholeSellerPetcategory from "./component/wholeseller/wholeseller-pet-category";
-import WholesellerContact from "./component/wholeseller/wholeseller-contact";
-import WholesellerHome from "./component/wholeseller/wholeseller-home";
-import Wholesellerdashboard from "./component/wholeseller/wholeseller-dashboard";
-import WholesellerTransitionHistory from "./component/wholeseller/wholeseller-transition-history";
-import Wholesellerproduct from "./component/wholeseller/wholeseller-product";
-import WholesellerproductDetails from "./component/wholeseller/wholeseller-productDetails";
-import WholesellerAddCart from "./component/wholeseller/wholeseller-add-cart";
-import WholesellerPaymentMethod from "./component/wholeseller/wholeseller-paymentMethod";
-import Wholesellerpay from "./component/wholeseller/wholeseller-pay";
+import WholeSellerPetcategory from "./component/petShop/petShop-pet-category";
+import WholesellerContact from "./component/petShop/petShop-contact";
+import WholesellerHome from "./component/petShop/petShop-home";
+import Wholesellerdashboard from "./component/petShop/petShop-dashboard";
+import WholesellerTransitionHistory from "./component/petShop/petShop-transition-history";
+import Wholesellerproduct from "./component/petShop/petShop-product";
+import WholesellerproductDetails from "./component/petShop/petShop-productDetails";
+import WholesellerAddCart from "./component/petShop/petShop-add-cart";
+import WholesellerPaymentMethod from "./component/petShop/petShop-paymentMethod";
+import Wholesellerpay from "./component/petShop/petShop-pay";
 import DashboadSalesman from "./component/Salesman/dashboardSalesman";
 import Partnerdashboard from "./component/Partner/partner-dashboard";
 import Planbuy from "./component/Partner/planbuy";
@@ -48,14 +48,14 @@ import Map from "./component/User/track-your-order";
 import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
 import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
 import SalesmanAddcart from "./component/Salesman/salesman-add-cart";
-import Wholeseller from "./component/wholeseller/wholeseller-login";
-import WholesellerSignUp from "./component/wholeseller/wholeseller-signup";
+import Wholeseller from "./component/petShop/petShop-login";
+import WholesellerSignUp from "./component/petShop/petShop-signup";
 import Catcategory from "./component/User/cat-category";
 import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
 import Petprofile from "./component/User/pet-profile";
 import Wishlistproduct from "./component/User/wishlist-product";
-import WholesellerWishlistproduct from "./component/wholeseller/wholeseller-wishlist-product";
+import WholesellerWishlistproduct from "./component/petShop/petShop-wishlist-product";
 import Shopbybrandlist from "./component/User/shop-by-brand-list";
 import Blog from "./component/User/blog";
 import Updateprofile from "./component/User/update-profile";
@@ -67,26 +67,53 @@ import Findastore from "./component/User/find-a-store";
 import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
-import WholeSellerShipping from "./component/wholeseller/wholeseller-shipping";
-import WholeSellerPayLater from "./component/wholeseller/wholeseller-paylater";
+import WholeSellerShipping from "./component/petShop/petShop-shipping";
+import WholeSellerPayLater from "./component/petShop/petShop-paylater";
 import Returnpolicy from "./component/User/return-policy";
 import Paymentoption from "./component/User/payment-option";
 import Myorder from "./component/User/my-order";
-import WholesellerMyorder from "./component/wholeseller/wholeseller-my-orders";
-import WholeSellerUpdateprofile from "./component/wholeseller/wholeseller-update-profile";
+import WholesellerMyorder from "./component/petShop/petShop-my-orders";
+import WholeSellerUpdateprofile from "./component/petShop/petShop-update-profile";
 import Orderviewdetails from "./component/User/order-view-details";
 import SalesmanLogin from "./component/Salesman/SalesmanLogin";
 import Partneroneshop from "./component/User/partner-oneshop";
 import Wholesallerfooter from "../src/directives/wholesaller-Footer";
-import Wholesallerdeliverydetails from "./component/wholeseller/wholesaller-Delivery-details";
-import Wholesallerinternationalshipping from "./component/wholeseller/wholesaller-International-shipping";
-import Wholesallerpaymentoptionfooter from "./component/wholeseller/wholesaller-payment-footer";
-import Wholesallertrackyourorder from "./component/wholeseller/wholesaller-tractYourOrder";
-import Wholesallerreturnpolicy from "./component/wholeseller/wholesaller-return-policy";
-import Wholesallerfindastore from "./component/wholeseller/wholesaller-Find-a-store";
-import Wholesalleraboutus from "./component/wholeseller/wholesaller-about-us";
-import Wholesallerhelpandfaqs from "./component/wholeseller/wholesaller-Help&Faqs";
-import WholesalerOrderviewdetails from "./component/wholeseller/wholesaler-order-view-details";
+import Wholesallerdeliverydetails from "./component/petShop/petShop-Delivery-details";
+import Wholesallerinternationalshipping from "./component/petShop/petShop-International-shipping";
+import Wholesallerpaymentoptionfooter from "./component/petShop/petShop-payment-footer";
+import Wholesallertrackyourorder from "./component/petShop/petShop-tractYourOrder";
+import Wholesallerreturnpolicy from "./component/petShop/petShop-return-policy";
+import Wholesallerfindastore from "./component/petShop/petshop-Find-a-store";
+import Wholesalleraboutus from "./component/petShop/petShop-about-us";
+import Wholesallerhelpandfaqs from "./component/petShop/petShop-Help&Faqs";
+import WholesalerOrderviewdetails from "./component/petShop/petShop-order-view-details";
+import PetshopOrderviewdetails from "./component/petShop/petShop-order-view-details";
+import Petshopaboutus from "./component/petShop/petShop-about-us";
+import Petshopdeliverydetails from "./component/petShop/petShop-Delivery-details";
+import Petshopfindastore from "./component/petShop/petshop-Find-a-store";
+import Petshophelpandfaqs from "./component/petShop/petShop-Help&Faqs";
+import Petshopinternationalshipping from "./component/petShop/petShop-International-shipping";
+import Petshoppaymentoptionfooter from "./component/petShop/petShop-payment-footer";
+import Petshopreturnpolicy from "./component/petShop/petShop-return-policy";
+import Petshoptrackyourorder from "./component/petShop/petShop-tractYourOrder";
+import PetshopAddCart from "./component/petShop/petShop-add-cart";
+import PetshopContact from "./component/petShop/petShop-contact";
+import Petshopdashboard from "./component/petShop/petShop-dashboard";
+import PetshopHome from "./component/petShop/petShop-home";
+import PetshopLogin from "./component/petShop/petShop-login";
+import PetshopMyorder from "./component/petShop/petShop-my-orders";
+import Petshoppay from "./component/petShop/petShop-pay";
+import PetshopPayLater from "./component/petShop/petShop-paylater";
+import PetshopPaymentMethod from "./component/petShop/petShop-paymentMethod";
+import PetshopPetcategory from "./component/petShop/petShop-pet-category";
+import Petshopproduct from "./component/petShop/petShop-product";
+import PetshopProductbypartner from "./component/petShop/petShop-productbypartner";
+import PetshopproductDetails from "./component/petShop/petShop-productDetails";
+import PetshopShipping from "./component/petShop/petShop-shipping";
+import PetshopSignUp from "./component/petShop/petShop-signup";
+import PetshopTransitionHistory from "./component/petShop/petShop-transition-history";
+import PetshopUpdateprofile from "./component/petShop/petShop-update-profile";
+import PetshopWishlistproduct from "./component/petShop/petShop-wishlist-product";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -165,8 +192,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/other-login" element={<Otherlogin />} />
-          <Route path="/wholeseller-login" element={<Wholeseller />} />
-          <Route path="/wholeseller-signup" element={<WholesellerSignUp />} />
+          <Route path="/petshop-login" element={<PetshopLogin />} />
+          <Route path="/petshop-signup" element={<PetshopSignUp />} />
 
           <Route path="/otp" element={<Otp />} />
           <Route path="/partners-login" element={<Partners />} />
@@ -174,104 +201,104 @@ function App() {
 
           {/* Wholeseller flow  */}
           <Route
-            path="/wholeseller-dashboard"
-            element={<Wholesellerdashboard />}
+            path="/petshop-dashboard"
+            element={<Petshopdashboard />}
           />
           <Route
-            path="/wholeseller-pet-category/:name/:id"
-            element={<WholeSellerPetcategory />}
+            path="/petshop-pet-category/:name/:id"
+            element={<PetshopPetcategory />}
           />
           <Route
-            path="/wholeseller-my-orders"
-            element={<WholesellerMyorder />}
+            path="/petshop-my-orders"
+            element={<PetshopMyorder />}
           />
           <Route
-            path="/wholeseller-update-profile"
-            element={<WholeSellerUpdateprofile />}
+            path="/petshop-update-profile"
+            element={<PetshopUpdateprofile />}
           />
           <Route
-            path="/wholeseller-wishlist-product"
-            element={<WholesellerWishlistproduct />}
+            path="/petshop-wishlist-product"
+            element={<PetshopWishlistproduct />}
           />
           <Route
-            path="/wholeseller-productDetails/:id"
-            element={<WholesellerproductDetails />}
+            path="/petshop-productDetails/:id"
+            element={<PetshopproductDetails />}
           />
-          <Route path="/wholeseller-contact" element={<WholesellerContact />} />
+          <Route path="/petshop-contact" element={<PetshopContact />} />
           <Route
-            path="/wholeseller-transition-history"
-            element={<WholesellerTransitionHistory />}
+            path="/petshop-transition-history"
+            element={<PetshopTransitionHistory />}
           />
-          <Route path="/wholeseller-product" element={<Wholesellerproduct />} />
+          <Route path="/petshop-product" element={<Petshopproduct />} />
+          {/* <Route
+            path="/petshop-product-details/:id"
+            element={<PetshopproductDetails />}
+          /> */}
+          <Route path="/petshop-home" element={<PetshopHome />} />
           <Route
-            path="/wholeseller-product-details/:id"
-            element={<WholesellerproductDetails />}
+            path="/petshop-product-by-partner"
+            element={<PetshopProductbypartner />}
           />
-          <Route path="/wholeseller-home" element={<WholesellerHome />} />
           <Route
-            path="/wholeseller-product-by-partner"
-            element={<WholesellerProductbypartner />}
-          />
-          <Route
-            path="/wholeseller-add-cart/:id"
-            element={<WholesellerAddCart />}
+            path="/petshop-add-cart/:id"
+            element={<PetshopAddCart />}
           />
            <Route
-            path="/wholeseller-add-cart"
-            element={<WholesellerAddCart />}
+            path="/petshop-add-cart"
+            element={<PetshopAddCart />}
           />
           <Route
-            path="/wholeseller-payment-method"
-            element={<WholesellerPaymentMethod />}
+            path="/petshop-payment-method"
+            element={<PetshopPaymentMethod />}
           />
-          <Route path="/wholeseller-pay" element={<Wholesellerpay />} />
+          <Route path="/petshop-pay" element={<Petshoppay />} />
           <Route
-            path="/wholeseller-shipping/:id"
-            element={<WholeSellerShipping />}
+            path="/petshop-shipping/:id"
+            element={<PetshopShipping />}
           />
           <Route
-            path="/wholeseller-paylater/:id"
-            element={<WholeSellerPayLater />}
+            path="/petshop-paylater/:id"
+            element={<PetshopPayLater />}
           />
           <Route
             path="/order-view-details/:id"
             element={<Orderviewdetails />}
           />
           <Route
-            path="/wholesaler-order-view-details/:id"
-            element={<WholesalerOrderviewdetails />}
+            path="/petShop-order-view-details/:id"
+            element={<PetshopOrderviewdetails />}
           />
 
           {/* wholesaller Footer  */}
           <Route path="/wholesallerfooter" element={<Wholesallerfooter />} />
           <Route
-            path="/wholesallerdeliverydetails"
-            element={<Wholesallerdeliverydetails />}
+            path="/petshopdeliverydetails"
+            element={<Petshopdeliverydetails />}
           />
           <Route
-            path="/wholesallerinternationalshipping"
-            element={<Wholesallerinternationalshipping />}
+            path="/petshopinternationalshipping"
+            element={<Petshopinternationalshipping />}
           />
           <Route
-            path="/wholesallerpaymentoptionfooter"
-            element={<Wholesallerpaymentoptionfooter />}
+            path="/petshoppaymentoptionfooter"
+            element={<Petshoppaymentoptionfooter />}
           />
           <Route
-            path="/wholesallertrackyourorde"
-            element={<Wholesallertrackyourorder />}
+            path="/petshoptrackyourorde"
+            element={<Petshoptrackyourorder />}
           />
           <Route
-            path="/wholesallerreturnpolicy"
-            element={<Wholesallerreturnpolicy />}
+            path="/petshopreturnpolicy"
+            element={<Petshopreturnpolicy />}
           />
           <Route
-            path="/wholesallerfindastore"
-            element={<Wholesallerfindastore />}
+            path="/petshopfindastore"
+            element={<Petshopfindastore />}
           />
-          <Route path="/wholesalleraboutus" element={<Wholesalleraboutus />} />
+          <Route path="/petshopaboutus" element={<Petshopaboutus />} />
           <Route
-            path="/wholesallerhelpandfaqs"
-            element={<Wholesallerhelpandfaqs />}
+            path="/petshophelpandfaqs"
+            element={<Petshophelpandfaqs />}
           />
 
           {/* Sales Man flow  */}

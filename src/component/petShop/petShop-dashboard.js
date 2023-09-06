@@ -1,6 +1,6 @@
-import React from "react";
-import Wholeheader from "../../directives/wholesalesheader";
-import HomeImg from "../../assets/images/img/home.png";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import icon from "../../assets/images/icon/pro.png";
@@ -12,14 +12,30 @@ import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import paydone from "../../assets/images/icon/paydone.png";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function Wholesellerdashboard() {
+function Petshopdashboard() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
-
+  const [totalorder, settotalorder] = useState([]);
+  useEffect(() => {
+    totalOrders();
+  }, []);
+  const totalOrders = async () => {
+    axios
+      .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
+      .then((response) => {
+        console.log(response);
+        console.log("Order List Successful");
+        settotalorder(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <div className="home-bg">
         <div className="home-section">
           <Container className="p-0">
@@ -49,7 +65,7 @@ function Wholesellerdashboard() {
       <section className="dash-addProduct-btn">
         <div className="text-center mt-3">
           <Button>
-            <Link to="/wholeseller-product">Add Products</Link>
+            <Link to="/petshop-product">Add Products</Link>
           </Button>
         </div>
       </section>
@@ -130,409 +146,79 @@ function Wholesellerdashboard() {
                     <h1>Total Order</h1>
                   </div>
                   <Row>
-                    <Col lg={4} sm={6} className="mb-4">
-                      <div className="order-card order-bg1">
-                        <div className="order-status">
-                          <h6>Completed</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
+                    {totalorder && totalorder.length > 0 ? (
+                      totalorder.map((item, index) => (
+                        <Col lg={4} sm={6} className="mb-4">
+                          <div className="order-card order-bg1">
+                            <div className="order-status">
+                              <h6>{item.payment_status}</h6>
+                            </div>
+                            <div className="order-content">
+                              <Row>
+                                <Col sm={3}>
+                                  <div className="dash-logo">
+                                    <img src={logo} />
+                                  </div>
+                                </Col>
+                                <Col sm={9}>
+                                  <div className="dashCard-detail">
+                                    <h6>
+                                      Order ID : <span>{item.id}</span>
+                                    </h6>
+                                    <p>
+                                      Payment status : <span>{item.payment_status}</span>
+                                    </p>
+                                    <p>
+                                      Order By : <span>{item.user_id ? "Wholeseller" : ""}</span>
+                                    </p>
+                                    <p>
+                                      Total Amount : <span>₹ {item.order_amount}</span>
+                                    </p>
+                                  </div>
+                                </Col>
+                              </Row>
+                              <p>{item.user_id ? "Wholeseller" : ""}</p>
+                              <div className="dash-review">
+                              {item.callback.map((callbackItem, callbackIndex) => (
+                                <h6>{callbackItem.variant}</h6>
+                                ))}
+                                <a>
+                                  <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                                <a>
+                                  <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                                <a>
+                                  <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                                <a>
+                                  <i class="fa fa-star" aria-hidden="true"></i>
+                                </a>
+                                <a>
+                                  <i
+                                    class="fa fa-star-half-o"
+                                    aria-hidden="true"
+                                  ></i>
+                                </a>
+                                {/* <p>
+                                  Lorem Ipsum is simply dummy text of the printing
+                                  and typesetting
+                                </p> */}
                               </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
+                            </div>
+                            <div className="text-center mt-3">
+                              <Button>Detail Order</Button>
+                            </div>
                           </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} className="mb-4">
-                      <div className="order-card order-bg2">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} className="mb-4">
-                      <div className="order-card order-bg3">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} className="mb-4">
-                      <div className="order-card order-bg1">
-                        <div className="order-status">
-                          <h6>Completed</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} className="mb-4">
-                      <div className="order-card order-bg2">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} sm={6} className="mb-4">
-                      <div className="order-card order-bg3">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Total Order</p>
+                    )}
                   </Row>
                 </div>
 
-                {/* <section className="section-padding">
-        <Container>
-          <Row className="justify-content-center">
-            <Col lg={8}>
-              <div className="text-center">
-              <h1 className="main-head">What Our Clients Say About Us</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
-            </Col>
-          </Row>
-
-
-          
-        </Container>
-      </section> */}
+      
 
                 <section className="section-padding">
                   <Container>
@@ -1248,4 +934,4 @@ function Wholesellerdashboard() {
   );
 }
 
-export default Wholesellerdashboard;
+export default Petshopdashboard;

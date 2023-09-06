@@ -8,9 +8,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import Wholeheader from "../../directives/wholesalesheader";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesalerOrderviewdetails() {
+function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
   // console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
@@ -109,7 +109,7 @@ function WholesalerOrderviewdetails() {
 
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader/>
       <section className="section-padding">
         <Container>
           <h1 className="main-head">Orders View</h1>
@@ -169,7 +169,7 @@ function WholesalerOrderviewdetails() {
                             <Col sm={3}>
                               <div className="order-ids">
                                 <Button>
-                                  <Link to={`/wholeseller-add-cart/${id}`} onClick={handleAddToCart}>
+                                  <Link to={`/petshop-add-cart/${id}`} onClick={handleAddToCart}>
                                     Buy it again
                                 </Link></Button>
                               </div>
@@ -279,4 +279,4 @@ function WholesalerOrderviewdetails() {
   );
 }
 
-export default WholesalerOrderviewdetails;
+export default PetshopOrderviewdetails;

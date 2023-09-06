@@ -1,15 +1,15 @@
 import React from "react";
-import Newheader from "../../directives/newheader";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row, Accordion } from "react-bootstrap";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-const Wholesallerhelpandfaqs = () => {
+const Petshophelpandfaqs = () => {
   return (
     <>
       {" "}
-      <Newheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -91,4 +91,4 @@ However, We are not liable for any delays in delivery by our courier partners bu
   );
 };
 
-export default Wholesallerhelpandfaqs;
+export default Petshophelpandfaqs;

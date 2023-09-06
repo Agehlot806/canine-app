@@ -1,5 +1,4 @@
 import React from "react";
-import Wholeheader from "../../directives/wholesalesheader";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -10,8 +9,9 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import cart from "../../assets/images/icon/cart.png";
 import logo from "../../assets/images/logo.png";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesellerMyorder() {
+function PetshopMyorder() {
   const [allorder, setallorder] = useState([]);
   useEffect(() => {
     allOrders();
@@ -42,7 +42,7 @@ function WholesellerMyorder() {
 
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <section className="section-padding">
         <Container>
           <h1 className="main-head">My Orders</h1>
@@ -65,7 +65,7 @@ function WholesellerMyorder() {
                       <div className="myorder-btn">
                         <Button>
                           <Link
-                            to={`/wholesaler-order-view-details/${item.id}`}
+                            to={`/petshop-order-view-details/${item.id}`}
                           >
                             View
                           </Link>
@@ -89,4 +89,4 @@ function WholesellerMyorder() {
   );
 }
 
-export default WholesellerMyorder;
+export default PetshopMyorder;

@@ -4,7 +4,6 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 // import { Link, useParams } from 'react-router-dom'
 import cart from "../../assets/images/icon/cart1.png";
-import Wholeheader from "../../directives/wholesalesheader";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
@@ -14,8 +13,9 @@ import { useEffect } from "react";
 import paydone from "../../assets/images/icon/paydone.png";
 import moment from "moment";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesellerAddCart() {
+function PetshopAddCart() {
   const { id } = useParams();
   console.log("id", id);
   // Create a ref to store the list of items in the cart
@@ -34,7 +34,7 @@ function WholesellerAddCart() {
   };
 
   const redirectToShipping = () => {
-    Navigate("/wholeseler-shipping");
+    Navigate("/petshop-shipping");
   };
   // ************************
   // let wholesellervariationprice = 0;
@@ -72,7 +72,7 @@ function WholesellerAddCart() {
       coupon_discount_amount: 200,
       coupon_discount_title: "coupan",
       payment_status: "unpaid",
-      order_status: "pending",
+      order_status: "completed",
       total_tax_amount: 160,
       payment_method: "offline",
       transaction_reference: "sadgash23asds",
@@ -105,7 +105,7 @@ function WholesellerAddCart() {
         if (loginType == "salesman") {
           shippingpage("/salesman-dashboad");
         } else {
-          shippingpage("/wholeseller-shipping/" + responseData.data.order_id);
+          shippingpage("/petshop-shipping/" + responseData.data.order_id);
         }
       })
       .catch((error) => {
@@ -143,7 +143,7 @@ function WholesellerAddCart() {
         handler: (response) => {
           setPaymentId(response.razorpay_payment_id);
           // Handle the success callback
-          window.location.href = "/wholeseller-shipping";
+          window.location.href = "/petshop-shipping";
           console.log("Payment Successful:", response);
         },
 
@@ -555,7 +555,7 @@ function WholesellerAddCart() {
 
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -1155,7 +1155,7 @@ function WholesellerAddCart() {
                     handlePaylater(); // Pass the 'event' parameter here if needed
                   }}
                 >
-                  <Link to="/wholeseller-shipping">Done</Link>
+                  <Link to="/petshop-shipping">Done</Link>
                 </Button>
               </div>
             </div>
@@ -1166,4 +1166,4 @@ function WholesellerAddCart() {
   );
 }
 
-export default WholesellerAddCart;
+export default PetshopAddCart;

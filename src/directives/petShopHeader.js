@@ -6,7 +6,7 @@ import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 
-function Wholeheader(props) {
+function PetShopHeader(props) {
   const navigate = useNavigate();
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
@@ -135,7 +135,7 @@ function Wholeheader(props) {
           <div className="collapse navbar-collapse" id="megaMenu">
             <ul className="navbar-nav mr-auto">
               {/* <li className="nav-item">
-                <Link className="nav-link" to="/wholeseller-dashboard">
+                <Link className="nav-link" to="/petshop-dashboard">
                   Dashboard
                 </Link>
               </li> */}
@@ -145,14 +145,14 @@ function Wholeheader(props) {
                   to={
                     loginType === "salesman"
                       ? "/salesman-dashboad"
-                      : "/wholeseller-home"
+                      : "/petshop-home"
                   }
                 >
                   {loginType === "salesman" ? "Dashboard" : "Home"}
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/wholeseller-product">
+                <Link className="nav-link" to="/petshop-product">
                   New
                 </Link>
               </li>
@@ -183,7 +183,7 @@ function Wholeheader(props) {
                                 item.name == "food" && (
                                   <li key={item.id}>
                                     <Link
-                                      to={`/wholeseller-pet-category/${item.name}/${item.id}`}
+                                      to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -303,7 +303,7 @@ function Wholeheader(props) {
                                 item.name == "food" && (
                                   <li key={item.id}>
                                     <Link
-                                      to={`/wholeseller-pet-category/${item.name}`}
+                                      to={`/petshop-pet-category/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -409,7 +409,7 @@ function Wholeheader(props) {
                   Products
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="/wholeseller-product">
+                  <Link className="dropdown-item" to="/petshop-product">
                     All Product
                   </Link>
                   <Link className="dropdown-item" to="">
@@ -434,7 +434,7 @@ function Wholeheader(props) {
                 </Link>
               </li> */}
               <li className="nav-item">
-                <Link className="nav-link" to="/wholeseller-contact">
+                <Link className="nav-link" to="/petshop-contact">
                   Contact
                 </Link>
               </li>
@@ -502,7 +502,7 @@ function Wholeheader(props) {
                         to={
                           loginType === "salesman"
                             ? "/salesman-dashboad/"
-                            : "/wholeseller-dashboard"
+                            : "/petshop-dashboard"
                         }
                       >
                         Dashboard
@@ -514,7 +514,7 @@ function Wholeheader(props) {
                             to={
                               loginType === "salesman"
                                 ? "/salesman-dashboad/"
-                                : "/wholeseller-transition-history"
+                                : "/petshop-transition-history"
                             }
                           >
                             Transition History
@@ -524,7 +524,7 @@ function Wholeheader(props) {
                             to={
                               loginType === "salesman"
                                 ? "/salesman-dashboad/"
-                                : "/wholeseller-my-orders"
+                                : "/petshop-my-orders"
                             }
                           >
                             My Orders
@@ -536,7 +536,7 @@ function Wholeheader(props) {
                         to={
                           loginType === "salesman"
                             ? "/salesman-dashboad/"
-                            : "/wholeseller-wishlist-product"
+                            : "/petshop-wishlist-product"
                         }
                       >
                         Wishlist Products
@@ -545,8 +545,8 @@ function Wholeheader(props) {
                         className="dropdown-item"
                         to={
                           loginType === "salesman"
-                            ? "/wholeseller-update-profile"
-                            : "/wholeseller-update-profile"
+                            ? "/petshop-update-profile"
+                            : "/petshop-update-profile"
                         }
                       >
                         Profile
@@ -557,7 +557,7 @@ function Wholeheader(props) {
                     </div>
                   </li>
                   <li className="nav-item">
-                <Link to="/wholeseller-add-cart"
+                <Link to="/petshop-add-cart"
                   className="notification-btn"
                 >
                   <i class="fa fa-shopping-cart" /> Cart
@@ -572,7 +572,7 @@ function Wholeheader(props) {
                       to={
                         loginType === "salesman"
                           ? "/salesman-login"
-                          : "/wholeseller-login"
+                          : "/petshop-login"
                       }
                     >
                       Sign In
@@ -631,4 +631,4 @@ function Wholeheader(props) {
   );
 }
 
-export default Wholeheader;
+export default PetShopHeader;

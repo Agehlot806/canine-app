@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Newheader from "../../directives/newheader";
 import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
@@ -11,10 +10,10 @@ import orders from "../../assets/images/img/orders.png";
 import Footer from "../../directives/footer";
 import { Link, useNavigate } from "react-router-dom";
 import invoice from "../../assets/images/icon/invoice.png";
-import Wholeheader from "../../directives/wholesalesheader";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import moment from "moment";
+import PetShopHeader from "../../directives/petShopHeader";
 
 function DashboadSalesman() {
   const navigate = useNavigate();
@@ -32,12 +31,12 @@ function DashboadSalesman() {
   const handleAddProduct = async (id) => {
     await localStorage.setItem("wholeSellerId", id);
     await localStorage.setItem("UserWholesellerId", id);
-    navigate("/wholeseller-product");
+    navigate("/petshop-product");
   };
   const handleOrderHistory = async (id) => {
     await localStorage.setItem("wholeSellerId", id);
     await localStorage.setItem("UserWholesellerId", id);
-    navigate('/wholeseller-my-orders')
+    navigate('/petshop-my-orders')
   };
 
   const getWholesellerList = async () => {
@@ -88,7 +87,7 @@ function DashboadSalesman() {
   };
   return (
     <>
-      <Wholeheader type={"salesman"} />
+      <PetShopHeader type={"salesman"} />
       <div className="home-bg">
         <div className="home-section">
           <Container className="p-0">
@@ -222,7 +221,7 @@ function DashboadSalesman() {
                               aria-controls="Add New Wholeseller"
                               aria-selected="false"
                               onClick={() => {
-                                navigate("/wholeseller-signup", {
+                                navigate("/petshop-signup", {
                                   state: {
                                     type: "salesman",
                                     salesmanId: salesmanId,

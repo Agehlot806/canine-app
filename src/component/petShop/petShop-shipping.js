@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import Wholeheader from "../../directives/wholesalesheader";
 import { Col, Container, Row, Button, Table } from "react-bootstrap";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
@@ -13,8 +12,9 @@ import { BASE_URL } from "../../Constant/Index";
 import { Link, useParams } from "react-router-dom";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import moment from "moment";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholeSellerShipping() {
+function PetshopShipping() {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
@@ -62,7 +62,7 @@ function WholeSellerShipping() {
 
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -90,7 +90,7 @@ function WholeSellerShipping() {
                       <div className="myorder-btn">
                         <Button>
                           <Link
-                            to={`/wholesaler-order-view-details/${item.id}`}
+                            to={`/petshop-order-view-details/${item.id}`}
                           >
                             View
                           </Link>
@@ -345,12 +345,7 @@ function WholeSellerShipping() {
       </section>
       <section className="section-padding">
         <Container>
-          <Row>
-            <Col lg={6} className="align-self-center">
-              <div className="Re-order">
-                <Button>Re Order</Button>
-              </div>
-            </Col>
+          <Row className="justify-content-center">
             <Col lg={6}>
               <div className="order-main-deals">
                 <img src={orders} />
@@ -364,4 +359,4 @@ function WholeSellerShipping() {
   );
 }
 
-export default WholeSellerShipping;
+export default PetshopShipping;

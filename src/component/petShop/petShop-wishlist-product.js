@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import Wholeheader from "../../directives/wholesalesheader";
 import { BASE_URL } from "../../Constant/Index";
 import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesellerWishlistproduct() {
+function PetshopWishlistproduct() {
   const [wishlistData, setWishlistData] = useState([]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function WholesellerWishlistproduct() {
   return (
     <>
       <Toaster />
-      <Wholeheader />
+      <PetShopHeader />
       <section className="section-padding">
         <Container>
           <h1 className="main-head">Wishlist Products</h1>
@@ -146,4 +146,4 @@ function WholesellerWishlistproduct() {
   );
 }
 
-export default WholesellerWishlistproduct;
+export default PetshopWishlistproduct;

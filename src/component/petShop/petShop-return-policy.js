@@ -1,14 +1,14 @@
 import React from 'react'
-import Newheader from '../../directives/newheader'
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Col, Container, Row } from 'react-bootstrap';
 import Wholesallerfooter from '../../directives/wholesaller-Footer';
+import PetShopHeader from '../../directives/petShopHeader';
 
 
-function Wholesallerreturnpolicy() {
+function Petshopreturnpolicy() {
     return (
         <>
-            <Newheader />
+            <PetShopHeader />
             <Container fluid className="p-0">
                 <div className="all-bg">
                     <img src={productdetail} />
@@ -106,4 +106,4 @@ function Wholesallerreturnpolicy() {
     )
 }
 
-export default Wholesallerreturnpolicy;
+export default Petshopreturnpolicy;

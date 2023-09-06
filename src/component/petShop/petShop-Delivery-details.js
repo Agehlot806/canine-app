@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import productdetail from "../../assets/images/banner/productdetail.png";
+import PetShopHeader from "../../directives/petShopHeader";
 
 
-const Wholesallerdeliverydetails = () => {
+const Petshopdeliverydetails = () => {
   const [addresslist, setaddresslist] = useState([]);
 // storedUserId
 const customer_id = localStorage.getItem("userInfo");
@@ -36,7 +36,7 @@ console.log("customer_id: ", customer_id);
 
   return (
     <>
-      <Newheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -93,4 +93,4 @@ console.log("customer_id: ", customer_id);
   );
 };
 
-export default Wholesallerdeliverydetails;
+export default Petshopdeliverydetails;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import Wholeheader from "../../directives/wholesalesheader";
 import { Col, Container, Row, Button, Table } from "react-bootstrap";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
@@ -12,8 +11,9 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Link } from "react-router-dom";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholeSellerPayLater() {
+function PetshopPayLater() {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
@@ -60,7 +60,7 @@ function WholeSellerPayLater() {
 
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -329,4 +329,4 @@ function WholeSellerPayLater() {
   );
 }
 
-export default WholeSellerPayLater;
+export default PetshopPayLater;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Wholeheader from "../../directives/wholesalesheader";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import product from "../../assets/images/banner/product.png";
@@ -15,8 +14,9 @@ import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
 import { async } from "q";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholeSellerPetcategory() {
+function PetshopPetcategory() {
   //     const { id } = useParams();
   //   console.log("id", id);
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
@@ -491,7 +491,7 @@ function WholeSellerPetcategory() {
   return (
     <>
       <Toaster />
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={product} />
@@ -862,7 +862,7 @@ function WholeSellerPetcategory() {
                                     onClick={(id) => addToWishlist(item.id)}
                                   />
                                   <Link
-                                    to={`/wholeseller-productDetails/${item.id}`}
+                                    to={`/petshop-productDetails/${item.id}`}
                                   >
                                     <div className="text-center">
                                       <img
@@ -929,7 +929,7 @@ function WholeSellerPetcategory() {
                             class="fa fa-heart-o"
                             onClick={(id) => addToWishlist(item.id)}
                           />
-                          {/* <Link to={`/wholeseller-productDetails/${item.id}`}> */}
+                          {/* <Link to={`/petshop-productDetails/${item.id}`}> */}
                           <div className="text-center">
                             {/* <img
                                         src={
@@ -986,7 +986,7 @@ function WholeSellerPetcategory() {
                             class="fa fa-heart-o"
                             onClick={() => addToWishlist(item.id)}
                           />
-                          <Link to={`/wholeseller-productDetails/${item.id}`}>
+                          <Link to={`/petshop-productDetails/${item.id}`}>
                             <div className="text-center">
                               <img
                                 src={
@@ -1048,4 +1048,4 @@ function WholeSellerPetcategory() {
   );
 }
 
-export default WholeSellerPetcategory;
+export default PetshopPetcategory;

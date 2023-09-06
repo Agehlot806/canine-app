@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import partner from "../../assets/images/banner/partner.png";
 import bag from "../../assets/images/icon/bag.png";
@@ -11,8 +10,9 @@ import bannerPro from "../../assets/images/img/bannerPro.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesellerProductbypartner() {
+function PetshopProductbypartner() {
   const { id } = useParams();
   console.log("id: ", id);
   const [thirdbanner, setthirdbanner] = useState([]);
@@ -72,7 +72,7 @@ function WholesellerProductbypartner() {
 
   return (
     <>
-      <Newheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={partner} />
@@ -87,7 +87,7 @@ function WholesellerProductbypartner() {
               {allVendorShop && allVendorShop.length > 0 ? (
                 allVendorShop.map((item) => (
                   <Col lg={3} sm={6} xs={6} className="mb-5">
-                    <a href="/wholeseller-product-by-partner">
+                    <a href="/petshop-product-by-partner">
                       <div className="ProductPartner-card">
                         {/* <img src={item.logo} /> */}
                         <img
@@ -130,7 +130,7 @@ function WholesellerProductbypartner() {
                         class="fa fa-heart-o"
                         onClick={() => addToWishlist(item.id)}
                       />
-                      <Link to={`/wholeseller-product-details/${item.id}`}>
+                      <Link to={`/petshop-productDetails/${item.id}`}>
                         <div className="text-center">
                           <img
                             src={
@@ -150,7 +150,7 @@ function WholesellerProductbypartner() {
                             </Col>
                             <Col>
                               <Link
-                                to={`/wholeseller-add-cart/${id}`}
+                                to={`/petshop-add-cart/${id}`}
                                 // onClick={handleAddToCart}
                               >
                                 <img src={bag} />
@@ -162,7 +162,7 @@ function WholesellerProductbypartner() {
                     </div>
                   </Col>
                   // <Col lg={3} sm={6} xs={6} className="mb-5">
-                  //   <a href="/wholeseller-product-by-partner">
+                  //   <a href="/petshop-product-by-partner">
                   //     <div className="ProductPartner-card">
                   //       {/* <img src={item.logo} /> */}
                   //       <img
@@ -182,7 +182,7 @@ function WholesellerProductbypartner() {
                   //           </Col>
                   //           <Col>
                   //             <Link
-                  //             // to={`/wholeseller-add-cart/${id}`}
+                  //             // to={`/petshop-add-cart/${id}`}
                   //             // onClick={handleAddToCart}
                   //             >
                   //               <img src={bag} />
@@ -211,7 +211,7 @@ function WholesellerProductbypartner() {
                     <div className="banner-bgmain" key={item.id}>
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          "https://canine.hirectjob.in/storage/app/" +
                           item.image
                         }
                       />
@@ -257,4 +257,4 @@ function WholesellerProductbypartner() {
   );
 }
 
-export default WholesellerProductbypartner;
+export default PetshopProductbypartner;

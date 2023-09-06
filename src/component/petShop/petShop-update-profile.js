@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Wholeheader from "../../directives/wholesalesheader";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { useNavigate } from "react-router-dom";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholeSellerUpdateprofile() {
+function PetshopUpdateprofile() {
   // const [uploadField, setUploadField] = useState([{image:""}])
   const navigator = useNavigate();
   const [imageFile, setImageFile] = useState(null);
@@ -135,7 +135,7 @@ function WholeSellerUpdateprofile() {
 
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <section className="section-padding">
         <Container>
           <Row className="justify-content-center mt-3">
@@ -276,4 +276,4 @@ function WholeSellerUpdateprofile() {
   );
 }
 
-export default WholeSellerUpdateprofile;
+export default PetshopUpdateprofile;

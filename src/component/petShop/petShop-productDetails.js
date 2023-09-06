@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Newheader from "../../directives/newheader";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
@@ -9,7 +8,6 @@ import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
 import bag from "../../assets/images/icon/bag.png";
-import Wholeheader from "../../directives/wholesalesheader";
 import { AiOutlineStar } from "react-icons/ai";
 import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -17,8 +15,9 @@ import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import toast from "react-hot-toast";
+import PetShopHeader from "../../directives/petShopHeader";
 
-function WholesellerproductDetails() {
+function PetshopproductDetails() {
   const { id } = useParams();
   console.log("id: ", id);
   // *************************
@@ -40,7 +39,7 @@ function WholesellerproductDetails() {
     productDetails?.variations?.type
   );
   const demousercheck = () => {
-    toast.error("Added to cart! NOT ACCESS");
+    toast.error("Profile is not verified");
   };
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
@@ -273,7 +272,7 @@ function WholesellerproductDetails() {
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
-    formData.append("UserWholesellerId", storedWholesellerId);
+    formData.append("user_id", storedWholesellerId);
     formData.append("item_id", item_id);
     axios
       .post(`${BASE_URL}/customer/wish-list/add`, formData, {
@@ -291,7 +290,7 @@ function WholesellerproductDetails() {
   };
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
@@ -474,7 +473,7 @@ function WholesellerproductDetails() {
               {verifiredIdaccess === 1 ? (
                 <Button>
                   <Link
-                    to={`/wholeseller-add-cart/${id}`}
+                    to={`/petshop-add-cart/${id}`}
                     onClick={handleAddToCart}
                   >
                     <i className="fa fa-shopping-bag" /> Add to cart
@@ -501,7 +500,7 @@ function WholesellerproductDetails() {
           {/* </Row> */}
           <div className="productBTNaddcard">
             {/* <Button>
-              <Link to="/wholeseller-add-cart">
+              <Link to="/petshop-add-cart">
                 <i className="fa fa-shopping-bag" /> Add to cart
               </Link>
             </Button> */}
@@ -540,7 +539,7 @@ function WholesellerproductDetails() {
                     >
                       <i
                         class="fa fa-heart-o"
-                        onClick={(id) => addToWishlist(item.id)}
+                        onClick={() => addToWishlist(item.id)}
                       />
                       <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">
@@ -606,4 +605,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default WholesellerproductDetails;
+export default PetshopproductDetails;

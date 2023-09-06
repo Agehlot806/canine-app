@@ -1,11 +1,11 @@
 import React from "react";
 import "../../assets/css/order-tracker.css";
-import Newheader from "../../directives/newheader";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
 import { useState } from "react";
 import Wholesallerfooter from "../../directives/wholesaller-Footer";
+import PetShopHeader from "../../directives/petShopHeader";
 
-export default function Wholesallertrackyourorder() {
+export default function Petshoptrackyourorder() {
   const [activetraker, setActivetraker] = useState(1);
   const [trankershowData, settrankershowData] = useState(false);
 
@@ -24,7 +24,7 @@ export default function Wholesallertrackyourorder() {
 
   return (
     <>
-      <Newheader />
+      <PetShopHeader />
 
 
       <section className="tracker-bg">

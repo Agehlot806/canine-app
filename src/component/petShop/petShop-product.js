@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import Carousel from "react-multi-carousel";
 import product from '../../assets/images/banner/product.png'
@@ -12,9 +11,9 @@ import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
-import Wholeheader from '../../directives/wholesalesheader';
 import Wholesallerfooter from '../../directives/wholesaller-Footer';
-
+import PetShopHeader from '../../directives/petShopHeader';
+import { Toaster, toast } from 'react-hot-toast';
 const clinetreview = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -32,7 +31,7 @@ const clinetreview = {
     slidesToSlide: 1 // optional, default to 1.
   }
 };
-function Wholesellerproduct(props) {
+function Petshopproduct(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
 
@@ -282,6 +281,32 @@ function Wholesellerproduct(props) {
       return updatedcateIds;
     });
   };
+  // storedWholesellerId
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
+  // ----------------------------------------
+
+
+  const addToWishlist = async (item_id) => {
+    const formData = new FormData();
+    formData.append("user_id", storedWholesellerId);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success("Added successfully");
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
+  };
+
+
 
   const allhealthselect = (name) => {
     setSelectedhealthIds((prevSelectedhealthIds) => {
@@ -410,7 +435,7 @@ function Wholesellerproduct(props) {
   ];
   return (
     <>
-      <Wholeheader />
+      <PetShopHeader />
       <Container fluid className='p-0'>
         <div className='all-bg'>
           <img src={product} />
@@ -815,8 +840,12 @@ function Wholesellerproduct(props) {
                           background:
                             gradientColors[index % gradientColors.length],
                         }}>
-                        <i class="fa fa-heart-o" />
-                        <Link to={`/wholeseller-product-details/${item.id}`}>
+                        <i
+                        class="fa fa-heart-o"
+                        onClick={() => addToWishlist(item.id)}
+                      />
+
+                        <Link to={`/petshop-productDetails/${item.id}`}>
                           <div className='text-center'>
                             <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
                           </div>
@@ -872,4 +901,4 @@ function Wholesellerproduct(props) {
   )
 }
 
-export default Wholesellerproduct
+export default Petshopproduct
