@@ -22,9 +22,8 @@ function Myorder() {
     // storedUserId
     const customer_id = localStorage.getItem("userInfo");
     let storedUserId = JSON.parse(customer_id);
-    console.log("storedUserId: ", storedUserId);
-    console.log("customer_id: ", customer_id);
     // =----------------------------
+
 
     const allOrders = async () => {
         axios

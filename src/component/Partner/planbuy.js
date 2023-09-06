@@ -99,7 +99,7 @@ function Planbuy() {
                             item.type === "default" && (
                                 <img className="partner-img"
                                     src={
-                                        "https://canine.hirectjob.in/storage/app/public/banner/" +
+                                        "https://canine.hirectjob.in/storage/app/" +
                                         item.image
                                     }
                                 />

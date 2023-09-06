@@ -214,12 +214,7 @@ function Shipping() {
       </section>
       <section className="section-padding">
         <Container>
-          <Row>
-            <Col lg={6} sm={6} className="align-self-center">
-              <div className="Re-order">
-                <Button>Re Order</Button>
-              </div>
-            </Col>
+          <Row className="justify-content-center"> 
             <Col lg={6} sm={6}>
               <div className="order-main-deals">
                 <img src={orders} />

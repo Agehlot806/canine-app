@@ -101,7 +101,7 @@ function Productbypartner() {
                     <div className="banner-bgmain" key={item.id}>
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/public/banner/" +
+                          "https://canine.hirectjob.in/storage/app/" +
                           item.image
                         }
                       />
