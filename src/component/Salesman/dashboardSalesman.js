@@ -34,6 +34,11 @@ function DashboadSalesman() {
     await localStorage.setItem("UserWholesellerId", id);
     navigate("/wholeseller-product");
   };
+  const handleOrderHistory = async (id) => {
+    await localStorage.setItem("wholeSellerId", id);
+    await localStorage.setItem("UserWholesellerId", id);
+    navigate('/wholeseller-my-orders')
+  };
 
   const getWholesellerList = async () => {
     await axios
@@ -312,7 +317,9 @@ function DashboadSalesman() {
                                         >
                                           Add Product
                                         </Button>
-                                        <Button>Order History</Button>
+                                        <Button onClick={() => {
+                                          handleOrderHistory(item.id)
+                                        }}>Order History</Button>
                                       </div>
                                     </div>
                                   </div>
@@ -352,6 +359,7 @@ function DashboadSalesman() {
                                       item?.user_id[0]?.l_name}
                                   </h5>
                                   <p>{moment(item.pending).format("LLL")}</p>
+                                  <p>{`Order Status: ${item.order_status}`}</p>
                                 </Col>
                                 <Col lg={2} className="align-self-center">
                                   <div className="Transactions-icon">
@@ -393,6 +401,12 @@ function DashboadSalesman() {
                               </Col>
                               <Col lg={6}>
                                 <h3>Order Id: {item.id}</h3>
+                                <h3>
+                                  Name:{" "}
+                                  {item?.user_id[0].f_name +
+                                    " " +
+                                    item?.user_id[0].l_name}
+                                </h3>
                                 <h3>
                                   Date: {moment(item.pending).format("LLL")}
                                 </h3>
@@ -492,6 +506,12 @@ function DashboadSalesman() {
                               </Col>
                               <Col lg={6}>
                                 <h3>Order Id: {item.id}</h3>
+                                <h3>
+                                  Name:{" "}
+                                  {item?.user_id[0].f_name +
+                                    " " +
+                                    item?.user_id[0].l_name}
+                                </h3>
                                 <h3>
                                   Date: {moment(item.pending).format("LLL")}
                                 </h3>
