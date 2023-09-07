@@ -291,7 +291,7 @@ function Addcart() {
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
 
-  
+
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -568,7 +568,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -703,8 +703,8 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount
+                              originalPrice -
+                              disscountvalue?.discount
                             )}`}
                             {/* Calculate and display the Rounding Adjust */}
                           </h5>
@@ -779,11 +779,10 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${
-                                addressContentVisible
+                              className={`fa ${addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                              }`}
+                                }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -886,7 +885,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                              // onClick={handleAddToCart}
+                            // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1372,11 +1371,11 @@ function Addcart() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -1503,8 +1502,8 @@ function Addcart() {
                             onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
-                            // data-toggle="modal"
-                            // data-target="#Coupon"
+                          // data-toggle="modal"
+                          // data-target="#Coupon"
                           >
                             Apply
                           </button>

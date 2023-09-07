@@ -252,6 +252,7 @@ function App() {
           <Route path="/petshopfindastore" element={<Petshopfindastore />} />
           <Route path="/petshopaboutus" element={<Petshopaboutus />} />
           <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
+          <Route path="/petshop-canine-product" element={<PetShopcanineproduct />} />
 
           {/* Sales Man flow  */}
           <Route path="/salesman-login" element={<SalesmanLogin />} />

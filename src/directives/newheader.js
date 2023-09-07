@@ -122,7 +122,7 @@ function Newheader(props) {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="megaMenu">
-            <ul className="navbar-nav mr-auto">
+            <ul className="navbar-nav m-auto">
               <li className="nav-item">
                 <Link
                   className="nav-link"
@@ -446,6 +446,12 @@ function Newheader(props) {
                       Logout
                     </button>
                   </li>
+                  <li className="nav-item">
+                    <Link to="/add-cart" className="notification-btn">
+                      <i class="fa fa-shopping-cart" /> <span className="cart-count">{dataLength}</span>{" "}
+                     
+                    </Link>
+                  </li>
                   <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle profile-icon"
@@ -485,12 +491,7 @@ function Newheader(props) {
                                     </Link> */}
                     </div>
                   </li>
-                  <li className="nav-item">
-                    <Link to="/add-cart" className="notification-btn">
-                      <i class="fa fa-shopping-cart" /> <span className="cart-count">{dataLength}</span>{" "}
-                     
-                    </Link>
-                  </li>
+                 
                 </>
               ) : (
                 // Display Sign In button if user is not logged in

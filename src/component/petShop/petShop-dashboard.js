@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../Constant/Index";import HomeImg from "../../assets/images/img/home.png";
+import { BASE_URL } from "../../Constant/Index"; import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import icon from "../../assets/images/icon/pro.png";
@@ -18,9 +18,19 @@ function Petshopdashboard() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   const [totalorder, settotalorder] = useState([]);
+  const [homebanner, sethomebanner] = useState([]);
   useEffect(() => {
     totalOrders();
+    AllBanner();
   }, []);
+  const AllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const totalOrders = async () => {
     axios
       .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
@@ -33,34 +43,47 @@ function Petshopdashboard() {
         console.log(error);
       });
   };
+  const gradientColors = [
+    "linear-gradient(180deg, #eef 70%, rgba(238, 238, 255, 0) 100%)",
+    "linear-gradient(180deg, #ffead2 0%, rgba(255, 234, 210, 0) 100%)",
+    "linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%)",
+  ];
   return (
     <>
       <PetShopHeader />
-      <div className="home-bg">
-        <div className="home-section">
-          <Container className="p-0">
-            <Row>
-              <Col lg={6} className="align-self-center">
-                <div className="home-content">
-                  {/* <h1>
-                    Taking care <br />
-                    for your Smart Dog !
-                  </h1>
-                  <p>
-                    Human–canine bonding is the relationship between dogs and
-                    humans.
-                  </p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button> */}
-                </div>
-              </Col>
-              <Col lg={6}>
-                <img src={HomeImg} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
+      <div className="home-section">
+        <Container fluid className="p-0">
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
+          </div>
+        </Container>
       </div>
       <section className="dash-addProduct-btn">
         <div className="text-center mt-3">
@@ -149,7 +172,10 @@ function Petshopdashboard() {
                     {totalorder && totalorder.length > 0 ? (
                       totalorder.map((item, index) => (
                         <Col lg={4} sm={6} className="mb-4">
-                          <div className="order-card order-bg1">
+                          <div className="order-card order-bg1" style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}>
                             <div className="order-status">
                               <h6>{item.payment_status}</h6>
                             </div>
@@ -179,8 +205,8 @@ function Petshopdashboard() {
                               </Row>
                               <p>{item.user_id ? "Wholeseller" : ""}</p>
                               <div className="dash-review">
-                              {item.callback.map((callbackItem, callbackIndex) => (
-                                <h6>{callbackItem.variant}</h6>
+                                {item.callback.map((callbackItem, callbackIndex) => (
+                                  <h6>{callbackItem.variant}</h6>
                                 ))}
                                 <a>
                                   <i class="fa fa-star" aria-hidden="true"></i>
@@ -218,7 +244,7 @@ function Petshopdashboard() {
                   </Row>
                 </div>
 
-      
+
 
                 <section className="section-padding">
                   <Container>

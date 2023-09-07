@@ -32,7 +32,7 @@ const clinetreview = {
         slidesToSlide: 1 // optional, default to 1.
     }
 };
-function Canineproduct(props) {
+function PetShopcanineproduct(props) {
     const [categories, setcategories] = useState([]);
     const [allproduct, setallproduct] = useState([]);
 
@@ -66,38 +66,39 @@ function Canineproduct(props) {
     };
 
     // storedUserId
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
+    const customer_id = localStorage.getItem("userInfo");
+    let storedUserId = JSON.parse(customer_id);
 
     const addToWishlist = async (item_id) => {
         const formData = new FormData();
         formData.append("user_id", storedUserId);
         formData.append("item_id", item_id);
         axios
-          .post(`${BASE_URL}/customer/wish-list/add`, formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-          .then((response) => {
-            console.log("response143", response);
-            if (response.data.message) {
-              toast.success("Added successfully");
-            }
-          })
-          .catch((error) => {
-            toast.error("Already in your wishlist");
-          });
-      };
+            .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((response) => {
+                console.log("response143", response);
+                if (response.data.message) {
+                    toast.success("Added successfully");
+                }
+            })
+            .catch((error) => {
+                toast.error("Already in your wishlist");
+            });
+    };
 
-      const gradientColors = [
+    const gradientColors = [
         "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
         "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
         "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
         "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+        // Add more gradient colors as needed
       ];
 
     return (
         <>
-        <Toaster />
+            <Toaster />
             <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
@@ -186,11 +187,11 @@ function Canineproduct(props) {
                           background:
                             gradientColors[index % gradientColors.length],
                         }}>
-                                                        <i
-                          class="fa fa-heart-o"
-                          onClick={() => addToWishlist(item.id)}
-                        />
-                                                            <Link to={`/product-details/${item.id}`}>
+                                                            <i
+                                                                class="fa fa-heart-o"
+                                                                onClick={() => addToWishlist(item.id)}
+                                                            />
+                                                            <Link to={`/petshop-productDetails/${item.id}`}>
                                                                 <div className='text-center'>
                                                                     <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
                                                                 </div>
@@ -200,15 +201,7 @@ function Canineproduct(props) {
                                                                 </div>
                                                                 <div className="product-bag">
                                                                     <Row>
-                                                                        <Col>
-                                                                            <p>₹999.00</p>
-                                                                        </Col>
-                                                                        <Col>
-                                                                            <h5>20%</h5>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
+                                                                        <Col className='align-self-center'><h6>₹{item.whole_price}</h6></Col>
                                                                         <Col><Link to=''><img src={bag} /></Link></Col>
                                                                     </Row>
                                                                 </div>
@@ -234,4 +227,4 @@ function Canineproduct(props) {
     )
 }
 
-export default Canineproduct
+export default PetShopcanineproduct

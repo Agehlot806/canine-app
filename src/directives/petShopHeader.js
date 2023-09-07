@@ -139,7 +139,7 @@ function PetShopHeader(props) {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="megaMenu">
-            <ul className="navbar-nav mr-auto">
+            <ul className="navbar-nav m-auto">
               {/* <li className="nav-item">
                 <Link className="nav-link" to="/petshop-dashboard">
                   Dashboard
@@ -418,7 +418,7 @@ function PetShopHeader(props) {
                   <Link className="dropdown-item" to="/petshop-product">
                     All Product
                   </Link>
-                  <Link className="dropdown-item" to="">
+                  <Link className="dropdown-item" to="/petshop-canine-product">
                     Canine Product
                   </Link>
                   <Link className="dropdown-item" to="">
@@ -474,19 +474,14 @@ function PetShopHeader(props) {
                       Logout
                     </button>
                   </li>
-                  {/* <li className="nav-item">
-                    <a
-                      className="nav-link dropdown-toggle profile-icon"
-                      href="#"
-                      id="navbarDropdown"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <img src={pro} />
-                    </a>
-                  </li> */}
+                  
+                 
+                  <li className="nav-item">
+                    <Link to="/add-cart" className="notification-btn">
+                      <i class="fa fa-shopping-cart" />{" "}
+                      <span className="cart-countpetshop">{dataLengthpetshop}</span>{" "}
+                    </Link>
+                  </li>
                   <li className="nav-item dropdown">
                     <a
                       className="nav-link dropdown-toggle profile-icon"
@@ -561,12 +556,6 @@ function PetShopHeader(props) {
                                         // Logout
                                     // </Link>  */}
                     </div>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/add-cart" className="notification-btn">
-                      <i class="fa fa-shopping-cart" />{" "}
-                      <span className="cart-countpetshop">{dataLengthpetshop}</span>{" "}
-                    </Link>
                   </li>
                 </>
               ) : (

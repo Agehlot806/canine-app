@@ -224,6 +224,7 @@ function PetshopAddCart() {
     couponlistdata();
     GetdataAll();
     allAddressList();
+    AllBanner();
   }, []);
 
   // useEffect(() => {
@@ -316,20 +317,6 @@ function PetshopAddCart() {
       // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
-    }
-  };
-
-  const handleRemoveFromWishlist = async (id) => {
-    try {
-      await axios.delete(`${BASE_URL}/customer/wish-list/remove/7/1`);
-      setWishlistData((prevData) => prevData.filter((item) => item.id !== id));
-    } catch (error) {
-      console.error("Error removing item from wishlist:", error);
-      if (error.response) {
-        console.log("Response status:", error.response.status);
-        console.log("Response data:", error.response.data);
-        toast.success("Your Product deleted successfully");
-      }
     }
   };
 
@@ -554,15 +541,53 @@ function PetshopAddCart() {
         // toast.error("Field is required");
       });
   };
+  const [homebanner, sethomebanner] = useState([]);
+  const AllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
-      <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={productdetail} />
-        </div>
-      </Container>
+      <div className="home-section">
+        <Container fluid className="p-0">
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
+          </div>
+        </Container>
+      </div>
       <section className="section-padding">
         <div className="add-cart">
           {addToCartProduct && addToCartProduct.length > 0 ? (
