@@ -42,6 +42,7 @@ function PetshopproductDetails() {
     toast.error("Profile is not verified");
   };
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
+  const [homebanner, sethomebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails--- ", productDetails);
   // const { stars, reviews } = Productdetail;
@@ -108,6 +109,7 @@ function PetshopproductDetails() {
     itemWiseBanner();
     fetchrelatedproduct();
     fetchBreed();
+    AllBanner();
   }, []);
 
   const productData = async () => {
@@ -204,7 +206,14 @@ function PetshopproductDetails() {
       "https://canine.hirectjob.in/storage/app/public/product/" + clickedImage
     );
   };
-
+  const AllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const itemWiseBanner = async () => {
     try {
       const response = await fetch(`${BASE_URL}/banners/`);
@@ -291,11 +300,40 @@ function PetshopproductDetails() {
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={productdetail} />
-        </div>
-      </Container>
+      <div className="home-section">
+        <Container fluid className="p-0">
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
+          </div>
+        </Container>
+      </div>
       <section className="section-padding">
         <Container>
           <Row>
@@ -515,7 +553,36 @@ function PetshopproductDetails() {
       </section>
       <Container fluid className="p-0">
         <div className="product-innerBanner">
-          <img src={product} />
+        <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "item_wise" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
+          </div>
         </div>
       </Container>
 

@@ -2684,7 +2684,7 @@ ul.list-unstyled li {
 }
 .notification-btn {
   color: #000;
-  
+  position: relative;
 }
 a.notification-btn i {
   font-size: 22px;
@@ -2696,6 +2696,7 @@ a.notification-btn i {
 }
 .newheader ul li.nav-item {
   text-align: left;
+  align-self: center;
 }
 .cart-count {
   background-color: #f00;
@@ -2704,8 +2705,8 @@ a.notification-btn i {
   padding: 0 5px;
   font-size: 9px;
   position: absolute;
-  top: 15px;
-    right: 12%;
+  top: -15px;
+    left: 0;
 }
 ul.list-unstyled li a {
   color: #6c6b6b;
@@ -3148,6 +3149,6 @@ button.Apply-price {
   padding: 0 5px;
   font-size: 9px;
   position: absolute;
-  top: 15px;
-  right: 17%;
+  top: -15px;
+    left: 0;
 }

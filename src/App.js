@@ -87,6 +87,7 @@ import PetshopTransitionHistory from "./component/petShop/petShop-transition-his
 import PetshopUpdateprofile from "./component/petShop/petShop-update-profile";
 import PetshopWishlistproduct from "./component/petShop/petShop-wishlist-product";
 import Wholesallerfooter from "./directives/wholesaller-Footer";
+import PetShopcanineproduct from "./component/petShop/petShop-canine-product";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -249,6 +250,7 @@ function App() {
           <Route path="/petshopfindastore" element={<Petshopfindastore />} />
           <Route path="/petshopaboutus" element={<Petshopaboutus />} />
           <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
+          <Route path="/petshop-canine-product" element={<PetShopcanineproduct />} />
 
           {/* Sales Man flow  */}
           <Route path="/salesman-login" element={<SalesmanLogin />} />

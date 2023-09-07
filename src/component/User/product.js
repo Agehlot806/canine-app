@@ -776,7 +776,7 @@ function Product(props) {
                       >
                         <i
                           class="fa fa-heart-o"
-                          onClick={(id) => addToWishlist(item.id)}
+                          onClick={() => addToWishlist(item.id)}
                         />
                         <Link to={`/product-details/${item.id}`}>
                           <div className="text-center">
