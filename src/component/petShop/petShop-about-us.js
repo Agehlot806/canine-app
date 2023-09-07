@@ -8,8 +8,8 @@ import icon2 from '../../assets/images/icon/icon2.png'
 import icon3 from '../../assets/images/icon/icon3.png'
 import aboutpage from '../../assets/images/img/aboutpage.png'
 import video1 from '../../assets/images/video/video1.mp4'
-import Wholesallerfooter from '../../directives/wholesaller-Footer';
 import PetShopHeader from '../../directives/petShopHeader';
+import Petshopfooter from '../../directives/petShop-Footer';
 
 function Petshopaboutus() {
     const videoRef = useRef(null);
@@ -169,7 +169,7 @@ function Petshopaboutus() {
                 </Container>
             </section>
 
-            <Wholesallerfooter />
+            <Petshopfooter />
         </>
     )
 }

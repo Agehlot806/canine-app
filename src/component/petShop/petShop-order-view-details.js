@@ -2,13 +2,13 @@ import React from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
-import Footer from "../../directives/footer";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
@@ -274,7 +274,7 @@ function PetshopOrderviewdetails() {
           </div>
         </Container>
       </section>
-      <Footer />
+      <Petshopfooter />
     </>
   );
 }

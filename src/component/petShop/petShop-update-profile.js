@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { useNavigate } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopUpdateprofile() {
   // const [uploadField, setUploadField] = useState([{image:""}])
@@ -271,7 +271,7 @@ function PetshopUpdateprofile() {
           </Row>
         </Container>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

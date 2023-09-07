@@ -5,8 +5,8 @@ import card from '../../assets/images/img/cards.png'
 import card1 from '../../assets/images/img/card1.png'
 import card2 from '../../assets/images/img/card2.png'
 import { Link } from 'react-router-dom'
-import Wholesallerfooter from '../../directives/wholesaller-Footer';
 import PetShopHeader from '../../directives/petShopHeader';
+import Petshopfooter from '../../directives/petShop-Footer'
 
 
 
@@ -46,7 +46,7 @@ function PetshopPaymentMethod() {
                     </Row>
                 </Container>
             </section>
-            <Wholesallerfooter />
+            <Petshopfooter />
         </>
     )
 }

@@ -13,9 +13,9 @@ import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import toast from "react-hot-toast";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopproductDetails() {
   const { id } = useParams();
@@ -585,7 +585,7 @@ function PetshopproductDetails() {
           </div>
         </Container>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

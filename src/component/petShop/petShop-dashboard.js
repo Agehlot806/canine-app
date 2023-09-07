@@ -11,8 +11,8 @@ import { Link } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import paydone from "../../assets/images/icon/paydone.png";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function Petshopdashboard() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
@@ -929,7 +929,7 @@ function Petshopdashboard() {
           </div>
         </Container>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

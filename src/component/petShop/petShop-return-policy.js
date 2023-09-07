@@ -1,8 +1,8 @@
 import React from 'react'
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Col, Container, Row } from 'react-bootstrap';
-import Wholesallerfooter from '../../directives/wholesaller-Footer';
 import PetShopHeader from '../../directives/petShopHeader';
+import Petshopfooter from '../../directives/petShop-Footer';
 
 
 function Petshopreturnpolicy() {
@@ -101,7 +101,7 @@ function Petshopreturnpolicy() {
                     </Row>
                 </Container>
             </section>
-            <Wholesallerfooter />
+            <Petshopfooter />
         </>
     )
 }

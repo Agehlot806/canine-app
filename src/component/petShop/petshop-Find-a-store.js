@@ -1,8 +1,8 @@
 import React from "react";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 const Petshopfindastore = () => {
   return (
@@ -19,7 +19,7 @@ const Petshopfindastore = () => {
           </div>
         </div>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 };

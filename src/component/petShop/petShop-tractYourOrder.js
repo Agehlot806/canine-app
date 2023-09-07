@@ -2,8 +2,8 @@ import React from "react";
 import "../../assets/css/order-tracker.css";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
 import { useState } from "react";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 export default function Petshoptrackyourorder() {
   const [activetraker, setActivetraker] = useState(1);
@@ -152,7 +152,7 @@ export default function Petshoptrackyourorder() {
           </Container>
         </section>
       )}
-      <Wholesallerfooter />
+      <Petshopfooter />
 
       {/* Modal */}
       {/* Cancel Order */}

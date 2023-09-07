@@ -12,8 +12,8 @@ import { loadRazorpay } from "../../utils";
 import { useEffect } from "react";
 import paydone from "../../assets/images/icon/paydone.png";
 import moment from "moment";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopAddCart() {
   const { id } = useParams();
@@ -876,7 +876,7 @@ function PetshopAddCart() {
         </div>
       </section>
 
-      <Wholesallerfooter />
+      <Petshopfooter />
       {/* Modal add address */}
       <div
         className="modal fade editAddress"

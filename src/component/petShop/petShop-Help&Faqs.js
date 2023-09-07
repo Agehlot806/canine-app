@@ -2,8 +2,8 @@ import React from "react";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row, Accordion } from "react-bootstrap";
 import productdetail from "../../assets/images/banner/productdetail.png";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 const Petshophelpandfaqs = () => {
   return (
@@ -86,7 +86,7 @@ However, We are not liable for any delays in delivery by our courier partners bu
           </Row>
         </Container>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 };

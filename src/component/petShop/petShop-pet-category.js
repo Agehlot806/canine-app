@@ -13,8 +13,8 @@ import axios from "axios";
 import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
 import { async } from "q";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopPetcategory() {
   //     const { id } = useParams();
@@ -1043,7 +1043,7 @@ function PetshopPetcategory() {
         </Row>
       </Container>
 
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

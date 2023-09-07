@@ -12,7 +12,7 @@ import {
 } from "react-icons/bi";
 import WhatsAppWidget from "../chatwhatsapp";
 
-function Wholesallerfooter() {
+function Petshopfooter() {
   return (
     <>
       <footer className="footer-bg">
@@ -24,28 +24,28 @@ function Wholesallerfooter() {
                   <h5>{strings.usefulLinks}</h5>
                   <ul>
                     <li>
-                      <Link to="/wholesallerdeliverydetails">
+                      <Link to="/petshopdeliverydetails">
                         {strings.deliveryDeatils}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/wholesallerinternationalshipping">
+                      <Link to="/petshopinternationalshipping">
                         {strings.internationalShipping}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/wholesallerpaymentoptionfooter">{strings.paymentOption}</Link>
+                      <Link to="/petshoppaymentoptionfooter">{strings.paymentOption}</Link>
                     </li>
                     <li>
-                      <Link to="/wholesallertrackyourorde">
+                      <Link to="/petshoptrackyourorde">
                         {strings.trackYourOrder}
                       </Link>
                     </li>
                     <li>
-                      <Link to="/wholesallerreturnpolicy">Return Policy</Link>
+                      <Link to="/petshopreturnpolicy">Return Policy</Link>
                     </li>
                     <li>
-                      <Link to="/wholesallerfindastore">{strings.findaStore}</Link>
+                      <Link to="/petshopfindastore">{strings.findaStore}</Link>
                     </li>
                   </ul>
                 </div>
@@ -55,10 +55,10 @@ function Wholesallerfooter() {
                   <h5>Information</h5>
                   <ul>
                     <li>
-                      <Link to="/wholesalleraboutus">AboutUs</Link>
+                      <Link to="/petshopaboutus">AboutUs</Link>
                     </li>
                     <li>
-                      <Link to="/wholesallerhelpandfaqs">{strings.helpandFAQs}</Link>
+                      <Link to="/petshophelpandfaqs">{strings.helpandFAQs}</Link>
                     </li>
                     <li>
                       <Link to="">Products</Link>
@@ -129,4 +129,4 @@ function Wholesallerfooter() {
   );
 }
 
-export default Wholesallerfooter;
+export default Petshopfooter;

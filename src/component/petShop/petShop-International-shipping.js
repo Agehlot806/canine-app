@@ -1,7 +1,7 @@
 import React from "react";
 import cart from "../../assets/images/icon/cart.png";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 const Petshopinternationalshipping = () => {
   return (
@@ -18,7 +18,7 @@ const Petshopinternationalshipping = () => {
           </div>
         </div>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 };

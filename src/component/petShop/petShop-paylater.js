@@ -10,8 +10,8 @@ import cart from "../../assets/images/icon/cart.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Link } from "react-router-dom";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopPayLater() {
   // storedWholesellerId
@@ -442,7 +442,7 @@ function PetshopPayLater() {
           </Row>
         </Container>
       </section> */}
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

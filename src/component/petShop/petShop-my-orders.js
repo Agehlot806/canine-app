@@ -8,8 +8,8 @@ import { BASE_URL } from "../../Constant/Index";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import cart from "../../assets/images/icon/cart.png";
 import logo from "../../assets/images/logo.png";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopMyorder() {
   const [allorder, setallorder] = useState([]);
@@ -84,7 +84,7 @@ function PetshopMyorder() {
           </div>
         </Container>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

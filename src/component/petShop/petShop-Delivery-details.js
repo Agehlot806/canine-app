@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 
 const Petshopdeliverydetails = () => {
@@ -88,7 +88,7 @@ console.log("customer_id: ", customer_id);
           </Row>
         </Container>
       </section>
-      <Footer />
+      <Petshopfooter />
     </>
   );
 };

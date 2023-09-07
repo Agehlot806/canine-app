@@ -11,9 +11,9 @@ import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
-import Wholesallerfooter from '../../directives/wholesaller-Footer';
 import PetShopHeader from '../../directives/petShopHeader';
 import { Toaster, toast } from 'react-hot-toast';
+import Petshopfooter from '../../directives/petShop-Footer';
 const clinetreview = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -896,7 +896,7 @@ function Petshopproduct(props) {
 
 
 
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   )
 }

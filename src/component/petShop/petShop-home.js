@@ -32,8 +32,8 @@ import loicon1 from "../../assets/images/img/loicon1.png";
 import loicon2 from "../../assets/images/img/loicon2.png";
 import aboutpage from "../../assets/images/img/aboutpage.png";
 import toast, { Toaster } from "react-hot-toast";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 const homeslider = {
   desktop: {
@@ -903,7 +903,7 @@ function PetshopHome(props) {
         </Container>
       </section>
 
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

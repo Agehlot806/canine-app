@@ -5,8 +5,8 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopWishlistproduct() {
   const [wishlistData, setWishlistData] = useState([]);
@@ -141,7 +141,7 @@ function PetshopWishlistproduct() {
         </Container>
       </section>
 
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

@@ -5,8 +5,8 @@ import strings from "../language";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import { toast } from "react-hot-toast";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopContact() {
   const [formData, setFormData] = useState({
@@ -2128,7 +2128,7 @@ function PetshopContact() {
         </Container>
       </section>
 
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }

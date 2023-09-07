@@ -9,8 +9,8 @@ import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import Wholesallerfooter from "../../directives/wholesaller-Footer";
 import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopProductbypartner() {
   const { id } = useParams();
@@ -252,7 +252,7 @@ function PetshopProductbypartner() {
           </div>
         </Container>
       </section>
-      <Wholesallerfooter />
+      <Petshopfooter />
     </>
   );
 }
