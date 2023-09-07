@@ -5,6 +5,7 @@ import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import "../assets/css/style.css";
 import { useCartContext } from "../component/context/addToCartContext";
 
 function PetShopHeader(props) {
@@ -474,12 +475,13 @@ function PetShopHeader(props) {
                       Logout
                     </button>
                   </li>
-                  
-                 
+
                   <li className="nav-item">
                     <Link to="/add-cart" className="notification-btn">
                       <i class="fa fa-shopping-cart" />{" "}
-                      <span className="cart-countpetshop">{dataLengthpetshop}</span>{" "}
+                      <span className="cart-countpetshop">
+                        {dataLengthpetshop}
+                      </span>{" "}
                     </Link>
                   </li>
                   <li className="nav-item dropdown">

@@ -26,6 +26,43 @@ function PetshopPayLater() {
 
   const [addresslist, setaddresslist] = useState([]);
   const [allorder, setallorder] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Select Payment Time");
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedOptiontwo, setSelectedOptiontwo] = useState(
+    "Select Payment Time"
+  );
+  const [isDropdownOpentwo, setDropdownOpentwo] = useState(false);
+  const [showPaymentModeDropdown, setShowPaymentModeDropdown] = useState(false);
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState(null);
+
+  const handleOptionSelect = (option) => {
+    if (option !== selectedOption) {
+      setSelectedOption(option);
+      setDropdownOpen(false);
+      setShowPaymentModeDropdown(true);
+    }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleOptionSelecttwo = (option, mode) => {
+    if (option !== selectedOptiontwo) {
+      setSelectedOptiontwo(option);
+      setDropdownOpentwo(false);
+      setSelectedPaymentMode(mode);
+      // setShowPaymentModeDropdown(false);
+    }
+  };
+
+  const toggleDropdowntwo = () => {
+    setDropdownOpentwo(!isDropdownOpentwo);
+  };
+
+  const handlePaymentModeSelect = (mode) => {
+    setSelectedPaymentMode(mode);
+  };
 
   const allAddressList = async () => {
     axios
@@ -66,46 +103,6 @@ function PetshopPayLater() {
           <img src={productdetail} />
         </div>
       </Container>
-
-      {/* <section className="section-padding">
-        <Container>
-          <div className="add-cart">
-            {allorder && allorder.length > 0 ? (
-              allorder.map((item, index) => (
-                <div className="myorder-list">
-                  <Row className="justify-content-center">
-                    <Col lg={2}>
-                      <img src={logo} />
-                    </Col>
-                    <Col lg={6}>
-                      <h3>Order Id: {item.id}</h3>
-                      <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
-                      <h3>Payment Method: {item.payment_method}</h3>
-                      <h3>Order Amount: ₹{item.order_amount}</h3>
-                    </Col>
-
-                    <Col lg={2} className="align-self-center">
-                      <div className="myorder-btn">
-                        <Button>
-                          <Link to={`/order-view-details/${item.id}`}>
-                            View
-                          </Link>
-                        </Button>
-                        <Button>
-                          <Link to="/track-your-order">Track</Link>
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              ))
-            ) : (
-              <p className="emptyMSG">No Order list</p>
-            )}
-          </div>
-        </Container>
-      </section> */}
-
       <section className="section-padding">
         <Container>
           <div className="oder-detail-card">
@@ -121,7 +118,6 @@ function PetshopPayLater() {
                   </div>
                 </div>
               </Col>
-              {/* <Col lg={7}> */}
               <Col lg={7} className="d-flex justify-content-center">
                 <div className="product-details text-center">
                   <div>
@@ -130,190 +126,152 @@ function PetshopPayLater() {
                   </div>
                 </div>
               </Col>
-              {/* <div>
-                  <h5>Canine Pay Later</h5>
-                  <p>Your total approved credit is 10,0000</p>
-                </div> */}
-              {/* </Col> */}
             </Row>
             <Row>
               <Col lg={5}>
-                {/* <div className="order-minicard">
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                </div> */}
                 <div className="payment-time">
                   <div className="dropdown">
                     <button
                       className="btn dropdown-toggle"
                       type="button"
                       id="dropdownMenuButton"
-                      data-toggle="dropdown"
                       aria-haspopup="true"
-                      aria-expanded="false"
+                      aria-expanded={isDropdownOpen}
+                      onClick={toggleDropdown}
                     >
-                      Select Payment Time
+                      {selectedOption}
                     </button>
                     <div
-                      className="dropdown-menu"
+                      className={`dropdown-menu ${
+                        isDropdownOpen ? "show" : ""
+                      }`}
                       aria-labelledby="dropdownMenuButton"
                     >
-                      <div className="form-check">
+                      <div
+                        className="form-check"
+                        onClick={() => handleOptionSelect("15 Days")}
+                      >
                         <input
                           className="form-check-input"
                           type="radio"
-                          name="exampleRadios"
+                          name="paymentTimeRadios"
+                          id="15Days"
+                          checked={selectedOption == "15 Days"}
+                          readOnly
                         />
                         <label className="form-check-label">15 Days</label>
                       </div>
-                      <div className="form-check">
+                      {/* Add similar code for other options */}
+                      <div
+                        className="form-check"
+                        onClick={() => handleOptionSelect("30 Days")}
+                      >
                         <input
                           className="form-check-input"
                           type="radio"
-                          name="exampleRadios"
+                          name="paymentTimeRadios"
+                          id="30Days"
+                          checked={selectedOption == "30 Days"}
+                          readOnly
                         />
                         <label className="form-check-label">30 Days</label>
                       </div>
-                      <div className="form-check">
+                      <div
+                        className="form-check"
+                        onClick={() => handleOptionSelect("45 Days")}
+                      >
                         <input
                           className="form-check-input"
                           type="radio"
-                          name="exampleRadios"
+                          name="paymentTimeRadios"
+                          id="45Days"
+                          checked={selectedOption == "45 Days"}
+                          readOnly
                         />
                         <label className="form-check-label">45 Days</label>
                       </div>
                     </div>
                   </div>
-                  <div className="dropdown">
-                    <button
-                      className="btn dropdown-toggle"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Select Payment Mode
-                    </button>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="exampleRadios"
-                        />
-                        <label className="form-check-label">UPI</label>
+                  {showPaymentModeDropdown && (
+                    <div className="dropdown">
+                      <button
+                        className="btn dropdown-toggle"
+                        type="button"
+                        id="paymentModeDropdownButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded={isDropdownOpentwo}
+                        onClick={toggleDropdowntwo}
+                      >
+                        {selectedOptiontwo}
+                      </button>
+                      <div
+                        className={`dropdown-menu ${
+                          isDropdownOpentwo ? "show" : ""
+                        }`}
+                        aria-labelledby="paymentModeDropdownButton"
+                      >
+                        <div
+                          className="form-check"
+                          onClick={() => handleOptionSelecttwo("UPI")}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="paymentModeRadios"
+                            id="UPI"
+                            checked={selectedOptiontwo == "UPI"}
+                            readOnly
+                          />
+                          <label className="form-check-label">UPI</label>
+                        </div>
+                        {/* Add similar code for other payment modes */}
+                        <div
+                          className="form-check"
+                          onClick={() => handleOptionSelecttwo("Cheque")}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="paymentModeRadios"
+                            id="Cheque"
+                            checked={selectedOptiontwo == "Cheque"}
+                            readOnly
+                          />
+                          <label className="form-check-label">Cheque</label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={() => handleOptionSelecttwo("Cash")}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="paymentModeRadios"
+                            id="Cash"
+                            checked={selectedOptiontwo == "Cash"}
+                            readOnly
+                          />
+                          <label className="form-check-label">Cash</label>
+                        </div>
                       </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="exampleRadios"
-                        />
-                        <label className="form-check-label">Cheque</label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="exampleRadios"
-                        />
-                        <label className="form-check-label">Cash</label>
-                      </div>
-                     
                     </div>
-                  </div>
+                  )}
 
                   <div>
+                    {selectedPaymentMode == "Cash" && (
+                      <div>
                         <div className="form-check form-check-inline">
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio1"
+                            name="gstRadios"
+                            id="withoutGST"
                             defaultValue="option1"
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="inlineRadio1"
+                            htmlFor="withoutGST"
                           >
                             Without GST
                           </label>
@@ -322,18 +280,17 @@ function PetshopPayLater() {
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio2"
+                            name="gstRadios"
+                            id="withGST"
                             defaultValue="option2"
                           />
-                          <label
-                            className="form-check-label"
-                            htmlFor="inlineRadio2"
-                          >
+                          <label className="form-check-label" htmlFor="withGST">
                             GST
                           </label>
                         </div>
                       </div>
+                    )}
+                  </div>
                 </div>
               </Col>
               <Col lg={7} className="align-self-center">
@@ -367,81 +324,7 @@ function PetshopPayLater() {
           </div>
         </Container>
       </section>
-      {/* <section className="section-padding">
-        <Container>
-          <h1 className="main-head text-center mb-3">Order Details</h1>
-          <div className="order-area-detials">
-            <Row>
-              <Col lg={4}>
-                <div className="order-details">
-                  <h6>ORDER NUMBER</h6>
-                  <p>4797290627</p>
-                  <h6>PAYMENT</h6>
-                  <p>Paid: Using Upi</p>
-                  <h6>Date</h6>
-                  <p>10 Feb 2023 10:20 AM</p>
-                  <h6>Phone Number</h6>
-                  <p>10 Feb 2023 10:20 AM</p>
-                  <h6>Deliver To</h6>
-                  <p>10 Feb 2023 10:20 AM</p>
-                </div>
-              </Col>
-              <Col lg={8} className="align-self-center">
-                <div className="order-details">
-                  <h4>Address</h4>
-                  <p>
-                    {addresslist && addresslist.length > 1 ? (
-                      addresslist.map(
-                        (item, index) =>
-                          index === 0 && (
-                            <p key={item.id}>
-                              {item.house_no} {item.area} {item.landmark}{" "}
-                              {item.city} {item.state} {item.pincode}
-                            </p>
-                          )
-                      )
-                    ) : (
-                      <p>No data to display</p>
-                    )}
-                  </p>
-                  <h4>shipping Address</h4>
-                  <p>
-                    {addresslist && addresslist.length > 1 ? (
-                      addresslist.map(
-                        (item, index) =>
-                          index === 1 && (
-                            <p key={item.id}>
-                              {item.house_no} {item.area} {item.landmark}{" "}
-                              {item.city} {item.state} {item.pincode}
-                            </p>
-                          )
-                      )
-                    ) : (
-                      <p>No data to display</p>
-                    )}
-                  </p>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </section> */}
-      {/* <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} className="align-self-center">
-              <div className="Re-order">
-                <Button>Re Order</Button>
-              </div>
-            </Col>
-            <Col lg={6}>
-              <div className="order-main-deals">
-                <img src={orders} />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section> */}
+
       <Petshopfooter />
     </>
   );
