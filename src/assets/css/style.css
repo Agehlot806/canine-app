@@ -3152,3 +3152,26 @@ button.Apply-price {
   top: -15px;
     left: 0;
 }
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 300px;
+  max-height: 200px; /* Set your desired max height */
+  overflow-y: auto;
+  background-color: #fff; /* Set the background color you want */
+  border: 1px solid #ccc; /* Add border for the dropdown */
+  border-top: none; /* Remove top border to align with the input */
+  border-radius: 0 0 4px 4px; /* Add rounded corners at the bottom */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a shadow for elevation */
+  z-index: 1; /* Ensure the dropdown is above other content */
+  padding: 0 14px;
+}
+.search-results li {
+  font-size: 16px;
+  margin: 10px 0;
+}
+.search-container {
+  position: relative;
+}

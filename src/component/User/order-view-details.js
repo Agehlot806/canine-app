@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
@@ -9,8 +9,54 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import {useReactToPrint} from "react-to-print"
+import { useBootstrapMinBreakpoint } from "react-bootstrap/esm/ThemeProvider";
 
 function Orderviewdetails() {
+
+  const tableRef = useRef();
+  const summaryTableRef = useRef(); // Ref for summary table
+  
+  // const handlePrint = () => {
+  //       if (tableRef.current) {
+  //           const doc = new jsPDF();
+  //           doc.autoTable({ html: tableRef.current });
+  //           doc.save('table.pdf');
+  //       }
+  //   }
+    const handlePrint = useReactToPrint({
+      content: () => tableRef.current,
+    });
+
+    
+
+    const summaryPrint = () => {
+      const doc = new jsPDF();
+  
+      
+      const summaryData = [
+        ["Description", "Price"],
+        ["Item 1", "$10"],
+        ["Item 2", "$20"],
+        ["Sub Total", "$30"],
+        ["Discount", "-$5"],
+        ["Delivery Charge", "$5"],
+        ["Total", "$30"],
+      ];
+  
+      doc.autoTable({
+        head: [["Summary Invoice"]],
+        body: summaryData,
+        startY: 10,
+        margin: { top: 20, right: 20, bottom: 0, left: 20 },
+      });
+  
+      doc.save("summary_invoice.pdf");
+    };
+ 
+
   const [allorder, setallorder] = useState([]);
   console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
@@ -135,16 +181,16 @@ function Orderviewdetails() {
               </Col>
               <Col lg={7}>
                 <div className="dowload-invioce">
-                  <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf">
-                    <Button className="invoice-1">
+                  {/* <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf"> */}
+                    <Button className="invoice-1" onClick={handlePrint}>
                       <img src={invoice} /> download invoice
                     </Button>
-                  </Link>
-                  <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf">
-                    <Button className="invoice-2">
+                  {/* </Link> */}
+                  {/* <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf"> */}
+                    <Button className="invoice-2" onClick={summaryPrint}>
                       <img src={invoice} /> download summary
                     </Button>
-                  </Link>
+                  {/* </Link> */}
                 </div>
               </Col>
             </Row>
@@ -194,7 +240,7 @@ function Orderviewdetails() {
                 </div>
               </Col>
               <Col lg={7} className="align-self-center">
-                <div className="order-table">
+                <div className="order-table" ref={tableRef}>
                   {allorder && allorder.length > 0 ? (
                     allorder.map((item, index) => {
                       console.log("Desired ID:", id);

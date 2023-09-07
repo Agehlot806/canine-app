@@ -128,6 +128,7 @@ function Petprofile() {
     calculateAge(selectedDate);
   };
 
+
   return (
     <>
       <Toaster />
@@ -195,9 +196,8 @@ function Petprofile() {
                       <ul className="nav nav-pills mb-3" role="tablist">
                         <li className="nav-item">
                           <a
-                            className={`nav-link ${
-                              gender === "Male" ? "active" : "inactive"
-                            }`}
+                            className={`nav-link ${gender === "Male" ? "active" : "inactive"
+                              }`}
                             onClick={() => handleGenderChange("Male")}
                           >
                             {strings.male}
@@ -205,9 +205,8 @@ function Petprofile() {
                         </li>
                         <li className="nav-item">
                           <a
-                            className={`nav-link ${
-                              gender === "Female" ? "active" : "inactive  "
-                            }`}
+                            className={`nav-link ${gender === "Female" ? "active" : "inactive  "
+                              }`}
                             onClick={() => handleGenderChange("Female")}
                           >
                             {strings.female}
