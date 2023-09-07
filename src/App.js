@@ -181,10 +181,7 @@ function App() {
             path="/petshop-pet-category/:name/:id"
             element={<PetshopPetcategory />}
           />
-          <Route
-            path="/petshop-my-orders"
-            element={<PetshopMyorder />}
-          />
+          <Route path="/petshop-my-orders" element={<PetshopMyorder />} />
           <Route
             path="/petshop-update-profile"
             element={<PetshopUpdateprofile />}
@@ -212,27 +209,15 @@ function App() {
             path="/petshop-product-by-partner"
             element={<PetshopProductbypartner />}
           />
-          <Route
-            path="/petshop-add-cart/:id"
-            element={<PetshopAddCart />}
-          />
-           <Route
-            path="/petshop-add-cart"
-            element={<PetshopAddCart />}
-          />
+          <Route path="/petshop-add-cart/:id" element={<PetshopAddCart />} />
+          <Route path="/petshop-add-cart" element={<PetshopAddCart />} />
           <Route
             path="/petshop-payment-method"
             element={<PetshopPaymentMethod />}
           />
           <Route path="/petshop-pay" element={<Petshoppay />} />
-          <Route
-            path="/petshop-shipping/:id"
-            element={<PetshopShipping />}
-          />
-          <Route
-            path="/petshop-paylater/:id"
-            element={<PetshopPayLater />}
-          />
+          <Route path="/petshop-shipping/:id" element={<PetshopShipping />} />
+          <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
           <Route
             path="/order-view-details/:id"
             element={<Orderviewdetails />}
@@ -264,15 +249,9 @@ function App() {
             path="/petshopreturnpolicy"
             element={<Petshopreturnpolicy />}
           />
-          <Route
-            path="/petshopfindastore"
-            element={<Petshopfindastore />}
-          />
+          <Route path="/petshopfindastore" element={<Petshopfindastore />} />
           <Route path="/petshopaboutus" element={<Petshopaboutus />} />
-          <Route
-            path="/petshophelpandfaqs"
-            element={<Petshophelpandfaqs />}
-          />
+          <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
 
           {/* Sales Man flow  */}
           <Route path="/salesman-login" element={<SalesmanLogin />} />
