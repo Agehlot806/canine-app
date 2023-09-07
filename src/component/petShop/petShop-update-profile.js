@@ -107,6 +107,7 @@ function PetshopUpdateprofile() {
         profileData // Send the profileData object in the request
       );
       if (response.data.message === "Successfully updated!") {
+        navigator("/petShop-home");
         console.log("Profile updated successfully!");
       }
     } catch (error) {

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Footer from "../../directives/footer";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Updateprofile() {
+  const navigate = useNavigate();
   // const [uploadField, setUploadField] = useState([{image:""}])
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
@@ -18,7 +20,6 @@ function Updateprofile() {
     // Add more fields here as needed
   });
   console.log("profileData: ", profileData);
-
 
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
@@ -76,6 +77,7 @@ function Updateprofile() {
         profileData // Send the profileData object in the request
       );
       if (response.data.message === "Successfully updated!") {
+        navigate("/home");
         console.log("Profile updated successfully!");
       }
     } catch (error) {
