@@ -262,6 +262,22 @@ function PetshopHome(props) {
   const { id } = useParams();
   console.log("id: ", id);
 
+
+  const renderBlogDescription = (description) => {
+    const maxCharacters = 50; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
@@ -666,68 +682,38 @@ function PetshopHome(props) {
         </Container>
       </section>
 
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6}>
-              <h1 className="main-head">Product By Partner</h1>
-            </Col>
-            <Col lg={6} sm={6}>
-              <div className="foodMore">
-                <Link to="/petshop-product-by-partner">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {allVendorShop && allVendorShop.length > 0 ? (
-                allVendorShop.map((item) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-5">
-                    <a href="/petshop-product-by-partner">
-                      <div className="ProductPartner-card">
-                        {/* <img src={item.logo} /> */}
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/store/" +
-                            item.logo
-                          }
-                        />
-                        <h3 className="text-dark">{item.name}</h3>
-                      </div>
-                    </a>
-                  </Col>
-                ))
-              ) : (
-                <p className="emptyMSG">No Product By Partner Data.</p>
-              )}
-            </Row>
-          </div>
-        </Container>
-      </section>
 
       <section className="section-padding">
         <Container>
           <div className="banner-video">
-            <Row>
-              <Col lg={5} className="p-0">
-                <div className="video-content">
-                  <h1 className="main-head">Samantha & Maya’s Pet Grooming</h1>
-                  <p>
-                    When it comes to cats, everyone knows taste is what’s most
-                    important, right? Imagine every meal oozing with
-                    irresistible flavour whilst being super healthy. Yup, the
-                    purrrfect combination! Say yes to Drools just like Samantha
-                    & Maya!
-                  </p>
-                  <Button>Shop Now</Button>
-                </div>
-              </Col>
-              <Col lg={7} className="p-0">
-                <video loop autoPlay muted>
-                  <source src={video2} type="video/mp4" />
-                </video>
-              </Col>
-            </Row>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "video" && (
+                    <Row>
+                      <Col lg={5} className="p-0">
+                        <div className="video-content">
+                          <h1 className="main-head">{item.title}</h1>
+                          <p>
+                            {item.description}
+                          </p>
+                          <Button>Shop Now</Button>
+                        </div>
+                      </Col>
+                      <Col lg={7} className="p-0">
+
+                        <video loop autoPlay muted>
+                          <source src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          } type="video/mp4" />
+                        </video>
+
+                      </Col>
+                    </Row>
+                  )
+              )
+              : null}
           </div>
         </Container>
       </section>
@@ -750,7 +736,8 @@ function PetshopHome(props) {
                         }
                       />
                       <h3>{item.title}</h3>
-                      <p>{item.description}</p>
+                      <p>{renderBlogDescription(item.description)}</p>
+                      <Link to={`/petshop-blog-details/${item.id}`}>Read More</Link>
                     </div>
                   </Col>
                 ))
@@ -761,7 +748,7 @@ function PetshopHome(props) {
           </div>
           <div className="allblogbtn">
             <Button>
-              <Link to="/blog">All Blogs</Link>
+              <Link to="/petshop-blog">All Blogs</Link>
             </Button>
           </div>
         </Container>

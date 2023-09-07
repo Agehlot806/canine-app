@@ -19,6 +19,7 @@ function DashboadSalesman() {
   const navigate = useNavigate();
   const [wholeSellerList, setWholeSellerList] = useState([]);
   const [orderList, setOrderList] = useState([]);
+  const [homebanner, sethomebanner] = useState([]);
   const [completedOders, setCompletedOders] = useState([]);
   const [totalTransactions, setTotalTransactions] = useState(0);
   const salesmanId = localStorage.getItem("salesmanId");
@@ -26,6 +27,7 @@ function DashboadSalesman() {
   useEffect(() => {
     getWholesellerList();
     getOrders();
+    AllBanner();
   }, []);
 
   const handleAddProduct = async (id) => {
@@ -85,27 +87,58 @@ function DashboadSalesman() {
         console.log("error in orderList", error);
       });
   };
+
+  const AllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const gradientColors = [
+    "linear-gradient(180deg,#c6ecfc 0%,rgba(198, 236, 252, 0.43) 100%)",
+    "linear-gradient(180deg, #eef 0%, rgba(238, 238, 255, 0.45) 100%)",
+    "linear-gradient(180deg,#ffead2 0%,rgba(255, 234, 210, 0.33) 100%)",
+  ];
+
   return (
     <>
       <PetShopHeader type={"salesman"} />
-      <div className="home-bg">
-        <div className="home-section">
-          <Container className="p-0">
-            <Row>
-              <Col lg={6} className="align-self-center">
-                <div className="home-content">
-                  {/* <h1>Taking care <br />
-                                        for your Smart Dog !</h1>
-                                    <p>Human–canine bonding is the relationship between dogs and humans.</p>
-                                    <Button>Explore More <i className="fa fa-angle-right" /></Button> */}
-                </div>
-              </Col>
-              <Col lg={6}>
-                <img src={HomeImg} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
+      <div className="home-section">
+        <Container fluid className="p-0">
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
+          </div>
+        </Container>
       </div>
       {/* <section className="dash-addProduct-btn">
         <div className="text-center mt-3">
@@ -266,7 +299,10 @@ function DashboadSalesman() {
                             {wholeSellerList.map((item) => {
                               return (
                                 <Col lg={4} className="mb-4">
-                                  <div className="Wholeseller-card wholeseller-bg1">
+                                  <div className="Wholeseller-card wholeseller-bg1 " style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}>
                                     <div className="wholeseller-status">
                                       <h6>Completed</h6>
                                     </div>
