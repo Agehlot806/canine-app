@@ -5,7 +5,7 @@ import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import {useCartContext} from '../component/context/addToCartContext'
+import { useCartContext } from '../component/context/addToCartContext'
 
 function Newheader(props) {
   // const { dataLength } = props;
@@ -95,6 +95,56 @@ function Newheader(props) {
         console.log(error);
       });
   };
+
+  const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      // Filter products when the search query changes
+      const filteredProducts = products.filter((product) => {
+        const lowerSearchQuery = searchQuery.toLowerCase();
+        return (
+          (product.name && product.name.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.description && product.description.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.sub_category && product.sub_category.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.category_ids && product.category_ids.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.brand_id && product.brand_id.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.lifeStage_id && product.lifeStage_id.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.helthCondition_id && product.helthCondition_id.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.Petsbreeds_id && product.Petsbreeds_id.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.price && product.price.toLowerCase().includes(lowerSearchQuery)) ||
+          (product.wholePrice && product.wholePrice.toLowerCase().includes(lowerSearchQuery))
+        );
+      });
+
+      setFilteredProducts(filteredProducts);
+      console.log("=========>>>>>>>", filteredProducts);
+    } else {
+      setFilteredProducts([]);
+    }
+  }, [searchQuery, products]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://canine.hirectjob.in/api/v1/items/latest"
+      );
+      setProducts(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
 
   return (
     <>
@@ -422,10 +472,21 @@ function Newheader(props) {
                     <i className="fa fa-search" />
                     <input
                       type="text"
-                      placeholder="Search by name"
-                      // value={searchTerm}
-                      // onChange={handleSearch}
+                      placeholder="Search keyword"
+                      value={searchQuery}
+                      onChange={handleSearchInputChange}
                     />
+
+                  </div>
+
+                  <div className="search-results">
+                    {filteredProducts.map((product, index, id) => (
+                      <li key={index}>
+                        <Link to={`/product-details/${product.id}`}>
+                          {product.name}
+                        </Link>
+                      </li>
+                    ))}
                   </div>
                 </a>
               </li>
@@ -449,7 +510,7 @@ function Newheader(props) {
                   <li className="nav-item">
                     <Link to="/add-cart" className="notification-btn">
                       <i class="fa fa-shopping-cart" /> <span className="cart-count">{dataLength}</span>{" "}
-                     
+
                     </Link>
                   </li>
                   <li className="nav-item dropdown">
@@ -491,7 +552,7 @@ function Newheader(props) {
                                     </Link> */}
                     </div>
                   </li>
-                 
+
                 </>
               ) : (
                 // Display Sign In button if user is not logged in
