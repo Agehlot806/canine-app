@@ -87,6 +87,8 @@ import PetshopTransitionHistory from "./component/petShop/petShop-transition-his
 import PetshopUpdateprofile from "./component/petShop/petShop-update-profile";
 import PetshopWishlistproduct from "./component/petShop/petShop-wishlist-product";
 import Petshopfooter from "./directives/petShop-Footer";
+import PetShopcanineproduct from "./component/petShop/petShop-canine-product";
+
 
 // ScrollToTop component
 const ScrollToTop = () => {
