@@ -3175,3 +3175,19 @@ button.Apply-price {
 .search-container {
   position: relative;
 }
+.tab-variations:hover {
+  background: blue;
+  cursor: pointer;
+}
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Show two lines of text */
+  -webkit-box-orient: vertical;
+}
+
+.read-more-link {
+  color: blue;
+  cursor: pointer;
+}
