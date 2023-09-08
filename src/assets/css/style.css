@@ -305,7 +305,7 @@ a {
 
 .foodMore a {
   font-weight: 400;
-  font-size: 24px;
+  font-size: 18px;
   color: #008efd;
   font-family: "Poppins";
 }
@@ -2277,8 +2277,8 @@ a.placDate {
   border-radius: 15px;
   border: 2.159px solid rgba(0, 29, 76, 0.2);
   background: #fff;
-  width: 125px;
-  height: 55px;
+  /* width: 125px;
+  height: 55px; */
   text-align: center;
   padding: 10px;
   margin: 0 10px;
@@ -3174,4 +3174,42 @@ button.Apply-price {
 }
 .search-container {
   position: relative;
+}
+
+.logout-area button {
+  background: #ffc934;
+  margin: 0 4px;
+  border-radius: 50px;
+  color: #000;
+  font-weight: bold;
+  font-size: 15px;
+}
+.logout-area button:hover {
+  background: #008efd;
+  color: #fff;
+}
+.order-minicard a i {
+  color: #f1c21b;
+}
+.myorder-list a i {
+  color: #f1c21b;
+}
+
+.star-rating {
+  display: inline-block;
+}
+
+.star {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url(../images/icon/star.png) no-repeat;
+  background-size: cover;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star.filled {
+  background: url(../images/icon/star\ \(1\).png) no-repeat;
+  background-size: cover;
 }

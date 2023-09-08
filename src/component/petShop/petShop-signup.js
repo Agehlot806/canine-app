@@ -45,6 +45,8 @@ function PetshopSignUp() {
   const [upload2, setUpload2] = useState(null);
   const [stateall, setStateall] = useState([]);
   const [stateData, setstateData] = useState("");
+  const [zoneList, setZoneList] = useState([]);
+  const [zonedata, setZonedata] = useState([]);
   const [stateallCity, setStateallCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true); // State to track password validity
@@ -63,6 +65,7 @@ function PetshopSignUp() {
       !selectedCity ||
       !businessName ||
       !aadharNumber ||
+      !zonedata ||
       !gstNumber ||
       !pincode ||
       !password ||
@@ -72,7 +75,7 @@ function PetshopSignUp() {
       toast.error("Please fill in all required fields."); // Display error toast
       return;
     }
-console.log('errorerrorerror',toast)
+    console.log('errorerrorerror', toast)
     if (password.length < 8) {
       setIsPasswordValid(false);
       return;
@@ -95,6 +98,7 @@ console.log('errorerrorerror',toast)
     formData.append("city", selectedCity);
     formData.append("business_name", businessName);
     formData.append("aadhar_number", aadharNumber);
+    formData.append("zone", zonedata);
     formData.append("gst_number", gstNumber);
     formData.append("pincode", pincode);
     formData.append("password", password);
@@ -133,8 +137,20 @@ console.log('errorerrorerror',toast)
         // Handle error, show error message, etc.
       });
   };
+
+  const getZoneList = async () => {
+    await axios
+      .get(`${BASE_URL}/zone/list`)
+      .then((res) => {
+        setZoneList(res.data.data);
+      })
+      .catch((error) => {
+        console.log("error in zone list", error);
+      });
+  };
   useEffect(() => {
     GetdataAll();
+    getZoneList();
   }, []);
   const GetdataAll = async (e) => {
     var headers = {
@@ -176,7 +192,7 @@ console.log('errorerrorerror',toast)
 
   return (
     <>
-       <Toaster />
+      <Toaster />
       <div className="users-bg">
         <Container>
           <div className="text-center">
@@ -336,6 +352,23 @@ console.log('errorerrorerror',toast)
                         }}
                       />
                     </Form.Group>
+                    <Row className="mb-3">
+                      <Form.Group as={Col}>
+                        <Form.Label>Zone</Form.Label>
+                        <Form.Select
+                          defaultValue="Select Zone"
+                          name="zone"
+                          onChange={(e) => {
+                            setZonedata(e.target.value)
+                          }}
+                        >
+                          <option value={""}>Select Zone</option>
+                          {zoneList.map((zonedata) => (
+                            <option value={zonedata.id}>{zonedata.name}</option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Row>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Control
                         type="number"

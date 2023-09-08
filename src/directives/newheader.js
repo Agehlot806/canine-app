@@ -499,11 +499,12 @@ function Newheader(props) {
                   <i class="fa fa-bell-o" />
                 </a>
               </li>
+              
               {storedUserId ? (
                 // Display Logout button if user is logged in
                 <>
                   <li className="nav-item">
-                    <button className="yellow-btn" onClick={logoutUser}>
+                    <button className="yellow-btn" data-toggle="modal" data-target="#logout-model" >
                       Logout
                     </button>
                   </li>
@@ -566,6 +567,21 @@ function Newheader(props) {
           </div>
         </div>
       </nav>
+
+ {/* Modal */}
+ <div className="modal fade" id="logout-model" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body logout-area">
+              <h4>Confirm Logout</h4>
+              <p>Are You Sure You Want To Logout</p>
+              <button type="button" className="btn" data-dismiss="modal" onClick={logoutUser}>Yes</button>
+              <button type="button" className="btn" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       {/* Modal */}
       <div

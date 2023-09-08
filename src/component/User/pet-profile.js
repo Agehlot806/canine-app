@@ -128,7 +128,12 @@ function Petprofile() {
     calculateAge(selectedDate);
   };
 
+  const [imagedata, setImage] = useState(null);
 
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setImage(selectedFile);
+  };
   return (
     <>
       <Toaster />
@@ -142,7 +147,7 @@ function Petprofile() {
         <Container>
           <div className="add-upload-area">
             <form>
-              <div className="form-group add-upload">
+              {/* <div className="form-group add-upload">
                 <label htmlFor="exampleFormControlFile1">
                   {strings.uploadImage}
                   <i class="fa fa-upload" />
@@ -152,6 +157,19 @@ function Petprofile() {
                   className="form-control-file"
                   id="exampleFormControlFile1"
                   onChange={(e) => setimage(e.target.files[0])}
+                />
+              </div> */}
+              <div className="form-group add-upload">
+                <label htmlFor="exampleFormControlFile1">
+                  {imagedata ? imagedata.name : 'Choose File'}
+                  <i className="fa fa-upload" />
+                </label>
+                <input
+                  type="file"
+                  className="form-control-file"
+                  id="exampleFormControlFile1"
+                  onChange={handleFileChange}
+                  onInput={(e) => setimage(e.target.files[0])}
                 />
               </div>
               <div className="needplace">
