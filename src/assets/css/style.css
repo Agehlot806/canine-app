@@ -3175,3 +3175,15 @@ button.Apply-price {
 .search-container {
   position: relative;
 }
+
+.payletter-btn {
+  text-align: center;
+}
+.payletter-btn button{
+  width: 100px !important;
+  background: #ffc934;
+  border: none;
+  text-align: center;
+  color: #000;
+  border-radius: 50px;
+}

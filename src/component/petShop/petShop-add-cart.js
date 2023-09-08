@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import productdetail from "../../assets/images/banner/productdetail.png";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 // import { Link, useParams } from 'react-router-dom'
 import cart from "../../assets/images/icon/cart1.png";
@@ -14,6 +14,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import moment from "moment";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import logo from "../../assets/images/logo.png";
 
 function PetshopAddCart() {
   const { id } = useParams();
@@ -23,6 +24,7 @@ function PetshopAddCart() {
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   console.log("addToCartProduct: ", addToCartProduct);
   // const [customer_id, setcustomer_id] = useState("");
+  const salesmanId = localStorage.getItem("salesmanId");
   const [coupencode, setcoupenCode] = useState(false);
   const [couponlist, setcouponlist] = useState([]);
   const [paymentId, setPaymentId] = useState("");
@@ -46,7 +48,7 @@ function PetshopAddCart() {
 
   let originalPrice = 0;
 
-  const updatedPrice = originalPrice * 1.05;
+  const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
     let allPrice = parseInt(el.price) + parseInt(originalPrice);
@@ -55,6 +57,10 @@ function PetshopAddCart() {
   const taxamound = Math.floor(originalPrice * 0.05);
   // console.log("allPrice: ", originalPrice);
   // console.log("taxamound: ", taxamound);
+  const [selectedValue, setSelectedValue] = useState(0);
+  const handleRadioButton = (event) => {
+    setSelectedValue(parseInt(event.target.value, 10));
+  };
 
   const shippingpage = useNavigate("");
   const [sendcartdata, setSandCartData] = useState([]);
@@ -65,30 +71,32 @@ function PetshopAddCart() {
       price: item.price,
       quantity: item.quantity,
       tax_amount: taxamound,
-      discount_on_item: disscountvalue,
+      discount_on_item: "",
     }));
     const requestData = {
       user_id: storedWholesellerId,
       seller_id: Number(salesmanId),
-      coupon_discount_amount: 200,
-      coupon_discount_title: "coupan",
-      payment_status: "unpaid",
+      coupon_discount_amount: "200",
+      discount_on_item: "",
+      coupon_discount_title: "sdcdvsdff",
+      payment_status: "paid",
       order_status: "completed",
-      total_tax_amount: 160,
-      payment_method: "offline",
-      transaction_reference: "sadgash23asds",
+      total_tax_amount: taxamound,
+      gst_bill: selectedValue,
+      payment_day: selectedOption,
+      payment_mode: selectedOptiontwo,
+      payment_method: selectedInput ? "offline" : "online",
+      transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
-      coupon_code: "sdf42",
+      coupon_code: "",
       order_type: "delivery",
-      checked: 1,
+      checked: selectedInput,
       store_id: 1,
       zone_id: 2,
       delivered_status: "undelivered",
-      delivery_address: "Delhi city 389",
+      delivery_address: "hgsdjhgdhg",
       item_campaign_id: "",
-      order_amount: parseInt(
-        originalPrice * 0.05 + originalPrice - disscountvalue
-      ),
+      order_amount: parseInt(originalPrice * 0.05 + originalPrice),
       cart: cartData,
     };
     fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
@@ -113,13 +121,13 @@ function PetshopAddCart() {
         console.error("Error sending request:", error);
       });
   };
-  const disscountvalue = localStorage.getItem("disconut");
-  console.log("disscountvalue", disscountvalue);
-  const coupendisscount = (dis) => {
-    setcoupenCode(!coupencode);
-    localStorage.setItem("disconut", dis);
-    console.log("disccount?????", dis);
-  };
+  // const disscountvalue = localStorage.getItem("disconut");
+  // console.log("disscountvalue", disscountvalue);
+  // const coupendisscount = (dis) => {
+  //   setcoupenCode(!coupencode);
+  //   localStorage.setItem("disconut", dis);
+  //   console.log("disccount?????", dis);
+  // };
 
   const handlePayment = async () => {
     try {
@@ -167,10 +175,6 @@ function PetshopAddCart() {
     }
   };
   // const originalPrice = addToCartProduct[0]?.price;
-
-  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -449,7 +453,17 @@ function PetshopAddCart() {
     setAddressContentVisible(!addressContentVisible);
   };
 
-  const [addresslist, setaddresslist] = useState([]);
+  function formatAddress(selectedAddress) {
+    return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
+  }
+
+  // ...
+
+  // Use the formatAddress function to get the selected address as a single string
+  const deliveryAddress = selectedAddress
+    ? formatAddress(selectedAddress)
+    : "No address selected";
+
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
@@ -462,7 +476,7 @@ function PetshopAddCart() {
         console.log(error);
       });
   };
-  console.log("address list", addresslist);
+  // console.log("address list", addresslist);
 
   const handleDeleteAddress = (id) => {
     axios
@@ -517,7 +531,7 @@ function PetshopAddCart() {
 
     const data = {
       user_id: storedWholesellerId,
-      amount: parseInt(originalPrice * 0.05 + originalPrice - disscountvalue),
+      amount: parseInt(originalPrice * 0.05 + originalPrice),
       paydate: formattedDate, // Formatted current date
     };
 
@@ -551,6 +565,86 @@ function PetshopAddCart() {
     }
   };
 
+  // ===============================================================
+  // ===============================================================
+  console.log("id", id);
+  // const location = useLocation();
+  // const state = location.state;
+  // console.log("state: ", state);
+  // storedWholesellerId
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
+  // ----------------------------------------
+
+  useEffect(() => {
+    allOrders();
+  }, []);
+
+  const [addresslist, setaddresslist] = useState([]);
+  const [allorder, setallorder] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Select Payment Time");
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedOptiontwo, setSelectedOptiontwo] = useState(
+    "Select Payment Time"
+  );
+  const [isDropdownOpentwo, setDropdownOpentwo] = useState(false);
+  const [showPaymentModeDropdown, setShowPaymentModeDropdown] = useState(false);
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState(null);
+  const [showGstOptions, setShowGstOptions] = useState(false);
+
+  const handleOptionSelect = (option) => {
+    if (option !== selectedOption) {
+      setSelectedOption(option);
+      setDropdownOpen(false);
+      setShowPaymentModeDropdown(true);
+    }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleOptionSelecttwo = (option, mode) => {
+    if (option !== selectedOptiontwo) {
+      setSelectedOptiontwo(option);
+      setDropdownOpentwo(false);
+      setSelectedPaymentMode(mode);
+      // setShowPaymentModeDropdown(false);
+      // Check if "Cash" is selected to show/hide GST options
+      if (option === "Cash") {
+        setShowGstOptions(true);
+      } else {
+        setShowGstOptions(false);
+      }
+    }
+  };
+
+  const toggleDropdowntwo = () => {
+    setDropdownOpentwo(!isDropdownOpentwo);
+  };
+
+  const handlePaymentModeSelect = (mode) => {
+    setSelectedPaymentMode(mode);
+  };
+
+  const allOrders = async () => {
+    axios
+      .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
+      .then((response) => {
+        console.log(response);
+        console.log("Order List Successful");
+        setallorder(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getDateFromCreatedAt = (createdAt) => {
+    const dateObject = new Date(createdAt);
+    return dateObject.toLocaleDateString();
+  };
+
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
@@ -559,31 +653,31 @@ function PetshopAddCart() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -1148,8 +1242,10 @@ function PetshopAddCart() {
                 </div>
                 <Button
                   disabled={!selectedInput}
+                  // data-toggle="modal"
+                  // data-target="#paysubmit"
                   data-toggle="modal"
-                  data-target="#paysubmit"
+                  data-target=".bd-example-modal-lg"
                   data-dismiss="modal"
                 >
                   <Link>pay</Link>
@@ -1160,6 +1256,261 @@ function PetshopAddCart() {
         </div>
       </div>
 
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <Container>
+                <div className="oder-detail-card">
+                  <Row>
+                    <Col lg={5}>
+                      <div className="product-details">
+                        <div>
+                          <img src={logo} />
+                        </div>
+                        <div>
+                          <h5>Canine Products</h5>
+                          <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={7} className="d-flex justify-content-center">
+                      <div className="product-details text-center">
+                        <div>
+                          <h5>Canine Pay Later</h5>
+                          <p>Your total approved credit is ₹ 10,0000</p>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col lg={5}>
+                      <div className="payment-time">
+                        <div className="dropdown">
+                          <button
+                            className="btn dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            aria-haspopup="true"
+                            aria-expanded={isDropdownOpen}
+                            onClick={toggleDropdown}
+                          >
+                            {selectedOption}
+                          </button>
+                          <div
+                            className={`dropdown-menu ${
+                              isDropdownOpen ? "show" : ""
+                            }`}
+                            aria-labelledby="dropdownMenuButton"
+                          >
+                            <div
+                              className="form-check"
+                              onClick={() => handleOptionSelect("15 Days")}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="paymentTimeRadios"
+                                id="15Days"
+                                checked={selectedOption == "15"}
+                                readOnly
+                              />
+                              <label className="form-check-label">
+                                15 Days
+                              </label>
+                            </div>
+                            {/* Add similar code for other options */}
+                            <div
+                              className="form-check"
+                              onClick={() => handleOptionSelect("30 Days")}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="paymentTimeRadios"
+                                id="30Days"
+                                checked={selectedOption == "30"}
+                                readOnly
+                              />
+                              <label className="form-check-label">
+                                30 Days
+                              </label>
+                            </div>
+                            <div
+                              className="form-check"
+                              onClick={() => handleOptionSelect("45 Days")}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="paymentTimeRadios"
+                                id="45Days"
+                                checked={selectedOption == "45"}
+                                readOnly
+                              />
+                              <label className="form-check-label">
+                                45 Days
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        {showPaymentModeDropdown && (
+                          <div className="dropdown">
+                            <button
+                              className="btn dropdown-toggle"
+                              type="button"
+                              id="paymentModeDropdownButton"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded={isDropdownOpentwo}
+                              onClick={toggleDropdowntwo}
+                            >
+                              {selectedOptiontwo}
+                            </button>
+                            <div
+                              className={`dropdown-menu ${
+                                isDropdownOpentwo ? "show" : ""
+                              }`}
+                              aria-labelledby="paymentModeDropdownButton"
+                            >
+                              <div
+                                className="form-check"
+                                onClick={() => handleOptionSelecttwo("UPI")}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentModeRadios"
+                                  id="UPI"
+                                  checked={selectedOptiontwo == "UPI"}
+                                  readOnly
+                                />
+                                <label className="form-check-label">UPI</label>
+                              </div>
+                              {/* Add similar code for other payment modes */}
+                              <div
+                                className="form-check"
+                                onClick={() => handleOptionSelecttwo("Cheque")}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentModeRadios"
+                                  id="Cheque"
+                                  checked={selectedOptiontwo == "Cheque"}
+                                  readOnly
+                                />
+                                <label className="form-check-label">
+                                  Cheque
+                                </label>
+                              </div>
+                              <div
+                                className="form-check"
+                                onClick={() => handleOptionSelecttwo("Cash")}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentModeRadios"
+                                  id="Cash"
+                                  checked={selectedOptiontwo == "Cash"}
+                                  readOnly
+                                />
+                                <label className="form-check-label">Cash</label>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div>
+                          {showGstOptions && (
+                            <div>
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="gstRadios"
+                                  id="withoutGST"
+                                  value={0}
+                                  onChange={handleRadioButton}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="withoutGST"
+                                >
+                                  Without GST
+                                </label>
+                              </div>
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="gstRadios"
+                                  id="withGST"
+                                  value={1}
+                                  onChange={handleRadioButton}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="withGST"
+                                >
+                                  GST
+                                </label>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="payletter-btn">
+                          <button
+                            data-toggle="modal"
+                            data-dismiss="modal"
+                            data-target="#paysubmit"
+                          >
+                            Sumbit
+                          </button>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={7} className="align-self-center">
+                      <div className="order-table">
+                        <Table responsive>
+                          <tbody>
+                            <tr>
+                              <th>Utilised Credit</th>
+                              <td>₹0</td>
+                            </tr>
+                            <tr>
+                              <th>Available Credit</th>
+                              <td>₹10,0000</td>
+                            </tr>
+                            <tr>
+                              <th>Total Approved Credit</th>
+                              <td>₹10,0000</td>
+                            </tr>
+                            <tr>
+                              {/* <th>(All due are debited on 5th of each month)</th> */}
+                              {/* <td>₹138.00</td> */}
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <p className="d-flex justify-content-center">
+                          (All due are debited on 5th of each month)
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Container>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Modal */}
       <div
         className="modal fade"

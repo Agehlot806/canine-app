@@ -91,7 +91,6 @@ import PetShopcanineproduct from "./component/petShop/petShop-canine-product";
 import PetshopBlog from "./component/petShop/petShop-blog";
 import PetshopBlogdetails from "./component/petShop/petShop-blog-details";
 
-
 // ScrollToTop component
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -177,10 +176,7 @@ function App() {
           <Route path="/salesman-signup" element={<Salesman />} />
 
           {/* Pet shop flow  */}
-          <Route
-            path="/petshop-dashboard"
-            element={<Petshopdashboard />}
-          />
+          <Route path="/petshop-dashboard" element={<Petshopdashboard />} />
           <Route
             path="/petshop-pet-category/:name/:id"
             element={<PetshopPetcategory />}
@@ -256,10 +252,15 @@ function App() {
           <Route path="/petshopfindastore" element={<Petshopfindastore />} />
           <Route path="/petshopaboutus" element={<Petshopaboutus />} />
           <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
-          <Route path="/petshop-canine-product" element={<PetShopcanineproduct />} />
+          <Route
+            path="/petshop-canine-product"
+            element={<PetShopcanineproduct />}
+          />
           <Route path="/petshop-blog" element={<PetshopBlog />} />
-          <Route path="/petshop-blog-details/:id" element={<PetshopBlogdetails />} />
-
+          <Route
+            path="/petshop-blog-details/:id"
+            element={<PetshopBlogdetails />}
+          />
 
           {/* Sales Man flow  */}
           <Route path="/salesman-login" element={<SalesmanLogin />} />

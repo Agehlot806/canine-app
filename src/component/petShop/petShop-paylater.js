@@ -9,11 +9,16 @@ import orders from "../../assets/images/img/orders.png";
 import cart from "../../assets/images/icon/cart.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopPayLater() {
+  const { id } = useParams();
+  console.log("id", id);
+  const location = useLocation();
+const state = location.state;
+console.log('state: ', state);
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
