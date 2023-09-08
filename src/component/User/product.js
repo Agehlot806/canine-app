@@ -34,6 +34,7 @@ const clinetreview = {
   },
 };
 function Product(props) {
+  const [expandedDescription, setExpandedDescription] = useState({});
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [itembannerdata, setitembannerdata] = useState([]);
@@ -789,7 +790,23 @@ function Product(props) {
                           </div>
                           <div>
                             <h6>{item.name}</h6>
-                            <p>{item.description}</p>
+                            {/* <p>{item.description}</p> */}
+                            <p className={`truncate-text ${!expandedDescription[item.id] ? 'read-more-link' : ''}`}>
+                            {item.description}
+                            {item.description.length > 100 && !expandedDescription[item.id] && (
+                              <span
+                                className="read-more-link"
+                                onClick={() =>
+                                  setExpandedDescription({
+                                    ...expandedDescription,
+                                    [item.id]: true,
+                                  })
+                                }
+                              >
+                                Read More
+                              </span>
+                            )}
+                          </p>
                           </div>
                           <div className="product-bag">
                             <Row>

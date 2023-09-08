@@ -3186,4 +3186,19 @@ button.Apply-price {
   text-align: center;
   color: #000;
   border-radius: 50px;
+.tab-variations:hover {
+  background: blue;
+  cursor: pointer;
+}
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Show two lines of text */
+  -webkit-box-orient: vertical;
+}
+
+.read-more-link {
+  color: blue;
+  cursor: pointer;
 }

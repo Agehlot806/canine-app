@@ -72,10 +72,11 @@ const clinetreview = {
 };
 
 function Home(props) {
+  const [expandedDescription, setExpandedDescription] = useState({});
   const navigate = useNavigate()
   const [categories, setcategories] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
-  
+
   const [allproduct, setallproduct] = useState([]);
   console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
@@ -92,7 +93,7 @@ function Home(props) {
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
-  console.log("homebannerhomebanner",homebanner);
+  console.log("homebannerhomebanner", homebanner);
   const homeAllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
@@ -182,6 +183,7 @@ function Home(props) {
 
     const truncatedDescription = description.slice(0, maxCharacters);
 
+
     return (
       <>
         <p>{truncatedDescription}.......</p>
@@ -221,6 +223,12 @@ function Home(props) {
   // ----------------------------------------
 
   const addToWishlist = async (item_id) => {
+    if (!storedUserId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
     const formData = new FormData();
     formData.append("user_id", storedUserId);
     formData.append("item_id", item_id);
@@ -253,6 +261,7 @@ function Home(props) {
   const [addToCartStatus, setAddToCartStatus] = useState("");
 
   const handleAddToCart = async () => {
+
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
@@ -282,6 +291,10 @@ function Home(props) {
 
   const { id } = useParams();
   console.log("id: ", id);
+  // const navigate = useNavigate();
+  // navigate("/login");
+
+
 
   return (
     <>
@@ -488,7 +501,23 @@ function Home(props) {
                         </div>
                         <div>
                           <h6>{item.name}</h6>
-                          <p>{item.description}</p>
+                          {/* <p>{item.description}</p> */}
+                          <p className={`truncate-text ${!expandedDescription[item.id] ? 'read-more-link' : ''}`}>
+                            {item.description}
+                            {item.description.length > 100 && !expandedDescription[item.id] && (
+                              <span
+                                className="read-more-link"
+                                onClick={() =>
+                                  setExpandedDescription({
+                                    ...expandedDescription,
+                                    [item.id]: true,
+                                  })
+                                }
+                              >
+                                Read More
+                              </span>
+                            )}
+                          </p>
                         </div>
                         <div className="product-bag">
                           <Row>
