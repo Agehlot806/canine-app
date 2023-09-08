@@ -1161,13 +1161,13 @@ a {
 
 .order-card.order-bg1 .order-status h6 {
   background: #07b12c;
-    width: 100px;
-    padding: 4px;
-    border-radius: 25px 16px 16px 0;
-    color: #fff;
-    font-weight: 100;
-    font-size: 15px;
-    text-align: center;
+  width: 100px;
+  padding: 4px;
+  border-radius: 25px 16px 16px 0;
+  color: #fff;
+  font-weight: 100;
+  font-size: 15px;
+  text-align: center;
 }
 
 .order-card button {
@@ -2706,7 +2706,7 @@ a.notification-btn i {
   font-size: 9px;
   position: absolute;
   top: -15px;
-    left: 0;
+  left: 0;
 }
 ul.list-unstyled li a {
   color: #6c6b6b;
@@ -3123,13 +3123,13 @@ button.Apply-price {
   margin: 0 0 16px;
 }
 
-
 .payment-time {
   background: #fff;
   padding: 20px;
   height: 100%;
   border-radius: 15px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 .payment-time button {
   width: 100%;
@@ -3150,7 +3150,7 @@ button.Apply-price {
   font-size: 9px;
   position: absolute;
   top: -15px;
-    left: 0;
+  left: 0;
 }
 
 .search-results {
@@ -3179,13 +3179,14 @@ button.Apply-price {
 .payletter-btn {
   text-align: center;
 }
-.payletter-btn button{
+.payletter-btn button {
   width: 100px !important;
   background: #ffc934;
   border: none;
   text-align: center;
   color: #000;
   border-radius: 50px;
+}
 .tab-variations:hover {
   background: blue;
   cursor: pointer;
