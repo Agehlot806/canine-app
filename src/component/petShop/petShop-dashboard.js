@@ -23,6 +23,7 @@ function Petshopdashboard() {
     totalOrders();
     AllBanner();
   }, []);
+  
   const AllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
@@ -48,6 +49,7 @@ function Petshopdashboard() {
     "linear-gradient(180deg, #ffead2 0%, rgba(255, 234, 210, 0) 100%)",
     "linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%)",
   ];
+  
   return (
     <>
       <PetShopHeader />

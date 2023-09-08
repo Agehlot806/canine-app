@@ -65,6 +65,7 @@ function Productdetail() {
     fetchrelatedproduct();
     fetchBreed();
     fetchLifestage();
+    AllBanner();
     // fetchProductData();
   }, []);
 
@@ -290,16 +291,54 @@ function Productdetail() {
   const handleVariantChange = (e) => {
     setSelectedVariant(e.target.value);
   };
+  const [homebanner, sethomebanner] = useState([]);
+  const AllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <Toaster />
 
       <Newheader />
-      <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={productdetail} />
-        </div>
-      </Container>
+      <div className="home-section">
+        <Container fluid className="p-0">
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
+          </div>
+        </Container>
+      </div>
 
       <section className="section-padding">
         <Container>

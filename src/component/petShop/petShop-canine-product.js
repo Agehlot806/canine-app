@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Newheader from '../../directives/newheader';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import Carousel from "react-multi-carousel";
 import product from '../../assets/images/banner/product.png'
@@ -7,13 +6,14 @@ import { Link } from 'react-router-dom'
 import product1 from '../../assets/images/img/product1.png'
 import product2 from '../../assets/images/img/product2.png'
 import product3 from '../../assets/images/img/product3.png'
-import Footer from '../../directives/footer'
 import productdetail from '../../assets/images/banner/productdetail.png'
 import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
 import { Toaster, toast } from 'react-hot-toast';
+import PetShopHeader from '../../directives/petShopHeader';
+import Petshopfooter from '../../directives/petShop-Footer';
 
 const clinetreview = {
     desktop: {
@@ -99,7 +99,7 @@ function PetShopcanineproduct(props) {
     return (
         <>
             <Toaster />
-            <Newheader />
+            < PetShopHeader/>
             <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={product} />
@@ -222,7 +222,7 @@ function PetShopcanineproduct(props) {
 
 
 
-            <Footer />
+            < Petshopfooter/>
         </>
     )
 }

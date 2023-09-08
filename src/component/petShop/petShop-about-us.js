@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
-import Newheader from '../../directives/newheader';
 import about from '../../assets/images/banner/about.png'
 import { Container, Row, Col } from 'react-bootstrap'
 import icon1 from '../../assets/images/icon/icon1.png'
