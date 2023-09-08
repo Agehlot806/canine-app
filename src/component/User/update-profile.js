@@ -3,6 +3,7 @@ import Newheader from "../../directives/newheader";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Footer from "../../directives/footer";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function Updateprofile() {
   // const [uploadField, setUploadField] = useState([{image:""}])
@@ -77,6 +78,7 @@ function Updateprofile() {
       );
       if (response.data.message === "Successfully updated!") {
         console.log("Profile updated successfully!");
+        toast.success("Successfully updated!")
       }
     } catch (error) {
       console.error(error);

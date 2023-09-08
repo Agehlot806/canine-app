@@ -11,14 +11,16 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import {useReactToPrint} from "react-to-print"
+import { useReactToPrint } from "react-to-print"
 import { useBootstrapMinBreakpoint } from "react-bootstrap/esm/ThemeProvider";
+import { Toaster, toast } from "react-hot-toast";
+import StarRating from "../starrating";
 
 function Orderviewdetails() {
 
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
-  
+
   // const handlePrint = () => {
   //       if (tableRef.current) {
   //           const doc = new jsPDF();
@@ -26,36 +28,36 @@ function Orderviewdetails() {
   //           doc.save('table.pdf');
   //       }
   //   }
-    const handlePrint = useReactToPrint({
-      content: () => tableRef.current,
+  const handlePrint = useReactToPrint({
+    content: () => tableRef.current,
+  });
+
+
+
+  const summaryPrint = () => {
+    const doc = new jsPDF();
+
+
+    const summaryData = [
+      ["Description", "Price"],
+      ["Item 1", "$10"],
+      ["Item 2", "$20"],
+      ["Sub Total", "$30"],
+      ["Discount", "-$5"],
+      ["Delivery Charge", "$5"],
+      ["Total", "$30"],
+    ];
+
+    doc.autoTable({
+      head: [["Summary Invoice"]],
+      body: summaryData,
+      startY: 10,
+      margin: { top: 20, right: 20, bottom: 0, left: 20 },
     });
 
-    
+    doc.save("summary_invoice.pdf");
+  };
 
-    const summaryPrint = () => {
-      const doc = new jsPDF();
-  
-      
-      const summaryData = [
-        ["Description", "Price"],
-        ["Item 1", "$10"],
-        ["Item 2", "$20"],
-        ["Sub Total", "$30"],
-        ["Discount", "-$5"],
-        ["Delivery Charge", "$5"],
-        ["Total", "$30"],
-      ];
-  
-      doc.autoTable({
-        head: [["Summary Invoice"]],
-        body: summaryData,
-        startY: 10,
-        margin: { top: 20, right: 20, bottom: 0, left: 20 },
-      });
-  
-      doc.save("summary_invoice.pdf");
-    };
- 
 
   const [allorder, setallorder] = useState([]);
   console.log("allorder: ", allorder);
@@ -64,6 +66,11 @@ function Orderviewdetails() {
 
   const { id } = useParams();
   console.log("order id ", id);
+
+
+
+
+
 
   useEffect(() => {
     orderViewdetails();
@@ -114,6 +121,7 @@ function Orderviewdetails() {
         console.log(error);
       });
   };
+  const item_id = orderDetails[0]?.item_id;
 
   const orderViewdetails = async () => {
     axios
@@ -122,6 +130,8 @@ function Orderviewdetails() {
         console.log("=======>???????????????????????????????? ", response);
         console.log("order Details Successful");
         setorderDetails(response.data.data);
+        //       const item_id = response.data.data.item_id;
+        // console.log("Item ID:", item_id);
       })
       .catch((error) => {
         console.log(error);
@@ -159,8 +169,49 @@ function Orderviewdetails() {
     }
   };
 
+
+
+  const [rating, setRating] = useState(0);
+
+  const handleStarClick = (index) => {
+    if (index === rating) {
+      // If the same star is clicked again, deselect it (set rating to 0).
+      setRating(0);
+    } else {
+      // Otherwise, set the rating to the clicked star index or half of it.
+      setRating(index);
+    }
+  };
+
+
+
+  const [responseMessage, setResponseMessage] = useState("");
+  const [comment, setcomment] = useState("");
+
+  const handleReview = (event) => {
+    event.preventDefault();
+    const data = {
+      user_id: storedUserId,
+      item_id: item_id,
+      order_id: id,
+      comment: comment,
+      rating: rating,
+    };
+    axios
+      .post(`${BASE_URL}/items/reviews/submit`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Review Add Successfully");
+      })
+      .catch((error) => {
+        toast.error("Field is required");
+      });
+  };
+
+
   return (
     <>
+      <Toaster />
       <Newheader />
       <section className="section-padding">
         <Container>
@@ -182,14 +233,14 @@ function Orderviewdetails() {
               <Col lg={7}>
                 <div className="dowload-invioce">
                   {/* <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf"> */}
-                    <Button className="invoice-1" onClick={handlePrint}>
-                      <img src={invoice} /> download invoice
-                    </Button>
+                  <Button className="invoice-1" onClick={handlePrint}>
+                    <img src={invoice} /> download invoice
+                  </Button>
                   {/* </Link> */}
                   {/* <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf"> */}
-                    <Button className="invoice-2" onClick={summaryPrint}>
-                      <img src={invoice} /> download summary
-                    </Button>
+                  <Button className="invoice-2" onClick={summaryPrint}>
+                    <img src={invoice} /> download summary
+                  </Button>
                   {/* </Link> */}
                 </div>
               </Col>
@@ -230,6 +281,35 @@ function Orderviewdetails() {
                               </div>
                             </Col>
                           </Row>
+                          {/* <div>
+                            {allorder && allorder.length > 0 ? (
+                              <h3>Order Status: {allorder[0].order_status}</h3>
+                            ) : (
+                              <p className="emptyMSG">No Order list</p>
+                            )}
+                          </div> */}
+                          <>
+                            <h2>Star Rating: {rating} stars</h2>
+                            <div className="star-rating">
+                              {[1, 2, 3, 4, 5].map((index) => (
+                                <div
+                                  key={index}
+                                  className={`star ${index <= rating ? 'filled' : ''}`}
+                                  onClick={() => handleStarClick(index)}
+                                ></div>
+                              ))}
+                            </div>
+                            <form>
+                              <div className="form-group">
+                                <label >Write a Review</label>
+                                <textarea className="form-control" rows={3} value={comment}
+                                  onChange={(e) => setcomment(e.target.value)} />
+                              </div>
+                            </form>
+                            <Button onClick={handleReview}>Submit</Button>
+                          </>
+
+
                           <hr />
                         </div>
                       );

@@ -11,7 +11,7 @@ import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
 import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
-import star from "../star";
+// import star from "../star";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 import brandPro1 from "../../assets/images/img/brandPro1.png";

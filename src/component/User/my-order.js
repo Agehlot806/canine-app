@@ -12,11 +12,14 @@ import cart from "../../assets/images/icon/cart.png";
 import logo from "../../assets/images/logo.png";
 
 function Myorder() {
-   
+
 
     const [allorder, setallorder] = useState([]);
+    const [allreviewdata, setallreviewdata] = useState([]);
+
     useEffect(() => {
         allOrders();
+        allStarData();
     }, []);
 
     // storedUserId
@@ -38,12 +41,25 @@ function Myorder() {
             });
     };
 
+    const allStarData = async () => {
+        axios
+            .get(`${BASE_URL}/items/get_review`)
+            .then((response) => {
+                console.log(response);
+                console.log("Review List Successful");
+                setallreviewdata(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     const getDateFromCreatedAt = (createdAt) => {
         const dateObject = new Date(createdAt);
         return dateObject.toLocaleDateString();
     };
 
-  
+
 
     return (
         <>
@@ -64,15 +80,32 @@ function Myorder() {
                                             <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
                                             <h3>Payment Method: {item.payment_method}</h3>
                                             <h3>Order Amount: ₹{item.order_amount}</h3>
+                                            <h3>Order Status: {item.order_status}</h3>
+                                            {item.order_status === 'delivered' ? (
+                                                <div>
+                                                {allreviewdata && allreviewdata.length > 0 ? (
+                                                  allreviewdata.map((item, index) => (
+                                                    <div key={index}>
+                                                      {Array.from({ length: item.rating }).map((_, starIndex) => (
+                                                        <a 
+                                                        key={starIndex}><i className="fa fa-star" /></a>
+                                                      ))}
+                                                    </div>
+                                                  ))
+                                                ) : (
+                                                  <p className="emptyMSG">No Review</p>
+                                                )}
+                                              </div>
+                                            ) : null}
                                         </Col>
-                                    
+
                                         <Col lg={3} sm={3} className="align-self-center">
                                             <div className="myorder-btn">
                                                 <Button>
                                                     <Link to={`/order-view-details/${item.id}`}>View</Link>
                                                 </Button>
                                                 <Button>
-                                                <Link to={`/track-your-order/${item.id}`}>Track</Link>
+                                                    <Link to={`/track-your-order/${item.id}`}>Track</Link>
                                                 </Button>
                                             </div>
                                         </Col>
