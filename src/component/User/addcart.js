@@ -338,14 +338,15 @@ function Addcart() {
   let storedUserId = JSON.parse(customer_id);
   // ----------------------------------------
 
-  const [addresslist, setaddresslist] = useState([]);
+  // const [addresslist, setaddresslist] = useState([]);
+  const [addresslist, setAddressList] = useState([]);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
-        setaddresslist(response.data.data);
+        setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -412,7 +413,7 @@ function Addcart() {
       user_id: customer_id,
       coupon_discount_amount: disscountvalue?.discount,
       coupon_discount_title: disscountvalue?.title,
-      payment_status: "confirm",
+      payment_status: "paid",
       order_status: "pending",
       total_tax_amount: taxamound,
       payment_method: selectedInput ? "offline" : "online",
@@ -428,7 +429,7 @@ function Addcart() {
       item_campaign_id: "",
       order_amount: parseInt(
         originalPrice * 0.05 + originalPrice - disscountvalue?.discount
-      ),
+      ) || "",
       cart: cartData,
     };
     fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
