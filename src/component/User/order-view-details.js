@@ -289,7 +289,7 @@ function Orderviewdetails() {
                             )}
                           </div> */}
                           <>
-                            <h2>Star Rating: {rating} stars</h2>
+                            <p>Product Rating: {rating}</p>
                             <div className="star-rating">
                               {[1, 2, 3, 4, 5].map((index) => (
                                 <div
@@ -302,11 +302,11 @@ function Orderviewdetails() {
                             <form>
                               <div className="form-group">
                                 <label >Write a Review</label>
-                                <textarea className="form-control" rows={3} value={comment}
+                                <textarea className="form-control mb-3" rows={3} value={comment}
                                   onChange={(e) => setcomment(e.target.value)} />
                               </div>
                             </form>
-                            <Button onClick={handleReview}>Submit</Button>
+                            <Button  onClick={handleReview}>Submit</Button>
                           </>
 
 

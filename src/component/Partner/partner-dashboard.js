@@ -136,15 +136,14 @@ function Partnerdashboard() {
                       subscription.image
                     }
                   />
-                  <h4>{subscription.plantime}</h4>
+                  <h4>{subscription.pname}</h4>
                   {/* <p><i className="fa fa-users" /> 987 Members</p> */}
-                  <p>{subscription.pname}</p>
                   <h5>
                     Advertisement : <span>{subscription.advertisement}</span>
                   </h5>
 
                   <div className="Members-monthly Members-monthly1">
-                    <h2>₹ {subscription.price}</h2>
+                    <h2>₹ {subscription.price}/<span>{subscription.plantime}</span></h2>
                     <span>Limit : {subscription.limit}</span>
                   </div>
                   <ul>

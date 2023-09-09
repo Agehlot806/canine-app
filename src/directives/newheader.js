@@ -149,7 +149,8 @@ function Newheader(props) {
   return (
     <>
       <Toaster />
-      <nav className="navbar navbar-expand-lg navbar-light newheader">
+      <div className="sticky-newheader">
+      <nav className="navbar navbar-expand-lg navbar-light newheader ">
         <div className="container">
           <a className="navbar-brand" href="#">
             {" "}
@@ -173,7 +174,7 @@ function Newheader(props) {
           </button>
           <div className="collapse navbar-collapse" id="megaMenu">
             <ul className="navbar-nav m-auto">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link"
                   to={props.type == "salesman" ? "/salesman-dashboad" : "/"}
@@ -185,7 +186,7 @@ function Newheader(props) {
                 <Link className="nav-link" to="/product">
                   New
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item dropdown mega-dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
@@ -458,7 +459,7 @@ function Newheader(props) {
                             </li> */}
               <li className="nav-item">
                 <Link className="nav-link" to="/service">
-                  Petcare
+                  Services
                 </Link>
               </li>
               <li className="nav-item">
@@ -472,7 +473,7 @@ function Newheader(props) {
                     <i className="fa fa-search" />
                     <input
                       type="text"
-                      placeholder="Search keyword"
+                      placeholder="What are you looking for?"
                       value={searchQuery}
                       onChange={handleSearchInputChange}
                     />
@@ -499,7 +500,7 @@ function Newheader(props) {
                   <i class="fa fa-bell-o" />
                 </a>
               </li>
-              
+
               {storedUserId ? (
                 // Display Logout button if user is logged in
                 <>
@@ -514,8 +515,8 @@ function Newheader(props) {
 
                     </Link>
                   </li>
-                  <li className="nav-item dropdown">
-                    <a
+                  <li className="nav-item dropdown profile-mainarea">
+                    {/* <a
                       className="nav-link dropdown-toggle profile-icon"
                       href="#"
                       id="navbarDropdown"
@@ -523,9 +524,15 @@ function Newheader(props) {
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
-                    >
+                    > */}
+                    <Link
+                  className="nav-link profile-icon"
+                  to={props.type == "salesman" ? "/salesman-dashboad" : "/"}
+                >
+                  {/* {props.type == "salesman" ? "Dashboard" : "Home"} */}
+                
                       <img src={pro} />
-                    </a>
+                      </Link>
                     <div
                       className="dropdown-menu"
                       aria-labelledby="navbarDropdown"
@@ -567,9 +574,10 @@ function Newheader(props) {
           </div>
         </div>
       </nav>
+      </div>
 
- {/* Modal */}
- <div className="modal fade" id="logout-model" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      {/* Modal */}
+      <div className="modal fade" id="logout-model" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-body logout-area">

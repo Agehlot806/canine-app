@@ -29,21 +29,21 @@ function Myorder() {
 
 
     const allOrders = async () => {
-        axios
-            .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
-            .then((response) => {
-                console.log(response);
-                console.log("Order List Successful");
-                setallorder(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        try {
+            const response = await axios.get(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+            console.log(response);
+            console.log("Order List Successful");
+            const itemIds = response.data.data.flatMap(order => order.callback.map(callback => callback.item_id));
+            console.log(itemIds);
+            setallorder(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const allStarData = async () => {
+    const allStarData = async (itemIds) => {
         axios
-            .get(`${BASE_URL}/items/get_review`)
+            .get(`${BASE_URL}/items/get_reviewitem/5`)
             .then((response) => {
                 console.log(response);
                 console.log("Review List Successful");
@@ -83,19 +83,19 @@ function Myorder() {
                                             <h3>Order Status: {item.order_status}</h3>
                                             {item.order_status === 'delivered' ? (
                                                 <div>
-                                                {allreviewdata && allreviewdata.length > 0 ? (
-                                                  allreviewdata.map((item, index) => (
-                                                    <div key={index}>
-                                                      {Array.from({ length: item.rating }).map((_, starIndex) => (
-                                                        <a 
-                                                        key={starIndex}><i className="fa fa-star" /></a>
-                                                      ))}
-                                                    </div>
-                                                  ))
-                                                ) : (
-                                                  <p className="emptyMSG">No Review</p>
-                                                )}
-                                              </div>
+                                                    {allreviewdata && allreviewdata.length > 0 ? (
+                                                        allreviewdata.map((item, index) => (
+                                                            <div key={index}>
+                                                                {Array.from({ length: item.rating }).map((_, starIndex) => (
+                                                                    <a
+                                                                        key={starIndex}><i className="fa fa-star" /></a>
+                                                                ))}
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <p className="emptyMSG">No Review</p>
+                                                    )}
+                                                </div>
                                             ) : null}
                                         </Col>
 

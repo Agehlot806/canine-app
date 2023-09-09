@@ -78,7 +78,7 @@ function Home(props) {
   const [homebanner, sethomebanner] = useState([]);
 
   const [allproduct, setallproduct] = useState([]);
-  console.log("allproduct: ", allproduct);
+  console.log("allproduct in home: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
   // console.log("allVendorShop: ", allVendorShop);
@@ -86,7 +86,7 @@ function Home(props) {
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
-
+  const [wishlistData, setWishlistData] = useState([]);
   useEffect(() => {
     fetchBrands();
     homeAllBanner();
@@ -140,7 +140,12 @@ function Home(props) {
     thirdBanner();
     fetchBlogs();
     AllVendorHomePage();
+    fetchWishlistData();
   }, []);
+  // useEffect(() => {
+    
+  //   fetchWishlistData();
+  // }, []);
 
   const categoriesProduct = async () => {
     try {
@@ -221,35 +226,6 @@ function Home(props) {
   console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
-  const addToWishlist = async (item_id) => {
-    if (!storedUserId) {
-      // If the user is not logged in, navigate to the login page
-      navigate("/login");
-      return; // Exit the function without adding to wishlist
-    }
-
-    const formData = new FormData();
-    formData.append("user_id", storedUserId);
-    formData.append("item_id", item_id);
-    axios
-      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        console.log("response143", response);
-        if (response.data.message) {
-          toast.success("Added successfully");
-        }
-      })
-      .catch((error) => {
-        toast.error("Already in your wishlist");
-      });
-  };
-
-  // const randomColor = `rgb(${Math.floor(Math.random() * 'linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)')}, ${Math.floor(
-  //   Math.random() * 'linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)'
-  // )}, ${Math.floor(Math.random() * 'linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)')})`;
-
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
     "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
@@ -257,7 +233,18 @@ function Home(props) {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+
   const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
 
   const handleAddToCart = async () => {
     try {
@@ -287,8 +274,75 @@ function Home(props) {
     }
   };
 
+
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedUserId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData",filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        setallproduct(newArr);
+      }
+    }
+  };
+  const addToWishlist = async (item_id) => {
+    if (!storedUserId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
+    const formData = new FormData();
+    formData.append("user_id", storedUserId);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+            const index = allproduct.map((el) => el.id).indexOf(item_id);
+            newArr[index].isFav = true;
+            setallproduct(newArr);
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
+  };
+
+
+
   const { id } = useParams();
-  console.log("id: ", id);
+  // console.log("id: ", id);
   // const navigate = useNavigate();
   // navigate("/login");
 
@@ -484,10 +538,24 @@ function Home(props) {
                           gradientColors[index % gradientColors.length],
                       }}
                     >
-                      <i
+                      {/* <i
                         class="fa fa-heart-o"
                         onClick={() => addToWishlist(item.id)}
+                      /> */}
+
+                      <i
+                        class={
+                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                        }
+                        onClick={(id) => {
+                          if (storedUserId == null) {
+                            toast.error("Please Login first");
+                          } else {
+                            addToWishlist(item.id);
+                          }
+                        }}
                       />
+
                       <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">
                           <img
