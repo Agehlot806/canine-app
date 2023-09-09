@@ -144,7 +144,7 @@ function Serviceaddpet() {
               </div>
               <div className="needplace">
              
-                  {selectedCategory && (
+                  {/* {selectedCategory && (
                     <div className="selectedCategory">
                       <h2>Avatar</h2>
                       <img
@@ -155,7 +155,7 @@ function Serviceaddpet() {
                         alt={selectedCategory.name}
                       />
                     </div>
-                  )}
+                  )} */}
                
                     <div className="form-group">
                       <label>Pet type</label>
