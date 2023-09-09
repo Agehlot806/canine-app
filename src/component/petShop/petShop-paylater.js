@@ -17,8 +17,8 @@ function PetshopPayLater() {
   const { id } = useParams();
   console.log("id", id);
   const location = useLocation();
-const state = location.state;
-console.log('state: ', state);
+  const state = location.state;
+  console.log("state: ", state);
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
@@ -52,12 +52,24 @@ console.log('state: ', state);
     setDropdownOpen(!isDropdownOpen);
   };
 
+  // const handleOptionSelecttwo = (option, mode) => {
+  //   if (option !== selectedOptiontwo) {
+  //     setSelectedOptiontwo(option);
+  //     setDropdownOpentwo(false);
+  //     setSelectedPaymentMode(mode);
+  //     // setShowPaymentModeDropdown(false);
+  //   }
+  // };
   const handleOptionSelecttwo = (option, mode) => {
     if (option !== selectedOptiontwo) {
       setSelectedOptiontwo(option);
       setDropdownOpentwo(false);
       setSelectedPaymentMode(mode);
-      // setShowPaymentModeDropdown(false);
+
+      // Check if both "Cheque" and "UPI" are selected, and set GST as default
+      if (selectedOptiontwo == "Cheque" && option == "UPI") {
+        setSelectedPaymentMode("GST");
+      }
     }
   };
 

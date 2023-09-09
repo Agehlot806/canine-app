@@ -585,7 +585,7 @@ function PetshopAddCart() {
   const [selectedOption, setSelectedOption] = useState("Select Payment Time");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOptiontwo, setSelectedOptiontwo] = useState(
-    "Select Payment Time"
+    "Select Payment Mode"
   );
   const [isDropdownOpentwo, setDropdownOpentwo] = useState(false);
   const [showPaymentModeDropdown, setShowPaymentModeDropdown] = useState(false);
@@ -610,8 +610,21 @@ function PetshopAddCart() {
       setDropdownOpentwo(false);
       setSelectedPaymentMode(mode);
       // setShowPaymentModeDropdown(false);
+      // Check if both "Cheque" and "UPI" are selected, and set GST as default
+      // Check if both "Cheque" and "UPI" are selected, and set GST as default
+      if (selectedOptiontwo === "Cheque" && option === "UPI") {
+        setSelectedPaymentMode("GST");
+      } else if (selectedOptiontwo === "UPI" && option === "Cheque") {
+        setSelectedPaymentMode("GST");
+      } else if (
+        selectedOptiontwo === "GST" &&
+        option !== "Cheque" &&
+        option !== "UPI"
+      ) {
+        setSelectedPaymentMode(""); // Reset the payment mode if neither "Cheque" nor "UPI" is selected
+      }
       // Check if "Cash" is selected to show/hide GST options
-      if (option === "Cash") {
+      if (option === "Cash" || option === "Cheque" || option === "UPI") {
         setShowGstOptions(true);
       } else {
         setShowGstOptions(false);
@@ -1439,6 +1452,10 @@ function PetshopAddCart() {
                                   id="withoutGST"
                                   value={0}
                                   onChange={handleRadioButton}
+                                  disabled={
+                                    selectedOptiontwo == "Cheque" ||
+                                    selectedOptiontwo == "UPI"
+                                  }
                                 />
                                 <label
                                   className="form-check-label"
@@ -1455,6 +1472,11 @@ function PetshopAddCart() {
                                   id="withGST"
                                   value={1}
                                   onChange={handleRadioButton}
+                                  // checked={
+                                  //   selectedPaymentMode == "GST"
+                                  //     ? selectedOptiontwo == "Cheque"
+                                  //     : selectedOptiontwo == "UPI"
+                                  // }
                                 />
                                 <label
                                   className="form-check-label"
