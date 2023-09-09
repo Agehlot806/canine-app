@@ -183,31 +183,33 @@ function Servicedate() {
             </div>
             <div className="sevice-select-date">
               <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              
                 {slotday?.length > 0 ? (
-                  slotday.map((item, index) => (
-                    <li className="nav-item">
-                      <a
-                        className="nav-link"
-                        id="Set-tab"
-                        data-toggle="pill"
-                        href="#Set"
-                        role="tab"
-                        aria-controls="Set"
-                        aria-selected="true"
-                        onClick={() => {
-                          setTimingSlot(item.slot_timing);
-                        }}
-                      >
-                        {item.day} <br />
-                        <span>
-                          {moment(item.slot_date).format("MMMM Do YYYY")}
-                        </span>
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <p className="emptyMSG">{stringes.invalidDate}</p>
-                )}
+  slotday.map((item, index) => (
+    <li className="nav-item" key={index}>
+      <a
+        className="nav-link"
+        id="Set-tab"
+        data-toggle="pill"
+        href="#Set"
+        role="tab"
+        aria-controls="Set"
+        aria-selected="true"
+        onClick={() => {
+          setTimingSlot(item.slot_timing);
+        }}
+      >
+        {moment(item.slot_date).format("dddd").split("", 3)} <br />
+        <span>
+        {moment(item.slot_date).format("D")}
+        </span>
+      </a>
+    </li>
+  ))
+) : (
+  <p className="emptyMSG">{stringes.invalidDate}</p>
+)}
+
               </ul>
             </div>
           </div>

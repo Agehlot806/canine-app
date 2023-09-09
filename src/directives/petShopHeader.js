@@ -166,6 +166,7 @@ function PetShopHeader(props) {
   return (
     <>
       <Toaster />
+      <div className="sticky-newheader">
       <nav className="navbar navbar-expand-lg navbar-light newheader">
         <div className="container">
           <a className="navbar-brand" href="#">
@@ -195,7 +196,7 @@ function PetShopHeader(props) {
                   Dashboard
                 </Link>
               </li> */}
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link"
                   to={
@@ -211,7 +212,7 @@ function PetShopHeader(props) {
                 <Link className="nav-link" to="/petshop-product">
                   New
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item dropdown mega-dropdown">
                 <Link
                   className="nav-link dropdown-toggle"
@@ -500,7 +501,7 @@ function PetShopHeader(props) {
                     <i className="fa fa-search" />
                     <input
                       type="text"
-                      placeholder="Search keyword"
+                      placeholder="What are you looking for?"
                       value={searchQuery}
                       onChange={handleSearchInputChange}
                     />
@@ -545,7 +546,7 @@ function PetShopHeader(props) {
                     </Link>
                   </li>
                   <li className="nav-item dropdown">
-                    <a
+                    {/* <a
                       className="nav-link dropdown-toggle profile-icon"
                       href="#"
                       id="navbarDropdown"
@@ -553,9 +554,19 @@ function PetShopHeader(props) {
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
-                    >
+                    > */}
+                      <Link
+                  className="nav-link profile-icon"
+                  to={
+                    loginType === "salesman"
+                      ? "/salesman-dashboad"
+                      : "/petshop-home"
+                  }
+                >
+                  {/* {loginType === "salesman" ? "Dashboard" : "Home"} */}
+               
                       <img src={pro} />
-                    </a>
+                      </Link>
                     <div
                       className="dropdown-menu"
                       aria-labelledby="navbarDropdown"
@@ -640,6 +651,7 @@ function PetShopHeader(props) {
           </div>
         </div>
       </nav>
+      </div>
 
       {/* Modal */}
       <div

@@ -8,29 +8,32 @@ import { Link } from "react-router-dom";
 import { loadRazorpay } from "../../utils";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import moment from 'moment';
 function Planbuy() {
-    const [paymentId, setPaymentId] = useState("");
-    const [homebanner, sethomebanner] = useState([]);
+  const [paymentId, setPaymentId] = useState("");
+  const [homebanner, sethomebanner] = useState([]);
   const allbanner = async () => {
-      try {
-          const response = await fetch(`${BASE_URL}/banners/`);
-          const data = await response.json();
-          const latestPosts = data.data.slice(0, 1);
-          sethomebanner(latestPosts);
-      } catch (error) {
-          console.log(error);
-      }
+    try {
+      const response = await fetch(`${BASE_URL}/banners/`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 1);
+      sethomebanner(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     allbanner();
-}, []);
+  }, []);
   const storedPlanData = localStorage.getItem("planData");
   const parsedPlanData = JSON.parse(storedPlanData);
 
   // Access the "Monthly" and "price" properties
   const monthly = parsedPlanData.plantime;
   const price = parsedPlanData.price;
+  const image = parsedPlanData.image
+  const advertisement = parsedPlanData.advertisement;
+  const limit = parsedPlanData.limit;
   const expairedate = parsedPlanData.plan_expaire_date;
   const planname = parsedPlanData.pname;
   const descriptiondata = parsedPlanData.description;
@@ -89,24 +92,48 @@ function Planbuy() {
       console.error("Razorpay Load Error:", error);
     }
   };
+
+  const [initialDate] = useState(new Date());
+  const [item] = useState({ plantime: 'Monthly' }); // Replace with your actual item data
+  const [expirationDate, setExpirationDate] = useState(null);
+
+  useEffect(() => {
+    const calculateExpirationDate = () => {
+      let expirationDate = new Date(initialDate);
+
+      if (item.plantime === 'Monthly') {
+        expirationDate.setDate(expirationDate.getDate() + 30);
+      } else if (item.plantime === 'Half-Yearly') {
+        expirationDate.setDate(expirationDate.getDate() + 30 * 6);
+      } else if (item.plantime === 'Annual') {
+        expirationDate.setDate(expirationDate.getDate() + 365);
+      }
+
+      return moment(expirationDate).format('L');
+    };
+
+    const formattedExpirationDate = calculateExpirationDate();
+    setExpirationDate(formattedExpirationDate);
+  }, [initialDate, item]);
+
   return (
     <>
       <Newheader />
       <div className="home-section">
-                {homebanner
-                    ? homebanner.map(
-                        (item, index) =>
-                            item.type === "default" && (
-                                <img className="partner-img"
-                                    src={
-                                        "https://canine.hirectjob.in/storage/app/" +
-                                        item.image
-                                    }
-                                />
-                            )
-                    )
-                    : null}
-            </div>
+        {homebanner
+          ? homebanner.map(
+            (item, index) =>
+              item.type === "default" && (
+                <img className="partner-img"
+                  src={
+                    "https://canine.hirectjob.in/storage/app/" +
+                    item.image
+                  }
+                />
+              )
+          )
+          : null}
+      </div>
 
       <section className="section-padding">
         <Container>
@@ -118,7 +145,12 @@ function Planbuy() {
             </p>
           </div>
           <div className="partner-img">
-            <img src={partner} />
+            <img
+              src={
+                "https://canine.hirectjob.in/uploads/subscription//" +
+                image
+              }
+            />
           </div>
         </Container>
       </section>
@@ -135,15 +167,17 @@ function Planbuy() {
               <div className="plan-rupy">
                 <h2>{price}</h2>
                 <span>/{monthly}</span>
-              </div>
-              <p>3850.00/month</p>
+              </div><br />
+              <h4>Product upload Limit / {limit}</h4>
+              <h4>{advertisement} Advertisement</h4>
               <Button onClick={() => handlePayment()}>Buy Now</Button>
               <br />
               <br /> <br />
               <Link>Expiration Date:</Link>
-              <Link className="placDate">{expairedate}</Link>
+              <Link className="placDate">{expirationDate}</Link>
             </div>
           </div>
+
         </Container>
       </section>
       <Footer />
