@@ -2710,9 +2710,6 @@ a.notification-btn i {
   text-align: left;
   align-self: center;
 }
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block;
-}
 
 .sticky-newheader {
   position: sticky;
