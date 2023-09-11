@@ -35,11 +35,86 @@ const clinetreview = {
 function PetShopcanineproduct(props) {
     const [categories, setcategories] = useState([]);
     const [allproduct, setallproduct] = useState([]);
-
+    const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
+    const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
+    const [brands, setBrands] = useState([]);
+    console.log("brands: ", brands);
+    const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
+      useState(false);
+    const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
+    const [lifestageDropdownVisible, setLifestageDropdownVisible] =
+      useState(false);
+    const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
+      useState(false);
+    const [breed, setBreed] = useState([]);
+    const [healthcondition, setHealthcondition] = useState([]);
+    const [lifestage, setlifestage] = useState([]);
+    const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
+    const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
+      useState(false);
+    const [vegNonvegDropdownVisible, setVegNonvegDropdownVisible] =
+      useState(false);
+    const [groomingFeatureDropdownVisible, setGroomingFeatureDropdownVisible] =
+      useState(false);
+    const [groomingToolsDropdownVisible, setGroomingToolsDropdownVisible] =
+      useState(false);
+    const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] =
+      useState(false);
+    const handleParentClick = (dropdownName) => {
+      switch (dropdownName) {
+        case "brand":
+          setBrandDropdownVisible(!brandDropdownVisible);
+          break;
+        case "productType":
+          setProductTypeDropdownVisible(!productTypeDropdownVisible);
+          break;
+        case "price":
+          setPriceDropdownVisible(!priceDropdownVisible);
+          break;
+        case "lifestage":
+          setLifestageDropdownVisible(!lifestageDropdownVisible);
+          break;
+        case "breedType":
+          setBreedTypeDropdownVisible(!breedTypeDropdownVisible);
+          break;
+        case "health":
+          setHealthDropdownVisible(!healthDropdownVisible);
+          break;
+        case "specialDiet":
+          setSpecialDietDropdownVisible(!specialDietDropdownVisible);
+          break;
+          case "cate":
+            setCateDropdownVisible(!cateDropdownVisible);
+            break;
+        case "veg-Non-veg":
+          setVegNonvegDropdownVisible(!vegNonvegDropdownVisible);
+          break;
+        case "groomingFeature":
+          setGroomingFeatureDropdownVisible(!groomingFeatureDropdownVisible);
+          break;
+        case "groomingTools":
+          setGroomingToolsDropdownVisible(!groomingToolsDropdownVisible);
+          break;
+        case "accessoryType":
+          setAccessoryTypeDropdownVisible(!accessoryTypeDropdownVisible);
+        default:
+          break;
+      }
+    };
+  
+    const handleCheckboxClick = (event) => {
+      event.stopPropagation();
+    };
 
     useEffect(() => {
         categoriesProduct();
         allProduct();
+        allBrandshow()
+        allLifesageshow()
+        allBreedshow()
+        allsubcategary()
+        allHealthconditionshow()
+        Allsubcategories()
     }, []);
 
     const categoriesProduct = async () => {
@@ -88,6 +163,250 @@ function PetShopcanineproduct(props) {
             });
     };
 
+
+    ////filter tarun//
+const [allbrand, setAllBrand] = useState("")
+const [alllifesage, setAlllifesage] = useState("")
+const [allbreed, setAllBreed] = useState("")
+const [allsubcate, setAllSubcate] = useState("")
+const [allhealth, setAllHealth] = useState("")
+const [subcategories, setsubcategories] = useState([]);
+
+
+const allBrandshow = async () => {
+  axios
+    .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
+    .then((response) => {
+      // console.log("responseresponse?????",response);
+      setAllBrand(response.data.data);
+      // Perform any additional actions after successful deletion
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const allLifesageshow = async () => {
+  axios
+    .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
+    .then((response) => {
+      console.log("responseresponse?????", response);
+      setAlllifesage(response.data.data);
+      // Perform any additional actions after successful deletion
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const allBreedshow = async () => {
+  axios
+    .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
+    .then((response) => {
+      console.log("responseresponse?????", response);
+      setAllBreed(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+const allsubcategary = async () => {
+  axios
+    .get(`https://canine.hirectjob.in/api/v1/categories`)
+    .then((response) => {
+      console.log("responseresponse?????", response);
+      setAllSubcate(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const allHealthconditionshow = async () => {
+  axios
+    .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
+    .then((response) => {
+      console.log("responseresponse?????", response);
+      setAllHealth(response.data.data);
+      // Perform any additional actions after successful deletion
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const Allsubcategories = async () => {
+  axios
+    .get(`${BASE_URL}/categories/subcategories`)
+    .then((response) => {
+      console.log(response);
+      console.log("Delete Successful");
+      setsubcategories(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const [selectedBrandIds, setSelectedBrandIds] = useState([]);
+const [selectedlifeIds, setSelectedLifeIds] = useState([]);
+const [selectedbreedIds, setSelectedbreedIds] = useState([]);
+const [selectedcateIds, setSelectedcateIds] = useState([]);
+const [selectedhealthIds, setSelectedhealthIds] = useState([]);
+const [selectedvegIds, setSelectedvegIds] = useState([]);
+const [selectedsubcateIds, setSelectedsubcateIds] = useState([]);
+
+const [minpricevalue, setMinpricevalue] = useState([])
+const [maxpricevalue, setMaxpricevalue] = useState([])
+const minprice = (e) => {
+  setMinpricevalue(e.target.value)
+}
+const maxprice = (e) => {
+  setMaxpricevalue(e.target.value)
+}
+
+const handleDataListBrand = (brand_id) => {
+  setSelectedBrandIds((prevSelectedBrandIds) => {
+    const updatedBrandIds = prevSelectedBrandIds.includes(brand_id)
+      ? prevSelectedBrandIds.filter((id) => id !== brand_id)
+      : [...prevSelectedBrandIds, brand_id];
+    filterProducts(updatedBrandIds); // Pass the updated brand IDs to filter function
+    return updatedBrandIds;
+  });
+};
+
+const Lifesatedataselect = (name) => {
+  setSelectedLifeIds((prevSelectedLifeIds) => {
+    const updatedLifeIds = prevSelectedLifeIds.includes(name)
+      ? prevSelectedLifeIds.filter((id) => id !== name)
+      : [...prevSelectedLifeIds, name];
+    filterProducts(undefined, updatedLifeIds);
+    return updatedLifeIds;
+  });
+};
+
+const allbreedselect = (name) => {
+  setSelectedbreedIds((prevSelectedBreedIds) => {
+    const updatedBreedIds = prevSelectedBreedIds.includes(name)
+      ? prevSelectedBreedIds.filter((id) => id !== name)
+      : [...prevSelectedBreedIds, name];
+    filterProducts(undefined, undefined, updatedBreedIds);
+    return updatedBreedIds;
+  });
+};
+const allcateselect = (name) => {
+  setSelectedcateIds((prevSelectedBreedIds) => {
+    const updatedcateIds = prevSelectedBreedIds.includes(name)
+      ? prevSelectedBreedIds.filter((id) => id !== name)
+      : [...prevSelectedBreedIds, name];
+    filterProducts(undefined, undefined, undefined, updatedcateIds);
+    return updatedcateIds;
+  });
+};
+
+const allhealthselect = (name) => {
+  setSelectedhealthIds((prevSelectedhealthIds) => {
+    const updatedhealthIds = prevSelectedhealthIds.includes(name)
+      ? prevSelectedhealthIds.filter((id) => id !== name)
+      : [...prevSelectedhealthIds, name];
+    filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+    return updatedhealthIds;
+  });
+};
+
+  const allsubcateselect = (name) => {  
+  setSelectedsubcateIds((prevSelectedhealthIds) => {
+    const updatesubcateIds = prevSelectedhealthIds.includes(name)
+      ? prevSelectedhealthIds.filter((id) => id !== name)
+      : [...prevSelectedhealthIds, name];
+    filterProducts(undefined, undefined, undefined, undefined,undefined,undefined, updatesubcateIds);
+    return updatesubcateIds;
+  });
+};
+
+const vegnonveghandler = (value) => {
+  setSelectedvegIds((prevSelectedvegIds) => {
+    const updatedvegIds = prevSelectedvegIds.includes(value)
+      ? prevSelectedvegIds.filter((id) => id !== value)
+      : [...prevSelectedvegIds, value];
+    filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+    return updatedvegIds;
+  });
+};
+const applyprice = ()=>{
+  filterProducts();
+}
+
+
+const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds,updatedvegIds,updatesubcateIds) => {
+  try {
+    const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
+    const products = response.data.data;
+    const filteredProducts = applyFilters({
+      selectedBrands: updatedBrandIds || selectedBrandIds,
+      selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
+      selectBreedFilterList: updatedBreedIds || selectedbreedIds,
+      selectcate: updatedcateIds || selectedcateIds,
+      selecthealth: updatedhealthIds || selectedhealthIds,
+      selectedVegOptions:updatedvegIds|| selectedvegIds,
+      selectedsubcate:updatesubcateIds|| selectedsubcateIds,
+      minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
+      maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
+      // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
+      // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+      // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
+      products: products,
+    });
+    console.log("/////", filteredProducts);
+    console.log("======", products);
+    setallproduct(filteredProducts)
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
+};
+
+const applyFilters = ({
+  selectedBrands,
+  selectLifeStageFilterList,
+  selectBreedFilterList,
+  selectcate,
+  selecthealth,
+  selectedVegOptions,
+  selectedsubcate,
+  minPrice,
+  maxPrice,
+  products,
+}) => {
+  const selectedBrandSet = new Set(selectedBrands);
+  const selectedLifeStageSet = new Set(selectLifeStageFilterList);
+  const selectedBreedSet = new Set(selectBreedFilterList);
+  const selectedcateSet = new Set(selectcate);
+  const selectedhealthSet = new Set(selecthealth);
+  const selectedvegSet = new Set(selectedVegOptions);
+  const selectedsubcateSet = new Set(selectedsubcate);
+
+  return products.filter(product => {
+    const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
+    const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
+    const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
+    const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
+    const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
+    const subcateFilter = selectedsubcate.length === 0 || selectedsubcateSet.has(product.sub_category.toString());
+    const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
+    const price = parseFloat(product.price);  // Parse the price to a number
+    const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+    const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
+    // const price = parseFloat(product.price);  // Parse the price to a number
+    // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+    // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
+    // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
+    return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter&&Filterveg&&minPriceFilter&& maxPriceFilter&&subcateFilter;
+  });
+};
+
     const gradientColors = [
         "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
         "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
@@ -108,36 +427,341 @@ function PetShopcanineproduct(props) {
 
             <Container>
                 <Row>
-                    <Col lg={3}>
-                        <section className='section-padding'>
-                            <div className='filter-product'>
-                                <h3>Filters</h3>
-                                <hr />
-                                <Form.Select aria-label="Default select example">
-                                    <option>Brand</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                                <hr />
-                                <Form.Select aria-label="Default select example">
-                                    <option>Product Type</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                                <hr />
-                                <Form.Select aria-label="Default select example">
-                                    <option>Price </option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
-                                <hr />
+                <Col lg={3}>
+            <section className="section-padding">
+              <div className="filter-product">
+                <h3>Filters</h3>
+                
+                <hr />
+                <div
+                  onClick={() => handleParentClick("brand")}
+                  className="main-chk"
+                >
+                  Brand
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {brandDropdownVisible && (
+                    <>
+                      <div>
+                        {allbrand ? (
+                          allbrand.map((items) => (
+                            items.canine === 1&& ( 
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                        
 
+                                onClick={(e) => handleDataListBrand(items.title)}
+                              />
+                              <label
+                                className="form-check-label"
+                              >
+                                {items.title}
+                              </label>
                             </div>
-                        </section>
-                    </Col>
+                            )
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("productType")}
+                  className="main-chk"
+                >
+                  Product Type
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {productTypeDropdownVisible && (
+                     <>
+                     <div>
+                       {subcategories ? (
+                         subcategories.map((items) => (
+                           <div
+                             className="form-check"
+                             onClick={handleCheckboxClick}
+                           >
+                             <input
+                               className="form-check-input"
+                               type="checkbox"
+                               onClick={(e) => allsubcateselect(items.name)}
+                             />
+                             <label
+                               className="form-check-label"
+              
+                             >
+                               {items.name}
+                             </label>
+                           </div>
+
+                         ))
+                       ) : ""}
+                     </div>
+                   </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("cate")}
+                  className="main-chk"
+                >
+                  Category
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {cateDropdownVisible && (
+                    <>
+                      <div>
+                        {allsubcate ? (
+                          allsubcate.map((items) => (
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                        
+
+                                onClick={(e) => allcateselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
+                               
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+
+                <div
+                  onClick={() => handleParentClick("price")}
+                  className="main-chk"
+                >
+                  Price
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {priceDropdownVisible && (
+                    <>
+                      <div>
+
+                        <div className="form-range" onClick={handleCheckboxClick}>
+                          <span>₹</span>
+                          <input type="number" 
+                          placeholder="From"  onChange={minprice} />
+                        </div>
+                        <div className="form-range" onClick={handleCheckboxClick}>
+                          <span>₹</span>
+                          <input type="number"
+                             placeholder="From"  onChange={maxprice} />
+                        </div>
+                        <div className="form-range" >
+                          {/* <span>₹</span> */}
+                       <button onClick={applyprice}>Apply</button>
+                        </div>
+                      </div>
+
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("lifestage")}
+                  className="main-chk"
+                >
+                  Lifestage
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {lifestageDropdownVisible && (
+                    <>
+                      <div>
+                        {alllifesage ? (
+                          alllifesage.map((items) => (
+
+
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) => Lifesatedataselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("breedType")}
+                  className="main-chk"
+                >
+                  Breed Type
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {breedTypeDropdownVisible && (
+                    <>
+                      <div>
+                        {allbreed ? (
+                          allbreed.map((items) => (
+
+
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) => allbreedselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+                <div
+                  onClick={() => handleParentClick("health")}
+                  className="main-chk"
+                >
+                  Health Condition
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {healthDropdownVisible && (
+                    <>
+                      <div>
+                        {allhealth ? (
+                          allhealth.map((items) => (
+
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allhealthselect(items.title)}
+                              />
+                              <label
+                                className="form-check-label"
+                              >
+                                {items.title}
+                              </label>
+                            </div>
+                          ))
+                        ) : ""}
+
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+
+                <div
+                  onClick={() => handleParentClick("veg-Non-veg")}
+                  className="main-chk"
+                >
+                  Veg/Nonveg
+                  <div className="i-con">
+                    <span>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {vegNonvegDropdownVisible && (
+                    <>
+                      <div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            onClick={(e)=>vegnonveghandler("1")}
+                          />
+                          <label
+                            className="form-check-label"
+                          >
+                            Non-Veg (219)
+                          </label>
+                        </div>
+                        <div
+                          className="form-check"
+                          onClick={handleCheckboxClick}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            onClick={(e)=>vegnonveghandler("0")}
+
+                          />
+                          <label
+                            className="form-check-label"
+                          >
+                            Veg (73)
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <hr />
+
+
+
+              </div>
+            </section>
+          </Col>
                     <Col lg={9}>
                         <section className="section-padding">
                             <Container>
@@ -166,7 +790,7 @@ function PetShopcanineproduct(props) {
                                 >
                                     {categories.map((item) => (
                                         <div className="product-Deals" key={item.id}>
-                                            <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image} />
+                                            <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image}    onClick={(e) => allcateselect(item.name)}/>
                                             <h1>{item.name}</h1>
                                         </div>
                                     ))}

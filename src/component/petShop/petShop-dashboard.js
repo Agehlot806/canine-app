@@ -13,17 +13,35 @@ import bannerPro from "../../assets/images/img/bannerPro.png";
 import paydone from "../../assets/images/icon/paydone.png";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import toast, { Toaster } from "react-hot-toast";
 
 function Petshopdashboard() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   const [totalorder, settotalorder] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
+  const [email, setEmail] = useState("");
   useEffect(() => {
     totalOrders();
     AllBanner();
   }, []);
   
+  const handleNewsletter = (event) => {
+    event.preventDefault();
+    const data = {
+      email: email,
+    };
+    axios
+      .post(`${BASE_URL}/newsletter/subscribe`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Subscription Successfully");
+      })
+      .catch((error) => {
+        toast.error("The email field is required");
+      });
+  };
+
   const AllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
@@ -52,6 +70,7 @@ function Petshopdashboard() {
   
   return (
     <>
+    <Toaster />
       <PetShopHeader />
       <div className="home-section">
         <Container fluid className="p-0">
@@ -249,37 +268,56 @@ function Petshopdashboard() {
 
 
                 <section className="section-padding">
-                  <Container>
-                    <div className=" Newsletter-bg">
-                      <Row>
-                        <Col lg={3}>
-                          <img src={catpng} />
-                        </Col>
-                        <Col lg={6}>
-                          <div className="Newsletter">
-                            <h1 className="main-head">
-                              Get Or Promo Code by Subscribing To our Newsletter
-                            </h1>
-                            <Form className="d-flex">
-                              <Form.Control
-                                type="search"
-                                placeholder="Enter your email"
-                                className="me-2"
-                                aria-label="Search"
-                              />
-                              <Button variant="outline-success">
-                                Subscribe
-                              </Button>
-                            </Form>
+        <Container>
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "news_letter" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row className="justify-content-center">
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <div className="Newsletter">
+                              <h1 className="main-head">
+                                Get Or Promo Code by Subscribing To our Newsletter
+                              </h1>
+                              <Form className="d-flex">
+                                <Form.Control
+                                  type="search"
+                                  placeholder="Enter your email"
+                                  className="me-2"
+                                  aria-label="Search"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <Button
+                                  variant="outline-success"
+                                  onClick={handleNewsletter}
+                                >
+                                  Subscribe
+                                </Button>
+                              </Form>
+                            </div>
                           </div>
-                        </Col>
-                        <Col lg={3} className="align-self-center">
-                          <img src={bannerPro} />
                         </Col>
                       </Row>
                     </div>
-                  </Container>
-                </section>
+                  )
+              )
+              : null}
+          </div>
+        </Container>
+      </section>
+
               </div>
               <div
                 className="tab-pane fade"

@@ -34,6 +34,8 @@ import aboutpage from "../../assets/images/img/aboutpage.png";
 import toast, { Toaster } from "react-hot-toast";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import app1 from "../../assets/images/img/app1.png";
+import app2 from "../../assets/images/img/app2.png";
 
 const homeslider = {
   desktop: {
@@ -334,35 +336,44 @@ function PetshopHome(props) {
                   : null}
               </div>
               <div>
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_2" && (
-                        <div className="home-img">
-                          <div className="">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
+              {homebanner
+                ? homebanner.map(
+                  (item, index) =>
+                    item.type === "home_banner_2" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
                         </div>
-                      )
-                  )
-                  : null}
-              </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+
+                              <div className="app-home">
+                               
+                                    <Link>
+                                      <img src={app1} />
+                                    </Link>
+                                  
+                                    <Link>
+                                      <img src={app2} />
+                                    </Link>
+                                 
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
+                : null}
+            </div>
               <div>
                 {homebanner
                   ? homebanner.map(
@@ -854,38 +865,51 @@ function PetshopHome(props) {
 
       <section className="section-padding">
         <Container>
-          <div className=" Newsletter-bg">
-            <Row>
-              <Col lg={3}>
-                <img src={catpng} />
-              </Col>
-              <Col lg={6}>
-                <div className="Newsletter">
-                  <h1 className="main-head">
-                    Get Or Promo Code by Subscribing To our Newsletter
-                  </h1>
-                  <Form className="d-flex">
-                    <Form.Control
-                      type="search"
-                      placeholder="Enter your email"
-                      className="me-2"
-                      aria-label="Search"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Button
-                      variant="outline-success"
-                      onClick={handleNewsletter}
-                    >
-                      Subscribe
-                    </Button>
-                  </Form>
-                </div>
-              </Col>
-              <Col lg={3} className="align-self-center">
-                <img src={bannerPro} />
-              </Col>
-            </Row>
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "news_letter" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row className="justify-content-center">
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <div className="Newsletter">
+                              <h1 className="main-head">
+                                Get Or Promo Code by Subscribing To our Newsletter
+                              </h1>
+                              <Form className="d-flex">
+                                <Form.Control
+                                  type="search"
+                                  placeholder="Enter your email"
+                                  className="me-2"
+                                  aria-label="Search"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <Button
+                                  variant="outline-success"
+                                  onClick={handleNewsletter}
+                                >
+                                  Subscribe
+                                </Button>
+                              </Form>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
           </div>
         </Container>
       </section>
