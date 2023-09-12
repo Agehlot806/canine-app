@@ -107,6 +107,44 @@ function PetshopOrderviewdetails() {
     }
   };
 
+  const [rating, setRating] = useState(0);
+  const [responseMessage, setResponseMessage] = useState("");
+  const [comment, setcomment] = useState("");
+  const [showForm, setShowForm] = useState(true);
+
+  const handleStarClick = (index) => {
+    if (index === rating) {
+      // If the same star is clicked again, deselect it (set rating to 0).
+      setRating(0);
+    } else {
+      // Otherwise, set the rating to the clicked star index or half of it.
+      setRating(index);
+    }
+  };
+
+
+
+  const handleReview = (event) => {
+    event.preventDefault();
+    const data = {
+      user_id: storedUserId,
+      item_id: item_id,
+      order_id: id,
+      comment: comment,
+      rating: rating,
+    };
+    axios
+      .post(`${BASE_URL}/items/reviews/submit`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Review Add Successfully");
+        setShowForm(false);
+      })
+      .catch((error) => {
+        toast.error("Field is required");
+      });
+  };
+
   return (
     <>
       <PetShopHeader/>
@@ -175,6 +213,36 @@ function PetshopOrderviewdetails() {
                               </div>
                             </Col>
                           </Row>
+
+                          <div>
+                            <p>Product Rating: {rating}</p>
+                            <div className="star-rating">
+                              {[1, 2, 3, 4, 5].map((index) => (
+                                <div
+                                  key={index}
+                                  className={`star ${index <= rating ? 'filled' : ''}`}
+                                  onClick={() => handleStarClick(index)}
+                                ></div>
+                              ))}
+                            </div>
+                            {showForm && (
+                              <form>
+                                <div className="form-group">
+                                  <label>Write a Review</label>
+                                  <textarea
+                                    className="form-control mb-3"
+                                    rows={3}
+                                    value={comment}
+                                    onChange={(e) => setcomment(e.target.value)}
+                                  />
+                                </div>
+                                <button className="btn btn-primary" onClick={handleReview}>
+                                  Submit
+                                </button>
+                              </form>
+                            )}
+                            {!showForm && <p>Review submitted. Thank you!</p>}
+                          </div>
                           <hr />
                         </div>
                       );
