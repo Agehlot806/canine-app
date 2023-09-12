@@ -293,7 +293,7 @@ function PetshopPayLater() {
                             Without GST
                           </label>
                         </div>
-                        <div className="form-check form-check-inline">
+                        <div className="form-check">
                           <input
                             className="form-check-input"
                             type="radio"
@@ -341,7 +341,6 @@ function PetshopPayLater() {
           </div>
         </Container>
       </section>
-
       <Petshopfooter />
     </>
   );
