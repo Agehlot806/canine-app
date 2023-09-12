@@ -6,6 +6,7 @@ import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useCartContext } from '../component/context/addToCartContext'
+import { useNotificationContext } from "../component/context/notificationContext";
 
 function Newheader(props) {
   // const { dataLength } = props;
@@ -18,6 +19,7 @@ function Newheader(props) {
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
+  const { notificationLength, dataLengthpetnotification } = useNotificationContext();
 
 
   useEffect(() => {
@@ -617,6 +619,7 @@ function Newheader(props) {
                     data-target="#exampleModal"
                   >
                     <i class="fa fa-bell-o" />
+                    <span>{notificationLength}</span>
                   </a>
                 </li>
 

@@ -3290,3 +3290,13 @@ button.Apply-price {
 .app-home a img {
   width: 200px;
 }
+.notification-btn span {
+  background-color: #f00;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0 5px;
+  font-size: 9px;
+  position: absolute;
+  top: -10px;
+  left: 0;
+}

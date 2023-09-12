@@ -11,7 +11,7 @@ export const useCartContext = () => {
 export const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
-  const [dataLengthpetshop, setDataLengthpetshop] = useState(0);
+  const [dataLengthpetshop, setDataLengthpetshop] = useState();
 
   // Your BASE_URL and storedUserId
   const BASE_URL = "https://canine.hirectjob.in/api/v1";
