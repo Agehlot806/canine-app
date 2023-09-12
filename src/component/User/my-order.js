@@ -29,21 +29,21 @@ function Myorder() {
 
 
     const allOrders = async () => {
-        try {
-            const response = await axios.get(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
-            console.log(response);
-            console.log("Order List Successful");
-            const itemIds = response.data.data.flatMap(order => order.callback.map(callback => callback.item_id));
-            console.log(itemIds);
-            setallorder(response.data.data);
-        } catch (error) {
-            console.log(error);
-        }
+        axios
+            .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
+            .then((response) => {
+                console.log(response);
+                console.log("Order List Successful");
+                setallorder(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
-    const allStarData = async (itemIds) => {
+    const allStarData = async () => {
         axios
-            .get(`${BASE_URL}/items/get_reviewitem/5`)
+            .get(`${BASE_URL}/items/get_reviewitem/7`)
             .then((response) => {
                 console.log(response);
                 console.log("Review List Successful");
@@ -82,20 +82,13 @@ function Myorder() {
                                             <h3>Order Amount: ₹{item.order_amount}</h3>
                                             <h3>Order Status: {item.order_status}</h3>
                                             {item.order_status === 'delivered' ? (
-                                                <div>
-                                                    {allreviewdata && allreviewdata.length > 0 ? (
-                                                        allreviewdata.map((item, index) => (
-                                                            <div key={index}>
-                                                                {Array.from({ length: item.rating }).map((_, starIndex) => (
-                                                                    <a
-                                                                        key={starIndex}><i className="fa fa-star" /></a>
-                                                                ))}
-                                                            </div>
-                                                        ))
-                                                    ) : (
-                                                        <p className="emptyMSG">No Review</p>
-                                                    )}
-                                                </div>
+                                                 <div>
+                                                    {item.user_details && item.user_details.length > 0 ? (
+    <div>
+        <p>Rating Count: {item.user_details[0].rating_count}</p>
+    </div>
+) : null}
+                                               </div>
                                             ) : null}
                                         </Col>
 
