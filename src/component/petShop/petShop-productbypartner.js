@@ -16,15 +16,45 @@ function PetshopProductbypartner() {
   const { id } = useParams();
   console.log("id: ", id);
   const [thirdbanner, setthirdbanner] = useState([]);
+  const [homebanner, sethomebanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
   console.log("allVendorShop: ", allVendorShop);
   const [vendorItemList, setVendorItemList] = useState([]);
+  const [responseMessage, setResponseMessage] = useState("");
+  const [email, setEmail] = useState("");
 
+  
   useEffect(() => {
     thirdBanner();
     AllVendorHomePage();
     VendorItems();
+    homeAllBanner();
   }, []);
+
+   const homeAllBanner = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/banners/`);
+      sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleNewsletter = (event) => {
+    event.preventDefault();
+    const data = {
+      email: email,
+    };
+    axios
+      .post(`${BASE_URL}/newsletter/subscribe`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Subscription Successfully");
+      })
+      .catch((error) => {
+        toast.error("The email field is required");
+      });
+  };
 
   const thirdBanner = () => {
     axios
@@ -224,31 +254,51 @@ function PetshopProductbypartner() {
 
       <section className="section-padding">
         <Container>
-          <div className=" Newsletter-bg">
-            <Row>
-              <Col lg={3}>
-                <img src={catpng} />
-              </Col>
-              <Col lg={6}>
-                <div className="Newsletter">
-                  <h1 className="main-head">
-                    Get Or Promo Code by Subscribing To our Newsletter
-                  </h1>
-                  <Form className="d-flex">
-                    <Form.Control
-                      type="search"
-                      placeholder="Enter your email"
-                      className="me-2"
-                      aria-label="Search"
-                    />
-                    <Button variant="outline-success">Subscribe</Button>
-                  </Form>
-                </div>
-              </Col>
-              <Col lg={3} className="align-self-center">
-                <img src={bannerPro} />
-              </Col>
-            </Row>
+          <div>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "news_letter" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </div>
+                      <Row className="justify-content-center">
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <div className="Newsletter">
+                              <h1 className="main-head">
+                                Get Or Promo Code by Subscribing To our Newsletter
+                              </h1>
+                              <Form className="d-flex">
+                                <Form.Control
+                                  type="search"
+                                  placeholder="Enter your email"
+                                  className="me-2"
+                                  aria-label="Search"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <Button
+                                  variant="outline-success"
+                                  onClick={handleNewsletter}
+                                >
+                                  Subscribe
+                                </Button>
+                              </Form>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
+              : null}
           </div>
         </Container>
       </section>
@@ -256,5 +306,6 @@ function PetshopProductbypartner() {
     </>
   );
 }
+
 
 export default PetshopProductbypartner;

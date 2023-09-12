@@ -7,6 +7,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import "../assets/css/style.css";
 import { useCartContext } from "../component/context/addToCartContext";
+import { useNotificationContext } from "../component/context/notificationContext";
 
 function PetShopHeader(props) {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ function PetShopHeader(props) {
   const [categories, setcategories] = useState([]);
   const { cartData, dataLengthpetshop, addToCartData } = useCartContext();
   const loginType = localStorage.getItem("loginType");
+  const { notificationLength, dataLengthpetnotification } = useNotificationContext();
+  
 
   useEffect(() => {
     fetchBrands();
