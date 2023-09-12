@@ -187,6 +187,7 @@ function Orderviewdetails() {
 
   const [responseMessage, setResponseMessage] = useState("");
   const [comment, setcomment] = useState("");
+  const [showForm, setShowForm] = useState(true);
 
   const handleReview = (event) => {
     event.preventDefault();
@@ -202,6 +203,7 @@ function Orderviewdetails() {
       .then((response) => {
         setResponseMessage(response.data.message);
         toast.success("Review Add Successfully");
+        setShowForm(false);
       })
       .catch((error) => {
         toast.error("Field is required");
@@ -281,14 +283,7 @@ function Orderviewdetails() {
                               </div>
                             </Col>
                           </Row>
-                          {/* <div>
-                            {allorder && allorder.length > 0 ? (
-                              <h3>Order Status: {allorder[0].order_status}</h3>
-                            ) : (
-                              <p className="emptyMSG">No Order list</p>
-                            )}
-                          </div> */}
-                          <>
+                          <div>
                             <p>Product Rating: {rating}</p>
                             <div className="star-rating">
                               {[1, 2, 3, 4, 5].map((index) => (
@@ -299,15 +294,24 @@ function Orderviewdetails() {
                                 ></div>
                               ))}
                             </div>
-                            <form>
-                              <div className="form-group">
-                                <label >Write a Review</label>
-                                <textarea className="form-control mb-3" rows={3} value={comment}
-                                  onChange={(e) => setcomment(e.target.value)} />
-                              </div>
-                            </form>
-                            <Button  onClick={handleReview}>Submit</Button>
-                          </>
+                            {showForm && (
+                              <form>
+                                <div className="form-group">
+                                  <label>Write a Review</label>
+                                  <textarea
+                                    className="form-control mb-3"
+                                    rows={3}
+                                    value={comment}
+                                    onChange={(e) => setcomment(e.target.value)}
+                                  />
+                                </div>
+                                <button className="btn btn-primary" onClick={handleReview}>
+                                  Submit
+                                </button>
+                              </form>
+                            )}
+                            {!showForm && <p>Review submitted. Thank you!</p>}
+                          </div>
 
 
                           <hr />

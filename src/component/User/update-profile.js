@@ -7,48 +7,51 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 function Updateprofile() {
-  const navigate = useNavigate();
-  // const [uploadField, setUploadField] = useState([{image:""}])
-  const [imageFile, setImageFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState({ image: "" } || null);
 
-  const [profileData, setProfileData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "", // Initialize with default value
-    phone: "", // Initialize with default value
-    image: "",
-    // Add more fields here as needed
-  });
-  console.log("profileData: ", profileData);
+
+
+  // const navigate = useNavigate();
+  // // const [uploadField, setUploadField] = useState([{image:""}])
+  // const [imageFile, setImageFile] = useState(null);
+  // const [imageUrl, setImageUrl] = useState({ image: "" } || null);
+
+  // const [profileData, setProfileData] = useState({
+  //   firstname: "",
+  //   lastname: "",
+  //   email: "", // Initialize with default value
+  //   phone: "", // Initialize with default value
+  //   image: "",
+  //   // Add more fields here as needed
+  // });
+  // console.log("profileData: ", profileData);
 
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  useEffect(() => {
-    // Fetch profile data from the API
-    axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
-      .then((response) => {
-        if (response.data.status === "200") {
-          console.log("response.data: ", response.data);
-          setProfileData({
-            f_name: response.data.data[0].f_name,
-            l_name: response.data.data[0].l_name,
-            email: response.data.data[0].email, // Set email from response
-            phone: response.data.data[0].phone, // Set phone from response
-            image: response.data.data[0].image,
-            // Set other fields as needed
-          });
-          // Update the profileData state
-          if (profile.image) {
-            setImageUrl(profile.image);
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   // Fetch profile data from the API
+  //   axios
+  //     .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
+  //     .then((response) => {
+  //       if (response.data.status === "200") {
+  //         console.log("response.data:????? ", response.data);
+  //         setProfileData({
+  //           f_name: response.data.data[0].f_name,
+  //           l_name: response.data.data[0].l_name,
+  //           email: response.data.data[0].email, // Set email from response
+  //           phone: response.data.data[0].phone, // Set phone from response
+  //           image: response.data.data[0].image,
+  //           // Set other fields as needed
+  //         });
+  //         // Update the profileData state
+  //         if (profile.image) {
+  //           setImageUrl(profile.image);
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   // const addUploadFields = () => {
   //   let newUpdloadField = {image:""}
@@ -59,34 +62,96 @@ function Updateprofile() {
   //   data.splice(index, 1);
   //   setUploadFields(data)
   // };
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setImageFile(file);
 
-      // Create a preview URL for the selected image
-      const previewUrl = URL.createObjectURL(file);
-      setImageUrl(previewUrl);
-    }
-  };
+  //     // Create a preview URL for the selected image
+  //     const previewUrl = URL.createObjectURL(file);
+  //     setImageUrl(previewUrl);
+  //   }
+  // };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/update-profile",
-        profileData // Send the profileData object in the request
-      );
-      if (response.data.message === "Successfully updated!") {
-        navigate("/home");
-        console.log("Profile updated successfully!");
-        toast.success("Successfully updated!")
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
+  //       profileData // Send the profileData object in the request
+  //     );
+  //     if (response.data.message === "Successfully updated!") {
+  //       navigate("/home");
+  //       console.log("Profile updated successfully!");
+  //       toast.success("Successfully updated!")
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
+
+  const [name, setname] = useState("")
+  const [namel, setnamel] = useState("")
+  const [email, setemail] = useState("")
+  const [phone, setphone] = useState("")
+  const [imgage, setimgage] = useState("")
+
+
+  useEffect(() => {
+      // Fetch profile data from the API
+      axios
+          .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
+          .then((response) => {
+
+              console.log("response.data:????? ", response.data);
+              setname(response.data.data[0].f_name)
+              setnamel(response.data.data[0].l_name)
+              setemail(response.data.data[0].email)
+              setphone(response.data.data[0].phone)
+              setimgage(response.data.data[0].image)
+              // Update the profileData state
+
+
+          })
+          .catch((error) => {
+              console.error(error);
+          });
+  }, []);
+  const halderimage = (e) => {
+      setimgage(e.target.files[0])
+  }
+  const UpdateProfile = (e) => {
+      e.preventDefault();
+      var formData = new FormData();
+      // formData.append('username', username);
+      formData.append('f_name', name);
+      formData.append('l_name', namel);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('image', imgage);
+
+      axios({
+          method: "post",
+          url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" },
+      })
+          .then(response => {
+              console.log(" New password updatesuccessfully");
+              toast.success("Successfully updated!")
+              console.log("respo", response);
+          })
+          .catch(error => {
+              console.log(error);
+          });
+
+
+  }
+
+  // setImagePhoto(true);
+  //       setStorephotofiles(event.target.files[0])
+  //       setFilePhoto(URL.createObjectURL(event.target.files[0]));
   return (
     <>
       <Newheader />
@@ -96,7 +161,7 @@ function Updateprofile() {
             <Col lg={10}>
               <h1 className="main-head text-center">Profile</h1>
               <div className="contact-form">
-                <Form onSubmit={handleFormSubmit}>
+                <Form >
                   <Row>
                     <Col lg={6} sm={6} xs={12}>
                       <Form.Group className="mb-3" controlId="formGridEmail">
@@ -107,13 +172,9 @@ function Updateprofile() {
                           placeholder="Enter first name"
                           type="text"
                           name="f_name"
-                          value={profileData.f_name || ""}
-                          onChange={(e) =>
-                            setProfileData({
-                              ...profileData,
-                              f_name: e.target.value.replace(/[^A-Za-z]/, ""),
-                            })
-                          }
+                        value={name}
+                  onChange={(e)=>setname(e.target.value)}
+                      
                         />
                       </Form.Group>
                     </Col>
@@ -126,13 +187,8 @@ function Updateprofile() {
                           name="l_name"
                           placeholder="Enter last name"
                           type="text"
-                          value={profileData.l_name || ""}
-                          onChange={(e) =>
-                            setProfileData({
-                              ...profileData,
-                              l_name: e.target.value.replace(/[^A-Za-z]/, ""),
-                            })
-                          }
+                          value={namel}
+                          onChange={(e)=>setnamel(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
@@ -145,13 +201,8 @@ function Updateprofile() {
                       name="email"
                       placeholder="Enter email"
                       type="email"
-                      value={profileData.email || ""}
-                      onChange={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          email: e.target.value,
-                        })
-                      }
+                      value={email}
+                      onChange={(e)=>setemail(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
@@ -164,40 +215,21 @@ function Updateprofile() {
                       placeholder="Enter phone"
                       type="tel"
                       maxLength={10}
-                      value={profileData.phone || ""}
-                      onChange={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          phone: e.target.value
-                            .replace(/\D/g, "")
-                            .substring(0, 10),
-                        })
-                      }
+                      value={phone}
+                      onChange={(e)=>setphone(e.target.value)}
+                      
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
                     <Form.Label>
                       Upload Image<span style={{ color: "#008efd" }}>*</span>
                     </Form.Label>
-                    <Form.Control type="file" onChange={handleImageUpload} />
-                    {imageUrl !== null && imageUrl !== "" && (
-                      <div className="image-preview">
-                        <img src={imageUrl} alt="Uploaded" />
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => {
-                            setImageFile(null);
-                            setImageUrl("");
-                          }}
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    )}
+                    <Form.Control type="file" onChange={halderimage} />
+                    <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' />
                   </Form.Group>
-
-                  <Button type="submit" className="mt-4">
+                  {/* {imagePhoto ?
+                                                            <img src={filePhoto} alt="file"></img> : ""} */}
+                  <Button type="submit" className="mt-4" onClick={UpdateProfile}>
                     Update Profile
                   </Button>
                 </Form>

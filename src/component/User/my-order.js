@@ -82,14 +82,39 @@ function Myorder() {
                                             <h3>Order Amount: ₹{item.order_amount}</h3>
                                             <h3>Order Status: {item.order_status}</h3>
                                             {item.order_status === 'delivered' ? (
-                                                 <div>
-                                                    {item.user_details && item.user_details.length > 0 ? (
-    <div>
-        <p>Rating Count: {item.user_details[0].rating_count}</p>
-    </div>
-) : null}
-                                               </div>
-                                            ) : null}
+                                                <div>
+                                                    {item.callback.map((callbackItem) => (
+                                                        <div key={callbackItem.id}>
+                                                            {callbackItem.user_details && callbackItem.user_details.rating > 0 ? (
+                                                                <div className='solidFA-icon'>
+                                                                    {Array.from({ length: callbackItem.user_details.rating }).map((_, index) => (
+                                                                        <i className="fa-solid fa-star" key={index} />
+                                                                    ))}
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <a><i className="fa-regular fa-star" /></a>
+                                                                   <a><i className="fa-regular fa-star" /></a>
+                                                                   <a><i className="fa-regular fa-star" /></a>
+                                                                   <a><i className="fa-regular fa-star" /></a>
+                                                                   <a><i className="fa-regular fa-star" /></a>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                   <a><i className="fa-regular fa-star" /></a>
+                                                   <a><i className="fa-regular fa-star" /></a>
+                                                   <a><i className="fa-regular fa-star" /></a>
+                                                   <a><i className="fa-regular fa-star" /></a>
+                                                   <a><i className="fa-regular fa-star" /></a>
+                                                </div>
+                                            )}
+
+
+
                                         </Col>
 
                                         <Col lg={3} sm={3} className="align-self-center">

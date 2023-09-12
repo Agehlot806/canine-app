@@ -66,6 +66,7 @@ function Productdetail() {
     fetchBreed();
     fetchLifestage();
     AllBanner();
+    AllOrderList();
     // fetchProductData();
   }, []);
 
@@ -125,7 +126,7 @@ function Productdetail() {
     return (
       <span key={index}>
         {productDetails?.rating_count ||
-        productDetails?.status + 0.5 >= index + 1 ? (
+          productDetails?.status + 0.5 >= index + 1 ? (
           <FaStar className="icon" />
         ) : productDetails?.rating_count ||
           productDetails?.status + 0.5 >= number ? (
@@ -271,7 +272,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -279,7 +280,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -296,6 +297,16 @@ function Productdetail() {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const [orderlist, setorderlist] = useState([]);
+  const AllOrderList = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      setorderlist(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -356,7 +367,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -395,16 +406,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex + 1) % productDetails.images.length
+                      (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                          productDetails.images.length
+                      (lightboxImageIndex +
+                        productDetails.images.length -
+                        1) %
+                      productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -413,7 +424,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                          productDetails.images.length
+                        productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -469,11 +480,10 @@ function Productdetail() {
                                 productDetails.variations.map((item, index) => (
                                   <Col lg={3} key={index}>
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`tab-variations ${selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -590,33 +600,44 @@ function Productdetail() {
           <hr />
           <div className="Product-Review">
             <h1 className="main-head mt-4">Product Review</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s,
-            </p>
-            <div className="row">
-              <div className="col-sm-3 col">
-                <Wrapper>
-                  <div className="icon-style">
-                    {ratingStar}
-                    {/* {productDetails.reviews || 60} */}
-                    {/* <p>({productDetails.reviews || 60} customer reviews)</p> */}
-                  </div>
-                </Wrapper>
+            {orderlist.map((order) => (
+              <div key={order.id}>
+                {order.callback[0].user_details && (
+                  <>
+                    <p>
+                      {order.callback[0].user_details.comment}
+                    </p>
+
+                    <div className="row">
+                      <div className="col-sm-3 col">
+                        <Wrapper>
+                          <div className="icon-style">
+                            {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                              <i className="fa-solid fa-star" key={index} />
+                            ))}
+                          </div>
+                        </Wrapper>
+                      </div>
+                      <div className="col-sm-5 col">
+                      {order.callback[0].user_profile && (
+                        <div className="Product-img">
+                          <img src={order.callback[0].user_profile.image} />
+                          <span> {order.callback[0].user_profile.f_name}</span>
+                          <div className="user-icon">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span> 1 2 3 4 5</span>
+                          </div>
+                        </div>
+                         )}
+                      </div>
+                    </div>
+                  </>
+                )}
+                <hr />
               </div>
-              <div className="col-sm-5 col">
-                <div className="Product-img">
-                  <img src={pro} />
-                  <span>Wade Warren</span>
-                  <div className="user-icon">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span> 1 2 3 4 5</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr />
+            ))}
+            <a href="">Read more</a>
+
           </div>
         </Container>
       </section>
@@ -627,25 +648,25 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-            (item, index) =>
-              item.type === "item_wise" && (
-                <div className="product-innerBanner">
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/" +
-                      item.image
-                    }
-                  />
-                  <div className="home-content">
-                    <h1>{item.title}</h1>
-                    <p>{item.description}</p>
-                    <Button>
-                      Explore More <i className="fa fa-angle-right" />
-                    </Button>
-                  </div>
+          (item, index) =>
+            item.type === "item_wise" && (
+              <div className="product-innerBanner">
+                <img
+                  src={
+                    "https://canine.hirectjob.in/storage/app/" +
+                    item.image
+                  }
+                />
+                <div className="home-content">
+                  <h1>{item.title}</h1>
+                  <p>{item.description}</p>
+                  <Button>
+                    Explore More <i className="fa fa-angle-right" />
+                  </Button>
                 </div>
-              )
-          )
+              </div>
+            )
+        )
         : null}
 
       <section className="section-padding food">
