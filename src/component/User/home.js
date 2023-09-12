@@ -303,9 +303,11 @@ function Home(props) {
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
+        console.log("element",element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
         console.log("indexData", indexData);
         newArr[indexData].isFav = true;
+        console.log("newArrnewArr",newArr);
         setallproduct(newArr);
       }
     }

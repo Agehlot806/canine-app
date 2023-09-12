@@ -3300,3 +3300,12 @@ button.Apply-price {
   top: -10px;
   left: 0;
 }
+.solidFA-icon i {
+  color: #f1c21b;
+}
+
+.contact-form img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
