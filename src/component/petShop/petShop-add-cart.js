@@ -201,6 +201,7 @@ function PetshopAddCart() {
   };
 
   const handleDecrementone = (index) => {
+    
     const updatedCart = [...addToCartProduct];
     if (updatedCart[index].quantity > 1) {
       updatedCart[index].quantity -= 1;
