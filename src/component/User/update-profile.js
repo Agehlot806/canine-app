@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 
 function Updateprofile() {
 
-
+  const navigate = useNavigate()
 
   // const navigate = useNavigate();
   // // const [uploadField, setUploadField] = useState([{image:""}])
@@ -99,52 +99,53 @@ function Updateprofile() {
 
 
   useEffect(() => {
-      // Fetch profile data from the API
-      axios
-          .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
-          .then((response) => {
+    // Fetch profile data from the API
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
+      .then((response) => {
 
-              console.log("response.data:????? ", response.data);
-              setname(response.data.data[0].f_name)
-              setnamel(response.data.data[0].l_name)
-              setemail(response.data.data[0].email)
-              setphone(response.data.data[0].phone)
-              setimgage(response.data.data[0].image)
-              // Update the profileData state
+        console.log("response.data:????? ", response.data);
+        setname(response.data.data[0].f_name)
+        setnamel(response.data.data[0].l_name)
+        setemail(response.data.data[0].email)
+        setphone(response.data.data[0].phone)
+        setimgage(response.data.data[0].image)
+        // Update the profileData state
 
 
-          })
-          .catch((error) => {
-              console.error(error);
-          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
   const halderimage = (e) => {
-      setimgage(e.target.files[0])
+    setimgage(e.target.files[0])
   }
   const UpdateProfile = (e) => {
-      e.preventDefault();
-      var formData = new FormData();
-      // formData.append('username', username);
-      formData.append('f_name', name);
-      formData.append('l_name', namel);
-      formData.append('email', email);
-      formData.append('phone', phone);
-      formData.append('image', imgage);
+    e.preventDefault();
+    var formData = new FormData();
+    // formData.append('username', username);
+    formData.append('f_name', name);
+    formData.append('l_name', namel);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('image', imgage);
 
-      axios({
-          method: "post",
-          url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
-          data: formData,
-          headers: { "Content-Type": "multipart/form-data" },
+    axios({
+      method: "post",
+      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(response => {
+        console.log(" New password updatesuccessfully");
+        toast.success("Successfully updated!")
+        console.log("respo", response);
+        navigate("/")
       })
-          .then(response => {
-              console.log(" New password updatesuccessfully");
-              toast.success("Successfully updated!")
-              console.log("respo", response);
-          })
-          .catch(error => {
-              console.log(error);
-          });
+      .catch(error => {
+        console.log(error);
+      });
 
 
   }
@@ -172,9 +173,9 @@ function Updateprofile() {
                           placeholder="Enter first name"
                           type="text"
                           name="f_name"
-                        value={name}
-                  onChange={(e)=>setname(e.target.value)}
-                      
+                          value={name}
+                          onChange={(e) => setname(e.target.value)}
+
                         />
                       </Form.Group>
                     </Col>
@@ -188,7 +189,7 @@ function Updateprofile() {
                           placeholder="Enter last name"
                           type="text"
                           value={namel}
-                          onChange={(e)=>setnamel(e.target.value)}
+                          onChange={(e) => setnamel(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
@@ -202,7 +203,7 @@ function Updateprofile() {
                       placeholder="Enter email"
                       type="email"
                       value={email}
-                      onChange={(e)=>setemail(e.target.value)}
+                      onChange={(e) => setemail(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
@@ -216,8 +217,8 @@ function Updateprofile() {
                       type="tel"
                       maxLength={10}
                       value={phone}
-                      onChange={(e)=>setphone(e.target.value)}
-                      
+                      onChange={(e) => setphone(e.target.value)}
+
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">

@@ -95,6 +95,36 @@ function PetShopHeader(props) {
     }
   };
 
+// useEffect(() => {
+//     const storedWholesellerId = localStorage.getItem("userInfo");
+//     setStoredUserId(JSON.parse(storedWholesellerId));
+//   }, []);
+  const [profileData, setProfileData] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState({ image: "" } || null);
+  console.log("profileDataaaa: ", profileData);
+  useEffect(() => {
+    const storedWholesellerId = localStorage.getItem("userInfo");
+    // Fetch profile data from the API
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedWholesellerId}`)
+      .then((response) => {
+        if (response.data.status === "200" && response.data.data.length > 0) {
+          const profile = response.data.data[0];
+          console.log("response.data: ", response.data);
+          setProfileData(profile);
+          // Update the profileData state
+          if (profile.image) {
+            setImageUrl({ image: profile.image });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+
   useEffect(() => {
     const storedWholesellerId = Number(
       localStorage.getItem(
@@ -177,6 +207,8 @@ function PetShopHeader(props) {
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  
 
   return (
     <>
@@ -594,7 +626,13 @@ function PetShopHeader(props) {
                       >
                         {/* {loginType === "salesman" ? "Dashboard" : "Home"} */}
 
-                        <img src={pro} />
+                        {/* <img src={pro} /> */}
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/profile/" +
+                            profileData?.image
+                          }
+                        />
                       </Link>
                       <div
                         className="dropdown-menu"

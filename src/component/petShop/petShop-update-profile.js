@@ -5,23 +5,97 @@ import { BASE_URL } from "../../Constant/Index";
 import { useNavigate } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import toast, { Toaster } from 'react-hot-toast';
 
 function PetshopUpdateprofile() {
   // const [uploadField, setUploadField] = useState([{image:""}])
   const navigator = useNavigate();
-  const [imageFile, setImageFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState({ image: "" } || null);
-  console.log(imageUrl);
+  // const [imageFile, setImageFile] = useState(null);
+  // const [imageUrl, setImageUrl] = useState({ image: "" } || null);
+  // console.log(imageUrl);
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
 
-  const [profileData, setProfileData] = useState({
-    f_name: "",
-    l_name: "",
-    email: "", // Initialize with default value
-    phone: "", // Initialize with default value
-    image: "",
-    // Add more fields here as needed
-  });
-  console.log("profileData: ", profileData);
+  // const [profileData, setProfileData] = useState({
+  //   f_name: "",
+  //   l_name: "",
+  //   email: "", 
+  //   phone: "", 
+  //   image: "",
+    
+  // });
+  // console.log("profileData: ", profileData);
+  const [name, setname] = useState("")
+  const [namel, setnamel] = useState("")
+  const [email, setemail] = useState("")
+  const [phone, setphone] = useState("")
+  const [imgage, setimgage] = useState("")
+  // useEffect(()=>{
+  //   axios.get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
+  //   .then((response)=>{
+
+  //     console.log("===========>>>>>>>>> ", response.data);
+  //       setname(response.data.data[0].f_name)
+  //       setnamel(response.data.data[0].l_name)
+  //       setemail(response.data.data[0].email)
+  //       setphone(response.data.data[0].phone)
+  //       setimgage(response.data.data[0].image)
+        
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+  // },[]);
+  const getWholesellerProfile =()=>{
+    axios.get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
+    .then((response)=>{
+
+      console.log("===========>>>>>>>>> ", response.data);
+        setname(response.data.data[0].f_name)
+        setnamel(response.data.data[0].l_name)
+        setemail(response.data.data[0].email)
+        setphone(response.data.data[0].phone)
+        setimgage(response.data.data[0].image)
+        // Update the profileData state
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  }
+  const halderimage = (e) => {
+    setimgage(e.target.files[0])
+  }
+
+  const UpdateProfile = (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    // formData.append('username', username);
+    formData.append('f_name', name);
+    formData.append('l_name', namel);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('image', imgage);
+
+    axios({
+      method: "post",
+      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(response => {
+        console.log(" New password updatesuccessfully");
+        toast.success("Successfully updated!")
+        console.log("respo", response);
+        navigator("/petshop-home")
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+
+  }
+
 
   const loginType = localStorage.getItem("loginType");
   const salesmanId = localStorage.getItem("salesmanId");
@@ -36,32 +110,36 @@ function PetshopUpdateprofile() {
       getWholesellerProfile();
     }
   }, []);
+  const onclickdata =()=>{
+    toast.success("Successfully updated!")
 
-  const getWholesellerProfile = async () => {
-    // Fetch profile data from the API
-    await axios
-      .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
-      .then((response) => {
-        if (response.data.status === "200") {
-          console.log("response.data: ", response.data);
-          setProfileData({
-            f_name: response.data.data[0].f_name,
-            l_name: response.data.data[0].l_name,
-            email: response.data.data[0].email, // Set email from response
-            phone: response.data.data[0].phone, // Set phone from response
-            image: response.data.data[0].image,
-            // Set other fields as needed
-          });
-          // Update the profileData state
-          if (profile.image) {
-            setImageUrl(profile.image);
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  }
+
+  // const getWholesellerProfile = async () => {
+    
+  //   await axios
+  //     .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
+  //     .then((response) => {
+  //       if (response.data.status === "200") {
+  //         console.log("response.data: ", response.data);
+  //         setProfileData({
+  //           f_name: response.data.data[0].f_name,
+  //           l_name: response.data.data[0].l_name,
+  //           email: response.data.data[0].email, 
+  //           phone: response.data.data[0].phone, 
+  //           image: response.data.data[0].image,
+            
+  //         });
+          
+  //         if (profile.image) {
+  //           setImageUrl(profile.image);
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   const getSalesmanProfile = async () => {
     await axios
@@ -84,36 +162,36 @@ function PetshopUpdateprofile() {
       });
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    setProfileData({
-      ...profileData,
-      image: e.target.files[0],
-    });
-    if (file) {
-      setImageFile(file);
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   setProfileData({
+  //     ...profileData,
+  //     image: e.target.files[0],
+  //   });
+  //   if (file) {
+  //     setImageFile(file);
 
-      // Create a preview URL for the selected image
-      const previewUrl = URL.createObjectURL(file);
-      setImageUrl(previewUrl);
-    }
-  };
+      
+  //     const previewUrl = URL.createObjectURL(file);
+  //     setImageUrl(previewUrl);
+  //   }
+  // };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/update-profile",
-        profileData // Send the profileData object in the request
-      );
-      if (response.data.message === "Successfully updated!") {
-        navigator("/petShop-home");
-        console.log("Profile updated successfully!");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
+  //       profileData 
+  //     );
+  //     if (response.data.message === "Successfully updated!") {
+  //       navigator("/petShop-home");
+  //       console.log("Profile updated successfully!");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleSalesmanUpdate = async (e) => {
     e.preventDefault();
@@ -136,6 +214,7 @@ function PetshopUpdateprofile() {
 
   return (
     <>
+    
       <PetShopHeader />
       <section className="section-padding">
         <Container>
@@ -148,7 +227,7 @@ function PetshopUpdateprofile() {
                     if (loginType == "salesman") {
                       handleSalesmanUpdate(e);
                     } else {
-                      handleFormSubmit(e);
+                      UpdateProfile(e);
                     }
                   }}
                 >
@@ -162,13 +241,15 @@ function PetshopUpdateprofile() {
                           placeholder="Enter first name"
                           type="text"
                           name="f_name"
-                          value={profileData.f_name || ""}
-                          onChange={(e) =>
-                            setProfileData({
-                              ...profileData,
-                              f_name: e.target.value.replace(/[^A-Za-z]/, ""),
-                            })
-                          }
+                          // value={profileData.f_name || ""}
+                          value={name}
+                          // onChange={(e) =>
+                          //   setProfileData({
+                          //     ...profileData,
+                          //     f_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                          //   })
+                          // }
+                          onChange={(e)=>setname(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
@@ -181,13 +262,15 @@ function PetshopUpdateprofile() {
                           name="l_name"
                           placeholder="Enter last name"
                           type="text"
-                          value={profileData.l_name || ""}
-                          onChange={(e) =>
-                            setProfileData({
-                              ...profileData,
-                              l_name: e.target.value.replace(/[^A-Za-z]/, ""),
-                            })
-                          }
+                          // value={profileData.l_name || ""}
+                          // onChange={(e) =>
+                          //   setProfileData({
+                          //     ...profileData,
+                          //     l_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                          //   })
+                          // }
+                          value={namel}
+                          onChange={(e)=>setnamel(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
@@ -200,13 +283,15 @@ function PetshopUpdateprofile() {
                       name="email"
                       placeholder="Enter email"
                       type="email"
-                      value={profileData.email || ""}
-                      onChange={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          email: e.target.value,
-                        })
-                      }
+                      // value={profileData.email || ""}
+                      // onChange={(e) =>
+                      //   setProfileData({
+                      //     ...profileData,
+                      //     email: e.target.value,
+                      //   })
+                      // }
+                      value={email}
+                      onChange={(e)=>setemail(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
@@ -220,22 +305,24 @@ function PetshopUpdateprofile() {
                       type="tel"
                       maxLength={10}
                       disabled={loginType == "salesman" ? true : false}
-                      value={profileData.phone || ""}
-                      onChange={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          phone: e.target.value
-                            .replace(/\D/g, "")
-                            .substring(0, 10),
-                        })
-                      }
+                      // value={profileData.phone || ""}
+                      // onChange={(e) =>
+                      //   setProfileData({
+                      //     ...profileData,
+                      //     phone: e.target.value
+                      //       .replace(/\D/g, "")
+                      //       .substring(0, 10),
+                      //   })
+                      // }
+                      value={phone}
+                      onChange={(e)=>setphone(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
                     <Form.Label>
                       Upload Image<span style={{ color: "#008efd" }}>*</span>
                     </Form.Label>
-                    <Form.Control type="file" onChange={handleImageUpload} />
+                    {/* <Form.Control type="file" onChange={handleImageUpload} />
                     {imageUrl.image !== null && imageUrl.image !== "" ? (
                       <div className="image-preview">
                         <img src={imageUrl} alt="Uploaded" />
@@ -260,10 +347,12 @@ function PetshopUpdateprofile() {
                           alt="profile"
                         />
                       </div>
-                    )}
+                    )} */}
+                    <Form.Control type="file" onChange={halderimage} />
+                    <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' />
                   </Form.Group>
 
-                  <Button type="submit" className="mt-4">
+                  <Button type="submit" className="mt-4" onClick={UpdateProfile}>
                     Update Profile
                   </Button>
                 </Form>
