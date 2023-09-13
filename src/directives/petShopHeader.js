@@ -550,6 +550,7 @@ function PetShopHeader(props) {
                     data-target="#exampleModal"
                   >
                     <i class="fa fa-bell-o" />
+                    <span>{notificationLength}</span>
                   </a>
                 </li>
                 {storedWholesellerId ? (
