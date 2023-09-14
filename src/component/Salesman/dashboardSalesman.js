@@ -296,13 +296,15 @@ function DashboadSalesman() {
                       >
                         <div className="needplace">
                           <Row>
-                            {wholeSellerList.map((item) => {
+                            {wholeSellerList.map((item,index) => {
                               return (
                                 <Col lg={4} className="mb-4">
-                                  <div className="Wholeseller-card wholeseller-bg1 " style={{
+                                  <div className="Wholeseller-card wholeseller-bg1 " 
+                                  style={{
                             background:
                               gradientColors[index % gradientColors.length],
-                          }}>
+                          }}
+                          >
                                     <div className="wholeseller-status">
                                       <h6>Completed</h6>
                                     </div>

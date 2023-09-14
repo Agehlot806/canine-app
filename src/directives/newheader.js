@@ -83,6 +83,7 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     setStoredUserId(JSON.parse(customer_id));
   }, []);
+  
   const [profileData, setProfileData] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
