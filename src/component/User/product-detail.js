@@ -68,7 +68,7 @@ function Productdetail() {
     fetchLifestage();
     AllBanner();
     AllOrderList();
-    fetchWishlistData()
+    fetchWishlistData();
     // fetchProductData();
   }, []);
 
@@ -79,7 +79,7 @@ function Productdetail() {
         console.log("=======> ", response);
         console.log("Delete Successful");
         setProductDetails(response.data.data);
-        
+
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -90,6 +90,28 @@ function Productdetail() {
   let storedUserId = JSON.parse(customer_id);
   console.log("customer_id: ", customer_id);
 
+  // ****************notifyme
+  const [email, setEmail] = useState("");
+  const [variation, setVariation] = useState("");
+  const handleNotifymeSubmit = async (e) => {
+    // e.preventDefault();
+    // console.log("handleSubmit called", handleValid()); // Add this
+
+    // if (handleValid()) {
+    const notifymeData = new FormData();
+
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    console.log("notifymeData", notifymeData);
+    axios
+      .post(`https://canine.hirectjob.in/api/v1/items/notify/2`, notifymeData)
+      .then((response) => {
+        toast.success("Your data Successfully Add");
+      })
+      .catch((error) => {
+        toast.error("Field is required");
+      });
+  };
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -129,7 +151,6 @@ function Productdetail() {
     );
   });
 
-  
   const itemWiseBanner = async () => {
     try {
       const response = await fetch(`${BASE_URL}/banners/`);
@@ -265,7 +286,7 @@ function Productdetail() {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -285,11 +306,11 @@ function Productdetail() {
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element",element);
+        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
         console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr",newArr);
+        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -350,7 +371,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -358,7 +379,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -384,13 +405,15 @@ function Productdetail() {
   const [orderlist, setorderlist] = useState([]);
   const AllOrderList = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const response = await axios.get(
+        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+      );
       setorderlist(response.data.data);
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   const toggleReview = (e) => {
     e.preventDefault();
     setTotalreview(!totalreview);
@@ -405,31 +428,31 @@ function Productdetail() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -451,7 +474,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -490,16 +513,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex + 1) % productDetails.images.length
+                        (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex +
-                        productDetails.images.length -
-                        1) %
-                      productDetails.images.length
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -508,7 +531,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                        productDetails.images.length
+                          productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -564,10 +587,11 @@ function Productdetail() {
                                 productDetails.variations.map((item, index) => (
                                   <Col lg={3} key={index}>
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -695,18 +719,21 @@ function Productdetail() {
                             src={
                               "https://canine.hirectjob.in/storage/app/public/profile/" +
                               order.callback[0].user_profile[0].image
-                            } />
-                          <span>{order.callback[0].user_profile[0].f_name}</span>
+                            }
+                          />
+                          <span>
+                            {order.callback[0].user_profile[0].f_name}
+                          </span>
                         </div>
                       )}
                       {order.callback[0].user_details && (
                         <>
-                          <p>
-                            {order.callback[0].user_details.comment}
-                          </p>
+                          <p>{order.callback[0].user_details.comment}</p>
                           <Wrapper>
                             <div className="icon-style">
-                              {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                              {Array.from({
+                                length: order.callback[0].user_details.rating,
+                              }).map((_, index) => (
                                 <i className="fa-solid fa-star" key={index} />
                               ))}
                             </div>
@@ -729,7 +756,7 @@ function Productdetail() {
                   <i className="fa fa-angle-down" aria-hidden="true"></i>
                 )}
               </a>
-              {totalreview &&
+              {totalreview && (
                 <>
                   {orderlist.map((order) => (
                     <div key={order.id}>
@@ -739,18 +766,21 @@ function Productdetail() {
                             src={
                               "https://canine.hirectjob.in/storage/app/public/profile/" +
                               order.callback[0].user_profile[0].image
-                            } />
-                          <span>{order.callback[0].user_profile[0].f_name}</span>
+                            }
+                          />
+                          <span>
+                            {order.callback[0].user_profile[0].f_name}
+                          </span>
                         </div>
                       )}
                       {order.callback[0].user_details && (
                         <>
-                          <p>
-                            {order.callback[0].user_details.comment}
-                          </p>
+                          <p>{order.callback[0].user_details.comment}</p>
                           <Wrapper>
                             <div className="icon-style">
-                              {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                              {Array.from({
+                                length: order.callback[0].user_details.rating,
+                              }).map((_, index) => (
                                 <i className="fa-solid fa-star" key={index} />
                               ))}
                             </div>
@@ -761,7 +791,7 @@ function Productdetail() {
                     </div>
                   ))}
                 </>
-              }
+              )}
             </div>
           </div>
         </Container>
@@ -773,25 +803,24 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-          (item, index) =>
-            item.type === "item_wise" && (
-              <div className="product-innerBanner">
-                <img
-                  src={
-                    "https://canine.hirectjob.in/storage/app/" +
-                    item.image
-                  }
-                />
-                <div className="home-content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button>
+            (item, index) =>
+              item.type === "item_wise" && (
+                <div className="product-innerBanner">
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/" + item.image
+                    }
+                  />
+                  <div className="home-content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Button>
+                      Explore More <i className="fa fa-angle-right" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )
-        )
+              )
+          )
         : null}
 
       <section className="section-padding food">
@@ -814,7 +843,9 @@ function Productdetail() {
                     >
                       <i
                         class={
-                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                          item.isFav
+                            ? "fa-solid fa-heart"
+                            : "fa-regular fa-heart"
                         }
                         onClick={(id) => {
                           if (storedUserId == null) {
@@ -892,7 +923,11 @@ function Productdetail() {
               <form>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select className="form-control">
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
                     <option>Choose....</option>
                     {productDetails?.variations &&
                       productDetails?.variations.map((item) => (
@@ -906,6 +941,8 @@ function Productdetail() {
                     type="email"
                     className="form-control"
                     placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                   />
                 </div>
                 <div className="Notify-Me">
@@ -913,6 +950,7 @@ function Productdetail() {
                     type="submit"
                     className="btn btn-primary"
                     data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
                   >
                     Notify Me When Available
                   </button>

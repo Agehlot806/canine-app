@@ -11,6 +11,7 @@ const SalesmanLogin = () => {
   const navigate = useNavigate();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handlePhoneNumberChange = (event) => {
     const input = event.target.value;
@@ -21,37 +22,40 @@ const SalesmanLogin = () => {
 
     setPhone(formattedNumber);
   };
+  const togglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(phone == '' && password == ''){
-      toast.error('ffff')
-    }else {
-    const formData = new FormData();
-    formData.append("phone", phone);
-    formData.append("password", password);
-    axios
-      .post(`${BASE_URL}/auth/delivery-man/login`, formData)
-      .then((response) => {
-        console.log("tarun", response);
-        if (response.data.status === "200") {
-          localStorage.setItem("salesmanId", response.data.data[0].id);
-          localStorage.setItem("salesmanPhone", response.data.data[0].phone);
-          localStorage.setItem("loginType", 'salesman');
-          localStorage.setItem("verifiedId", response.data.data[0].status);
-          navigate("/salesman-dashboad");
-          toast.success("Successfully");
-        }
-        if (response.data.message === "User Not Exit") {
-          toast.error("User Not Exit");
-        }
-        // Handle the response as needed
-        //
-      })
-      .catch((error) => {
-        console.log(error);
-        // Handle errors if any
-      });
+    if (phone == "" && password == "") {
+      toast.error("ffff");
+    } else {
+      const formData = new FormData();
+      formData.append("phone", phone);
+      formData.append("password", password);
+      axios
+        .post(`${BASE_URL}/auth/delivery-man/login`, formData)
+        .then((response) => {
+          console.log("tarun", response);
+          if (response.data.status === "200") {
+            localStorage.setItem("salesmanId", response.data.data[0].id);
+            localStorage.setItem("salesmanPhone", response.data.data[0].phone);
+            localStorage.setItem("loginType", "salesman");
+            localStorage.setItem("verifiedId", response.data.data[0].status);
+            navigate("/salesman-dashboad");
+            toast.success("Successfully");
+          }
+          if (response.data.message === "User Not Exit") {
+            toast.error("User Not Exit");
+          }
+          // Handle the response as needed
+          //
+        })
+        .catch((error) => {
+          console.log(error);
+          // Handle errors if any
+        });
     }
   };
   return (
@@ -82,13 +86,32 @@ const SalesmanLogin = () => {
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGroupPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      placeholder="Enter password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className="form-area eyeicon">
+                      <Form.Control
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        // className="btn btn-secondary"
+                        style={{
+                          border: "none",
+                          borderRadius: "37.75px",
+                          height: "55px",
+                        }}
+                        onClick={togglePassword}
+                      >
+                        <i
+                          className={`fa ${
+                            showPassword ? "fa-eye" : "fa-eye-slash"
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
                   </Form.Group>
                   <div className="login-btns">
                     <Button

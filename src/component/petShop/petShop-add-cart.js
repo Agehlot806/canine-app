@@ -20,7 +20,8 @@ function PetshopAddCart() {
   const { id } = useParams();
   console.log("id", id);
   // Create a ref to store the list of items in the cart
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const [minOrder, setMinOrder] = useState(0);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   console.log("addToCartProduct: ", addToCartProduct);
   // const [customer_id, setcustomer_id] = useState("");
@@ -70,6 +71,7 @@ function PetshopAddCart() {
       variation: item.variant,
       price: item.price,
       quantity: item.quantity,
+      min_order: item.min_order,
       tax_amount: taxamound,
       discount_on_item: "",
     }));
@@ -200,10 +202,9 @@ function PetshopAddCart() {
     setSandCartData(updatedSendCart); // Update sendcartdata
   };
 
-  const handleDecrementone = (index) => {
-    
+  const handleDecrementone = (index, item) => {
     const updatedCart = [...addToCartProduct];
-    if (updatedCart[index].quantity > 1) {
+    if (updatedCart[index].quantity > item.min_order) {
       updatedCart[index].quantity -= 1;
       updatedCart[index].price =
         updatedCart[index].price *
@@ -220,6 +221,7 @@ function PetshopAddCart() {
       setSandCartData(updatedSendCart); // Update sendcartdata
     }
   };
+
   const fieldpagerefresh = () => {
     window.location.reload(false);
   };
@@ -252,6 +254,7 @@ function PetshopAddCart() {
           params: {
             id: id, // Replace this with the correct product_id you want to add
             quantity: quantity,
+            // min_order: minOrder,
           },
         }
       )
@@ -267,7 +270,9 @@ function PetshopAddCart() {
           variant: item.variant,
           price: item.price,
           quantity: item.quantity, // Assuming the response already includes the quantity
+          min_order: item.min_order,
         }));
+        console.log("newCartsend: ", response.data.data);
 
         setSandCartData([...newCartsend]);
 
@@ -277,13 +282,30 @@ function PetshopAddCart() {
           image: item.image,
           price: item.price,
           quantity: item.quantity, // Assuming the response already includes the quantity
+          min_order: item.min_order,
         }));
 
+        const addcartitem = response.data.data[0];
+        if (addcartitem?.min_order !== null && addcartitem?.min_order > 0) {
+          setMinOrder(addcartitem.min_order);
+          setQuantity(addcartitem.min_order); // Set initial quantity to min_order
+        }
         // Update the addToCartProduct state by adding the new cart items
-        setAddToCartProduct([...addToCartProduct, ...newCartItems]);
+        setAddToCartProduct([
+          ...addToCartProduct,
+          ...newCartItems,
+          // ...addcartitem,
+        ]);
 
         // Clear the quantity input field after adding the item to the cart
-        setQuantity(1);
+        // setQuantity(1);
+
+        // setAddToCartProduct([...addcartitem])
+        // Update the minOrder state with the min_order value
+        // setMinOrder(addcartitem.min_order);
+
+        // Set the quantity state to the desired value (e.g., 1)
+        // setQuantity(addcartitem.min_order);
         // cartItemsRef.current = response.data.data;
         // setAddToCartProduct(response.data.data);
         // console.log("response.data.data: ", response.data.data);
@@ -732,7 +754,7 @@ function PetshopAddCart() {
                       </button>
                     </div> */}
                     <div className="quantity-btn">
-                      <button onClick={() => handleDecrementone(index)}>
+                      <button onClick={() => handleDecrementone(index, item)}>
                         <i className="fa fa-minus" />
                       </button>
                       <form>

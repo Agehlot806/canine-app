@@ -9,6 +9,7 @@ function PetshopLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(true); // State to track password validity
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(true); // State to track presence of a special character
   const [isEmailValid, setIsEmailValid] = useState(true); // State to track email validity
@@ -19,7 +20,9 @@ function PetshopLogin() {
       !hasCapitalLetter
     );
   };
-
+  const togglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isEmailFormatValid(email)) {
@@ -28,7 +31,7 @@ function PetshopLogin() {
     }
     // if (password.length < 8 || !hasSpecialCharacter) {
     //   setIsPasswordValid(false);
-    //   return; 
+    //   return;
     // }
     const formData = new FormData();
     formData.append("email", email);
@@ -99,22 +102,41 @@ function PetshopLogin() {
                         </Form.Control.Feedback>
                       )}
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupPassword">
+                    <Form.Group className="mb-3" controlId="formGroupEmail">
                       <Form.Label>Password</Form.Label>
-                      <Form.Control
-                        type="password"
-                        name="password"
-                        placeholder="Enter password"
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                          // setIsPasswordValid(e.target.value.length >= 6);
-                          // setHasSpecialCharacter(
-                          //   /[^A-Za-z0-9]/.test(e.target.value)
-                          // );
-                        }}
-                        isInvalid={!isPasswordValid || !hasSpecialCharacter}
-                      />
+                      <div className="form-area eyeicon">
+                        <Form.Control
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          placeholder="Enter password"
+                          value={password}
+                          onChange={(e) => {
+                            setPassword(e.target.value);
+                            // setIsPasswordValid(e.target.value.length >= 6);
+                            // setHasSpecialCharacter(
+                            //   /[^A-Za-z0-9]/.test(e.target.value)
+                            // );
+                          }}
+                          isInvalid={!isPasswordValid || !hasSpecialCharacter}
+                        />
+                        <button
+                          type="button"
+                          // className="btn btn-secondary"
+                          style={{
+                            border: "none",
+                            borderRadius: "37.75px",
+                            height: "55px",
+                          }}
+                          onClick={togglePassword}
+                        >
+                          <i
+                            className={`fa ${
+                              showPassword ? "fa-eye" : "fa-eye-slash"
+                            }`}
+                            aria-hidden="true"
+                          />
+                        </button>
+                      </div>
                       {(!isPasswordValid || !hasSpecialCharacter) && (
                         <Form.Control.Feedback type="invalid">
                           Your password should be at least 8 characters and
@@ -122,6 +144,7 @@ function PetshopLogin() {
                         </Form.Control.Feedback>
                       )}
                     </Form.Group>
+
                     <div className="login-btns">
                       <Button
                         variant="primary"
