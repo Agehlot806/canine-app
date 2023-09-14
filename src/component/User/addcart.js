@@ -820,8 +820,8 @@ function Addcart() {
                             Select Address{" "}
                             <i
                               className={`fa ${addressContentVisible
-                                  ? "fa-arrow-up"
-                                  : "fa-arrow-down"
+                                ? "fa-arrow-up"
+                                : "fa-arrow-down"
                                 }`}
                               aria-hidden="true"
                             ></i>

@@ -244,7 +244,7 @@ function App() {
             element={<Petshoppaymentoptionfooter />}
           />
           <Route
-            path="/petshoptrackyourorde"
+            path="/petshoptrackyourorde/:id"
             element={<Petshoptrackyourorder />}
           />
           <Route

@@ -1,25 +1,102 @@
 import React from "react";
 import "../../assets/css/order-tracker.css";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
 export default function Petshoptrackyourorder() {
-  const [activetraker, setActivetraker] = useState(1);
+  const { id } = useParams();
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  const salesmanId = localStorage.getItem("salesmanId");
+  const [trackingValue, setTrackingValue] = useState([]);
+  const [cancelValue, setCancelValue] = useState('');
+  useEffect(() => {
+    if (id) {
+      setTrackingValue(id);
+    }
+  }, [id]);
+  const handleInputChange = (e) => {
+    setTrackingValue(e.target.value);
+  };
   const [trankershowData, settrankershowData] = useState(false);
-
-  const handletrakerNext = () => {
-    setActivetraker((prevActive) => Math.min(prevActive + 1, steps.length));
+  const [steps, setSteps] = useState([
+    'Pending',
+    'Confirmed',
+    'Processing',
+    'Handover',
+    'Picked Up',
+    'Delivered'
+  ]);
+  const [orderData, setOrderData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const trackingtargetvaluenumber = () => {
+    // Fetch order data from an API endpoint
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/tracking/${trackingValue}`)
+      .then(response => response.json())
+      .then(data => {
+        setOrderData(data.data[0]);
+        setIsLoading(false);
+        settrankershowData(!trankershowData)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setIsLoading(false);
+      });
   };
-  const handletrakerPrev = () => {
-    setActivetraker((prevActive) => Math.max(prevActive - 1, 1));
+  const getCurrentStepIndex = () => {
+    if (orderData.delivered_status === 'delivered') {
+      return steps.length;
+    }
+    else if (orderData.picked_up && new Date(orderData.picked_up) <= new Date()) {
+      return 5; // Delivered
+    }
+    else if (orderData.handover && new Date(orderData.handover) <= new Date()) {
+      return 4; // Picked Up
+    }
+    else if (orderData.processing && new Date(orderData.processing) <= new Date()) {
+      return 3; // Handover
+    }
+    else if (orderData.confirmed && new Date(orderData.confirmed) <= new Date()) {
+      return 2; // Processing
+    }
+    else if (orderData.pending && new Date(orderData.pending) <= new Date()) {
+      return 1; // Confirmed
+    } else {
+      return 0; // Pending
+    }
   };
-  const steps = [1, 2, 3, 4]; // Define your steps here
-
   const handleButtonClick = () => {
-    settrankershowData(!trankershowData);
   };
+
+
+  const cancelorders = (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    // formData.append('username', username);
+    formData.append('user_id', storedWholesellerId);
+    formData.append('order_id', id);
+    formData.append('canceled', cancelValue);
+
+    axios({
+        method: "post",
+        url: `https://canine.hirectjob.in/api/v1/customer/order/cancel/${id}`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+    })
+        .then(response => {
+            console.log("respo", response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+
+}
+const Canceldata = (e)=>{
+setCancelValue(e.target.value)
+}
 
 
   return (
@@ -33,11 +110,13 @@ export default function Petshoptrackyourorder() {
             <Row className="justify-content-center">
               <Col lg={6}>
 
-                <div className="tranker-search">
+              <div className="tranker-search">
                   <h4>Track Your Shipment</h4>
-                  <form className="Track-Your">
-                    <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" />
-                    <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button>
+                  <form className="d-flex">
+                    <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" value={trackingValue}
+                      onChange={handleInputChange} />
+                    <button type="button" className="btn" onClick={trackingtargetvaluenumber}>Track</button>
+                    {/* <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button> */}
                   </form>
                 </div>
               </Col>
@@ -77,74 +156,52 @@ export default function Petshoptrackyourorder() {
 
                     <hr className="my-4" />
 
-                    {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="d-flex justify-content-center align-items-center big-dot dot">
-                                            <MDBIcon icon="check text-white" />
-                                        </span>
-                                    </div> */}
-                    <div id="progress">
+                    
+                   <div id="progress">
                       <div
                         id="progress-bar"
                         style={{
-                          width:
-                            ((activetraker - 1) / (steps.length - 1)) * 100 + "%",
+                          width: (getCurrentStepIndex() - 1) / (steps.length - 1) * 100 + '%',
+                          backgroundColor: 'blue',
                         }}
                       ></div>
                       <ul id="progress-num">
                         {steps.map((step, index) => (
                           <li
                             key={index}
-                            className={`step ${index < activetraker ? "active" : ""
-                              }`}
+                            className={`step ${index === 0 ? 'active' : ''} ${index < getCurrentStepIndex() ? 'active' : ''}`}
                           >
-                            {step}
+                            {/* {step} */}
                           </li>
                         ))}
                       </ul>
                     </div>
-
                     <div className="d-flex flex-row justify-content-between align-items-center tracker-content">
-                      <div className="d-flex flex-column align-items-start">
-                        <span>15 Mar</span>
-                        <span>Order placed</span>
-                      </div>
-                      <div className="d-flex flex-column justify-content-center">
-                        <span>15 Mar</span>
-                        <span>Order placed</span>
-                      </div>
-                      <div className="d-flex flex-column justify-content-center align-items-center">
-                        <span>15 Mar</span>
-                        <span>Order Dispatched</span>
-                      </div>
-                      <div className="d-flex flex-column align-items-end">
-                        <span>15 Mar</span>
-                        <span>Delivered</span>
-                      </div>
+                      {isLoading ? (
+                        <p>Loading...</p>
+                      ) : (
+                        steps.map((step, index) => (
+                          <div
+                            key={index}
+                            className={`d-flex flex-column ${index === getCurrentStepIndex() - 1 ? 'align-items-center' : 'align-items-' +
+                              (index < getCurrentStepIndex() - 1 ? 'start' : 'end')
+                              }`}
+                          >
+                            {step === 'Picked Up' && orderData.picked_up ? (
+                              <span>{orderData.picked_up} - Picked Up</span>
+                            ) : (
+                              <span>{orderData[step.toLowerCase()]} - {step}</span>
+                            )}
+                          </div>
+                        ))
+                      )}
                     </div>
-                    <button
-                      id="progress-prev"
-                      className="btn"
-                      disabled={activetraker === 1}
-                      onClick={handletrakerPrev}
-                    >
-                      Prev
-                    </button>
-                    <button
-                      id="progress-next"
-                      className="btn"
-                      disabled={activetraker === steps.length}
-                      onClick={handletrakerNext}
-                    >
-                      Next
-                    </button>
+
+
+
+
+
+
                   </Card.Body>
                 </Card>
               </Col>
@@ -198,14 +255,14 @@ export default function Petshoptrackyourorder() {
               <h2>Cancel Order</h2>
               <p>Select a reason for order cancellation:</p>
 
-              <div className="selct-cancle">
+              <div className="selct-cancle" value={cancelValue} onChange={Canceldata}>
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    id="exampleRadios1"
-                    defaultValue="option1"
+                
+                    value='Damaged Product'
                   />
                   <label className="form-check-label" htmlFor="exampleRadios1">
                     Damaged Product
@@ -216,8 +273,9 @@ export default function Petshoptrackyourorder() {
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    id="exampleRadios2"
-                    defaultValue="option2"
+                   
+                  
+                    value=' Late Delivery'
                   />
                   <label className="form-check-label" htmlFor="exampleRadios2">
                     Late Delivery
@@ -228,25 +286,26 @@ export default function Petshoptrackyourorder() {
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    id="exampleRadios2"
-                    defaultValue="option2"
+                  
+                    value='Changed My Mind'
                   />
                   <label className="form-check-label" htmlFor="exampleRadios2">
                     Changed My Mind
                   </label>
                 </div>
                 <div className="form-check">
-                  <input
+                  {/* <input
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
                     id="exampleRadios2"
-                    defaultValue="option2"
                     data-toggle="modal"
                     data-dismiss="modal"
                     data-target="#exampleModalCenter"
-                  />
-                  <label className="form-check-label" htmlFor="exampleRadios2">
+                  /> */}
+                  <label className="form-check-label"  data-toggle="modal"
+                    data-dismiss="modal"
+                    data-target="#exampleModalCenter" htmlFor="exampleRadios2">
                     Other
                   </label>
                 </div>
@@ -256,6 +315,7 @@ export default function Petshoptrackyourorder() {
                 data-toggle="modal"
                 data-dismiss="modal"
                 data-target="#cancleconfirmModal"
+                onClick={cancelorders}
               >
                 Confirm
               </Button>
@@ -284,13 +344,15 @@ export default function Petshoptrackyourorder() {
                     type="text"
                     className="form-control"
                     placeholder="Enter reason"
+                    value={cancelValue}
+                    onChange={(e)=>setCancelValue(e.target.value)}
                   />
                 </div>
               </div>
               <Button className="bordercancle" data-dismiss="modal">
                 Cancel
               </Button>
-              <Button>Ok</Button>
+              <Button onClick={cancelorders} data-dismiss="modal"> Ok</Button>
             </div>
           </div>
         </div>

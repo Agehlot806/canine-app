@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Newheader from "../../directives/newheader";
 import bag from "../../assets/images/icon/bag.png";
+import toast, { Toaster } from "react-hot-toast";
 
 function Blogdetails() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ function Blogdetails() {
   useEffect(() => {
     allblogs();
     allProduct();
+    fetchWishlistData();
   }, []);
   const [blogdata, setBlogdata] = useState([]);
   const [allproduct, setallproduct] = useState([]);
@@ -50,6 +52,21 @@ function Blogdetails() {
       });
   };
 
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
+
   const handleAddToCart = async () => {
     try {
       const response = await axios.post(
@@ -77,8 +94,74 @@ function Blogdetails() {
       setAddToCartStatus("Error adding to cart");
     }
   };
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedUserId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData", filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        console.log("element", element);
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        console.log("newArrnewArr", newArr);
+        setallproduct(newArr);
+      }
+    }
+  };
+  const addToWishlist = async (item_id) => {
+    if (!storedUserId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
+    const formData = new FormData();
+    formData.append("user_id", storedUserId);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+          const index = allproduct.map((el) => el.id).indexOf(item_id);
+          newArr[index].isFav = true;
+          setallproduct(newArr);
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
+  };
   return (
     <>
+    <Toaster />
       <Newheader />
       <section className="section-padding">
         <Container>
@@ -145,11 +228,6 @@ function Blogdetails() {
                           gradientColors[index % gradientColors.length],
                       }}
                     >
-                      {/* <i
-                        class="fa fa-heart-o"
-                        onClick={() => addToWishlist(item.id)}
-                      /> */}
-
                       <i
                         class={
                           item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
@@ -176,11 +254,10 @@ function Blogdetails() {
                           <h6>{item.name}</h6>
                           {/* <p>{item.description}</p> */}
                           <p
-                            className={`truncate-text ${
-                              !expandedDescription[item.id]
-                                ? "read-more-link"
-                                : ""
-                            }`}
+                            className={`truncate-text ${!expandedDescription[item.id]
+                              ? "read-more-link"
+                              : ""
+                              }`}
                           >
                             {item.description}
                             {item.description.length > 100 &&
@@ -217,10 +294,9 @@ function Blogdetails() {
                             >
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
-                                  item.price -
+                                {`₹${item.price -
                                   (item.price * item.discount) / 100
-                                }`}
+                                  }`}
                               </h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>

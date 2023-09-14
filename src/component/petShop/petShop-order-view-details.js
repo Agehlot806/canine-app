@@ -9,6 +9,8 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print"
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
@@ -65,6 +67,17 @@ function PetshopOrderviewdetails() {
         console.log(error);
       });
   };
+
+  const tableRef = useRef();
+  const summaryTableRef = useRef(); // Ref for summary table
+
+  const handlePrint = useReactToPrint({
+    content: () => tableRef.current,
+  });
+  const summaryPrint = useReactToPrint({
+    content: () => summaryTableRef.current,
+
+  });
 
   const orderViewdetails = async () => {
     axios
@@ -147,7 +160,7 @@ function PetshopOrderviewdetails() {
 
   return (
     <>
-      <PetShopHeader/>
+      <PetShopHeader />
       <section className="section-padding">
         <Container>
           <h1 className="main-head">Orders View</h1>
@@ -209,7 +222,7 @@ function PetshopOrderviewdetails() {
                                 <Button>
                                   <Link to={`/petshop-add-cart/${id}`} onClick={handleAddToCart}>
                                     Buy it again
-                                </Link></Button>
+                                  </Link></Button>
                               </div>
                             </Col>
                           </Row>
@@ -253,92 +266,116 @@ function PetshopOrderviewdetails() {
                 </div>
               </Col>
               <Col lg={7} className="align-self-center">
-                <div className="order-table">
-                  {allorder && allorder.length > 0 ? (
-                    allorder.map((item, index) => {
-                      console.log("Desired ID:", id);
-                      console.log("Item ID:", item.id);
+                <Row>
+                  <Col sm={12} className="mb-4">
+                    <div className="order-table"  ref={tableRef}>
+                      {allorder && allorder.length > 0 ? (
+                        allorder.map((item, index) => {
+                          console.log("Desired ID:", id);
+                          console.log("Item ID:", item.id);
 
-                      if (item.id == id) {
-                        console.log("Match found for ID:", id);
-                        return (
-                          <Table responsive key={index}>
-                            <>
-                              <tbody>
-                                <tr>
-                                  <th>Sub Total</th>
-                                  {/* <td>
-                                    ₹
-                                    {orderDetails.reduce(
-                                      (total, order) =>
-                                        total + parseFloat(order.price),
-                                      0
-                                    )}
-                                  </td> */}
-                                  <td>₹{subTotal}</td>
-                                </tr>
-                                {/* <tr>
-                                  <th>
-                                    Moving Cart <br />
-                                    <p>Additional Services</p>
-                                  </th>
-                                            <td>{ item.}</td>
-                                </tr> */}
-                                {/* <tr>
-                                  <th>
-                                    Discount <br />
-                                    <p>Promo Code: {item.coupon_code}</p>
-                                  </th>
+                          if (item.id == id) {
+                            console.log("Match found for ID:", id);
+                            return (
+                              <Table responsive key={index}>
+                                <>
+                                  <tbody>
+                                    <tr>
+                                      <th>Sub Total</th>
+                                      <td>₹{subTotal}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Delivery Charge</th>
+                                      <td>₹{deliveryCharge}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Total</th>
+                                      <td>₹{GrandTotal}</td>
+                                    </tr>
+                                  </tbody>
+                                </>
+                              </Table>
+                            );
+                          } else {
+                            console.log("No match for ID:", id);
+                            return null; // If no match, return null or an empty fragment
+                          }
+                        })
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
 
-                                  <td>₹{couponDiscount}</td>
-                                </tr> */}
-                                <tr>
-                                  <th>Delivery Charge</th>
-                                  <td>₹{deliveryCharge}</td>
-                                </tr>
-                                <tr>
-                                  <th>Total</th>
-                                  <td>₹{GrandTotal}</td>
-                                </tr>
-                              </tbody>
-                            </>
-                          </Table>
-                        );
-                      } else {
-                        console.log("No match for ID:", id);
-                        return null; // If no match, return null or an empty fragment
-                      }
-                    })
-                  ) : (
-                    <p className="emptyMSG">No Order list</p>
-                  )}
-                  {/* <Table responsive>
-                                        <tbody>
-                                            <tr>
-                                                <th>Sub Total</th>
-                                                <td>₹{orderDetails.reduce((total, order) => total + parseFloat(order.price), 0)}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Moving Cart <br />
-                                                    <p>Additional Services</p></th>
-                                                <td>$10</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Discount <br />
-                                                    <p>Promo Code: 554dffd</p>
-                                                    <p>delivery_charge</p></th>
+                    </div>
+                  </Col>
+                  <Col sm={12}>
+                    <div ref={summaryTableRef}>
+                    {allorder && allorder.length > 0 ? (
+                      allorder.map((item, index) => {
+                        console.log("Desired ID:", id);
+                        console.log("Item ID:", item.id);
 
-                                                <td>$20</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Total</th>
-                                                <td>$138.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </Table> */}
-                </div>
+                        if (item.id == id) {
+                          console.log("Match found for ID:", id);
+                          return (
+                            <div className="dow-summy">
+                              <h5>Order Summary</h5>
+                              <table>
+                                <tbody>
+                                  <tr>
+                                    <th><p>Order ID :</p></th>
+                                    <td><p>{item.id}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <th><p>Item Name :</p></th>
+                                    <td>
+                                      {item.callback[0] && (
+                                        <p>{item.callback[0].variant}</p>
+                                      )}</td>
+                                  </tr>
+                                  <tr>
+                                    <th><p>Total Before Tax:</p></th>
+                                    <td><p>
+                                      ₹
+                                      {parseInt(
+                                        orderDetails.reduce(
+                                          (total, order) =>
+                                            total + parseFloat(order.price),
+                                          0
+                                        )
+                                      )}
+                                    </p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th><p>Sub Total:</p></th>
+                                    <td><p>₹{subTotal}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <th><p>Delivery Fee:</p></th>
+                                    <td><p>₹{deliveryCharge}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <th><h4>Total:</h4></th>
+                                    <td><h4>₹{GrandTotal}</h4></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          );
+                        } else {
+                          console.log("No match for ID:", id);
+                          return null;
+                        }
+                      })
+                    ) : (
+                      <p className="emptyMSG">No Order list</p>
+                    )}
+                    </div>
+                  </Col>
+                </Row>
               </Col>
             </Row>
+
           </div>
         </Container>
       </section>

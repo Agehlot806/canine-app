@@ -48,6 +48,7 @@ function Product(props) {
     allBreedshow()
     allHealthconditionshow();
     allsubcategary()
+    fetchWishlistData()
   }, []);
 
   const categoriesProduct = async () => {
@@ -155,7 +156,89 @@ function Product(props) {
   console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails.name,
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity: productDetails.quantity,
+          price: productDetails.price,
+          user_id: storedUserId,
+          item_id: productDetails.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedUserId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData", filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        console.log("element",element);
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        console.log("newArrnewArr",newArr);
+        setallproduct(newArr);
+      }
+    }
+  };
   const addToWishlist = async (item_id) => {
+    if (!storedUserId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
     const formData = new FormData();
     formData.append("user_id", storedUserId);
     formData.append("item_id", item_id);
@@ -166,7 +249,11 @@ function Product(props) {
       .then((response) => {
         console.log("response143", response);
         if (response.data.message) {
-          toast.success("Added successfully");
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+          const index = allproduct.map((el) => el.id).indexOf(item_id);
+          newArr[index].isFav = true;
+          setallproduct(newArr);
         }
       })
       .catch((error) => {
@@ -776,9 +863,17 @@ function Product(props) {
                         }}
                       >
                         <i
-                          class="fa fa-heart-o"
-                          onClick={() => addToWishlist(item.id)}
-                        />
+                        class={
+                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                        }
+                        onClick={(id) => {
+                          if (storedUserId == null) {
+                            toast.error("Please Login first");
+                          } else {
+                            addToWishlist(item.id);
+                          }
+                        }}
+                      />
                         <Link to={`/product-details/${item.id}`}>
                           <div className="text-center">
                             <img

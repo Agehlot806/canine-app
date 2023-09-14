@@ -43,8 +43,6 @@ function PetshopproductDetails() {
   };
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
-  const [addToCartStatus, setAddToCartStatus] = useState("");
-  console.log("productDetails--- ", productDetails);
   // const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(100);
   const [minOrder, setMinOrder] = useState(100);
@@ -110,11 +108,13 @@ function PetshopproductDetails() {
     fetchrelatedproduct();
     fetchBreed();
     AllBanner();
+    AllOrderList();
+    fetchWishlistData();
   }, []);
 
   const productData = async () => {
     axios
-      .get(`${BASE_URL}/items/details/${id}`)
+      .get(`${BASE_URL}/items/product_details/${id}`)
       .then((response) => {
         console.log("=======> ", response);
         console.log("Delete Successful");
@@ -124,35 +124,6 @@ function PetshopproductDetails() {
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product`,
-        {
-          item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
-          image: productDetails?.image,
-          quantity: quantity,
-          price: formattedAmount,
-          user_id: storedWholesellerId,
-          item_id: productDetails?.id,
-          seller_id: salesmanId ? Number(salesmanId) : "",
-        }
-      );
-
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
   };
 
   // const handleQuantityChange = (event) => {
@@ -165,11 +136,9 @@ function PetshopproductDetails() {
     let number = index + 0.5;
     return (
       <span key={index}>
-        {productDetails?.rating_count ||
-        productDetails?.status + 0.5 >= index + 1 ? (
+        {productDetails.rating_count >= index + 1 ? (
           <FaStar className="icon" />
-        ) : productDetails?.rating_count ||
-          productDetails?.status + 0.5 >= number ? (
+        ) : productDetails.rating_count >= number ? (
           <FaStarHalfAlt className="icon" />
         ) : (
           <AiOutlineStar className="icon" />
@@ -184,7 +153,7 @@ function PetshopproductDetails() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -195,7 +164,7 @@ function PetshopproductDetails() {
     if (productDetails.image) {
       setsingleImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -239,6 +208,7 @@ function PetshopproductDetails() {
         console.log(error);
       });
   };
+  const [allproduct, setallproduct] = useState([]);
   const [tragetSpecies, setTragetSpecies] = useState([]);
   const fetchBreed = async () => {
     try {
@@ -279,7 +249,91 @@ function PetshopproductDetails() {
   // ).toFixed(2);
   // const formattedSavedAmount = Number(savedAmount).toString();
 
+  const [wishlistData, setWishlistData] = useState([]);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails.name,
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity: productDetails.quantity,
+          price: productDetails.price,
+          user_id: storedWholesellerId,
+          item_id: productDetails.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } 
+    catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedWholesellerId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData", filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        console.log("element", element);
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        console.log("newArrnewArr", newArr);
+        setallproduct(newArr);
+      }
+    }
+  };
   const addToWishlist = async (item_id) => {
+    if (!storedWholesellerId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
     const formData = new FormData();
     formData.append("user_id", storedWholesellerId);
     formData.append("item_id", item_id);
@@ -290,13 +344,34 @@ function PetshopproductDetails() {
       .then((response) => {
         console.log("response143", response);
         if (response.data.message) {
-          toast.success("Added successfully");
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+          const index = allproduct.map((el) => el.id).indexOf(item_id);
+          newArr[index].isFav = true;
+          setallproduct(newArr);
         }
       })
       .catch((error) => {
         toast.error("Already in your wishlist");
       });
   };
+
+  const [totalreview, setTotalreview] = useState(false);
+  const [orderlist, setorderlist] = useState([]);
+  const AllOrderList = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`);
+      setorderlist(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const toggleReview = (e) => {
+    e.preventDefault();
+    setTotalreview(!totalreview);
+  };
+
   return (
     <>
       <PetShopHeader />
@@ -305,31 +380,31 @@ function PetshopproductDetails() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -350,7 +425,7 @@ function PetshopproductDetails() {
                         <img src={singleImage} />
                       </div></Col> */}
                     {productDetails?.images &&
-                    productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
                         <Col sm={2} className="mb-3" key={index}>
                           <div
@@ -388,7 +463,7 @@ function PetshopproductDetails() {
                 <Wrapper>
                   <div className="icon-style">
                     {ratingStar}
-                    <p>({productDetails.reviews || 60} customer reviews)</p>
+                    <p>({productDetails.rating_count} customer reviews)</p>
                   </div>
                 </Wrapper>
 
@@ -403,11 +478,10 @@ function PetshopproductDetails() {
                             productDetails.variations.map((item, index) => (
                               <Col lg={3} sm={3} xs={3} key={index}>
                                 <div
-                                  className={`tab-variations ${
-                                    selectedVariant === item.type
-                                      ? "active"
-                                      : ""
-                                  }`}
+                                  className={`tab-variations ${selectedVariant === item.type
+                                    ? "active"
+                                    : ""
+                                    }`}
                                   onClick={() => {
                                     setSelectedVariant(item.type);
                                     setSelectedVariantPrice(item.price); // Store the price in state
@@ -549,6 +623,90 @@ function PetshopproductDetails() {
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s,
           </p>
+          <hr />
+          <div className="Product-Review">
+            <h1 className="main-head mt-4">Product Review</h1>
+            {orderlist && orderlist.length > 1 ? (
+              orderlist.map(
+                (order, index) =>
+                  index === 0 && (
+                    <div key={order.id}>
+                      {order.callback[0].user_profile && (
+                        <div className="Product-img">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              order.callback[0].user_profile[0].image
+                            } />
+                          <span>{order.callback[0].user_profile[0].f_name}</span>
+                        </div>
+                      )}
+                      {order.callback[0].user_details && (
+                        <>
+                          <p>
+                            {order.callback[0].user_details.comment}
+                          </p>
+                          <Wrapper>
+                            <div className="icon-style">
+                              {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                                <i className="fa-solid fa-star" key={index} />
+                              ))}
+                            </div>
+                          </Wrapper>
+                        </>
+                      )}
+                      <hr />
+                    </div>
+                  )
+              )
+            ) : (
+              <p>No Review</p>
+            )}
+            <div className="reviewMore">
+              <a href="#" onClick={toggleReview}>
+                Read more
+                {totalreview ? (
+                  <i className="fa fa-angle-up" aria-hidden="true"></i>
+                ) : (
+                  <i className="fa fa-angle-down" aria-hidden="true"></i>
+                )}
+              </a>
+              {totalreview &&
+                <>
+                  {orderlist.map((order) => (
+                    <div key={order.id}>
+                      {order.callback[0].user_profile && (
+                        <div className="Product-img">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              order.callback[0].user_profile[0].image
+                            } />
+                          <span>{order.callback[0].user_profile[0].f_name}</span>
+                        </div>
+                      )}
+                      {order.callback[0].user_details && (
+                        <>
+                          <p>
+                            {order.callback[0].user_details.comment}
+                          </p>
+                          <Wrapper>
+                            <div className="icon-style">
+                              {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                                <i className="fa-solid fa-star" key={index} />
+                              ))}
+                            </div>
+                          </Wrapper>
+                        </>
+                      )}
+                      <hr />
+                    </div>
+                  ))}
+                </>
+              }
+            </div>
+          </div>
+
         </Container>
       </section>
       <Container fluid className="p-0">
@@ -556,31 +714,31 @@ function PetshopproductDetails() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "item_wise" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "item_wise" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </div>
@@ -605,8 +763,16 @@ function PetshopproductDetails() {
                       }}
                     >
                       <i
-                        class="fa fa-heart-o"
-                        onClick={() => addToWishlist(item.id)}
+                        class={
+                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                        }
+                        onClick={(id) => {
+                          if (storedWholesellerId == null) {
+                            toast.error("Please Login first");
+                          } else {
+                            addToWishlist(item.id);
+                          }
+                        }}
                       />
                       <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">

@@ -29,12 +29,13 @@ function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
+  const [allproduct, setallproduct] = useState([]);
+
   console.log(
     "productDetails.variations[0].type: ",
     productDetails?.variations?.type
   );
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
-  const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("productDetails--- ", productDetails);
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
@@ -67,16 +68,18 @@ function Productdetail() {
     fetchLifestage();
     AllBanner();
     AllOrderList();
+    fetchWishlistData()
     // fetchProductData();
   }, []);
 
   const productData = async () => {
     axios
-      .get(`${BASE_URL}/items/details/${id}`)
+      .get(`${BASE_URL}/items/product_details/${id}`)
       .then((response) => {
         console.log("=======> ", response);
         console.log("Delete Successful");
         setProductDetails(response.data.data);
+        
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -87,33 +90,6 @@ function Productdetail() {
   let storedUserId = JSON.parse(customer_id);
   console.log("customer_id: ", customer_id);
 
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product`,
-        {
-          item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
-          image: productDetails?.image,
-          quantity: quantity,
-          price: formattedAmount,
-          user_id: storedUserId,
-          item_id: productDetails?.id,
-        }
-      );
-
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
-  };
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -121,15 +97,30 @@ function Productdetail() {
       setQuantity(newQuantity);
     }
   };
+  // const ratingStar = Array.from({ length: 5 }, (item, index) => {
+  //   let number = index + 0.5;
+  //   return (
+  //     <span key={index}>
+  //       {productDetails.rating_count ||
+  //         productDetails?.status + 0.5 >= index + 1 ? (
+  //         <FaStar className="icon" />
+  //       ) : productDetails.rating_count ||
+  //         productDetails?.status + 0.5 >= number ? (
+  //         <FaStarHalfAlt className="icon" />
+  //       ) : (
+  //         <AiOutlineStar className="icon" />
+  //       )}
+  //     </span>
+  //   );
+  // });
+
   const ratingStar = Array.from({ length: 5 }, (item, index) => {
     let number = index + 0.5;
     return (
       <span key={index}>
-        {productDetails?.rating_count ||
-          productDetails?.status + 0.5 >= index + 1 ? (
+        {productDetails.rating_count >= index + 1 ? (
           <FaStar className="icon" />
-        ) : productDetails?.rating_count ||
-          productDetails?.status + 0.5 >= number ? (
+        ) : productDetails.rating_count >= number ? (
           <FaStarHalfAlt className="icon" />
         ) : (
           <AiOutlineStar className="icon" />
@@ -138,6 +129,7 @@ function Productdetail() {
     );
   });
 
+  
   const itemWiseBanner = async () => {
     try {
       const response = await fetch(`${BASE_URL}/banners/`);
@@ -226,7 +218,89 @@ function Productdetail() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails.name,
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity: productDetails.quantity,
+          price: productDetails.price,
+          user_id: storedUserId,
+          item_id: productDetails.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedUserId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData", filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        console.log("element",element);
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        console.log("newArrnewArr",newArr);
+        setallproduct(newArr);
+      }
+    }
+  };
   const addToWishlist = async (item_id) => {
+    if (!storedUserId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
     const formData = new FormData();
     formData.append("user_id", storedUserId);
     formData.append("item_id", item_id);
@@ -237,7 +311,11 @@ function Productdetail() {
       .then((response) => {
         console.log("response143", response);
         if (response.data.message) {
-          toast.success("Added successfully");
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+          const index = allproduct.map((el) => el.id).indexOf(item_id);
+          newArr[index].isFav = true;
+          setallproduct(newArr);
         }
       })
       .catch((error) => {
@@ -302,6 +380,7 @@ function Productdetail() {
     }
   };
 
+  const [totalreview, setTotalreview] = useState(false);
   const [orderlist, setorderlist] = useState([]);
   const AllOrderList = async () => {
     try {
@@ -310,6 +389,11 @@ function Productdetail() {
     } catch (error) {
       console.error(error);
     }
+  };
+  
+  const toggleReview = (e) => {
+    e.preventDefault();
+    setTotalreview(!totalreview);
   };
   return (
     <>
@@ -463,7 +547,7 @@ function Productdetail() {
                 <Wrapper>
                   <div className="icon-style">
                     {ratingStar}
-                    <p>({productDetails.reviews || 60} customer reviews)</p>
+                    <p>({productDetails.rating_count} customer reviews)</p>
                   </div>
                 </Wrapper>
 
@@ -600,44 +684,85 @@ function Productdetail() {
           <hr />
           <div className="Product-Review">
             <h1 className="main-head mt-4">Product Review</h1>
-            {orderlist.map((order) => (
-              <div key={order.id}>
-                {order.callback[0].user_details && (
-                  <>
-                    <p>
-                      {order.callback[0].user_details.comment}
-                    </p>
-
-                    <div className="row">
-                      <div className="col-sm-3 col">
-                        <Wrapper>
-                          <div className="icon-style">
-                            {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
-                              <i className="fa-solid fa-star" key={index} />
-                            ))}
-                          </div>
-                        </Wrapper>
-                      </div>
-                      <div className="col-sm-5 col">
+            {orderlist && orderlist.length > 1 ? (
+              orderlist.map(
+                (order, index) =>
+                  index === 0 && (
+                    <div key={order.id}>
                       {order.callback[0].user_profile && (
                         <div className="Product-img">
-                          <img src={order.callback[0].user_profile.image} />
-                          <span> {order.callback[0].user_profile.f_name}</span>
-                          <div className="user-icon">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span> 1 2 3 4 5</span>
-                          </div>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              order.callback[0].user_profile[0].image
+                            } />
+                          <span>{order.callback[0].user_profile[0].f_name}</span>
                         </div>
-                         )}
-                      </div>
+                      )}
+                      {order.callback[0].user_details && (
+                        <>
+                          <p>
+                            {order.callback[0].user_details.comment}
+                          </p>
+                          <Wrapper>
+                            <div className="icon-style">
+                              {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                                <i className="fa-solid fa-star" key={index} />
+                              ))}
+                            </div>
+                          </Wrapper>
+                        </>
+                      )}
+                      <hr />
                     </div>
-                  </>
+                  )
+              )
+            ) : (
+              <p>No Review</p>
+            )}
+            <div className="reviewMore">
+              <a href="#" onClick={toggleReview}>
+                Read more
+                {totalreview ? (
+                  <i className="fa fa-angle-up" aria-hidden="true"></i>
+                ) : (
+                  <i className="fa fa-angle-down" aria-hidden="true"></i>
                 )}
-                <hr />
-              </div>
-            ))}
-            <a href="">Read more</a>
-
+              </a>
+              {totalreview &&
+                <>
+                  {orderlist.map((order) => (
+                    <div key={order.id}>
+                      {order.callback[0].user_profile && (
+                        <div className="Product-img">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              order.callback[0].user_profile[0].image
+                            } />
+                          <span>{order.callback[0].user_profile[0].f_name}</span>
+                        </div>
+                      )}
+                      {order.callback[0].user_details && (
+                        <>
+                          <p>
+                            {order.callback[0].user_details.comment}
+                          </p>
+                          <Wrapper>
+                            <div className="icon-style">
+                              {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                                <i className="fa-solid fa-star" key={index} />
+                              ))}
+                            </div>
+                          </Wrapper>
+                        </>
+                      )}
+                      <hr />
+                    </div>
+                  ))}
+                </>
+              }
+            </div>
           </div>
         </Container>
       </section>
@@ -688,8 +813,16 @@ function Productdetail() {
                       }}
                     >
                       <i
-                        class="fa fa-heart-o"
-                        onClick={(id) => addToWishlist(item.id)}
+                        class={
+                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                        }
+                        onClick={(id) => {
+                          if (storedUserId == null) {
+                            toast.error("Please Login first");
+                          } else {
+                            addToWishlist(item.id);
+                          }
+                        }}
                       />
                       <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">

@@ -5,10 +5,15 @@ import Footer from "../../directives/footer";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
 import { useState ,useEffect} from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Trackyourorder() {
   const { id } = useParams();
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+
   const [trackingValue, setTrackingValue] = useState([]);
+  const [cancelValue, setCancelValue] = useState('');
   useEffect(() => {
     if (id) {
       setTrackingValue(id);
@@ -67,7 +72,29 @@ export default function Trackyourorder() {
   const handleButtonClick = () => {
   };
 
-
+  const cancelorders = (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    // formData.append('username', username);
+    formData.append('user_id', storedUserId);
+    formData.append('order_id', id);
+    formData.append('canceled', cancelValue);
+    axios({
+        method: "post",
+        url: `https://canine.hirectjob.in/api/v1/customer/order/cancel/${id}`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+    })
+        .then(response => {
+            console.log("respo", response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+const Canceldata = (e)=>{
+  setCancelValue(e.target.value)
+  }
   return (
     <>
       <Newheader />
@@ -235,15 +262,13 @@ export default function Trackyourorder() {
             <div className="modal-body">
               <h2>Cancel Order</h2>
               <p>Select a reason for order cancellation:</p>
-
-              <div className="selct-cancle">
+              <div className="selct-cancle" value={cancelValue} onChange={Canceldata}>
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    id="exampleRadios1"
-                    defaultValue="option1"
+                    value='Damaged Product'
                   />
                   <label className="form-check-label" htmlFor="exampleRadios1">
                     Damaged Product
@@ -254,8 +279,7 @@ export default function Trackyourorder() {
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    id="exampleRadios2"
-                    defaultValue="option2"
+                    value=' Late Delivery'
                   />
                   <label className="form-check-label" htmlFor="exampleRadios2">
                     Late Delivery
@@ -266,25 +290,25 @@ export default function Trackyourorder() {
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    id="exampleRadios2"
-                    defaultValue="option2"
+                    value='Changed My Mind'
                   />
                   <label className="form-check-label" htmlFor="exampleRadios2">
                     Changed My Mind
                   </label>
                 </div>
                 <div className="form-check">
-                  <input
+                  {/* <input
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
                     id="exampleRadios2"
-                    defaultValue="option2"
                     data-toggle="modal"
                     data-dismiss="modal"
                     data-target="#exampleModalCenter"
-                  />
-                  <label className="form-check-label" htmlFor="exampleRadios2">
+                  /> */}
+                  <label className="form-check-label"  data-toggle="modal"
+                    data-dismiss="modal"
+                    data-target="#exampleModalCenter" htmlFor="exampleRadios2">
                     Other
                   </label>
                 </div>
@@ -294,6 +318,7 @@ export default function Trackyourorder() {
                 data-toggle="modal"
                 data-dismiss="modal"
                 data-target="#cancleconfirmModal"
+                onClick={cancelorders}
               >
                 Confirm
               </Button>
@@ -322,13 +347,15 @@ export default function Trackyourorder() {
                     type="text"
                     className="form-control"
                     placeholder="Enter reason"
+                    value={cancelValue}
+                    onChange={(e)=>setCancelValue(e.target.value)}
                   />
                 </div>
               </div>
               <Button className="bordercancle" data-dismiss="modal">
                 Cancel
               </Button>
-              <Button>Ok</Button>
+              <Button onClick={cancelorders} data-dismiss="modal"> Ok</Button>
             </div>
           </div>
         </div>
