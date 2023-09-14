@@ -142,24 +142,38 @@ function PetshopUpdateprofile() {
   // };
 
   const getSalesmanProfile = async () => {
-    await axios
-      .get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
-      .then((response) => {
-        if (response.data.status === "200") {
-          console.log("response.data: ", response.data);
-          setProfileData({
-            f_name: response.data.data[0].f_name,
-            l_name: response.data.data[0].l_name,
-            email: response.data.data[0].email, // Set email from response
-            phone: response.data.data[0].phone, // Set phone from response
-            image: response.data.data[0].image,
-            // Set other fields as needed
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // await axios
+    //   .get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
+    //   .then((response) => {
+    //     if (response.data.status === "200") {
+    //       console.log("response.data: ", response.data);
+    //       setProfileData({
+    //         f_name: response.data.data[0].f_name,
+    //         l_name: response.data.data[0].l_name,
+    //         email: response.data.data[0].email, 
+    //         phone: response.data.data[0].phone, 
+    //         image: response.data.data[0].image,
+            
+    //       });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+    axios.get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
+    .then((response)=>{
+
+      console.log("salesmannnnnnnnnnnnnnn ", response.data);
+        setname(response.data.data[0].f_name)
+        setnamel(response.data.data[0].l_name)
+        setemail(response.data.data[0].email)
+        setphone(response.data.data[0].phone)
+        setimgage(response.data.data[0].image)
+        // Update the profileData state
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
   // const handleImageUpload = (e) => {
@@ -194,22 +208,47 @@ function PetshopUpdateprofile() {
   // };
 
   const handleSalesmanUpdate = async (e) => {
+    // e.preventDefault();
+    // const formData = new FormData();
+    // formData.append("f_name", profileData.f_name);
+    // formData.append("l_name", profileData.l_name);
+    // formData.append("email", profileData.email);
+    // formData.append("image", profileData.image);
+    // formData.append("phone", profileData.phone);
+    // await axios
+    //   .post(`${BASE_URL}/auth/delivery-man/deliveryman_update`, formData)
+    //   .then((res) => {
+    //     console.log("res in profile", res);
+    //     navigator("/salesman-dashboad");
+    //   })
+    //   .catch((error) => {
+    //     console.log("error in profile", error);
+    //   });
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("f_name", profileData.f_name);
-    formData.append("l_name", profileData.l_name);
-    formData.append("email", profileData.email);
-    formData.append("image", profileData.image);
-    formData.append("phone", profileData.phone);
-    await axios
-      .post(`${BASE_URL}/auth/delivery-man/deliveryman_update`, formData)
-      .then((res) => {
-        console.log("res in profile", res);
-        navigator("/salesman-dashboad");
+    var formData = new FormData();
+    // formData.append('username', username);
+    formData.append('f_name', name);
+    formData.append('l_name', namel);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('image', imgage);
+
+    axios({
+      method: "post",
+      url: `${BASE_URL}/auth/delivery-man/deliveryman_update`,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then(response => {
+        console.log(" New password updatesuccessfully");
+        toast.success("Successfully updated!")
+        console.log("respo", response);
+        navigator("/salesman-dashboad")
       })
-      .catch((error) => {
-        console.log("error in profile", error);
+      .catch(error => {
+        console.log(error);
       });
+
   };
 
   return (
@@ -349,10 +388,18 @@ function PetshopUpdateprofile() {
                       </div>
                     )} */}
                     <Form.Control type="file" onChange={halderimage} />
-                    <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' />
+                    <img src={
+                     loginType == "salesman" ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" + imgage : "https://canine.hirectjob.in/storage/app/public/profile/" + imgage
+                      } alt='' />
                   </Form.Group>
 
-                  <Button type="submit" className="mt-4" onClick={UpdateProfile}>
+                  <Button type="submit" className="mt-4" onClick={(e) => {
+                     if (loginType == "salesman") {
+                      handleSalesmanUpdate(e);
+                    } else {
+                      UpdateProfile(e);
+                    }
+                  }}>
                     Update Profile
                   </Button>
                 </Form>

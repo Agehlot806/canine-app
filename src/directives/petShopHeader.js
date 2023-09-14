@@ -95,19 +95,16 @@ function PetShopHeader(props) {
     }
   };
 
-// useEffect(() => {
-//     const storedWholesellerId = localStorage.getItem("userInfo");
-//     setStoredUserId(JSON.parse(storedWholesellerId));
-//   }, []);
+
   const [profileData, setProfileData] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
-  console.log("profileDataaaa: ", profileData);
+  console.log("===========>>>>>> ", profileData);
   useEffect(() => {
-    const storedWholesellerId = localStorage.getItem("userInfo");
+    const storedWholesellerId = localStorage.getItem("UserWholesellerId");
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedWholesellerId}`)
+      .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
       .then((response) => {
         if (response.data.status === "200" && response.data.data.length > 0) {
           const profile = response.data.data[0];
@@ -123,6 +120,25 @@ function PetShopHeader(props) {
         console.error(error);
       });
   }, []);
+
+  const [salesmanProfile,setSalesmanProfile] = useState([]);
+  const [salesmanUrl,setSalesmanUrl] = useState({image:""} || null);
+  const salesmanId = localStorage.getItem("salesmanId");
+  useEffect(()=>{
+    axios.get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
+    .then((response)=>{
+      if (response.data.status === "200" && response.data.data.length > 0) {
+        const profile = response.data.data[0];
+        setSalesmanProfile(profile);
+        if (profile.image){
+          setSalesmanUrl({image:profile.image});
+        } 
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  },[])
 
 
   useEffect(() => {
@@ -619,7 +635,7 @@ function PetShopHeader(props) {
                       <Link
                         className="nav-link profile-icon"
                         to={
-                          loginType === "salesman"
+                          loginType == "salesman"
                             ? "/salesman-dashboad"
                             : "/petshop-home"
                         }
@@ -629,9 +645,10 @@ function PetShopHeader(props) {
                         {/* <img src={pro} /> */}
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/profile/" +
+                            loginType == "salesman" ? "https://canine.hirectjob.in/storage/app/public/delivery-man/"+ salesmanProfile?.image : "https://canine.hirectjob.in/storage/app/public/profile/" +
                             profileData?.image
                           }
+                          
                         />
                       </Link>
                       <div
@@ -685,7 +702,7 @@ function PetShopHeader(props) {
                         <Link
                           className="dropdown-item"
                           to={
-                            loginType === "salesman"
+                            loginType == "salesman"
                               ? "/petshop-update-profile"
                               : "/petshop-update-profile"
                           }
