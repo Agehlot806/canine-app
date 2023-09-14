@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Newheader from '../../directives/newheader';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap'
+import { Container, Row, Col, Button, Table } from 'react-bootstrap'
 import Carousel from "react-multi-carousel";
 import product from '../../assets/images/banner/product.png'
 import { Link } from 'react-router-dom'
@@ -14,141 +14,143 @@ import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
 import { Toaster, toast } from 'react-hot-toast';
+import { styled } from "styled-components";
+import { AiOutlineStar } from "react-icons/ai";
 
 const clinetreview = {
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 4,
-        slidesToSlide: 2 // optional, default to 1.
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2,
-        slidesToSlide: 1 // optional, default to 1.
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1,
-        slidesToSlide: 1 // optional, default to 1.
-    }
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 4,
+    slidesToSlide: 2 // optional, default to 1.
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 1 // optional, default to 1.
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    slidesToSlide: 1 // optional, default to 1.
+  }
 };
 
 
 
 function Canineproduct(props) {
-    const [categories, setcategories] = useState([]);
-    const [allproduct, setallproduct] = useState([]);
-    const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
-    const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
-    const [brands, setBrands] = useState([]);
-    console.log("brands: ", brands);
-    const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
-      useState(false);
-    const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
-    const [lifestageDropdownVisible, setLifestageDropdownVisible] =
-      useState(false);
-    const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
-      useState(false);
-    const [breed, setBreed] = useState([]);
-    const [healthcondition, setHealthcondition] = useState([]);
-    const [lifestage, setlifestage] = useState([]);
-    const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
-    const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
-      useState(false);
-    const [vegNonvegDropdownVisible, setVegNonvegDropdownVisible] =
-      useState(false);
-    const [groomingFeatureDropdownVisible, setGroomingFeatureDropdownVisible] =
-      useState(false);
-    const [groomingToolsDropdownVisible, setGroomingToolsDropdownVisible] =
-      useState(false);
-    const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] =
-      useState(false);
-    const handleParentClick = (dropdownName) => {
-      switch (dropdownName) {
-        case "brand":
-          setBrandDropdownVisible(!brandDropdownVisible);
-          break;
-        case "productType":
-          setProductTypeDropdownVisible(!productTypeDropdownVisible);
-          break;
-        case "price":
-          setPriceDropdownVisible(!priceDropdownVisible);
-          break;
-        case "lifestage":
-          setLifestageDropdownVisible(!lifestageDropdownVisible);
-          break;
-        case "breedType":
-          setBreedTypeDropdownVisible(!breedTypeDropdownVisible);
-          break;
-        case "health":
-          setHealthDropdownVisible(!healthDropdownVisible);
-          break;
-        case "specialDiet":
-          setSpecialDietDropdownVisible(!specialDietDropdownVisible);
-          break;
-          case "cate":
-            setCateDropdownVisible(!cateDropdownVisible);
-            break;
-        case "veg-Non-veg":
-          setVegNonvegDropdownVisible(!vegNonvegDropdownVisible);
-          break;
-        case "groomingFeature":
-          setGroomingFeatureDropdownVisible(!groomingFeatureDropdownVisible);
-          break;
-        case "groomingTools":
-          setGroomingToolsDropdownVisible(!groomingToolsDropdownVisible);
-          break;
-        case "accessoryType":
-          setAccessoryTypeDropdownVisible(!accessoryTypeDropdownVisible);
-        default:
-          break;
-      }
-    };
-  
-    const handleCheckboxClick = (event) => {
-      event.stopPropagation();
-    };
+  const [categories, setcategories] = useState([]);
+  const [allproduct, setallproduct] = useState([]);
+  const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
+  const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
+  const [brands, setBrands] = useState([]);
+  console.log("brands: ", brands);
+  const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
+    useState(false);
+  const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
+  const [lifestageDropdownVisible, setLifestageDropdownVisible] =
+    useState(false);
+  const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
+    useState(false);
+  const [breed, setBreed] = useState([]);
+  const [healthcondition, setHealthcondition] = useState([]);
+  const [lifestage, setlifestage] = useState([]);
+  const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
+  const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
+    useState(false);
+  const [vegNonvegDropdownVisible, setVegNonvegDropdownVisible] =
+    useState(false);
+  const [groomingFeatureDropdownVisible, setGroomingFeatureDropdownVisible] =
+    useState(false);
+  const [groomingToolsDropdownVisible, setGroomingToolsDropdownVisible] =
+    useState(false);
+  const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] =
+    useState(false);
+  const handleParentClick = (dropdownName) => {
+    switch (dropdownName) {
+      case "brand":
+        setBrandDropdownVisible(!brandDropdownVisible);
+        break;
+      case "productType":
+        setProductTypeDropdownVisible(!productTypeDropdownVisible);
+        break;
+      case "price":
+        setPriceDropdownVisible(!priceDropdownVisible);
+        break;
+      case "lifestage":
+        setLifestageDropdownVisible(!lifestageDropdownVisible);
+        break;
+      case "breedType":
+        setBreedTypeDropdownVisible(!breedTypeDropdownVisible);
+        break;
+      case "health":
+        setHealthDropdownVisible(!healthDropdownVisible);
+        break;
+      case "specialDiet":
+        setSpecialDietDropdownVisible(!specialDietDropdownVisible);
+        break;
+      case "cate":
+        setCateDropdownVisible(!cateDropdownVisible);
+        break;
+      case "veg-Non-veg":
+        setVegNonvegDropdownVisible(!vegNonvegDropdownVisible);
+        break;
+      case "groomingFeature":
+        setGroomingFeatureDropdownVisible(!groomingFeatureDropdownVisible);
+        break;
+      case "groomingTools":
+        setGroomingToolsDropdownVisible(!groomingToolsDropdownVisible);
+        break;
+      case "accessoryType":
+        setAccessoryTypeDropdownVisible(!accessoryTypeDropdownVisible);
+      default:
+        break;
+    }
+  };
 
-    useEffect(() => {
-        categoriesProduct();
-        allProduct();
-        allBrandshow()
-        allLifesageshow()
-        allBreedshow()
-        allsubcategary()
-        allHealthconditionshow()
-        Allsubcategories()
-        fetchWishlistData();
-    }, []);
+  const handleCheckboxClick = (event) => {
+    event.stopPropagation();
+  };
 
-    const categoriesProduct = async () => {
-        try {
-            const response = await fetch(`${BASE_URL}/categories`);
-            const jsonData = await response.json();
-            setcategories(jsonData.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-    const allProduct = async () => {
-        axios
-            .get(`${BASE_URL}/items/latest`)
-            .then((response) => {
-                console.log(response);
-                console.log("all product Successful");
-                setallproduct(response.data.data)
-                // Perform any additional actions after successful deletion
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+  useEffect(() => {
+    categoriesProduct();
+    allProduct();
+    allBrandshow()
+    allLifesageshow()
+    allBreedshow()
+    allsubcategary()
+    allHealthconditionshow()
+    Allsubcategories()
+    fetchWishlistData();
+  }, []);
 
-    // storedUserId
-    const customer_id = localStorage.getItem("userInfo");
-    let storedUserId = JSON.parse(customer_id);
+  const categoriesProduct = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/categories`);
+      const jsonData = await response.json();
+      setcategories(jsonData.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const allProduct = async () => {
+    axios
+      .get(`${BASE_URL}/items/latest`)
+      .then((response) => {
+        console.log(response);
+        console.log("all product Successful");
+        setallproduct(response.data.data)
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    const [addToCartStatus, setAddToCartStatus] = useState("");
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  let storedUserId = JSON.parse(customer_id);
+
+  const [addToCartStatus, setAddToCartStatus] = useState("");
   const [isFavCheck, setisFavCheck] = useState(false);
   useEffect(() => {
     if (allproduct.length > 0) {
@@ -215,11 +217,11 @@ function Canineproduct(props) {
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element",element);
+        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
         console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr",newArr);
+        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -255,8 +257,8 @@ function Canineproduct(props) {
 
 
 
-////filter tarun//
-const [allbrand, setAllBrand] = useState("")
+  ////filter tarun//
+  const [allbrand, setAllBrand] = useState("")
   const [alllifesage, setAlllifesage] = useState("")
   const [allbreed, setAllBreed] = useState("")
   const [allsubcate, setAllSubcate] = useState("")
@@ -348,7 +350,7 @@ const [allbrand, setAllBrand] = useState("")
   const [selectedhealthIds, setSelectedhealthIds] = useState([]);
   const [selectedvegIds, setSelectedvegIds] = useState([]);
   const [selectedsubcateIds, setSelectedsubcateIds] = useState([]);
- 
+
   const [minpricevalue, setMinpricevalue] = useState([])
   const [maxpricevalue, setMaxpricevalue] = useState([])
   const minprice = (e) => {
@@ -407,12 +409,12 @@ const [allbrand, setAllBrand] = useState("")
     });
   };
 
-    const allsubcateselect = (name) => {  
+  const allsubcateselect = (name) => {
     setSelectedsubcateIds((prevSelectedhealthIds) => {
       const updatesubcateIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined,undefined,undefined, updatesubcateIds);
+      filterProducts(undefined, undefined, undefined, undefined, undefined, undefined, updatesubcateIds);
       return updatesubcateIds;
     });
   };
@@ -426,12 +428,12 @@ const [allbrand, setAllBrand] = useState("")
       return updatedvegIds;
     });
   };
-  const applyprice = ()=>{
+  const applyprice = () => {
     filterProducts();
   }
 
-  
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds,updatedvegIds,updatesubcateIds) => {
+
+  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds, updatesubcateIds) => {
     try {
       const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
       const products = response.data.data;
@@ -441,8 +443,8 @@ const [allbrand, setAllBrand] = useState("")
         selectBreedFilterList: updatedBreedIds || selectedbreedIds,
         selectcate: updatedcateIds || selectedcateIds,
         selecthealth: updatedhealthIds || selectedhealthIds,
-        selectedVegOptions:updatedvegIds|| selectedvegIds,
-        selectedsubcate:updatesubcateIds|| selectedsubcateIds,
+        selectedVegOptions: updatedvegIds || selectedvegIds,
+        selectedsubcate: updatesubcateIds || selectedsubcateIds,
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
@@ -494,34 +496,164 @@ const [allbrand, setAllBrand] = useState("")
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter&&Filterveg&&minPriceFilter&& maxPriceFilter&&subcateFilter;
+      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter && subcateFilter;
     });
   };
 
-    const gradientColors = [
-        "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
-        "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
-        "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
-        "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
-    ];
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+  ];
 
+  const [buttonVisibility, setButtonVisibility] = useState({});
+  const handleMouseEnter = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: true,
+    }));
+  };
+
+  const handleMouseLeave = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: false,
+    }));
+  };
+  const [wishlistData, setWishlistData] = useState([]);
+
+  // =============================================================================
+  // ================================================================================
+  // Product details code with modal
+  // ================================================================================
+  // =============================================================================
+
+  const [productDetails, setProductDetails] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedVariant, setSelectedVariant] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  console.log("productDetails---->", productDetails);
+  const handleIncrementone = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleDecrementone = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  useEffect(() => {
+    if (productDetails?.variations && productDetails.variations.length > 0) {
+      const defaultVariant = productDetails.variations[0];
+      setSelectedVariant(defaultVariant.type);
+      setSelectedVariantPrice(defaultVariant.price);
+    }
+  }, [productDetails]);
+
+  // useEffect(() => {
+  //   productData();
+  // }, []);
+
+  const productData = async (selctId) => {
+    axios
+      .get(`${BASE_URL}/items/product_details/${selctId}`)
+      .then((response) => {
+        console.log("=======>", response);
+        console.log("product details Successful");
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  const ratingStar = Array.from({ length: 5 }, (item, index) => {
+    let number = index + 0.5;
     return (
-        <>
-            <Toaster />
-            <Newheader />
-            <Container fluid className='p-0'>
-                <div className='all-bg'>
-                    <img src={product} />
-                </div>
-            </Container>
+      <span key={index}>
+        {productDetails.rating_count >= index + 1 ? (
+          <i className="fa fa-star" />
+        ) : productDetails.rating_count >= number ? (
+          <i className="fa fa-star-half-o" />
+        ) : (
+          <i className="fa fa-star-o" />
+        )}
+      </span>
+    );
+  });
 
-            <Container>
-                <Row>
-                <Col lg={3}>
+  let uservariationprice = 0;
+
+  if (selectedVariantPrice !== null) {
+    uservariationprice = selectedVariantPrice;
+  }
+  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+
+  const Amount = Math.floor(
+    uservariationprice - (uservariationprice * productDetails.discount) / 100
+  ).toFixed(2);
+
+  const formattedAmount = Number(Amount).toString();
+
+  const savedAmount = Math.floor(
+    productDetails.price * quantity - Amount
+  ).toFixed(2);
+  const formattedSavedAmount = Number(savedAmount).toString();
+
+
+  // Lightbox product =====
+  const [mainImage, setMainImage] = useState("");
+  const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (productDetails.image) {
+      setMainImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+        productDetails.image
+      );
+    }
+  }, [productDetails]);
+
+  const handleThumbnailClick = (index) => {
+    setMainImage(
+      "https://canine.hirectjob.in/storage/app/public/product/" +
+      productDetails.images[index]
+    );
+  };
+
+  const handleMainImageClick = () => {
+    setLightboxIsOpen(true);
+    setLightboxImageIndex(productDetails.images.indexOf(mainImage));
+  };
+  const handeldataId = (id) => {
+    productData(id);
+  }
+
+  return (
+    <>
+      <Toaster />
+      <Newheader />
+      <Container fluid className='p-0'>
+        <div className='all-bg'>
+          <img src={product} />
+        </div>
+      </Container>
+
+      <Container>
+        <Row>
+          <Col lg={3}>
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
-                
+
                 <hr />
                 <div
                   onClick={() => handleParentClick("brand")}
@@ -538,24 +670,24 @@ const [allbrand, setAllBrand] = useState("")
                       <div>
                         {allbrand ? (
                           allbrand.map((items) => (
-                            items.canine === 1&& ( 
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                        
-
-                                onClick={(e) => handleDataListBrand(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
+                            items.canine === 1 && (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+
+
+                                  onClick={(e) => handleDataListBrand(items.title)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                >
+                                  {items.title}
+                                </label>
+                              </div>
                             )
                           ))
                         ) : ""}
@@ -575,31 +707,31 @@ const [allbrand, setAllBrand] = useState("")
                     </span>
                   </div>
                   {productTypeDropdownVisible && (
-                     <>
-                     <div>
-                       {subcategories ? (
-                         subcategories.map((items) => (
-                           <div
-                             className="form-check"
-                             onClick={handleCheckboxClick}
-                           >
-                             <input
-                               className="form-check-input"
-                               type="checkbox"
-                               onClick={(e) => allsubcateselect(items.name)}
-                             />
-                             <label
-                               className="form-check-label"
-              
-                             >
-                               {items.name}
-                             </label>
-                           </div>
+                    <>
+                      <div>
+                        {subcategories ? (
+                          subcategories.map((items) => (
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allsubcateselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
 
-                         ))
-                       ) : ""}
-                     </div>
-                   </>
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
                   )}
                 </div>
                 <hr />
@@ -625,13 +757,13 @@ const [allbrand, setAllBrand] = useState("")
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                        
+
 
                                 onClick={(e) => allcateselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
-                               
+
                               >
                                 {items.name}
                               </label>
@@ -661,17 +793,17 @@ const [allbrand, setAllBrand] = useState("")
 
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
-                          <input type="number" 
-                          placeholder="From"  onChange={minprice} />
+                          <input type="number"
+                            placeholder="From" onChange={minprice} />
                         </div>
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
                           <input type="number"
-                             placeholder="From"  onChange={maxprice} />
+                            placeholder="From" onChange={maxprice} />
                         </div>
                         <div className="form-range" >
                           {/* <span>₹</span> */}
-                       <button onClick={applyprice}>Apply</button>
+                          <button onClick={applyprice}>Apply</button>
                         </div>
                       </div>
 
@@ -817,7 +949,7 @@ const [allbrand, setAllBrand] = useState("")
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            onClick={(e)=>vegnonveghandler("1")}
+                            onClick={(e) => vegnonveghandler("1")}
                           />
                           <label
                             className="form-check-label"
@@ -832,7 +964,7 @@ const [allbrand, setAllBrand] = useState("")
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            onClick={(e)=>vegnonveghandler("0")}
+                            onClick={(e) => vegnonveghandler("0")}
 
                           />
                           <label
@@ -852,109 +984,383 @@ const [allbrand, setAllBrand] = useState("")
               </div>
             </section>
           </Col>
-                    <Col lg={9}>
-                        <section className="section-padding">
-                            <Container>
-                                <h1 className="main-head">
-                                    Shop Deals For Your Best Buddy
-                                </h1>
-                            </Container>
-                            <Container fluid>
-                                <Carousel
-                                    swipeable={true}
-                                    draggable={true}
-                                    showDots={true}
-                                    responsive={clinetreview}
-                                    ssr={true} // means to render carousel on server-side.
-                                    infinite={true}
-                                    autoPlay={props.deviceType !== "mobile" ? true : false}
-                                    autoPlaySpeed={2000}
-                                    keyBoardControl={true}
-                                    customTransition="all 1s"
-                                    transitionDuration={1000}
-                                    containerClass="carousel-container"
-                                    removeArrowOnDeviceType={["tablet", "mobile"]}
-                                    deviceType={props.deviceType}
-                                    dotListClass="custom-dot-list-style"
-                                    itemClass="carousel-item-padding-40-px"
-                                >
-                                    {categories.map((item) => (
-                                        <div className="product-Deals" key={item.id}>
-                                            <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image}  onClick={(e) => allcateselect(item.name)} />
-                                            <h1>{item.name}</h1>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </Container>
-                        </section>
+          <Col lg={9}>
+            <section className="section-padding">
+              <Container>
+                <h1 className="main-head">
+                  Shop Deals For Your Best Buddy
+                </h1>
+              </Container>
+              <Container fluid>
+                <Carousel
+                  swipeable={true}
+                  draggable={true}
+                  showDots={true}
+                  responsive={clinetreview}
+                  ssr={true} // means to render carousel on server-side.
+                  infinite={true}
+                  autoPlay={props.deviceType !== "mobile" ? true : false}
+                  autoPlaySpeed={2000}
+                  keyBoardControl={true}
+                  customTransition="all 1s"
+                  transitionDuration={1000}
+                  containerClass="carousel-container"
+                  removeArrowOnDeviceType={["tablet", "mobile"]}
+                  deviceType={props.deviceType}
+                  dotListClass="custom-dot-list-style"
+                  itemClass="carousel-item-padding-40-px"
+                >
+                  {categories.map((item) => (
+                    <div className="product-Deals" key={item.id}>
+                      <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image} onClick={(e) => allcateselect(item.name)} />
+                      <h1>{item.name}</h1>
+                    </div>
+                  ))}
+                </Carousel>
+              </Container>
+            </section>
 
 
-                        <section className="section-padding food">
-                            <Container>
-                                <Row>
-                                    {allproduct
-                                        ? allproduct.map(
-                                            (item, index) =>
-                                                item.module_id === 1 && (
-                                                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                                                        <div className="food-product" key={item.id} style={{
-                                                            background:
-                                                                gradientColors[index % gradientColors.length],
-                                                        }}>
-                                                            <i
-                        class={
-                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                        }
-                        onClick={(id) => {
-                          if (storedUserId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
-                          }
-                        }}
-                      />
-                                                            <Link to={`/product-details/${item.id}`}>
-                                                                <div className='text-center'>
-                                                                    <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
-                                                                </div>
-                                                                <div>
-                                                                    <h6>{item.name}</h6>
-                                                                    <p>{item.description}</p>
-                                                                </div>
-                                                                <div className="product-bag">
-                                                                    <Row>
-                                                                        <Col>
-                                                                            <p>₹999.00</p>
-                                                                        </Col>
-                                                                        <Col>
-                                                                            <h5>20%</h5>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
-                                                                        <Col><Link to=''><img src={bag} /></Link></Col>
-                                                                    </Row>
-                                                                </div>
-                                                            </Link>
-                                                        </div>
-                                                    </Col>
-                                                )
-                                        )
-                                        : null}
-                                </Row>
-                            </Container>
-                        </section>
-
-
-                    </Col>
+            <section className="section-padding food">
+              <Container>
+                <Row>
+                  {allproduct
+                    ? allproduct.map(
+                      (item, index) =>
+                        item.module_id === 1 && (
+                          <Col lg={4} sm={6} xs={6} className="mb-4">
+                            <div className="food-product" onMouseEnter={() => handleMouseEnter(item.id)}
+                              onMouseLeave={() => handleMouseLeave(item.id)}
+                              key={item.id} style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}>
+                              <i
+                                class={
+                                  item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                                }
+                                onClick={(id) => {
+                                  if (storedUserId == null) {
+                                    toast.error("Please Login first");
+                                  } else {
+                                    addToWishlist(item.id);
+                                  }
+                                }}
+                              />
+                              <Link to={`/product-details/${item.id}`}>
+                                <div className='text-center'>
+                                  <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
+                                </div>
+                                <div>
+                                  <h6>{item.name}</h6>
+                                  <p>{item.description}</p>
+                                </div>
+                                <div className="product-bag">
+                                  <Row>
+                                    <Col>
+                                      <p>₹999.00</p>
+                                    </Col>
+                                    <Col>
+                                      <h5>20%</h5>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
+                                    <Col><Link to=''><img src={bag} /></Link></Col>
+                                  </Row>
+                                </div>
+                              </Link>
+                              {buttonVisibility[item.id] && (
+                                <div className="button-container">
+                                  <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
+                                  <button>Buy Now</button>
+                                </div>
+                              )}
+                            </div>
+                          </Col>
+                        )
+                    )
+                    : null}
                 </Row>
-            </Container >
+              </Container>
+            </section>
+
+
+          </Col>
+        </Row>
+      </Container >
 
 
 
-            <Footer />
-        </>
-    )
+      <Footer />
+
+
+      {/* Product details Modal */}
+      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+            <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <section className="section-padding">
+                <Container>
+                  <Row>
+                    <Col lg={6} sm={6}>
+                      <>
+                        <div>
+                          <div className="product-item quickviewimg">
+                            <img
+                              src={mainImage}
+                              alt="Product Image"
+                              onClick={handleMainImageClick}
+                            />
+                          </div>
+                          <div className="needplace">
+                            <Row>
+                              {productDetails?.images &&
+                                productDetails?.images.length > 0 ? (
+                                productDetails.images.map((item, index) => (
+                                  <Col
+                                    lg={3}
+                                    sm={3}
+                                    xs={3}
+                                    className="mb-3"
+                                    key={index}
+                                  >
+                                    <div
+                                      className="product-item-inner"
+                                      onClick={() => handleThumbnailClick(index)}
+                                    >
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          item
+                                        }
+                                        alt={`Image ${index}`}
+                                      />
+                                    </div>
+                                  </Col>
+                                ))
+                              ) : (
+                                <p className="emptyMSG">No Related Image.</p>
+                              )}
+                            </Row>
+                          </div>
+                        </div>
+
+                        {lightboxIsOpen && (
+                          <Lightbox
+                            mainSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[lightboxImageIndex]
+                            }
+                            nextSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[
+                              (lightboxImageIndex + 1) % productDetails.images.length
+                              ]
+                            }
+                            prevSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
+                              ]
+                            }
+                            onCloseRequest={() => setLightboxIsOpen(false)}
+                            onMovePrevRequest={() =>
+                              setLightboxImageIndex(
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                productDetails.images.length
+                              )
+                            }
+                            onMoveNextRequest={() =>
+                              setLightboxImageIndex(
+                                (lightboxImageIndex + 1) % productDetails.images.length
+                              )
+                            }
+                          />
+                        )}
+                      </>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div className="productDetail-content">
+                        <Row>
+                          <Col lg={9} sm={9} xs={9}>
+                            <h4>{productDetails.name}</h4>
+                          </Col>
+                          <Col lg={3} sm={3} xs={3}>
+                            <p>
+                              {productDetails.veg == 0 ? (
+                                <span>
+                                  <span className="non-vegetarian">●</span>
+                                </span>
+                              ) : (
+                                <span>
+                                  <span className="vegetarian">●</span>
+                                </span>
+                              )}
+                            </p>
+                          </Col>
+                        </Row>
+                        <p>
+                          By <span>{productDetails.store_name}</span>
+                        </p>
+
+                        <Wrapper>
+                          <div className="icon-style">
+                            {ratingStar}
+                            <p>({productDetails.rating_count} customer reviews)</p>
+                          </div>
+                        </Wrapper>
+
+                        <div className="needplaceProduct">
+                          <Row>
+                            <Col sm={6} xs={6}>
+                              <div>
+                                <div>
+                                  <div className="tab-container">
+                                    <h6>Variations</h6>
+                                    <Row>
+                                      {productDetails?.variations &&
+                                        productDetails?.variations.length > 0 &&
+                                        productDetails.variations.map((item, index) => (
+                                          <Col lg={4} key={index}>
+                                            <div
+                                              className={`tab-variations ${selectedVariant === item.type
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(item.price);
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          </Col>
+                                        ))}
+                                    </Row>
+                                  </div>
+                                </div>
+                              </div>
+                            </Col>
+                            <Col sm={6} xs={6}>
+                              <div className="quantity-btn quickbtn">
+                                <button onClick={handleDecrementone}>
+                                  <i className="fa fa-minus" />
+                                </button>
+                                <form>
+                                  <div className="form-group">
+                                    <input
+                                      type="tel"
+                                      className="form-control"
+                                      placeholder="Quantity"
+                                      value={quantity}
+                                      onChange={handleQuantityChange}
+                                      autoComplete="new-number"
+                                    />
+                                  </div>
+                                </form>
+                                <button onClick={handleIncrementone}>
+                                  <i className="fa fa-plus" />
+                                </button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              <Col lg={3} sm={3} xs={3}>
+                                <p>{`₹${uservariationprice}`}</p>
+                              </Col>
+                              <Col lg={4} sm={4} xs={3}>
+                                <h5>{`₹${formattedAmount}`}</h5>
+                              </Col>
+                              <Col lg={5} sm={5} xs={3}>
+                                <h6>
+                                  Your save
+                                  {formattedSavedAmount >= 0
+                                    ? "₹" + formattedSavedAmount
+                                    : "No savings"}
+                                </h6>
+                              </Col>
+                            </Row>
+                          </div>
+                        </div>
+                        <h5>About Us</h5>
+                        {productDetails ? (
+                          <Table responsive>
+                            <tbody>
+                              <tr>
+                                <th>Brand</th>
+                                <td>{productDetails?.brand_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Age Range</th>
+                                <td>{productDetails?.lifeStage_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Health Condition</th>
+                                <td>{productDetails?.helthCondition_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Target Species</th>
+                                <td>{productDetails?.Petsbreeds_id}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        ) : (
+                          <p>No data available for this product.</p>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      <Button>
+                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart} >
+                          <i className="fa fa-shopping-bag" /> Add to cart
+                        </Link>
+                        <p>{addToCartStatus}</p>
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
+                </Container>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </>
+  )
 }
+const Wrapper = styled.section`
+  justify-content: flex-start;
 
+  icon {
+    font-size: 2rem;
+    color: orange;
+  }
+  .emty-icon {
+    font-size: 2.6rem;
+  }
+  p {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+`;
 export default Canineproduct

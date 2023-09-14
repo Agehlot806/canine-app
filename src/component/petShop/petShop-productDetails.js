@@ -284,7 +284,7 @@ function PetshopproductDetails() {
         toast.success("Added to cart!");
         // Navigate("/addcart")
       }
-    } 
+    }
     catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
@@ -371,6 +371,40 @@ function PetshopproductDetails() {
     e.preventDefault();
     setTotalreview(!totalreview);
   };
+
+  const [buttonVisibility, setButtonVisibility] = useState({});
+
+  const handleMouseEnter = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: true,
+    }));
+  };
+
+  const handleMouseLeave = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: false,
+    }));
+  };
+
+  const productDatatwo = async (selctId) => {
+    axios
+      .get(`${BASE_URL}/items/product_details/${selctId}`)
+      .then((response) => {
+        console.log("=======> ", response);
+        console.log("Delete Successful");
+        setProductDetails(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handeldataId = (id) => {
+    productDatatwo(id);
+  }
 
   return (
     <>
@@ -756,6 +790,8 @@ function PetshopproductDetails() {
                   <Col lg={3} sm={6} xs={6} className="mb-4">
                     <div
                       className="food-product"
+                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseLeave={() => handleMouseLeave(item.id)}
                       key={item.id}
                       style={{
                         background:
@@ -774,7 +810,7 @@ function PetshopproductDetails() {
                           }
                         }}
                       />
-                      <Link to={`/product-details/${item.id}`}>
+                      <Link to={`/petshop-productDetails/${item.id}`}>
                         <div className="text-center">
                           <img
                             src={
@@ -811,6 +847,12 @@ function PetshopproductDetails() {
                           </Row>
                         </div>
                       </Link>
+                      {buttonVisibility[item.id] && (
+                        <div className="button-container">
+                          <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
+                          <button>Buy Now</button>
+                        </div>
+                      )}
                     </div>
                   </Col>
                 ))}
@@ -819,6 +861,317 @@ function PetshopproductDetails() {
         </Container>
       </section>
       <Petshopfooter />
+
+      {/* Product details Modal */}
+      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <section className="section-padding">
+                <Container>
+                  <Row>
+                    <Col lg={6}>
+                      <div>
+                        <div className="product-item quickviewimg">
+                          <img src={mainImage} alt="Product Image" />
+                        </div>
+                        <div className="needplace">
+                          <Row>
+                            {/* <Col sm={2} className="mb-3">
+                      <div
+                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
+                        <img src={singleImage} />
+                      </div></Col> */}
+                            {productDetails?.images &&
+                              productDetails?.images.length > 0 ? (
+                              productDetails?.images.map((item, index) => (
+                                <Col sm={3} className="mb-3" key={index}>
+                                  <div
+                                    className="product-item-inner"
+                                    onClick={() => handleThumbnailClick(index)}
+                                  >
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/public/product/" +
+                                        item
+                                      }
+                                      alt={`Image ${index}`}
+                                    />
+                                  </div>
+                                </Col>
+                              ))
+                            ) : (
+                              <p className="emptyMSG">No Related Image.</p>
+                            )}
+                          </Row>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="productDetail-content">
+                        <Row>
+                          <Col lg={10}>
+                            <h4>{productDetails.name}</h4>
+                          </Col>
+                        </Row>
+                        <p>
+                          By <span>{productDetails.store_name}</span>
+                        </p>
+
+                        <Wrapper>
+                          <div className="icon-style">
+                            {ratingStar}
+                            <p>({productDetails.rating_count} customer reviews)</p>
+                          </div>
+                        </Wrapper>
+
+                        <div className="needplaceProduct">
+                          <Row>
+                            <Col sm={6}>
+                              <div className="tab-container">
+                                <h6>Variations</h6>
+                                <Row>
+                                  {productDetails?.variations &&
+                                    productDetails?.variations.length > 0 &&
+                                    productDetails.variations.map((item, index) => (
+                                      <Col lg={4} sm={3} xs={3} key={index}>
+                                        <div
+                                          className={`tab-variations ${selectedVariant === item.type
+                                            ? "active"
+                                            : ""
+                                            }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      </Col>
+                                    ))}
+                                </Row>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div className="quantity-btn quickbtn">
+                                <button onClick={handleDecrementOne}>
+                                  <i className="fa fa-minus" />
+                                </button>
+                                <form>
+                                  <div className="form-group">
+                                    <input
+                                      type="tel"
+                                      className="form-control"
+                                      placeholder="Quantity"
+                                      value={quantity}
+                                      onChange={handleQuantityChange}
+                                      autoComplete="new-number"
+                                    />
+                                  </div>
+                                </form>
+                                <button onClick={handleIncrementOne}>
+                                  <i className="fa fa-plus" />
+                                </button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              {/* <Col lg={3}> */}
+                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
+                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
+                              {/* {console.log(
+                          "productDetails?.variations?.price: ",
+                          productDetails?.variations?.price
+                        )} */}
+                              {/* </Col> */}
+                              <Col lg={4}>
+                                <h5>{`₹${wholesellervariationprice}`}</h5>
+                              </Col>
+                              {/* <Col lg={5}>
+                        <h6>
+                          Your save
+                          {formattedSavedAmount >= 0
+                            ? "₹" + formattedSavedAmount
+                            : "No savings"}
+                        </h6>
+                      </Col> */}
+                            </Row>
+                          </div>
+                        </div>
+                        <h5>About Us</h5>
+                        {console.log(
+                          "productDetails.brand_id: ",
+                          productDetails.brand_id
+                        )}
+
+                        {productDetails ? (
+                          <Table responsive>
+                            <tbody>
+                              <tr>
+                                <th>Brand</th>
+                                <td>{productDetails?.brand_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Age Range</th>
+                                <td>{productDetails?.lifeStage_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Health Condition</th>
+                                <td>{productDetails?.helthCondition_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Target Species</th>
+                                <td>{productDetails?.Petsbreeds_id}</td>
+                              </tr>
+                              {/* <tr>
+                          <th>Item From</th>
+                          <td>Pellet</td>
+                        </tr> */}
+                            </tbody>
+                          </Table>
+                        ) : (
+                          <p>No data available for this product.</p>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      {verifiredIdaccess === 1 ? (
+                        <Button>
+                          <Link
+                            to={`/petshop-add-cart/${id}`}
+                            onClick={handleAddToCart}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button onClick={demousercheck}>
+                          <Link>
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                        </Button>
+                      )}
+                      <p>{addToCartStatus}</p>
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
+                  {/* </Row> */}
+                  <div className="productBTNaddcard">
+                    {/* <Button>
+              <Link to="/petshop-add-cart">
+                <i className="fa fa-shopping-bag" /> Add to cart
+              </Link>
+            </Button> */}
+                  </div>
+                  <h1 className="main-head mt-4">Product details</h1>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text
+                    ever since the 1500s,
+                  </p>
+                  <hr />
+                  <div className="Product-Review">
+                    <h1 className="main-head mt-4">Product Review</h1>
+                    {orderlist && orderlist.length > 1 ? (
+                      orderlist.map(
+                        (order, index) =>
+                          index === 0 && (
+                            <div key={order.id}>
+                              {order.callback[0].user_profile && (
+                                <div className="Product-img">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                      order.callback[0].user_profile[0].image
+                                    } />
+                                  <span>{order.callback[0].user_profile[0].f_name}</span>
+                                </div>
+                              )}
+                              {order.callback[0].user_details && (
+                                <>
+                                  <p>
+                                    {order.callback[0].user_details.comment}
+                                  </p>
+                                  <Wrapper>
+                                    <div className="icon-style">
+                                      {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                                        <i className="fa-solid fa-star" key={index} />
+                                      ))}
+                                    </div>
+                                  </Wrapper>
+                                </>
+                              )}
+                              <hr />
+                            </div>
+                          )
+                      )
+                    ) : (
+                      <p>No Review</p>
+                    )}
+                    <div className="reviewMore">
+                      <a href="#" onClick={toggleReview}>
+                        Read more
+                        {totalreview ? (
+                          <i className="fa fa-angle-up" aria-hidden="true"></i>
+                        ) : (
+                          <i className="fa fa-angle-down" aria-hidden="true"></i>
+                        )}
+                      </a>
+                      {totalreview &&
+                        <>
+                          {orderlist.map((order) => (
+                            <div key={order.id}>
+                              {order.callback[0].user_profile && (
+                                <div className="Product-img">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                      order.callback[0].user_profile[0].image
+                                    } />
+                                  <span>{order.callback[0].user_profile[0].f_name}</span>
+                                </div>
+                              )}
+                              {order.callback[0].user_details && (
+                                <>
+                                  <p>
+                                    {order.callback[0].user_details.comment}
+                                  </p>
+                                  <Wrapper>
+                                    <div className="icon-style">
+                                      {Array.from({ length: order.callback[0].user_details.rating }).map((_, index) => (
+                                        <i className="fa-solid fa-star" key={index} />
+                                      ))}
+                                    </div>
+                                  </Wrapper>
+                                </>
+                              )}
+                              <hr />
+                            </div>
+                          ))}
+                        </>
+                      }
+                    </div>
+                  </div>
+
+                </Container>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
