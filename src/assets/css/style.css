@@ -2792,11 +2792,11 @@ ul.list-unstyled li a {
   margin: 0 3px;
 }
 .Product-img img {
-  width: 30px;
+  width: 50px;
 }
 .Product-img span {
-  font-size: 20.233px;
-  margin-left: 2px;
+  font-size: 22px;
+  margin-left: 15px;
 }
 .user-icon i {
   margin-left: 37px;
@@ -3308,4 +3308,53 @@ button.Apply-price {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+}
+
+.Product-Review {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 1px 20px 20px;
+    border-radius: 20px;
+}
+.Product-Review p {
+  margin: 0;
+}
+
+.Product-Review i {
+  color: #f1c21b;
+}
+.reviewMore a {
+  font-size: 20px;
+}
+.reviewMore a i {
+  margin: 0 10px;
+  color: #3b71ca;
+}
+.dow-summy table tbody tr {
+  font-size: 20px;
+}
+.dow-summy table tbody tr th {
+  font-weight: 500;
+}
+.dow-summy table tbody tr td {
+  text-align: right;
+  position: relative;
+  left: 100%;
+}
+.dow-summy table tbody tr p {
+  margin: 0 0 8px;
+}
+.dow-summy {
+  border-radius: 26.965px;
+  background: #fff;
+  box-shadow: 0px 1.2840496301651px 38.521488189697266px 0px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+.food-product button {
+  background: #f1c21b;
+  border: none;
+  margin: 0 10px;
+  border-radius: 5px;
+  padding: 5px 11px;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }

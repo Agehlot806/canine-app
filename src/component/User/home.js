@@ -273,8 +273,6 @@ function Home(props) {
       setAddToCartStatus("Error adding to cart");
     }
   };
-
-
   const fetchWishlistData = async () => {
     try {
       await axios
@@ -303,11 +301,11 @@ function Home(props) {
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element",element);
+        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
         console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr",newArr);
+        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -347,6 +345,22 @@ function Home(props) {
   // console.log("id: ", id);
   // const navigate = useNavigate();
   // navigate("/login");
+  const [buttonVisibility, setButtonVisibility] = useState({});
+
+  // Function to handle mouse enter and mouse leave for a card
+  const handleMouseEnter = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: true,
+    }));
+  };
+
+  const handleMouseLeave = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: false,
+    }));
+  };
 
   return (
     <>
@@ -542,17 +556,14 @@ function Home(props) {
                   <Col lg={3} sm={6} xs={6} className="mb-4">
                     <div
                       className="food-product"
+                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseLeave={() => handleMouseLeave(item.id)}
                       key={item.id}
                       style={{
                         background:
                           gradientColors[index % gradientColors.length],
                       }}
                     >
-                      {/* <i
-                        class="fa fa-heart-o"
-                        onClick={() => addToWishlist(item.id)}
-                      /> */}
-
                       <i
                         class={
                           item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
@@ -565,7 +576,6 @@ function Home(props) {
                           }
                         }}
                       />
-
                       <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">
                           <img
@@ -635,6 +645,12 @@ function Home(props) {
                           </Row>
                         </div>
                       </Link>
+                      {buttonVisibility[item.id] && (
+                        <div className="button-container">
+                          <button>Quick View</button>
+                          <button>Buy Now</button>
+                        </div>
+                      )}
                     </div>
                   </Col>
                 ))}

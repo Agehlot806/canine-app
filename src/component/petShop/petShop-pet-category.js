@@ -103,6 +103,7 @@ function PetshopPetcategory() {
     fetchHealthcondition();
     fetchLifestage();
     allProduct();
+    fetchWishlistData();
   }, []);
 
   useEffect(() => {
@@ -141,7 +142,90 @@ function PetshopPetcategory() {
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
+  const [wishlistData, setWishlistData] = useState([]);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails.name,
+          // variant: productDetails.variations || "Default", // You may need to update this based on your data
+          image: productDetails.image,
+          quantity: productDetails.quantity,
+          price: productDetails.price,
+          user_id: storedWholesellerId,
+          item_id: productDetails.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedWholesellerId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData", filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        console.log("element", element);
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        console.log("newArrnewArr", newArr);
+        setallproduct(newArr);
+      }
+    }
+  };
   const addToWishlist = async (item_id) => {
+    if (!storedWholesellerId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
     const formData = new FormData();
     formData.append("user_id", storedWholesellerId);
     formData.append("item_id", item_id);
@@ -152,7 +236,11 @@ function PetshopPetcategory() {
       .then((response) => {
         console.log("response143", response);
         if (response.data.message) {
-          toast.success("Added successfully");
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+          const index = allproduct.map((el) => el.id).indexOf(item_id);
+          newArr[index].isFav = true;
+          setallproduct(newArr);
         }
       })
       .catch((error) => {
@@ -459,35 +547,6 @@ function PetshopPetcategory() {
     // Add more gradient colors as needed
   ];
 
-  const [addToCartStatus, setAddToCartStatus] = useState("");
-
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product`,
-        {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
-          user_id: storedWholesellerId,
-          item_id: productDetails.id,
-        }
-      );
-
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
-  };
   return (
     <>
       <Toaster />
@@ -519,38 +578,38 @@ function PetshopPetcategory() {
                     <>
                       {brands
                         ? brands.map(
-                            (item) =>
-                              item.canine == "1" && (
-                                <div>
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
+                          (item) =>
+                            item.canine == "1" && (
+                              <div>
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="defaultCheck1"
+                                    checked={selectedBrand !== null}
+                                    onChange={() => {
+                                      if (selectedBrand === null) {
+                                        handleDataListBrand(
+                                          allproduct[0].brand_id
+                                        ); // Set initial brand ID
+                                      } else {
+                                        handleClearFilter();
+                                      }
+                                    }}
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="defaultCheck1"
                                   >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id="defaultCheck1"
-                                      checked={selectedBrand !== null}
-                                      onChange={() => {
-                                        if (selectedBrand === null) {
-                                          handleDataListBrand(
-                                            allproduct[0].brand_id
-                                          ); // Set initial brand ID
-                                        } else {
-                                          handleClearFilter();
-                                        }
-                                      }}
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="defaultCheck1"
-                                    >
-                                      {item.title}
-                                    </label>
-                                  </div>
+                                    {item.title}
+                                  </label>
                                 </div>
-                              )
-                          )
+                              </div>
+                            )
+                        )
                         : null}
                     </>
                   )}
@@ -570,26 +629,26 @@ function PetshopPetcategory() {
                     <>
                       {subcategories && subcategories.length > 0
                         ? subcategories.map((item) => (
-                            <div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onClick={handleFilterClick}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
                               >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                  onClick={handleFilterClick}
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {item.name}
-                                </label>
-                              </div>
+                                {item.name}
+                              </label>
                             </div>
-                          ))
+                          </div>
+                        ))
                         : null}
                     </>
                   )}
@@ -610,7 +669,7 @@ function PetshopPetcategory() {
                       <div
                         className="form-range"
                         onClick={handleFilterClick}
-                        // onClick={handleCheckboxClick}
+                      // onClick={handleCheckboxClick}
                       >
                         <span>₹</span>
                         <input type="number" placeholder="From" />
@@ -618,7 +677,7 @@ function PetshopPetcategory() {
                       <div
                         className="form-range"
                         onClick={handleFilterClick}
-                        // onClick={handleCheckboxClick}
+                      // onClick={handleCheckboxClick}
                       >
                         <span>₹</span>
                         <input type="number" placeholder="From" />
@@ -641,35 +700,35 @@ function PetshopPetcategory() {
                     <>
                       {lifestage && lifestage.length > 0
                         ? lifestage.map((item) => (
-                            <div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                checked={selectedBrand !== null}
+                                onChange={() => {
+                                  if (selectedBrand === null) {
+                                    handleSelectedlifeStage(
+                                      allproduct[0].lifeStage_id
+                                    ); // Set initial brand ID
+                                  } else {
+                                    handleClearFilterlifeStage();
+                                  }
+                                }}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
                               >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                  checked={selectedBrand !== null}
-                                  onChange={() => {
-                                    if (selectedBrand === null) {
-                                      handleSelectedlifeStage(
-                                        allproduct[0].lifeStage_id
-                                      ); // Set initial brand ID
-                                    } else {
-                                      handleClearFilterlifeStage();
-                                    }
-                                  }}
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {item.name}
-                                </label>
-                              </div>
+                                {item.name}
+                              </label>
                             </div>
-                          ))
+                          </div>
+                        ))
                         : null}
                     </>
                   )}
@@ -820,9 +879,8 @@ function PetshopPetcategory() {
                         subcategories.map((item, index) => (
                           <li className="nav-item" key={item.id}>
                             <a
-                              className={`nav-link ${
-                                item.id == id ? "active" : ""
-                              }`}
+                              className={`nav-link ${item.id == id ? "active" : ""
+                                }`}
                               id="pills-home-tab"
                               data-toggle="pill"
                               onClick={(id) => subcatid(item.id, item.name)}
@@ -858,8 +916,16 @@ function PetshopPetcategory() {
                               <Col lg={4} sm={6} xs={6} className="mb-4">
                                 <div className="food-product" key={item.id}>
                                   <i
-                                    class="fa fa-heart-o"
-                                    onClick={(id) => addToWishlist(item.id)}
+                                    class={
+                                      item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                                    }
+                                    onClick={(id) => {
+                                      if (storedWholesellerId == null) {
+                                        toast.error("Please Login first");
+                                      } else {
+                                        addToWishlist(item.id);
+                                      }
+                                    }}
                                   />
                                   <Link
                                     to={`/petshop-productDetails/${item.id}`}
@@ -887,10 +953,9 @@ function PetshopPetcategory() {
                                       </Row>
                                       <Row>
                                         <Col className="align-self-center">
-                                          <h6>{`₹${
-                                            item.price -
+                                          <h6>{`₹${item.price -
                                             (item.price * item.discount) / 100
-                                          }`}</h6>
+                                            }`}</h6>
                                         </Col>
                                         <Col>
                                           <Link to="">
@@ -926,8 +991,16 @@ function PetshopPetcategory() {
                           }}
                         >
                           <i
-                            class="fa fa-heart-o"
-                            onClick={(id) => addToWishlist(item.id)}
+                            class={
+                              item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                            }
+                            onClick={(id) => {
+                              if (storedWholesellerId == null) {
+                                toast.error("Please Login first");
+                              } else {
+                                addToWishlist(item.id);
+                              }
+                            }}
                           />
                           {/* <Link to={`/petshop-productDetails/${item.id}`}> */}
                           <div className="text-center">
@@ -983,9 +1056,17 @@ function PetshopPetcategory() {
                           }}
                         >
                           <i
-                            class="fa fa-heart-o"
-                            onClick={() => addToWishlist(item.id)}
-                          />
+                        class={
+                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                        }
+                        onClick={(id) => {
+                          if (storedWholesellerId  == null) {
+                            toast.error("Please Login first");
+                          } else {
+                            addToWishlist(item.id);
+                          }
+                        }}
+                      />
                           <Link to={`/petshop-productDetails/${item.id}`}>
                             <div className="text-center">
                               <img
@@ -1012,10 +1093,9 @@ function PetshopPetcategory() {
                                 <Col className="align-self-center">
                                   <h6>
                                     {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                    {`₹${
-                                      item.price -
+                                    {`₹${item.price -
                                       (item.price * item.discount) / 100
-                                    }`}
+                                      }`}
                                   </h6>
                                 </Col>
                                 <Col>

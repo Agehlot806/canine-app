@@ -21,42 +21,13 @@ function Orderviewdetails() {
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
 
-  // const handlePrint = () => {
-  //       if (tableRef.current) {
-  //           const doc = new jsPDF();
-  //           doc.autoTable({ html: tableRef.current });
-  //           doc.save('table.pdf');
-  //       }
-  //   }
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
   });
+  const summaryPrint = useReactToPrint({
+    content: () => summaryTableRef.current,
 
-
-
-  const summaryPrint = () => {
-    const doc = new jsPDF();
-
-
-    const summaryData = [
-      ["Description", "Price"],
-      ["Item 1", "$10"],
-      ["Item 2", "$20"],
-      ["Sub Total", "$30"],
-      ["Discount", "-$5"],
-      ["Delivery Charge", "$5"],
-      ["Total", "$30"],
-    ];
-
-    doc.autoTable({
-      head: [["Summary Invoice"]],
-      body: summaryData,
-      startY: 10,
-      margin: { top: 20, right: 20, bottom: 0, left: 20 },
-    });
-
-    doc.save("summary_invoice.pdf");
-  };
+  });
 
 
   const [allorder, setallorder] = useState([]);
@@ -248,7 +219,7 @@ function Orderviewdetails() {
               </Col>
             </Row>
             <Row>
-              <Col lg={5}>
+              <Col lg={5} className="align-self-center">
                 <div className="order-minicard">
                   {orderDetails && orderDetails.length > 0 ? (
                     orderDetails.map((order) => {
@@ -284,34 +255,42 @@ function Orderviewdetails() {
                             </Col>
                           </Row>
                           <div>
-                            <p>Product Rating: {rating}</p>
-                            <div className="star-rating">
-                              {[1, 2, 3, 4, 5].map((index) => (
-                                <div
-                                  key={index}
-                                  className={`star ${index <= rating ? 'filled' : ''}`}
-                                  onClick={() => handleStarClick(index)}
-                                ></div>
-                              ))}
-                            </div>
-                            {showForm && (
-                              <form>
-                                <div className="form-group">
-                                  <label>Write a Review</label>
-                                  <textarea
-                                    className="form-control mb-3"
-                                    rows={3}
-                                    value={comment}
-                                    onChange={(e) => setcomment(e.target.value)}
-                                  />
+                            {allorder.order_status === "delivered" ? (
+                              <div>
+                                <p className="m-0">Product Rating: {rating}</p>
+                                <div className="star-rating">
+                                  {[1, 2, 3, 4, 5].map((index) => (
+                                    <div
+                                      key={index}
+                                      className={`star ${index <= rating ? 'filled' : ''}`}
+                                      onClick={() => handleStarClick(index)}
+                                    ></div>
+                                  ))}
                                 </div>
-                                <button className="btn btn-primary" onClick={handleReview}>
-                                  Submit
-                                </button>
-                              </form>
-                            )}
-                            {!showForm && <p>Review submitted. Thank you!</p>}
+                                {showForm ? (
+                                  <form>
+                                    <div className="form-group">
+                                      <label>Write a Review</label>
+                                      <textarea
+                                        className="form-control mb-3"
+                                        rows={3}
+                                        value={comment}
+                                        onChange={(e) => setcomment(e.target.value)}
+                                      />
+                                    </div>
+                                    <button className="btn btn-primary" onClick={handleReview}>
+                                      Submit
+                                    </button>
+                                  </form>
+                                ) : (
+                                  <p>Review submitted. Thank you!</p>
+                                )}
+                              </div>
+                            ) : null}
                           </div>
+
+
+
 
 
                           <hr />
@@ -323,106 +302,163 @@ function Orderviewdetails() {
                   )}
                 </div>
               </Col>
-              <Col lg={7} className="align-self-center">
-                <div className="order-table" ref={tableRef}>
-                  {allorder && allorder.length > 0 ? (
-                    allorder.map((item, index) => {
-                      console.log("Desired ID:", id);
-                      console.log("Item ID:", item.id);
+              <Col lg={7} >
+                <Row>
+                  <Col sm={12} className="mb-4">
+                    <div className="order-table" ref={tableRef}>
+                      {allorder && allorder.length > 0 ? (
+                        allorder.map((item, index) => {
+                          console.log("Desired ID:", id);
+                          console.log("Item ID:", item.id);
 
-                      if (item.id == id) {
-                        console.log("Match found for ID:", id);
-                        return (
-                          <Table responsive key={index}>
-                            <>
-                              <tbody>
-                                <tr>
-                                  <th>Total</th>
-                                  <td>
-                                    ₹
-                                    {parseInt(
-                                      orderDetails.reduce(
-                                        (total, order) =>
-                                          total + parseFloat(order.price),
-                                        0
-                                      )
-                                    )}
-                                  </td>
-                                  {/* <td>₹{subTotal}</td> */}
-                                </tr>
-                                {/* <tr>
+                          if (item.id == id) {
+                            console.log("Match found for ID:", id);
+                            return (
+                              <div className="dow-summy">
+                                <h5>Order Invoice</h5>
+                                <table responsive key={index}>
+                                  <>
+                                    <tbody>
+                                      <tr>
+                                        <th><p>Total</p></th>
+                                        <td><p>
+                                          ₹
+                                          {parseInt(
+                                            orderDetails.reduce(
+                                              (total, order) =>
+                                                total + parseFloat(order.price),
+                                              0
+                                            )
+                                          )}
+                                        </p></td>
+                                        {/* <td>₹{subTotal}</td> */}
+                                      </tr>
+                                      {/* <tr>
                                   <th>
                                     Moving Cart <br />
                                     <p>Additional Services</p>
                                   </th>
                                             <td>{ item.}</td>
                                 </tr> */}
-                                <tr>
-                                  <th>
-                                    Discount <br />
-                                    <p>Promo Code: {item.coupon_code}</p>
-                                  </th>
+                                      <tr>
+                                        <th>
 
-                                  <td>
-                                    <span style={{ fontSize: 20 }}>{"-"}</span>{" "}
-                                    ₹{couponDiscount}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th>Sub Total</th>
-                                  <td>₹{subTotal}</td>
-                                </tr>
+                                          <p> Discount <br />
+                                            Promo Code: {item.coupon_code}</p>
+                                        </th>
 
-                                <tr>
-                                  <th>Delivery Charge</th>
-                                  <td>₹{deliveryCharge}</td>
-                                </tr>
-                                <tr>
-                                  <th>Total</th>
-                                  <td>₹{GrandTotal}</td>
-                                </tr>
-                              </tbody>
-                            </>
-                          </Table>
-                        );
-                      } else {
-                        console.log("No match for ID:", id);
-                        return null; // If no match, return null or an empty fragment
-                      }
-                    })
-                  ) : (
-                    <p className="emptyMSG">No Order list</p>
-                  )}
-                  {/* <Table responsive>
-                                        <tbody>
-                                            <tr>
-                                                <th>Sub Total</th>
-                                                <td>₹{orderDetails.reduce((total, order) => total + parseFloat(order.price), 0)}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Moving Cart <br />
-                                                    <p>Additional Services</p></th>
-                                                <td>$10</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Discount <br />
-                                                    <p>Promo Code: 554dffd</p>
-                                                    <p>delivery_charge</p></th>
+                                        <td><p>
+                                          <span style={{ fontSize: 20 }}>{"-"}</span>{" "}
+                                          ₹{couponDiscount}
+                                        </p></td>
+                                      </tr>
+                                      <tr>
+                                        <th><p>Sub Total</p></th>
+                                        <td><p>₹{subTotal}</p></td>
+                                      </tr>
 
-                                                <td>$20</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Total</th>
-                                                <td>$138.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </Table> */}
-                </div>
+                                      <tr>
+                                        <th><p>Delivery Charge</p></th>
+                                        <td><p>₹{deliveryCharge}</p></td>
+                                      </tr>
+                                      <tr>
+                                        <th><h4>Total</h4></th>
+                                        <td><h4 style={{color:"#3b71ca"}}>₹{GrandTotal}</h4></td>
+                                      </tr>
+                                    </tbody>
+                                  </>
+                                </table>
+                              </div>
+                            );
+                          } else {
+                            console.log("No match for ID:", id);
+                            return null; // If no match, return null or an empty fragment
+                          }
+                        })
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
+
+                    </div>
+                  </Col>
+
+                  <Col sm={12}>
+                    <div ref={summaryTableRef}>
+                      {allorder && allorder.length > 0 ? (
+                        allorder.map((item, index) => {
+                          console.log("Desired ID:", id);
+                          console.log("Item ID:", item.id);
+
+                          if (item.id == id) {
+                            console.log("Match found for ID:", id);
+                            return (
+                              <div className="dow-summy">
+                                <h5>Order Summary</h5>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <th><p>Order ID :</p></th>
+                                      <td><p>{item.id}</p></td>
+                                    </tr>
+                                    <tr>
+                                      <th><p>Item Name :</p></th>
+                                      <td>
+                                        {item.callback[0] && (
+                                          <p>{item.callback[0].variant}</p>
+                                        )}</td>
+                                    </tr>
+                                    <tr>
+                                      <th><p>Total Before Tax:</p></th>
+                                      <td><p>
+                                        ₹
+                                        {parseInt(
+                                          orderDetails.reduce(
+                                            (total, order) =>
+                                              total + parseFloat(order.price),
+                                            0
+                                          )
+                                        )}
+                                      </p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th><p>Sub Total:</p></th>
+                                      <td><p>₹{subTotal}</p></td>
+                                    </tr>
+                                    <tr>
+                                      <th><p>Coupon Discount:</p></th>
+                                      <td><p>₹{item.coupon_discount_amount}</p></td>
+                                    </tr>
+                                    <tr>
+                                      <th><p>Delivery Fee:</p></th>
+                                      <td><p>₹{deliveryCharge}</p></td>
+                                    </tr>
+                                    <tr>
+                                      <th><h4>Total:</h4></th>
+                                      <td><h4 style={{color:"#3b71ca"}}>₹{GrandTotal}</h4></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            );
+                          } else {
+                            console.log("No match for ID:", id);
+                            return null;
+                          }
+                        })
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </div>
         </Container>
       </section>
+
+
       <Footer />
     </>
   );

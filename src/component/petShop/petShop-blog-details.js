@@ -7,6 +7,7 @@ import axios from "axios";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import bag from "../../assets/images/icon/bag.png";
+import toast, { Toaster } from "react-hot-toast";
 
 function PetshopBlogdetails() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ function PetshopBlogdetails() {
   useEffect(() => {
     allblogs();
     allProduct();
+    fetchWishlistData();
   }, []);
   const [blogdata, setBlogdata] = useState([]);
   const [allproduct, setallproduct] = useState([]);
@@ -38,6 +40,22 @@ function PetshopBlogdetails() {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+  // storedWholesellerId
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  console.log("storedWholesellerId: ", storedWholesellerId);
+  // ----------------------------------------
+  const [wishlistData, setWishlistData] = useState([]);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [isFavCheck, setisFavCheck] = useState(false);
+  useEffect(() => {
+    if (allproduct.length > 0) {
+      handleWishlist();
+    }
+
+    return () => {
+      setisFavCheck(false);
+    };
+  }, [isFavCheck]);
 
   const handleAddToCart = async () => {
     try {
@@ -49,7 +67,7 @@ function PetshopBlogdetails() {
           image: productDetails.image,
           quantity: productDetails.quantity,
           price: productDetails.price,
-          user_id: storedUserId,
+          user_id: storedWholesellerId,
           item_id: productDetails.id,
         }
       );
@@ -61,10 +79,76 @@ function PetshopBlogdetails() {
         toast.success("Added to cart!");
         // Navigate("/addcart")
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
+  };
+  const fetchWishlistData = async () => {
+    try {
+      await axios
+        .get(`${BASE_URL}/customer/wish-list/${storedWholesellerId}`)
+        .then((response) => {
+          console.log("response in whisList", response);
+          setWishlistData(response.data.data);
+          setisFavCheck(true);
+          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+        });
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
+  const handleWishlist = () => {
+    let newArr = [...allproduct];
+
+    const filterData = allproduct.filter((el) => {
+      return wishlistData.some((ele) => {
+        return ele.item_id === el.id;
+      });
+    });
+    console.log("filterData", filterData);
+
+    if (filterData.length > 0) {
+      for (let index = 0; index < filterData.length; index++) {
+        const element = filterData[index];
+        console.log("element", element);
+        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
+        console.log("indexData", indexData);
+        newArr[indexData].isFav = true;
+        console.log("newArrnewArr", newArr);
+        setallproduct(newArr);
+      }
+    }
+  };
+  const addToWishlist = async (item_id) => {
+    if (!storedWholesellerId) {
+      // If the user is not logged in, navigate to the login page
+      navigate("/login");
+      return; // Exit the function without adding to wishlist
+    }
+
+    const formData = new FormData();
+    formData.append("user_id", storedWholesellerId);
+    formData.append("item_id", item_id);
+    axios
+      .post(`${BASE_URL}/customer/wish-list/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("response143", response);
+        if (response.data.message) {
+          toast.success(response.data.message);
+          let newArr = [...allproduct];
+          const index = allproduct.map((el) => el.id).indexOf(item_id);
+          newArr[index].isFav = true;
+          setallproduct(newArr);
+        }
+      })
+      .catch((error) => {
+        toast.error("Already in your wishlist");
+      });
   };
 
   const allblogs = () => {
@@ -80,6 +164,7 @@ function PetshopBlogdetails() {
 
   return (
     <>
+      <Toaster />
       <PetShopHeader />
       <section className="section-padding">
         <Container>
@@ -146,17 +231,13 @@ function PetshopBlogdetails() {
                           gradientColors[index % gradientColors.length],
                       }}
                     >
-                      {/* <i
-                        class="fa fa-heart-o"
-                        onClick={() => addToWishlist(item.id)}
-                      /> */}
 
                       <i
                         class={
                           item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
                         }
                         onClick={(id) => {
-                          if (storedUserId == null) {
+                          if (storedWholesellerId == null) {
                             toast.error("Please Login first");
                           } else {
                             addToWishlist(item.id);
@@ -177,11 +258,10 @@ function PetshopBlogdetails() {
                           <h6>{item.name}</h6>
                           {/* <p>{item.description}</p> */}
                           <p
-                            className={`truncate-text ${
-                              !expandedDescription[item.id]
-                                ? "read-more-link"
-                                : ""
-                            }`}
+                            className={`truncate-text ${!expandedDescription[item.id]
+                              ? "read-more-link"
+                              : ""
+                              }`}
                           >
                             {item.description}
                             {item.description.length > 100 &&
@@ -218,10 +298,9 @@ function PetshopBlogdetails() {
                             >
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
-                                  item.price -
+                                {`₹${item.price -
                                   (item.price * item.discount) / 100
-                                }`}
+                                  }`}
                               </h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
