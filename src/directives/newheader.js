@@ -5,7 +5,7 @@ import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import { useCartContext } from '../component/context/addToCartContext'
+import { useCartContext } from "../component/context/addToCartContext";
 import { useNotificationContext } from "../component/context/notificationContext";
 
 function Newheader(props) {
@@ -19,7 +19,8 @@ function Newheader(props) {
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
-  const { notificationLength, dataLengthpetnotification } = useNotificationContext();
+  const { notificationLength, dataLengthpetnotification } =
+    useNotificationContext();
 
   useEffect(() => {
     fetchBrands();
@@ -68,6 +69,9 @@ function Newheader(props) {
     if (customer_id) {
       try {
         localStorage.removeItem("userInfo");
+        localStorage.removeItem("loginType");
+        localStorage.removeItem("phone");
+        localStorage.removeItem("otp");
         console.log("Logged out user with ID: ", customer_id);
         setStoredUserId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
@@ -83,7 +87,7 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     setStoredUserId(JSON.parse(customer_id));
   }, []);
-  
+
   const [profileData, setProfileData] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
@@ -521,7 +525,6 @@ function Newheader(props) {
                         value={searchQuery}
                         onChange={handleSearchInputChange}
                       />
-
                     </div>
 
                     <div className="search-results">
