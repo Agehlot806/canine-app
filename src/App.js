@@ -90,6 +90,7 @@ import Petshopfooter from "./directives/petShop-Footer";
 import PetShopcanineproduct from "./component/petShop/petShop-canine-product";
 import PetshopBlog from "./component/petShop/petShop-blog";
 import PetshopBlogdetails from "./component/petShop/petShop-blog-details";
+import Quickview from "./component/User/quick-view";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -115,6 +116,7 @@ function App() {
           <Route path="/service" element={<Service />} />
           <Route path="/product" element={<Product />} />
           <Route path="/product-details/:id" element={<Productdetail />} />
+          <Route path="/quick-view/:id" element={<Quickview />} />
           <Route path="/canine-product" element={<Canineproduct />} />
           <Route path="/patners-product" element={<Patnersproduct />} />
           <Route path="/contact" element={<Contact />} />

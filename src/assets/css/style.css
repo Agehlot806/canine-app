@@ -3352,7 +3352,7 @@ button.Apply-price {
 .food-product button {
   background: #f1c21b;
   border: none;
-  margin: 0 10px;
+  margin: 0 8px;
   border-radius: 5px;
   padding: 5px 11px;
   font-weight: 600;
@@ -3366,4 +3366,16 @@ button.Apply-price {
     right: 20px;
     top: 0;
     background: none;
+}
+.product-item.quickviewimg img {
+    width: 100%;
+    height: 100%;
+}
+.quantity-btn.quickbtn button {
+  padding: 5px 10px;
+}
+
+.quickarea {
+  font-size: 35px;
+  float: right;
 }

@@ -202,7 +202,23 @@ function Productdetail() {
       // Handle error as needed
     }
   };
+  const [wishlistData, setWishlistData] = useState([]);
 
+  const [buttonVisibility, setButtonVisibility] = useState({});
+
+  const handleMouseEnter = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: true,
+    }));
+  };
+
+  const handleMouseLeave = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: false,
+    }));
+  };
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
     "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
@@ -292,7 +308,21 @@ function Productdetail() {
       console.error("Error fetching wishlist data:", error);
     }
   };
-
+  const productDatatwo = async (selctId) => {
+    axios
+      .get(`${BASE_URL}/items/product_details/${selctId}`)
+      .then((response) => {
+        console.log("=======>", response);
+        console.log("product details Successful");
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handeldataId = (id) => {
+    productDatatwo(id);
+  }
   const handleWishlist = () => {
     let newArr = [...allproduct];
 
@@ -835,6 +865,8 @@ function Productdetail() {
                   <Col lg={3} sm={6} xs={6} className="mb-4">
                     <div
                       className="food-product"
+                      onMouseEnter={() => handleMouseEnter(item.id)}
+                      onMouseLeave={() => handleMouseLeave(item.id)}
                       key={item.id}
                       style={{
                         background:
@@ -897,6 +929,12 @@ function Productdetail() {
                           </Row>
                         </div>
                       </Link>
+                      {buttonVisibility[item.id] && (
+                        <div className="button-container">
+                          <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
+                          <button>Buy Now</button>
+                        </div>
+                      )}
                     </div>
                   </Col>
                 ))}
@@ -905,7 +943,255 @@ function Productdetail() {
         </Container>
       </section>
       <Footer />
+ {/* Product details Modal */}
+ <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <section className="section-padding">
+                <Container>
+                  <Row>
+                    <Col lg={6} sm={6}>
+                      <>
+                        <div>
+                          <div className="product-item quickviewimg">
+                            <img
+                              src={mainImage}
+                              alt="Product Image"
+                              onClick={handleMainImageClick}
+                            />
+                          </div>
+                          <div className="needplace">
+                            <Row>
+                              {productDetails?.images &&
+                                productDetails?.images.length > 0 ? (
+                                productDetails.images.map((item, index) => (
+                                  <Col
+                                    lg={3}
+                                    sm={3}
+                                    xs={3}
+                                    className="mb-3"
+                                    key={index}
+                                  >
+                                    <div
+                                      className="product-item-inner"
+                                      onClick={() => handleThumbnailClick(index)}
+                                    >
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          item
+                                        }
+                                        alt={`Image ${index}`}
+                                      />
+                                    </div>
+                                  </Col>
+                                ))
+                              ) : (
+                                <p className="emptyMSG">No Related Image.</p>
+                              )}
+                            </Row>
+                          </div>
+                        </div>
 
+                        {lightboxIsOpen && (
+                          <Lightbox
+                            mainSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[lightboxImageIndex]
+                            }
+                            nextSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[
+                              (lightboxImageIndex + 1) % productDetails.images.length
+                              ]
+                            }
+                            prevSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
+                              ]
+                            }
+                            onCloseRequest={() => setLightboxIsOpen(false)}
+                            onMovePrevRequest={() =>
+                              setLightboxImageIndex(
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                productDetails.images.length
+                              )
+                            }
+                            onMoveNextRequest={() =>
+                              setLightboxImageIndex(
+                                (lightboxImageIndex + 1) % productDetails.images.length
+                              )
+                            }
+                          />
+                        )}
+                      </>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div className="productDetail-content">
+                        <Row>
+                          <Col lg={9} sm={9} xs={9}>
+                            <h4>{productDetails.name}</h4>
+                          </Col>
+                          <Col lg={3} sm={3} xs={3}>
+                            <p>
+                              {productDetails.veg == 0 ? (
+                                <span>
+                                  <span className="non-vegetarian">●</span>
+                                </span>
+                              ) : (
+                                <span>
+                                  <span className="vegetarian">●</span>
+                                </span>
+                              )}
+                            </p>
+                          </Col>
+                        </Row>
+                        <p>
+                          By <span>{productDetails.store_name}</span>
+                        </p>
+
+                        <Wrapper>
+                          <div className="icon-style">
+                            {ratingStar}
+                            <p>({productDetails.rating_count} customer reviews)</p>
+                          </div>
+                        </Wrapper>
+
+                        <div className="needplaceProduct">
+                          <Row>
+                            <Col sm={6} xs={6}>
+                              <div>
+                                <div>
+                                  <div className="tab-container">
+                                    <h6>Variations</h6>
+                                    <Row>
+                                      {productDetails?.variations &&
+                                        productDetails?.variations.length > 0 &&
+                                        productDetails.variations.map((item, index) => (
+                                          <Col lg={4} key={index}>
+                                            <div
+                                              className={`tab-variations ${selectedVariant === item.type
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(item.price);
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          </Col>
+                                        ))}
+                                    </Row>
+                                  </div>
+                                </div>
+                              </div>
+                            </Col>
+                            <Col sm={6} xs={6}>
+                              <div className="quantity-btn quickbtn">
+                                <button onClick={handleDecrementone}>
+                                  <i className="fa fa-minus" />
+                                </button>
+                                <form>
+                                  <div className="form-group">
+                                    <input
+                                      type="tel"
+                                      className="form-control"
+                                      placeholder="Quantity"
+                                      value={quantity}
+                                      onChange={handleQuantityChange}
+                                      autoComplete="new-number"
+                                    />
+                                  </div>
+                                </form>
+                                <button onClick={handleIncrementone}>
+                                  <i className="fa fa-plus" />
+                                </button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              <Col lg={3} sm={3} xs={3}>
+                                <p>{`₹${uservariationprice}`}</p>
+                              </Col>
+                              <Col lg={4} sm={4} xs={3}>
+                                <h5>{`₹${formattedAmount}`}</h5>
+                              </Col>
+                              <Col lg={5} sm={5} xs={3}>
+                                <h6>
+                                  Your save
+                                  {formattedSavedAmount >= 0
+                                    ? "₹" + formattedSavedAmount
+                                    : "No savings"}
+                                </h6>
+                              </Col>
+                            </Row>
+                          </div>
+                        </div>
+                        <h5>About Us</h5>
+                        {productDetails ? (
+                          <Table responsive>
+                            <tbody>
+                              <tr>
+                                <th>Brand</th>
+                                <td>{productDetails?.brand_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Age Range</th>
+                                <td>{productDetails?.lifeStage_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Health Condition</th>
+                                <td>{productDetails?.helthCondition_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Target Species</th>
+                                <td>{productDetails?.Petsbreeds_id}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        ) : (
+                          <p>No data available for this product.</p>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      <Button>
+                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart}>
+                          <i className="fa fa-shopping-bag" /> Add to cart
+                        </Link>
+                        <p>{addToCartStatus}</p>
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
+                </Container>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Modal */}
       <div
         className="modal fade"

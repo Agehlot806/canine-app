@@ -1,39 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import HomeImg from "../../assets/images/img/home.png";
-import leftImg from "../../assets/images/img/left-img.png";
-import food from "../../assets/images/img/food.png";
-import video2 from "../../assets/images/video/video1.mp4";
-import paw from "../../assets/images/img/paw.png";
 import bag from "../../assets/images/icon/bag.png";
-import cat from "../../assets/images/img/cat.png";
-import rebit from "../../assets/images/img/rebit.png";
-import hamster from "../../assets/images/img/hamster.png";
-import catpng from "../../assets/images/img/catpng.png";
-import bannerPro from "../../assets/images/img/bannerPro.png";
-import third1 from "../../assets/images/banner/third1.webp";
-import third2 from "../../assets/images/banner/third2.webp";
-import third3 from "../../assets/images/banner/third3.webp";
 import cus1 from "../../assets/images/img/cus1.png";
 import cus2 from "../../assets/images/img/cus2.png";
 import cus3 from "../../assets/images/img/cus3.png";
 import vector from "../../assets/images/img/Vector.png";
-import brand1 from "../../assets/images/img/brand1.png";
-import brand2 from "../../assets/images/img/brand2.png";
-import brand3 from "../../assets/images/img/brand3.png";
-import brandPro1 from "../../assets/images/img/brandPro1.png";
-import brandPro2 from "../../assets/images/img/brandPro2.png";
-import brandPro3 from "../../assets/images/img/brandPro3.png";
 import Footer from "../../directives/footer";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
-import loicon1 from "../../assets/images/img/loicon1.png";
 import app1 from "../../assets/images/img/app1.png";
 import app2 from "../../assets/images/img/app2.png";
 import toast, { Toaster } from "react-hot-toast";
+import { styled } from "styled-components";
+import { AiOutlineStar } from "react-icons/ai";
 
 const homeslider = {
   desktop: {
@@ -342,9 +324,6 @@ function Home(props) {
 
 
   const { id } = useParams();
-  // console.log("id: ", id);
-  // const navigate = useNavigate();
-  // navigate("/login");
   const [buttonVisibility, setButtonVisibility] = useState({});
 
   // Function to handle mouse enter and mouse leave for a card
@@ -361,6 +340,120 @@ function Home(props) {
       [productId]: false,
     }));
   };
+
+  // =============================================================================
+  // ================================================================================
+  // Product details code with modal
+  // ================================================================================
+  // =============================================================================
+
+  const [productDetails, setProductDetails] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedVariant, setSelectedVariant] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  console.log("productDetails---->", productDetails);
+  const handleIncrementone = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleDecrementone = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  useEffect(() => {
+    if (productDetails?.variations && productDetails.variations.length > 0) {
+      const defaultVariant = productDetails.variations[0];
+      setSelectedVariant(defaultVariant.type);
+      setSelectedVariantPrice(defaultVariant.price);
+    }
+  }, [productDetails]);
+
+  // useEffect(() => {
+  //   productData();
+  // }, []);
+
+  const productData = async (selctId) => {
+    axios
+      .get(`${BASE_URL}/items/product_details/${selctId}`)
+      .then((response) => {
+        console.log("=======>", response);
+        console.log("product details Successful");
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  const ratingStar = Array.from({ length: 5 }, (item, index) => {
+    let number = index + 0.5;
+    return (
+      <span key={index}>
+        {productDetails.rating_count >= index + 1 ? (
+          <i className="fa fa-star" />
+          ) : productDetails.rating_count >= number ? (
+            <i className="fa fa-star-half-o" />
+          ) : (
+            <i className="fa fa-star-o" />
+        )}
+      </span>
+    );
+  });
+
+  let uservariationprice = 0;
+
+  if (selectedVariantPrice !== null) {
+    uservariationprice = selectedVariantPrice;
+  }
+  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+
+  const Amount = Math.floor(
+    uservariationprice - (uservariationprice * productDetails.discount) / 100
+  ).toFixed(2);
+
+  const formattedAmount = Number(Amount).toString();
+
+  const savedAmount = Math.floor(
+    productDetails.price * quantity - Amount
+  ).toFixed(2);
+  const formattedSavedAmount = Number(savedAmount).toString();
+
+
+  // Lightbox product =====
+  const [mainImage, setMainImage] = useState("");
+  const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (productDetails.image) {
+      setMainImage(
+        "https://canine.hirectjob.in/storage/app/public/product/" +
+        productDetails.image
+      );
+    }
+  }, [productDetails]);
+
+  const handleThumbnailClick = (index) => {
+    setMainImage(
+      "https://canine.hirectjob.in/storage/app/public/product/" +
+      productDetails.images[index]
+    );
+  };
+
+  const handleMainImageClick = () => {
+    setLightboxIsOpen(true);
+    setLightboxImageIndex(productDetails.images.indexOf(mainImage));
+  };
+  const handeldataId = (id) => {
+    productData(id);
+  }
 
   return (
     <>
@@ -538,7 +631,6 @@ function Home(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6} xs={6}>
-              {/* <h5>Dog Nutrients & Food </h5> */}
               <h1 className="main-head">Latest all Products</h1>
             </Col>
             <Col lg={6} sm={6} xs={6}>
@@ -647,7 +739,7 @@ function Home(props) {
                       </Link>
                       {buttonVisibility[item.id] && (
                         <div className="button-container">
-                          <button>Quick View</button>
+                          <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
                           <button>Buy Now</button>
                         </div>
                       )}
@@ -1082,8 +1174,274 @@ function Home(props) {
       </section>
 
       <Footer />
+
+
+
+      {/* Product details Modal */}
+      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+            <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <section className="section-padding">
+                <Container>
+                  <Row>
+                    <Col lg={6} sm={6}>
+                      <>
+                        <div>
+                          <div className="product-item quickviewimg">
+                            <img
+                              src={mainImage}
+                              alt="Product Image"
+                              onClick={handleMainImageClick}
+                            />
+                          </div>
+                          <div className="needplace">
+                            <Row>
+                              {productDetails?.images &&
+                                productDetails?.images.length > 0 ? (
+                                productDetails.images.map((item, index) => (
+                                  <Col
+                                    lg={3}
+                                    sm={3}
+                                    xs={3}
+                                    className="mb-3"
+                                    key={index}
+                                  >
+                                    <div
+                                      className="product-item-inner"
+                                      onClick={() => handleThumbnailClick(index)}
+                                    >
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          item
+                                        }
+                                        alt={`Image ${index}`}
+                                      />
+                                    </div>
+                                  </Col>
+                                ))
+                              ) : (
+                                <p className="emptyMSG">No Related Image.</p>
+                              )}
+                            </Row>
+                          </div>
+                        </div>
+
+                        {lightboxIsOpen && (
+                          <Lightbox
+                            mainSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[lightboxImageIndex]
+                            }
+                            nextSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[
+                              (lightboxImageIndex + 1) % productDetails.images.length
+                              ]
+                            }
+                            prevSrc={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails.images[
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
+                              ]
+                            }
+                            onCloseRequest={() => setLightboxIsOpen(false)}
+                            onMovePrevRequest={() =>
+                              setLightboxImageIndex(
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                productDetails.images.length
+                              )
+                            }
+                            onMoveNextRequest={() =>
+                              setLightboxImageIndex(
+                                (lightboxImageIndex + 1) % productDetails.images.length
+                              )
+                            }
+                          />
+                        )}
+                      </>
+                    </Col>
+                    <Col lg={6} sm={6}>
+                      <div className="productDetail-content">
+                        <Row>
+                          <Col lg={9} sm={9} xs={9}>
+                            <h4>{productDetails.name}</h4>
+                          </Col>
+                          <Col lg={3} sm={3} xs={3}>
+                            <p>
+                              {productDetails.veg == 0 ? (
+                                <span>
+                                  <span className="non-vegetarian">●</span>
+                                </span>
+                              ) : (
+                                <span>
+                                  <span className="vegetarian">●</span>
+                                </span>
+                              )}
+                            </p>
+                          </Col>
+                        </Row>
+                        <p>
+                          By <span>{productDetails.store_name}</span>
+                        </p>
+
+                        <Wrapper>
+                          <div className="icon-style">
+                            {ratingStar}
+                            <p>({productDetails.rating_count} customer reviews)</p>
+                          </div>
+                        </Wrapper>
+
+                        <div className="needplaceProduct">
+                          <Row>
+                            <Col sm={6} xs={6}>
+                              <div>
+                                <div>
+                                  <div className="tab-container">
+                                    <h6>Variations</h6>
+                                    <Row>
+                                      {productDetails?.variations &&
+                                        productDetails?.variations.length > 0 &&
+                                        productDetails.variations.map((item, index) => (
+                                          <Col lg={4} key={index}>
+                                            <div
+                                              className={`tab-variations ${selectedVariant === item.type
+                                                ? "active"
+                                                : ""
+                                                }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(item.price);
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          </Col>
+                                        ))}
+                                    </Row>
+                                  </div>
+                                </div>
+                              </div>
+                            </Col>
+                            <Col sm={6} xs={6}>
+                              <div className="quantity-btn quickbtn">
+                                <button onClick={handleDecrementone}>
+                                  <i className="fa fa-minus" />
+                                </button>
+                                <form>
+                                  <div className="form-group">
+                                    <input
+                                      type="tel"
+                                      className="form-control"
+                                      placeholder="Quantity"
+                                      value={quantity}
+                                      onChange={handleQuantityChange}
+                                      autoComplete="new-number"
+                                    />
+                                  </div>
+                                </form>
+                                <button onClick={handleIncrementone}>
+                                  <i className="fa fa-plus" />
+                                </button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              <Col lg={3} sm={3} xs={3}>
+                                <p>{`₹${uservariationprice}`}</p>
+                              </Col>
+                              <Col lg={4} sm={4} xs={3}>
+                                <h5>{`₹${formattedAmount}`}</h5>
+                              </Col>
+                              <Col lg={5} sm={5} xs={3}>
+                                <h6>
+                                  Your save
+                                  {formattedSavedAmount >= 0
+                                    ? "₹" + formattedSavedAmount
+                                    : "No savings"}
+                                </h6>
+                              </Col>
+                            </Row>
+                          </div>
+                        </div>
+                        <h5>About Us</h5>
+                        {productDetails ? (
+                          <Table responsive>
+                            <tbody>
+                              <tr>
+                                <th>Brand</th>
+                                <td>{productDetails?.brand_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Age Range</th>
+                                <td>{productDetails?.lifeStage_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Health Condition</th>
+                                <td>{productDetails?.helthCondition_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Target Species</th>
+                                <td>{productDetails?.Petsbreeds_id}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        ) : (
+                          <p>No data available for this product.</p>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      <Button>
+                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart}>
+                          <i className="fa fa-shopping-bag" /> Add to cart
+                        </Link>
+                        <p>{addToCartStatus}</p>
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
+                </Container>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
+const Wrapper = styled.section`
+  justify-content: flex-start;
 
+  icon {
+    font-size: 2rem;
+    color: orange;
+  }
+  .emty-icon {
+    font-size: 2.6rem;
+  }
+  p {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+`;
 export default Home;
