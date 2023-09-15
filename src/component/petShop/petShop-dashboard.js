@@ -7,7 +7,7 @@ import icon from "../../assets/images/icon/pro.png";
 import arrow from "../../assets/images/icon/arrow.png";
 import invoice from "../../assets/images/icon/invoice.png";
 import orders from "../../assets/images/img/orders.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import paydone from "../../assets/images/icon/paydone.png";
@@ -16,6 +16,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import toast, { Toaster } from "react-hot-toast";
 
 function Petshopdashboard() {
+  const navigate = useNavigate();
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   const [totalorder, settotalorder] = useState([]);
@@ -50,6 +51,12 @@ function Petshopdashboard() {
       console.error(error);
     }
   };
+
+  const handleOrderHistory =  (id) => {
+     
+    navigate(`/order-view-details/${id}`)
+  };
+
   const totalOrders = async () => {
     axios
       .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
@@ -67,6 +74,7 @@ function Petshopdashboard() {
     "linear-gradient(180deg, #ffead2 0%, rgba(255, 234, 210, 0) 100%)",
     "linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%)",
   ];
+  
   
   return (
     <>
@@ -210,7 +218,9 @@ function Petshopdashboard() {
                                 <Col sm={9}>
                                   <div className="dashCard-detail">
                                     <h6>
-                                      Order ID : <span>{item.id}</span>
+                                      Order ID : <span>{item.id}
+                                      {console.log('Orderrrrrrrrrrrrr ID:', item.id)}
+                                      </span>
                                     </h6>
                                     <p>
                                       Payment status : <span>{item.payment_status}</span>
@@ -254,7 +264,11 @@ function Petshopdashboard() {
                               </div>
                             </div>
                             <div className="text-center mt-3">
-                              <Button>Detail Order</Button>
+                              <Button
+                               onClick={() => {
+                                          handleOrderHistory(item.id)
+                                        }}
+                              >Detail Order</Button>
                             </div>
                           </div>
                         </Col>

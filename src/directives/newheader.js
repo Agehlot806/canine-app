@@ -580,9 +580,9 @@ function Newheader(props) {
                       <Link
                         // key={item.id}
                         className="nav-link profile-icon"
-                        to={
-                          props.type === "salesman" ? "/salesman-dashboad" : "/"
-                        }
+                        // to={
+                        //    props.type === "salesman" ? "/salesman-dashboad" : "/"
+                        // }
                       >
                         <img
                           src={
