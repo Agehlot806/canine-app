@@ -116,6 +116,7 @@ function PetShopcanineproduct(props) {
     allsubcategary()
     allHealthconditionshow()
     Allsubcategories()
+    fetchWishlistData()
   }, []);
 
   const categoriesProduct = async () => {
@@ -163,13 +164,15 @@ function PetShopcanineproduct(props) {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
+          min_order: productDetails.min_order,
           user_id: storedWholesellerId,
-          item_id: productDetails.id,
+          item_id: productDetails?.id,
+          seller_id: salesmanId ? Number(salesmanId) : "",
         }
       );
 
@@ -183,6 +186,16 @@ function PetShopcanineproduct(props) {
     } catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
+    }
+    const modal = document.querySelector('.modal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
     }
   };
   const fetchWishlistData = async () => {
@@ -524,18 +537,11 @@ function PetShopcanineproduct(props) {
   // =============================================================================
 
   const [productDetails, setProductDetails] = useState([]);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
   console.log("productDetails---->", productDetails);
-  const handleIncrementone = () => {
-    setQuantity(quantity + 1);
-  };
-  const handleDecrementone = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
@@ -552,9 +558,22 @@ function PetShopcanineproduct(props) {
     axios
       .get(`${BASE_URL}/items/product_details/${selctId}`)
       .then((response) => {
-        console.log("=======>", response);
-        console.log("product details Successful");
+        console.log("=======> ", response);
+        console.log("Delete Successful");
         setProductDetails(response.data.data);
+        // Perform any additional actions after successful deletion
+        const fetchedProductDetails = response.data.data;
+
+        if (
+          fetchedProductDetails?.min_order !== null &&
+          fetchedProductDetails?.min_order > 0
+        ) {
+          setMinOrder(fetchedProductDetails.min_order);
+          setQuantity(fetchedProductDetails.min_order); // Set initial quantity to min_order
+        }
+
+        // Perform any additional actions after successful fetch
+        setProductDetails(fetchedProductDetails);
       })
       .catch((error) => {
         console.log(error);
@@ -563,8 +582,18 @@ function PetShopcanineproduct(props) {
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
-    if (!isNaN(newQuantity)) {
+    if (!isNaN(newQuantity) && newQuantity >= minOrder) {
       setQuantity(newQuantity);
+    }
+  };
+
+  const handleIncrementOne = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrementOne = () => {
+    if (quantity > minOrder) {
+      setQuantity(quantity - 1);
     }
   };
 
@@ -630,6 +659,13 @@ function PetShopcanineproduct(props) {
   const handeldataId = (id) => {
     productData(id);
   }
+
+  let wholesellervariationprice = 0;
+
+  if (selectedVariantPrice !== null) {
+    wholesellervariationprice = selectedVariantPrice;
+  }
+  const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
 
   return (
     <>
@@ -1082,6 +1118,7 @@ function PetShopcanineproduct(props) {
 
       < Petshopfooter />
 
+     
       {/* Product details Modal */}
       <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg">
@@ -1091,106 +1128,48 @@ function PetShopcanineproduct(props) {
               <section className="section-padding">
                 <Container>
                   <Row>
-                    <Col lg={6} sm={6}>
-                      <>
-                        <div>
-                          <div className="product-item quickviewimg">
-                            <img
-                              src={mainImage}
-                              alt="Product Image"
-                              onClick={handleMainImageClick}
-                            />
-                          </div>
-                          <div className="needplace">
-                            <Row>
-                              {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
-                                productDetails.images.map((item, index) => (
-                                  <Col
-                                    lg={3}
-                                    sm={3}
-                                    xs={3}
-                                    className="mb-3"
-                                    key={index}
-                                  >
-                                    <div
-                                      className="product-item-inner"
-                                      onClick={() => handleThumbnailClick(index)}
-                                    >
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
-                                          item
-                                        }
-                                        alt={`Image ${index}`}
-                                      />
-                                    </div>
-                                  </Col>
-                                ))
-                              ) : (
-                                <p className="emptyMSG">No Related Image.</p>
-                              )}
-                            </Row>
-                          </div>
+                    <Col lg={6}>
+                      <div>
+                        <div className="product-item quickviewimg">
+                          <img src={mainImage} alt="Product Image" />
                         </div>
-
-                        {lightboxIsOpen && (
-                          <Lightbox
-                            mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
-                              productDetails.images[lightboxImageIndex]
-                            }
-                            nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
-                              productDetails.images[
-                              (lightboxImageIndex + 1) % productDetails.images.length
-                              ]
-                            }
-                            prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
-                              productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
-                              ]
-                            }
-                            onCloseRequest={() => setLightboxIsOpen(false)}
-                            onMovePrevRequest={() =>
-                              setLightboxImageIndex(
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                productDetails.images.length
-                              )
-                            }
-                            onMoveNextRequest={() =>
-                              setLightboxImageIndex(
-                                (lightboxImageIndex + 1) % productDetails.images.length
-                              )
-                            }
-                          />
-                        )}
-                      </>
+                        <div className="needplace">
+                          <Row>
+                            {/* <Col sm={2} className="mb-3">
+                      <div
+                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
+                        <img src={singleImage} />
+                      </div></Col> */}
+                            {productDetails?.images &&
+                              productDetails?.images.length > 0 ? (
+                              productDetails?.images.map((item, index) => (
+                                <Col sm={3} className="mb-3" key={index}>
+                                  <div
+                                    className="product-item-inner"
+                                    onClick={() => handleThumbnailClick(index)}
+                                  >
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/public/product/" +
+                                        item
+                                      }
+                                      alt={`Image ${index}`}
+                                    />
+                                  </div>
+                                </Col>
+                              ))
+                            ) : (
+                              <p className="emptyMSG">No Related Image.</p>
+                            )}
+                          </Row>
+                        </div>
+                      </div>
                     </Col>
-                    <Col lg={6} sm={6}>
+                    <Col lg={6}>
                       <div className="productDetail-content">
                         <Row>
-                          <Col lg={9} sm={9} xs={9}>
+                          <Col lg={10}>
                             <h4>{productDetails.name}</h4>
-                          </Col>
-                          <Col lg={3} sm={3} xs={3}>
-                            <p>
-                              {productDetails.veg == 0 ? (
-                                <span>
-                                  <span className="non-vegetarian">●</span>
-                                </span>
-                              ) : (
-                                <span>
-                                  <span className="vegetarian">●</span>
-                                </span>
-                              )}
-                            </p>
                           </Col>
                         </Row>
                         <p>
@@ -1206,38 +1185,34 @@ function PetShopcanineproduct(props) {
 
                         <div className="needplaceProduct">
                           <Row>
-                            <Col sm={6} xs={6}>
-                              <div>
-                                <div>
-                                  <div className="tab-container">
-                                    <h6>Variations</h6>
-                                    <Row>
-                                      {productDetails?.variations &&
-                                        productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map((item, index) => (
-                                          <Col lg={4} key={index}>
-                                            <div
-                                              className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
-                                                }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(item.price);
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          </Col>
-                                        ))}
-                                    </Row>
-                                  </div>
-                                </div>
+                            <Col sm={6}>
+                              <div className="tab-container">
+                                <h6>Variations</h6>
+                                <Row>
+                                  {productDetails?.variations &&
+                                    productDetails?.variations.length > 0 &&
+                                    productDetails.variations.map((item, index) => (
+                                      <Col lg={4} sm={4} xs={3} key={index}>
+                                        <div
+                                          className={`tab-variations ${selectedVariant === item.type
+                                            ? "active"
+                                            : ""
+                                            }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      </Col>
+                                    ))}
+                                </Row>
                               </div>
                             </Col>
-                            <Col sm={6} xs={6}>
+                            <Col sm={6}>
                               <div className="quantity-btn quickbtn">
-                                <button onClick={handleDecrementone}>
+                                <button onClick={handleDecrementOne}>
                                   <i className="fa fa-minus" />
                                 </button>
                                 <form>
@@ -1252,7 +1227,7 @@ function PetShopcanineproduct(props) {
                                     />
                                   </div>
                                 </form>
-                                <button onClick={handleIncrementone}>
+                                <button onClick={handleIncrementOne}>
                                   <i className="fa fa-plus" />
                                 </button>
                               </div>
@@ -1262,24 +1237,34 @@ function PetShopcanineproduct(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
+                              {/* <Col lg={3}> */}
+                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
+                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
+                              {/* {console.log(
+                          "productDetails?.variations?.price: ",
+                          productDetails?.variations?.price
+                        )} */}
+                              {/* </Col> */}
+                              <Col lg={4}>
+                                <h5>{`₹${wholesellervariationprice}`}</h5>
                               </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
+                              {/* <Col lg={5}>
+                        <h6>
+                          Your save
+                          {formattedSavedAmount >= 0
+                            ? "₹" + formattedSavedAmount
+                            : "No savings"}
+                        </h6>
+                      </Col> */}
                             </Row>
                           </div>
                         </div>
                         <h5>About Us</h5>
+                        {console.log(
+                          "productDetails.brand_id: ",
+                          productDetails.brand_id
+                        )}
+
                         {productDetails ? (
                           <Table responsive>
                             <tbody>
@@ -1299,6 +1284,10 @@ function PetShopcanineproduct(props) {
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
                               </tr>
+                              {/* <tr>
+                          <th>Item From</th>
+                          <td>Pellet</td>
+                        </tr> */}
                             </tbody>
                           </Table>
                         ) : (
@@ -1309,12 +1298,23 @@ function PetShopcanineproduct(props) {
                   </Row>
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      <Button>
-                        <Link to={`/petshop-add-cart/${productDetails.id}`} onClick={handleAddToCart}>
-                          <i className="fa fa-shopping-bag" /> Add to cart
-                        </Link>
-                        <p>{addToCartStatus}</p>
-                      </Button>
+                      {verifiredIdaccess === 1 ? (
+                        <Button>
+                          <Link
+                            to={`/petshop-add-cart/${productDetails.id}`}
+                            onClick={handleAddToCart}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button onClick={demousercheck}>
+                          <Link>
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                        </Button>
+                      )}
+                      <p>{addToCartStatus}</p>
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">
@@ -1325,6 +1325,7 @@ function PetShopcanineproduct(props) {
                       </Button>
                     </div>
                   )}
+                  {/* </Row> */}
                 </Container>
               </section>
             </div>
