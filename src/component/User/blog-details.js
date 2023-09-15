@@ -73,13 +73,13 @@ function Blogdetails() {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
           user_id: storedUserId,
-          item_id: productDetails.id,
+          item_id: productDetails?.id,
         }
       );
 
@@ -93,6 +93,16 @@ function Blogdetails() {
     } catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
+    }
+    const modal = document.querySelector('.modal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
     }
   };
   const fetchWishlistData = async () => {
