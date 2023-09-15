@@ -276,21 +276,21 @@ function PetShopHeader(props) {
                   New
                 </Link>
               </li> */}
-                <li className="nav-item dropdown mega-dropdown">
-                  <Link
+                <li className="nav-item dropdown new-mega-drop">
+                  <a
                     className="nav-link dropdown-toggle"
-                    to=""
-                    id="megaDropdown"
+                    href="#"
+                    id="navbarDropdown"
                     role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Dog
-                  </Link>
+                    Dogs
+                  </a>
                   <div
-                    className="dropdown-menu mega-menu"
-                    aria-labelledby="megaDropdown"
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">
@@ -398,11 +398,11 @@ function PetShopHeader(props) {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown mega-dropdown">
+                <li className="nav-item dropdown new-mega-drop">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
-                    id="megaDropdown"
+                    id="navbarDropdown"
                     role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
@@ -411,8 +411,8 @@ function PetShopHeader(props) {
                     Cats
                   </a>
                   <div
-                    className="dropdown-menu mega-menu"
-                    aria-labelledby="megaDropdown"
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">
@@ -637,7 +637,7 @@ function PetShopHeader(props) {
                         to={
                           loginType == "salesman"
                             ? "/salesman-dashboad"
-                            : "/petshop-home"
+                            : ""
                         }
                       >
                         {/* {loginType === "salesman" ? "Dashboard" : "Home"} */}

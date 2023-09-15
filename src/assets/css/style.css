@@ -3379,3 +3379,17 @@ button.Apply-price {
   font-size: 35px;
   float: right;
 }
+.food-product button a {
+  color: #000;
+}
+
+li.nav-item.dropdown.new-mega-drop .dropdown-menu {
+  position: absolute;
+  width: 900px;
+  left: -140px;
+  padding: 20px;
+}
+
+li.nav-item.dropdown.new-mega-drop {
+  position: relative;
+}
