@@ -367,6 +367,9 @@ a {
   font-size: 25px;
   color: red;
 }
+.food-product i:hover {
+  font-size: 30px;
+}
 .product-bag h6 {
   color: #000;
 }
@@ -374,8 +377,12 @@ a {
 .product-bag a img {
   width: 40px;
   height: 40px;
+  
 }
-
+.product-bag a img:hover {
+  width: 45px;
+  height: 45px;
+}
 .product-bag a {
   float: right;
 }
@@ -3383,6 +3390,10 @@ button.Apply-price {
   color: #000;
 }
 
+.food-product button:hover {
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
 li.nav-item.dropdown.new-mega-drop .dropdown-menu {
   position: absolute;
   width: 900px;
@@ -3392,4 +3403,10 @@ li.nav-item.dropdown.new-mega-drop .dropdown-menu {
 
 li.nav-item.dropdown.new-mega-drop {
   position: relative;
+}
+
+.linereview {
+  border: 1px solid whitesmoke;
+  margin-bottom: 10px;
+  padding: 10px;
 }

@@ -691,7 +691,7 @@ function Productdetail() {
             {orderlist.map((order) => (
               <div key={order.id}>
                 {order.callback[0].user_details && (
-                  <>
+                  <div className="linereview">
                     <p>{order.callback[0].user_details.comment}</p>
 
                     <div className="row">
@@ -722,9 +722,9 @@ function Productdetail() {
                         )}
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
-                <hr />
+                {/* <hr /> */}
               </div>
             ))}
             <a href="">Read more</a>
