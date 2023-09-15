@@ -187,6 +187,7 @@ function Newheader(props) {
     setSearchQuery(e.target.value);
   };
 
+  
   return (
     <>
       <Toaster />
@@ -228,23 +229,23 @@ function Newheader(props) {
                   New
                 </Link>
               </li> */}
-                <li className="nav-item dropdown mega-dropdown">
-                  <Link
+                <li className="nav-item dropdown new-mega-drop">
+                  <a
                     className="nav-link dropdown-toggle"
-                    to=""
-                    id="megaDropdown"
+                    href="#"
+                    id="navbarDropdown"
                     role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     Dog
-                  </Link>
+                  </a>
                   <div
-                    className="dropdown-menu mega-menu"
-                    aria-labelledby="megaDropdown"
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
                   >
-                    <div className="row">
+                     <div className="row">
                       <div className="col-md-4">
                         <>
                           <h5 className="mega-title">Dog Food</h5>
@@ -350,11 +351,11 @@ function Newheader(props) {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown mega-dropdown">
+                <li className="nav-item dropdown new-mega-drop">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
-                    id="megaDropdown"
+                    id="navbarDropdown"
                     role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
@@ -363,10 +364,10 @@ function Newheader(props) {
                     Cats
                   </a>
                   <div
-                    className="dropdown-menu mega-menu"
-                    aria-labelledby="megaDropdown"
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
                   >
-                    <div className="row">
+                     <div className="row">
                       <div className="col-md-4">
                         <>
                           <h5 className="mega-title">Cat Food & Treats</h5>
@@ -470,6 +471,7 @@ function Newheader(props) {
                     </div>
                   </div>
                 </li>
+                
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
@@ -580,9 +582,9 @@ function Newheader(props) {
                       <Link
                         // key={item.id}
                         className="nav-link profile-icon"
-                        to={
-                          props.type === "salesman" ? "/salesman-dashboad" : "/"
-                        }
+                        to=""
+                          // props.type === "salesman" ? "/salesman-dashboad" : "home"
+                       
                       >
                         <img
                           src={

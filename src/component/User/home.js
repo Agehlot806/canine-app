@@ -398,10 +398,10 @@ function Home(props) {
       <span key={index}>
         {productDetails.rating_count >= index + 1 ? (
           <i className="fa fa-star" />
-          ) : productDetails.rating_count >= number ? (
-            <i className="fa fa-star-half-o" />
-          ) : (
-            <i className="fa fa-star-o" />
+        ) : productDetails.rating_count >= number ? (
+          <i className="fa fa-star-half-o" />
+        ) : (
+          <i className="fa fa-star-o" />
         )}
       </span>
     );
@@ -740,7 +740,9 @@ function Home(props) {
                       {buttonVisibility[item.id] && (
                         <div className="button-container">
                           <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
-                          <button>Buy Now</button>
+                          <button><Link to={`/add-cart/${item.id}`} onClick={handleAddToCart}>
+                           Buy Now
+                          </Link></button>
                         </div>
                       )}
                     </div>
@@ -1182,7 +1184,7 @@ function Home(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-            <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i class="quickarea fa fa-times" data-dismiss="modal" />
               <section className="section-padding">
                 <Container>
                   <Row>
