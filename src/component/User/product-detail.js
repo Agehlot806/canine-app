@@ -29,13 +29,13 @@ function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
-  const [allproduct, setallproduct] = useState([]);
-
   console.log(
     "productDetails.variations[0].type: ",
     productDetails?.variations?.type
   );
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
+  const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [notifyMeData, setNotifyMeData] = useState("");
   console.log("productDetails--- ", productDetails);
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
@@ -68,7 +68,6 @@ function Productdetail() {
     fetchLifestage();
     AllBanner();
     AllOrderList();
-    fetchWishlistData();
     // fetchProductData();
   }, []);
 
@@ -79,7 +78,6 @@ function Productdetail() {
         console.log("=======> ", response);
         console.log("Delete Successful");
         setProductDetails(response.data.data);
-
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -89,6 +87,34 @@ function Productdetail() {
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
   console.log("customer_id: ", customer_id);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
+          user_id: storedUserId,
+          item_id: productDetails?.id,
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+  };
 
   // ****************notifyme
   const [email, setEmail] = useState("");
@@ -123,10 +149,10 @@ function Productdetail() {
   //   let number = index + 0.5;
   //   return (
   //     <span key={index}>
-  //       {productDetails.rating_count ||
-  //         productDetails?.status + 0.5 >= index + 1 ? (
+  //       {productDetails?.rating_count ||
+  //       productDetails?.status + 0.5 >= index + 1 ? (
   //         <FaStar className="icon" />
-  //       ) : productDetails.rating_count ||
+  //       ) : productDetails?.rating_count ||
   //         productDetails?.status + 0.5 >= number ? (
   //         <FaStarHalfAlt className="icon" />
   //       ) : (
@@ -202,23 +228,7 @@ function Productdetail() {
       // Handle error as needed
     }
   };
-  const [wishlistData, setWishlistData] = useState([]);
 
-  const [buttonVisibility, setButtonVisibility] = useState({});
-
-  const handleMouseEnter = (productId) => {
-    setButtonVisibility((prevVisibility) => ({
-      ...prevVisibility,
-      [productId]: true,
-    }));
-  };
-
-  const handleMouseLeave = (productId) => {
-    setButtonVisibility((prevVisibility) => ({
-      ...prevVisibility,
-      [productId]: false,
-    }));
-  };
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
     "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
@@ -255,103 +265,7 @@ function Productdetail() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
-  const [addToCartStatus, setAddToCartStatus] = useState("");
-  const [isFavCheck, setisFavCheck] = useState(false);
-  useEffect(() => {
-    if (allproduct.length > 0) {
-      handleWishlist();
-    }
-
-    return () => {
-      setisFavCheck(false);
-    };
-  }, [isFavCheck]);
-
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product`,
-        {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
-          user_id: storedUserId,
-          item_id: productDetails.id,
-        }
-      );
-
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
-  };
-  const fetchWishlistData = async () => {
-    try {
-      await axios
-        .get(`${BASE_URL}/customer/wish-list/${storedUserId}`)
-        .then((response) => {
-          console.log("response in whisList", response);
-          setWishlistData(response.data.data);
-          setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
-        });
-    } catch (error) {
-      console.error("Error fetching wishlist data:", error);
-    }
-  };
-  const productDatatwo = async (selctId) => {
-    axios
-      .get(`${BASE_URL}/items/product_details/${selctId}`)
-      .then((response) => {
-        console.log("=======>", response);
-        console.log("product details Successful");
-        setProductDetails(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const handeldataId = (id) => {
-    productDatatwo(id);
-  }
-  const handleWishlist = () => {
-    let newArr = [...allproduct];
-
-    const filterData = allproduct.filter((el) => {
-      return wishlistData.some((ele) => {
-        return ele.item_id === el.id;
-      });
-    });
-    console.log("filterData", filterData);
-
-    if (filterData.length > 0) {
-      for (let index = 0; index < filterData.length; index++) {
-        const element = filterData[index];
-        console.log("element", element);
-        const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
-        newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
-        setallproduct(newArr);
-      }
-    }
-  };
   const addToWishlist = async (item_id) => {
-    if (!storedUserId) {
-      // If the user is not logged in, navigate to the login page
-      navigate("/login");
-      return; // Exit the function without adding to wishlist
-    }
-
     const formData = new FormData();
     formData.append("user_id", storedUserId);
     formData.append("item_id", item_id);
@@ -362,11 +276,7 @@ function Productdetail() {
       .then((response) => {
         console.log("response143", response);
         if (response.data.message) {
-          toast.success(response.data.message);
-          let newArr = [...allproduct];
-          const index = allproduct.map((el) => el.id).indexOf(item_id);
-          newArr[index].isFav = true;
-          setallproduct(newArr);
+          toast.success("Added successfully");
         }
       })
       .catch((error) => {
@@ -431,7 +341,6 @@ function Productdetail() {
     }
   };
 
-  const [totalreview, setTotalreview] = useState(false);
   const [orderlist, setorderlist] = useState([]);
   const AllOrderList = async () => {
     try {
@@ -444,10 +353,41 @@ function Productdetail() {
     }
   };
 
-  const toggleReview = (e) => {
-    e.preventDefault();
-    setTotalreview(!totalreview);
+
+  // ===================================================
+  // ======================================================
+
+  const [buttonVisibility, setButtonVisibility] = useState({});
+  const handleMouseEnter = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: true,
+    }));
   };
+  const handleMouseLeave = (productId) => {
+    setButtonVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [productId]: false,
+    }));
+  };
+
+  const handeldataId = (id) => {
+    productDatatwo(id);
+  }
+  
+  const productDatatwo = async (selctId) => {
+    axios
+      .get(`${BASE_URL}/items/product_details/${selctId}`)
+      .then((response) => {
+        console.log("=======>", response);
+        console.log("product details Successful");
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Toaster />
@@ -738,91 +678,46 @@ function Productdetail() {
           <hr />
           <div className="Product-Review">
             <h1 className="main-head mt-4">Product Review</h1>
-            {orderlist && orderlist.length > 1 ? (
-              orderlist.map(
-                (order, index) =>
-                  index === 0 && (
-                    <div key={order.id}>
-                      {order.callback[0].user_profile && (
-                        <div className="Product-img">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              order.callback[0].user_profile[0].image
-                            }
-                          />
-                          <span>
-                            {order.callback[0].user_profile[0].f_name}
-                          </span>
-                        </div>
-                      )}
-                      {order.callback[0].user_details && (
-                        <>
-                          <p>{order.callback[0].user_details.comment}</p>
-                          <Wrapper>
-                            <div className="icon-style">
-                              {Array.from({
-                                length: order.callback[0].user_details.rating,
-                              }).map((_, index) => (
-                                <i className="fa-solid fa-star" key={index} />
-                              ))}
+            {orderlist.map((order) => (
+              <div key={order.id}>
+                {order.callback[0].user_details && (
+                  <>
+                    <p>{order.callback[0].user_details.comment}</p>
+
+                    <div className="row">
+                      <div className="col-sm-3 col">
+                        <Wrapper>
+                          <div className="icon-style">
+                            {Array.from({
+                              length: order.callback[0].user_details.rating,
+                            }).map((_, index) => (
+                              <i className="fa-solid fa-star" key={index} />
+                            ))}
+                          </div>
+                        </Wrapper>
+                      </div>
+                      <div className="col-sm-5 col">
+                        {order.callback[0].user_profile && (
+                          <div className="Product-img">
+                            <img src={order.callback[0].user_profile.image} />
+                            <span>
+                              {" "}
+                              {order.callback[0].user_profile.f_name}
+                            </span>
+                            <div className="user-icon">
+                              <i class="fa fa-user" aria-hidden="true"></i>
+                              <span> 1 2 3 4 5</span>
                             </div>
-                          </Wrapper>
-                        </>
-                      )}
-                      <hr />
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )
-              )
-            ) : (
-              <p>No Review</p>
-            )}
-            <div className="reviewMore">
-              <a href="#" onClick={toggleReview}>
-                Read more
-                {totalreview ? (
-                  <i className="fa fa-angle-up" aria-hidden="true"></i>
-                ) : (
-                  <i className="fa fa-angle-down" aria-hidden="true"></i>
+                  </>
                 )}
-              </a>
-              {totalreview && (
-                <>
-                  {orderlist.map((order) => (
-                    <div key={order.id}>
-                      {order.callback[0].user_profile && (
-                        <div className="Product-img">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              order.callback[0].user_profile[0].image
-                            }
-                          />
-                          <span>
-                            {order.callback[0].user_profile[0].f_name}
-                          </span>
-                        </div>
-                      )}
-                      {order.callback[0].user_details && (
-                        <>
-                          <p>{order.callback[0].user_details.comment}</p>
-                          <Wrapper>
-                            <div className="icon-style">
-                              {Array.from({
-                                length: order.callback[0].user_details.rating,
-                              }).map((_, index) => (
-                                <i className="fa-solid fa-star" key={index} />
-                              ))}
-                            </div>
-                          </Wrapper>
-                        </>
-                      )}
-                      <hr />
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
+                <hr />
+              </div>
+            ))}
+            <a href="">Read more</a>
           </div>
         </Container>
       </section>
@@ -874,18 +769,8 @@ function Productdetail() {
                       }}
                     >
                       <i
-                        class={
-                          item.isFav
-                            ? "fa-solid fa-heart"
-                            : "fa-regular fa-heart"
-                        }
-                        onClick={(id) => {
-                          if (storedUserId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
-                          }
-                        }}
+                        class="fa fa-heart-o"
+                        onClick={(id) => addToWishlist(item.id)}
                       />
                       <Link to={`/product-details/${item.id}`}>
                         <div className="text-center">
@@ -929,12 +814,14 @@ function Productdetail() {
                           </Row>
                         </div>
                       </Link>
+
                       {buttonVisibility[item.id] && (
                         <div className="button-container">
                           <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
                           <button>Buy Now</button>
                         </div>
                       )}
+
                     </div>
                   </Col>
                 ))}
@@ -943,8 +830,64 @@ function Productdetail() {
         </Container>
       </section>
       <Footer />
- {/* Product details Modal */}
- <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+      {/* Modal */}
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
+                    <option>Choose....</option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{/* Product details Modal */}
+<div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -994,7 +937,6 @@ function Productdetail() {
                             </Row>
                           </div>
                         </div>
-
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
@@ -1057,14 +999,12 @@ function Productdetail() {
                         <p>
                           By <span>{productDetails.store_name}</span>
                         </p>
-
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
                             <p>({productDetails.rating_count} customer reviews)</p>
                           </div>
                         </Wrapper>
-
                         <div className="needplaceProduct">
                           <Row>
                             <Col sm={6} xs={6}>
@@ -1192,60 +1132,9 @@ function Productdetail() {
           </div>
         </div>
       </div>
-      {/* Modal */}
-      <div
-        className="modal fade"
-        id="soldoutModel"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h4>{productDetails.name}</h4>
-              <p>{productDetails.description}</p>
-              <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option>Choose....</option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* // ============================== */}
+
+
     </>
   );
 }

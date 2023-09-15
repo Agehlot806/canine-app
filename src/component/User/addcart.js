@@ -235,8 +235,6 @@ function Addcart() {
     }
   };
 
-
-
   const [selectedCity, setSelectedCity] = useState("");
   console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
@@ -292,7 +290,6 @@ function Addcart() {
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
 
-
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -309,17 +306,19 @@ function Addcart() {
     };
 
     try {
-      const response = await axios.post(`${BASE_URL}/customer/address/add`, data);
+      const response = await axios.post(
+        `${BASE_URL}/customer/address/add`,
+        data
+      );
       setResponseMessage(response.data.message);
-      toast.success('Successfully added!');
+      toast.success("Successfully added!");
 
       // Call allAddressList to update the address list
       await allAddressList();
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
-
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
@@ -407,19 +406,19 @@ function Addcart() {
       price: item.price,
       quantity: item.quantity,
       tax_amount: taxamound,
-      discount_on_item: disscountvalue?.discount,
+      discount_on_item: disscountvalue?.discount || "",
     }));
     const requestData = {
       user_id: customer_id,
-      coupon_discount_amount: disscountvalue?.discount,
-      coupon_discount_title: disscountvalue?.title,
+      coupon_discount_amount: disscountvalue?.discount || "",
+      coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
       total_tax_amount: taxamound,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
-      coupon_code: disscountvalue?.code,
+      coupon_code: disscountvalue?.code || "",
       order_type: "delivery",
       checked: selectedInput,
       store_id: 1,
@@ -427,9 +426,10 @@ function Addcart() {
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
       item_campaign_id: "",
-      order_amount: parseInt(
-        originalPrice * 0.05 + originalPrice - disscountvalue?.discount
-      ) || "",
+      order_amount:
+        parseInt(
+          originalPrice * 0.05 + originalPrice - disscountvalue?.discount
+        ) || originalPrice * 0.05 + originalPrice,
       cart: cartData,
     };
     fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
@@ -529,31 +529,31 @@ function Addcart() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -608,7 +608,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -743,10 +743,11 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                              originalPrice -
-                              disscountvalue?.discount
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                             )}`}
-                            {/* Calculate and display the Rounding Adjust */}
+                            {/* Calculate  and display the Rounding Adjust */}
                           </h5>
                         </Col>
                       </Row>
@@ -819,10 +820,11 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${addressContentVisible
-                                ? "fa-arrow-up"
-                                : "fa-arrow-down"
-                                }`}
+                              className={`fa ${
+                                addressContentVisible
+                                  ? "fa-arrow-up"
+                                  : "fa-arrow-down"
+                              }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -925,7 +927,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                            // onClick={handleAddToCart}
+                              // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1411,11 +1413,11 @@ function Addcart() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -1542,8 +1544,8 @@ function Addcart() {
                             onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
-                          // data-toggle="modal"
-                          // data-target="#Coupon"
+                            // data-toggle="modal"
+                            // data-target="#Coupon"
                           >
                             Apply
                           </button>
