@@ -280,7 +280,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "treats" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )
@@ -299,7 +299,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "toys" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )
@@ -318,7 +318,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "accessories" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )
@@ -337,7 +337,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "medicine" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )

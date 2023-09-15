@@ -9,6 +9,8 @@ import { toast } from "react-hot-toast";
 function Updateprofile() {
 
   const navigate = useNavigate()
+  const [selectedImage, setSelectedImage] = useState(null);
+
 
   // const navigate = useNavigate();
   // // const [uploadField, setUploadField] = useState([{image:""}])
@@ -119,7 +121,12 @@ function Updateprofile() {
       });
   }, []);
   const halderimage = (e) => {
-    setimgage(e.target.files[0])
+    // setimgage(e.target.files[0])
+    const file = e.target.files[0];
+    setimgage(file);  // Store the file directly
+
+    // Create a preview URL for the selected image
+    setSelectedImage(URL.createObjectURL(file));
   }
   const UpdateProfile = (e) => {
     e.preventDefault();
@@ -226,7 +233,15 @@ function Updateprofile() {
                       Upload Image<span style={{ color: "#008efd" }}>*</span>
                     </Form.Label>
                     <Form.Control type="file" onChange={halderimage} />
-                    <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' />
+                    {/* {selectedImage && (
+                      <img src={selectedImage} alt="Selected Image" style={{ width: '100px', height: '100px' }} />
+                    )} */}
+                    {/* <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' /> */}
+                    <img
+                      src={selectedImage ? selectedImage : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`}
+                      alt="Image"
+                      style={{ width: '100px', height: '100px' }}
+                    />
                   </Form.Group>
                   {/* {imagePhoto ?
                                                             <img src={filePhoto} alt="file"></img> : ""} */}

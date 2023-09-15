@@ -10,11 +10,14 @@ import toast, { Toaster } from 'react-hot-toast';
 function PetshopUpdateprofile() {
   // const [uploadField, setUploadField] = useState([{image:""}])
   const navigator = useNavigate();
+  const [selectedImage, setSelectedImage] = useState(null);
   // const [imageFile, setImageFile] = useState(null);
   // const [imageUrl, setImageUrl] = useState({ image: "" } || null);
   // console.log(imageUrl);
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
+
+
 
   // const [profileData, setProfileData] = useState({
   //   f_name: "",
@@ -22,7 +25,7 @@ function PetshopUpdateprofile() {
   //   email: "", 
   //   phone: "", 
   //   image: "",
-    
+
   // });
   // console.log("profileData: ", profileData);
   const [name, setname] = useState("")
@@ -40,31 +43,36 @@ function PetshopUpdateprofile() {
   //       setemail(response.data.data[0].email)
   //       setphone(response.data.data[0].phone)
   //       setimgage(response.data.data[0].image)
-        
+
   //   })
   //   .catch((error) => {
   //     console.error(error);
   //   });
   // },[]);
-  const getWholesellerProfile =()=>{
+  const getWholesellerProfile = () => {
     axios.get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
-    .then((response)=>{
+      .then((response) => {
 
-      console.log("===========>>>>>>>>> ", response.data);
+        console.log("===========>>>>>>>>> ", response.data);
         setname(response.data.data[0].f_name)
         setnamel(response.data.data[0].l_name)
         setemail(response.data.data[0].email)
         setphone(response.data.data[0].phone)
         setimgage(response.data.data[0].image)
         // Update the profileData state
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
   }
   const halderimage = (e) => {
-    setimgage(e.target.files[0])
+    // setimgage(e.target.files[0])
+    const file = e.target.files[0];
+    setimgage(file);  // Store the file directly
+
+    // Create a preview URL for the selected image
+    setSelectedImage(URL.createObjectURL(file));
   }
 
   const UpdateProfile = (e) => {
@@ -110,13 +118,13 @@ function PetshopUpdateprofile() {
       getWholesellerProfile();
     }
   }, []);
-  const onclickdata =()=>{
+  const onclickdata = () => {
     toast.success("Successfully updated!")
 
   }
 
   // const getWholesellerProfile = async () => {
-    
+
   //   await axios
   //     .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
   //     .then((response) => {
@@ -128,9 +136,9 @@ function PetshopUpdateprofile() {
   //           email: response.data.data[0].email, 
   //           phone: response.data.data[0].phone, 
   //           image: response.data.data[0].image,
-            
+
   //         });
-          
+
   //         if (profile.image) {
   //           setImageUrl(profile.image);
   //         }
@@ -153,7 +161,7 @@ function PetshopUpdateprofile() {
     //         email: response.data.data[0].email, 
     //         phone: response.data.data[0].phone, 
     //         image: response.data.data[0].image,
-            
+
     //       });
     //     }
     //   })
@@ -161,19 +169,19 @@ function PetshopUpdateprofile() {
     //     console.error(error);
     //   });
     axios.get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
-    .then((response)=>{
+      .then((response) => {
 
-      console.log("salesmannnnnnnnnnnnnnn ", response.data);
+        console.log("salesmannnnnnnnnnnnnnn ", response.data);
         setname(response.data.data[0].f_name)
         setnamel(response.data.data[0].l_name)
         setemail(response.data.data[0].email)
         setphone(response.data.data[0].phone)
         setimgage(response.data.data[0].image)
         // Update the profileData state
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   // const handleImageUpload = (e) => {
@@ -185,7 +193,7 @@ function PetshopUpdateprofile() {
   //   if (file) {
   //     setImageFile(file);
 
-      
+
   //     const previewUrl = URL.createObjectURL(file);
   //     setImageUrl(previewUrl);
   //   }
@@ -253,7 +261,7 @@ function PetshopUpdateprofile() {
 
   return (
     <>
-    
+
       <PetShopHeader />
       <section className="section-padding">
         <Container>
@@ -288,7 +296,7 @@ function PetshopUpdateprofile() {
                           //     f_name: e.target.value.replace(/[^A-Za-z]/, ""),
                           //   })
                           // }
-                          onChange={(e)=>setname(e.target.value)}
+                          onChange={(e) => setname(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
@@ -309,7 +317,7 @@ function PetshopUpdateprofile() {
                           //   })
                           // }
                           value={namel}
-                          onChange={(e)=>setnamel(e.target.value)}
+                          onChange={(e) => setnamel(e.target.value)}
                         />
                       </Form.Group>
                     </Col>
@@ -330,7 +338,7 @@ function PetshopUpdateprofile() {
                       //   })
                       // }
                       value={email}
-                      onChange={(e)=>setemail(e.target.value)}
+                      onChange={(e) => setemail(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
@@ -354,7 +362,7 @@ function PetshopUpdateprofile() {
                       //   })
                       // }
                       value={phone}
-                      onChange={(e)=>setphone(e.target.value)}
+                      onChange={(e) => setphone(e.target.value)}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
@@ -388,13 +396,26 @@ function PetshopUpdateprofile() {
                       </div>
                     )} */}
                     <Form.Control type="file" onChange={halderimage} />
-                    <img src={
+                    {/* <img src={
                      loginType == "salesman" ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" + imgage : "https://canine.hirectjob.in/storage/app/public/profile/" + imgage
-                      } alt='' />
+                      } alt='' /> */}
+                    {selectedImage ? (
+                      <img src={selectedImage} alt="Selected Image" style={{ width: '100px', height: '100px' }} />
+                    ) : (
+                      <img
+                        src={
+                          loginType === "salesman"
+                            ? `https://canine.hirectjob.in/storage/app/public/delivery-man/${imgage}`
+                            : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`
+                        }
+                        alt="Image"
+                        style={{ width: '100px', height: '100px' }}
+                      />
+                    )}
                   </Form.Group>
 
                   <Button type="submit" className="mt-4" onClick={(e) => {
-                     if (loginType == "salesman") {
+                    if (loginType == "salesman") {
                       handleSalesmanUpdate(e);
                     } else {
                       UpdateProfile(e);

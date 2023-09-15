@@ -318,7 +318,7 @@ function Servicedate() {
                     maxLength={10}
                     className="form-control"
                     placeholder="+91 00000000"
-                    onChange={(e) => setMobile(e.target.value)}
+                    onChange={(e) => setMobile(e.target.value.replace(/[^0-9+]/g, ""))}
                     value={mobile}
                   />
                   {/* {formValid.mobile && (
