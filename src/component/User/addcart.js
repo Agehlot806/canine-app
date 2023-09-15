@@ -38,18 +38,30 @@ function Addcart() {
   const redirectToShipping = () => {
     Navigate("/shipping");
   };
+  // loadRazorpayScript
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
 
   const handlePayment = async () => {
     try {
       // const response = await loadRazorpay();
-      loadRazorpay()
-        .then((response) => {
-          // console.log("response handlePayment: ", response);
-          // Code to execute after the script has loaded
-        })
-        .catch((error) => {
-          console.error("Error loading Razorpay script:", error);
-        });
+      // loadRazorpay()
+      //   .then((response) => {
+      //     console.log("response handlePayment: ", response);
+      //     // Code to execute after the script has loaded
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error loading Razorpay script:", error);
+      //   });
+      await loadRazorpayScript();
 
       const options = {
         key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
@@ -915,8 +927,14 @@ function Addcart() {
                             <h4>Total</h4>
                             <h2>
                               ₹{" "}
-                              {`${parseInt(
+                              {/* {`${parseInt(
                                 originalPrice * 0.05 + originalPrice
+                              )}`} */}
+                              {`${parseInt(
+                                originalPrice * 0.05 +
+                                  originalPrice -
+                                  disscountvalue?.discount ||
+                                  originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
