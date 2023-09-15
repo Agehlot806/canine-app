@@ -36,6 +36,7 @@ function DashboadSalesman() {
     navigate("/petshop-product");
   };
   const handleOrderHistory = async (id) => {
+    console.log("iiiiiiiiiiiiiiiiiiid",id);
     await localStorage.setItem("wholeSellerId", id);
     await localStorage.setItem("UserWholesellerId", id);
     navigate('/petshop-my-orders')
