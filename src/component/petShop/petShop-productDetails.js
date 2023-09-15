@@ -105,7 +105,7 @@ function PetshopproductDetails() {
 
   const productData = async () => {
     axios
-      .get(`${BASE_URL}/items/details/${id}`)
+      .get(`${BASE_URL}/items/product_details/${id}`)
       .then((response) => {
         console.log("=======> ", response);
         console.log("Delete Successful");
