@@ -114,6 +114,16 @@ function Productdetail() {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
+    const modal = document.querySelector('.modal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
   };
 
   // ****************notifyme
