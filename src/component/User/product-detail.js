@@ -114,6 +114,16 @@ function Productdetail() {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
+    const modal = document.querySelector('.modal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
   };
 
   // ****************notifyme
@@ -681,7 +691,7 @@ function Productdetail() {
             {orderlist.map((order) => (
               <div key={order.id}>
                 {order.callback[0].user_details && (
-                  <>
+                  <div className="linereview">
                     <p>{order.callback[0].user_details.comment}</p>
 
                     <div className="row">
@@ -712,9 +722,9 @@ function Productdetail() {
                         )}
                       </div>
                     </div>
-                  </>
+                  </div>
                 )}
-                <hr />
+                {/* <hr /> */}
               </div>
             ))}
             <a href="">Read more</a>

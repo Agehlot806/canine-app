@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
-import { Container, Row, Col, Button, Form ,Table} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import product from "../../assets/images/banner/product.png";
 import { Link } from "react-router-dom";
@@ -138,7 +138,7 @@ function Product(props) {
       case "cate":
         setCateDropdownVisible(!cateDropdownVisible);
         break;
-        case "groomingTools":
+      case "groomingTools":
         setGroomingToolsDropdownVisible(!groomingToolsDropdownVisible);
         break;
       case "accessoryType":
@@ -175,13 +175,13 @@ function Product(props) {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
           user_id: storedUserId,
-          item_id: productDetails.id,
+          item_id: productDetails?.id,
         }
       );
 
@@ -195,6 +195,16 @@ function Product(props) {
     } catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
+    }
+    const modal = document.querySelector('.modal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
     }
   };
   const fetchWishlistData = async () => {
@@ -225,11 +235,11 @@ function Product(props) {
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element",element);
+        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
         console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr",newArr);
+        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -367,7 +377,7 @@ function Product(props) {
   const [selectedcateIds, setSelectedcateIds] = useState([]);
   const [selectedhealthIds, setSelectedhealthIds] = useState([]);
   const [selectedvegIds, setSelectedvegIds] = useState([]);
- 
+
   const [minpricevalue, setMinpricevalue] = useState([])
   const [maxpricevalue, setMaxpricevalue] = useState([])
   const minprice = (e) => {
@@ -435,11 +445,11 @@ function Product(props) {
       return updatedvegIds;
     });
   };
-  const applyprice = ()=>{
+  const applyprice = () => {
     filterProducts();
   }
 
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds,updatedvegIds) => {
+  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds) => {
     try {
       const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
       const products = response.data.data;
@@ -449,7 +459,7 @@ function Product(props) {
         selectBreedFilterList: updatedBreedIds || selectedbreedIds,
         selectcate: updatedcateIds || selectedcateIds,
         selecthealth: updatedhealthIds || selectedhealthIds,
-        selectedVegOptions:updatedvegIds|| selectedvegIds,
+        selectedVegOptions: updatedvegIds || selectedvegIds,
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
@@ -498,7 +508,7 @@ function Product(props) {
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter&&Filterveg&&minPriceFilter&& maxPriceFilter;
+      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter;
     });
   };
 
@@ -519,7 +529,7 @@ function Product(props) {
 
   const [wishlistData, setWishlistData] = useState([]);
 
-   // =============================================================================
+  // =============================================================================
   // ================================================================================
   // Product details code with modal
   // ================================================================================
@@ -576,10 +586,10 @@ function Product(props) {
       <span key={index}>
         {productDetails.rating_count >= index + 1 ? (
           <i className="fa fa-star" />
-          ) : productDetails.rating_count >= number ? (
-            <i className="fa fa-star-half-o" />
-          ) : (
-            <i className="fa fa-star-o" />
+        ) : productDetails.rating_count >= number ? (
+          <i className="fa fa-star-half-o" />
+        ) : (
+          <i className="fa fa-star-o" />
         )}
       </span>
     );
@@ -650,7 +660,7 @@ function Product(props) {
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
-                
+
                 <hr />
                 <div
                   onClick={() => handleParentClick("brand")}
@@ -674,7 +684,7 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                        
+
 
                                 onClick={(e) => handleDataListBrand(items.title)}
                               />
@@ -714,7 +724,7 @@ function Product(props) {
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                        
+
 
                                 onClick={(e) => allcateselect(items.name)}
                               />
@@ -749,17 +759,17 @@ function Product(props) {
 
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
-                          <input type="number" 
-                          placeholder="From"  onChange={minprice} />
+                          <input type="number"
+                            placeholder="From" onChange={minprice} />
                         </div>
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
                           <input type="number"
-                             placeholder="From"  onChange={maxprice} />
+                            placeholder="From" onChange={maxprice} />
                         </div>
                         <div className="form-range text-center" >
                           {/* <span>₹</span> */}
-                       <button className="Apply-price" onClick={applyprice}>Apply</button>
+                          <button className="Apply-price" onClick={applyprice}>Apply</button>
                         </div>
                       </div>
 
@@ -905,7 +915,7 @@ function Product(props) {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            onClick={(e)=>vegnonveghandler("1")}
+                            onClick={(e) => vegnonveghandler("1")}
                           />
                           <label
                             className="form-check-label"
@@ -920,7 +930,7 @@ function Product(props) {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            onClick={(e)=>vegnonveghandler("0")}
+                            onClick={(e) => vegnonveghandler("0")}
 
                           />
                           <label
@@ -989,7 +999,7 @@ function Product(props) {
                       <div
                         className="food-product"
                         onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
+                        onMouseLeave={() => handleMouseLeave(item.id)}
                         key={item.id}
                         style={{
                           background:
@@ -997,17 +1007,17 @@ function Product(props) {
                         }}
                       >
                         <i
-                        class={
-                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                        }
-                        onClick={(id) => {
-                          if (storedUserId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
+                          class={
+                            item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
                           }
-                        }}
-                      />
+                          onClick={(id) => {
+                            if (storedUserId == null) {
+                              toast.error("Please Login first");
+                            } else {
+                              addToWishlist(item.id);
+                            }
+                          }}
+                        />
                         <Link to={`/product-details/${item.id}`}>
                           <div className="text-center">
                             <img
@@ -1021,21 +1031,21 @@ function Product(props) {
                             <h6>{item.name}</h6>
                             {/* <p>{item.description}</p> */}
                             <p className={`truncate-text ${!expandedDescription[item.id] ? 'read-more-link' : ''}`}>
-                            {item.description}
-                            {item.description.length > 100 && !expandedDescription[item.id] && (
-                              <span
-                                className="read-more-link"
-                                onClick={() =>
-                                  setExpandedDescription({
-                                    ...expandedDescription,
-                                    [item.id]: true,
-                                  })
-                                }
-                              >
-                                Read More
-                              </span>
-                            )}
-                          </p>
+                              {item.description}
+                              {item.description.length > 100 && !expandedDescription[item.id] && (
+                                <span
+                                  className="read-more-link"
+                                  onClick={() =>
+                                    setExpandedDescription({
+                                      ...expandedDescription,
+                                      [item.id]: true,
+                                    })
+                                  }
+                                >
+                                  Read More
+                                </span>
+                              )}
+                            </p>
                           </div>
                           <div className="product-bag">
                             <Row>
@@ -1063,7 +1073,7 @@ function Product(props) {
                             <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
                             <button>Buy Now</button>
                           </div>
-                      )}
+                        )}
                       </div>
                     </Col>
                   ))}
@@ -1100,8 +1110,8 @@ function Product(props) {
 
       <Footer />
 
-       {/* Product details Modal */}
-       <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      {/* Product details Modal */}
+      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">

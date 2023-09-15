@@ -41,8 +41,10 @@ const SalesmanLogin = () => {
           if (response.data.status === "200") {
             localStorage.setItem("salesmanId", response.data.data[0].id);
             localStorage.setItem("salesmanPhone", response.data.data[0].phone);
-            localStorage.setItem("loginType", "salesman");
+            localStorage.setItem("loginType", "salesman"); 
+            localStorage.setItem("zoneId", response.data.data[0].zone_id);
             localStorage.setItem("verifiedId", response.data.data[0].status);
+
             navigate("/salesman-dashboad");
             toast.success("Successfully");
           }

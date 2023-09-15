@@ -23,7 +23,7 @@ function DashboadSalesman() {
   const [completedOders, setCompletedOders] = useState([]);
   const [totalTransactions, setTotalTransactions] = useState(0);
   const salesmanId = localStorage.getItem("salesmanId");
-
+  const zoneId = localStorage.getItem("zoneId");
   useEffect(() => {
     getWholesellerList();
     getOrders();
@@ -36,15 +36,15 @@ function DashboadSalesman() {
     navigate("/petshop-product");
   };
   const handleOrderHistory = async (id) => {
-    console.log("iiiiiiiiiiiiiiiiiiid",id);
+    console.log("iiiiiiiiiiiiiiiiiiid", id);
     await localStorage.setItem("wholeSellerId", id);
     await localStorage.setItem("UserWholesellerId", id);
-    navigate('/petshop-my-orders')
+    navigate("/petshop-my-orders");
   };
 
   const getWholesellerList = async () => {
     await axios
-      .get(`${BASE_URL}/auth/wholesaler_list/${salesmanId}`)
+      .get(`${BASE_URL}/auth/wholesaler_list/${zoneId}`)
       .then((res) => {
         console.log("res in list", res);
         setWholeSellerList(res.data.data);
@@ -112,31 +112,31 @@ function DashboadSalesman() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -297,15 +297,18 @@ function DashboadSalesman() {
                       >
                         <div className="needplace">
                           <Row>
-                            {wholeSellerList.map((item,index) => {
+                            {wholeSellerList.map((item, index) => {
                               return (
                                 <Col lg={4} className="mb-4">
-                                  <div className="Wholeseller-card wholeseller-bg1 " 
-                                  style={{
-                            background:
-                              gradientColors[index % gradientColors.length],
-                          }}
-                          >
+                                  <div
+                                    className="Wholeseller-card wholeseller-bg1 "
+                                    style={{
+                                      background:
+                                        gradientColors[
+                                          index % gradientColors.length
+                                        ],
+                                    }}
+                                  >
                                     <div className="wholeseller-status">
                                       <h6>Completed</h6>
                                     </div>
@@ -355,9 +358,13 @@ function DashboadSalesman() {
                                         >
                                           Add Product
                                         </Button>
-                                        <Button onClick={() => {
-                                          handleOrderHistory(item.id)
-                                        }}>Order History</Button>
+                                        <Button
+                                          onClick={() => {
+                                            handleOrderHistory(item.id);
+                                          }}
+                                        >
+                                          Order History
+                                        </Button>
                                       </div>
                                     </div>
                                   </div>
@@ -475,7 +482,9 @@ function DashboadSalesman() {
                                     </a>
                                   </Button>
                                   <Button>
-                                    <Link to={`/track-your-order/${item.id}`}>Track</Link>
+                                    <Link to={`/track-your-order/${item.id}`}>
+                                      Track
+                                    </Link>
                                   </Button>
                                 </div>
                               </Col>
