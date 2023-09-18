@@ -3410,3 +3410,10 @@ li.nav-item.dropdown.new-mega-drop {
   margin-bottom: 10px;
   padding: 10px;
 }
+.gif img {
+  width: 100%;
+}
+
+.gif {
+  padding: 100px 0;
+}
