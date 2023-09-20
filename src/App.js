@@ -91,6 +91,7 @@ import PetShopcanineproduct from "./component/petShop/petShop-canine-product";
 import PetshopBlog from "./component/petShop/petShop-blog";
 import PetshopBlogdetails from "./component/petShop/petShop-blog-details";
 import Quickview from "./component/User/quick-view";
+import Notfound from "./component/Not-Found/Page-Not-Found";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -284,6 +285,9 @@ function App() {
           <Route path="/plan-buy" element={<Planbuy />} />
           <Route path="/partner-card" element={<Partnercard />} />
           <Route path="/pay" element={<Pay />} />
+
+          {/* page Not Found flow  */}
+          <Route path="*" element={<Notfound/>}/>
         </Routes>
       </BrowserRouter>
     </div>

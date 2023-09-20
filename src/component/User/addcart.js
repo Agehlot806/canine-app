@@ -34,6 +34,8 @@ function Addcart() {
   // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
   // const firstDiscountAmount = firstDiscount ? firstDiscount.discount : "";
 
+
+
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
   };
@@ -354,6 +356,7 @@ function Addcart() {
 
   // const [addresslist, setaddresslist] = useState([]);
   const [addresslist, setAddressList] = useState([]);
+  console.log("addresslisttttttttttt", addresslist);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
@@ -388,7 +391,7 @@ function Addcart() {
   // ============================================================
 
   const [profileData, setProfileData] = useState({});
-  console.log("profileData: ", profileData);
+  console.log("profileDataaaaaaaaaaaaaaaaaaaaaaaa: ", profileData);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
 
@@ -544,31 +547,31 @@ function Addcart() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -623,7 +626,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -758,9 +761,9 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount ||
-                                originalPrice + taxamound
+                              originalPrice -
+                              disscountvalue?.discount ||
+                              originalPrice + taxamound
                             )}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
@@ -835,11 +838,10 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${
-                                addressContentVisible
-                                  ? "fa-arrow-up"
-                                  : "fa-arrow-down"
-                              }`}
+                              className={`fa ${addressContentVisible
+                                ? "fa-arrow-up"
+                                : "fa-arrow-down"
+                                }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -935,9 +937,9 @@ function Addcart() {
                               )}`} */}
                               {`${parseInt(
                                 originalPrice * 0.05 +
-                                  originalPrice -
-                                  disscountvalue?.discount ||
-                                  originalPrice + taxamound
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
@@ -948,7 +950,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                              // onClick={handleAddToCart}
+                            // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1426,7 +1428,7 @@ function Addcart() {
                   }
                 />
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col">
                   <div className="form-group">
                     <label>State</label>
@@ -1434,11 +1436,11 @@ function Addcart() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                      onChange={(e) =>
+                      setProfileData ({
+                        ...profileData,
+                        state: e.target.value,
+                      })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -1472,7 +1474,57 @@ function Addcart() {
                     </select>
                   </div>
                 </div>
+              </div> */}
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label>State</label>
+                    <select
+                      className="form-control"
+                      value={profileData.state || ""}
+                      onChange={(e) =>{
+                        Subscription(e);
+                        setProfileData({
+                          ...profileData,
+                          state: e.target.value,
+                        })
+                      }
+                    }
+                    >
+                      <option value="">State Choose...</option>
+                      {stateall.map((items) => (
+                        <option value={items.id} key={items.id}>
+                          {items.state_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group">
+                    <label>City</label>
+                    <select
+                      className="form-control"
+                      value={profileData.city || ""}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          city: e.target.value,
+                        })
+                      }
+                    >
+                      <option value="">City Choose...</option>
+                      {stateallCity.map((items) => (
+                        <option value={items.id} key={items.id}>
+                          {items.city_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
+
+
               <div class="form-group">
                 <label for="exampleFormControlInput1">Pincode</label>
                 <input
@@ -1565,8 +1617,8 @@ function Addcart() {
                             onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
-                            // data-toggle="modal"
-                            // data-target="#Coupon"
+                          // data-toggle="modal"
+                          // data-target="#Coupon"
                           >
                             Apply
                           </button>
