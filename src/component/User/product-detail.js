@@ -351,6 +351,7 @@ function Productdetail() {
     }
   };
 
+
   const [orderlist, setorderlist] = useState([]);
   const AllOrderList = async () => {
     try {
@@ -690,16 +691,16 @@ function Productdetail() {
             <h1 className="main-head mt-4">Product Review</h1>
             {orderlist.map((order) => (
               <div key={order.id}>
-                {order.callback[0].user_details && (
+                {order.callback[0]?.user_details && (
                   <div className="linereview">
-                    <p>{order.callback[0].user_details.comment}</p>
+                    <p>{order.callback[0]?.user_details.comment}</p>
 
                     <div className="row">
                       <div className="col-sm-3 col">
                         <Wrapper>
                           <div className="icon-style">
                             {Array.from({
-                              length: order.callback[0].user_details.rating,
+                              length: order.callback[0]?.user_details.rating,
                             }).map((_, index) => (
                               <i className="fa-solid fa-star" key={index} />
                             ))}
@@ -1025,7 +1026,7 @@ function Productdetail() {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map((item, index) => (
+                                         productDetails.variations.map((item, index) => (
                                           <Col lg={4} key={index}>
                                             <div
                                               className={`tab-variations ${selectedVariant === item.type
@@ -1037,7 +1038,7 @@ function Productdetail() {
                                                 setSelectedVariantPrice(item.price);
                                               }}
                                             >
-                                              {item.type}
+                                             <a>{item.type}</a> 
                                             </div>
                                           </Col>
                                         ))}

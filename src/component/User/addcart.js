@@ -198,6 +198,7 @@ function Addcart() {
           item_name: item.item_name,
           image: item.image,
           price: item.price,
+          variant: item.variant,
           quantity: item.quantity, // Assuming the response already includes the quantity
         }));
 
@@ -234,18 +235,11 @@ function Addcart() {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
   };
+  
 
   const [selectedCity, setSelectedCity] = useState("");
   console.log("selectedCity: ", selectedCity);
@@ -586,7 +580,7 @@ function Addcart() {
                   </Col>
                   <Col lg={6} sm={5} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
-                    {/* <p>with paneer or cottage cheese.</p> */}
+                    <p>Selected Variant : {item.variant}</p>
                   </Col>
                   <Col
                     lg={2}
@@ -1562,6 +1556,7 @@ function Addcart() {
                             onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
+                            data-dismiss="modal" 
                             // data-toggle="modal"
                             // data-target="#Coupon"
                           >
