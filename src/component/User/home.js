@@ -77,6 +77,7 @@ function Home(props) {
     allAddressList();
     couponlistdata();
     allReview();
+    GetdataAll();
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
@@ -411,9 +412,9 @@ function Home(props) {
     let number = index + 0.5;
     return (
       <span key={index}>
-        {productDetails.rating_count >= index + 1 ? (
+        {productDetails?.rating_count >= index + 1 ? (
           <i className="fa fa-star" />
-        ) : productDetails.rating_count >= number ? (
+        ) : productDetails?.rating_count >= number ? (
           <i className="fa fa-star-half-o" />
         ) : (
           <i className="fa fa-star-o" />
@@ -430,7 +431,7 @@ function Home(props) {
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
   // Amount use in Quick
   const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
+    uservariationprice - (uservariationprice * productDetails?.discount) / 100
   ).toFixed(2);
   const taxamound = Math.floor(Amount * 0.05);
   const finalamount = Amount + taxamound;
@@ -438,7 +439,7 @@ function Home(props) {
   const formattedAmount = Number(Amount).toString();
 
   const savedAmount = Math.floor(
-    productDetails.price * quantity - Amount
+    productDetails?.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   // buy now price
@@ -450,7 +451,7 @@ function Home(props) {
   buynowprice = buynowprice * (quantity > 1 ? quantity : 1);
 
   const buynowAmount = Math.floor(
-    buynowprice - (buynowprice * productDetails.discount) / 100
+    buynowprice - (buynowprice * productDetails?.discount) / 100
   ).toFixed(2);
   const buynowtaxamound = Math.floor(Amount * 0.05);
   const buynowfinalamount = Amount + taxamound;
@@ -463,10 +464,10 @@ function Home(props) {
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
 
   useEffect(() => {
-    if (productDetails.image) {
+    if (productDetails?.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+          productDetails?.image
       );
     }
   }, [productDetails]);
@@ -474,13 +475,13 @@ function Home(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.images[index]
+        productDetails?.images[index]
     );
   };
 
   const handleMainImageClick = () => {
     setLightboxIsOpen(true);
-    setLightboxImageIndex(productDetails.images.indexOf(mainImage));
+    setLightboxImageIndex(productDetails?.images.indexOf(mainImage));
   };
   const handeldataId = (id) => {
     productData(id);
@@ -680,6 +681,23 @@ function Home(props) {
     }
   };
 
+  const handleDeleteAddress = (id) => {
+    axios
+      .delete(
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+      )
+      .then((response) => {
+        toast.success("Address deleted successfully");
+        // console.log("Address deleted successfully:", response.data.message);
+        setaddresslist((prevAddressList) =>
+          prevAddressList.filter((item) => item.id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting address:", error);
+      });
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -742,14 +760,12 @@ function Home(props) {
   function formatAddress(selectedAddress) {
     return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
   }
-
   // ...
 
   // Use the formatAddress function to get the selected address as a single string
   const deliveryAddress = selectedAddress
     ? formatAddress(selectedAddress)
     : "No address selected";
-
   // Buy now checkout code
   const handleSendRequest = async () => {
     // const cartData = sendcartdata.map((item) => ({
@@ -810,6 +826,8 @@ function Home(props) {
       .then((responseData) => {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
+        console.log("order_id",responseData.data.order_id);
+
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -830,6 +848,38 @@ function Home(props) {
       console.log(error);
     }
   };
+
+
+  const handleResetClick = () => {
+    setfirst_name(null);
+    setlast_name(null);
+    setmobile(null);
+    sethouse_no(null);
+    setarea(null);
+    setlandmark(null);
+    setpincode(null);
+    setstate(null);
+    setcity(null);
+    setFirst_nameError(null);
+    setLast_nameError(null);
+    setMobileError(null);
+    setHouse_noError(null);
+    setAreaError(null);
+    setLandmarkError(null);
+    setPincodeError(null);
+    setStateError(null);
+    setCityError(null);
+    setIsFormValid(null);
+    setSelectedCity(null);
+    setcoupenCode(null);
+    setAppliedCoupon(null);
+    setSelectedInput(null);
+    setAddressContentVisible(null);
+    setSelectedAddress(null);
+    setQuantity(1);
+    setProductDetails(null);
+  };
+
 
   return (
     <>
@@ -1104,7 +1154,7 @@ function Home(props) {
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
                                 {`₹${
                                   item.price -
-                                  (item.price * item.discount) / 100
+                                  (item.price * item?.discount) / 100
                                 }`}
                               </h6>
                             </Col>
@@ -1451,7 +1501,7 @@ function Home(props) {
                     )}
                     <div className="icon-style">
                       {Array.from({
-                        length: order.callback[0]?.user_details.rating,
+                        length: order.callback[0]?.user_details?.rating,
                       }).map((_, index) => (
                         <Link><img src={vector} key={index} /></Link>
                       ))}
@@ -1624,11 +1674,11 @@ function Home(props) {
                       <div className="productDetail-content">
                         <Row>
                           <Col lg={9} sm={9} xs={9}>
-                            <h4>{productDetails.name}</h4>
+                            <h4>{productDetails?.name}</h4>
                           </Col>
                           <Col lg={3} sm={3} xs={3}>
                             <p>
-                              {productDetails.veg == 0 ? (
+                              {productDetails?.veg == 0 ? (
                                 <span>
                                   <span className="non-vegetarian">●</span>
                                 </span>
@@ -1641,14 +1691,14 @@ function Home(props) {
                           </Col>
                         </Row>
                         <p>
-                          By <span>{productDetails.store_name}</span>
+                          By <span>{productDetails?.store_name}</span>
                         </p>
 
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
                             <p>
-                              ({productDetails.rating_count} customer reviews)
+                              ({productDetails?.rating_count} customer reviews)
                             </p>
                           </div>
                         </Wrapper>
@@ -1663,23 +1713,23 @@ function Home(props) {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map(
+                                        productDetails?.variations.map(
                                           (item, index) => (
                                             <Col lg={4} key={index}>
                                               <div
                                                 className={`tab-variations ${
-                                                  selectedVariant === item.type
+                                                  selectedVariant === item?.type
                                                     ? "active"
                                                     : ""
                                                 }`}
                                                 onClick={() => {
-                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariant(item?.type);
                                                   setSelectedVariantPrice(
-                                                    item.price
+                                                    item?.price
                                                   );
                                                 }}
                                               >
-                                                {item.type}
+                                                {item?.type}
                                               </div>
                                             </Col>
                                           )
@@ -1761,7 +1811,7 @@ function Home(props) {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {productDetails?.stock && productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
                         <Link
@@ -2038,6 +2088,431 @@ function Home(props) {
         </div>
       </div>
       {/* update-model */}
+     
+      <div
+        className="modal fade buynow"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <>
+                <Container>
+                  <div className="needplace">
+                    <div className="address">
+                      <h3>Address</h3>
+                      <div className="address-card">
+                        {console.log("addresslist", addresslist)}
+                        {addresslist && addresslist.length > 1 ? (
+                          addresslist.map(
+                            (item, index) =>
+                              index === 0 && (
+                                <p key={item.id}>
+                                  {item.house_no} {item.area} {item.landmark}{" "}
+                                  {item.city} {item.state} {item.pincode}
+                                </p>
+                              )
+                          )
+                        ) : (
+                          <p>No data to display</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+                <Container>
+                  <div className="needplace">
+                    <div className="address">
+                      <h3>Shipping Address</h3>
+                      <div className="address-card">
+                        <Row>
+                          <Col lg={10} sm={9}>
+                            {selectedAddress ? (
+                              <div className="selectedAddress-area">
+                                <p>
+                                  {selectedAddress.first_name}{" "}
+                                  {selectedAddress.last_name}
+                                </p>
+                                <p>
+                                  {selectedAddress.house_no}{" "}
+                                  {selectedAddress.area}{" "}
+                                  {selectedAddress.landmark}{" "}
+                                  {selectedAddress.city} {selectedAddress.state}{" "}
+                                  {selectedAddress.pincode}
+                                </p>
+                                <p>Mobile: {selectedAddress.mobile}</p>
+                              </div>
+                            ) : (
+                              <p>No address selected</p>
+                            )}
+                          </Col>
+                          <Col lg={2} sm={3}>
+                            <Button
+                              data-toggle="modal"
+                              data-target="#changeadress-model"
+                              data-dismiss="modal"
+                            >
+                              Add
+                            </Button>
+                          </Col>
+                          <Col lg={12} sm={12}>
+                            <div className="address-arrow">
+                              <button onClick={toggleAddressContent}>
+                                Select Address{" "}
+                                <i
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
+                            <br />
+                            <Row>
+                              {addressContentVisible && (
+                                <Col lg={12}>
+                                  <div className="address-Content">
+                                    {addresslist && addresslist.length > 0 ? (
+                                      addresslist.map((item, index) => (
+                                        <div
+                                          className="chk-address"
+                                          key={item.id}
+                                        >
+                                          <div className="chk-center">
+                                            <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name="exampleRadios"
+                                              onClick={() =>
+                                                handleAddressClick(index)
+                                              }
+                                            />
+                                          </div>
+                                          <div className="Daynamic-address">
+                                            <table>
+                                              <tr>
+                                                <th>Name:&nbsp;</th>
+                                                <td>
+                                                  {item.first_name}&nbsp;
+                                                  {item.last_name}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <th>Address:&nbsp;</th>
+                                                <td>
+                                                  {item.house_no} {item.area}{" "}
+                                                  {item.landmark} {item.city}{" "}
+                                                  {item.state} {item.pincode}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <th>Mobile:&nbsp;</th>
+                                                <td>{item.mobile}</td>
+                                              </tr>
+                                            </table>
+                                            <div className="address-delete">
+                                              <i
+                                                className="fa fa-trash"
+                                                onClick={() =>
+                                                  handleDeleteAddress(item.id)
+                                                }
+                                              />
+                                              &nbsp; &nbsp;
+                                              <i
+                                                className="fa fa-edit"
+                                                data-toggle="modal"
+                                                onClick={() => {
+                                                  setProfileData(item);
+                                                }}
+                                                data-target="#update-model"
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))
+                                    ) : (
+                                      <p>No Addresses Available</p>
+                                    )}
+                                  </div>
+                                </Col>
+                              )}
+                            </Row>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+                {/* {productDetails && productDetails.length > 0 ? ( */}
+                <section className="section-padding">
+                  <Container>
+                    <Row>
+                      <Col lg={3}>
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            productDetails?.image
+                          }
+                        />
+                      </Col>
+                      <Col lg={7} sm={10}>
+                        <h2>{productDetails?.name}</h2>
+                        <div className="tab-container">
+                          <h6>Variations</h6>
+                          <Row>
+                            {productDetails?.variations &&
+                              productDetails?.variations.length > 0 &&
+                              productDetails?.variations.map((item, index) => (
+                                <Col lg={3} key={index}>
+                                  <div
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      setSelectedVariant(item?.type);
+                                      setSelectedVariantPrice(item?.price);
+                                    }}
+                                  >
+                                    {item?.type}
+                                  </div>
+                                </Col>
+                              ))}
+                          </Row>
+                        </div>
+                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
+                        <div className="quantity-btn quickbtn">
+                          <button onClick={handleDecrementbuynow}>
+                            <i className="fa fa-minus" />
+                          </button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                value={quantitybuynow}
+                                onChange={handleQuantityChangebuynow}
+                                autoComplete="new-number"
+                              />
+                            </div>
+                          </form>
+                          <button onClick={handleIncrementbuynow}>
+                            <i className="fa fa-plus" />
+                          </button>
+                        </div> */}
+                        <div className="quantity-btn quickbtn">
+                          <button onClick={handleDecrementone}>
+                            <i className="fa fa-minus" />
+                          </button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                autoComplete="new-number"
+                              />
+                            </div>
+                          </form>
+                          <button onClick={handleIncrementone}>
+                            <i className="fa fa-plus" />
+                          </button>
+                        </div>
+
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              <Col lg={3} sm={3} xs={3}>
+                                <p>{`₹${uservariationprice}`}</p>
+                              </Col>
+                              <Col lg={4} sm={4} xs={3}>
+                                <h5>{`₹${formattedAmount}`}</h5>
+                              </Col>
+                              <Col lg={5} sm={5} xs={3}>
+                                <h6>
+                                  Your save
+                                  {formattedSavedAmount >= 0
+                                    ? "₹" + formattedSavedAmount
+                                    : "No savings"}
+                                </h6>
+                              </Col>
+                            </Row>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col lg={2} sm={2} xs={6} className="align-self-end">
+                        <div className="delete-addcard">
+                          <Link onClick={() => removeFromCart(item.id)}>
+                            <i class="fa fa-trash-o" />
+                          </Link>
+                        </div>
+                      </Col>
+                    </Row>
+                    <hr />
+                  </Container>
+                </section>
+                {/* ) : (
+                  <section className="section-padding">
+                    <Container
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <Row>
+                        <p>Cart is Empty</p>
+                      </Row>
+                    </Container>
+                  </section>
+                )} */}
+                <Container>
+                  <div className="needplace">
+                    <Row className="justify-content-center">
+                      <Col lg={10}>
+                        {!coupencode ? (
+                          <div class="card mb-3">
+                            <div class="card-body">
+                              <form>
+                                <div class="form-group">
+                                  <label>Have a Coupon Code?</label>
+                                  <div class="input-group ">
+                                    <input
+                                      type="text"
+                                      class="form-control coupon"
+                                      name=""
+                                      placeholder="Coupon code"
+                                      data-toggle="modal"
+                                      data-target="#Coupon"
+                                    />
+                                    {/* <span class="input-group-append px-3">
+                                  <button
+                                    onClick={() => {
+                                      setcoupenCode(!coupencode);
+                                    }}
+                                    class="btn btn-primary btn-apply coupon"
+                                    data-toggle="modal"
+                                    data-target="#Coupon"
+                                  >
+                                    Apply
+                                  </button>
+                                </span> */}
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="add-cart-Voucher ">
+                            <Row>
+                              <Col>
+                                <img src={voch} />
+                              </Col>
+                              <Col className="align-self-center">
+                                <h5>{disscountvalue?.title}</h5>
+                              </Col>
+                              <Col className="align-self-center">
+                                <h6>₹{disscountvalue?.discount}</h6>
+                              </Col>
+                              <Col className="align-self-center">
+                                <button
+                                  // onClick={() => {
+                                  //   setcoupenCode(!coupencode);
+                                  // }}
+                                  onClick={clearCoupon}
+                                  type="button"
+                                  class="btn btn-danger"
+                                >
+                                  X
+                                </button>
+                              </Col>
+                            </Row>
+                          </div>
+                        )}
+                      </Col>
+                    </Row>
+                  </div>
+                </Container>
+
+                <Container>
+                  <div className="needplace">
+                    <Row className="justify-content-center">
+                      <Col lg={10}>
+                        <div className="add-cart-total">
+                          <Row>
+                            <Col>
+                              <h5>Sub Total</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{parseInt(Amount)}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Coupon Discount</h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                ₹
+                                {appliedCoupon
+                                  ? parseInt(disscountvalue?.discount)
+                                  : 0}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Tax(5%)</h5>
+                            </Col>
+                            <Col>
+                              <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+
+                          <Row>
+                            <Col>
+                              <h5>Rounding Adjust</h5>
+                            </Col>
+                            <Col>
+                            <h5>
+                                ₹
+                                {
+                                  (parseInt(Amount) * 0.05) + parseInt(Amount) - (
+                                    (disscountvalue?.discount ?? 0)
+                                   )
+                                }
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                </Container>
+                <div className="homecheckout">
+                  <button data-toggle="modal" data-target="#cod">
+                    Checkout
+                  </button>
+                  <button data-dismiss="modal" onClick={handleResetClick}>
+                    Close
+                  </button>
+                </div>
+              </>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div
         className="modal fade editAddress"
         id="update-model"
@@ -2235,438 +2710,6 @@ function Home(props) {
           </div>
         </div>
       </div>
-      <div
-        className="modal fade buynow"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-body">
-              <>
-                <Container>
-                  <div className="needplace">
-                    <div className="address">
-                      <h3>Address</h3>
-                      <div className="address-card">
-                        {console.log("addresslist", addresslist)}
-                        {addresslist && addresslist.length > 1 ? (
-                          addresslist.map(
-                            (item, index) =>
-                              index === 0 && (
-                                <p key={item.id}>
-                                  {item.house_no} {item.area} {item.landmark}{" "}
-                                  {item.city} {item.state} {item.pincode}
-                                </p>
-                              )
-                          )
-                        ) : (
-                          <p>No data to display</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-                <Container>
-                  <div className="needplace">
-                    <div className="address">
-                      <h3>Shipping Address</h3>
-                      <div className="address-card">
-                        <Row>
-                          <Col lg={10} sm={9}>
-                            {selectedAddress ? (
-                              <div className="selectedAddress-area">
-                                <p>
-                                  {selectedAddress.first_name}{" "}
-                                  {selectedAddress.last_name}
-                                </p>
-                                <p>
-                                  {selectedAddress.house_no}{" "}
-                                  {selectedAddress.area}{" "}
-                                  {selectedAddress.landmark}{" "}
-                                  {selectedAddress.city} {selectedAddress.state}{" "}
-                                  {selectedAddress.pincode}
-                                </p>
-                                <p>Mobile: {selectedAddress.mobile}</p>
-                              </div>
-                            ) : (
-                              <p>No address selected</p>
-                            )}
-                          </Col>
-                          <Col lg={2} sm={3}>
-                            <Button
-                              data-toggle="modal"
-                              data-target="#changeadress-model"
-                              data-dismiss="modal"
-                            >
-                              Add +
-                            </Button>
-                          </Col>
-                          <Col lg={12} sm={12}>
-                            <div className="address-arrow">
-                              <button onClick={toggleAddressContent}>
-                                Select Address{" "}
-                                <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
-                                  aria-hidden="true"
-                                ></i>
-                              </button>
-                            </div>
-                            <br />
-                            <Row>
-                              {addressContentVisible && (
-                                <Col lg={12}>
-                                  <div className="address-Content">
-                                    {addresslist && addresslist.length > 0 ? (
-                                      addresslist.map((item, index) => (
-                                        <div
-                                          className="chk-address"
-                                          key={item.id}
-                                        >
-                                          <div className="chk-center">
-                                            <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name="exampleRadios"
-                                              onClick={() =>
-                                                handleAddressClick(index)
-                                              }
-                                            />
-                                          </div>
-                                          <div className="Daynamic-address">
-                                            <table>
-                                              <tr>
-                                                <th>Name:&nbsp;</th>
-                                                <td>
-                                                  {item.first_name}&nbsp;
-                                                  {item.last_name}
-                                                </td>
-                                              </tr>
-                                              <tr>
-                                                <th>Address:&nbsp;</th>
-                                                <td>
-                                                  {item.house_no} {item.area}{" "}
-                                                  {item.landmark} {item.city}{" "}
-                                                  {item.state} {item.pincode}
-                                                </td>
-                                              </tr>
-                                              <tr>
-                                                <th>Mobile:&nbsp;</th>
-                                                <td>{item.mobile}</td>
-                                              </tr>
-                                            </table>
-                                            <div className="address-delete">
-                                              <i
-                                                className="fa fa-trash"
-                                                onClick={() =>
-                                                  handleDeleteAddress(item.id)
-                                                }
-                                              />
-                                              &nbsp; &nbsp;
-                                              <i
-                                                className="fa fa-edit"
-                                                data-toggle="modal"
-                                                onClick={() => {
-                                                  setProfileData(item);
-                                                }}
-                                                data-target="#update-model"
-                                              />
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ))
-                                    ) : (
-                                      <p>No Addresses Available</p>
-                                    )}
-                                  </div>
-                                </Col>
-                              )}
-                            </Row>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-                {/* {productDetails && productDetails.length > 0 ? ( */}
-                <section className="section-padding">
-                  <Container>
-                    <Row>
-                      <Col lg={3}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
-                            productDetails.image
-                          }
-                        />
-                      </Col>
-                      <Col lg={7} sm={10}>
-                        <h2>{productDetails.name}</h2>
-                        <div className="tab-container">
-                          <h6>Variations</h6>
-                          <Row>
-                            {productDetails?.variations &&
-                              productDetails?.variations.length > 0 &&
-                              productDetails.variations.map((item, index) => (
-                                <Col lg={3} key={index}>
-                                  <div
-                                    className={`tab-variations ${
-                                      selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      setSelectedVariant(item.type);
-                                      setSelectedVariantPrice(item.price);
-                                    }}
-                                  >
-                                    {item.type}
-                                  </div>
-                                </Col>
-                              ))}
-                          </Row>
-                        </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementone}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantity}
-                                onChange={handleQuantityChange}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementone}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div>
-
-                        <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col>
-                    </Row>
-                    <hr />
-                  </Container>
-                </section>
-                {/* ) : (
-                  <section className="section-padding">
-                    <Container
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Row>
-                        <p>Cart is Empty</p>
-                      </Row>
-                    </Container>
-                  </section>
-                )} */}
-                <Container>
-                  <div className="needplace">
-                    <Row className="justify-content-center">
-                      <Col lg={5}>
-                        {!coupencode ? (
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <form>
-                                <div class="form-group">
-                                  <label>Have a Coupon Code?</label>
-                                  <div class="input-group ">
-                                    <input
-                                      type="text"
-                                      class="form-control coupon"
-                                      name=""
-                                      placeholder="Coupon code"
-                                      data-toggle="modal"
-                                      data-target="#Coupon"
-                                    />
-                                    {/* <span class="input-group-append px-3">
-                                  <button
-                                    onClick={() => {
-                                      setcoupenCode(!coupencode);
-                                    }}
-                                    class="btn btn-primary btn-apply coupon"
-                                    data-toggle="modal"
-                                    data-target="#Coupon"
-                                  >
-                                    Apply
-                                  </button>
-                                </span> */}
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="add-cart-Voucher ">
-                            <Row>
-                              <Col>
-                                <img src={voch} />
-                              </Col>
-                              <Col className="align-self-center">
-                                <h5>{disscountvalue?.title}</h5>
-                              </Col>
-                              <Col className="align-self-center">
-                                <h6>₹{disscountvalue?.discount}</h6>
-                              </Col>
-                              <Col className="align-self-center">
-                                <button
-                                  // onClick={() => {
-                                  //   setcoupenCode(!coupencode);
-                                  // }}
-                                  onClick={clearCoupon}
-                                  type="button"
-                                  class="btn btn-danger"
-                                >
-                                  X
-                                </button>
-                              </Col>
-                            </Row>
-                          </div>
-                        )}
-                      </Col>
-                    </Row>
-                  </div>
-                </Container>
-
-                <Container>
-                  <div className="needplace">
-                    <Row className="justify-content-center">
-                      <Col lg={8}>
-                        <div className="add-cart-total">
-                          <Row>
-                            <Col>
-                              <h5>Sub Total</h5>
-                            </Col>
-                            <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{parseInt(Amount)}</h5>
-                            </Col>
-                          </Row>
-                          <hr />
-                          <Row>
-                            <Col>
-                              <h5>Coupon Discount</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {appliedCoupon
-                                  ? parseInt(disscountvalue?.discount)
-                                  : 0}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <hr />
-                          <Row>
-                            <Col>
-                              <h5>Tax(5%)</h5>
-                            </Col>
-                            <Col>
-                              <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
-                            </Col>
-                          </Row>
-                          <hr />
-
-                          <Row>
-                            <Col>
-                              <h5>Rounding Adjust</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹{" "}
-                                {`${parseInt(
-                                  Amount * 0.05 +
-                                    Amount -
-                                    disscountvalue?.discount ||
-                                    Amount + taxamound
-                                )}`}
-                                {/* {`${parseInt(
-                                  Amount * 0.05 +
-                                    Amount -
-                                    disscountvalue?.discount +
-                                    taxamound
-                                )}`} */}
-                                {/* Calculate  and display the Rounding Adjust */}
-                                {console.log(
-                                  "disscountvalue?.discount: ",
-                                  disscountvalue?.discount
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Container>
-                <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
-                    Checkout
-                  </button>
-                </div>
-              </>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div
         className="modal fade notification-area"
         id="Coupon"

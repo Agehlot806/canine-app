@@ -163,9 +163,9 @@ a {
   box-shadow: none !important;
 }
 .profile-icon img {
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
+  width: 80px;
+    height: 100%;
+    border-radius: 50%;
 }
 /* =========================== Home area css ================================ */
 .home-bg {
@@ -3433,4 +3433,15 @@ li.nav-item.dropdown.new-mega-drop {
 
 .gif {
   padding: 100px 0;
+}
+
+.buynow img {
+    width: 170px;
+}
+.buynow .quantity-btn {
+  margin: 10px 0 0;
+}
+.buynow .add-cart-Voucher img {
+  width: 50px;
+  height: 50px;
 }
