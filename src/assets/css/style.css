@@ -3278,7 +3278,7 @@ button.Apply-price {
   filter: contrast(0.4);
 }
 .star.filled {
-  background: url(../images/icon/star\\(1\).png) no-repeat;
+  background: url(../images/icon//star\ \(1\).png) no-repeat;
   background-size: cover;
 }
 
