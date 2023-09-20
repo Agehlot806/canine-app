@@ -151,6 +151,12 @@
         width: 70px;
         height: 70px;
     }
+    .app-home a img {
+        width: 80px;
+    }
+    .Newsletter {
+        padding: 5px 0;
+    }
     .addCARThead h2 {
         font-size: 16px;
     }
@@ -257,12 +263,24 @@
         width: 200px;
     }
     .Newsletter h1 {
-        font-size: 26px;
+        font-size: 13px;
     }
     .food-product p {
         font-size: 12px;
     }
-
+    .Newsletter input {
+        border-radius: 1px;
+        height: 38px;
+        font-size: 12px;
+    }
+    .Newsletter form {
+        margin: 0;
+    }
+    .home-content .Newsletter button {
+        border-radius: 2px;
+        height: 25px;
+        font-size: 12px
+    }
     .brandLOGO img {
         width: 100px;
     }

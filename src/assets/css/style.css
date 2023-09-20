@@ -367,9 +367,7 @@ a {
   font-size: 25px;
   color: red;
 }
-.food-product i:hover {
-  font-size: 30px;
-}
+
 .product-bag h6 {
   color: #000;
 }
@@ -485,10 +483,17 @@ a {
   text-align: center;
   color: #fff;
   padding: 15px;
+  height: 100%;
+}
+.Brand-cus {
+  /* background: #fff1a6; */
+  border-radius: 20px;
+  text-align: center;
+  height: 100%;
 }
 
 .Brand-cus img {
-  width: 100%;
+  width: 100px;
 }
 
 .brand-bg h5 {
@@ -3122,6 +3127,7 @@ main {
   margin: 10px 0 0;
   border-radius: 5px;
   border: 1px solid gray;
+  cursor: context-menu;
 }
 .tab-variations.active {
   background-color: #ffc934;

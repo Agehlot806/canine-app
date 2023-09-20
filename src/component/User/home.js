@@ -76,6 +76,7 @@ function Home(props) {
     homeAllBanner();
     allAddressList();
     couponlistdata();
+    allReview();
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
@@ -818,6 +819,18 @@ function Home(props) {
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
   };
+  const [reviewlist, setreviewlist] = useState([]);
+  const allReview = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 3);
+      setreviewlist(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Toaster />
@@ -1423,93 +1436,32 @@ function Home(props) {
             </Col>
           </Row>
           <Row>
-            <Col lg={4} sm={6} xs={6}>
-              <div className="Brand-cus">
-                <img src={cus1} />
-                <div className="brand-bg">
-                  <h5>Anna & Tobby</h5>
-                  <p>Amazing Products & Delivery on time.</p>
-                  <div>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>4.2/5</Link>
+            {reviewlist.map((order) => (
+              <Col lg={4} sm={6} xs={6} key={order.id}>
+                <div className="Brand-cus">
+                  {/* {order.callback[0].user_profile && (
+                    <img src={order.callback[0].user_profile[0].image} />
+                  )} */}
+                  <div className="brand-bg">
+                    {order.callback[0].user_profile && (
+                      <h5>{order.callback[0].user_profile[0].f_name} {order.callback[0].user_profile[0].l_name}</h5>
+                    )}
+                    {order.callback[0]?.user_details && (
+                      <p>{order.callback[0]?.user_details.comment}</p>
+                    )}
+                    <div className="icon-style">
+                      {Array.from({
+                        length: order.callback[0]?.user_details.rating,
+                      }).map((_, index) => (
+                        <Link><img src={vector} key={index} /></Link>
+                      ))}
+                    </div>
+                    {/* <Link>4.2/5</Link> */}
                   </div>
                 </div>
-              </div>
-            </Col>
-            <Col lg={4} sm={6} xs={6}>
-              <div className="Brand-cus">
-                <img src={cus2} />
-                <div className="brand-bg">
-                  <h5>Christine & Tom</h5>
-                  <p>Love the overall Shpping experience!</p>
-                  <div>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>4.2/5</Link>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col lg={4} sm={6} xs={6}>
-              <div className="Brand-cus">
-                <img src={cus3} />
-                <div className="brand-bg">
-                  <h5>Sindy & Kitch</h5>
-                  <p>Kitch is love food from the pup-hub</p>
-                  <div>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>4.2/5</Link>
-                  </div>
-                </div>
-              </div>
-            </Col>
+              </Col>
+            ))}
           </Row>
-          <div className="all-btn text-center mt-5 mb-4">
-            <Button className="blue-btn">
-              Explore More <i className="fa fa-angle-right" />
-            </Button>
-          </div>
         </Container>
       </section>
 
