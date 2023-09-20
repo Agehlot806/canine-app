@@ -6,7 +6,7 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 import cart from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
@@ -15,6 +15,9 @@ import paydone from "../../assets/images/icon/paydone.png";
 
 function Addcart() {
   const { id } = useParams();
+  // const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  // const goWithBuyNow = params.get('gowithbuynow');
   console.log("id", id);
   // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(1);

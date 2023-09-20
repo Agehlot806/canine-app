@@ -3410,3 +3410,16 @@ li.nav-item.dropdown.new-mega-drop {
   margin-bottom: 10px;
   padding: 10px;
 }
+.homecheckout {
+    text-align: center;
+    margin: 25px 0 0;
+}
+.homecheckout button {
+  background: #f1c21b !important;
+  border: none !important;
+  font-weight: 600;
+  width: 100px;
+  height: 40px;
+  border-radius: 6px;
+  margin: 0 18px;
+}
