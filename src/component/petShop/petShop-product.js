@@ -1,53 +1,55 @@
-import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Button, Table } from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
-import product from '../../assets/images/banner/product.png'
-import { Link } from 'react-router-dom'
-import product1 from '../../assets/images/img/product1.png'
-import product2 from '../../assets/images/img/product2.png'
-import product3 from '../../assets/images/img/product3.png'
-import productdetail from '../../assets/images/banner/productdetail.png'
-import bannerone from '../../assets/images/banner/banner.png'
-import { BASE_URL } from '../../Constant/Index';
-import axios from 'axios';
-import bag from '../../assets/images/icon/bag.png'
-import PetShopHeader from '../../directives/petShopHeader';
-import { Toaster, toast } from 'react-hot-toast';
-import Petshopfooter from '../../directives/petShop-Footer';
+import product from "../../assets/images/banner/product.png";
+import { Link, useNavigate } from "react-router-dom";
+import product1 from "../../assets/images/img/product1.png";
+import product2 from "../../assets/images/img/product2.png";
+import product3 from "../../assets/images/img/product3.png";
+import productdetail from "../../assets/images/banner/productdetail.png";
+import bannerone from "../../assets/images/banner/banner.png";
+import { BASE_URL } from "../../Constant/Index";
+import axios from "axios";
+import bag from "../../assets/images/icon/bag.png";
+import PetShopHeader from "../../directives/petShopHeader";
+import { Toaster, toast } from "react-hot-toast";
+import Petshopfooter from "../../directives/petShop-Footer";
 import { styled } from "styled-components";
+import paydone from "../../assets/images/icon/paydone.png";
+import { loadRazorpay } from "../../utils";
 
 const clinetreview = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 3,
-    slidesToSlide: 2 // optional, default to 1.
+    slidesToSlide: 2, // optional, default to 1.
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
     items: 2,
-    slidesToSlide: 1 // optional, default to 1.
+    slidesToSlide: 1, // optional, default to 1.
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
-    slidesToSlide: 1 // optional, default to 1.
-  }
+    slidesToSlide: 1, // optional, default to 1.
+  },
 };
 function Petshopproduct(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
 
-
   useEffect(() => {
     categoriesProduct();
     allProduct();
-    allBrandshow()
-    allLifesageshow()
-    allBreedshow()
-    allsubcategary()
-    allHealthconditionshow()
-    Allsubcategories()
-    fetchWishlistData()
+    allBrandshow();
+    allLifesageshow();
+    allBreedshow();
+    allsubcategary();
+    allHealthconditionshow();
+    Allsubcategories();
+    fetchWishlistData();
+    allAddressList();
   }, []);
 
   const categoriesProduct = async () => {
@@ -65,7 +67,7 @@ function Petshopproduct(props) {
       .then((response) => {
         console.log(response);
         console.log("Delete Successful");
-        setallproduct(response.data.data)
+        setallproduct(response.data.data);
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -142,15 +144,13 @@ function Petshopproduct(props) {
     event.stopPropagation();
   };
 
-
   ///tarun filter code//
-  const [allbrand, setAllBrand] = useState("")
-  const [alllifesage, setAlllifesage] = useState("")
-  const [allbreed, setAllBreed] = useState("")
-  const [allsubcate, setAllSubcate] = useState("")
-  const [allhealth, setAllHealth] = useState("")
+  const [allbrand, setAllBrand] = useState("");
+  const [alllifesage, setAlllifesage] = useState("");
+  const [allbreed, setAllBreed] = useState("");
+  const [allsubcate, setAllSubcate] = useState("");
+  const [allhealth, setAllHealth] = useState("");
   const [subcategories, setsubcategories] = useState([]);
-
 
   const allBrandshow = async () => {
     axios
@@ -189,7 +189,6 @@ function Petshopproduct(props) {
         console.log(error);
       });
   };
-
 
   const allsubcategary = async () => {
     axios
@@ -237,14 +236,14 @@ function Petshopproduct(props) {
   const [selectedvegIds, setSelectedvegIds] = useState([]);
   const [selectedsubcateIds, setSelectedsubcateIds] = useState([]);
 
-  const [minpricevalue, setMinpricevalue] = useState([])
-  const [maxpricevalue, setMaxpricevalue] = useState([])
+  const [minpricevalue, setMinpricevalue] = useState([]);
+  const [maxpricevalue, setMaxpricevalue] = useState([]);
   const minprice = (e) => {
-    setMinpricevalue(e.target.value)
-  }
+    setMinpricevalue(e.target.value);
+  };
   const maxprice = (e) => {
-    setMaxpricevalue(e.target.value)
-  }
+    setMaxpricevalue(e.target.value);
+  };
 
   const handleDataListBrand = (brand_id) => {
     setSelectedBrandIds((prevSelectedBrandIds) => {
@@ -330,12 +329,12 @@ function Petshopproduct(props) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const modalBackdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
       }
@@ -349,7 +348,7 @@ function Petshopproduct(props) {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -407,13 +406,18 @@ function Petshopproduct(props) {
       });
   };
 
-
   const allhealthselect = (name) => {
     setSelectedhealthIds((prevSelectedhealthIds) => {
       const updatedhealthIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedhealthIds
+      );
       return updatedhealthIds;
     });
   };
@@ -422,7 +426,15 @@ function Petshopproduct(props) {
       const updatesubcateIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined, undefined, undefined, updatesubcateIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatesubcateIds
+      );
       return updatesubcateIds;
     });
   };
@@ -432,18 +444,35 @@ function Petshopproduct(props) {
       const updatedvegIds = prevSelectedvegIds.includes(value)
         ? prevSelectedvegIds.filter((id) => id !== value)
         : [...prevSelectedvegIds, value];
-      filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedvegIds
+      );
       return updatedvegIds;
     });
   };
   const applyprice = () => {
     filterProducts();
-  }
+  };
 
   console.log("/////", selectedsubcateIds);
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds, updatesubcateIds) => {
+  const filterProducts = async (
+    updatedBrandIds,
+    updatedLifeIds,
+    updatedBreedIds,
+    updatedcateIds,
+    updatedhealthIds,
+    updatedvegIds,
+    updatesubcateIds
+  ) => {
     try {
-      const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
+      const response = await axios.get(
+        "https://canine.hirectjob.in/api/v1/items/latest"
+      );
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -456,17 +485,16 @@ function Petshopproduct(props) {
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
-        // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+        // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
-      setallproduct(filteredProducts)
+      setallproduct(filteredProducts);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-
   };
 
   const applyFilters = ({
@@ -489,25 +517,48 @@ function Petshopproduct(props) {
     const selectedvegSet = new Set(selectedVegOptions);
     const selectedsubcateSet = new Set(selectedsubcate);
 
-    return products.filter(product => {
-      const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
-      const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
-      const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
-      const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
-      const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
-      const subcateFilter = selectedsubcate.length === 0 || selectedsubcateSet.has(product.sub_category.toString());
-      const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
-      const price = parseFloat(product.price);  // Parse the price to a number
-      const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+    return products.filter((product) => {
+      const brandFilter =
+        selectedBrands.length === 0 ||
+        selectedBrandSet.has(product.brand_id.toString());
+      const lifeStageFilter =
+        selectLifeStageFilterList.length === 0 ||
+        selectedLifeStageSet.has(product.lifeStage_id.toString());
+      const breedFilter =
+        selectBreedFilterList.length === 0 ||
+        selectedBreedSet.has(product.Petsbreeds_id.toString());
+      const cateFilter =
+        selectcate.length === 0 ||
+        selectedcateSet.has(product.category_ids.toString());
+      const healthFilter =
+        selecthealth.length === 0 ||
+        selectedhealthSet.has(product.helthCondition_id.toString());
+      const subcateFilter =
+        selectedsubcate.length === 0 ||
+        selectedsubcateSet.has(product.sub_category.toString());
+      const Filterveg =
+        selectedVegOptions.length === 0 ||
+        selectedvegSet.has(product.veg === 0 ? "0" : "1");
+      const price = parseFloat(product.price); // Parse the price to a number
+      const minPriceFilter = isNaN(minPrice) || price >= minPrice; // Check if price is NaN or greater than minPrice
       const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const price = parseFloat(product.price);  // Parse the price to a number
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter && subcateFilter;
+      return (
+        brandFilter &&
+        lifeStageFilter &&
+        breedFilter &&
+        cateFilter &&
+        healthFilter &&
+        Filterveg &&
+        minPriceFilter &&
+        maxPriceFilter &&
+        subcateFilter
+      );
     });
   };
-
 
   const [paginatedCategories, setPaginatedCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -533,7 +584,6 @@ function Petshopproduct(props) {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
-
 
   const [buttonVisibility, setButtonVisibility] = useState({});
 
@@ -562,7 +612,7 @@ function Petshopproduct(props) {
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  
+
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
@@ -618,14 +668,12 @@ function Petshopproduct(props) {
     }
   };
 
-  
   let wholesellervariationprice = 0;
 
   if (selectedVariantPrice !== null) {
     wholesellervariationprice = selectedVariantPrice;
   }
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
-
 
   const ratingStar = Array.from({ length: 5 }, (item, index) => {
     let number = index + 0.5;
@@ -660,7 +708,6 @@ function Petshopproduct(props) {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
-
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -670,7 +717,7 @@ function Petshopproduct(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -678,7 +725,7 @@ function Petshopproduct(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -688,13 +735,466 @@ function Petshopproduct(props) {
   };
   const handeldataId = (id) => {
     productData(id);
+  };
+
+  // ===============================================================
+  // =================================================================
+  // Buy Now ------------------------
+  // ==================================================================
+  // ===============================================================
+  const shippingpage = useNavigate("");
+  const [quantitybuynow, setQuantitybuynow] = useState(1);
+  // const handleIncrementbuynow = () => {
+  //   setQuantitybuynow(quantitybuynow + 1);
+  // };
+  // const handleDecrementbuynow = () => {
+  //   if (quantitybuynow > 1) {
+  //     setQuantitybuynow(quantitybuynow - 1);
+  //   }
+  // };
+
+  const handleQuantityChangebuynow = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  const [addresslist, setAddressList] = useState([]);
+  console.log("addresslist: ", addresslist);
+  const allAddressList = async () => {
+    axios
+      .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
+      .then((response) => {
+        console.log(response);
+        console.log("address list Successful");
+        setAddressList(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [addressContentVisible, setAddressContentVisible] = useState(false);
+
+  const handleAddressClick = (index) => {
+    setSelectedAddress(addresslist[index]);
+    setAddressContentVisible(false); // Hide the address content after selecting an address
+  };
+
+  const toggleAddressContent = () => {
+    setAddressContentVisible(!addressContentVisible);
+  };
+
+  const [stateall, setStateall] = useState([]);
+  const [stateallCity, setStateallCity] = useState([]);
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
+  const [mobile, setmobile] = useState("");
+  const [house_no, sethouse_no] = useState("");
+  const [area, setarea] = useState("");
+  const [landmark, setlandmark] = useState("");
+  const [pincode, setpincode] = useState("");
+  const [state, setstate] = useState("");
+  const [city, setcity] = useState("");
+  const [profileData, setProfileData] = useState({});
+  const [paymentId, setPaymentId] = useState("");
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async () => {
+    try {
+      // const response = await loadRazorpay();
+      await loadRazorpayScript();
+
+      const options = {
+        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        amount: 10000, // Amount in paise (100 INR)
+        currency: "INR",
+        name: "HEllo world",
+        description: "Test Payment",
+        image: "https://your_logo_url.png",
+        // order_id: response.id, // Order ID obtained from Razorpay
+        handler: (response) => {
+          setPaymentId(response.razorpay_payment_id);
+          // Handle the success callback
+          window.location.href = "/petshop-shipping";
+          console.log("Payment Successful:", response);
+        },
+
+        prefill: {
+          email: "test@example.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "1234, Demo Address",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Razorpay Load Error:", error);
+    }
+  };
+
+  const handleAddAddress = async (event) => {
+    event.preventDefault();
+    const data = {
+      user_id: storedWholesellerId,
+      first_name: first_name,
+      last_name: last_name,
+      mobile: mobile,
+      house_no: house_no,
+      area: area,
+      landmark: landmark,
+      state: state,
+      city: city,
+      pincode: pincode,
+    };
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/address/add`,
+        data
+      );
+      setResponseMessage(response.data.message);
+      toast.success("Successfully added!");
+
+      // Call allAddressList to update the address list
+      await allAddressList();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const [first_nameError, setFirst_nameError] = useState("");
+
+  const [last_nameError, setLast_nameError] = useState("");
+
+  const [mobileError, setMobileError] = useState("");
+
+  const [house_noError, setHouse_noError] = useState("");
+
+  const [areaError, setAreaError] = useState("");
+
+  const [landmarkError, setLandmarkError] = useState("");
+
+  const [pincodeError, setPincodeError] = useState("");
+
+  const [stateError, setStateError] = useState("");
+
+  const [cityError, setCityError] = useState("");
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const validateForm = () => {
+    if (
+      first_name.trim() === "" ||
+      last_name.trim() === "" ||
+      mobile.trim() === "" ||
+      house_no.trim() === "" ||
+      area.trim() === "" ||
+      landmark.trim() === "" ||
+      state.trim() === "" ||
+      selectedCity.trim() === "" ||
+      pincode.trim() === ""
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  };
+
+  const [selectedCity, setSelectedCity] = useState("");
+  console.log("selectedCity: ", selectedCity);
+  const GetdataAll = async (e) => {
+    var headers = {
+      Accept: "application/json",
+      "Content-Data": "application/json",
+    };
+    await fetch(`${BASE_URL}/auth/state`, {
+      method: "GET",
+      headers: headers,
+    })
+      .then((Response) => Response.json())
+      .then((Response) => {
+        setStateall(Response?.data ? Response?.data : []);
+        // console.log("99999999999999999999", Response);
+      })
+      .catch((error) => {
+        console.error("ERROR FOUND---->>>>" + error);
+      });
+  };
+
+  const Getdatacity = (state) => {
+    axios
+      .get(`${BASE_URL}/auth/city?state=${state}`, {
+        headers: { "Content-Data": "multipart/form-data" },
+      })
+      .then((response) => {
+        // console.log("responseresponse", response);
+        setStateallCity(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const Subscription = (event) => {
+    if (event.target.value) {
+      setstate(event.target.value);
+
+      Getdatacity(event.target.value);
+    }
+  };
+
+  // const removeFromCart = async (selctId) => {
+  //   try {
+  //     const response = await axios
+  //       .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
+  //       .then((response) => {
+  //         console.log(response);
+  //         window.location.reload(false);
+  //       });
+  //     // if (response.data.success) {
+  //     //   setAddToCartProduct(
+  //     //     (prevData) => prevData.filter((item) => item.id !== id)
+  //     //     // refresh
+  //     //   );
+  //     //   window.location.reload(false);
+  //     //   console.log("Product removed from cart:", response.data);
+  //     // }
+  //   } catch (error) {
+  //     console.error("Error removing product from cart:", error);
+  //   }
+  // };
+
+  const handleDeleteAddress = (id) => {
+    axios
+      .delete(
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+      )
+      .then((response) => {
+        toast.success("Address deleted successfully");
+        // console.log("Address deleted successfully:", response.data.message);
+        setaddresslist((prevAddressList) =>
+          prevAddressList.filter((item) => item.id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting address:", error);
+      });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        profileData // Send the updated profileData in the request body
+      );
+      // console.log("response in edit", response);
+      if (response.data.status === 200) {
+        console.log("Profile updated successfully!");
+        setaddresslist((prevAddressList) =>
+          prevAddressList.filter((item) => item.id !== id)
+        );
+        fieldpagerefresh(); // Call fieldpagerefresh here
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const [couponlist, setcouponlist] = useState([]);
+  const couponlistdata = async () => {
+    axios
+      .get(`${BASE_URL}/coupon/list`)
+      .then((response) => {
+        console.log(response);
+        setcouponlist(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const [coupencode, setcoupenCode] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState(false);
+  const data = localStorage.getItem("disconut");
+  const disscountvalue = JSON.parse(data);
+  // const finalPrice = parseInt(
+  //   disscountvalue?.discount
+  //     ? Amount - disscountvalue.discount
+  //     : Amount + taxamound
+  // );
+  // {`${parseInt(
+  //   disscountvalue?.discount
+  //     ? Amount -
+  //         disscountvalue.discount +
+  //         taxamound
+  //     : Amount + taxamound
+  // )}`}
+  const coupendisscount = (dis) => {
+    setcoupenCode(!coupencode);
+    localStorage.setItem("disconut", JSON.stringify(dis));
+    setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+    console.log("disccount?????", dis);
+  };
+  const clearCoupon = () => {
+    setcoupenCode(!coupencode);
+    setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+  };
+  const [selectedInput, setSelectedInput] = useState("");
+  function formatAddress(selectedAddress) {
+    return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
   }
+  // ...
+
+  // Use the formatAddress function to get the selected address as a single string
+  const deliveryAddress = selectedAddress
+    ? formatAddress(selectedAddress)
+    : "No address selected";
+  // Buy now checkout code
+  const handleSendRequest = async () => {
+    // const cartData = sendcartdata.map((item) => ({
+    //   product_id: item.item_id,
+    //   variation: item.variant,
+    //   price: item.price,
+    //   quantity: item.quantity,
+    //   tax_amount: taxamound,
+    //   discount_on_item: disscountvalue?.discount || "",
+    // }));
+    const cartData = {
+      product_id: productDetails.id,
+      variation: selectedVariant,
+      price: Amount,
+      quantity: quantity,
+      tax_amount: Math.floor(Amount * 0.05),
+      discount_on_item: "",
+    };
+    // Calculate the order_amount
+    const orderAmount = parseInt(Amount) * 0.05 + parseInt(Amount) ?? 0;
+
+    const requestData = {
+      user_id: storedWholesellerId,
+      coupon_discount_amount: "",
+      coupon_discount_title: "",
+      payment_status: "paid",
+      order_status: "pending",
+      total_tax_amount: Math.floor(Amount * 0.05),
+      payment_method: selectedInput ? "offline" : "online",
+      transaction_reference: selectedInput ? "" : "sadgash23asds",
+      delivery_address_id: 2,
+      coupon_code: "",
+      order_type: "delivery",
+      checked: selectedInput,
+      store_id: 1,
+      zone_id: 2,
+      delivered_status: "undelivered",
+      delivery_address: deliveryAddress,
+      item_campaign_id: "",
+      order_amount: orderAmount,
+      cart: [cartData],
+    };
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log("responseData???>>>>", responseData);
+        shippingpage("/petShop-shipping/" + responseData.data.order_id);
+        // shippingpage(
+        //   `/shipping/${responseData.data.order_id}?gowithbuynow=true`
+        // );
+        console.log("order_id", responseData);
+      })
+      .catch((error) => {
+        console.error("Error sending request:", error);
+      });
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
+  };
+
+  const handleRadioChange = (event) => {
+    setSelectedInput(event.target.checked);
+  };
+  const [reviewlist, setreviewlist] = useState([]);
+  const allReview = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/customer/order/list?id=${storedWholesellerId}`
+      );
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 3);
+      setreviewlist(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleResetClick = () => {
+    setfirst_name(null);
+    setlast_name(null);
+    setmobile(null);
+    sethouse_no(null);
+    setarea(null);
+    setlandmark(null);
+    setpincode(null);
+    setstate(null);
+    setcity(null);
+    setFirst_nameError(null);
+    setLast_nameError(null);
+    setMobileError(null);
+    setHouse_noError(null);
+    setAreaError(null);
+    setLandmarkError(null);
+    setPincodeError(null);
+    setStateError(null);
+    setCityError(null);
+    setIsFormValid(null);
+    setSelectedCity(null);
+    setcoupenCode(null);
+    setAppliedCoupon(null);
+    setSelectedInput(null);
+    setAddressContentVisible(null);
+    setSelectedAddress(null);
+    setQuantity(1);
+    setProductDetails(null);
+  };
 
   return (
     <>
       <PetShopHeader />
-      <Container fluid className='p-0'>
-        <div className='all-bg'>
+      <Container fluid className="p-0">
+        <div className="all-bg">
           <img src={product} />
         </div>
       </Container>
@@ -720,31 +1220,28 @@ function Petshopproduct(props) {
                   {brandDropdownVisible && (
                     <>
                       <div>
-                        {allbrand ? (
-                          allbrand.map((items) => (
-                            items.canine == 1 && (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-
-
-
-                                  onClick={(e) => handleDataListBrand(items.title)}
-                                />
-                                <label
-                                  className="form-check-label"
-
-                                >
-                                  {items.title}
-                                </label>
-                              </div>
+                        {allbrand
+                          ? allbrand.map(
+                              (items) =>
+                                items.canine == 1 && (
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) =>
+                                        handleDataListBrand(items.title)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.title}
+                                    </label>
+                                  </div>
+                                )
                             )
-                          ))
-                        ) : ""}
+                          : ""}
                       </div>
                     </>
                   )}
@@ -763,27 +1260,23 @@ function Petshopproduct(props) {
                   {productTypeDropdownVisible && (
                     <>
                       <div>
-                        {subcategories ? (
-                          subcategories.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allsubcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {subcategories
+                          ? subcategories.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allsubcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -802,30 +1295,23 @@ function Petshopproduct(props) {
                   {cateDropdownVisible && (
                     <>
                       <div>
-                        {allsubcate ? (
-                          allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-
-
-                                onClick={(e) => allcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {allsubcate
+                          ? allsubcate.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -845,23 +1331,33 @@ function Petshopproduct(props) {
                   {priceDropdownVisible && (
                     <>
                       <div>
-
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={minprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={minprice}
+                          />
                         </div>
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={maxprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={maxprice}
+                          />
                         </div>
-                        <div className="form-range" >
+                        <div className="form-range">
                           {/* <span>₹</span> */}
                           <button onClick={applyprice}>Apply</button>
                         </div>
                       </div>
-
                     </>
                   )}
                 </div>
@@ -879,29 +1375,25 @@ function Petshopproduct(props) {
                   {lifestageDropdownVisible && (
                     <>
                       <div>
-                        {alllifesage ? (
-                          alllifesage.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-                                onChange={(e) => Lifesatedataselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {alllifesage
+                          ? alllifesage.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items.name)
+                                  }
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -920,29 +1412,23 @@ function Petshopproduct(props) {
                   {breedTypeDropdownVisible && (
                     <>
                       <div>
-                        {allbreed ? (
-                          allbreed.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-                                onChange={(e) => allbreedselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {allbreed
+                          ? allbreed.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) => allbreedselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -961,29 +1447,23 @@ function Petshopproduct(props) {
                   {healthDropdownVisible && (
                     <>
                       <div>
-                        {allhealth ? (
-                          allhealth.map((items) => (
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {allhealth
+                          ? allhealth.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
-
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label className="form-check-label">
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1010,13 +1490,9 @@ function Petshopproduct(props) {
                           <input
                             className="form-check-input"
                             type="checkbox"
-
                             onClick={(e) => vegnonveghandler("1")}
                           />
-                          <label
-                            className="form-check-label"
-
-                          >
+                          <label className="form-check-label">
                             Non-Veg (219)
                           </label>
                         </div>
@@ -1027,34 +1503,22 @@ function Petshopproduct(props) {
                           <input
                             className="form-check-input"
                             type="checkbox"
-
                             onClick={(e) => vegnonveghandler("0")}
-
                           />
-                          <label
-                            className="form-check-label"
-
-                          >
-                            Veg (73)
-                          </label>
+                          <label className="form-check-label">Veg (73)</label>
                         </div>
                       </div>
                     </>
                   )}
                 </div>
                 <hr />
-
-
-
               </div>
             </section>
           </Col>
           <Col lg={9}>
             <section className="section-padding">
               <Container>
-                <h1 className="main-head">
-                  Shop Deals For Your Best Buddy
-                </h1>
+                <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
               </Container>
               <Container fluid>
                 <Carousel
@@ -1077,67 +1541,99 @@ function Petshopproduct(props) {
                 >
                   {categories.map((item) => (
                     <div className="Shop-Deals" key={item.id}>
-                      <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image} onClick={(e) => allcateselect(item.name)} />
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/public/category/" +
+                          item.image
+                        }
+                        onClick={(e) => allcateselect(item.name)}
+                      />
                       <h1>{item.name}</h1>
                     </div>
                   ))}
-
                 </Carousel>
               </Container>
             </section>
 
-
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {paginatedCategories && paginatedCategories.map((item, index) => (
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div className="food-product" key={item.id}
-                      onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
-                        style={{
-                          background:
-                            gradientColors[index % gradientColors.length],
-                        }}>
-                        <i
-                        class={
-                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                        }
-                        onClick={(id) => {
-                          if (storedWholesellerId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
-                          }
-                        }}
-                      />
+                  {paginatedCategories &&
+                    paginatedCategories.map((item, index) => (
+                      <Col lg={4} sm={6} xs={6} className="mb-4">
+                        <div
+                          className="food-product"
+                          key={item.id}
+                          onMouseEnter={() => handleMouseEnter(item.id)}
+                          onMouseLeave={() => handleMouseLeave(item.id)}
+                          style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}
+                        >
+                          <i
+                            class={
+                              item.isFav
+                                ? "fa-solid fa-heart"
+                                : "fa-regular fa-heart"
+                            }
+                            onClick={(id) => {
+                              if (storedWholesellerId == null) {
+                                toast.error("Please Login first");
+                              } else {
+                                addToWishlist(item.id);
+                              }
+                            }}
+                          />
 
-                        <Link to={`/petshop-productDetails/${item.id}`}>
-                          <div className='text-center'>
-                            <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
-                          </div>
-                          <div>
-                            <h6>{item.name}</h6>
-                            <p>{item.description}</p>
-                          </div>
-                          <div className="product-bag">
-                           
-                            <Row>
-                              <Col className='align-self-center'><h6>₹{item.whole_price}</h6></Col>
-                              <Col><Link to=''><img src={bag} /></Link></Col>
-                            </Row>
-                          </div>
-                        </Link>
+                          <Link to={`/petshop-productDetails/${item.id}`}>
+                            <div className="text-center">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in//storage/app/public/product/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <div>
+                              <h6>{item.name}</h6>
+                              <p>{item.description}</p>
+                            </div>
+                            <div className="product-bag">
+                              <Row>
+                                <Col className="align-self-center">
+                                  <h6>₹{item.whole_price}</h6>
+                                </Col>
+                                <Col>
+                                  <Link to="">
+                                    <img src={bag} />
+                                  </Link>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Link>
 
-                        {buttonVisibility[item.id] && (
-                        <div className="button-container">
-                          <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
-                          <button>Buy Now</button>
+                          {buttonVisibility[item.id] && (
+                            <div className="button-container">
+                              <button
+                                data-toggle="modal"
+                                data-target=".bd-example-modal-lg"
+                                onClick={(e) => handeldataId(item.id)}
+                              >
+                                Quick View
+                              </button>
+                              <button
+                                data-toggle="modal"
+                                data-target=".buynow"
+                                onClick={(e) => handeldataId(item.id)}
+                              >
+                                Buy Now
+                              </button>
+                            </div>
+                          )}
                         </div>
-                      )}
-                      </div>
-                    </Col>
-                  ))}
+                      </Col>
+                    ))}
                 </Row>
                 <div className="pagination-area">
                   <ul className="pagination">
@@ -1162,18 +1658,20 @@ function Petshopproduct(props) {
                 </div>
               </Container>
             </section>
-
-
           </Col>
         </Row>
-      </Container >
-
-
+      </Container>
 
       <Petshopfooter />
 
-       {/* Product details Modal */}
-       <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      {/* Product details Modal */}
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -1194,7 +1692,7 @@ function Petshopproduct(props) {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                            productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1232,7 +1730,9 @@ function Petshopproduct(props) {
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
-                            <p>({productDetails.rating_count} customer reviews)</p>
+                            <p>
+                              ({productDetails.rating_count} customer reviews)
+                            </p>
                           </div>
                         </Wrapper>
 
@@ -1244,22 +1744,27 @@ function Petshopproduct(props) {
                                 <Row>
                                   {productDetails?.variations &&
                                     productDetails?.variations.length > 0 &&
-                                    productDetails.variations.map((item, index) => (
-                                      <Col lg={4} sm={4} xs={3} key={index}>
-                                        <div
-                                          className={`tab-variations ${selectedVariant === item.type
-                                            ? "active"
-                                            : ""
+                                    productDetails.variations.map(
+                                      (item, index) => (
+                                        <Col lg={4} sm={4} xs={3} key={index}>
+                                          <div
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
+                                                ? "active"
+                                                : ""
                                             }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      </Col>
-                                    ))}
+                                            onClick={() => {
+                                              setSelectedVariant(item.type);
+                                              setSelectedVariantPrice(
+                                                item.price
+                                              ); // Store the price in state
+                                            }}
+                                          >
+                                            {item.type}
+                                          </div>
+                                        </Col>
+                                      )
+                                    )}
                                 </Row>
                               </div>
                             </Col>
@@ -1385,8 +1890,893 @@ function Petshopproduct(props) {
           </div>
         </div>
       </div>
+      {/* all modals */}
+
+      {/* Modal */}
+      <div
+        className="modal fade editAddress"
+        id="changeadress-model"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                New Address Add
+              </h5>
+            </div>
+            <div className="modal-body">
+              <div class="form-group">
+                <label>First Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={first_name}
+                  onChange={(e) => {
+                    setfirst_name(e.target.value);
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (first_name.trim() === "") {
+                      setFirst_nameError("First Name is required");
+                    } else {
+                      setFirst_nameError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{first_nameError}</span>
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={last_name}
+                  onChange={(e) => {
+                    setlast_name(e.target.value);
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (last_name.trim() === "") {
+                      setLast_nameError("Last Name is required");
+                    } else {
+                      setLast_nameError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{last_nameError}</span>
+              </div>
+              <div class="form-group">
+                <label>Mobile</label>
+                <input
+                  type="tel"
+                  name="mobile"
+                  class="form-control"
+                  maxLength={10}
+                  value={mobile}
+                  onChange={(e) => {
+                    setmobile(e.target.value);
+                    validateForm();
+                    const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric character
+                    if (numericValue.length <= 10) {
+                      setmobile(numericValue);
+                    }
+                  }}
+                  onBlur={() => {
+                    if (mobile.trim() === "") {
+                      setMobileError("Mobile Number is required");
+                    } else {
+                      setMobileError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{mobileError}</span>
+              </div>
+              <div class="form-group">
+                <label>flat,House no,Building,Company</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={house_no}
+                  onChange={(e) => {
+                    sethouse_no(e.target.value);
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (house_no.trim() === "") {
+                      setHouse_noError(
+                        "House no, flat, Building, Company Number is required"
+                      );
+                    } else {
+                      setHouse_noError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{house_noError}</span>
+              </div>
+              <div class="form-group">
+                <label>Area, Street,Sector,Village</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={area}
+                  onChange={(e) => {
+                    setarea(e.target.value);
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (area.trim() === "") {
+                      setAreaError("Area, Street, Sector, Village is required");
+                    } else {
+                      setAreaError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{areaError}</span>
+              </div>
+              <div class="form-group">
+                <label>Landmark</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={landmark}
+                  onChange={(e) => {
+                    setlandmark(e.target.value);
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (landmark.trim() === "") {
+                      setLandmarkError("Landmark is required");
+                    } else {
+                      setLandmarkError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{landmarkError}</span>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label>State</label>
+                    <select
+                      className="form-control"
+                      onChange={Subscription}
+                      value={state}
+                      onInput={(e) => {
+                        setstate(e.target.value);
+                        validateForm();
+                      }}
+                      onBlur={() => {
+                        if (state.trim() === "") {
+                          setStateError("State is required");
+                        } else {
+                          setStateError("");
+                        }
+                      }}
+                    >
+                      <option>State Choose...</option>
+                      {stateall.map((items) => (
+                        <option value={items.id} key={items.id}>
+                          {items.state_name}
+                        </option>
+                      ))}
+                    </select>
+                    <span style={{ color: "red" }}>{stateError}</span>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group">
+                    <label>City</label>
+                    <select
+                      className="form-control"
+                      onInput={(e) => setSelectedCity(e.target.value)}
+                      value={selectedCity}
+                      onChange={(e) => {
+                        setcity(e.target.value);
+                        validateForm();
+                      }}
+                      onBlur={() => {
+                        if (city.trim() === "") {
+                          setCityError("City is required");
+                        } else {
+                          setCityError("");
+                        }
+                      }}
+                    >
+                      <option>City Choose...</option>
+                      {stateallCity.map((items) => (
+                        <option>{items.city_name}</option>
+                      ))}
+                    </select>
+                    <span style={{ color: "red" }}>{cityError}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Pincode</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={pincode}
+                  onChange={(e) => {
+                    setpincode(e.target.value);
+                    validateForm();
+                  }}
+                  onBlur={() => {
+                    if (pincode.trim() === "") {
+                      setPincodeError("Pincode is required");
+                    } else {
+                      setPincodeError("");
+                    }
+                  }}
+                />
+                <span style={{ color: "red" }}>{pincodeError}</span>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleAddAddress}
+                data-dismiss="modal"
+                disabled={
+                  !isFormValid ||
+                  first_name.trim() === "" || // Add this condition
+                  last_name.trim() === "" || // Add similar conditions for other fields
+                  mobile.trim() === "" ||
+                  house_no.trim() === "" ||
+                  area.trim() === "" ||
+                  landmark.trim() === "" ||
+                  state.trim() === "" ||
+                  selectedCity.trim() === "" ||
+                  pincode.trim() === ""
+                }
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* update-model */}
+
+      <div
+        className="modal fade buynow"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <>
+                <Container>
+                  <div className="needplace">
+                    <div className="address">
+                      <h3>Address</h3>
+                      <div className="address-card">
+                        {console.log("addresslist", addresslist)}
+                        {addresslist && addresslist.length > 1 ? (
+                          addresslist.map(
+                            (item, index) =>
+                              index === 0 && (
+                                <p key={item.id}>
+                                  {item.house_no} {item.area} {item.landmark}{" "}
+                                  {item.city} {item.state} {item.pincode}
+                                </p>
+                              )
+                          )
+                        ) : (
+                          <p>No data to display</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+                <Container>
+                  <div className="needplace">
+                    <div className="address">
+                      <h3>Shipping Address</h3>
+                      <div className="address-card">
+                        <Row>
+                          <Col lg={10} sm={9}>
+                            {selectedAddress ? (
+                              <div className="selectedAddress-area">
+                                <p>
+                                  {selectedAddress.first_name}{" "}
+                                  {selectedAddress.last_name}
+                                </p>
+                                <p>
+                                  {selectedAddress.house_no}{" "}
+                                  {selectedAddress.area}{" "}
+                                  {selectedAddress.landmark}{" "}
+                                  {selectedAddress.city} {selectedAddress.state}{" "}
+                                  {selectedAddress.pincode}
+                                </p>
+                                <p>Mobile: {selectedAddress.mobile}</p>
+                              </div>
+                            ) : (
+                              <p>No address selected</p>
+                            )}
+                          </Col>
+                          <Col lg={2} sm={3}>
+                            <Button
+                              data-toggle="modal"
+                              data-target="#changeadress-model"
+                              data-dismiss="modal"
+                            >
+                              Add
+                            </Button>
+                          </Col>
+                          <Col lg={12} sm={12}>
+                            <div className="address-arrow">
+                              <button onClick={toggleAddressContent}>
+                                Select Address{" "}
+                                <i
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
+                            <br />
+                            <Row>
+                              {addressContentVisible && (
+                                <Col lg={12}>
+                                  <div className="address-Content">
+                                    {addresslist && addresslist.length > 0 ? (
+                                      addresslist.map((item, index) => (
+                                        <div
+                                          className="chk-address"
+                                          key={item.id}
+                                        >
+                                          <div className="chk-center">
+                                            <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name="exampleRadios"
+                                              onClick={() =>
+                                                handleAddressClick(index)
+                                              }
+                                            />
+                                          </div>
+                                          <div className="Daynamic-address">
+                                            <table>
+                                              <tr>
+                                                <th>Name:&nbsp;</th>
+                                                <td>
+                                                  {item.first_name}&nbsp;
+                                                  {item.last_name}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <th>Address:&nbsp;</th>
+                                                <td>
+                                                  {item.house_no} {item.area}{" "}
+                                                  {item.landmark} {item.city}{" "}
+                                                  {item.state} {item.pincode}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <th>Mobile:&nbsp;</th>
+                                                <td>{item.mobile}</td>
+                                              </tr>
+                                            </table>
+                                            <div className="address-delete">
+                                              <i
+                                                className="fa fa-trash"
+                                                onClick={() =>
+                                                  handleDeleteAddress(item.id)
+                                                }
+                                              />
+                                              &nbsp; &nbsp;
+                                              <i
+                                                className="fa fa-edit"
+                                                data-toggle="modal"
+                                                onClick={() => {
+                                                  setProfileData(item);
+                                                }}
+                                                data-target="#update-model"
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))
+                                    ) : (
+                                      <p>No Addresses Available</p>
+                                    )}
+                                  </div>
+                                </Col>
+                              )}
+                            </Row>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+                {/* {productDetails && productDetails.length > 0 ? ( */}
+                <section className="section-padding">
+                  <Container>
+                    <Row>
+                      <Col lg={3}>
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            productDetails?.image
+                          }
+                        />
+                      </Col>
+                      <Col lg={7} sm={10}>
+                        <h2>{productDetails?.name}</h2>
+                        <div className="tab-container">
+                          <h6>Variations</h6>
+                          <Row>
+                            {productDetails?.variations &&
+                              productDetails?.variations.length > 0 &&
+                              productDetails?.variations.map((item, index) => (
+                                <Col lg={3} key={index}>
+                                  <div
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      setSelectedVariant(item?.type);
+                                      setSelectedVariantPrice(item?.price);
+                                    }}
+                                  >
+                                    {item?.type}
+                                  </div>
+                                </Col>
+                              ))}
+                          </Row>
+                        </div>
+                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
+                        <div className="quantity-btn quickbtn">
+                          <button onClick={handleDecrementbuynow}>
+                            <i className="fa fa-minus" />
+                          </button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                value={quantitybuynow}
+                                onChange={handleQuantityChangebuynow}
+                                autoComplete="new-number"
+                              />
+                            </div>
+                          </form>
+                          <button onClick={handleIncrementbuynow}>
+                            <i className="fa fa-plus" />
+                          </button>
+                        </div> */}
+                        <div className="quantity-btn quickbtn">
+                          <button onClick={handleDecrementOne}>
+                            <i className="fa fa-minus" />
+                          </button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                autoComplete="new-number"
+                              />
+                            </div>
+                          </form>
+                          <button onClick={handleIncrementOne}>
+                            <i className="fa fa-plus" />
+                          </button>
+                        </div>
+
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              <Col lg={3} sm={3} xs={3}>
+                                <p>{`₹${uservariationprice}`}</p>
+                              </Col>
+                              <Col lg={4} sm={4} xs={3}>
+                                <h5>{`₹${formattedAmount}`}</h5>
+                              </Col>
+                              <Col lg={5} sm={5} xs={3}>
+                                <h6>
+                                  Your save
+                                  {formattedSavedAmount >= 0
+                                    ? "₹" + formattedSavedAmount
+                                    : "No savings"}
+                                </h6>
+                              </Col>
+                            </Row>
+                          </div>
+                        </div>
+                      </Col>
+                      {/* <Col lg={2} sm={2} xs={6} className="align-self-end">
+                        <div className="delete-addcard">
+                          <Link onClick={() => removeFromCart(item.id)}>
+                            <i class="fa fa-trash-o" />
+                          </Link>
+                        </div>
+                      </Col> */}
+                    </Row>
+                    <hr />
+                  </Container>
+                </section>
+                {/* ) : (
+                  <section className="section-padding">
+                    <Container
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <Row>
+                        <p>Cart is Empty</p>
+                      </Row>
+                    </Container>
+                  </section>
+                )} */}
+
+                <Container>
+                  <div className="needplace">
+                    <Row className="justify-content-center">
+                      <Col lg={10}>
+                        <div className="add-cart-total">
+                          <Row>
+                            <Col>
+                              <h5>Sub Total</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{parseInt(Amount)}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          {/* <Row>
+                            <Col>
+                              <h5>Coupon Discount</h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                ₹
+                                {appliedCoupon
+                                  ? parseInt(disscountvalue?.discount)
+                                  : 0}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <hr />*/}
+                          <Row>
+                            <Col>
+                              <h5>Tax(5%)</h5>
+                            </Col>
+                            <Col>
+                              <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+
+                          <Row>
+                            <Col>
+                              <h5>Rounding Adjust</h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                ₹
+                                {parseInt(Amount) * 0.05 + parseInt(Amount) ??
+                                  0}
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                </Container>
+                <div className="homecheckout">
+                  <button data-toggle="modal" data-target="#cod">
+                    Checkout
+                  </button>
+                  <button data-dismiss="modal" onClick={handleResetClick}>
+                    Close
+                  </button>
+                </div>
+              </>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade editAddress"
+        id="update-model"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Update Address
+              </h5>
+            </div>
+            <div className="modal-body">
+              <div class="form-group">
+                <label>First Name</label>
+                {/* <input
+                  class="form-control"
+                  type="text"
+                  name="first_name"
+                  value={profileData.first_name || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      first_name: e.target.value.replace(/[^A-Za-z]/, ""),
+                    })
+                  }
+                /> */}
+                <input
+                  className="form-control"
+                  type="text"
+                  name="first_name"
+                  value={profileData.first_name || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      first_name: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Enter last name"
+                  name="last_name"
+                  value={profileData.last_name || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      last_name: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Mobile</label>
+                <input
+                  type="tel"
+                  name="mobile"
+                  class="form-control"
+                  maxLength={10}
+                  value={profileData.mobile || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      mobile: e.target.value
+                        .replace(/\D/g, "")
+                        .substring(0, 10),
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>flat,House no,Building,Company</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="house_no"
+                  value={profileData.house_no || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      house_no: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Area, Street,Sector,Village</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="area"
+                  value={profileData.area || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      area: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label>Landmark</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="landmark"
+                  value={profileData.landmark || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      landmark: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="form-group">
+                    <label>State</label>
+                    <select
+                      className="form-control"
+                      onChange={Subscription}
+                      value={profileData.state || ""}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
+                    >
+                      <option value="">State Choose...</option>
+                      {stateall.map((items) => (
+                        <option value={items.state_name} key={items.id}>
+                          {items.state_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="form-group">
+                    <label>City</label>
+                    <select
+                      className="form-control"
+                      onInput={(e) => setSelectedCity(e.target.value)}
+                      value={profileData.city || ""}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          city: e.target.value,
+                        })
+                      }
+                    >
+                      <option value="">City Choose...</option>
+                      {stateallCity.map((items) => (
+                        <option value={items.city_name} key={items.id}>
+                          {items.city_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Pincode</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={profileData.pincode || ""}
+                  onChange={(e) =>
+                    setProfileData({
+                      ...profileData,
+                      pincode: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleFormSubmit}
+                data-dismiss="modal"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="cod"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      data-dismiss="modal"
+                      onClick={() => handlePayment()}
+                    />
+                    <p>Online Payment</p>
+                  </div>
+                </div>
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      value="second"
+                      checked={selectedInput}
+                      onChange={handleRadioChange}
+                    />
+                    <p>Cash On Delivery</p>
+                  </div>
+                </div>
+                <Button
+                  disabled={!selectedInput}
+                  data-toggle="modal"
+                  data-target="#paysubmit"
+                  data-dismiss="modal"
+                >
+                  <Link>pay</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="paysubmit"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <img src={paydone} />
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesettingLorem Ipsum is simply dummy text of the printing
+                  and typesetting
+                </p>
+                <Button
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={handleSendRequest}
+                >
+                  <Link to="/petShop-shipping">Done</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
-  )
+  );
 }
 const Wrapper = styled.section`
   justify-content: flex-start;
@@ -1403,4 +2793,4 @@ const Wrapper = styled.section`
     padding-left: 1.2rem;
   }
 `;
-export default Petshopproduct
+export default Petshopproduct;

@@ -10,13 +10,13 @@ import { BASE_URL } from "../../Constant/Index";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import { useRef } from "react";
-import { useReactToPrint } from "react-to-print"
+import { useReactToPrint } from "react-to-print";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
-  // console.log("allorder: ", allorder);
+  console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
-  // console.log("orderDetails: ", orderDetails);
+  console.log("orderDetails: ", orderDetails);
 
   const { id } = useParams();
   console.log("order id ", id);
@@ -27,6 +27,14 @@ function PetshopOrderviewdetails() {
   }, []);
   let subTotal = orderDetails.reduce(
     (total, order) => total + parseFloat(order.price),
+    0
+  );
+  let TaxAmount = orderDetails.reduce(
+    (total, order) => total + parseFloat(order.tax_amount),
+    0
+  );
+  let SubTotalTaxAmount = orderDetails.reduce(
+    (total, order) => total + parseFloat(order.total_add_on_price),
     0
   );
 
@@ -42,7 +50,7 @@ function PetshopOrderviewdetails() {
     0
   );
 
-  const AddAllServiceCharges = subTotal + deliveryCharge;
+  const AddAllServiceCharges = SubTotalTaxAmount + deliveryCharge;
   const formatted = AddAllServiceCharges.toLocaleString(undefined, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
@@ -76,7 +84,6 @@ function PetshopOrderviewdetails() {
   });
   const summaryPrint = useReactToPrint({
     content: () => summaryTableRef.current,
-
   });
 
   const orderViewdetails = async () => {
@@ -134,8 +141,6 @@ function PetshopOrderviewdetails() {
       setRating(index);
     }
   };
-
-
 
   const handleReview = (event) => {
     event.preventDefault();
@@ -220,9 +225,13 @@ function PetshopOrderviewdetails() {
                             <Col sm={3}>
                               <div className="order-ids">
                                 <Button>
-                                  <Link to={`/petshop-add-cart/${id}`} onClick={handleAddToCart}>
+                                  <Link
+                                    to={`/petshop-add-cart/${id}`}
+                                    onClick={handleAddToCart}
+                                  >
                                     Buy it again
-                                  </Link></Button>
+                                  </Link>
+                                </Button>
                               </div>
                             </Col>
                           </Row>
@@ -233,7 +242,9 @@ function PetshopOrderviewdetails() {
                               {[1, 2, 3, 4, 5].map((index) => (
                                 <div
                                   key={index}
-                                  className={`star ${index <= rating ? 'filled' : ''}`}
+                                  className={`star ${
+                                    index <= rating ? "filled" : ""
+                                  }`}
                                   onClick={() => handleStarClick(index)}
                                 ></div>
                               ))}
@@ -249,7 +260,10 @@ function PetshopOrderviewdetails() {
                                     onChange={(e) => setcomment(e.target.value)}
                                   />
                                 </div>
-                                <button className="btn btn-primary" onClick={handleReview}>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={handleReview}
+                                >
                                   Submit
                                 </button>
                               </form>
@@ -268,7 +282,7 @@ function PetshopOrderviewdetails() {
               <Col lg={7} className="align-self-center">
                 <Row>
                   <Col sm={12} className="mb-4">
-                    <div className="order-table"  ref={tableRef}>
+                    <div className="order-table" ref={tableRef}>
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
                           console.log("Desired ID:", id);
@@ -281,8 +295,16 @@ function PetshopOrderviewdetails() {
                                 <>
                                   <tbody>
                                     <tr>
-                                      <th>Sub Total</th>
+                                      <th>Total</th>
                                       <td>₹{subTotal}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Tax:</th>
+                                      <td>₹{TaxAmount}</td>
+                                    </tr>
+                                    <tr>
+                                      <th>Sub Total</th>
+                                      <td>₹{SubTotalTaxAmount}</td>
                                     </tr>
                                     <tr>
                                       <th>Delivery Charge</th>
@@ -304,78 +326,99 @@ function PetshopOrderviewdetails() {
                       ) : (
                         <p className="emptyMSG">No Order list</p>
                       )}
-
                     </div>
                   </Col>
                   <Col sm={12}>
                     <div ref={summaryTableRef}>
-                    {allorder && allorder.length > 0 ? (
-                      allorder.map((item, index) => {
-                        console.log("Desired ID:", id);
-                        console.log("Item ID:", item.id);
+                      {allorder && allorder.length > 0 ? (
+                        allorder.map((item, index) => {
+                          console.log("Desired ID:", id);
+                          console.log("Item ID:", item.id);
 
-                        if (item.id == id) {
-                          console.log("Match found for ID:", id);
-                          return (
-                            <div className="dow-summy">
-                              <h5>Order Summary</h5>
-                              <table>
-                                <tbody>
-                                  <tr>
-                                    <th><p>Order ID :</p></th>
-                                    <td><p>{item.id}</p></td>
-                                  </tr>
-                                  <tr>
-                                    <th><p>Item Name :</p></th>
-                                    <td>
-                                      {item.callback[0] && (
-                                        <p>{item.callback[0].variant}</p>
-                                      )}</td>
-                                  </tr>
-                                  <tr>
-                                    <th><p>Total Before Tax:</p></th>
-                                    <td><p>
-                                      ₹
-                                      {parseInt(
-                                        orderDetails.reduce(
-                                          (total, order) =>
-                                            total + parseFloat(order.price),
-                                          0
-                                        )
-                                      )}
-                                    </p>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th><p>Sub Total:</p></th>
-                                    <td><p>₹{subTotal}</p></td>
-                                  </tr>
-                                  <tr>
-                                    <th><p>Delivery Fee:</p></th>
-                                    <td><p>₹{deliveryCharge}</p></td>
-                                  </tr>
-                                  <tr>
-                                    <th><h4>Total:</h4></th>
-                                    <td><h4>₹{GrandTotal}</h4></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          );
-                        } else {
-                          console.log("No match for ID:", id);
-                          return null;
-                        }
-                      })
-                    ) : (
-                      <p className="emptyMSG">No Order list</p>
-                    )}
+                          if (item.id == id) {
+                            console.log("Match found for ID:", id);
+                            return (
+                              <div className="dow-summy">
+                                <h5>Order Summary</h5>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <th>
+                                        <p>Order ID :</p>
+                                      </th>
+                                      <td>
+                                        <p>{item.id}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <p>Item Name :</p>
+                                      </th>
+                                      <td>
+                                        {item.callback[0] && (
+                                          <p>{item.callback[0].variant}</p>
+                                        )}
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <p>Total Before Tax:</p>
+                                      </th>
+                                      <td>
+                                        <p>
+                                          ₹
+                                          {parseInt(
+                                            orderDetails.reduce(
+                                              (total, order) =>
+                                                total + parseFloat(order.price),
+                                              0
+                                            )
+                                          )}
+                                        </p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <p>Sub Total:</p>
+                                      </th>
+                                      <td>
+                                        <p>₹{SubTotalTaxAmount}</p>
+                                      </td>
+                                    </tr>
+
+                                    <tr>
+                                      <th>
+                                        <p>Delivery Fee:</p>
+                                      </th>
+                                      <td>
+                                        <p>₹{deliveryCharge}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <h4>Total:</h4>
+                                      </th>
+                                      <td>
+                                        <h4>₹{GrandTotal}</h4>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            );
+                          } else {
+                            console.log("No match for ID:", id);
+                            return null;
+                          }
+                        })
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
                     </div>
                   </Col>
                 </Row>
               </Col>
             </Row>
-
           </div>
         </Container>
       </section>

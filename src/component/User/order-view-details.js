@@ -9,14 +9,31 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { useReactToPrint } from "react-to-print"
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { useReactToPrint } from "react-to-print";
 import { useBootstrapMinBreakpoint } from "react-bootstrap/esm/ThemeProvider";
 import { Toaster, toast } from "react-hot-toast";
 import StarRating from "../starrating";
 
 function Orderviewdetails() {
+  // const queryString = window.location.search;
+  // const urlParams = new URLSearchParams(queryString);
+
+  // const gowithbuynow = urlParams.get("gowithbuynow");
+  // const [butitAgainHide, setbutitAgainHide] = useState(gowithbuynow === "true");
+
+  // useEffect(() => {
+  //   // You can use this useEffect if you want to update the butitAgainHide state
+  //   // based on changes in gowithbuynow (e.g., if it changes dynamically)
+  //   setbutitAgainHide(gowithbuynow === "true");
+  // }, [gowithbuynow]); // Run this effect whenever gowithbuynow changes
+
+  // if (gowithbuynow === 'true') {
+  //   setbutitAgainHide(false)
+  // } else {
+
+  //   }
 
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
@@ -26,9 +43,7 @@ function Orderviewdetails() {
   });
   const summaryPrint = useReactToPrint({
     content: () => summaryTableRef.current,
-
   });
-
 
   const [allorder, setallorder] = useState([]);
   console.log("allorder: ", allorder);
@@ -37,11 +52,6 @@ function Orderviewdetails() {
 
   const { id } = useParams();
   console.log("order id ", id);
-
-
-
-
-
 
   useEffect(() => {
     orderViewdetails();
@@ -138,19 +148,17 @@ function Orderviewdetails() {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const modalBackdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
       }
     }
   };
-
-
 
   const [rating, setRating] = useState(0);
 
@@ -163,8 +171,6 @@ function Orderviewdetails() {
       setRating(index);
     }
   };
-
-
 
   const [responseMessage, setResponseMessage] = useState("");
   const [comment, setcomment] = useState("");
@@ -190,7 +196,6 @@ function Orderviewdetails() {
         toast.error("Field is required");
       });
   };
-
 
   return (
     <>
@@ -257,10 +262,24 @@ function Orderviewdetails() {
                             <Col sm={3}>
                               <div className="order-ids">
                                 <Button>
-                                  <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                                  <Link
+                                    to={`/add-cart/${id}`}
+                                    onClick={handleAddToCart}
+                                  >
                                     Buy it again
                                   </Link>
                                 </Button>
+                                {/* {butitAgainHide ? null : ( // Render nothing if butitAgainHide is true (button is hidden)
+                                  // Render the "Buy it again" button if butitAgainHide is false (button is shown)
+                                  <Button>
+                                    <Link
+                                      to={`/add-cart/${id}`}
+                                      onClick={handleAddToCart}
+                                    >
+                                      Buy it again
+                                    </Link>
+                                  </Button>
+                                )} */}
                               </div>
                             </Col>
                           </Row>
@@ -272,7 +291,9 @@ function Orderviewdetails() {
                                   {[1, 2, 3, 4, 5].map((index) => (
                                     <div
                                       key={index}
-                                      className={`star ${index <= rating ? 'filled' : ''}`}
+                                      className={`star ${
+                                        index <= rating ? "filled" : ""
+                                      }`}
                                       onClick={() => handleStarClick(index)}
                                     ></div>
                                   ))}
@@ -285,10 +306,15 @@ function Orderviewdetails() {
                                         className="form-control mb-3"
                                         rows={3}
                                         value={comment}
-                                        onChange={(e) => setcomment(e.target.value)}
+                                        onChange={(e) =>
+                                          setcomment(e.target.value)
+                                        }
                                       />
                                     </div>
-                                    <button className="btn btn-primary" onClick={handleReview}>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={handleReview}
+                                    >
                                       Submit
                                     </button>
                                   </form>
@@ -299,10 +325,6 @@ function Orderviewdetails() {
                             ) : null}
                           </div>
 
-
-
-
-
                           <hr />
                         </div>
                       );
@@ -312,7 +334,7 @@ function Orderviewdetails() {
                   )}
                 </div>
               </Col>
-              <Col lg={7} >
+              <Col lg={7}>
                 <Row>
                   <Col sm={12} className="mb-4">
                     <div className="order-table" ref={tableRef}>
@@ -330,17 +352,22 @@ function Orderviewdetails() {
                                   <>
                                     <tbody>
                                       <tr>
-                                        <th><p>Total</p></th>
-                                        <td><p>
-                                          ₹
-                                          {parseInt(
-                                            orderDetails.reduce(
-                                              (total, order) =>
-                                                total + parseFloat(order.price),
-                                              0
-                                            )
-                                          )}
-                                        </p></td>
+                                        <th>
+                                          <p>Total</p>
+                                        </th>
+                                        <td>
+                                          <p>
+                                            ₹
+                                            {parseInt(
+                                              orderDetails.reduce(
+                                                (total, order) =>
+                                                  total +
+                                                  parseFloat(order.price),
+                                                0
+                                              )
+                                            )}
+                                          </p>
+                                        </td>
                                         {/* <td>₹{subTotal}</td> */}
                                       </tr>
                                       {/* <tr>
@@ -352,28 +379,48 @@ function Orderviewdetails() {
                                 </tr> */}
                                       <tr>
                                         <th>
-
-                                          <p> Discount <br />
-                                            Promo Code: {item.coupon_code}</p>
+                                          <p>
+                                            {" "}
+                                            Discount <br />
+                                            Promo Code: {item.coupon_code}
+                                          </p>
                                         </th>
 
-                                        <td><p>
-                                          <span style={{ fontSize: 20 }}>{"-"}</span>{" "}
-                                          ₹{couponDiscount}
-                                        </p></td>
+                                        <td>
+                                          <p>
+                                            <span style={{ fontSize: 20 }}>
+                                              {"-"}
+                                            </span>{" "}
+                                            ₹{couponDiscount}
+                                          </p>
+                                        </td>
                                       </tr>
                                       <tr>
-                                        <th><p>Sub Total</p></th>
-                                        <td><p>₹{subTotal}</p></td>
+                                        <th>
+                                          <p>Sub Total</p>
+                                        </th>
+                                        <td>
+                                          <p>₹{subTotal}</p>
+                                        </td>
                                       </tr>
 
                                       <tr>
-                                        <th><p>Delivery Charge</p></th>
-                                        <td><p>₹{deliveryCharge}</p></td>
+                                        <th>
+                                          <p>Delivery Charge</p>
+                                        </th>
+                                        <td>
+                                          <p>₹{deliveryCharge}</p>
+                                        </td>
                                       </tr>
                                       <tr>
-                                        <th><h4>Total</h4></th>
-                                        <td><h4 style={{color:"#3b71ca"}}>₹{GrandTotal}</h4></td>
+                                        <th>
+                                          <h4>Total</h4>
+                                        </th>
+                                        <td>
+                                          <h4 style={{ color: "#3b71ca" }}>
+                                            ₹{GrandTotal}
+                                          </h4>
+                                        </td>
                                       </tr>
                                     </tbody>
                                   </>
@@ -388,7 +435,6 @@ function Orderviewdetails() {
                       ) : (
                         <p className="emptyMSG">No Order list</p>
                       )}
-
                     </div>
                   </Col>
 
@@ -407,45 +453,73 @@ function Orderviewdetails() {
                                 <table>
                                   <tbody>
                                     <tr>
-                                      <th><p>Order ID :</p></th>
-                                      <td><p>{item.id}</p></td>
-                                    </tr>
-                                    <tr>
-                                      <th><p>Item Name :</p></th>
+                                      <th>
+                                        <p>Order ID :</p>
+                                      </th>
                                       <td>
-                                        {item.callback[0] && (
-                                          <p>{item.callback[0].variant}</p>
-                                        )}</td>
-                                    </tr>
-                                    <tr>
-                                      <th><p>Total Before Tax:</p></th>
-                                      <td><p>
-                                        ₹
-                                        {parseInt(
-                                          orderDetails.reduce(
-                                            (total, order) =>
-                                              total + parseFloat(order.price),
-                                            0
-                                          )
-                                        )}
-                                      </p>
+                                        <p>{item.id}</p>
                                       </td>
                                     </tr>
                                     <tr>
-                                      <th><p>Sub Total:</p></th>
-                                      <td><p>₹{subTotal}</p></td>
+                                      <th>
+                                        <p>Item Name :</p>
+                                      </th>
+                                      <td>
+                                        {item.callback[0] && (
+                                          <p>{item.callback[0].variant}</p>
+                                        )}
+                                      </td>
                                     </tr>
                                     <tr>
-                                      <th><p>Coupon Discount:</p></th>
-                                      <td><p>₹{item.coupon_discount_amount}</p></td>
+                                      <th>
+                                        <p>Total Before Tax:</p>
+                                      </th>
+                                      <td>
+                                        <p>
+                                          ₹
+                                          {parseInt(
+                                            orderDetails.reduce(
+                                              (total, order) =>
+                                                total + parseFloat(order.price),
+                                              0
+                                            )
+                                          )}
+                                        </p>
+                                      </td>
                                     </tr>
                                     <tr>
-                                      <th><p>Delivery Fee:</p></th>
-                                      <td><p>₹{deliveryCharge}</p></td>
+                                      <th>
+                                        <p>Sub Total:</p>
+                                      </th>
+                                      <td>
+                                        <p>₹{subTotal}</p>
+                                      </td>
                                     </tr>
                                     <tr>
-                                      <th><h4>Total:</h4></th>
-                                      <td><h4 style={{color:"#3b71ca"}}>₹{GrandTotal}</h4></td>
+                                      <th>
+                                        <p>Coupon Discount:</p>
+                                      </th>
+                                      <td>
+                                        <p>₹{item.coupon_discount_amount}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <p>Delivery Fee:</p>
+                                      </th>
+                                      <td>
+                                        <p>₹{deliveryCharge}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <h4>Total:</h4>
+                                      </th>
+                                      <td>
+                                        <h4 style={{ color: "#3b71ca" }}>
+                                          ₹{GrandTotal}
+                                        </h4>
+                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -467,7 +541,6 @@ function Orderviewdetails() {
           </div>
         </Container>
       </section>
-
 
       <Footer />
     </>

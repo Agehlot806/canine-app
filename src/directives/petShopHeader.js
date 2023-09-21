@@ -20,8 +20,8 @@ function PetShopHeader(props) {
   const [categories, setcategories] = useState([]);
   const { cartData, dataLengthpetshop, addToCartData } = useCartContext();
   const loginType = localStorage.getItem("loginType");
-  const { notificationLength, dataLengthpetnotification } = useNotificationContext();
-  
+  const { notificationLength, dataLengthpetnotification } =
+    useNotificationContext();
 
   useEffect(() => {
     fetchBrands();
@@ -95,7 +95,6 @@ function PetShopHeader(props) {
     }
   };
 
-
   const [profileData, setProfileData] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
@@ -121,25 +120,25 @@ function PetShopHeader(props) {
       });
   }, []);
 
-  const [salesmanProfile,setSalesmanProfile] = useState([]);
-  const [salesmanUrl,setSalesmanUrl] = useState({image:""} || null);
+  const [salesmanProfile, setSalesmanProfile] = useState([]);
+  const [salesmanUrl, setSalesmanUrl] = useState({ image: "" } || null);
   const salesmanId = localStorage.getItem("salesmanId");
-  useEffect(()=>{
-    axios.get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
-    .then((response)=>{
-      if (response.data.status === "200" && response.data.data.length > 0) {
-        const profile = response.data.data[0];
-        setSalesmanProfile(profile);
-        if (profile.image){
-          setSalesmanUrl({image:profile.image});
-        } 
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  },[])
-
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
+      .then((response) => {
+        if (response.data.status === "200" && response.data.data.length > 0) {
+          const profile = response.data.data[0];
+          setSalesmanProfile(profile);
+          if (profile.image) {
+            setSalesmanUrl({ image: profile.image });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   useEffect(() => {
     const storedWholesellerId = Number(
@@ -224,8 +223,6 @@ function PetShopHeader(props) {
     setSearchQuery(e.target.value);
   };
 
-  
-
   return (
     <>
       <Toaster />
@@ -235,7 +232,11 @@ function PetShopHeader(props) {
             <a className="navbar-brand" href="#">
               {" "}
               <Link
-                to={loginType == "salesman" ? "/salesman-dashboad" : "/"}
+                to={
+                  loginType == "salesman"
+                    ? "/salesman-dashboad"
+                    : "/petshop-home"
+                }
                 className="logoBG"
               >
                 <img src={logo} />
@@ -634,21 +635,19 @@ function PetShopHeader(props) {
                     > */}
                       <Link
                         className="nav-link profile-icon"
-                        to={
-                          loginType == "salesman"
-                            ? "/salesman-dashboad"
-                            : ""
-                        }
+                        to={loginType == "salesman" ? "/salesman-dashboad" : ""}
                       >
                         {/* {loginType === "salesman" ? "Dashboard" : "Home"} */}
 
                         {/* <img src={pro} /> */}
                         <img
                           src={
-                            loginType == "salesman" ? "https://canine.hirectjob.in/storage/app/public/delivery-man/"+ salesmanProfile?.image : "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData?.image
+                            loginType == "salesman"
+                              ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
+                                salesmanProfile?.image
+                              : "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                profileData?.image
                           }
-                          
                         />
                       </Link>
                       <div

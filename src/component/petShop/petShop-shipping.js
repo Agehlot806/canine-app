@@ -72,71 +72,96 @@ function PetshopShipping() {
       <section className="section-padding">
         <Container>
           <div className="add-cart">
-          {allorder && allorder.length > 0 ? (
-                            allorder.map((item, index) => (
-                                <div className='myorder-list'>
-                                    <Row className='justify-content-center'>
-                                        <Col lg={2} sm={2}>
-                                            <img src={logo} />
-                                        </Col>
-                                        <Col lg={5} sm={5}>
-                                            <h3>Order Id: {item.id}</h3>
-                                            <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
-                                            <h3>Payment Method: {item.payment_method}</h3>
-                                            <h3>Order Amount: ₹{item.order_amount}</h3>
-                                            <h3>Order Status: {item.order_status}</h3>
-                                            {item.order_status === 'delivered' ? (
-                                                <div>
-                                                    {item.callback.map((callbackItem) => (
-                                                        <div key={callbackItem.id}>
-                                                            {callbackItem.user_details && callbackItem.user_details.rating > 0 ? (
-                                                                <div className='solidFA-icon'>
-                                                                    {Array.from({ length: callbackItem.user_details.rating }).map((_, index) => (
-                                                                        <i className="fa-solid fa-star" key={index} />
-                                                                    ))}
-                                                                </div>
-                                                            ) : (
-                                                                <div>
-                                                                    <a><i className="fa-regular fa-star" /></a>
-                                                                   <a><i className="fa-regular fa-star" /></a>
-                                                                   <a><i className="fa-regular fa-star" /></a>
-                                                                   <a><i className="fa-regular fa-star" /></a>
-                                                                   <a><i className="fa-regular fa-star" /></a>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <div>
-                                                   <a><i className="fa-regular fa-star" /></a>
-                                                   <a><i className="fa-regular fa-star" /></a>
-                                                   <a><i className="fa-regular fa-star" /></a>
-                                                   <a><i className="fa-regular fa-star" /></a>
-                                                   <a><i className="fa-regular fa-star" /></a>
-                                                </div>
-                                            )}
-
-
-
-                                        </Col>
-
-                                        <Col lg={3} sm={3} className="align-self-center">
-                                            <div className="myorder-btn">
-                                                <Button>
-                                                    <Link to={`/order-view-details/${item.id}`}>View</Link>
-                                                </Button>
-                                                <Button>
-                                                    <Link to={`/track-your-order/${item.id}`}>Track</Link>
-                                                </Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
+            {allorder && allorder.length > 0 ? (
+              allorder.map((item, index) => (
+                <div className="myorder-list">
+                  <Row className="justify-content-center">
+                    <Col lg={2} sm={2}>
+                      <img src={logo} />
+                    </Col>
+                    <Col lg={5} sm={5}>
+                      <h3>Order Id: {item.id}</h3>
+                      <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
+                      <h3>Payment Method: {item.payment_method}</h3>
+                      <h3>Order Amount: ₹{item.order_amount}</h3>
+                      <h3>Order Status: {item.order_status}</h3>
+                      {item.order_status === "delivered" ? (
+                        <div>
+                          {item.callback.map((callbackItem) => (
+                            <div key={callbackItem.id}>
+                              {callbackItem.user_details &&
+                              callbackItem.user_details.rating > 0 ? (
+                                <div className="solidFA-icon">
+                                  {Array.from({
+                                    length: callbackItem.user_details.rating,
+                                  }).map((_, index) => (
+                                    <i
+                                      className="fa-solid fa-star"
+                                      key={index}
+                                    />
+                                  ))}
                                 </div>
-                            ))
-                        ) : (
-                            <p className="emptyMSG">No Order list</p>
-                        )}
+                              ) : (
+                                <div>
+                                  <a>
+                                    <i className="fa-regular fa-star" />
+                                  </a>
+                                  <a>
+                                    <i className="fa-regular fa-star" />
+                                  </a>
+                                  <a>
+                                    <i className="fa-regular fa-star" />
+                                  </a>
+                                  <a>
+                                    <i className="fa-regular fa-star" />
+                                  </a>
+                                  <a>
+                                    <i className="fa-regular fa-star" />
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div>
+                          <a>
+                            <i className="fa-regular fa-star" />
+                          </a>
+                          <a>
+                            <i className="fa-regular fa-star" />
+                          </a>
+                          <a>
+                            <i className="fa-regular fa-star" />
+                          </a>
+                          <a>
+                            <i className="fa-regular fa-star" />
+                          </a>
+                          <a>
+                            <i className="fa-regular fa-star" />
+                          </a>
+                        </div>
+                      )}
+                    </Col>
+
+                    <Col lg={3} sm={3} className="align-self-center">
+                      <div className="myorder-btn">
+                        <Button>
+                          <Link to={`/petShop-order-view-details/${item.id}`}>
+                            View
+                          </Link>
+                        </Button>
+                        <Button>
+                          <Link to={`/track-your-order/${item.id}`}>Track</Link>
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              ))
+            ) : (
+              <p className="emptyMSG">No Order list</p>
+            )}
           </div>
         </Container>
       </section>
