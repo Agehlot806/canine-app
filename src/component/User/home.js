@@ -523,7 +523,7 @@ function Home(props) {
         console.log(error);
       });
   };
-
+console.log("addresslist--",addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -733,18 +733,7 @@ function Home(props) {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
-  // const finalPrice = parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount - disscountvalue.discount
-  //     : Amount + taxamound
-  // );
-  // {`${parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount -
-  //         disscountvalue.discount +
-  //         taxamound
-  //     : Amount + taxamound
-  // )}`}
+
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
@@ -805,7 +794,7 @@ function Home(props) {
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
       item_campaign_id: "",
-      order_amount:orderAmount,
+      order_amount: orderAmount,
       //    {
       //   (parseInt(Amount) * 0.05) + parseInt(Amount) - (
       //     (disscountvalue?.discount ?? 0)
@@ -893,6 +882,64 @@ function Home(props) {
     setProductDetails(null);
   };
 
+ // loadRazorpayScript
+ const loadRazorpayScript = () => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+};
+
+const handlePayment = async () => {
+  try {
+    // const response = await loadRazorpay();
+    // loadRazorpay()
+    //   .then((response) => {
+    //     console.log("response handlePayment: ", response);
+    //     // Code to execute after the script has loaded
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error loading Razorpay script:", error);
+    //   });
+    await loadRazorpayScript();
+
+    const options = {
+      key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+      amount: 10000, // Amount in paise (100 INR)
+      currency: "INR",
+      name: "HEllo world",
+      description: "Test Payment",
+      image: "https://your_logo_url.png",
+      // order_id: response.id, // Order ID obtained from Razorpay
+      handler: (response) => {
+        setPaymentId(response.razorpay_payment_id);
+        // Handle the success callback
+        window.location.href = "/shipping";
+        console.log("Payment Successful:", response);
+      },
+
+      prefill: {
+        email: "test@example.com",
+        contact: "1234567890",
+      },
+      notes: {
+        address: "1234, Demo Address",
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  } catch (error) {
+    console.error("Razorpay Load Error:", error);
+  }
+};
 
   return (
     <>
@@ -1125,8 +1172,8 @@ function Home(props) {
                           {/* <p>{item.description}</p> */}
                           <p
                             className={`truncate-text ${!expandedDescription[item.id]
-                                ? "read-more-link"
-                                : ""
+                              ? "read-more-link"
+                              : ""
                               }`}
                           >
                             {item.description}
@@ -1172,7 +1219,7 @@ function Home(props) {
                             <Col lg={6} sm={6} xs={6}>
                               <Link
                                 to={`/add-cart/${id}`}
-                                onClick={handleAddToCart}
+                                onClick={(e) => handeldataId(item.id)}
                               >
                                 <img src={bag} />
                               </Link>
@@ -1729,8 +1776,8 @@ function Home(props) {
                                             <Col lg={4} key={index}>
                                               <div
                                                 className={`tab-variations ${selectedVariant === item?.type
-                                                    ? "active"
-                                                    : ""
+                                                  ? "active"
+                                                  : ""
                                                   }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item?.type);
@@ -1848,7 +1895,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-      {/* Modal */}
+      {/*  Modal */}
       <div
         className="modal fade editAddress"
         id="changeadress-model"
@@ -2097,8 +2144,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-      {/* update-model */}
-
+      {/* buynow-model */}
       <div
         className="modal fade buynow"
         tabIndex={-1}
@@ -2174,8 +2220,8 @@ function Home(props) {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2280,8 +2326,8 @@ function Home(props) {
                                 <Col lg={3} key={index}>
                                   <div
                                     className={`tab-variations ${selectedVariant === item?.type
-                                        ? "active"
-                                        : ""
+                                      ? "active"
+                                      : ""
                                       }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
@@ -2519,8 +2565,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-
-
+      {/* update-model */}
       <div
         className="modal fade editAddress"
         id="update-model"
@@ -2718,6 +2763,7 @@ function Home(props) {
           </div>
         </div>
       </div>
+      {/* Coupon */}
       <div
         className="modal fade notification-area"
         id="Coupon"
@@ -2810,7 +2856,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-
+      {/* cod */}
       <div
         className="modal fade"
         id="cod"
@@ -2861,7 +2907,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-
+      {/* paysubmit */}
       <div
         className="modal fade"
         id="paysubmit"
