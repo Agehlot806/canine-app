@@ -101,6 +101,12 @@ function PetshopPetcategory() {
     fetchLifestage();
     allProduct();
     fetchWishlistData();
+    // allAddressList();
+    // GetdataAll();
+  }, []);
+  useEffect(() => {
+    allAddressList();
+    GetdataAll();
   }, []);
 
   useEffect(() => {
@@ -732,20 +738,19 @@ function PetshopPetcategory() {
   };
 
   const [addresslist, setAddressList] = useState([]);
-  console.log("addresslist: ", addresslist);
   const allAddressList = async () => {
-    axios
+    console.log("storedWholesellerId", typeof storedWholesellerId);
+    await axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
       .then((response) => {
-        console.log(response);
-        console.log("address list Successful");
+        console.log("address list Successful", response);
         setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
+  console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -770,57 +775,8 @@ function PetshopPetcategory() {
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
-  const [paymentId, setPaymentId] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
 
-  const loadRazorpayScript = () => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.async = true;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.body.appendChild(script);
-    });
-  };
-
-  const handlePayment = async () => {
-    try {
-      // const response = await loadRazorpay();
-      await loadRazorpayScript();
-
-      const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
-        amount: 10000, // Amount in paise (100 INR)
-        currency: "INR",
-        name: "HEllo world",
-        description: "Test Payment",
-        image: "https://your_logo_url.png",
-        // order_id: response.id, // Order ID obtained from Razorpay
-        handler: (response) => {
-          setPaymentId(response.razorpay_payment_id);
-          // Handle the success callback
-          window.location.href = "/petshop-shipping";
-          console.log("Payment Successful:", response);
-        },
-
-        prefill: {
-          email: "test@example.com",
-          contact: "1234567890",
-        },
-        notes: {
-          address: "1234, Demo Address",
-        },
-        theme: {
-          color: "#F37254",
-        },
-      };
-
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.error("Razorpay Load Error:", error);
-    }
-  };
 
   const handleAddAddress = async (event) => {
     event.preventDefault();
@@ -933,27 +889,6 @@ function PetshopPetcategory() {
     }
   };
 
-  // const removeFromCart = async (selctId) => {
-  //   try {
-  //     const response = await axios
-  //       .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //         window.location.reload(false);
-  //       });
-  //     // if (response.data.success) {
-  //     //   setAddToCartProduct(
-  //     //     (prevData) => prevData.filter((item) => item.id !== id)
-  //     //     // refresh
-  //     //   );
-  //     //   window.location.reload(false);
-  //     //   console.log("Product removed from cart:", response.data);
-  //     // }
-  //   } catch (error) {
-  //     console.error("Error removing product from cart:", error);
-  //   }
-  // };
-
   const handleDeleteAddress = (id) => {
     axios
       .delete(
@@ -990,45 +925,7 @@ function PetshopPetcategory() {
       console.error(error);
     }
   };
-  const [couponlist, setcouponlist] = useState([]);
-  const couponlistdata = async () => {
-    axios
-      .get(`${BASE_URL}/coupon/list`)
-      .then((response) => {
-        console.log(response);
-        setcouponlist(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const [coupencode, setcoupenCode] = useState(false);
-  const [appliedCoupon, setAppliedCoupon] = useState(false);
-  const data = localStorage.getItem("disconut");
-  const disscountvalue = JSON.parse(data);
-  // const finalPrice = parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount - disscountvalue.discount
-  //     : Amount + taxamound
-  // );
-  // {`${parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount -
-  //         disscountvalue.discount +
-  //         taxamound
-  //     : Amount + taxamound
-  // )}`}
-  // const coupendisscount = (dis) => {
-  //   setcoupenCode(!coupencode);
-  //   localStorage.setItem("disconut", JSON.stringify(dis));
-  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-  //   console.log("disccount?????", dis);
-  // };
-  // const clearCoupon = () => {
-  //   setcoupenCode(!coupencode);
-  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
-  // };
+
   const [selectedInput, setSelectedInput] = useState("");
   function formatAddress(selectedAddress) {
     return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
@@ -2289,7 +2186,7 @@ function PetshopPetcategory() {
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>
-                              index === 0 && (
+                              index == 0 && (
                                 <p key={item.id}>
                                   {item.house_no} {item.area} {item.landmark}{" "}
                                   {item.city} {item.state} {item.pincode}

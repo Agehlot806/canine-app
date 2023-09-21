@@ -118,9 +118,6 @@ function Home(props) {
       // Handle error as needed
     }
   };
-  console.log("====================================");
-  console.log(brands);
-  console.log("====================================");
 
   useEffect(() => {
     categoriesProduct();
