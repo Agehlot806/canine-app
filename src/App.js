@@ -162,6 +162,7 @@ function App() {
           />
           <Route path="/payment-options" element={<paymentOptions />} />
           <Route path="/track-your-order/:id" element={<Trackyourorder />} />
+          <Route path="/track-your-order" element={<Trackyourorder />} />
           <Route path="/find-a-store" element={<Findastore />} />
           <Route path="/offers-details" element={<Offersdetails />} />
           <Route path="/payment-option" element={<Paymentoption />} />
@@ -248,6 +249,10 @@ function App() {
           />
           <Route
             path="/petshoptrackyourorde/:id"
+            element={<Petshoptrackyourorder />}
+          />
+                    <Route
+            path="/petshoptrackyourorde"
             element={<Petshoptrackyourorder />}
           />
           <Route

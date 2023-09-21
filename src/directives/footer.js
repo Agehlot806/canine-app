@@ -37,7 +37,7 @@ function Footer() {
                       <Link to="/payment-option">{strings.paymentOption}</Link>
                     </li>
                     <li>
-                      <Link to="/track-your-order/:id">
+                      <Link to="/track-your-order">
                         {strings.trackYourOrder}
                       </Link>
                     </li>
@@ -109,12 +109,12 @@ function Footer() {
                   <h5>Download The Apps</h5>
                   <ul>
                     <li>
-                      <Link>
+                      <Link to="https://play.google.com/store/games?device=windows">
                         <img src={app1} />
                       </Link>
                     </li>
                     <li>
-                      <Link>
+                      <Link to="https://www.apple.com/in/">
                         <img src={app2} />
                       </Link>
                     </li>
