@@ -37,7 +37,7 @@ function Petshopfooter() {
                       <Link to="/petshoppaymentoptionfooter">{strings.paymentOption}</Link>
                     </li>
                     <li>
-                      <Link to="/petshoptrackyourorde/:id">
+                      <Link to="/petshoptrackyourorde">
                         {strings.trackYourOrder}
                       </Link>
                     </li>
@@ -97,12 +97,12 @@ function Petshopfooter() {
                   <h5>Download The Apps</h5>
                   <ul>
                     <li>
-                      <Link>
+                    <Link to="https://play.google.com/store/games?device=windows">
                         <img src={app1} />
                       </Link>
                     </li>
                     <li>
-                      <Link>
+                      <Link to="https://www.apple.com/in/">
                         <img src={app2} />
                       </Link>
                     </li>

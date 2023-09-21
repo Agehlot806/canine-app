@@ -70,9 +70,9 @@ function Petcategory() {
       case "specialDiet":
         setSpecialDietDropdownVisible(!specialDietDropdownVisible);
         break;
-        case "cate":
-          setCateDropdownVisible(!cateDropdownVisible);
-          break;
+      case "cate":
+        setCateDropdownVisible(!cateDropdownVisible);
+        break;
       case "veg-Non-veg":
         setVegNonvegDropdownVisible(!vegNonvegDropdownVisible);
         break;
@@ -106,18 +106,18 @@ function Petcategory() {
 
 
 
- 
- 
-  
 
- 
+
+
+
+
 
 
   // filter code ==========================
   const [allproduct, setallproduct] = useState([])
 
   useEffect(() => {
- 
+
     allProduct();
     allBrandshow()
     allLifesageshow()
@@ -127,8 +127,12 @@ function Petcategory() {
     Allsubcategories()
     fetchWishlistData()
     couponlistdata();
-    GetdataAll();
     allReview();
+    // GetdataAll();
+    // allAddressList();
+  }, []);
+  useEffect(() => {
+    GetdataAll();
     allAddressList();
   }, []);
   const allProduct = async () => {
@@ -144,10 +148,10 @@ function Petcategory() {
         console.log(error);
       });
   };
-  
 
-////filter tarun//
-const [allbrand, setAllBrand] = useState("")
+
+  ////filter tarun//
+  const [allbrand, setAllBrand] = useState("")
   const [alllifesage, setAlllifesage] = useState("")
   const [allbreed, setAllBreed] = useState("")
   const [allsubcate, setAllSubcate] = useState("")
@@ -239,7 +243,7 @@ const [allbrand, setAllBrand] = useState("")
   const [selectedhealthIds, setSelectedhealthIds] = useState([]);
   const [selectedvegIds, setSelectedvegIds] = useState([]);
   const [selectedsubcateIds, setSelectedsubcateIds] = useState([]);
- 
+
   const [minpricevalue, setMinpricevalue] = useState([])
   const [maxpricevalue, setMaxpricevalue] = useState([])
   const minprice = (e) => {
@@ -297,12 +301,12 @@ const [allbrand, setAllBrand] = useState("")
       return updatedhealthIds;
     });
   };
-    const allsubcateselect = (name) => {  
+  const allsubcateselect = (name) => {
     setSelectedsubcateIds((prevSelectedhealthIds) => {
       const updatesubcateIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined,undefined,undefined, updatesubcateIds);
+      filterProducts(undefined, undefined, undefined, undefined, undefined, undefined, updatesubcateIds);
       return updatesubcateIds;
     });
   };
@@ -316,12 +320,12 @@ const [allbrand, setAllBrand] = useState("")
       return updatedvegIds;
     });
   };
-  const applyprice = ()=>{
+  const applyprice = () => {
     filterProducts();
   }
 
-  console.log("/////",selectedsubcateIds);
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds,updatedvegIds,updatesubcateIds) => {
+  console.log("/////", selectedsubcateIds);
+  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds, updatesubcateIds) => {
     try {
       const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
       const products = response.data.data;
@@ -331,8 +335,8 @@ const [allbrand, setAllBrand] = useState("")
         selectBreedFilterList: updatedBreedIds || selectedbreedIds,
         selectcate: updatedcateIds || selectedcateIds,
         selecthealth: updatedhealthIds || selectedhealthIds,
-        selectedVegOptions:updatedvegIds|| selectedvegIds,
-        selectedsubcate:updatesubcateIds|| selectedsubcateIds,
+        selectedVegOptions: updatedvegIds || selectedvegIds,
+        selectedsubcate: updatesubcateIds || selectedsubcateIds,
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
@@ -384,11 +388,11 @@ const [allbrand, setAllBrand] = useState("")
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter&&Filterveg&&minPriceFilter&& maxPriceFilter&&subcateFilter;
+      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter && subcateFilter;
     });
   };
 
- 
+
 
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
@@ -398,47 +402,47 @@ const [allbrand, setAllBrand] = useState("")
     // Add more gradient colors as needed
   ];
 
-  
-/////pagination//
 
-const [paginatedCategories, setPaginatedCategories] = useState([]);
-const [currentPage, setCurrentPage] = useState(1);
-const pageSize = 6;
-useEffect(() => {
-  // Update the paginated categories whenever brandcategories or currentPage changes
-  pagination(currentPage);
-}, [allproduct, currentPage]);
+  /////pagination//
 
-const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
-const pages = _.range(1, pageCount + 1);
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+  useEffect(() => {
+    // Update the paginated categories whenever brandcategories or currentPage changes
+    pagination(currentPage);
+  }, [allproduct, currentPage]);
 
-const pagination = (pageNo) => {
-  setCurrentPage(pageNo);
-  const startIndex = (pageNo - 1) * pageSize;
-  const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
-  setPaginatedCategories(paginated);
-};
+  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  const pages = _.range(1, pageCount + 1);
 
-const [subid, setsubid] = useState("");
-const [petitemproduct, setpetitemproduct] = useState([]);
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+    setPaginatedCategories(paginated);
+  };
 
-const subcatid = async (id) => {
-  setsubid(id);
-  console.log("subcategoriesID", subid);
-  await axios
-    .get(`${BASE_URL}/items/product/${id}/${subid}`)
-    .then((response) => {
-      console.log(response);
-      setpetitemproduct(response.data.data);
-      setallproduct(petitemproduct)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+  const [subid, setsubid] = useState("");
+  const [petitemproduct, setpetitemproduct] = useState([]);
+
+  const subcatid = async (id) => {
+    setsubid(id);
+    console.log("subcategoriesID", subid);
+    await axios
+      .get(`${BASE_URL}/items/product/${id}/${subid}`)
+      .then((response) => {
+        console.log(response);
+        setpetitemproduct(response.data.data);
+        setallproduct(petitemproduct)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 
-const [addToCartStatus, setAddToCartStatus] = useState("");
+  const [addToCartStatus, setAddToCartStatus] = useState("");
   const [isFavCheck, setisFavCheck] = useState(false);
   useEffect(() => {
     if (allproduct.length > 0) {
@@ -515,11 +519,11 @@ const [addToCartStatus, setAddToCartStatus] = useState("");
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element",element);
+        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
         console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr",newArr);
+        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -552,7 +556,7 @@ const [addToCartStatus, setAddToCartStatus] = useState("");
         toast.error("Already in your wishlist");
       });
   };
- 
+
   const [buttonVisibility, setButtonVisibility] = useState({});
 
   const handleMouseEnter = (productId) => {
@@ -685,7 +689,7 @@ const [addToCartStatus, setAddToCartStatus] = useState("");
   }
 
 
- 
+
   // ===============================================================
   // =================================================================
   // Buy Now ------------------------
@@ -711,18 +715,18 @@ const [addToCartStatus, setAddToCartStatus] = useState("");
 
   const [addresslist, setAddressList] = useState([]);
   const allAddressList = async () => {
-    axios
-      .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
-      .then((response) => {
-        console.log(response);
-        console.log("address list Successful");
-        setAddressList(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log("storedUserId", typeof storedUserId);
+    await axios 
+    .get(`${BASE_URL}/customer/address/list/${customer_id}`)
+    .then((response) => {
+      console.log("address list Successful", response);
+      setAddressList(response.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   };
-console.log("addresslist--",addresslist);
+  console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -888,7 +892,7 @@ console.log("addresslist--",addresslist);
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
       })
@@ -907,7 +911,7 @@ console.log("addresslist--",addresslist);
       // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
         fieldpagerefresh(); // Call fieldpagerefresh here
@@ -1092,8 +1096,8 @@ console.log("addresslist--",addresslist);
     setProductDetails(null);
   };
 
-   // loadRazorpayScript
-   const loadRazorpayScript = () => {
+  // loadRazorpayScript
+  const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -1162,11 +1166,11 @@ console.log("addresslist--",addresslist);
 
       <Container>
         <Row>
-        <Col lg={3}>
+          <Col lg={3}>
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
-                
+
                 <hr />
                 <div
                   onClick={() => handleParentClick("brand")}
@@ -1190,7 +1194,7 @@ console.log("addresslist--",addresslist);
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                        
+
 
                                 onClick={(e) => handleDataListBrand(items.title)}
                               />
@@ -1219,31 +1223,31 @@ console.log("addresslist--",addresslist);
                     </span>
                   </div>
                   {productTypeDropdownVisible && (
-                     <>
-                     <div>
-                       {subcategories ? (
-                         subcategories.map((items) => (
-                           <div
-                             className="form-check"
-                             onClick={handleCheckboxClick}
-                           >
-                             <input
-                               className="form-check-input"
-                               type="checkbox"
-                               onClick={(e) => allsubcateselect(items.name)}
-                             />
-                             <label
-                               className="form-check-label"
-              
-                             >
-                               {items.name}
-                             </label>
-                           </div>
+                    <>
+                      <div>
+                        {subcategories ? (
+                          subcategories.map((items) => (
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allsubcateselect(items.name)}
+                              />
+                              <label
+                                className="form-check-label"
 
-                         ))
-                       ) : ""}
-                     </div>
-                   </>
+                              >
+                                {items.name}
+                              </label>
+                            </div>
+
+                          ))
+                        ) : ""}
+                      </div>
+                    </>
                   )}
                 </div>
                 <hr />
@@ -1269,13 +1273,13 @@ console.log("addresslist--",addresslist);
                               <input
                                 className="form-check-input"
                                 type="checkbox"
-                        
+
 
                                 onClick={(e) => allcateselect(items.name)}
                               />
                               <label
                                 className="form-check-label"
-                               
+
                               >
                                 {items.name}
                               </label>
@@ -1305,17 +1309,17 @@ console.log("addresslist--",addresslist);
 
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
-                          <input type="number" 
-                          placeholder="From"  onChange={minprice} />
+                          <input type="number"
+                            placeholder="From" onChange={minprice} />
                         </div>
                         <div className="form-range" onClick={handleCheckboxClick}>
                           <span>₹</span>
                           <input type="number"
-                             placeholder="From"  onChange={maxprice} />
+                            placeholder="From" onChange={maxprice} />
                         </div>
                         <div className="form-range" >
                           {/* <span>₹</span> */}
-                       <button onClick={applyprice}>Apply</button>
+                          <button onClick={applyprice}>Apply</button>
                         </div>
                       </div>
 
@@ -1461,7 +1465,7 @@ console.log("addresslist--",addresslist);
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            onClick={(e)=>vegnonveghandler("1")}
+                            onClick={(e) => vegnonveghandler("1")}
                           />
                           <label
                             className="form-check-label"
@@ -1476,7 +1480,7 @@ console.log("addresslist--",addresslist);
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            onClick={(e)=>vegnonveghandler("0")}
+                            onClick={(e) => vegnonveghandler("0")}
 
                           />
                           <label
@@ -1501,7 +1505,7 @@ console.log("addresslist--",addresslist);
               <Container>
                 <div className="needplace">
                   <div className="dog-categorys-area">
-                  <ul
+                    <ul
                       className="nav nav-pills mb-3"
                       id="pills-tab"
                       role="tablist"
@@ -1510,8 +1514,8 @@ console.log("addresslist--",addresslist);
                         subcategories.map((item, index) => (
                           <li className="nav-item" key={item.id}>
                             <a
-                 className={`nav-link ${item.id == id ? "active" : ""
-                }`}
+                              className={`nav-link ${item.id == id ? "active" : ""
+                                }`}
                               id="pills-home-tab"
                               data-toggle="pill"
                               onClick={(e) => allsubcateselect(item.name)}
@@ -1544,7 +1548,7 @@ console.log("addresslist--",addresslist);
                         aria-labelledby="pills-home-tab"
                       >
                         <Row>
-                      
+
                         </Row>
                       </div>
                     </div>
@@ -1552,103 +1556,103 @@ console.log("addresslist--",addresslist);
                 </div>
                 <div>
                   <Row>
-                  {paginatedCategories.map((item, index) => (
-                    item.category_id == id &&( 
-                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                      <div
-                        className="food-product"
-                        onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
-                        key={item.id}
-                        style={{
-                          background:
-                            gradientColors[index % gradientColors.length],
-                        }}
-                      >
-                        <i
-                        class={
-                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                        }
-                        onClick={(id) => {
-                          if (storedUserId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
-                          }
-                        }}
-                      />
-                        <Link to={`/product-details/${item.id}`}>
-                          <div className="text-center">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in//storage/app/public/product/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <div>
-                            <h6>{item.name}</h6>
-                            <p>{item.description}</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹999.00</p>
-                              </Col>
-                              <Col>
-                                <h5>{item.discount}%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>₹{item.price}</h6>
-                              </Col>
-                              <Col>
-                                <Link to="">
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                        {buttonVisibility[item.id] && (
-                        <div className="button-container">
-                          <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
+                    {paginatedCategories.map((item, index) => (
+                      item.category_id == id && (
+                        <Col lg={4} sm={6} xs={6} className="mb-4">
+                          <div
+                            className="food-product"
+                            onMouseEnter={() => handleMouseEnter(item.id)}
+                            onMouseLeave={() => handleMouseLeave(item.id)}
+                            key={item.id}
+                            style={{
+                              background:
+                                gradientColors[index % gradientColors.length],
+                            }}
                           >
-                            Buy Now
-                          </button>
-                        </div>
-                      )}
-                      </div>
-                    </Col>
-                    )
-                  ))}
+                            <i
+                              class={
+                                item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                              }
+                              onClick={(id) => {
+                                if (storedUserId == null) {
+                                  toast.error("Please Login first");
+                                } else {
+                                  addToWishlist(item.id);
+                                }
+                              }}
+                            />
+                            <Link to={`/product-details/${item.id}`}>
+                              <div className="text-center">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/public/product/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <div>
+                                <h6>{item.name}</h6>
+                                <p>{item.description}</p>
+                              </div>
+                              <div className="product-bag">
+                                <Row>
+                                  <Col>
+                                    <p>₹999.00</p>
+                                  </Col>
+                                  <Col>
+                                    <h5>{item.discount}%</h5>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col className="align-self-center">
+                                    <h6>₹{item.price}</h6>
+                                  </Col>
+                                  <Col>
+                                    <Link to="">
+                                      <img src={bag} />
+                                    </Link>
+                                  </Col>
+                                </Row>
+                              </div>
+                            </Link>
+                            {buttonVisibility[item.id] && (
+                              <div className="button-container">
+                                <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".buynow"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Buy Now
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </Col>
+                      )
+                    ))}
                   </Row>
                   <div className="pagination-area">
-                  <ul className="pagination">
-                    {pages.map((page) => (
-                      <li
-                        key={page}
-                        className={
-                          page === currentPage
-                            ? "page-item active"
-                            : "page-item"
-                        }
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => pagination(page)}
+                    <ul className="pagination">
+                      {pages.map((page) => (
+                        <li
+                          key={page}
+                          className={
+                            page === currentPage
+                              ? "page-item active"
+                              : "page-item"
+                          }
                         >
-                          {page}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                          <button
+                            className="page-link"
+                            onClick={() => pagination(page)}
+                          >
+                            {page}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
                 <Row>
@@ -1927,7 +1931,7 @@ console.log("addresslist--",addresslist);
           <div className="modal-content">
             <div className="modal-body">
               <>
-              <Container>
+                <Container>
                   <div className="needplace">
                     <div className="address">
                       <h3>Address</h3>
@@ -1936,7 +1940,7 @@ console.log("addresslist--",addresslist);
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>
-                              index === 0 && (
+                              index == 0 && (
                                 <p key={item.id}>
                                   {item.house_no} {item.area} {item.landmark}{" "}
                                   {item.city} {item.state} {item.pincode}
@@ -2072,7 +2076,7 @@ console.log("addresslist--",addresslist);
                       </div>
                     </div>
                   </div>
-                </Container> 
+                </Container>
                 {/* {productDetails && productDetails.length > 0 ? ( */}
                 <section className="section-padding">
                   <Container>

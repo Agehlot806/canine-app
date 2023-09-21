@@ -185,21 +185,17 @@ function PetshopOrderviewdetails() {
               </Col>
               <Col lg={7}>
                 <div className="dowload-invioce">
-                  <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf">
-                    <Button className="invoice-1">
-                      <img src={invoice} /> download invoice
-                    </Button>
-                  </Link>
-                  <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf">
-                    <Button className="invoice-2">
-                      <img src={invoice} /> download summary
-                    </Button>
-                  </Link>
+                  <Button className="invoice-1" onClick={handlePrint}>
+                    <img src={invoice} /> download invoice
+                  </Button>
+                  <Button className="invoice-2" onClick={summaryPrint}>
+                    <img src={invoice} /> download summary
+                  </Button>
                 </div>
               </Col>
             </Row>
             <Row>
-              <Col lg={5}>
+            <Col lg={5} className="align-self-center">
                 <div className="order-minicard">
                   {orderDetails && orderDetails.length > 0 ? (
                     orderDetails.map((order) => {
@@ -235,40 +231,42 @@ function PetshopOrderviewdetails() {
                               </div>
                             </Col>
                           </Row>
-
                           <div>
-                            <p>Product Rating: {rating}</p>
-                            <div className="star-rating">
-                              {[1, 2, 3, 4, 5].map((index) => (
-                                <div
-                                  key={index}
-                                  className={`star ${
-                                    index <= rating ? "filled" : ""
-                                  }`}
-                                  onClick={() => handleStarClick(index)}
-                                ></div>
-                              ))}
-                            </div>
-                            {showForm && (
-                              <form>
-                                <div className="form-group">
-                                  <label>Write a Review</label>
-                                  <textarea
-                                    className="form-control mb-3"
-                                    rows={3}
-                                    value={comment}
-                                    onChange={(e) => setcomment(e.target.value)}
-                                  />
+                            {allorder.order_status === "delivered" ? (
+                              <div>
+                                <p>Product Rating: {rating}</p>
+                                <div className="star-rating">
+                                  {[1, 2, 3, 4, 5].map((index) => (
+                                    <div
+                                      key={index}
+                                      className={`star ${index <= rating ? "filled" : ""
+                                        }`}
+                                      onClick={() => handleStarClick(index)}
+                                    ></div>
+                                  ))}
                                 </div>
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={handleReview}
-                                >
-                                  Submit
-                                </button>
-                              </form>
-                            )}
-                            {!showForm && <p>Review submitted. Thank you!</p>}
+                                {showForm && (
+                                  <form>
+                                    <div className="form-group">
+                                      <label>Write a Review</label>
+                                      <textarea
+                                        className="form-control mb-3"
+                                        rows={3}
+                                        value={comment}
+                                        onChange={(e) => setcomment(e.target.value)}
+                                      />
+                                    </div>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={handleReview}
+                                    >
+                                      Submit
+                                    </button>
+                                  </form>
+                                )}
+                                {!showForm && <p>Review submitted. Thank you!</p>}
+                              </div>
+                            ) : null}
                           </div>
                           <hr />
                         </div>
@@ -291,32 +289,35 @@ function PetshopOrderviewdetails() {
                           if (item.id == id) {
                             console.log("Match found for ID:", id);
                             return (
-                              <Table responsive key={index}>
-                                <>
-                                  <tbody>
-                                    <tr>
-                                      <th>Total</th>
-                                      <td>₹{subTotal}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Tax:</th>
-                                      <td>₹{TaxAmount}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Sub Total</th>
-                                      <td>₹{SubTotalTaxAmount}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Delivery Charge</th>
-                                      <td>₹{deliveryCharge}</td>
-                                    </tr>
-                                    <tr>
-                                      <th>Total</th>
-                                      <td>₹{GrandTotal}</td>
-                                    </tr>
-                                  </tbody>
-                                </>
-                              </Table>
+                              <div className="dow-summy">
+                                <h5>Order Invoice</h5>
+                                <table responsive key={index}>
+                                  <>
+                                    <tbody>
+                                      <tr>
+                                        <th><p>Total</p></th>
+                                        <td><p>₹{subTotal}</p></td>
+                                      </tr>
+                                      <tr>
+                                        <th><p>Tax:</p></th>
+                                        <td><p>₹{TaxAmount}</p></td>
+                                      </tr>
+                                      <tr>
+                                        <th><p>Sub Total</p></th>
+                                        <td><p>₹{SubTotalTaxAmount}</p></td>
+                                      </tr>
+                                      <tr>
+                                        <th><p>Delivery Charge</p></th>
+                                        <td><p>₹{deliveryCharge}</p></td>
+                                      </tr>
+                                      <tr>
+                                        <th>Total</th>
+                                        <td>₹{GrandTotal}</td>
+                                      </tr>
+                                    </tbody>
+                                  </>
+                                </table>
+                              </div>
                             );
                           } else {
                             console.log("No match for ID:", id);
