@@ -7,6 +7,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import { useCartContext } from "../component/context/addToCartContext";
 import { useNotificationContext } from "../component/context/notificationContext";
+import { Col, Row } from "react-bootstrap";
 
 function Newheader(props) {
   // const { dataLength } = props;
@@ -23,11 +24,12 @@ function Newheader(props) {
     useNotificationContext();
 
   useEffect(() => {
-    fetchBrands();
+    // fetchBrands();
     allProductdata();
     AllDogsubcategories();
     categoriesProduct();
     addToCartData();
+    fetchNotifications();
   }, []);
 
   const categoriesProduct = async () => {
@@ -40,12 +42,12 @@ function Newheader(props) {
     }
   };
 
-  const fetchBrands = async () => {
+  const fetchNotifications = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}/customer/notifications?tergat=customer`
       );
-      setNotification(response.data);
+      setNotification(response.data.state); 
     } catch (error) {
       console.error(error);
     }
@@ -686,10 +688,11 @@ function Newheader(props) {
                   <div className="notification">
                     <Row>
                       <Col lg={2}>
-                        <img src={pro} />
+                        <img src={item.image} />
                       </Col>
                       <Col lg={10} className="align-self-center">
-                        <h6>{item.tergat}</h6>
+                        <h6>{item.title}</h6>
+                        <p>{item.description}</p>
                       </Col>
                     </Row>
                   </div>
@@ -697,7 +700,7 @@ function Newheader(props) {
               ) : (
                 <p className="emptyMSG">No Notification</p>
               )}
-
+              {console.log("notificationnotification",notification)}
               <button
                 type="button"
                 className="btn btn-secondary"

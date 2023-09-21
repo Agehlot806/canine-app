@@ -6,7 +6,7 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 import cart from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
@@ -15,6 +15,9 @@ import paydone from "../../assets/images/icon/paydone.png";
 
 function Addcart() {
   const { id } = useParams();
+  // const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  // const goWithBuyNow = params.get('gowithbuynow');
   console.log("id", id);
   // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(1);
@@ -200,6 +203,7 @@ function Addcart() {
           item_name: item.item_name,
           image: item.image,
           price: item.price,
+          variant: item.variant,
           quantity: item.quantity, // Assuming the response already includes the quantity
         }));
 
@@ -236,18 +240,11 @@ function Addcart() {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
   };
+  
 
   const [selectedCity, setSelectedCity] = useState("");
   console.log("selectedCity: ", selectedCity);
@@ -589,7 +586,7 @@ function Addcart() {
                   </Col>
                   <Col lg={6} sm={5} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
-                    {/* <p>with paneer or cottage cheese.</p> */}
+                    <p>Selected Variant : {item.variant}</p>
                   </Col>
                   <Col
                     lg={2}
@@ -1614,8 +1611,9 @@ function Addcart() {
                             onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
-                          // data-toggle="modal"
-                          // data-target="#Coupon"
+                            data-dismiss="modal" 
+                            // data-toggle="modal"
+                            // data-target="#Coupon"
                           >
                             Apply
                           </button>
