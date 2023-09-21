@@ -133,34 +133,49 @@ function Productdetail() {
   };
 
 
- 
+
 
   // ****************notifyme
   const [email, setEmail] = useState("");
   const [variation, setVariation] = useState("");
   const handleNotifymeSubmit = async (e) => {
-    // e.preventDefault();
-    // console.log("handleSubmit called", handleValid()); // Add this
-
-    // if (handleValid()) {
+    e.preventDefault(); // Prevent default form submission behavior
+  
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+  
+    // Validate variation
+    if (!variation) {
+      toast.error("Please select a variation");
+      return;
+    }
+  
+    // Prepare form data
     const notifymeData = new FormData();
-
     notifymeData.append("email", email);
     notifymeData.append("variation", variation);
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
+  
     console.log('productDetails.id: ', productDetails?.id);
     console.log("notifymeData", notifymeData);
+  
+    // Send a request
     axios
       .post(`https://canine.hirectjob.in/api/v1/items/notify/2`, notifymeData)
       .then((response) => {
-        toast.success("Your data Successfully Add");
+        toast.success("Your data was successfully added");
       })
       .catch((error) => {
-        toast.error("Field is required");
+        toast.error("An error occurred. Please try again.");
       });
   };
+   
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -334,7 +349,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -342,7 +357,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -448,7 +463,7 @@ function Productdetail() {
         console.log(error);
       });
   };
-console.log("addresslist--",addresslist);
+  console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -818,8 +833,8 @@ console.log("addresslist--",addresslist);
     setProductDetails(null);
   };
 
-   // loadRazorpayScript
-   const loadRazorpayScript = () => {
+  // loadRazorpayScript
+  const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -876,6 +891,7 @@ console.log("addresslist--",addresslist);
       console.error("Razorpay Load Error:", error);
     }
   };
+  
 
   return (
     <>
@@ -887,31 +903,31 @@ console.log("addresslist--",addresslist);
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -933,7 +949,7 @@ console.log("addresslist--",addresslist);
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -972,16 +988,16 @@ console.log("addresslist--",addresslist);
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex + 1) % productDetails.images.length
+                      (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                          productDetails.images.length
+                      (lightboxImageIndex +
+                        productDetails.images.length -
+                        1) %
+                      productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -990,7 +1006,7 @@ console.log("addresslist--",addresslist);
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                          productDetails.images.length
+                        productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1046,11 +1062,10 @@ console.log("addresslist--",addresslist);
                                 productDetails.variations.map((item, index) => (
                                   <Col lg={3} key={index}>
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -1212,24 +1227,24 @@ console.log("addresslist--",addresslist);
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-            (item, index) =>
-              item.type === "item_wise" && (
-                <div className="product-innerBanner">
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/" + item.image
-                    }
-                  />
-                  <div className="home-content">
-                    <h1>{item.title}</h1>
-                    <p>{item.description}</p>
-                    <Button>
-                      Explore More <i className="fa fa-angle-right" />
-                    </Button>
-                  </div>
+          (item, index) =>
+            item.type === "item_wise" && (
+              <div className="product-innerBanner">
+                <img
+                  src={
+                    "https://canine.hirectjob.in/storage/app/" + item.image
+                  }
+                />
+                <div className="home-content">
+                  <h1>{item.title}</h1>
+                  <p>{item.description}</p>
+                  <Button>
+                    Explore More <i className="fa fa-angle-right" />
+                  </Button>
                 </div>
-              )
-          )
+              </div>
+            )
+        )
         : null}
 
       <section className="section-padding food">
@@ -1286,8 +1301,8 @@ console.log("addresslist--",addresslist);
                               className="align-self-center"
                             >
                               <h6>{`₹${item.price -
-                                  (item.price * item?.discount) / 100
-                                  }`}</h6>
+                                (item.price * item?.discount) / 100
+                                }`}</h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1350,7 +1365,9 @@ console.log("addresslist--",addresslist);
                     onChange={(e) => setVariation(e.target.value)}
                     value={variation}
                   >
-                    <option>Choose....</option>
+                    <option value="" disabled selected>
+                      Choose an option...
+                    </option>
                     {productDetails?.variations &&
                       productDetails?.variations.map((item) => (
                         <option>{item.type}</option>
@@ -1411,7 +1428,7 @@ console.log("addresslist--",addresslist);
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1451,17 +1468,17 @@ console.log("addresslist--",addresslist);
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1470,13 +1487,13 @@ console.log("addresslist--",addresslist);
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1528,11 +1545,10 @@ console.log("addresslist--",addresslist);
                                           (item, index) => (
                                             <Col lg={4} key={index}>
                                               <div
-                                                className={`tab-variations ${
-                                                  selectedVariant === item.type
+                                                className={`tab-variations ${selectedVariant === item.type
                                                     ? "active"
                                                     : ""
-                                                }`}
+                                                  }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item.type);
                                                   setSelectedVariantPrice(
@@ -1653,8 +1669,8 @@ console.log("addresslist--",addresslist);
 
 
 
-       {/* buynow-model */}
-       <div
+      {/* buynow-model */}
+      <div
         className="modal fade buynow"
         tabIndex={-1}
         role="dialog"
@@ -1665,7 +1681,7 @@ console.log("addresslist--",addresslist);
           <div className="modal-content">
             <div className="modal-body">
               <>
-              <Container>
+                <Container>
                   <div className="needplace">
                     <div className="address">
                       <h3>Address</h3>
@@ -1810,7 +1826,7 @@ console.log("addresslist--",addresslist);
                       </div>
                     </div>
                   </div>
-                </Container> 
+                </Container>
                 {/* {productDetails && productDetails.length > 0 ? ( */}
                 <section className="section-padding">
                   <Container>
