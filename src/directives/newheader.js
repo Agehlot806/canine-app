@@ -8,7 +8,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { useCartContext } from "../component/context/addToCartContext";
 import { useNotificationContext } from "../component/context/notificationContext";
 import { Col, Row } from "react-bootstrap";
-import loicon1 from "../assets/images/img/loicon1.png"
+import loicon1 from "../assets/images/img/loicon1.png";
 
 function Newheader(props) {
   // const { dataLength } = props;
@@ -190,7 +190,6 @@ function Newheader(props) {
     setSearchQuery(e.target.value);
   };
 
-
   return (
     <>
       <Toaster />
@@ -238,7 +237,7 @@ function Newheader(props) {
                     href="#"
                     id="navbarDropdown"
                     role="button"
-                    data-toggle="dropdown"
+                    // data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -283,7 +282,11 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "treats" && (
                                   <li>
-                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
                                   </li>
                                 )
                             )
@@ -302,7 +305,11 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "toys" && (
                                   <li>
-                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
                                   </li>
                                 )
                             )
@@ -321,7 +328,11 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "accessories" && (
                                   <li>
-                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
                                   </li>
                                 )
                             )
@@ -340,7 +351,11 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "medicine" && (
                                   <li>
-                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
                                   </li>
                                 )
                             )
@@ -360,7 +375,7 @@ function Newheader(props) {
                     href="#"
                     id="navbarDropdown"
                     role="button"
-                    data-toggle="dropdown"
+                    // data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -586,8 +601,7 @@ function Newheader(props) {
                         // key={item.id}
                         className="nav-link profile-icon"
                         to=""
-                      // props.type === "salesman" ? "/salesman-dashboad" : "home"
-
+                        // props.type === "salesman" ? "/salesman-dashboad" : "home"
                       >
                         {/* <img
                           src={
@@ -600,13 +614,12 @@ function Newheader(props) {
                         <img
                           src={
                             profileData?.image
-                              ? "https://canine.hirectjob.in/storage/app/public/profile/" + profileData.image
-                              : loicon1 
+                              ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                profileData.image
+                              : loicon1
                           }
                           alt="Profile Image"
                         />
-
-
                       </Link>
                       <div
                         className="dropdown-menu"

@@ -233,8 +233,8 @@ function Orderviewdetails() {
                 </div>
               </Col>
             </Row>
-            <Row>
-              <Col lg={5} className="align-self-center">
+            <Row className="justify-content-center">
+              <Col lg={8} >
                 <div className="order-minicard">
                   {orderDetails && orderDetails.length > 0 ? (
                     orderDetails.map((order) => {
@@ -263,7 +263,7 @@ function Orderviewdetails() {
                               <div className="order-ids">
                                 <Button>
                                   <Link
-                                    to={`/add-cart/${id}`}
+                                    to={`/add-cart/${order.item_id}`}
                                     onClick={handleAddToCart}
                                   >
                                     Buy it again
@@ -334,208 +334,204 @@ function Orderviewdetails() {
                   )}
                 </div>
               </Col>
-              <Col lg={7}>
-                <Row>
-                  <Col sm={12} className="mb-4">
-                    <div className="order-table" ref={tableRef}>
-                      {allorder && allorder.length > 0 ? (
-                        allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
+            </Row>
+            <Row>
+              <Col lg={6} className="mb-4">
+                <div className="order-table" ref={tableRef}>
+                  {allorder && allorder.length > 0 ? (
+                    allorder.map((item, index) => {
+                      console.log("Desired ID:", id);
+                      console.log("Item ID:", item.id);
 
-                          if (item.id == id) {
-                            console.log("Match found for ID:", id);
-                            return (
-                              <div className="dow-summy">
-                                <h5>Order Invoice</h5>
-                                <table responsive key={index}>
-                                  <>
-                                    <tbody>
-                                      <tr>
-                                        <th>
-                                          <p>Total</p>
-                                        </th>
-                                        <td>
-                                          <p>
-                                            ₹
-                                            {parseInt(
-                                              orderDetails.reduce(
-                                                (total, order) =>
-                                                  total +
-                                                  parseFloat(order.price),
-                                                0
-                                              )
-                                            )}
-                                          </p>
-                                        </td>
-                                        {/* <td>₹{subTotal}</td> */}
-                                      </tr>
-                                      {/* <tr>
+                      if (item.id == id) {
+                        console.log("Match found for ID:", id);
+                        return (
+                          <div className="dow-summy">
+                            <h5>Order Invoice</h5>
+                            <table responsive key={index}>
+                              <>
+                                <tbody>
+                                  <tr>
+                                    <th>
+                                      <p>Total</p>
+                                    </th>
+                                    <td>
+                                      <p>
+                                        ₹
+                                        {parseInt(
+                                          orderDetails.reduce(
+                                            (total, order) =>
+                                              total + parseFloat(order.price),
+                                            0
+                                          )
+                                        )}
+                                      </p>
+                                    </td>
+                                    {/* <td>₹{subTotal}</td> */}
+                                  </tr>
+                                  {/* <tr>
                                   <th>
                                     Moving Cart <br />
                                     <p>Additional Services</p>
                                   </th>
                                             <td>{ item.}</td>
                                 </tr> */}
-                                      <tr>
-                                        <th>
-                                          <p>
-                                            {" "}
-                                            Discount <br />
-                                            Promo Code: {item.coupon_code}
-                                          </p>
-                                        </th>
+                                  <tr>
+                                    <th>
+                                      <p>
+                                        {" "}
+                                        Discount <br />
+                                        Promo Code: {item.coupon_code}
+                                      </p>
+                                    </th>
 
-                                        <td>
-                                          <p>
-                                            <span style={{ fontSize: 20 }}>
-                                              {"-"}
-                                            </span>{" "}
-                                            ₹{couponDiscount}
-                                          </p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>
-                                          <p>Sub Total</p>
-                                        </th>
-                                        <td>
-                                          <p>₹{subTotal}</p>
-                                        </td>
-                                      </tr>
+                                    <td>
+                                      <p>
+                                        <span style={{ fontSize: 20 }}>
+                                          {"-"}
+                                        </span>{" "}
+                                        ₹{couponDiscount}
+                                      </p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>
+                                      <p>Sub Total</p>
+                                    </th>
+                                    <td>
+                                      <p>₹{subTotal}</p>
+                                    </td>
+                                  </tr>
 
-                                      <tr>
-                                        <th>
-                                          <p>Delivery Charge</p>
-                                        </th>
-                                        <td>
-                                          <p>₹{deliveryCharge}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>
-                                          <h4>Total</h4>
-                                        </th>
-                                        <td>
-                                          <h4 style={{ color: "#3b71ca" }}>
-                                            ₹{GrandTotal}
-                                          </h4>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </>
-                                </table>
-                              </div>
-                            );
-                          } else {
-                            console.log("No match for ID:", id);
-                            return null; // If no match, return null or an empty fragment
-                          }
-                        })
-                      ) : (
-                        <p className="emptyMSG">No Order list</p>
-                      )}
-                    </div>
-                  </Col>
+                                  <tr>
+                                    <th>
+                                      <p>Delivery Charge</p>
+                                    </th>
+                                    <td>
+                                      <p>₹{deliveryCharge}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th>
+                                      <h4>Total</h4>
+                                    </th>
+                                    <td>
+                                      <h4 style={{ color: "#3b71ca" }}>
+                                        ₹{GrandTotal}
+                                      </h4>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </>
+                            </table>
+                          </div>
+                        );
+                      } else {
+                        console.log("No match for ID:", id);
+                        return null; // If no match, return null or an empty fragment
+                      }
+                    })
+                  ) : (
+                    <p className="emptyMSG">No Order list</p>
+                  )}
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div ref={summaryTableRef}>
+                  {allorder && allorder.length > 0 ? (
+                    allorder.map((item, index) => {
+                      console.log("Desired ID:", id);
+                      console.log("Item ID:", item.id);
 
-                  <Col sm={12}>
-                    <div ref={summaryTableRef}>
-                      {allorder && allorder.length > 0 ? (
-                        allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
-
-                          if (item.id == id) {
-                            console.log("Match found for ID:", id);
-                            return (
-                              <div className="dow-summy">
-                                <h5>Order Summary</h5>
-                                <table>
-                                  <tbody>
-                                    <tr>
-                                      <th>
-                                        <p>Order ID :</p>
-                                      </th>
-                                      <td>
-                                        <p>{item.id}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Item Name :</p>
-                                      </th>
-                                      <td>
-                                        {item.callback[0] && (
-                                          <p>{item.callback[0].variant}</p>
-                                        )}
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Total Before Tax:</p>
-                                      </th>
-                                      <td>
-                                        <p>
-                                          ₹
-                                          {parseInt(
-                                            orderDetails.reduce(
-                                              (total, order) =>
-                                                total + parseFloat(order.price),
-                                              0
-                                            )
-                                          )}
-                                        </p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Sub Total:</p>
-                                      </th>
-                                      <td>
-                                        <p>₹{subTotal}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Coupon Discount:</p>
-                                      </th>
-                                      <td>
-                                        <p>₹{item.coupon_discount_amount}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Delivery Fee:</p>
-                                      </th>
-                                      <td>
-                                        <p>₹{deliveryCharge}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <h4>Total:</h4>
-                                      </th>
-                                      <td>
-                                        <h4 style={{ color: "#3b71ca" }}>
-                                          ₹{GrandTotal}
-                                        </h4>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            );
-                          } else {
-                            console.log("No match for ID:", id);
-                            return null;
-                          }
-                        })
-                      ) : (
-                        <p className="emptyMSG">No Order list</p>
-                      )}
-                    </div>
-                  </Col>
-                </Row>
+                      if (item.id == id) {
+                        console.log("Match found for ID:", id);
+                        return (
+                          <div className="dow-summy leftsummy">
+                            <h5>Order Summary</h5>
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <th>
+                                    <p>Order ID :</p>
+                                  </th>
+                                  <td>
+                                    <p>{item.id}</p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <p>Item Name :</p>
+                                  </th>
+                                  <td>
+                                    {item.callback[0] && (
+                                      <p>{item.callback[0].variant}</p>
+                                    )}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <p>Total Before Tax:</p>
+                                  </th>
+                                  <td>
+                                    <p>
+                                      ₹
+                                      {parseInt(
+                                        orderDetails.reduce(
+                                          (total, order) =>
+                                            total + parseFloat(order.price),
+                                          0
+                                        )
+                                      )}
+                                    </p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <p>Sub Total:</p>
+                                  </th>
+                                  <td>
+                                    <p>₹{subTotal}</p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <p>Coupon Discount:</p>
+                                  </th>
+                                  <td>
+                                    <p>₹{item.coupon_discount_amount}</p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <p>Delivery Fee:</p>
+                                  </th>
+                                  <td>
+                                    <p>₹{deliveryCharge}</p>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>
+                                    <h4>Total:</h4>
+                                  </th>
+                                  <td>
+                                    <h4 style={{ color: "#3b71ca" }}>
+                                      ₹{GrandTotal}
+                                    </h4>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        );
+                      } else {
+                        console.log("No match for ID:", id);
+                        return null;
+                      }
+                    })
+                  ) : (
+                    <p className="emptyMSG">No Order list</p>
+                  )}
+                </div>
               </Col>
             </Row>
           </div>

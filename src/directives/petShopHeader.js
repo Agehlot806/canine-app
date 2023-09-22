@@ -8,7 +8,7 @@ import { Toaster, toast } from "react-hot-toast";
 import "../assets/css/style.css";
 import { useCartContext } from "../component/context/addToCartContext";
 import { useNotificationContext } from "../component/context/notificationContext";
-import loicon1 from "../assets/images/img/loicon1.png"
+import loicon1 from "../assets/images/img/loicon1.png";
 
 function PetShopHeader(props) {
   const navigate = useNavigate();
@@ -284,7 +284,7 @@ function PetShopHeader(props) {
                     href="#"
                     id="navbarDropdown"
                     role="button"
-                    data-toggle="dropdown"
+                    // data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -406,7 +406,7 @@ function PetShopHeader(props) {
                     href="#"
                     id="navbarDropdown"
                     role="button"
-                    data-toggle="dropdown"
+                    // data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -644,10 +644,14 @@ function PetShopHeader(props) {
                         <img
                           src={
                             loginType == "salesman"
-                              ? salesmanProfile?.image? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
-                                salesmanProfile?.image : loicon1
-                              : profileData?.image ?  "https://canine.hirectjob.in/storage/app/public/profile/" +
-                                profileData?.image  : loicon1
+                              ? salesmanProfile?.image
+                                ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
+                                  salesmanProfile?.image
+                                : loicon1
+                              : profileData?.image
+                              ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                profileData?.image
+                              : loicon1
                           }
                         />
                         {/* <img
@@ -658,7 +662,6 @@ function PetShopHeader(props) {
                           }
                           alt="Profile Image"
                         /> */}
-
                       </Link>
                       <div
                         className="dropdown-menu"
