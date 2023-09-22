@@ -1608,7 +1608,8 @@ function Petcategory() {
                                     <h6>₹{item.price}</h6>
                                   </Col>
                                   <Col>
-                                    <Link to="">
+                                    <Link to={`/add-cart/${item.id}`}
+                                onClick={handleAddToCart}>
                                       <img src={bag} />
                                     </Link>
                                   </Col>

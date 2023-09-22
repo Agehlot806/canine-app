@@ -1336,7 +1336,7 @@ function Productdetail() {
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
                               <Link
-                                to={`/add-cart/${id}`}
+                                to={`/add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />

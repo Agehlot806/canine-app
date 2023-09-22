@@ -180,8 +180,8 @@ function PetshopProductbypartner() {
                             </Col>
                             <Col>
                               <Link
-                                to={`/petshop-add-cart/${id}`}
-                                // onClick={handleAddToCart}
+                                to={`/petshop-add-cart/${item.id}`}
+                                onClick={handleAddToCart}
                               >
                                 <img src={bag} />
                               </Link>

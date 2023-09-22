@@ -1549,7 +1549,8 @@ console.log("addresslist--",addresslist);
                                   </Row>
                                   <Row>
                                     <Col className='align-self-center'><h6>₹{item.price}</h6></Col>
-                                    <Col><Link to=''><img src={bag} /></Link></Col>
+                                    <Col><Link to={`/add-cart/${item.id}`}
+                                onClick={handleAddToCart}><img src={bag} /></Link></Col>
                                   </Row>
                                 </div>
                               </Link>

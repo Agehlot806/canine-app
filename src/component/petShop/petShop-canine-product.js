@@ -1546,7 +1546,8 @@ function PetShopcanineproduct(props) {
                                 <div className="product-bag">
                                   <Row>
                                     <Col className='align-self-center'><h6>₹{item.whole_price}</h6></Col>
-                                    <Col><Link to=''><img src={bag} /></Link></Col>
+                                    <Col><Link to={`/petshop-add-cart/${item.id}`}
+                                onClick={handleAddToCart}><img src={bag} /></Link></Col>
                                   </Row>
                                 </div>
                               </Link>
