@@ -1605,7 +1605,8 @@ function Petshopproduct(props) {
                                   <h6>₹{item.whole_price}</h6>
                                 </Col>
                                 <Col>
-                                  <Link to="">
+                                  <Link to={`/petshop-add-cart/${item.id}`}
+                                onClick={handleAddToCart}>
                                     <img src={bag} />
                                   </Link>
                                 </Col>

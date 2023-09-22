@@ -1223,8 +1223,8 @@ const handlePayment = async () => {
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
                               <Link
-                                to={`/add-cart/${id}`}
-                                onClick={(e) => handeldataId(item.id)}
+                                to={`/add-cart/${item.id}`}
+                                onClick={handleAddToCart}
                               >
                                 <img src={bag} />
                               </Link>

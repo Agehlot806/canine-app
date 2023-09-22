@@ -1214,7 +1214,7 @@ function PetshopproductDetails() {
                             </Col>
                             <Col>
                               <Link
-                                to={`/add-cart/${id}`}
+                                to={`/petshop-add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />

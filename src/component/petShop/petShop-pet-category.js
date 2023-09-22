@@ -1478,7 +1478,8 @@ function PetshopPetcategory() {
                                           }`}</h6>
                                         </Col>
                                         <Col>
-                                          <Link to="">
+                                          <Link to={`/petshop-add-cart/${item.id}`}
+                                onClick={handleAddToCart}>
                                             <img src={bag} />
                                           </Link>
                                         </Col>
@@ -1572,7 +1573,8 @@ function PetshopPetcategory() {
                                             }`}</h6> */}
                               </Col>
                               <Col>
-                                <Link to="">
+                                <Link to={`/petshop-add-cart/${item.id}`}
+                                onClick={handleAddToCart}>
                                   <img src={bag} />
                                 </Link>
                               </Col>
@@ -1643,8 +1645,8 @@ function PetshopPetcategory() {
                                 </Col>
                                 <Col>
                                   <Link
-                                    to={`/add-cart/${id}`}
-                                    onClick={handleAddToCart}
+                                   to={`/petshop-add-cart/${item.id}`}
+                                   onClick={handleAddToCart}
                                   >
                                     <img src={bag} />
                                   </Link>

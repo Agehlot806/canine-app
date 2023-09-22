@@ -563,6 +563,7 @@ a {
 /* about page area css */
 .all-bg img {
   width: 100%;
+  height: 300px;
 }
 
 .aboutPage-content ul {

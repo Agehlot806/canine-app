@@ -1190,7 +1190,7 @@ function PetshopHome(props) {
                             </Col>
                             <Col>
                               <Link
-                                to={`/petshop-add-cart/${id}`}
+                               to={`/petshop-add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />
