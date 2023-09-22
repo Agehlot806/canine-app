@@ -754,14 +754,6 @@ console.log("addresslist--",addresslist);
     : "No address selected";
   // Buy now checkout code
   const handleSendRequest = async () => {
-    // const cartData = sendcartdata.map((item) => ({
-    //   product_id: item.item_id,
-    //   variation: item.variant,
-    //   price: item.price,
-    //   quantity: item.quantity,
-    //   tax_amount: taxamound,
-    //   discount_on_item: disscountvalue?.discount || "",
-    // }));
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
@@ -795,14 +787,6 @@ console.log("addresslist--",addresslist);
       delivery_address: deliveryAddress,
       item_campaign_id: "",
       order_amount: orderAmount,
-      //    {
-      //   (parseInt(Amount) * 0.05) + parseInt(Amount) - (
-      //     (disscountvalue?.discount ?? 0)
-      //   )
-      // },
-      // {`${parseInt( Amount * 0.05 + Amount - disscountvalue?.discount + taxamound)}`},
-      // parseInt(Amount * 0.05 + Amount - disscountvalue?.discount) ||
-      // Amount * 0.05 + Amount,
       cart: [cartData],
     };
     fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
@@ -899,15 +883,7 @@ console.log("addresslist--",addresslist);
 
 const handlePayment = async () => {
   try {
-    // const response = await loadRazorpay();
-    // loadRazorpay()
-    //   .then((response) => {
-    //     console.log("response handlePayment: ", response);
-    //     // Code to execute after the script has loaded
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error loading Razorpay script:", error);
-    //   });
+    
     await loadRazorpayScript();
 
     const options = {

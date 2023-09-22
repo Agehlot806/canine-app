@@ -1391,8 +1391,11 @@ a {
   background: #fff;
   box-shadow: 0px 1.2840496301651px 38.521488189697266px 0px rgba(0, 0, 0, 0.05);
   padding: 20px;
+  margin-bottom:20px;
 }
-
+.dow-summy.leftsummy tr td {
+  left: 70%;
+}
 .order-ids p {
   color: #000;
   font-family: Poppins;
