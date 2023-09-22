@@ -3,7 +3,7 @@ import Newheader from "../../directives/newheader";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import product from "../../assets/images/banner/product.png";
 import productItem from "../../assets/images/img/brandPro1.png";
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../directives/footer";
 import product1 from "../../assets/images/img/product1.png";
@@ -138,21 +138,51 @@ function Productdetail() {
   // ****************notifyme
   const [email, setEmail] = useState("");
   const [variation, setVariation] = useState("");
+  const [emailError, setEmailError] = useState('');
+  const [variationError, setVariationError] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const isEmailFormatValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(isEmailFormatValid(emailValue));
+  };
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   setEmailError(
+    //     /[A-Z]/.test(email) && !email.includes('@')
+    //       ? "Email should not contain capital letters and must include '@'."
+    //       : 'Please enter a valid email address'
+    //   );
+    // } else {
+    //   setEmailError('');
+    // }
+
+    
+    // if (!variation) {
+    //   setVariationError('Please select a variation');
+    // } else {
+    //   setVariationError('');
+    // }
   
     // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   toast.error("Please enter a valid email address");
+    //   return;
+    // }
   
     // Validate variation
-    if (!variation) {
-      toast.error("Please select a variation");
-      return;
-    }
+    // if (!variation) {
+    //   toast.error("Please select a variation");
+    //   return;
+    // }
   
     // Prepare form data
     const notifymeData = new FormData();
@@ -1357,7 +1387,7 @@ function Productdetail() {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-              <form>
+              {/* <form>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Variations</label>
                   <select
@@ -1394,7 +1424,78 @@ function Productdetail() {
                     Notify Me When Available
                   </button>
                 </div>
-              </form>
+              </form> */}
+              <Form onSubmit={handleNotifymeSubmit}>
+      {/* <Form.Group controlId="formVariations">
+        <Form.Label>Variations</Form.Label>
+        <Form.Control
+          as="select"
+          value={variation}
+          onChange={(e) => setVariation(e.target.value)}
+          required
+          isInvalid={!!variationError}
+        >
+          <option value="" disabled>
+            Choose an option...
+          </option>
+          {productDetails?.variations &&
+            productDetails?.variations.map((item, index) => (
+              <option key={index}>{item.type}</option>
+            ))}
+        </Form.Control>
+        {variationError && (
+          <div className="error-message">{variationError}</div>
+        )}
+      </Form.Group> */}
+      <Form.Group controlId="formVariations" className="mb-3">
+    <Form.Label>Variations</Form.Label>
+    <Form.Control
+      as="select"
+      value={variation}
+      onChange={(e) => {
+        setVariation(e.target.value);
+        setVariationError(''); // Clear previous error when the value changes
+      }}
+      required
+      isInvalid={!!variationError}
+    >
+      <option value="" disabled>
+        Choose an option...
+      </option>
+      {productDetails?.variations &&
+        productDetails?.variations.map((item, index) => (
+          <option key={index}>{item.type}</option>
+        ))}
+    </Form.Control>
+    {variationError && (
+      <div className="error-message">{variationError}</div>
+    )}
+  </Form.Group>
+      <Form.Group className="mb-3" controlId="formGroupEmail">
+        <Form.Control
+          type="email"
+          name="email"
+          placeholder="Email ID"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setIsEmailValid(isEmailFormatValid(e.target.value));
+          }}
+          isInvalid={!isEmailValid}
+        />
+        {!isEmailValid && (
+          <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+            {/[A-Z]/.test(email) && !email.includes("@")
+              ? "Email should not contain capital letters and must include '@'."
+              : "Please enter a valid email address."}
+          </Form.Control.Feedback>
+        )}
+      </Form.Group>
+
+      <Button variant="primary mt-3" type="submit">
+        Notify Me When Available
+      </Button>
+    </Form>
             </div>
           </div>
         </div>
