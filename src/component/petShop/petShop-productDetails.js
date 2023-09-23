@@ -236,18 +236,18 @@ function PetshopproductDetails() {
       </span>
     );
   });
-
-  const [orderlist, setorderlist] = useState([]);
+  const [getreviewlist, setgetreviewlist] = useState([]);
   const AllOrderList = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/customer/order/list?id=${storedWholesellerId}`
+        `${BASE_URL}/items/get_reviewitem/${id}`
       );
-      setorderlist(response.data.data);
+      setgetreviewlist(response.data.data);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -838,6 +838,13 @@ function PetshopproductDetails() {
     setProductDetails(null);
   };
 
+  const [showData, setShowData] = useState(false);
+
+  const toggleData = (e) => {
+    e.preventDefault();
+    setShowData(!showData);
+  };
+
   return (
     <>
       <PetShopHeader />
@@ -1085,50 +1092,99 @@ function PetshopproductDetails() {
             </Button> */}
           </div>
           <h1 className="main-head mt-4">Product details</h1>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
+          <p>{productDetails.description}</p>
 
           <>
             <div className="Product-Review">
               <h1 className="main-head mt-4">Product Review</h1>
-              {orderlist.map((order) => (
-                <div key={order.id}>
-                  {order.callback[0].user_details && (
-                    <div className="linereview">
-                      <p>{order.callback[0].user_details.comment}</p>
-
-                      <div className="row">
-                        <div className="col-sm-3 col">
-                          <Wrapper>
-                            <div className="icon-style">
-                              {Array.from({
-                                length: order.callback[0].user_details.rating,
-                              }).map((_, index) => (
-                                <i className="fa-solid fa-star" key={index} />
-                              ))}
-                            </div>
-                          </Wrapper>
-                        </div>
-                        <div className="col-sm-5 col">
-                          {order.callback[0].user_profile && (
-                            <div className="Product-img">
-                              <img src={order.callback[0].user_profile.image} />
-                              <span>
-                                {" "}
-                                {order.callback[0].user_profile.f_name}
-                              </span>
-                            </div>
-                          )}
+              {getreviewlist && getreviewlist.length > 1 ? (
+              getreviewlist.map(
+                (order, index) =>
+                  index === 0 && (
+                    <div key={order.id}>
+                      <div className="linereview">
+                        <p>{order.comment}</p>
+                        <div className="row">
+                          <div className="col-sm-3 col">
+                            <Wrapper>
+                              <div className="icon-style">
+                                {Array.from({
+                                  length: order.rating,
+                                }).map((_, index) => (
+                                  <i className="fa-solid fa-star" key={index} />
+                                ))}
+                              </div>
+                            </Wrapper>
+                          </div>
+                          <div className="col-sm-5 col">
+                            {order.user_id && order.user_id.length > 0 && (
+                              <div className="Product-img">
+                                <img src={"https://canine.hirectjob.in/storage/app/public/profile/" +
+                                  order.user_id[0].image} alt={order.user_id[0].f_name} />
+                                <span>
+                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                </span>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  )}
-                </div>
-              ))}
-              <a href="">Read more</a>
+                  )
+              )
+            ) : (
+              <p>No Review data</p>
+            )}
+
+            <div>
+              {showData ? (
+                <>
+                  {getreviewlist.map((order) => (
+                    <div key={order.id}>
+                      <div className="linereview">
+                        <p>{order.comment}</p>
+                        <div className="row">
+                          <div className="col-sm-3 col">
+                            <Wrapper>
+                              <div className="icon-style">
+                                {Array.from({
+                                  length: order.rating,
+                                }).map((_, index) => (
+                                  <i className="fa-solid fa-star" key={index} />
+                                ))}
+                              </div>
+                            </Wrapper>
+                          </div>
+                          <div className="col-sm-5 col">
+                            {order.user_id && order.user_id.length > 0 && (
+                              <div className="Product-img">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                    order.user_id[0].image
+                                  }
+                                  alt={order.user_id[0].f_name}
+                                />
+                                <span>
+                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <a href="#" onClick={toggleData}>
+                    Read less
+                  </a>
+                </>
+              ) : (
+                <a href="#" onClick={toggleData}>
+                  Read more
+                </a>
+              )}
+            </div>
             </div>
           </>
         </Container>
@@ -1522,75 +1578,7 @@ function PetshopproductDetails() {
                       </Button>
                     </div>
                   )}
-                  {/* </Row> */}
-                  <div className="productBTNaddcard">
-                    {/* <Button>
-              <Link to="/petshop-add-cart">
-                <i className="fa fa-shopping-bag" /> Add to cart
-              </Link>
-            </Button> */}
-                  </div>
-                  <h1 className="main-head mt-4">Product details</h1>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s,
-                  </p>
-
-                    <div className="Product-Review">
-                      <h1 className="main-head mt-4">Product Review</h1>
-                      {orderlist.map((order) => (
-                        <div key={order.id}>
-                          {order.callback[0].user_details && (
-                            <>
-                              <p>{order.callback[0].user_details.comment}</p>
-
-                              <div className="row">
-                                <div className="col-sm-3 col">
-                                  <Wrapper>
-                                    <div className="icon-style">
-                                      {Array.from({
-                                        length:
-                                          order.callback[0].user_details.rating,
-                                      }).map((_, index) => (
-                                        <i
-                                          className="fa-solid fa-star"
-                                          key={index}
-                                        />
-                                      ))}
-                                    </div>
-                                  </Wrapper>
-                                </div>
-                                <div className="col-sm-5 col">
-                                  {order.callback[0].user_profile && (
-                                    <div className="Product-img">
-                                      <img
-                                        src={
-                                          order.callback[0].user_profile.image
-                                        }
-                                      />
-                                      <span>
-                                        {" "}
-                                        {order.callback[0].user_profile.f_name}
-                                      </span>
-                                      <div className="user-icon">
-                                        <i
-                                          class="fa fa-user"
-                                          aria-hidden="true"
-                                        ></i>
-                                        <span> 1 2 3 4 5</span>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      ))}
-                      <a href="">Read more</a>
-                    </div>
-                </Container>
+                      </Container>
               </section>
             </div>
           </div>

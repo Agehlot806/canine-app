@@ -25,8 +25,13 @@ function Blogdetails() {
     allAddressList();
   }, []);
   const [blogdata, setBlogdata] = useState([]);
+  console.log("blogdata: ", blogdata);
   const [allproduct, setallproduct] = useState([]);
   const [expandedDescription, setExpandedDescription] = useState({});
+  const [productIds, setProductIds] = useState([]);
+  console.log("productIds: ", productIds);
+  // const relatedProductData = blogdata?.product_id;
+  // console.log("relatedProductData: ", relatedProductData);
 
   const allProduct = async () => {
     try {
@@ -52,6 +57,16 @@ function Blogdetails() {
       .get(`${BASE_URL}/auth/blog_detail/${id}`)
       .then((response) => {
         setBlogdata(response.data.data);
+        // Extract product_ids from the data array
+        const blogDataa = response.data.data;
+        // const extractedProductIds = blogDataa.map((item) =>
+        //   item.product_id.map((product) => product.id)
+        // );
+        const extractedProductIds = blogDataa.map((item) => item.product_id);
+        // Combine all product_ids into a single array
+        const allProductIds = extractedProductIds.flat();
+
+        setProductIds(allProductIds);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -99,12 +114,12 @@ function Blogdetails() {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const modalBackdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
       }
@@ -118,7 +133,7 @@ function Blogdetails() {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -276,7 +291,6 @@ function Blogdetails() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
-
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -286,7 +300,7 @@ function Blogdetails() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -294,7 +308,7 @@ function Blogdetails() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -304,10 +318,9 @@ function Blogdetails() {
   };
   const handeldataId = (id) => {
     productData(id);
-  }
+  };
 
-
-   // ===============================================================
+  // ===============================================================
   // =================================================================
   // Buy Now ------------------------
   // ==================================================================
@@ -332,9 +345,9 @@ function Blogdetails() {
   };
 
   const taxamound = Math.floor(Amount * 0.05);
-  
+
   const [addresslist, setAddressList] = useState([]);
-  
+
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
@@ -596,7 +609,10 @@ function Blogdetails() {
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = (parseInt(Amount) * 0.05) + parseInt(Amount) - (disscountvalue?.discount ?? 0);
+    const orderAmount =
+      parseInt(Amount) * 0.05 +
+      parseInt(Amount) -
+      (disscountvalue?.discount ?? 0);
 
     const requestData = {
       user_id: storedUserId,
@@ -616,7 +632,7 @@ function Blogdetails() {
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
       item_campaign_id: "",
-      order_amount:orderAmount,
+      order_amount: orderAmount,
       //    {
       //   (parseInt(Amount) * 0.05) + parseInt(Amount) - (
       //     (disscountvalue?.discount ?? 0)
@@ -641,7 +657,6 @@ function Blogdetails() {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
         console.log("order_id", responseData);
-
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -664,7 +679,9 @@ function Blogdetails() {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const response = await fetch(
+        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+      );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -672,7 +689,6 @@ function Blogdetails() {
       console.log(error);
     }
   };
-
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -704,8 +720,8 @@ function Blogdetails() {
     setProductDetails(null);
   };
 
-   // loadRazorpayScript
-   const loadRazorpayScript = () => {
+  // loadRazorpayScript
+  const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -762,7 +778,7 @@ function Blogdetails() {
       console.error("Razorpay Load Error:", error);
     }
   };
-  
+
   return (
     <>
       <Toaster />
@@ -821,117 +837,119 @@ function Blogdetails() {
           </Row>
           <div className="needplace">
             <Row>
-              {allproduct &&
-                allproduct.map((item, index) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-4">
-                    <div
-                      className="food-product"
-                      onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
-                      key={item.id}
-                      style={{
-                        background:
-                          gradientColors[index % gradientColors.length],
-                      }}
-                    >
-                      <i
-                        class={
-                          item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+              {/* {allproduct &&
+                allproduct.map((item, index) => ( */}
+              {productIds.map((item, index) => (
+                <Col lg={3} sm={6} xs={6} className="mb-4" key={item[0]?.id}>
+                  {console.log("itemmmhksdkn: ", item)}
+                  <div
+                    className="food-product"
+                    onMouseEnter={() => handleMouseEnter(item[0]?.id)}
+                    onMouseLeave={() => handleMouseLeave(item[0]?.id)}
+                    style={{
+                      background:
+                        gradientColors[index % gradientColors?.length],
+                    }}
+                  >
+                    <i
+                      className={
+                        item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                      }
+                      onClick={() => {
+                        if (storedUserId == null) {
+                          toast.error("Please Login first");
+                        } else {
+                          addToWishlist(item[0]?.id);
                         }
-                        onClick={(id) => {
-                          if (storedUserId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
-                          }
-                        }}
-                      />
+                      }}
+                    />
 
-                      <Link to={`/product-details/${item.id}`}>
-                        <div className="text-center">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <div>
-                          <h6>{item.name}</h6>
-                          {/* <p>{item.description}</p> */}
-                          <p
-                            className={`truncate-text ${!expandedDescription[item.id]
+                    <Link to={`/product-details/${item[0]?.id}`}>
+                      <div className="text-center">
+                        <img
+                          src={`https://canine.hirectjob.in//storage/app/public/product/${item[0]?.image}`}
+                          alt={item[0]?.name}
+                        />
+                      </div>
+                      <div>
+                        <h6>{item[0]?.name}</h6>
+                        <p
+                          className={`truncate-text ${
+                            !expandedDescription[item[0]?.id]
                               ? "read-more-link"
                               : ""
-                              }`}
-                          >
-                            {item.description}
-                            {item.description.length > 100 &&
-                              !expandedDescription[item.id] && (
-                                <span
-                                  className="read-more-link"
-                                  onClick={() =>
-                                    setExpandedDescription({
-                                      ...expandedDescription,
-                                      [item.id]: true,
-                                    })
-                                  }
-                                >
-                                  Read More
-                                </span>
-                              )}
-                          </p>
-                        </div>
-                        <div className="product-bag">
-                          <Row>
-                            <Col lg={6} sm={6} xs={6}>
-                              <p>₹{item.price}</p>
-                            </Col>
-                            <Col lg={6} sm={6} xs={6}>
-                              <h5>Save {parseFloat(item.discount)}%</h5>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col
-                              lg={6}
-                              sm={6}
-                              xs={6}
-                              className="align-self-center"
-                            >
-                              <h6>
-                                {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${item.price -
-                                  (item.price * item.discount) / 100
-                                  }`}
-                              </h6>
-                            </Col>
-                            <Col lg={6} sm={6} xs={6}>
-                              <Link
-                               to={`/add-cart/${item.id}`}
-                               onClick={handleAddToCart}
+                          }`}
+                        >
+                          {item[0]?.description}
+                          {item[0]?.description?.length > 100 &&
+                            !expandedDescription[item[0]?.id] && (
+                              <span
+                                className="read-more-link"
+                                onClick={() =>
+                                  setExpandedDescription({
+                                    ...expandedDescription,
+                                    [item[0]?.id]: true,
+                                  })
+                                }
                               >
-                                <img src={bag} />
-                              </Link>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Link>
-                      {buttonVisibility[item.id] && (
-                        <div className="button-container">
-                          <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
+                                Read More
+                              </span>
+                            )}
+                        </p>
+                      </div>
+                      <div className="product-bag">
+                        <Row>
+                          <Col lg={6} sm={6} xs={6}>
+                            <p>₹{item[0]?.price}</p>
+                          </Col>
+                          <Col lg={6} sm={6} xs={6}>
+                            <h5>Save {parseFloat(item[0]?.discount)}%</h5>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col
+                            lg={6}
+                            sm={6}
+                            xs={6}
+                            className="align-self-center"
                           >
-                            Buy Now
-                          </button>
-
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                ))}
+                            <h6>{`₹${
+                              item[0]?.price -
+                              (item[0]?.price * item[0]?.discount) / 100
+                            }`}</h6>
+                          </Col>
+                          <Col lg={6} sm={6} xs={6}>
+                            <Link
+                              to={`/add-cart/${item[0]?.id}`}
+                              onClick={handleAddToCart}
+                            >
+                              <img src={bag} alt="Add to Cart" />
+                            </Link>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Link>
+                    {buttonVisibility[item[0].id] && (
+                      <div className="button-container">
+                        <button
+                          data-toggle="modal"
+                          data-target=".bd-example-modal-lg"
+                          onClick={() => handeldataId(item[0].id)}
+                        >
+                          Quick View
+                        </button>
+                        <button
+                          data-toggle="modal"
+                          data-target=".buynow"
+                          onClick={() => handeldataId(item[0].id)}
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </Col>
+              ))}
             </Row>
           </div>
         </Container>
@@ -939,7 +957,13 @@ function Blogdetails() {
       <Footer />
 
       {/* Product details Modal */}
-      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -960,8 +984,8 @@ function Blogdetails() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
-                                productDetails.images.map((item, index) => (
+                              productDetails?.images?.length > 0 ? (
+                                productDetails?.images.map((item, index) => (
                                   <Col
                                     lg={3}
                                     sm={3}
@@ -971,7 +995,9 @@ function Blogdetails() {
                                   >
                                     <div
                                       className="product-item-inner"
-                                      onClick={() => handleThumbnailClick(index)}
+                                      onClick={() =>
+                                        handleThumbnailClick(index)
+                                      }
                                     >
                                       <img
                                         src={
@@ -999,30 +1025,32 @@ function Blogdetails() {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails?.images?.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails?.images?.length -
+                                  1) %
+                                  productDetails?.images?.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
                             onMovePrevRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex +
-                                  productDetails.images.length -
+                                  productDetails?.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails?.images?.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
-                                (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails?.images?.length
                               )
                             }
                           />
@@ -1056,7 +1084,9 @@ function Blogdetails() {
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
-                            <p>({productDetails.rating_count} customer reviews)</p>
+                            <p>
+                              ({productDetails.rating_count} customer reviews)
+                            </p>
                           </div>
                         </Wrapper>
 
@@ -1070,22 +1100,27 @@ function Blogdetails() {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map((item, index) => (
-                                          <Col lg={4} key={index}>
-                                            <div
-                                              className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
+                                        productDetails.variations.map(
+                                          (item, index) => (
+                                            <Col lg={4} key={index}>
+                                              <div
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
                                                 }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(item.price);
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          </Col>
-                                        ))}
+                                                onClick={() => {
+                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariantPrice(
+                                                    item.price
+                                                  );
+                                                }}
+                                              >
+                                                {item.type}
+                                              </div>
+                                            </Col>
+                                          )
+                                        )}
                                     </Row>
                                   </div>
                                 </div>
@@ -1166,7 +1201,10 @@ function Blogdetails() {
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
-                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart}>
+                        <Link
+                          to={`/add-cart/${productDetails.id}`}
+                          onClick={handleAddToCart}
+                        >
                           <i className="fa fa-shopping-bag" /> Add to cart
                         </Link>
                         <p>{addToCartStatus}</p>
@@ -1188,9 +1226,8 @@ function Blogdetails() {
         </div>
       </div>
 
-
-       {/* buynow-model */}
-       <div
+      {/* buynow-model */}
+      <div
         className="modal fade buynow"
         tabIndex={-1}
         role="dialog"
@@ -1262,10 +1299,11 @@ function Blogdetails() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1368,10 +1406,11 @@ function Blogdetails() {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -1582,11 +1621,9 @@ function Blogdetails() {
                             <Col>
                               <h5>
                                 ₹
-                                {
-                                  (parseInt(Amount) * 0.05) + parseInt(Amount) - (
-                                    (disscountvalue?.discount ?? 0)
-                                  )
-                                }
+                                {parseInt(Amount) * 0.05 +
+                                  parseInt(Amount) -
+                                  (disscountvalue?.discount ?? 0)}
                               </h5>
                             </Col>
                           </Row>
@@ -1988,11 +2025,11 @@ function Blogdetails() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -2055,8 +2092,6 @@ function Blogdetails() {
           </div>
         </div>
       </div>
-
-    
 
       {/* Coupon */}
       <div

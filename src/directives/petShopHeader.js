@@ -276,21 +276,21 @@ function PetShopHeader(props) {
                   New
                 </Link>
               </li> */}
-                <li className="nav-item dropdown new-mega-drop">
+                <li className="nav-item dropdown mega-dropdown">
                   <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    // data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
+                     className="nav-link dropdown-toggle"
+                     href="#"
+                     id="megaDropdown"
+                     role="button"
+                     // data-toggle="dropdown"
+                     aria-haspopup="true"
+                     aria-expanded="false"
                   >
                     Dogs
                   </a>
                   <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
+                   className="dropdown-menu mega-menu catmenu"
+                   aria-labelledby="megaDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">
@@ -398,21 +398,21 @@ function PetShopHeader(props) {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown new-mega-drop">
+                <li className="nav-item dropdown mega-dropdown">
                   <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    // data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
+                     className="nav-link dropdown-toggle"
+                     href="#"
+                     id="megaDropdown"
+                     role="button"
+                     // data-toggle="dropdown"
+                     aria-haspopup="true"
+                     aria-expanded="false"
                   >
                     Cats
                   </a>
                   <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
+                   className="dropdown-menu mega-menu catmenu"
+                   aria-labelledby="megaDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">

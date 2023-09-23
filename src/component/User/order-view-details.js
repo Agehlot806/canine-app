@@ -93,7 +93,7 @@ function Orderviewdetails() {
       .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
       .then((response) => {
         console.log(response);
-        console.log("Order List Successful");
+        console.log("Order List Successful",allorder);
         setallorder(response.data.data);
       })
       .catch((error) => {
@@ -194,7 +194,7 @@ function Orderviewdetails() {
         toast.error("Field is required");
       });
   };
-
+  const orderWithstatus = allorder.find(order => order.order_status === "delivered")
   return (
     <>
       <Toaster />
@@ -282,7 +282,9 @@ function Orderviewdetails() {
                             </Col>
                           </Row>
                           <div>
-                            {allorder.order_status === "delivered" ? (
+                          {console.log("Order Status:", allorder)}
+                          
+                            {orderWithstatus && orderWithstatus.order_status === "delivered" ? (
                               <div>
                                 <p className="m-0">Product Rating: {rating}</p>
                                 <div className="star-rating">

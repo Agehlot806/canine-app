@@ -228,11 +228,12 @@ function Newheader(props) {
                   New
                 </Link>
               </li> */}
-                <li className="nav-item dropdown new-mega-drop">
+             
+                <li className="nav-item dropdown mega-dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
-                    id="navbarDropdown"
+                    id="megaDropdown"
                     role="button"
                     // data-toggle="dropdown"
                     aria-haspopup="true"
@@ -241,8 +242,8 @@ function Newheader(props) {
                     Dog
                   </a>
                   <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
+                    className="dropdown-menu mega-menu"
+                    aria-labelledby="megaDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">
@@ -366,11 +367,11 @@ function Newheader(props) {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown new-mega-drop">
+                <li className="nav-item dropdown mega-dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
-                    id="navbarDropdown"
+                    id="megaDropdown"
                     role="button"
                     // data-toggle="dropdown"
                     aria-haspopup="true"
@@ -379,8 +380,8 @@ function Newheader(props) {
                     Cats
                   </a>
                   <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
+                     className="dropdown-menu mega-menu catmenu"
+                     aria-labelledby="megaDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">
@@ -392,7 +393,7 @@ function Newheader(props) {
                                 (item) =>
                                   item.name == "food" && (
                                     <li key={item.id}>
-                                      <Link to={`/pet-category/${item.name}`}>
+                                      <Link to={`/pet-category/${item.name}/${item.id}`}>
                                         {item.name}
                                       </Link>
                                     </li>
@@ -415,7 +416,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "treats" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )
@@ -434,7 +435,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "toys" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )
@@ -453,7 +454,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "accessories" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )
@@ -472,7 +473,7 @@ function Newheader(props) {
                               (item) =>
                                 item.name == "medicine" && (
                                   <li>
-                                    <Link to="">{item.name}</Link>
+                                    <Link to={`/pet-category/${item.name}/${item.id}`}>{item.name}</Link>
                                   </li>
                                 )
                             )

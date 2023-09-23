@@ -31,6 +31,7 @@ function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
+  console.log("productDetails ", productDetails?.id);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [notifyMeData, setNotifyMeData] = useState("");
@@ -62,7 +63,7 @@ function Productdetail() {
     fetchBreed();
     fetchLifestage();
     AllBanner();
-    AllOrderList();
+    AllGetreviewList();
     couponlistdata();
     GetdataAll();
     allReview();
@@ -125,14 +126,11 @@ function Productdetail() {
     }
   };
 
-
-
-
   // ****************notifyme
   const [email, setEmail] = useState("");
   const [variation, setVariation] = useState("");
-  const [emailError, setEmailError] = useState('');
-  const [variationError, setVariationError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [variationError, setVariationError] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
   const isEmailFormatValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -146,37 +144,27 @@ function Productdetail() {
   };
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //   setEmailError(
-    //     /[A-Z]/.test(email) && !email.includes('@')
-    //       ? "Email should not contain capital letters and must include '@'."
-    //       : 'Please enter a valid email address'
-    //   );
-    // } else {
-    //   setEmailError('');
-    // }
 
-    
+
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
     //   setVariationError('');
     // }
-  
+
     // Validate email
     // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // if (!emailRegex.test(email)) {
     //   toast.error("Please enter a valid email address");
     //   return;
     // }
-  
+
     // Validate variation
     // if (!variation) {
     //   toast.error("Please select a variation");
     //   return;
     // }
-  
+
     // Prepare form data
     const notifymeData = new FormData();
     notifymeData.append("email", email);
@@ -184,13 +172,16 @@ function Productdetail() {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
-  
+
     console.log('productDetails.id: ', productDetails?.id);
     console.log("notifymeData", notifymeData);
-  
+
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify/2`, notifymeData)
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -198,7 +189,6 @@ function Productdetail() {
         toast.error("An error occurred. Please try again.");
       });
   };
-   
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -372,7 +362,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -380,7 +370,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -403,17 +393,18 @@ function Productdetail() {
   };
 
 
-  const [orderlist, setorderlist] = useState([]);
-  const AllOrderList = async () => {
+  const [getreviewlist, setgetreviewlist] = useState([]);
+  const AllGetreviewList = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+        `${BASE_URL}/items/get_reviewitem/${id}`
       );
-      setorderlist(response.data.data);
+      setgetreviewlist(response.data.data);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   // ===================================================
   // ======================================================
@@ -448,7 +439,6 @@ function Productdetail() {
         console.log(error);
       });
   };
-
 
   // ===============================================================
   // =================================================================
@@ -747,7 +737,10 @@ function Productdetail() {
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = (parseInt(Amount) * 0.05) + parseInt(Amount) - (disscountvalue?.discount ?? 0);
+    const orderAmount =
+      parseInt(Amount) * 0.05 +
+      parseInt(Amount) -
+      (disscountvalue?.discount ?? 0);
 
     const requestData = {
       user_id: storedUserId,
@@ -792,7 +785,6 @@ function Productdetail() {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
         console.log("order_id", responseData);
-
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -815,7 +807,9 @@ function Productdetail() {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const response = await fetch(
+        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+      );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -823,7 +817,6 @@ function Productdetail() {
       console.log(error);
     }
   };
-
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -913,7 +906,12 @@ function Productdetail() {
       console.error("Razorpay Load Error:", error);
     }
   };
-  
+  const [showData, setShowData] = useState(false);
+
+  const toggleData = (e) => {
+    e.preventDefault();
+    setShowData(!showData);
+  };
 
   return (
     <>
@@ -925,31 +923,31 @@ function Productdetail() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -971,7 +969,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1010,16 +1008,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex + 1) % productDetails.images.length
+                        (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex +
-                        productDetails.images.length -
-                        1) %
-                      productDetails.images.length
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1028,7 +1026,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                        productDetails.images.length
+                          productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1085,8 +1083,8 @@ function Productdetail() {
                                   <Col lg={3} key={index}>
                                     <div
                                       className={`tab-variations ${selectedVariant === item.type
-                                          ? "active"
-                                          : ""
+                                        ? "active"
+                                        : ""
                                         }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
@@ -1204,41 +1202,95 @@ function Productdetail() {
           <hr />
           <div className="Product-Review">
             <h1 className="main-head mt-4">Product Review</h1>
-            {orderlist.map((order) => (
-              <div key={order.id}>
-                {order.callback[0]?.user_details && (
-                  <div className="linereview">
-                    <p>{order.callback[0]?.user_details.comment}</p>
 
-                    <div className="row">
-                      <div className="col-sm-3 col">
-                        <Wrapper>
-                          <div className="icon-style">
-                            {Array.from({
-                              length: order.callback[0]?.user_details.rating,
-                            }).map((_, index) => (
-                              <i className="fa-solid fa-star" key={index} />
-                            ))}
+            {getreviewlist && getreviewlist.length > 1 ? (
+              getreviewlist.map(
+                (order, index) =>
+                  index === 0 && (
+                    <div key={order.id}>
+                      <div className="linereview">
+                        <p>{order.comment}</p>
+                        <div className="row">
+                          <div className="col-sm-3 col">
+                            <Wrapper>
+                              <div className="icon-style">
+                                {Array.from({
+                                  length: order.rating,
+                                }).map((_, index) => (
+                                  <i className="fa-solid fa-star" key={index} />
+                                ))}
+                              </div>
+                            </Wrapper>
                           </div>
-                        </Wrapper>
-                      </div>
-                      <div className="col-sm-5 col">
-                        {order.callback[0].user_profile && (
-                          <div className="Product-img">
-                            <img src={order.callback[0].user_profile.image} />
-                            <span>
-                              {order.callback[0].user_profile[0].f_name} {order.callback[0].user_profile[0].l_name}
-                            </span>
+                          <div className="col-sm-5 col">
+                            {order.user_id && order.user_id.length > 0 && (
+                              <div className="Product-img">
+                                <img src={"https://canine.hirectjob.in/storage/app/public/profile/" +
+                                  order.user_id[0].image} alt={order.user_id[0].f_name} />
+                                <span>
+                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                </span>
+                              </div>
+                            )}
                           </div>
-                        )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {/* <hr /> */}
-              </div>
-            ))}
-            <a href="">Read more</a>
+                  )
+              )
+            ) : (
+              <p>No Review data</p>
+            )}
+
+            <div>
+              {showData ? (
+                <>
+                  {getreviewlist.map((order) => (
+                    <div key={order.id}>
+                      <div className="linereview">
+                        <p>{order.comment}</p>
+                        <div className="row">
+                          <div className="col-sm-3 col">
+                            <Wrapper>
+                              <div className="icon-style">
+                                {Array.from({
+                                  length: order.rating,
+                                }).map((_, index) => (
+                                  <i className="fa-solid fa-star" key={index} />
+                                ))}
+                              </div>
+                            </Wrapper>
+                          </div>
+                          <div className="col-sm-5 col">
+                            {order.user_id && order.user_id.length > 0 && (
+                              <div className="Product-img">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                    order.user_id[0].image
+                                  }
+                                  alt={order.user_id[0].f_name}
+                                />
+                                <span>
+                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <a href="#" onClick={toggleData}>
+                    Read less
+                  </a>
+                </>
+              ) : (
+                <a href="#" onClick={toggleData}>
+                  Read more
+                </a>
+              )}
+            </div>
           </div>
         </Container>
       </section>
@@ -1249,24 +1301,24 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-          (item, index) =>
-            item.type === "item_wise" && (
-              <div className="product-innerBanner">
-                <img
-                  src={
-                    "https://canine.hirectjob.in/storage/app/" + item.image
-                  }
-                />
-                <div className="home-content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button>
+            (item, index) =>
+              item.type === "item_wise" && (
+                <div className="product-innerBanner">
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/" + item.image
+                    }
+                  />
+                  <div className="home-content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Button>
+                      Explore More <i className="fa fa-angle-right" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )
-        )
+              )
+          )
         : null}
 
       <section className="section-padding food">
@@ -1322,9 +1374,9 @@ function Productdetail() {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>{`₹${item.price -
-                                (item.price * item?.discount) / 100
-                                }`}</h6>
+                              <h6>{`₹${
+                                item.price - (item.price * item?.discount) / 100
+                              }`}</h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1418,7 +1470,7 @@ function Productdetail() {
                 </div>
               </form> */}
               <Form onSubmit={handleNotifymeSubmit}>
-      {/* <Form.Group controlId="formVariations">
+                {/* <Form.Group controlId="formVariations">
         <Form.Label>Variations</Form.Label>
         <Form.Control
           as="select"
@@ -1439,55 +1491,55 @@ function Productdetail() {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-      <Form.Group controlId="formVariations" className="mb-3">
-    <Form.Label>Variations</Form.Label>
-    <Form.Control
-      as="select"
-      value={variation}
-      onChange={(e) => {
-        setVariation(e.target.value);
-        setVariationError(''); // Clear previous error when the value changes
-      }}
-      required
-      isInvalid={!!variationError}
-    >
-      <option value="" disabled>
-        Choose an option...
-      </option>
-      {productDetails?.variations &&
-        productDetails?.variations.map((item, index) => (
-          <option key={index}>{item.type}</option>
-        ))}
-    </Form.Control>
-    {variationError && (
-      <div className="error-message">{variationError}</div>
-    )}
-  </Form.Group>
-      <Form.Group className="mb-3" controlId="formGroupEmail">
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Email ID"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setIsEmailValid(isEmailFormatValid(e.target.value));
-          }}
-          isInvalid={!isEmailValid}
-        />
-        {!isEmailValid && (
-          <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
-            {/[A-Z]/.test(email) && !email.includes("@")
-              ? "Email should not contain capital letters and must include '@'."
-              : "Please enter a valid email address."}
-          </Form.Control.Feedback>
-        )}
-      </Form.Group>
+                <Form.Group controlId="formVariations" className="mb-3">
+                  <Form.Label>Variations</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={variation}
+                    onChange={(e) => {
+                      setVariation(e.target.value);
+                      setVariationError(''); // Clear previous error when the value changes
+                    }}
+                    required
+                    isInvalid={!!variationError}
+                  >
+                    <option value="" disabled>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item, index) => (
+                        <option key={index}>{item.type}</option>
+                      ))}
+                  </Form.Control>
+                  {variationError && (
+                    <div className="error-message">{variationError}</div>
+                  )}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Email ID"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setIsEmailValid(isEmailFormatValid(e.target.value));
+                    }}
+                    isInvalid={!isEmailValid}
+                  />
+                  {!isEmailValid && (
+                    <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                      {/[A-Z]/.test(email) && !email.includes("@")
+                        ? "Email should not contain capital letters and must include '@'."
+                        : "Please enter a valid email address."}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
 
-      <Button variant="primary mt-3" type="submit">
-        Notify Me When Available
-      </Button>
-    </Form>
+                <Button variant="primary mt-3" type="submit">
+                  Notify Me When Available
+                </Button>
+              </Form>
             </div>
           </div>
         </div>
@@ -1521,7 +1573,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1561,17 +1613,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1580,13 +1632,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1639,8 +1691,8 @@ function Productdetail() {
                                             <Col lg={4} key={index}>
                                               <div
                                                 className={`tab-variations ${selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
+                                                  ? "active"
+                                                  : ""
                                                   }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item.type);
@@ -1760,8 +1812,6 @@ function Productdetail() {
       </div>
       {/* // ============================== */}
 
-
-
       {/* buynow-model */}
       <div
         className="modal fade buynow"
@@ -1835,10 +1885,11 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1941,10 +1992,11 @@ function Productdetail() {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -2155,11 +2207,9 @@ function Productdetail() {
                             <Col>
                               <h5>
                                 ₹
-                                {
-                                  (parseInt(Amount) * 0.05) + parseInt(Amount) - (
-                                    (disscountvalue?.discount ?? 0)
-                                  )
-                                }
+                                {parseInt(Amount) * 0.05 +
+                                  parseInt(Amount) -
+                                  (disscountvalue?.discount ?? 0)}
                               </h5>
                             </Col>
                           </Row>
@@ -2561,11 +2611,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
