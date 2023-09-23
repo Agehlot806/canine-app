@@ -23,7 +23,6 @@ const addMonths = (date, months) => {
 
 function Servicedate() {
   const { id } = useParams();
-  console.log("id: ", id);
   const [slotday, setSlotDay] = useState([]);
   console.log("slotday: ", slotday[0]?.slot_date);
   const [timingSlot, setTimingSlot] = useState([]);
@@ -41,7 +40,8 @@ function Servicedate() {
   const [formValid, setFormValid] = useState({});
   console.log("formValid: ", formValid);
   const [state, setstate] = useState("");
-
+  const [allservicebooking, setallservicebooking] = useState([]);
+  const [bookedSlotTimes, setBookedSlotTimes] = useState([]);
   console.log("petType: ", petType);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function Servicedate() {
   }, []);
   const handleSlotsData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/service/18`);
+      const response = await axios.get(`${BASE_URL}/banners/service/${id}`);
       setSlotDay(response.data.data);
       console.log("response.data: ", response.data);
 
@@ -61,6 +61,23 @@ function Servicedate() {
       // Handle error as needed
     }
   };
+
+  useEffect(() => {
+    fetchBookedSlotTimes();
+  }, [id]); 
+
+  const fetchBookedSlotTimes = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/banners/get_allservicebooking`);
+      const jsonData = await response.json();
+      const bookedTimes = jsonData.data.map((booking) => booking.slot); 
+      setBookedSlotTimes(bookedTimes);
+    } catch (error) {
+      console.error("Error fetching booked slot times:", error);
+    }
+  };
+
+
   const petCategories = async () => {
     try {
       const response = await fetch(`${BASE_URL}/categories`);
@@ -97,7 +114,7 @@ function Servicedate() {
 
     // if (handleValid()) {
     const bookingData = new FormData();
-    bookingData.append("user_id", storedUserId[0].id);
+    bookingData.append("user_id", storedUserId);
     bookingData.append("service_id", id);
     bookingData.append("dates", slotday[0]?.slot_date);
     bookingData.append("slot", bookingSlot);
@@ -203,15 +220,13 @@ function Servicedate() {
           </div>
           <div className="service-dateCart">
             <div className="month-name">
-              {/* {slotday?.length > 0 ? (
-                slotday.map((item, index) => (
-                  <h4>
-                    {moment(item.slot_date).format("MMMM Do YYYY").split("", 3)}
-                  </h4>
-                ))
+              {slotday?.length > 1 ? (
+                <h4>
+                  {moment(slotday[1].slot_date).format("MMMM Do YYYY").split("", 3)}
+                </h4>
               ) : (
                 <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
-              )} */}
+              )} 
             </div>
             <div className="sevice-select-date">
               {/* <DatePicker
@@ -246,9 +261,10 @@ function Servicedate() {
                           setTimingSlot(item.slot_timing);
                         }}
                       >
-                        {moment(item.slot_date).format("dddd").split("", 3)}{" "}
-                        <br />
-                        <span>{moment(item.slot_date).format("D")}</span>
+                        {moment(item.slot_date).format("dddd").split("", 3)} <br />
+                        <span>
+                          {moment(item.slot_date).format("D")}
+                        </span>
                       </a>
                     </li>
                   ))
@@ -266,31 +282,29 @@ function Servicedate() {
                 role="tabpanel"
                 aria-labelledby="Set-tab"
               >
-                <div>
-                  <div className="selectService-date">
-                    <h2>{stringes.time}</h2>
-                    <ul className="nav nav-pills mb-3" role="tablist">
-                      {timingSlot.length > 0 ? (
-                        timingSlot.map((item, index) => (
-                          <li className="nav-item">
-                            <a
-                              className="nav-link"
-                              data-toggle="pill"
-                              role="tab"
-                              aria-selected="true"
-                              onClick={() => {
-                                setBookingSlot(item);
-                              }}
-                            >
-                              {moment(item.slot_timing).format("h:mm a")}
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">{stringes.noSlot}</p>
-                      )}
-                    </ul>
-                  </div>
+                <div className="selectService-date">
+                  <h2>{stringes.time}</h2>
+                  <ul className="nav nav-pills mb-3" role="tablist">
+                    {timingSlot && timingSlot.length > 0 ? (
+                      timingSlot.map((item, index) => (
+                        <li className="nav-item" key={index}>
+                          <a
+                            className={`nav-link ${bookedSlotTimes.includes(item) ? 'disabled' : ''}`}
+                            data-toggle="pill"
+                            role="tab"
+                            aria-selected="true"
+                            onClick={() => {
+                              setBookingSlot(item);
+                            }}
+                          >
+                            {item}
+                          </a>
+                        </li>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">{stringes.noSlot}</p>
+                    )}
+                  </ul>
                 </div>
               </div>
             </div>

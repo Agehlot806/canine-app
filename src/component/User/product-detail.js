@@ -66,7 +66,7 @@ function Productdetail() {
     fetchBreed();
     fetchLifestage();
     AllBanner();
-    AllOrderList();
+    AllGetreviewList();
     couponlistdata();
     GetdataAll();
     allReview();
@@ -148,6 +148,26 @@ function Productdetail() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
+
+    // if (!variation) {
+    //   setVariationError('Please select a variation');
+    // } else {
+    //   setVariationError('');
+    // }
+
+    // Validate email
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   toast.error("Please enter a valid email address");
+    //   return;
+    // }
+
+    // Validate variation
+    // if (!variation) {
+    //   toast.error("Please select a variation");
+    //   return;
+    // }
+
     // Prepare form data
     const notifymeData = new FormData();
     notifymeData.append("email", email);
@@ -156,7 +176,7 @@ function Productdetail() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
+    console.log('productDetails.id: ', productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -375,17 +395,19 @@ function Productdetail() {
     }
   };
 
-  const [orderlist, setorderlist] = useState([]);
-  const AllOrderList = async () => {
+
+  const [getreviewlist, setgetreviewlist] = useState([]);
+  const AllGetreviewList = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+        `${BASE_URL}/items/get_reviewitem/${id}`
       );
-      setorderlist(response.data.data);
+      setgetreviewlist(response.data.data);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   // ===================================================
   // ======================================================
@@ -888,6 +910,12 @@ function Productdetail() {
       console.error("Razorpay Load Error:", error);
     }
   };
+  const [showData, setShowData] = useState(false);
+
+  const toggleData = (e) => {
+    e.preventDefault();
+    setShowData(!showData);
+  };
 
   return (
     <>
@@ -1058,11 +1086,10 @@ function Productdetail() {
                                 productDetails.variations.map((item, index) => (
                                   <Col lg={3} key={index}>
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`tab-variations ${selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -1179,42 +1206,95 @@ function Productdetail() {
           <hr />
           <div className="Product-Review">
             <h1 className="main-head mt-4">Product Review</h1>
-            {orderlist.map((order) => (
-              <div key={order.id}>
-                {order.callback[0]?.user_details && (
-                  <div className="linereview">
-                    <p>{order.callback[0]?.user_details.comment}</p>
 
-                    <div className="row">
-                      <div className="col-sm-3 col">
-                        <Wrapper>
-                          <div className="icon-style">
-                            {Array.from({
-                              length: order.callback[0]?.user_details.rating,
-                            }).map((_, index) => (
-                              <i className="fa-solid fa-star" key={index} />
-                            ))}
+            {getreviewlist && getreviewlist.length > 1 ? (
+              getreviewlist.map(
+                (order, index) =>
+                  index === 0 && (
+                    <div key={order.id}>
+                      <div className="linereview">
+                        <p>{order.comment}</p>
+                        <div className="row">
+                          <div className="col-sm-3 col">
+                            <Wrapper>
+                              <div className="icon-style">
+                                {Array.from({
+                                  length: order.rating,
+                                }).map((_, index) => (
+                                  <i className="fa-solid fa-star" key={index} />
+                                ))}
+                              </div>
+                            </Wrapper>
                           </div>
-                        </Wrapper>
-                      </div>
-                      <div className="col-sm-5 col">
-                        {order.callback[0].user_profile && (
-                          <div className="Product-img">
-                            <img src={order.callback[0].user_profile.image} />
-                            <span>
-                              {order.callback[0].user_profile[0].f_name}{" "}
-                              {order.callback[0].user_profile[0].l_name}
-                            </span>
+                          <div className="col-sm-5 col">
+                            {order.user_id && order.user_id.length > 0 && (
+                              <div className="Product-img">
+                                <img src={"https://canine.hirectjob.in/storage/app/public/profile/" +
+                                  order.user_id[0].image} alt={order.user_id[0].f_name} />
+                                <span>
+                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                </span>
+                              </div>
+                            )}
                           </div>
-                        )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {/* <hr /> */}
-              </div>
-            ))}
-            <a href="">Read more</a>
+                  )
+              )
+            ) : (
+              <p>No Review data</p>
+            )}
+
+            <div>
+              {showData ? (
+                <>
+                  {getreviewlist.map((order) => (
+                    <div key={order.id}>
+                      <div className="linereview">
+                        <p>{order.comment}</p>
+                        <div className="row">
+                          <div className="col-sm-3 col">
+                            <Wrapper>
+                              <div className="icon-style">
+                                {Array.from({
+                                  length: order.rating,
+                                }).map((_, index) => (
+                                  <i className="fa-solid fa-star" key={index} />
+                                ))}
+                              </div>
+                            </Wrapper>
+                          </div>
+                          <div className="col-sm-5 col">
+                            {order.user_id && order.user_id.length > 0 && (
+                              <div className="Product-img">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                    order.user_id[0].image
+                                  }
+                                  alt={order.user_id[0].f_name}
+                                />
+                                <span>
+                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <a href="#" onClick={toggleData}>
+                    Read less
+                  </a>
+                </>
+              ) : (
+                <a href="#" onClick={toggleData}>
+                  Read more
+                </a>
+              )}
+            </div>
           </div>
         </Container>
       </section>
@@ -1422,7 +1502,7 @@ function Productdetail() {
                     value={variation}
                     onChange={(e) => {
                       setVariation(e.target.value);
-                      setVariationError(""); // Clear previous error when the value changes
+                      setVariationError(''); // Clear previous error when the value changes
                     }}
                     required
                     isInvalid={!!variationError}
@@ -1452,10 +1532,7 @@ function Productdetail() {
                     isInvalid={!isEmailValid}
                   />
                   {!isEmailValid && (
-                    <Form.Control.Feedback
-                      type="invalid"
-                      className="custom-form-control-feedback"
-                    >
+                    <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
                       {/[A-Z]/.test(email) && !email.includes("@")
                         ? "Email should not contain capital letters and must include '@'."
                         : "Please enter a valid email address."}
@@ -1617,11 +1694,10 @@ function Productdetail() {
                                           (item, index) => (
                                             <Col lg={4} key={index}>
                                               <div
-                                                className={`tab-variations ${
-                                                  selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
-                                                }`}
+                                                className={`tab-variations ${selectedVariant === item.type
+                                                  ? "active"
+                                                  : ""
+                                                  }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item.type);
                                                   setSelectedVariantPrice(
