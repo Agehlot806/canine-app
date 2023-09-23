@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import strings from "react-localization";
 import { Toaster, toast } from "react-hot-toast";
 // import { DatePicker } from "react-datepicker";
-import DatePicker from "react-datepicker/dist/react-datepicker";
+// import DatePicker from "react-datepicker/dist/react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
 const addMonths = (date, months) => {
