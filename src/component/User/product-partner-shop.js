@@ -491,7 +491,6 @@ function Productpartnershop() {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("productDetails---->", productDetails);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -633,7 +632,6 @@ function Productpartnershop() {
         console.log(error);
       });
   };
-console.log("addresslist--",addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -728,7 +726,6 @@ console.log("addresslist--",addresslist);
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -2004,7 +2001,6 @@ console.log("addresslist--",addresslist);
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

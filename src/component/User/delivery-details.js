@@ -32,7 +32,6 @@ console.log("customer_id: ", customer_id);
         console.log(error);
       });
   };
-  console.log("addresslistaddresslistaddresslist",addresslist);
 
   return (
     <>

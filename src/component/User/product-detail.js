@@ -31,20 +31,13 @@ function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [productDetails, setProductDetails] = useState([]);
-  console.log(
-    "productDetails ",
-    productDetails?.id
-  );
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [notifyMeData, setNotifyMeData] = useState("");
-  console.log("productDetails--- ", productDetails);
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
-  console.log("quantity: ", quantity);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("selectedVariant: ", selectedVariant);
 
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -588,7 +581,6 @@ function Productdetail() {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -1787,7 +1779,6 @@ function Productdetail() {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

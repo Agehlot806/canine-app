@@ -411,7 +411,6 @@ function PetshopproductDetails() {
   };
 
   const [addresslist, setAddressList] = useState([]);
-  console.log("addresslist: ", addresslist);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
@@ -570,7 +569,6 @@ function PetshopproductDetails() {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -1868,7 +1866,6 @@ function PetshopproductDetails() {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

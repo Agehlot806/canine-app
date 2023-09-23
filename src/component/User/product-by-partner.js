@@ -15,7 +15,6 @@ function Productbypartner() {
   const navigate = useNavigate()
   const [thirdbanner, setthirdbanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
-  console.log("allVendorShop: ", allVendorShop);
     
   useEffect(() => {
     thirdBanner();

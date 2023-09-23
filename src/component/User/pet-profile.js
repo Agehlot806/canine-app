@@ -239,7 +239,8 @@ function Petprofile() {
                         value={breeds}
                         onChange={(e) => setbreeds(e.target.value)}
                       >
-                        <option>{strings.choose}</option>
+                        {/* <option>{strings.choose}</option> */}
+                        <option value="" disabled selected>{strings.choose}</option>
                         {selectbreed &&
                           selectbreed.map((item) => (
                             <option key={item.id}>{item.name}</option>

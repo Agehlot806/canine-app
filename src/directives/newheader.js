@@ -14,9 +14,7 @@ function Newheader(props) {
   // const { dataLength } = props;
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
-  console.log("allproduct: ", allproduct);
   const [dogsubcategories, setdogsubcategories] = useState("");
-  console.log("dogsubcategories: ", dogsubcategories);
   const [storedUserId, setStoredUserId] = useState(null);
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
@@ -94,7 +92,6 @@ function Newheader(props) {
   const [profileData, setProfileData] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState({ image: "" } || null);
-  console.log("profileDataaaa: ", profileData);
   useEffect(() => {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API

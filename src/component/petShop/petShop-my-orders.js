@@ -13,7 +13,6 @@ import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopMyorder() {
   const [allorder, setallorder] = useState([]);
-  console.log("allorderrrr: ", allorder);
   useEffect(() => {
     allOrders();
   }, []);

@@ -40,7 +40,6 @@ function PetShopcanineproduct(props) {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
-  console.log("brands: ", brands);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -543,7 +542,6 @@ function PetShopcanineproduct(props) {
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("productDetails---->", productDetails);
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
@@ -694,7 +692,6 @@ function PetShopcanineproduct(props) {
   };
 
   const [addresslist, setAddressList] = useState([]);
-  console.log("addresslist: ", addresslist);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
@@ -853,7 +850,6 @@ function PetShopcanineproduct(props) {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -2060,7 +2056,6 @@ function PetShopcanineproduct(props) {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

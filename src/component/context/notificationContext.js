@@ -9,9 +9,7 @@ export const useNotificationContext = () => {
 
 export const NotificationProvider = ({ children }) => {
   const [notificationLength, setNotificationLength] = useState(0);
-  console.log('notificationLength: ', notificationLength);
   const [dataLengthpetnotification, setDataLengthpetnotification] = useState(null); // Initialize as null
-  console.log('dataLengthpetnotification: ', dataLengthpetnotification);
 
   const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");

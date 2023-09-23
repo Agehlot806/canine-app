@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 
 function Service() {
   const [allservice, setallservice] = useState([]);
-  console.log("allservice: ", allservice);
 
   useEffect(() => {
     allService();

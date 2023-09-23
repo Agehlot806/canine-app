@@ -847,7 +847,6 @@ function PetshopAddCart() {
                 <div className="address">
                   <h3>Address</h3>
                   <div className="address-card">
-                    {console.log("addresslist", addresslist)}
                     {addresslist && addresslist.length > 0 ? (
                       addresslist.map(
                         (item, index) =>

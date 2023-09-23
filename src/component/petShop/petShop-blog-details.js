@@ -121,7 +121,7 @@ function PetshopBlogdetails() {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
+    
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
@@ -200,7 +200,6 @@ function PetshopBlogdetails() {
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("productDetails---->", productDetails);
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
@@ -350,7 +349,6 @@ function PetshopBlogdetails() {
   };
 
   const [addresslist, setAddressList] = useState([]);
-  console.log("addresslist: ", addresslist);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
@@ -509,7 +507,6 @@ function PetshopBlogdetails() {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -1459,7 +1456,6 @@ function PetshopBlogdetails() {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

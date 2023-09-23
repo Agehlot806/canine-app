@@ -27,7 +27,6 @@ function Shopbybrandlist() {
                 console.error("Error fetching data:", error);
             });
     };
-    console.log("brandproductbrandproductbrandproductbrandproduct",brandproduct);
 
     return (
         <>

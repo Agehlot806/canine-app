@@ -203,7 +203,6 @@ function Blogdetails() {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("productDetails---->", productDetails);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -443,7 +442,6 @@ function Blogdetails() {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -1208,7 +1206,6 @@ function Blogdetails() {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

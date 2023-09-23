@@ -10,7 +10,6 @@ function Partners() {
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
     const [partnerData, setpartnerData] = useState({});
-    console.log("partnerData", partnerData);
     const [zoneList, setZoneList] = useState([]);
     const nextStep = () => {
         // if (f_name && l_name && email && password && confirmpassword && phone) {

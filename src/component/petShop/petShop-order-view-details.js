@@ -14,9 +14,7 @@ import { useReactToPrint } from "react-to-print";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
-  console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
-  console.log("orderDetails: ", orderDetails);
 
   const { id } = useParams();
   console.log("order id ", id);

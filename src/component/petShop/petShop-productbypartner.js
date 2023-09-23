@@ -18,7 +18,6 @@ function PetshopProductbypartner() {
   const [thirdbanner, setthirdbanner] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
-  console.log("allVendorShop: ", allVendorShop);
   const [vendorItemList, setVendorItemList] = useState([]);
   const [responseMessage, setResponseMessage] = useState("");
   const [email, setEmail] = useState("");

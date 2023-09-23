@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 function Salesman() {
   const navigate = useNavigate();
   const [salesmanData, setsalesmanData] = useState({});
-  console.log("salesmanData", salesmanData);
   const [zoneList, setZoneList] = useState([]);
 
   useEffect(() => {

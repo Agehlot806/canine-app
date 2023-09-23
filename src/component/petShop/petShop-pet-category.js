@@ -18,7 +18,6 @@ function PetshopPetcategory() {
   //   console.log("id", id);
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
-  console.log("brands: ", brands);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);

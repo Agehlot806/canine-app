@@ -58,10 +58,8 @@ function PetshopHome(props) {
   const [categories, setcategories] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [allproduct, setallproduct] = useState([]);
-  console.log("allproduct: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
-  console.log("allVendorShop: ", allVendorShop);
   const [brands, setBrands] = useState([]);
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
@@ -509,7 +507,6 @@ function PetshopHome(props) {
   };
 
   const [addresslist, setAddressList] = useState([]);
-  console.log("addresslist: ", addresslist);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
@@ -668,7 +665,6 @@ function PetshopHome(props) {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -1848,7 +1844,6 @@ function PetshopHome(props) {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>
@@ -2534,7 +2529,6 @@ function PetshopHome(props) {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

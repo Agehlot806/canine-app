@@ -14,9 +14,7 @@ function PetShopHeader(props) {
   const navigate = useNavigate();
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
-  console.log("allproduct: ", allproduct);
   const [dogsubcategories, setdogsubcategories] = useState("");
-  console.log("dogsubcategories: ", dogsubcategories);
   const [storedWholesellerId, setStoredWholesellerId] = useState(null);
   const [categories, setcategories] = useState([]);
   const { cartData, dataLengthpetshop, addToCartData } = useCartContext();

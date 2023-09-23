@@ -62,10 +62,8 @@ function Home(props) {
   const [homebanner, sethomebanner] = useState([]);
 
   const [allproduct, setallproduct] = useState([]);
-  console.log("allproduct in home: ", allproduct);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
-  // console.log("allVendorShop: ", allVendorShop);
   const [brands, setBrands] = useState([]);
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
@@ -81,7 +79,6 @@ function Home(props) {
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
-  console.log("homebannerhomebanner", homebanner);
   const homeAllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
@@ -291,7 +288,6 @@ function Home(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
@@ -362,8 +358,6 @@ function Home(props) {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-
-  console.log("productDetails---->", productDetails);
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -520,7 +514,6 @@ function Home(props) {
         console.log(error);
       });
   };
-console.log("addresslist--",addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -615,7 +608,6 @@ console.log("addresslist--",addresslist);
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -2151,7 +2143,6 @@ const handlePayment = async () => {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {console.log("addresslist", addresslist)}
                         {addresslist && addresslist.length > 1 ? (
                           addresslist.map(
                             (item, index) =>

@@ -23,9 +23,7 @@ function Addcart() {
   const [quantity, setQuantity] = useState(1);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
   const [coupencode, setcoupenCode] = useState(false);
-  console.log("coupencode: ", coupencode);
   const [couponlist, setcouponlist] = useState([]);
-  console.log("couponlist: ", couponlist);
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
@@ -247,7 +245,6 @@ function Addcart() {
   
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -350,7 +347,6 @@ function Addcart() {
 
   // const [addresslist, setaddresslist] = useState([]);
   const [addresslist, setAddressList] = useState([]);
-  console.log("addresslisttttttttttt", addresslist);
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
@@ -385,7 +381,6 @@ function Addcart() {
   // ============================================================
 
   const [profileData, setProfileData] = useState({});
-  console.log("profileDataaaaaaaaaaaaaaaaaaaaaaaa: ", profileData);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
 
@@ -775,7 +770,6 @@ function Addcart() {
                 <div className="address">
                   <h3>Address</h3>
                   <div className="address-card">
-                    {console.log("addresslist", addresslist)}
                     {addresslist && addresslist.length > 1 ? (
                       addresslist.map(
                         (item, index) =>

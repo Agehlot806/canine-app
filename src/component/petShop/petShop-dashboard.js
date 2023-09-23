@@ -219,7 +219,6 @@ function Petshopdashboard() {
                                   <div className="dashCard-detail">
                                     <h6>
                                       Order ID : <span>{item.id}
-                                      {console.log('Orderrrrrrrrrrrrr ID:', item.id)}
                                       </span>
                                     </h6>
                                     <p>

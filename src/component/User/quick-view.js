@@ -46,10 +46,8 @@ function Quickview() {
   // const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(100);
   const [minOrder, setMinOrder] = useState(100);
-  console.log("quantity: ", quantity);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("selectedVariant: ", selectedVariant);
 
   // const handleIncrementone = () => {
   //   if (verifiredIdaccess === 1) {
@@ -194,7 +192,6 @@ function Quickview() {
     }
   };
   const [allrelatedproduct, setallrelatedproduct] = useState([]);
-  console.log("allrelatedproduct: ", allrelatedproduct);
   const fetchrelatedproduct = async () => {
     axios
       .get(`${BASE_URL}/items/product/2/8`)
