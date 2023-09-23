@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 // import blog1 from "../../assets/images/img/blog.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -19,10 +19,15 @@ function PetshopBlogdetails() {
     allblogs();
     allProduct();
     fetchWishlistData();
+    allAddressList();
   }, []);
   const [blogdata, setBlogdata] = useState([]);
+  console.log("blogdata: ", blogdata);
   const [allproduct, setallproduct] = useState([]);
   const [expandedDescription, setExpandedDescription] = useState({});
+  const [productIds, setProductIds] = useState([]);
+
+  console.log("productIds: ", productIds);
 
   const allProduct = async () => {
     try {
@@ -169,6 +174,16 @@ function PetshopBlogdetails() {
       .get(`${BASE_URL}/auth/blog_detail/${id}`)
       .then((response) => {
         setBlogdata(response.data.data);
+        // Extract product_ids from the data array
+        const blogDataa = response.data.data;
+        // const extractedProductIds = blogDataa.map((item) =>
+        //   item.product_id.map((product) => product.id)
+        // );
+        const extractedProductIds = blogDataa.map((item) => item.product_id);
+        // Combine all product_ids into a single array
+        const allProductIds = extractedProductIds.flat();
+
+        setProductIds(allProductIds);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -238,6 +253,49 @@ function PetshopBlogdetails() {
         console.log(error);
       });
   };
+  // ****************notifyme
+  const [email, setEmail] = useState("");
+  const [variation, setVariation] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [variationError, setVariationError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const isEmailFormatValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(isEmailFormatValid(emailValue));
+  };
+  const handleNotifymeSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Prepare form data
+    const notifymeData = new FormData();
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    notifymeData.append("stock", productDetails.stock);
+    notifymeData.append("user_id", storedUserId);
+    notifymeData.append("item_id", productDetails.id);
+
+    console.log("productDetails.id: ", productDetails?.id);
+    console.log("notifymeData", notifymeData);
+
+    // Send a request
+    axios
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
+  };
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -260,9 +318,9 @@ function PetshopBlogdetails() {
     let number = index + 0.5;
     return (
       <span key={index}>
-        {productDetails.rating_count >= index + 1 ? (
+        {productDetails?.rating_count >= index + 1 ? (
           <i className="fa fa-star" />
-        ) : productDetails.rating_count >= number ? (
+        ) : productDetails?.rating_count >= number ? (
           <i className="fa fa-star-half-o" />
         ) : (
           <i className="fa fa-star-o" />
@@ -837,132 +895,124 @@ function PetshopBlogdetails() {
           </Row>
           <div className="needplace">
             <Row>
-              {allproduct &&
-                allproduct.map((item, index) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-4">
-                    <div
-                      className="food-product"
-                      onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
-                      key={item.id}
-                      style={{
-                        background:
-                          gradientColors[index % gradientColors.length],
-                      }}
-                    >
-                      <i
-                        class={
-                          item.isFav
-                            ? "fa-solid fa-heart"
-                            : "fa-regular fa-heart"
+              {productIds.map((item, index) => (
+                <Col lg={3} sm={6} xs={6} className="mb-4" key={item[0]?.id}>
+                  {console.log("itemmmhksdkn: ", item)}
+                  <div
+                    className="food-product"
+                    onMouseEnter={() => handleMouseEnter(item[0]?.id)}
+                    onMouseLeave={() => handleMouseLeave(item[0]?.id)}
+                    style={{
+                      background:
+                        gradientColors[index % gradientColors?.length],
+                    }}
+                  >
+                    <i
+                      className={
+                        item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                      }
+                      onClick={() => {
+                        if (storedUserId == null) {
+                          toast.error("Please Login first");
+                        } else {
+                          addToWishlist(item[0]?.id);
                         }
-                        onClick={(id) => {
-                          if (storedWholesellerId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
-                          }
-                        }}
-                      />
+                      }}
+                    />
 
-                      <Link to={`/petshop-productDetails/${item.id}`}>
-                        <div className="text-center">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <div>
-                          <h6>{item.name}</h6>
-                          {/* <p>{item.description}</p> */}
-                          <p
-                            className={`truncate-text ${
-                              !expandedDescription[item.id]
-                                ? "read-more-link"
-                                : ""
-                            }`}
-                          >
-                            {item.description}
-                            {item.description.length > 100 &&
-                              !expandedDescription[item.id] && (
-                                <span
-                                  className="read-more-link"
-                                  onClick={() =>
-                                    setExpandedDescription({
-                                      ...expandedDescription,
-                                      [item.id]: true,
-                                    })
-                                  }
-                                >
-                                  Read More
-                                </span>
-                              )}
-                          </p>
-                        </div>
-                        <div className="product-bag">
-                          <Row>
-                            {/* <Col lg={6} sm={6} xs={6}>
-                              <p>₹{item.price}</p>
-                            </Col> */}
-                            {/* <Col lg={6} sm={6} xs={6}>
-                              <h5>Save {parseFloat(item.discount)}%</h5>
-                            </Col> */}
-                          </Row>
-                          <Row>
-                            <Col
-                              lg={6}
-                              sm={6}
-                              xs={6}
-                              className="align-self-center"
-                            >
-                              <h6>
-                                {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
-                                  item.price -
-                                  (item.price * item.discount) / 100
-                                }`}
-                              </h6>
-                            </Col>
-                            <Col lg={6} sm={6} xs={6}>
-                              <Link
-                                to={`/petshop-add-cart/${item.id}`}
-                                onClick={handleAddToCart}
+                    <Link to={`/product-details/${item[0]?.id}`}>
+                      <div className="text-center">
+                        <img
+                          src={`https://canine.hirectjob.in//storage/app/public/product/${item[0]?.image}`}
+                          alt={item[0]?.name}
+                        />
+                      </div>
+                      <div>
+                        <h6>{item[0]?.name}</h6>
+                        <p
+                          className={`truncate-text ${
+                            !expandedDescription[item[0]?.id]
+                              ? "read-more-link"
+                              : ""
+                          }`}
+                        >
+                          {item[0]?.description}
+                          {item[0]?.description?.length > 100 &&
+                            !expandedDescription[item[0]?.id] && (
+                              <span
+                                className="read-more-link"
+                                onClick={() =>
+                                  setExpandedDescription({
+                                    ...expandedDescription,
+                                    [item[0]?.id]: true,
+                                  })
+                                }
                               >
-                                <img src={bag} />
-                              </Link>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Link>
-                      {buttonVisibility[item.id] && (
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={(e) => handeldataId(item.id)}
+                                Read More
+                              </span>
+                            )}
+                        </p>
+                      </div>
+                      <div className="product-bag">
+                        <Row>
+                          <Col lg={6} sm={6} xs={6}>
+                            <p>₹{item[0]?.price}</p>
+                          </Col>
+                          <Col lg={6} sm={6} xs={6}>
+                            <h5>Save {parseFloat(item[0]?.discount)}%</h5>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col
+                            lg={6}
+                            sm={6}
+                            xs={6}
+                            className="align-self-center"
                           >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                ))}
+                            <h6>{`₹${
+                              item[0]?.price -
+                              (item[0]?.price * item[0]?.discount) / 100
+                            }`}</h6>
+                          </Col>
+                          <Col lg={6} sm={6} xs={6}>
+                            <Link
+                              to={`/petshop-add-cart/${item[0]?.id}`}
+                              onClick={handleAddToCart}
+                            >
+                              <img src={bag} alt="Add to Cart" />
+                            </Link>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Link>
+                    {buttonVisibility[item[0].id] && (
+                      <div className="button-container">
+                        <button
+                          data-toggle="modal"
+                          data-target=".bd-example-modal-lg"
+                          onClick={() => handeldataId(item[0].id)}
+                        >
+                          Quick View
+                        </button>
+                        <button
+                          data-toggle="modal"
+                          data-target=".buynow"
+                          onClick={() => handeldataId(item[0].id)}
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </Col>
+              ))}
             </Row>
           </div>
         </Container>
       </section>
 
       <Petshopfooter />
+      {/* Modal */}
 
       {/* Product details Modal */}
       <div
@@ -974,7 +1024,7 @@ function PetshopBlogdetails() {
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-body">
+            <div className="modal-body sold-modalbtn">
               <i class="quickarea fa fa-times" data-dismiss="modal" />
               <section className="section-padding">
                 <Container>
@@ -1031,7 +1081,7 @@ function PetshopBlogdetails() {
                           <div className="icon-style">
                             {ratingStar}
                             <p>
-                              ({productDetails.rating_count} customer reviews)
+                              ({productDetails?.rating_count} customer reviews)
                             </p>
                           </div>
                         </Wrapper>
@@ -1441,7 +1491,8 @@ function PetshopBlogdetails() {
           </div>
         </div>
       </div>
-      {/* update-model */}
+
+      {/* buynow */}
 
       <div
         className="modal fade buynow"
@@ -1452,7 +1503,7 @@ function PetshopBlogdetails() {
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-body">
+            <div className="modal-body ">
               <>
                 <Container>
                   <div className="needplace">
@@ -1783,10 +1834,26 @@ function PetshopBlogdetails() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
+                  {productDetails.stock &&
+                  productDetails.stock.length !== 10 ? (
+                    <button data-toggle="modal" data-target="#cod">
+                      Checkout
+                    </button>
+                  ) : (
+                    <div className="sold-out-btn soldbtn-new mt-3">
+                      <Link className="mb-4">Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                      <br />
+                    </div>
+                  )}
+                  <button
+                    className="mt-3"
+                    data-dismiss="modal"
+                    onClick={handleResetClick}
+                  >
                     Close
                   </button>
                 </div>
@@ -1795,6 +1862,139 @@ function PetshopBlogdetails() {
           </div>
         </div>
       </div>
+
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              {/* <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
+                    <option value="" disabled selected>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form> */}
+              <Form onSubmit={handleNotifymeSubmit}>
+                {/* <Form.Group controlId="formVariations">
+        <Form.Label>Variations</Form.Label>
+        <Form.Control
+          as="select"
+          value={variation}
+          onChange={(e) => setVariation(e.target.value)}
+          required
+          isInvalid={!!variationError}
+        >
+          <option value="" disabled>
+            Choose an option...
+          </option>
+          {productDetails?.variations &&
+            productDetails?.variations.map((item, index) => (
+              <option key={index}>{item.type}</option>
+            ))}
+        </Form.Control>
+        {variationError && (
+          <div className="error-message">{variationError}</div>
+        )}
+      </Form.Group> */}
+                <Form.Group controlId="formVariations" className="mb-3">
+                  <Form.Label>Variations</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={variation}
+                    onChange={(e) => {
+                      setVariation(e.target.value);
+                      setVariationError(""); // Clear previous error when the value changes
+                    }}
+                    required
+                    isInvalid={!!variationError}
+                  >
+                    <option value="" disabled>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.length > 0 &&
+                      productDetails?.variationsmap((item, index) => (
+                        <option key={index}>{item.type}</option>
+                      ))}
+                  </Form.Control>
+                  {variationError && (
+                    <div className="error-message">{variationError}</div>
+                  )}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Email ID"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setIsEmailValid(isEmailFormatValid(e.target.value));
+                    }}
+                    isInvalid={!isEmailValid}
+                  />
+                  {!isEmailValid && (
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="custom-form-control-feedback"
+                    >
+                      {/[A-Z]/.test(email) && !email.includes("@")
+                        ? "Email should not contain capital letters and must include '@'."
+                        : "Please enter a valid email address."}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+
+                <Button variant="primary mt-3" type="submit">
+                  Notify Me When Available
+                </Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal */}
 
       <div
         className="modal fade editAddress"

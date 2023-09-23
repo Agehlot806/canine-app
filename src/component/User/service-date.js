@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import service from "../../assets/images/banner/service.png";
 import { Form, Link } from "react-router-dom";
@@ -11,6 +11,15 @@ import moment from "moment/moment";
 import { useParams } from "react-router-dom";
 import strings from "react-localization";
 import { Toaster, toast } from "react-hot-toast";
+// import { DatePicker } from "react-datepicker";
+import DatePicker from "react-datepicker/dist/react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+
+const addMonths = (date, months) => {
+  const newDate = new Date(date);
+  newDate.setMonth(newDate.getMonth() + months);
+  return newDate;
+};
 
 function Servicedate() {
   const { id } = useParams();
@@ -157,6 +166,16 @@ function Servicedate() {
       Getdatacity(event.target.value);
     }
   };
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(null);
+
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
   return (
     <>
       <Toaster />
@@ -169,9 +188,22 @@ function Servicedate() {
 
       <section className="section-padding">
         <Container>
+          <div>
+            {/* <DatePicker
+              selected={startDate}
+              onChange={onChange}
+              minDate={new Date()}
+              maxDate={addMonths(new Date(), 5)}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+              showDisabledMonthNavigation
+            /> */}
+          </div>
           <div className="service-dateCart">
             <div className="month-name">
-              {slotday?.length > 0 ? (
+              {/* {slotday?.length > 0 ? (
                 slotday.map((item, index) => (
                   <h4>
                     {moment(item.slot_date).format("MMMM Do YYYY").split("", 3)}
@@ -179,37 +211,50 @@ function Servicedate() {
                 ))
               ) : (
                 <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
-              )}
+              )} */}
             </div>
             <div className="sevice-select-date">
+              {/* <DatePicker
+                selected={startDate}
+                onChange={onChange}
+                minDate={new Date()}
+                maxDate={addMonths(new Date(), 5)}
+                startDate={startDate}
+                endDate={endDate}
+                selectsRange
+                inline
+                showDisabledMonthNavigation
+                className="custom-datepicker"
+                // onSelect={() => setTimingSlot(item.slot_timing)}
+                // onClick={() => {
+                //   setTimingSlot(item.slot_timing);
+                // }}
+              /> */}
               <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-              
                 {slotday?.length > 0 ? (
-  slotday.map((item, index) => (
-    <li className="nav-item" key={index}>
-      <a
-        className="nav-link"
-        id="Set-tab"
-        data-toggle="pill"
-        href="#Set"
-        role="tab"
-        aria-controls="Set"
-        aria-selected="true"
-        onClick={() => {
-          setTimingSlot(item.slot_timing);
-        }}
-      >
-        {moment(item.slot_date).format("dddd").split("", 3)} <br />
-        <span>
-        {moment(item.slot_date).format("D")}
-        </span>
-      </a>
-    </li>
-  ))
-) : (
-  <p className="emptyMSG">{stringes.invalidDate}</p>
-)}
-
+                  slotday.map((item, index) => (
+                    <li className="nav-item" key={index}>
+                      <a
+                        className="nav-link"
+                        id="Set-tab"
+                        data-toggle="pill"
+                        href="#Set"
+                        role="tab"
+                        aria-controls="Set"
+                        aria-selected="true"
+                        onClick={() => {
+                          setTimingSlot(item.slot_timing);
+                        }}
+                      >
+                        {moment(item.slot_date).format("dddd").split("", 3)}{" "}
+                        <br />
+                        <span>{moment(item.slot_date).format("D")}</span>
+                      </a>
+                    </li>
+                  ))
+                ) : (
+                  <p className="emptyMSG">{stringes.invalidDate}</p>
+                )}
               </ul>
             </div>
           </div>
@@ -318,7 +363,9 @@ function Servicedate() {
                     maxLength={10}
                     className="form-control"
                     placeholder="+91 00000000"
-                    onChange={(e) => setMobile(e.target.value.replace(/[^0-9+]/g, ""))}
+                    onChange={(e) =>
+                      setMobile(e.target.value.replace(/[^0-9+]/g, ""))
+                    }
                     value={mobile}
                   />
                   {/* {formValid.mobile && (

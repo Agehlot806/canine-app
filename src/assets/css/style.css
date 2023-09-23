@@ -3453,3 +3453,66 @@ li.nav-item.dropdown.new-mega-drop {
 .productDetail-content svg {
     color: #ffc934;
 }
+
+.react-datepicker__day-name {
+  display: inline-flex;
+  font-size: 20px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 50px;
+  width: 130px;
+  justify-content: center;
+  background-color: #f1c21b;
+  color: #000;
+}
+
+.sevice-select-date .react-datepicker__day {
+  margin: 15px;
+  display: inline-flex;
+  padding: 10px;
+  border-radius: 4px;
+  width: 120px;
+  justify-content: center;
+  border: 2px solid #000;
+}
+/* .sevice-select-date .react-datepicker__day:hover {
+  background-color: #f1c21b;
+  color: #000;
+} */
+.sevice-select-date .react-datepicker__day--in-range, .react-datepicker__day--in-selecting-range, .react-datepicker__day--selected {
+  background-color: #f1c21b;
+  color: #000;
+}
+
+.sevice-select-date .react-datepicker__day--disabled{
+  color: #ccc;
+  cursor: default;
+  border: 2px solid #ccc;
+}
+
+/* span.react-datepicker__navigation-icon.react-datepicker__navigation-icon--previous::before {
+  content: "<";
+}
+.react-datepicker__navigation {
+  text-indent: -999em;
+} */
+
+
+.react-datepicker__navigation--previous.react-datepicker__navigation--previous--disabled .react-datepicker__navigation-icon--previous::before {
+  content: "\f104"; /* Unicode for the angle-left icon in Font Awesome */
+  font-family: FontAwesome; /* Specify the Font Awesome font family */
+  font-size: 16px; /* Adjust the font size as needed */
+  color: #000; /* Set the icon color */
+  text-indent: -9999px;
+}
+.sold-out-btn.soldbtn-new a {
+  padding: 8px 60px !important;
+}
+.sold-out-btn.soldbtn-new button {
+    margin: 15px 0 0 !important;
+    font-size: 22px;
+    background: #000;
+    width: 360px !important;
+    padding: 3px;
+    color: #000 !important;
+}
