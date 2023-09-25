@@ -278,7 +278,7 @@ function PetShopHeader(props) {
                   New
                 </Link>
               </li> */}
-                <li className="nav-item dropdown mega-dropdown">
+                <li className="nav-item dropdown mega-dropdown-new">
                   <a
                      className="nav-link dropdown-toggle"
                      href="#"
@@ -291,7 +291,7 @@ function PetShopHeader(props) {
                     Dogs
                   </a>
                   <div
-                   className="dropdown-menu mega-menu catmenu"
+                   className="dropdown-menu"
                    aria-labelledby="megaDropdown"
                   >
                     <div className="row">
@@ -400,7 +400,7 @@ function PetShopHeader(props) {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown mega-dropdown">
+                <li className="nav-item dropdown mega-dropdown-new">
                   <a
                      className="nav-link dropdown-toggle"
                      href="#"
@@ -413,8 +413,8 @@ function PetShopHeader(props) {
                     Cats
                   </a>
                   <div
-                   className="dropdown-menu mega-menu catmenu"
-                   aria-labelledby="megaDropdown"
+                  className="dropdown-menu"
+                  aria-labelledby="megaDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">

@@ -3623,3 +3623,30 @@ li.nav-item.dropdown.new-mega-drop {
 .nav-link.disabled {
   background-color: red;
 }
+
+/* Custom styling for the mega dropdown */
+.mega-dropdown-new {
+  position: static !important;
+  
+}
+
+.mega-dropdown-new .dropdown-menu {
+  width: 100%;
+  left: 0;
+  box-shadow: none;
+  padding: 15px;
+}
+
+.mega-dropdown-new .dropdown-menu .container {
+  width: auto;
+}
+
+.mega-dropdown-new .dropdown-menu .row {
+  width: 100%;
+}
+
+.mega-dropdown-new .dropdown-menu .col-lg-3 {
+  padding: 15px;
+}
+
+/* Add your own styling here */

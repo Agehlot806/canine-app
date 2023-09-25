@@ -231,8 +231,7 @@ function Newheader(props) {
                   New
                 </Link>
               </li> */}
-             
-                <li className="nav-item dropdown mega-dropdown">
+                <li className="nav-item dropdown mega-dropdown-new">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -245,7 +244,7 @@ function Newheader(props) {
                     Dog
                   </a>
                   <div
-                    className="dropdown-menu mega-menu"
+                    className="dropdown-menu"
                     aria-labelledby="megaDropdown"
                   >
                     <div className="row">
@@ -370,7 +369,7 @@ function Newheader(props) {
                     </div>
                   </div>
                 </li>
-                <li className="nav-item dropdown mega-dropdown">
+                <li className="nav-item dropdown mega-dropdown-new">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -383,7 +382,7 @@ function Newheader(props) {
                     Cats
                   </a>
                   <div
-                     className="dropdown-menu mega-menu catmenu"
+                     className="dropdown-menu"
                      aria-labelledby="megaDropdown"
                   >
                     <div className="row">
