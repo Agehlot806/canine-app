@@ -218,7 +218,7 @@ function PetshopBlogdetails() {
     if (productDetails?.variations && productDetails?.variations?.length > 0) {
       const defaultVariant = productDetails?.variations[0];
       setSelectedVariant(defaultVariant?.type);
-      setSelectedVariantPrice(defaultVariant?.price);
+      setSelectedVariantPrice(defaultVariant?.wholeprice);
     }
   }, [productDetails]);
 
@@ -332,13 +332,11 @@ function PetshopBlogdetails() {
   if (selectedVariantPrice !== null) {
     uservariationprice = selectedVariantPrice;
   }
-  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+  // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
-  ).toFixed(2);
-
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -951,24 +949,13 @@ function PetshopBlogdetails() {
                       </div>
                       <div className="product-bag">
                         <Row>
-                          <Col lg={6} sm={6} xs={6}>
-                            {/* <p>₹{item[0]?.price}</p> */}
-                          </Col>
-                          <Col lg={6} sm={6} xs={6}>
-                            {/* <h5>Save {parseFloat(item[0]?.discount)}%</h5> */}
-                          </Col>
-                        </Row>
-                        <Row>
                           <Col
                             lg={6}
                             sm={6}
                             xs={6}
                             className="align-self-center"
                           >
-                            <h6>{`₹${
-                              item[0]?.price -
-                              (item[0]?.price * item[0]?.discount) / 100
-                            }`}</h6>
+                            <h6>₹{item[0]?.whole_price}</h6>
                           </Col>
                           <Col lg={6} sm={6} xs={6}>
                             <Link
@@ -1102,9 +1089,10 @@ function PetshopBlogdetails() {
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
-                                                item.price
+                                                item.wholeprice * (quantity > 1 ? quantity : 1)
                                               ); // Store the price in state
                                             }}
+                                            
                                           >
                                             {item.type}
                                           </div>
@@ -1150,7 +1138,7 @@ function PetshopBlogdetails() {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${wholesellervariationprice}`}</h5>
+                                <h5>{`₹${formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -1678,7 +1666,7 @@ function PetshopBlogdetails() {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice );
                                     }}
                                   >
                                     {item?.type}
