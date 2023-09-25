@@ -647,7 +647,7 @@ function Product(props) {
   const handeldataId = (id) => {
     productData(id);
   }
-   // ===============================================================
+  // ===============================================================
   // =================================================================
   // Buy Now ------------------------
   // ==================================================================
@@ -791,7 +791,7 @@ function Product(props) {
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
         // console.log("99999999999999999999", Response);
-        console.log("666666666666666",setStateall);
+        console.log("666666666666666", setStateall);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -922,7 +922,7 @@ function Product(props) {
   }
   // ...
 
-  // Use the formatAddress function to get the selected address as a single string
+  // Use the formatAddress function to get the selected address as a single string                                       
   const deliveryAddress = selectedAddress
     ? formatAddress(selectedAddress)
     : "No address selected";
@@ -966,7 +966,7 @@ function Product(props) {
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
       item_campaign_id: "",
-      order_amount:orderAmount,
+      order_amount: orderAmount,
       //    {
       //   (parseInt(Amount) * 0.05) + parseInt(Amount) - (
       //     (disscountvalue?.discount ?? 0)
@@ -1052,6 +1052,61 @@ function Product(props) {
     setSelectedAddress(null);
     setQuantity(1);
     setProductDetails(null);
+  };
+  const [email, setEmail] = useState("");
+  const [variation, setVariation] = useState("");
+  const [variationError, setVariationError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const isEmailFormatValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  const handleNotifymeSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+
+    // if (!variation) {
+    //   setVariationError('Please select a variation');
+    // } else {
+    //   setVariationError('');
+    // }
+
+    // Validate email
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   toast.error("Please enter a valid email address");
+    //   return;
+    // }
+
+    // Validate variation
+    // if (!variation) {
+    //   toast.error("Please select a variation");
+    //   return;
+    // }
+
+    // Prepare form data
+    const notifymeData = new FormData();
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    notifymeData.append("stock", productDetails.stock);
+    notifymeData.append("user_id", storedUserId);
+    notifymeData.append("item_id", productDetails.id);
+
+    console.log('productDetails.id: ', productDetails?.id);
+    console.log("notifymeData", notifymeData);
+
+    // Send a request
+    axios
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
   };
 
   return (
@@ -1473,7 +1528,7 @@ function Product(props) {
                               </Col>
                               <Col>
                                 <Link to={`/add-cart/${item.id}`}
-                                onClick={handleAddToCart}>
+                                  onClick={handleAddToCart}>
                                   <img src={bag} />
                                 </Link>
                               </Col>
@@ -1484,12 +1539,12 @@ function Product(props) {
                           <div className="button-container">
                             <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
                             <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Buy Now
+                            </button>
                           </div>
                         )}
                       </div>
@@ -1771,6 +1826,132 @@ function Product(props) {
                       </Button>
                     </div>
                   )}
+                  <div
+                    className="modal fade"
+                    id="soldoutModel"
+                    tabIndex={-1}
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content">
+                        <div className="modal-body">
+                          <h4>{productDetails.name}</h4>
+                          <p>{productDetails.description}</p>
+                          {/* <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
+                    <option value="" disabled selected>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form> */}
+                          <Form onSubmit={handleNotifymeSubmit}>
+                            {/* <Form.Group controlId="formVariations">
+        <Form.Label>Variations</Form.Label>
+        <Form.Control
+          as="select"
+          value={variation}
+          onChange={(e) => setVariation(e.target.value)}
+          required
+          isInvalid={!!variationError}
+        >
+          <option value="" disabled>
+            Choose an option...
+          </option>
+          {productDetails?.variations &&
+            productDetails?.variations.map((item, index) => (
+              <option key={index}>{item.type}</option>
+            ))}
+        </Form.Control>
+        {variationError && (
+          <div className="error-message">{variationError}</div>
+        )}
+      </Form.Group> */}
+                            <Form.Group controlId="formVariations" className="mb-3">
+                              <Form.Label>Variations</Form.Label>
+                              <Form.Control
+                                as="select"
+                                value={variation}
+                                onChange={(e) => {
+                                  setVariation(e.target.value);
+                                  setVariationError(''); // Clear previous error when the value changes
+                                }}
+                                required
+                                isInvalid={!!variationError}
+                              >
+                                <option value="" disabled>
+                                  Choose an option...
+                                </option>
+                                {productDetails?.variations &&
+                                  productDetails?.variations.map((item, index) => (
+                                    <option key={index}>{item.type}</option>
+                                  ))}
+                              </Form.Control>
+                              {variationError && (
+                                <div className="error-message">{variationError}</div>
+                              )}
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                              <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder="Email ID"
+                                value={email}
+                                onChange={(e) => {
+                                  setEmail(e.target.value);
+                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                }}
+                                isInvalid={!isEmailValid}
+                              />
+                              {!isEmailValid && (
+                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                  {/[A-Z]/.test(email) && !email.includes("@")
+                                    ? "Email should not contain capital letters and must include '@'."
+                                    : "Please enter a valid email address."}
+                                </Form.Control.Feedback>
+                              )}
+                            </Form.Group>
+
+                            <Button variant="primary mt-3" type="submit">
+                              Notify Me When Available
+                            </Button>
+                          </Form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </Container>
               </section>
             </div>
@@ -1778,8 +1959,8 @@ function Product(props) {
         </div>
       </div>
 
-            {/* Modal */}
-            <div
+      {/* Modal */}
+      <div
         className="modal fade editAddress"
         id="changeadress-model"
         tabIndex={-1}
@@ -2103,8 +2284,8 @@ function Product(props) {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2209,8 +2390,8 @@ function Product(props) {
                                 <Col lg={3} key={index}>
                                   <div
                                     className={`tab-variations ${selectedVariant === item?.type
-                                        ? "active"
-                                        : ""
+                                      ? "active"
+                                      : ""
                                       }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
@@ -2821,7 +3002,7 @@ function Product(props) {
           </div>
         </div>
       </div>
-      
+
     </>
   );
 }
