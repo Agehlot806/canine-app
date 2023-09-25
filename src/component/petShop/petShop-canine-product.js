@@ -546,7 +546,7 @@ function PetShopcanineproduct(props) {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantPrice(defaultVariant.wholeprice);
     }
   }, [productDetails]);
 
@@ -619,11 +619,9 @@ function PetShopcanineproduct(props) {
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
-  ).toFixed(2);
-
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -1698,7 +1696,7 @@ function PetShopcanineproduct(props) {
                                             }`}
                                           onClick={() => {
                                             setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                            setSelectedVariantPrice(item.wholeprice); // Store the price in state
                                           }}
                                         >
                                           {item.type}
@@ -2269,7 +2267,7 @@ function PetShopcanineproduct(props) {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}

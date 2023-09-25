@@ -618,7 +618,7 @@ function Petshopproduct(props) {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantPrice(defaultVariant.wholeprice);
     }
   }, [productDetails]);
 
@@ -696,13 +696,11 @@ function Petshopproduct(props) {
   if (selectedVariantPrice !== null) {
     uservariationprice = selectedVariantPrice;
   }
-  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+  // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
-  ).toFixed(2);
-
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -1801,7 +1799,7 @@ function Petshopproduct(props) {
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
-                                                item.price
+                                                item.wholeprice
                                               ); // Store the price in state
                                             }}
                                           >
@@ -1849,7 +1847,7 @@ function Petshopproduct(props) {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${wholesellervariationprice}`}</h5>
+                                <h5>{`₹${formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2378,7 +2376,7 @@ function Petshopproduct(props) {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}
@@ -2432,20 +2430,20 @@ function Petshopproduct(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              <Col lg={3} sm={3} xs={3}>
+                              {/* <Col lg={3} sm={3} xs={3}>
                                 <p>{`₹${uservariationprice}`}</p>
-                              </Col>
+                              </Col> */}
                               <Col lg={4} sm={4} xs={3}>
                                 <h5>{`₹${formattedAmount}`}</h5>
                               </Col>
-                              <Col lg={5} sm={5} xs={3}>
+                              {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
                                   Your save
                                   {formattedSavedAmount >= 0
                                     ? "₹" + formattedSavedAmount
                                     : "No savings"}
                                 </h6>
-                              </Col>
+                              </Col> */}
                             </Row>
                           </div>
                         </div>

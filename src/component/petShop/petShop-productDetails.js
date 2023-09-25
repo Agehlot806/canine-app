@@ -92,7 +92,7 @@ function PetshopproductDetails() {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantPrice(defaultVariant.wholeprice);
     }
   }, [productDetails]);
 
@@ -334,7 +334,7 @@ function PetshopproductDetails() {
   if (selectedVariantPrice !== null) {
     wholesellervariationprice = selectedVariantPrice;
   }
-  const Amount = (wholesellervariationprice * quantity).toFixed(2);
+  const Amount = (wholesellervariationprice  * (quantity > 1 ? quantity : 1)).toFixed(2);
   const formattedAmount = Number(Amount).toString();
 
   const addToWishlist = async (item_id) => {
@@ -1004,7 +1004,7 @@ function PetshopproductDetails() {
                         )} */}
                       {/* </Col> */}
                       <Col lg={4}>
-                        <h5>{`₹${wholesellervariationprice}`}</h5>
+                        <h5>{`₹${formattedAmount}`}</h5>
                       </Col>
                       {/* <Col lg={5}>
                         <h6>
@@ -1399,7 +1399,7 @@ function PetshopproductDetails() {
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
-                                                item.price
+                                                item?.wholeprice
                                               ); // Store the price in state
                                             }}
                                           >
@@ -1447,7 +1447,7 @@ function PetshopproductDetails() {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${wholesellervariationprice}`}</h5>
+                                <h5>{`₹${formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -1973,7 +1973,7 @@ function PetshopproductDetails() {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}
