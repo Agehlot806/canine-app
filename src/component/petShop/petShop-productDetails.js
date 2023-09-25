@@ -1305,59 +1305,7 @@ function PetshopproductDetails() {
       </section>
       <Petshopfooter />
       {/* Modal */}
-      <div
-        className="modal fade"
-        id="soldoutModel"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h4>{productDetails.name}</h4>
-              <p>{productDetails.description}</p>
-              <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option>Choose....</option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Product details Modal */}
       <div
@@ -2177,10 +2125,26 @@ function PetshopproductDetails() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 10 ? (
+                    <button data-toggle="modal" data-target="#cod">
+                      Checkout
+                    </button>
+                  ) : (
+                    <div className="sold-out-btn soldbtn-new mt-3">
+                      <Link className="mb-4">Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                      <br />
+                    </div>
+                  )}
+                  <button
+                    className="mt-3"
+                    data-dismiss="modal"
+                    onClick={handleResetClick}
+                  >
                     Close
                   </button>
                 </div>
@@ -2190,6 +2154,61 @@ function PetshopproductDetails() {
         </div>
       </div>
 
+
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
+                    <option>Choose....</option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div
         className="modal fade editAddress"
         id="update-model"
