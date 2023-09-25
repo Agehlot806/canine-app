@@ -126,7 +126,6 @@ function PetshopBlogdetails() {
         return ele.item_id === el.id;
       });
     });
-    
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
@@ -216,10 +215,10 @@ function PetshopBlogdetails() {
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
   useEffect(() => {
-    if (productDetails?.variations && productDetails.variations.length > 0) {
-      const defaultVariant = productDetails.variations[0];
-      setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+    if (productDetails?.variations && productDetails?.variations?.length > 0) {
+      const defaultVariant = productDetails?.variations[0];
+      setSelectedVariant(defaultVariant?.type);
+      setSelectedVariantPrice(defaultVariant?.price);
     }
   }, [productDetails]);
 
@@ -843,7 +842,7 @@ function PetshopBlogdetails() {
           <Row className="justify-content-center">
             <Col lg={10}>
               <div className="blogDetails">
-                {blogdata && blogdata.length > 0 ? (
+                {blogdata && blogdata?.length > 0 ? (
                   blogdata.map((item, index) => (
                     <Col lg={12} className="mb-4" key={item.id}>
                       <div className="blog-card-are">
@@ -953,10 +952,10 @@ function PetshopBlogdetails() {
                       <div className="product-bag">
                         <Row>
                           <Col lg={6} sm={6} xs={6}>
-                            <p>₹{item[0]?.price}</p>
+                            {/* <p>₹{item[0]?.price}</p> */}
                           </Col>
                           <Col lg={6} sm={6} xs={6}>
-                            <h5>Save {parseFloat(item[0]?.discount)}%</h5>
+                            {/* <h5>Save {parseFloat(item[0]?.discount)}%</h5> */}
                           </Col>
                         </Row>
                         <Row>
@@ -1039,7 +1038,7 @@ function PetshopBlogdetails() {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                            productDetails?.images.length > 0 ? (
+                            productDetails?.images?.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1090,8 +1089,8 @@ function PetshopBlogdetails() {
                                 <h6>Variations</h6>
                                 <Row>
                                   {productDetails?.variations &&
-                                    productDetails?.variations.length > 0 &&
-                                    productDetails.variations.map(
+                                    productDetails?.variations?.length > 0 &&
+                                    productDetails?.variations.map(
                                       (item, index) => (
                                         <Col lg={4} sm={4} xs={3} key={index}>
                                           <div
@@ -1201,12 +1200,13 @@ function PetshopBlogdetails() {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {verifiredIdaccess === 1 ? (
                         <Button>
                           <Link
-                            to={`/petshop-add-cart/${productDetails.id}`}
+                            to={`/petshop-add-cart/${productDetails?.id}`}
                             onClick={handleAddToCart}
                           >
                             <i className="fa fa-shopping-bag" /> Add to cart
@@ -1308,7 +1308,7 @@ function PetshopBlogdetails() {
                     setmobile(e.target.value);
                     validateForm();
                     const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric character
-                    if (numericValue.length <= 10) {
+                    if (numericValue?.length <= 10) {
                       setmobile(numericValue);
                     }
                   }}
@@ -1507,7 +1507,7 @@ function PetshopBlogdetails() {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {addresslist && addresslist.length > 1 ? (
+                        {addresslist && addresslist?.length > 1 ? (
                           addresslist.map(
                             (item, index) =>
                               index === 0 && (
@@ -1578,7 +1578,7 @@ function PetshopBlogdetails() {
                               {addressContentVisible && (
                                 <Col lg={12}>
                                   <div className="address-Content">
-                                    {addresslist && addresslist.length > 0 ? (
+                                    {addresslist && addresslist?.length > 0 ? (
                                       addresslist.map((item, index) => (
                                         <div
                                           className="chk-address"
@@ -1667,7 +1667,7 @@ function PetshopBlogdetails() {
                           <h6>Variations</h6>
                           <Row>
                             {productDetails?.variations &&
-                              productDetails?.variations.length > 0 &&
+                              productDetails?.variations?.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
@@ -1830,8 +1830,8 @@ function PetshopBlogdetails() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  {productDetails.stock &&
-                  productDetails.stock.length !== 10 ? (
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 10 ? (
                     <button data-toggle="modal" data-target="#cod">
                       Checkout
                     </button>
@@ -1948,7 +1948,7 @@ function PetshopBlogdetails() {
                       Choose an option...
                     </option>
                     {productDetails?.variations &&
-                      productDetails?.variations.length > 0 &&
+                      productDetails?.variations?.length > 0 &&
                       productDetails?.variationsmap((item, index) => (
                         <option key={index}>{item.type}</option>
                       ))}

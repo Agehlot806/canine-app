@@ -49,10 +49,10 @@ function Productdetail() {
     }
   };
   useEffect(() => {
-    if (productDetails?.variations && productDetails.variations.length > 0) {
-      const defaultVariant = productDetails.variations[0];
-      setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+    if (productDetails?.variations && productDetails?.variations.length > 0) {
+      const defaultVariant = productDetails?.variations[0];
+      setSelectedVariant(defaultVariant?.type);
+      setSelectedVariantPrice(defaultVariant?.price);
     }
   }, [productDetails]);
 
@@ -145,7 +145,6 @@ function Productdetail() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -173,7 +172,7 @@ function Productdetail() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -392,7 +391,6 @@ function Productdetail() {
     }
   };
 
-
   const [getreviewlist, setgetreviewlist] = useState([]);
   const AllGetreviewList = async () => {
     try {
@@ -404,7 +402,6 @@ function Productdetail() {
       console.error(error);
     }
   };
-
 
   // ===================================================
   // ======================================================
@@ -1079,22 +1076,25 @@ function Productdetail() {
                             <Row>
                               {productDetails?.variations &&
                                 productDetails?.variations.length > 0 &&
-                                productDetails.variations.map((item, index) => (
-                                  <Col lg={3} key={index}>
-                                    <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
+                                productDetails?.variations.map(
+                                  (item, index) => (
+                                    <Col lg={3} key={index}>
+                                      <div
+                                        className={`tab-variations ${
+                                          selectedVariant === item.type
+                                            ? "active"
+                                            : ""
                                         }`}
-                                      onClick={() => {
-                                        setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
-                                      }}
-                                    >
-                                      {item.type}
-                                    </div>
-                                  </Col>
-                                ))}
+                                        onClick={() => {
+                                          setSelectedVariant(item.type);
+                                          setSelectedVariantPrice(item.price); // Store the price in state
+                                        }}
+                                      >
+                                        {item.type}
+                                      </div>
+                                    </Col>
+                                  )
+                                )}
                             </Row>
                           </div>
                         </div>
@@ -1225,10 +1225,16 @@ function Productdetail() {
                           <div className="col-sm-5 col">
                             {order.user_id && order.user_id.length > 0 && (
                               <div className="Product-img">
-                                <img src={"https://canine.hirectjob.in/storage/app/public/profile/" +
-                                  order.user_id[0].image} alt={order.user_id[0].f_name} />
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                    order.user_id[0].image
+                                  }
+                                  alt={order.user_id[0].f_name}
+                                />
                                 <span>
-                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                  {order.user_id[0].f_name}{" "}
+                                  {order.user_id[0].l_name}
                                 </span>
                               </div>
                             )}
@@ -1272,7 +1278,8 @@ function Productdetail() {
                                   alt={order.user_id[0].f_name}
                                 />
                                 <span>
-                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
+                                  {order.user_id[0].f_name}{" "}
+                                  {order.user_id[0].l_name}
                                 </span>
                               </div>
                             )}
@@ -1498,7 +1505,7 @@ function Productdetail() {
                     value={variation}
                     onChange={(e) => {
                       setVariation(e.target.value);
-                      setVariationError(''); // Clear previous error when the value changes
+                      setVariationError(""); // Clear previous error when the value changes
                     }}
                     required
                     isInvalid={!!variationError}
@@ -1506,10 +1513,11 @@ function Productdetail() {
                     <option value="" disabled>
                       Choose an option...
                     </option>
-                    {productDetails?.variations &&
+
+                    {/* {productDetails?.variations &&
                       productDetails?.variations.map((item, index) => (
                         <option key={index}>{item.type}</option>
-                      ))}
+                      ))} */}
                   </Form.Control>
                   {variationError && (
                     <div className="error-message">{variationError}</div>
@@ -1528,7 +1536,10 @@ function Productdetail() {
                     isInvalid={!isEmailValid}
                   />
                   {!isEmailValid && (
-                    <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="custom-form-control-feedback"
+                    >
                       {/[A-Z]/.test(email) && !email.includes("@")
                         ? "Email should not contain capital letters and must include '@'."
                         : "Please enter a valid email address."}
@@ -1686,14 +1697,15 @@ function Productdetail() {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map(
+                                        productDetails?.variations.map(
                                           (item, index) => (
                                             <Col lg={4} key={index}>
                                               <div
-                                                className={`tab-variations ${selectedVariant === item.type
-                                                  ? "active"
-                                                  : ""
-                                                  }`}
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
+                                                }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item.type);
                                                   setSelectedVariantPrice(
