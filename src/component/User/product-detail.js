@@ -1514,10 +1514,10 @@ function Productdetail() {
                       Choose an option...
                     </option>
 
-                    {/* {productDetails?.variations &&
+                     {productDetails?.variations &&
                       productDetails?.variations.map((item, index) => (
                         <option key={index}>{item.type}</option>
-                      ))} */}
+                      ))} 
                   </Form.Control>
                   {variationError && (
                     <div className="error-message">{variationError}</div>
