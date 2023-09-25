@@ -69,6 +69,7 @@ function PetshopHome(props) {
     fetchBrands();
     homeAllBanner();
     allAddressList();
+    allReview();
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
@@ -894,7 +895,7 @@ function PetshopHome(props) {
   const allReview = async () => {
     try {
       const response = await fetch(
-        `${BASE_URL}/customer/order/list?id=${storedWholesellerId}`
+        `${BASE_URL}/items/get_reviewitem/1`
       );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
@@ -933,6 +934,49 @@ function PetshopHome(props) {
     setQuantity(1);
     setProductDetails(null);
   };
+
+
+   // ****************notifyme
+   const [variation, setVariation] = useState("");
+   const [variationError, setVariationError] = useState("");
+   const [isEmailValid, setIsEmailValid] = useState(true);
+   const isEmailFormatValid = (email) => {
+     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     return emailRegex.test(email);
+   };
+ 
+   const handleEmailChange = (e) => {
+     const emailValue = e.target.value;
+     setEmail(emailValue);
+     setIsEmailValid(isEmailFormatValid(emailValue));
+   };
+   const handleNotifymeSubmit = async (e) => {
+     e.preventDefault(); // Prevent default form submission behavior
+ 
+     // Prepare form data
+     const notifymeData = new FormData();
+     notifymeData.append("email", email);
+     notifymeData.append("variation", variation);
+     notifymeData.append("stock", productDetails.stock);
+     notifymeData.append("user_id", storedWholesellerId);
+     notifymeData.append("item_id", productDetails.id);
+ 
+     console.log("productDetails.id: ", productDetails?.id);
+     console.log("notifymeData", notifymeData);
+ 
+     // Send a request
+     axios
+       .post(
+         `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+         notifymeData
+       )
+       .then((response) => {
+         toast.success("Your data was successfully added");
+       })
+       .catch((error) => {
+         toast.error("An error occurred. Please try again.");
+       });
+   };
 
   return (
     <>
@@ -1457,87 +1501,40 @@ function PetshopHome(props) {
             </Col>
           </Row>
           <Row>
-            <Col lg={4} sm={6} xs={6}>
-              <div className="Brand-cus">
-                <img src={cus1} />
-                <div className="brand-bg">
-                  <h5>Anna & Tobby</h5>
-                  <p>Amazing Products & Delivery on time.</p>
-                  <div>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>4.2/5</Link>
+            {reviewlist.map((order) => (
+              <Col lg={4} sm={6} xs={6} key={order.id}>
+                <div className="Brand-cus">
+                  <>
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/public/profile/" +
+                      order.user_id[0].image
+                    }
+                    alt={order.user_id[0].f_name}
+                  />
+                  </>
+                  <div className="brand-bg">
+                    {order.user_id && order.user_id.length > 0 && (
+                      <h5>
+                        {order.user_id[0].f_name}{" "}
+                        {order.user_id[0].l_name}
+                      </h5>
+                    )}
+                      <p>{order.comment}</p>
+                    <div className="icon-style">
+                      {Array.from({
+                        length: order.rating,
+                      }).map((_, index) => (
+                        <Link>
+                          <img src={vector} key={index} />
+                        </Link>
+                      ))}
+                    </div>
+                    {/* <Link>4.2/5</Link> */}
                   </div>
                 </div>
-              </div>
-            </Col>
-            <Col lg={4} sm={6} xs={6}>
-              <div className="Brand-cus">
-                <img src={cus2} />
-                <div className="brand-bg">
-                  <h5>Christine & Tom</h5>
-                  <p>Love the overall Shpping experience!</p>
-                  <div>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>4.2/5</Link>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col lg={4} sm={6} xs={6}>
-              <div className="Brand-cus">
-                <img src={cus3} />
-                <div className="brand-bg">
-                  <h5>Sindy & Kitch</h5>
-                  <p>Kitch is love food from the pup-hub</p>
-                  <div>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>
-                      <img src={vector} />
-                    </Link>
-                    <Link>4.2/5</Link>
-                  </div>
-                </div>
-              </div>
-            </Col>
+              </Col>
+            ))}
           </Row>
           <div className="all-btn text-center mt-5 mb-4">
             <Button className="blue-btn">
@@ -1815,7 +1812,7 @@ function PetshopHome(props) {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel">
+                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
                         Notify Me When Available
                       </Button>
                     </div>
@@ -2167,10 +2164,26 @@ function PetshopHome(props) {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 10 ? (
+                    <button data-toggle="modal" data-target="#cod">
+                      Checkout
+                    </button>
+                  ) : (
+                    <div className="sold-out-btn soldbtn-new mt-3">
+                      <Link className="mb-4">Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                      <br />
+                    </div>
+                  )}
+                  <button
+                    className="mt-3"
+                    data-dismiss="modal"
+                    onClick={handleResetClick}
+                  >
                     Close
                   </button>
                 </div>
@@ -2919,10 +2932,26 @@ function PetshopHome(props) {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 10 ? (
+                    <button data-toggle="modal" data-target="#cod">
+                      Checkout
+                    </button>
+                  ) : (
+                    <div className="sold-out-btn soldbtn-new mt-3">
+                      <Link className="mb-4">Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                      <br />
+                    </div>
+                  )}
+                  <button
+                    className="mt-3"
+                    data-dismiss="modal"
+                    onClick={handleResetClick}
+                  >
                     Close
                   </button>
                 </div>
@@ -3125,6 +3154,137 @@ function PetshopHome(props) {
               >
                 Update
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              {/* <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
+                    <option value="" disabled selected>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form> */}
+              <Form onSubmit={handleNotifymeSubmit}>
+                {/* <Form.Group controlId="formVariations">
+        <Form.Label>Variations</Form.Label>
+        <Form.Control
+          as="select"
+          value={variation}
+          onChange={(e) => setVariation(e.target.value)}
+          required
+          isInvalid={!!variationError}
+        >
+          <option value="" disabled>
+            Choose an option...
+          </option>
+          {productDetails?.variations &&
+            productDetails?.variations.map((item, index) => (
+              <option key={index}>{item.type}</option>
+            ))}
+        </Form.Control>
+        {variationError && (
+          <div className="error-message">{variationError}</div>
+        )}
+      </Form.Group> */}
+                <Form.Group controlId="formVariations" className="mb-3">
+                  <Form.Label>Variations</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={variation}
+                    onChange={(e) => {
+                      setVariation(e.target.value);
+                      setVariationError(""); // Clear previous error when the value changes
+                    }}
+                    required
+                    isInvalid={!!variationError}
+                  >
+                    <option value="" disabled>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations?.length > 0 &&
+                      productDetails?.variations.map((item, index) => (
+                        <option key={index}>{item.type}</option>
+                      ))}
+                  </Form.Control>
+                  {variationError && (
+                    <div className="error-message">{variationError}</div>
+                  )}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Email ID"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setIsEmailValid(isEmailFormatValid(e.target.value));
+                    }}
+                    isInvalid={!isEmailValid}
+                  />
+                  {!isEmailValid && (
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="custom-form-control-feedback"
+                    >
+                      {/[A-Z]/.test(email) && !email.includes("@")
+                        ? "Email should not contain capital letters and must include '@'."
+                        : "Please enter a valid email address."}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+
+                <Button variant="primary mt-3" type="submit">
+                  Notify Me When Available
+                </Button>
+              </Form>
             </div>
           </div>
         </div>

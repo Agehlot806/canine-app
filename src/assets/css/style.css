@@ -492,7 +492,7 @@ a {
 /* ==============Happy Customer ====================== */
 .brand-bg {
   background: #008efd;
-  text-align: center;
+  text-align: left;
   color: #fff;
   padding: 15px;
   height: 100%;
@@ -503,6 +503,7 @@ a {
   border-radius: 20px;
   text-align: center;
   height: 100%;
+  display: inline-flex;
 }
 
 .Brand-cus img {

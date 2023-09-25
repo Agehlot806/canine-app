@@ -465,7 +465,7 @@ function Home(props) {
     if (productDetails?.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails?.image
+        productDetails?.image
       );
     }
   }, [productDetails]);
@@ -473,7 +473,7 @@ function Home(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails?.images[index]
+      productDetails?.images[index]
     );
   };
 
@@ -824,11 +824,12 @@ function Home(props) {
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
   };
+
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
       const response = await fetch(
-        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+        `${BASE_URL}/items/get_reviewitem/1`
       );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
@@ -868,103 +869,103 @@ function Home(props) {
     setProductDetails(null);
   };
 
- // loadRazorpayScript
- const loadRazorpayScript = () => {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.body.appendChild(script);
-  });
-};
-
-const handlePayment = async () => {
-  try {
-    
-    await loadRazorpayScript();
-
-    const options = {
-      key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
-      amount: 10000, // Amount in paise (100 INR)
-      currency: "INR",
-      name: "HEllo world",
-      description: "Test Payment",
-      image: "https://your_logo_url.png",
-      // order_id: response.id, // Order ID obtained from Razorpay
-      handler: (response) => {
-        setPaymentId(response.razorpay_payment_id);
-        // Handle the success callback
-        window.location.href = "/shipping";
-        console.log("Payment Successful:", response);
-      },
-
-      prefill: {
-        email: "test@example.com",
-        contact: "1234567890",
-      },
-      notes: {
-        address: "1234, Demo Address",
-      },
-      theme: {
-        color: "#F37254",
-      },
-    };
-
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
-  } catch (error) {
-    console.error("Razorpay Load Error:", error);
-  }
-};
-const handleNotifymeSubmit = async (e) => {
-  e.preventDefault(); // Prevent default form submission behavior
-
-
-  // if (!variation) {
-  //   setVariationError('Please select a variation');
-  // } else {
-  //   setVariationError('');
-  // }
-
-  // Validate email
-  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // if (!emailRegex.test(email)) {
-  //   toast.error("Please enter a valid email address");
-  //   return;
-  // }
-
-  // Validate variation
-  // if (!variation) {
-  //   toast.error("Please select a variation");
-  //   return;
-  // }
-
-  // Prepare form data
-  const notifymeData = new FormData();
-  notifymeData.append("email", email);
-  notifymeData.append("variation", variation);
-  notifymeData.append("stock", productDetails.stock);
-  notifymeData.append("user_id", storedUserId);
-  notifymeData.append("item_id", productDetails.id);
-
-  console.log('productDetails.id: ', productDetails?.id);
-  console.log("notifymeData", notifymeData);
-
-  // Send a request
-  axios
-    .post(
-      `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
-      notifymeData
-    )
-    .then((response) => {
-      toast.success("Your data was successfully added");
-    })
-    .catch((error) => {
-      toast.error("An error occurred. Please try again.");
+  // loadRazorpayScript
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
     });
-};
+  };
+
+  const handlePayment = async () => {
+    try {
+
+      await loadRazorpayScript();
+
+      const options = {
+        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        amount: 10000, // Amount in paise (100 INR)
+        currency: "INR",
+        name: "HEllo world",
+        description: "Test Payment",
+        image: "https://your_logo_url.png",
+        // order_id: response.id, // Order ID obtained from Razorpay
+        handler: (response) => {
+          setPaymentId(response.razorpay_payment_id);
+          // Handle the success callback
+          window.location.href = "/shipping";
+          console.log("Payment Successful:", response);
+        },
+
+        prefill: {
+          email: "test@example.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "1234, Demo Address",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Razorpay Load Error:", error);
+    }
+  };
+  const handleNotifymeSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+
+    // if (!variation) {
+    //   setVariationError('Please select a variation');
+    // } else {
+    //   setVariationError('');
+    // }
+
+    // Validate email
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   toast.error("Please enter a valid email address");
+    //   return;
+    // }
+
+    // Validate variation
+    // if (!variation) {
+    //   toast.error("Please select a variation");
+    //   return;
+    // }
+
+    // Prepare form data
+    const notifymeData = new FormData();
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    notifymeData.append("stock", productDetails.stock);
+    notifymeData.append("user_id", storedUserId);
+    notifymeData.append("item_id", productDetails.id);
+
+    console.log('productDetails.id: ', productDetails?.id);
+    console.log("notifymeData", notifymeData);
+
+    // Send a request
+    axios
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
+  };
 
   return (
     <>
@@ -994,100 +995,100 @@ const handleNotifymeSubmit = async (e) => {
             <div>
               {homebanner
                 ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_1" && (
-                        <div className="home-img">
-                          <div className="">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More{" "}
-                                  <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
+                  (item, index) =>
+                    item.type === "home_banner_1" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
                         </div>
-                      )
-                  )
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More{" "}
+                                <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
                 : null}
             </div>
             <div>
               {homebanner
                 ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_2" && (
-                        <div className="home-img">
-                          <div className="">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-
-                                <div className="app-home">
-                                  <Link>
-                                    <img src={app1} />
-                                  </Link>
-
-                                  <Link>
-                                    <img src={app2} />
-                                  </Link>
-                                </div>
-                              </div>
-                            </Col>
-                          </Row>
+                  (item, index) =>
+                    item.type === "home_banner_2" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
                         </div>
-                      )
-                  )
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+
+                              <div className="app-home">
+                                <Link>
+                                  <img src={app1} />
+                                </Link>
+
+                                <Link>
+                                  <img src={app2} />
+                                </Link>
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
                 : null}
             </div>
             <div>
               {homebanner
                 ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_3" && (
-                        <div className="home-img">
-                          <div className="">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More{" "}
-                                  <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
+                  (item, index) =>
+                    item.type === "home_banner_3" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
                         </div>
-                      )
-                  )
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More{" "}
+                                <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
                 : null}
             </div>
           </Carousel>
@@ -1196,11 +1197,10 @@ const handleNotifymeSubmit = async (e) => {
                           <h6>{item.name}</h6>
                           {/* <p>{item.description}</p> */}
                           <p
-                            className={`truncate-text ${
-                              !expandedDescription[item.id]
+                            className={`truncate-text ${!expandedDescription[item.id]
                                 ? "read-more-link"
                                 : ""
-                            }`}
+                              }`}
                           >
                             {item.description}
                             {item.description.length > 100 &&
@@ -1237,10 +1237,9 @@ const handleNotifymeSubmit = async (e) => {
                             >
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${
-                                  item.price -
+                                {`₹${item.price -
                                   (item.price * item?.discount) / 100
-                                }`}
+                                  }`}
                               </h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
@@ -1305,11 +1304,116 @@ const handleNotifymeSubmit = async (e) => {
           <Row className="mt-4">
             {brands
               ? brands.map(
+                (brand) =>
+                  brand.canine == "1" && (
+                    <Col lg={3} sm={6} xs={6} className="mb-5">
+                      <div key={brand.id} className="Brand-card brand-1">
+                        <Link to={`/our-our-brand/${brand.id}`}>
+                          <div className="brandLOGO">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                brand.logo
+                              }
+                            />
+                          </div>
+                          <div className="brand-main">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                brand.image
+                              }
+                            />
+                          </div>
+                          <div className="brand-text">
+                            <h5>{brand.title}</h5>
+                          </div>
+                        </Link>
+                      </div>
+                    </Col>
+                  )
+              )
+              : null}
+          </Row>
+        </Container>
+      </section>
+
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <Col lg={6} className="mb-4">
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/" +
+                          item.image
+                        }
+                      />
+                    </Col>
+                  )
+              )
+              : null}
+            <Col lg={6} className="align-self-center">
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                    (item, index) =>
+                      item.type === "store_wise" && (
+                        <Col sm={12} className="mb-4">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                      )
+                  )
+                  : null}
+                {homebanner
+                  ? homebanner.map(
+                    (item, index) =>
+                      item.type === "item_wise" && (
+                        <Col sm={12} className="mb-4">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                      )
+                  )
+                  : null}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="section-padding">
+        <Container>
+          <Row>
+            <Col lg={6} sm={6} xs={6}>
+              <h1 className="main-head">Shop By Brands</h1>
+            </Col>
+            <Col lg={6} sm={6} xs={6}>
+              <div className="foodMore">
+                <Link to="/shop-by-brand">See all</Link>
+              </div>
+            </Col>
+          </Row>
+          <div className="needplace">
+            <Row>
+              {brands
+                ? brands.map(
                   (brand) =>
-                    brand.canine == "1" && (
+                    brand.canine == "0" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
                         <div key={brand.id} className="Brand-card brand-1">
-                          <Link to={`/our-our-brand/${brand.id}`}>
+                          <Link to={`/shop-by-brand-list/${brand.id}`}>
                             <div className="brandLOGO">
                               <img
                                 src={
@@ -1334,111 +1438,6 @@ const handleNotifymeSubmit = async (e) => {
                       </Col>
                     )
                 )
-              : null}
-          </Row>
-        </Container>
-      </section>
-
-      <section className="section-padding thirdbnner-area">
-        <Container>
-          <Row>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <Col lg={6} className="mb-4">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
-                      </Col>
-                    )
-                )
-              : null}
-            <Col lg={6} className="align-self-center">
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "store_wise" && (
-                          <Col sm={12} className="mb-4">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </Col>
-                        )
-                    )
-                  : null}
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "item_wise" && (
-                          <Col sm={12} className="mb-4">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </Col>
-                        )
-                    )
-                  : null}
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Shop By Brands</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {brands
-                ? brands.map(
-                    (brand) =>
-                      brand.canine == "0" && (
-                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div key={brand.id} className="Brand-card brand-1">
-                            <Link to={`/shop-by-brand-list/${brand.id}`}>
-                              <div className="brandLOGO">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                    brand.logo
-                                  }
-                                />
-                              </div>
-                              <div className="brand-main">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                    brand.image
-                                  }
-                                />
-                              </div>
-                              <div className="brand-text">
-                                <h5>{brand.title}</h5>
-                              </div>
-                            </Link>
-                          </div>
-                        </Col>
-                      )
-                  )
                 : null}
             </Row>
           </div>
@@ -1498,30 +1497,30 @@ const handleNotifymeSubmit = async (e) => {
           <div className="banner-video">
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "video" && (
-                      <Row>
-                        <Col lg={5} className="p-0">
-                          <div className="video-content">
-                            <h1 className="main-head">{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>Shop Now</Button>
-                          </div>
-                        </Col>
-                        <Col lg={7} className="p-0">
-                          <video loop autoPlay muted>
-                            <source
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                              type="video/mp4"
-                            />
-                          </video>
-                        </Col>
-                      </Row>
-                    )
-                )
+                (item, index) =>
+                  item.type === "video" && (
+                    <Row>
+                      <Col lg={5} className="p-0">
+                        <div className="video-content">
+                          <h1 className="main-head">{item.title}</h1>
+                          <p>{item.description}</p>
+                          <Button>Shop Now</Button>
+                        </div>
+                      </Col>
+                      <Col lg={7} className="p-0">
+                        <video loop autoPlay muted>
+                          <source
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                            type="video/mp4"
+                          />
+                        </video>
+                      </Col>
+                    </Row>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -1574,22 +1573,26 @@ const handleNotifymeSubmit = async (e) => {
             {reviewlist.map((order) => (
               <Col lg={4} sm={6} xs={6} key={order.id}>
                 <div className="Brand-cus">
-                  {/* {order.callback[0].user_profile && (
-                    <img src={order.callback[0].user_profile[0].image} />
-                  )} */}
+                  <>
+                  <img
+                    src={
+                      "https://canine.hirectjob.in/storage/app/public/profile/" +
+                      order.user_id[0].image
+                    }
+                    alt={order.user_id[0].f_name}
+                  />
+                  </>
                   <div className="brand-bg">
-                    {order.callback[0].user_profile && (
+                    {order.user_id && order.user_id.length > 0 && (
                       <h5>
-                        {order.callback[0].user_profile[0].f_name}{" "}
-                        {order.callback[0].user_profile[0].l_name}
+                        {order.user_id[0].f_name}{" "}
+                        {order.user_id[0].l_name}
                       </h5>
                     )}
-                    {order.callback[0]?.user_details && (
-                      <p>{order.callback[0]?.user_details.comment}</p>
-                    )}
+                      <p>{order.comment}</p>
                     <div className="icon-style">
                       {Array.from({
-                        length: order.callback[0]?.user_details?.rating,
+                        length: order.rating,
                       }).map((_, index) => (
                         <Link>
                           <img src={vector} key={index} />
@@ -1610,55 +1613,55 @@ const handleNotifymeSubmit = async (e) => {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "news_letter" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row className="justify-content-center">
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <div className="Newsletter">
-                                <h1 className="main-head">
-                                  Get Or Promo Code by Subscribing To our
-                                  Newsletter
-                                </h1>
-                                <Form className="d-flex">
-                                  <Form.Control
-                                    type="search"
-                                    placeholder="Enter your email"
-                                    className="me-2"
-                                    aria-label="Search"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                  />
-                                  <Button
-                                    variant="outline-success"
-                                    onClick={handleNewsletter}
-                                  >
-                                    Subscribe
-                                  </Button>
-                                </Form>
-                              </div>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "news_letter" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row className="justify-content-center">
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <div className="Newsletter">
+                              <h1 className="main-head">
+                                Get Or Promo Code by Subscribing To our
+                                Newsletter
+                              </h1>
+                              <Form className="d-flex">
+                                <Form.Control
+                                  type="search"
+                                  placeholder="Enter your email"
+                                  className="me-2"
+                                  aria-label="Search"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <Button
+                                  variant="outline-success"
+                                  onClick={handleNewsletter}
+                                >
+                                  Subscribe
+                                </Button>
+                              </Form>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
       </section>
 
       <Footer />
-      
+
 
       {/* Product details Modal */}
       <div
@@ -1688,7 +1691,7 @@ const handleNotifymeSubmit = async (e) => {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1729,17 +1732,17 @@ const handleNotifymeSubmit = async (e) => {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1748,13 +1751,13 @@ const handleNotifymeSubmit = async (e) => {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1808,11 +1811,10 @@ const handleNotifymeSubmit = async (e) => {
                                           (item, index) => (
                                             <Col lg={4} key={index}>
                                               <div
-                                                className={`tab-variations ${
-                                                  selectedVariant === item?.type
+                                                className={`tab-variations ${selectedVariant === item?.type
                                                     ? "active"
                                                     : ""
-                                                }`}
+                                                  }`}
                                                 onClick={() => {
                                                   setSelectedVariant(
                                                     item?.type
@@ -1905,7 +1907,7 @@ const handleNotifymeSubmit = async (e) => {
                     </Col>
                   </Row>
                   {productDetails?.stock &&
-                  productDetails?.stock?.length !== 0 ? (
+                    productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
                         <Link
@@ -1927,19 +1929,19 @@ const handleNotifymeSubmit = async (e) => {
                     </div>
                   )}
                   <div
-        className="modal fade"
-        id="soldoutModel"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h4>{productDetails.name}</h4>
-              <p>{productDetails.description}</p>
-              {/* <form>
+                    className="modal fade"
+                    id="soldoutModel"
+                    tabIndex={-1}
+                    role="dialog"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content">
+                        <div className="modal-body">
+                          <h4>{productDetails.name}</h4>
+                          <p>{productDetails.description}</p>
+                          {/* <form>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Variations</label>
                   <select
@@ -1977,8 +1979,8 @@ const handleNotifymeSubmit = async (e) => {
                   </button>
                 </div>
               </form> */}
-              <Form onSubmit={handleNotifymeSubmit}>
-                {/* <Form.Group controlId="formVariations">
+                          <Form onSubmit={handleNotifymeSubmit}>
+                            {/* <Form.Group controlId="formVariations">
         <Form.Label>Variations</Form.Label>
         <Form.Control
           as="select"
@@ -1999,59 +2001,59 @@ const handleNotifymeSubmit = async (e) => {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                <Form.Group controlId="formVariations" className="mb-3">
-                  <Form.Label>Variations</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={variation}
-                    onChange={(e) => {
-                      setVariation(e.target.value);
-                      setVariationError(''); // Clear previous error when the value changes
-                    }}
-                    required
-                    isInvalid={!!variationError}
-                  >
-                    <option value="" disabled>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item, index) => (
-                        <option key={index}>{item.type}</option>
-                      ))}
-                  </Form.Control>
-                  {variationError && (
-                    <div className="error-message">{variationError}</div>
-                  )}
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formGroupEmail">
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    placeholder="Email ID"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      setIsEmailValid(isEmailFormatValid(e.target.value));
-                    }}
-                    isInvalid={!isEmailValid}
-                  />
-                  {!isEmailValid && (
-                    <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
-                      {/[A-Z]/.test(email) && !email.includes("@")
-                        ? "Email should not contain capital letters and must include '@'."
-                        : "Please enter a valid email address."}
-                    </Form.Control.Feedback>
-                  )}
-                </Form.Group>
+                            <Form.Group controlId="formVariations" className="mb-3">
+                              <Form.Label>Variations</Form.Label>
+                              <Form.Control
+                                as="select"
+                                value={variation}
+                                onChange={(e) => {
+                                  setVariation(e.target.value);
+                                  setVariationError(''); // Clear previous error when the value changes
+                                }}
+                                required
+                                isInvalid={!!variationError}
+                              >
+                                <option value="" disabled>
+                                  Choose an option...
+                                </option>
+                                {productDetails?.variations &&
+                                  productDetails?.variations.map((item, index) => (
+                                    <option key={index}>{item.type}</option>
+                                  ))}
+                              </Form.Control>
+                              {variationError && (
+                                <div className="error-message">{variationError}</div>
+                              )}
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                              <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder="Email ID"
+                                value={email}
+                                onChange={(e) => {
+                                  setEmail(e.target.value);
+                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                }}
+                                isInvalid={!isEmailValid}
+                              />
+                              {!isEmailValid && (
+                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                  {/[A-Z]/.test(email) && !email.includes("@")
+                                    ? "Email should not contain capital letters and must include '@'."
+                                    : "Please enter a valid email address."}
+                                </Form.Control.Feedback>
+                              )}
+                            </Form.Group>
 
-                <Button variant="primary mt-3" type="submit">
-                  Notify Me When Available
-                </Button>
-              </Form>
-            </div>
-          </div>
-        </div>
-      </div>
+                            <Button variant="primary mt-3" type="submit">
+                              Notify Me When Available
+                            </Button>
+                          </Form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </Container>
               </section>
             </div>
@@ -2381,11 +2383,10 @@ const handleNotifymeSubmit = async (e) => {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2488,11 +2489,10 @@ const handleNotifymeSubmit = async (e) => {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${
-                                      selectedVariant === item?.type
+                                    className={`tab-variations ${selectedVariant === item?.type
                                         ? "active"
                                         : ""
-                                    }`}
+                                      }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -2857,11 +2857,11 @@ const handleNotifymeSubmit = async (e) => {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

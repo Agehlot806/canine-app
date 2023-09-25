@@ -509,9 +509,9 @@ function Newheader(props) {
                     <Link className="dropdown-item" to="/canine-product">
                       Canine Product
                     </Link>
-                    <Link className="dropdown-item" to="/patners-product">
+                    {/* <Link className="dropdown-item" to="/patners-product">
                       Patners Product
-                    </Link>
+                    </Link> */}
                   </div>
                 </li>
                 {/* <li className="nav-item dropdown">

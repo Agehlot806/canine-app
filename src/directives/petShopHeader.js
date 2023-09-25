@@ -545,9 +545,9 @@ function PetShopHeader(props) {
                     >
                       Canine Product
                     </Link>
-                    <Link className="dropdown-item" to="">
+                    {/* <Link className="dropdown-item" to="">
                       Patners Product
-                    </Link>
+                    </Link> */}
                   </div>
                 </li>
                 {/* <li className="nav-item dropdown">

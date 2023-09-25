@@ -275,7 +275,7 @@ function PetshopBlogdetails() {
     notifymeData.append("email", email);
     notifymeData.append("variation", variation);
     notifymeData.append("stock", productDetails.stock);
-    notifymeData.append("user_id", storedUserId);
+    notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
 
     console.log("productDetails.id: ", productDetails?.id);
@@ -908,7 +908,7 @@ function PetshopBlogdetails() {
                         item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
                       }
                       onClick={() => {
-                        if (storedUserId == null) {
+                        if (storedWholesellerId == null) {
                           toast.error("Please Login first");
                         } else {
                           addToWishlist(item[0]?.id);
@@ -916,7 +916,7 @@ function PetshopBlogdetails() {
                       }}
                     />
 
-                    <Link to={`/product-details/${item[0]?.id}`}>
+                    <Link to={`/petshop-productDetails/${item[0]?.id}`}>
                       <div className="text-center">
                         <img
                           src={`https://canine.hirectjob.in//storage/app/public/product/${item[0]?.image}`}
@@ -1225,7 +1225,7 @@ function PetshopBlogdetails() {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel">
+                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
                         Notify Me When Available
                       </Button>
                     </div>
@@ -1949,7 +1949,7 @@ function PetshopBlogdetails() {
                     </option>
                     {productDetails?.variations &&
                       productDetails?.variations?.length > 0 &&
-                      productDetails?.variationsmap((item, index) => (
+                      productDetails?.variations.map((item, index) => (
                         <option key={index}>{item.type}</option>
                       ))}
                   </Form.Control>

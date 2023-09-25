@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Button, Table } from 'react-bootstrap'
+import { Container, Row, Col, Button, Table ,Form} from 'react-bootstrap'
 import Carousel from "react-multi-carousel";
 import product from '../../assets/images/banner/product.png'
 import { Link, useNavigate } from 'react-router-dom'
@@ -1119,6 +1119,48 @@ function PetShopcanineproduct(props) {
     setProductDetails(null);
   };
 
+  // ****************notifyme
+  const [email, setEmail] = useState("");
+  const [variation, setVariation] = useState("");
+  const [variationError, setVariationError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const isEmailFormatValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(isEmailFormatValid(emailValue));
+  };
+  const handleNotifymeSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Prepare form data
+    const notifymeData = new FormData();
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    notifymeData.append("stock", productDetails.stock);
+    notifymeData.append("user_id", storedWholesellerId);
+    notifymeData.append("item_id", productDetails.id);
+
+    console.log("productDetails.id: ", productDetails?.id);
+    console.log("notifymeData", notifymeData);
+
+    // Send a request
+    axios
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
+  };
 
   return (
     <>
@@ -1776,7 +1818,7 @@ function PetShopcanineproduct(props) {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel">
+                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
                         Notify Me When Available
                       </Button>
                     </div>
@@ -2379,14 +2421,161 @@ function PetShopcanineproduct(props) {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 10 ? (
+                    <button data-toggle="modal" data-target="#cod">
+                      Checkout
+                    </button>
+                  ) : (
+                    <div className="sold-out-btn soldbtn-new mt-3">
+                      <Link className="mb-4">Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                      <br />
+                    </div>
+                  )}
+                  <button
+                    className="mt-3"
+                    data-dismiss="modal"
+                    onClick={handleResetClick}
+                  >
                     Close
                   </button>
                 </div>
               </>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="soldoutModel"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h4>{productDetails.name}</h4>
+              <p>{productDetails.description}</p>
+              {/* <form>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Variations</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setVariation(e.target.value)}
+                    value={variation}
+                  >
+                    <option value="" disabled selected>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations.map((item) => (
+                        <option>{item.type}</option>
+                      ))}
+                  </select>{" "}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Email</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                </div>
+                <div className="Notify-Me">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                    onClick={(e) => handleNotifymeSubmit(e)}
+                  >
+                    Notify Me When Available
+                  </button>
+                </div>
+              </form> */}
+              <Form onSubmit={handleNotifymeSubmit}>
+                {/* <Form.Group controlId="formVariations">
+        <Form.Label>Variations</Form.Label>
+        <Form.Control
+          as="select"
+          value={variation}
+          onChange={(e) => setVariation(e.target.value)}
+          required
+          isInvalid={!!variationError}
+        >
+          <option value="" disabled>
+            Choose an option...
+          </option>
+          {productDetails?.variations &&
+            productDetails?.variations.map((item, index) => (
+              <option key={index}>{item.type}</option>
+            ))}
+        </Form.Control>
+        {variationError && (
+          <div className="error-message">{variationError}</div>
+        )}
+      </Form.Group> */}
+                <Form.Group controlId="formVariations" className="mb-3">
+                  <Form.Label>Variations</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={variation}
+                    onChange={(e) => {
+                      setVariation(e.target.value);
+                      setVariationError(""); // Clear previous error when the value changes
+                    }}
+                    required
+                    isInvalid={!!variationError}
+                  >
+                    <option value="" disabled>
+                      Choose an option...
+                    </option>
+                    {productDetails?.variations &&
+                      productDetails?.variations?.length > 0 &&
+                      productDetails?.variations.map((item, index) => (
+                        <option key={index}>{item.type}</option>
+                      ))}
+                  </Form.Control>
+                  {variationError && (
+                    <div className="error-message">{variationError}</div>
+                  )}
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Email ID"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setIsEmailValid(isEmailFormatValid(e.target.value));
+                    }}
+                    isInvalid={!isEmailValid}
+                  />
+                  {!isEmailValid && (
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="custom-form-control-feedback"
+                    >
+                      {/[A-Z]/.test(email) && !email.includes("@")
+                        ? "Email should not contain capital letters and must include '@'."
+                        : "Please enter a valid email address."}
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+
+                <Button variant="primary mt-3" type="submit">
+                  Notify Me When Available
+                </Button>
+              </Form>
             </div>
           </div>
         </div>
