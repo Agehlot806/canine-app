@@ -364,7 +364,7 @@ function PetshopHome(props) {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantPrice(defaultVariant.wholeprice);
     }
   }, [productDetails]);
 
@@ -435,13 +435,19 @@ function PetshopHome(props) {
   if (selectedVariantPrice !== null) {
     uservariationprice = selectedVariantPrice;
   }
-  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+  // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
-  ).toFixed(2);
-
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+  // const Amount = Math.floor(
+  //   uservariationprice - (uservariationprice * productDetails.discount) / 100
+  // ).toFixed(2);
+  // let wholesellervariationprice = 0;
+
+  // if (selectedVariantPrice !== null) {
+  //   wholesellervariationprice = selectedVariantPrice;
+  // }
+
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -1225,7 +1231,7 @@ function PetshopHome(props) {
                                   item.price -
                                   (item.price * item.discount) / 100
                                 }`} */}
-                                ₹{item.price}
+                                ₹{item?.whole_price}
                               </h6>
                             </Col>
                             <Col>
@@ -1690,7 +1696,7 @@ function PetshopHome(props) {
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
-                                                item.price
+                                                item?.wholeprice
                                               ); // Store the price in state
                                             }}
                                           >
@@ -1738,7 +1744,7 @@ function PetshopHome(props) {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${wholesellervariationprice}`}</h5>
+                                <h5>{`₹${formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2012,7 +2018,7 @@ function PetshopHome(props) {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}
@@ -2713,7 +2719,7 @@ function PetshopHome(props) {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}

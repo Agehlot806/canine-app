@@ -590,10 +590,10 @@ function PetshopPetcategory() {
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
 
   useEffect(() => {
-    if (productDetails?.variations && productDetails.variations.length > 0) {
+    if (productDetails?.variations && productDetails?.variations?.length > 0) {
       const defaultVariant = productDetails.variations[0];
-      setSelectedVariant(defaultVariant.type);
-      setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariant(defaultVariant?.type);
+      setSelectedVariantPrice(defaultVariant?.wholeprice);
     }
   }, [productDetails]);
 
@@ -671,13 +671,11 @@ function PetshopPetcategory() {
   if (selectedVariantPrice !== null) {
     uservariationprice = selectedVariantPrice;
   }
-  uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+  // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
-  ).toFixed(2);
-
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -1504,18 +1502,8 @@ function PetshopPetcategory() {
                                     </div>
                                     <div className="product-bag">
                                       <Row>
-                                        <Col>
-                                          <p>₹{item.price}</p>
-                                        </Col>
-                                        <Col>
-                                          <h5>{item.discount}%</h5>
-                                        </Col>
-                                      </Row>
-                                      <Row>
                                         <Col className="align-self-center">
-                                          <h6>{`₹${item.price -
-                                            (item.price * item.discount) / 100
-                                            }`}</h6>
+                                          <h6>₹{item.whole_price}</h6>
                                         </Col>
                                         <Col>
                                           <Link to={`/petshop-add-cart/${item.id}`}
@@ -1603,7 +1591,7 @@ function PetshopPetcategory() {
                             <Row>
                               <Col>{/* <p>₹{product.price}</p> */}</Col>
                               <Col>
-                                <h5>₹{item.price}</h5>
+                                <h5>₹{item.whole_price}</h5>
                               </Col>
                             </Row>
                             <Row>
@@ -1670,17 +1658,8 @@ function PetshopPetcategory() {
                             </div>
                             <div className="product-bag">
                               <Row>
-                                <Col>{/* <p>₹{item.price}</p> */}</Col>
-                                <Col>{/* <h5>{item.discount}%</h5> */}</Col>
-                              </Row>
-                              <Row>
                                 <Col className="align-self-center">
-                                  <h6>
-                                    {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                    {`₹${item.price -
-                                      (item.price * item.discount) / 100
-                                      }`}
-                                  </h6>
+                                  <h6>₹{item.whole_price}</h6>
                                 </Col>
                                 <Col>
                                   <Link
@@ -1805,29 +1784,26 @@ function PetshopPetcategory() {
                               <div className="tab-container">
                                 <h6>Variations</h6>
                                 <Row>
-                                  {productDetails?.variations &&
-                                    productDetails?.variations.length > 0 &&
-                                    productDetails.variations.map(
-                                      (item, index) => (
-                                        <Col lg={4} sm={4} xs={3} key={index}>
-                                          <div
-                                            className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
-                                              }`}
-                                            onClick={() => {
-                                              setSelectedVariant(item.type);
-                                              setSelectedVariantPrice(
-                                                item.price
-                                              ); // Store the price in state
-                                            }}
-                                          >
-                                            {item.type}
-                                          </div>
-                                        </Col>
-                                      )
-                                    )}
-                                </Row>
+                            {productDetails?.variations &&
+                              productDetails?.variations.length > 0 &&
+                              productDetails?.variations.map((item, index) => (
+                                <Col lg={4} key={index}>
+                                  <div
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      setSelectedVariant(item?.type);
+                                      setSelectedVariantPrice(item?.wholeprice);
+                                    }}
+                                  >
+                                    {item?.type}
+                                  </div>
+                                </Col>
+                              ))}
+                          </Row>
                               </div>
                             </Col>
                             <Col sm={6}>
@@ -1866,7 +1842,7 @@ function PetshopPetcategory() {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${wholesellervariationprice}`}</h5>
+                                <h5>{`₹${formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2386,13 +2362,14 @@ function PetshopPetcategory() {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
                                         ? "active"
                                         : ""
-                                      }`}
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}
