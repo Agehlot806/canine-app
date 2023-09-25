@@ -829,7 +829,7 @@ function Home(props) {
   const allReview = async () => {
     try {
       const response = await fetch(
-        `${BASE_URL}/items/get_reviewitem/1`
+        `${BASE_URL}/items/get_happyreview`
       );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
