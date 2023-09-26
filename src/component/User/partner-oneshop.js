@@ -838,7 +838,7 @@ function Partneroneshop() {
       <section className='section-padding'>
         <Container>
           <div className='partner-oneshop'>
-            <Table>
+            <Table responsive>
               <tbody>
                 <tr>
                   <th>Partner Name :</th>

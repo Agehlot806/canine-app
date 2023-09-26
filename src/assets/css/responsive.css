@@ -14,7 +14,8 @@
     }
 
     .home-content h1 {
-        font-size: 30px;
+        /* font-size: 30px; */
+        font-size: 20px;
     }
 
     .home-content p {
@@ -102,7 +103,8 @@
         text-align: center;
     }
     .home-content {
-    left: 20px;
+    /* left: 20px; */
+    left: 60px;
 }
     .dowload-invioce {
         text-align: left;
@@ -120,11 +122,15 @@
     .dash-tabs li {
         margin: 0 0 20px;
     }
+    .Newsletter form{
+        margin: 15px 0 0;
+    }
 }
 
 @media only screen and (max-width: 820px) {
     .home-content h1 {
-        font-size: 24px;
+        /* font-size: 24px; */
+        font-size: 20px;
     }
 
     p {
@@ -263,7 +269,8 @@
         width: 200px;
     }
     .Newsletter h1 {
-        font-size: 13px;
+        /* font-size: 13px; */
+        font-size: 14px;
     }
     .food-product p {
         font-size: 12px;
@@ -279,7 +286,8 @@
     .home-content .Newsletter button {
         border-radius: 2px;
         height: 25px;
-        font-size: 12px
+        /* font-size: 12px */
+        font-size: 9px;
     }
     .brandLOGO img {
         width: 100px;
@@ -361,7 +369,8 @@
     }
 
     .Newsletter h1 {
-        font-size: 26px;
+        /* font-size: 26px; */
+        font-size: 14px;
     }
 
     .brandLOGO img {
@@ -730,7 +739,8 @@
     }
 
     .Newsletter h1 {
-        font-size: 12px;
+        /* font-size: 12px; */
+        font-size: 10px;
     }
 
     .Newsletter input::placeholder {
@@ -749,5 +759,8 @@
         font-weight: 600;
         font-size: 12px;
         padding: 0 15px;
+    }
+    .Brand-cus img {
+        width: 60px;
     }
 }
