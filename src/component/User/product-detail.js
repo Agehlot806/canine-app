@@ -1544,7 +1544,7 @@ function Productdetail() {
                   )}
                 </Form.Group>
 
-                <Button variant="primary mt-3" type="submit">
+                <Button variant="primary mt-3" type="submit" data-dismiss="modal">
                   Notify Me When Available
                 </Button>
               </Form>
