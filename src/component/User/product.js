@@ -1,4 +1,4 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
@@ -48,14 +48,14 @@ function Product(props) {
     categoriesProduct();
     allProduct();
     itemBanner();
-    allBrandshow()
-    allLifesageshow()
-    allBreedshow()
+    allBrandshow();
+    allLifesageshow();
+    allBreedshow();
     couponlistdata();
     allHealthconditionshow();
-    allsubcategary()
-    fetchWishlistData()
-    allAddressList()
+    allsubcategary();
+    fetchWishlistData();
+    allAddressList();
     GetdataAll();
   }, []);
 
@@ -89,8 +89,6 @@ function Product(props) {
       console.error(error);
     }
   };
-
-
 
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
@@ -202,12 +200,12 @@ function Product(props) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const modalBackdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
       }
@@ -221,7 +219,7 @@ function Product(props) {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -307,11 +305,11 @@ function Product(props) {
 
   /////tarunbirla////
 
-  const [allbrand, setAllBrand] = useState("")
-  const [alllifesage, setAlllifesage] = useState("")
-  const [allbreed, setAllBreed] = useState("")
-  const [allsubcate, setAllSubcate] = useState("")
-  const [allhealth, setAllHealth] = useState("")
+  const [allbrand, setAllBrand] = useState("");
+  const [alllifesage, setAlllifesage] = useState("");
+  const [allbreed, setAllBreed] = useState("");
+  const [allsubcate, setAllSubcate] = useState("");
+  const [allhealth, setAllHealth] = useState("");
 
   const allBrandshow = async () => {
     axios
@@ -351,7 +349,6 @@ function Product(props) {
       });
   };
 
-
   const allsubcategary = async () => {
     axios
       .get(`https://canine.hirectjob.in/api/v1/categories`)
@@ -384,14 +381,14 @@ function Product(props) {
   const [selectedhealthIds, setSelectedhealthIds] = useState([]);
   const [selectedvegIds, setSelectedvegIds] = useState([]);
 
-  const [minpricevalue, setMinpricevalue] = useState([])
-  const [maxpricevalue, setMaxpricevalue] = useState([])
+  const [minpricevalue, setMinpricevalue] = useState([]);
+  const [maxpricevalue, setMaxpricevalue] = useState([]);
   const minprice = (e) => {
-    setMinpricevalue(e.target.value)
-  }
+    setMinpricevalue(e.target.value);
+  };
   const maxprice = (e) => {
-    setMaxpricevalue(e.target.value)
-  }
+    setMaxpricevalue(e.target.value);
+  };
 
   const handleDataListBrand = (brand_id) => {
     setSelectedBrandIds((prevSelectedBrandIds) => {
@@ -437,7 +434,13 @@ function Product(props) {
       const updatedhealthIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedhealthIds
+      );
       return updatedhealthIds;
     });
   };
@@ -447,17 +450,33 @@ function Product(props) {
       const updatedvegIds = prevSelectedvegIds.includes(value)
         ? prevSelectedvegIds.filter((id) => id !== value)
         : [...prevSelectedvegIds, value];
-      filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedvegIds
+      );
       return updatedvegIds;
     });
   };
   const applyprice = () => {
     filterProducts();
-  }
+  };
 
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds) => {
+  const filterProducts = async (
+    updatedBrandIds,
+    updatedLifeIds,
+    updatedBreedIds,
+    updatedcateIds,
+    updatedhealthIds,
+    updatedvegIds
+  ) => {
     try {
-      const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
+      const response = await axios.get(
+        "https://canine.hirectjob.in/api/v1/items/latest"
+      );
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -469,17 +488,16 @@ function Product(props) {
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
-        // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+        // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
-      setallproduct(filteredProducts)
+      setallproduct(filteredProducts);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-
   };
 
   const applyFilters = ({
@@ -500,21 +518,42 @@ function Product(props) {
     const selectedhealthSet = new Set(selecthealth);
     const selectedvegSet = new Set(selectedVegOptions);
 
-    return products.filter(product => {
-      const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
-      const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
-      const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
-      const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
-      const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
-      const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
-      const price = parseFloat(product.price);  // Parse the price to a number
-      const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+    return products.filter((product) => {
+      const brandFilter =
+        selectedBrands.length === 0 ||
+        selectedBrandSet.has(product.brand_id.toString());
+      const lifeStageFilter =
+        selectLifeStageFilterList.length === 0 ||
+        selectedLifeStageSet.has(product.lifeStage_id.toString());
+      const breedFilter =
+        selectBreedFilterList.length === 0 ||
+        selectedBreedSet.has(product.Petsbreeds_id.toString());
+      const cateFilter =
+        selectcate.length === 0 ||
+        selectedcateSet.has(product.category_ids.toString());
+      const healthFilter =
+        selecthealth.length === 0 ||
+        selectedhealthSet.has(product.helthCondition_id.toString());
+      const Filterveg =
+        selectedVegOptions.length === 0 ||
+        selectedvegSet.has(product.veg === 0 ? "0" : "1");
+      const price = parseFloat(product.price); // Parse the price to a number
+      const minPriceFilter = isNaN(minPrice) || price >= minPrice; // Check if price is NaN or greater than minPrice
       const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const price = parseFloat(product.price);  // Parse the price to a number
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter;
+      return (
+        brandFilter &&
+        lifeStageFilter &&
+        breedFilter &&
+        cateFilter &&
+        healthFilter &&
+        Filterveg &&
+        minPriceFilter &&
+        maxPriceFilter
+      );
     });
   };
 
@@ -618,7 +657,6 @@ function Product(props) {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
-
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -628,7 +666,7 @@ function Product(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -636,7 +674,7 @@ function Product(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -646,7 +684,7 @@ function Product(props) {
   };
   const handeldataId = (id) => {
     productData(id);
-  }
+  };
   // ===============================================================
   // =================================================================
   // Buy Now ------------------------
@@ -922,7 +960,7 @@ function Product(props) {
   }
   // ...
 
-  // Use the formatAddress function to get the selected address as a single string                                       
+  // Use the formatAddress function to get the selected address as a single string
   const deliveryAddress = selectedAddress
     ? formatAddress(selectedAddress)
     : "No address selected";
@@ -946,7 +984,10 @@ function Product(props) {
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = (parseInt(Amount) * 0.05) + parseInt(Amount) - (disscountvalue?.discount ?? 0);
+    const orderAmount =
+      parseInt(Amount) * 0.05 +
+      parseInt(Amount) -
+      (disscountvalue?.discount ?? 0);
 
     const requestData = {
       user_id: storedUserId,
@@ -991,7 +1032,6 @@ function Product(props) {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
         console.log("order_id", responseData);
-
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -1014,7 +1054,9 @@ function Product(props) {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const response = await fetch(
+        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+      );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -1022,7 +1064,6 @@ function Product(props) {
       console.log(error);
     }
   };
-
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -1064,7 +1105,6 @@ function Product(props) {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -1092,15 +1132,12 @@ function Product(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
-      .post(
-        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
-        notifymeData
-      )
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1118,7 +1155,6 @@ function Product(props) {
           <img src={product} />
         </div>
       </Container>
-
 
       <Container>
         <Row>
@@ -1141,28 +1177,25 @@ function Product(props) {
                   {brandDropdownVisible && (
                     <>
                       <div>
-                        {allbrand ? (
-                          allbrand.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-
-                                onClick={(e) => handleDataListBrand(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {allbrand
+                          ? allbrand.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) =>
+                                    handleDataListBrand(items.title)
+                                  }
+                                />
+                                <label className="form-check-label">
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1181,28 +1214,23 @@ function Product(props) {
                   {cateDropdownVisible && (
                     <>
                       <div>
-                        {allsubcate ? (
-                          allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-
-                                onClick={(e) => allcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {allsubcate
+                          ? allsubcate.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1222,23 +1250,35 @@ function Product(props) {
                   {priceDropdownVisible && (
                     <>
                       <div>
-
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={minprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={minprice}
+                          />
                         </div>
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={maxprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={maxprice}
+                          />
                         </div>
-                        <div className="form-range text-center" >
+                        <div className="form-range text-center">
                           {/* <span>₹</span> */}
-                          <button className="Apply-price" onClick={applyprice}>Apply</button>
+                          <button className="Apply-price" onClick={applyprice}>
+                            Apply
+                          </button>
                         </div>
                       </div>
-
                     </>
                   )}
                 </div>
@@ -1256,27 +1296,25 @@ function Product(props) {
                   {lifestageDropdownVisible && (
                     <>
                       <div>
-                        {alllifesage ? (
-                          alllifesage.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) => Lifesatedataselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {alllifesage
+                          ? alllifesage.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items.name)
+                                  }
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1295,27 +1333,23 @@ function Product(props) {
                   {breedTypeDropdownVisible && (
                     <>
                       <div>
-                        {allbreed ? (
-                          allbreed.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) => allbreedselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {allbreed
+                          ? allbreed.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) => allbreedselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1334,27 +1368,23 @@ function Product(props) {
                   {healthDropdownVisible && (
                     <>
                       <div>
-                        {allhealth ? (
-                          allhealth.map((items) => (
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {allhealth
+                          ? allhealth.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
-
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label className="form-check-label">
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1383,9 +1413,7 @@ function Product(props) {
                             type="checkbox"
                             onClick={(e) => vegnonveghandler("1")}
                           />
-                          <label
-                            className="form-check-label"
-                          >
+                          <label className="form-check-label">
                             Non-Veg (219)
                           </label>
                         </div>
@@ -1397,22 +1425,14 @@ function Product(props) {
                             className="form-check-input"
                             type="checkbox"
                             onClick={(e) => vegnonveghandler("0")}
-
                           />
-                          <label
-                            className="form-check-label"
-                          >
-                            Veg (73)
-                          </label>
+                          <label className="form-check-label">Veg (73)</label>
                         </div>
                       </div>
                     </>
                   )}
                 </div>
                 <hr />
-
-
-
               </div>
             </section>
           </Col>
@@ -1474,7 +1494,9 @@ function Product(props) {
                       >
                         <i
                           class={
-                            item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                            item.isFav
+                              ? "fa-solid fa-heart"
+                              : "fa-regular fa-heart"
                           }
                           onClick={(id) => {
                             if (storedUserId == null) {
@@ -1496,21 +1518,28 @@ function Product(props) {
                           <div>
                             <h6>{item.name}</h6>
                             {/* <p>{item.description}</p> */}
-                            <p className={`truncate-text ${!expandedDescription[item.id] ? 'read-more-link' : ''}`}>
+                            <p
+                              className={`truncate-text ${
+                                !expandedDescription[item.id]
+                                  ? "read-more-link"
+                                  : ""
+                              }`}
+                            >
                               {item.description}
-                              {item.description.length > 100 && !expandedDescription[item.id] && (
-                                <span
-                                  className="read-more-link"
-                                  onClick={() =>
-                                    setExpandedDescription({
-                                      ...expandedDescription,
-                                      [item.id]: true,
-                                    })
-                                  }
-                                >
-                                  Read More
-                                </span>
-                              )}
+                              {item.description.length > 100 &&
+                                !expandedDescription[item.id] && (
+                                  <span
+                                    className="read-more-link"
+                                    onClick={() =>
+                                      setExpandedDescription({
+                                        ...expandedDescription,
+                                        [item.id]: true,
+                                      })
+                                    }
+                                  >
+                                    Read More
+                                  </span>
+                                )}
                             </p>
                           </div>
                           <div className="product-bag">
@@ -1527,8 +1556,10 @@ function Product(props) {
                                 <h6>₹{item.price}</h6>
                               </Col>
                               <Col>
-                                <Link to={`/add-cart/${item.id}`}
-                                  onClick={handleAddToCart}>
+                                <Link
+                                  to={`/add-cart/${item.id}`}
+                                  onClick={handleAddToCart}
+                                >
                                   <img src={bag} />
                                 </Link>
                               </Col>
@@ -1537,7 +1568,13 @@ function Product(props) {
                         </Link>
                         {buttonVisibility[item.id] && (
                           <div className="button-container">
-                            <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Quick View
+                            </button>
                             <button
                               data-toggle="modal"
                               data-target=".buynow"
@@ -1575,8 +1612,6 @@ function Product(props) {
                 </div>
               </Container>
             </section>
-
-
           </Col>
         </Row>
       </Container>
@@ -1584,7 +1619,13 @@ function Product(props) {
       <Footer />
 
       {/* Product details Modal */}
-      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -1605,7 +1646,7 @@ function Product(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1616,7 +1657,9 @@ function Product(props) {
                                   >
                                     <div
                                       className="product-item-inner"
-                                      onClick={() => handleThumbnailClick(index)}
+                                      onClick={() =>
+                                        handleThumbnailClick(index)
+                                      }
                                     >
                                       <img
                                         src={
@@ -1644,16 +1687,17 @@ function Product(props) {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1662,12 +1706,13 @@ function Product(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
-                                (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1701,7 +1746,9 @@ function Product(props) {
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
-                            <p>({productDetails?.rating_count} customer reviews)</p>
+                            <p>
+                              ({productDetails?.rating_count} customer reviews)
+                            </p>
                           </div>
                         </Wrapper>
 
@@ -1715,22 +1762,27 @@ function Product(props) {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map((item, index) => (
-                                          <Col lg={4} key={index}>
-                                            <div
-                                              className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
+                                        productDetails.variations.map(
+                                          (item, index) => (
+                                            <Col lg={4} key={index}>
+                                              <div
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
                                                 }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(item.price);
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          </Col>
-                                        ))}
+                                                onClick={() => {
+                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariantPrice(
+                                                    item.price
+                                                  );
+                                                }}
+                                              >
+                                                {item.type}
+                                              </div>
+                                            </Col>
+                                          )
+                                        )}
                                     </Row>
                                   </div>
                                 </div>
@@ -1811,7 +1863,10 @@ function Product(props) {
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
-                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart} >
+                        <Link
+                          to={`/add-cart/${productDetails.id}`}
+                          onClick={handleAddToCart}
+                        >
                           <i className="fa fa-shopping-bag" /> Add to cart
                         </Link>
                         <p>{addToCartStatus}</p>
@@ -1899,14 +1954,17 @@ function Product(props) {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                            <Form.Group controlId="formVariations" className="mb-3">
+                            <Form.Group
+                              controlId="formVariations"
+                              className="mb-3"
+                            >
                               <Form.Label>Variations</Form.Label>
                               <Form.Control
                                 as="select"
                                 value={variation}
                                 onChange={(e) => {
                                   setVariation(e.target.value);
-                                  setVariationError(''); // Clear previous error when the value changes
+                                  setVariationError(""); // Clear previous error when the value changes
                                 }}
                                 required
                                 isInvalid={!!variationError}
@@ -1915,15 +1973,22 @@ function Product(props) {
                                   Choose an option...
                                 </option>
                                 {productDetails?.variations &&
-                                  productDetails?.variations.map((item, index) => (
-                                    <option key={index}>{item.type}</option>
-                                  ))}
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <option key={index}>{item.type}</option>
+                                    )
+                                  )}
                               </Form.Control>
                               {variationError && (
-                                <div className="error-message">{variationError}</div>
+                                <div className="error-message">
+                                  {variationError}
+                                </div>
                               )}
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formGroupEmail"
+                            >
                               <Form.Control
                                 type="email"
                                 name="email"
@@ -1931,12 +1996,17 @@ function Product(props) {
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
-                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                  setIsEmailValid(
+                                    isEmailFormatValid(e.target.value)
+                                  );
                                 }}
                                 isInvalid={!isEmailValid}
                               />
                               {!isEmailValid && (
-                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                <Form.Control.Feedback
+                                  type="invalid"
+                                  className="custom-form-control-feedback"
+                                >
                                   {/[A-Z]/.test(email) && !email.includes("@")
                                     ? "Email should not contain capital letters and must include '@'."
                                     : "Please enter a valid email address."}
@@ -2283,10 +2353,11 @@ function Product(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2389,10 +2460,11 @@ function Product(props) {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -2603,11 +2675,9 @@ function Product(props) {
                             <Col>
                               <h5>
                                 ₹
-                                {
-                                  (parseInt(Amount) * 0.05) + parseInt(Amount) - (
-                                    (disscountvalue?.discount ?? 0)
-                                  )
-                                }
+                                {parseInt(Amount) * 0.05 +
+                                  parseInt(Amount) -
+                                  (disscountvalue?.discount ?? 0)}
                               </h5>
                             </Col>
                           </Row>
@@ -2629,7 +2699,6 @@ function Product(props) {
           </div>
         </div>
       </div>
-
 
       <div
         className="modal fade editAddress"
@@ -2761,11 +2830,11 @@ function Product(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -3002,7 +3071,6 @@ function Product(props) {
           </div>
         </div>
       </div>
-
     </>
   );
 }
