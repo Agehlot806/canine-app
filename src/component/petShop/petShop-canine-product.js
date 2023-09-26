@@ -1198,10 +1198,7 @@ function PetShopcanineproduct(props) {
 
     // Send a request
     axios
-      .post(
-        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
-        notifymeData
-      )
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })

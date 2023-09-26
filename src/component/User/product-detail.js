@@ -177,10 +177,7 @@ function Productdetail() {
 
     // Send a request
     axios
-      .post(
-        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
-        notifymeData
-      )
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1547,7 +1544,7 @@ function Productdetail() {
                   )}
                 </Form.Group>
 
-                <Button variant="primary mt-3" type="submit">
+                <Button variant="primary mt-3" type="submit" data-dismiss="modal">
                   Notify Me When Available
                 </Button>
               </Form>
