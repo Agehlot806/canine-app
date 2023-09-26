@@ -92,6 +92,10 @@ import PetshopBlog from "./component/petShop/petShop-blog";
 import PetshopBlogdetails from "./component/petShop/petShop-blog-details";
 import Quickview from "./component/User/quick-view";
 import Notfound from "./component/Not-Found/Page-Not-Found";
+import PetshopOurbrand from "./component/petShop/petShop-our-brand";
+import PetshopOurourbrand from "./component/petShop/petShop-our-ourBrand";
+import PetShopShopbybrand from "./component/petShop/petShop-shopbybrand";
+import PetshopShopbybrandlist from "./component/petShop/petShop-shop-by-brand-list";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -195,6 +199,22 @@ function App() {
           <Route
             path="/petshop-wishlist-product"
             element={<PetshopWishlistproduct />}
+          />
+           <Route
+            path="/petshop-our-brand"
+            element={<PetshopOurbrand />}
+          />
+           <Route
+            path="/petshop-our-Ourbrand/:id"
+            element={<PetshopOurourbrand />}
+          />
+          <Route
+            path="/petshop-shop-by-brand"
+            element={<PetShopShopbybrand />}
+          />
+           <Route
+            path="/petshop-shop-by-brandList/:id"
+            element={<PetshopShopbybrandlist />}
           />
           <Route
             path="/petshop-productDetails/:id"

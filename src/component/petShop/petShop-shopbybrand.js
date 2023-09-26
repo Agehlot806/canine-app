@@ -16,7 +16,7 @@ import bannerPro from "../../assets/images/img/bannerPro.png";
 import { Link } from 'react-router-dom';
 
 
-function Shopbybrand() {
+function PetShopShopbybrand() {
     const [thirdbanner, setthirdbanner] = useState([]);
     const [brands, setBrands] = useState([]);
 
@@ -71,7 +71,7 @@ function Shopbybrand() {
                                     brand.canine == '0' && (
                                         <Col lg={3} sm={6} xs={6} className="mb-5">
                                             <div key={brand.id} className="Brand-card brand-1">
-                                                <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                                <Link to={`/petshop-shop-by-brandList/${brand.id}`}>
                                                     <div className="brandLOGO">
                                                         <img
                                                             src={
@@ -123,34 +123,7 @@ function Shopbybrand() {
                 </Container>
             </section>
 
-            {/* <section className="section-padding">
-                <Container>
-                    <div className=" Newsletter-bg">
-                        <Row>
-                            <Col lg={3}>
-                                <img src={catpng} />
-                            </Col>
-                            <Col lg={6}>
-                                <div className="Newsletter">
-                                    <h1 className="main-head">Get Or Promo Code by Subscribing To our Newsletter</h1>
-                                    <Form className="d-flex">
-                                        <Form.Control
-                                            type="search"
-                                            placeholder="Enter your email"
-                                            className="me-2"
-                                            aria-label="Search"
-                                        />
-                                        <Button variant="outline-success">Subscribe</Button>
-                                    </Form>
-                                </div>
-                            </Col>
-                            <Col lg={3} className="align-self-center">
-                                <img src={bannerPro} />
-                            </Col>
-                        </Row>
-                    </div>
-                </Container>
-            </section> */}
+           
 
             <Footer />
         </>
@@ -158,4 +131,4 @@ function Shopbybrand() {
     
 }
 
-export default Shopbybrand
+export default PetShopShopbybrand

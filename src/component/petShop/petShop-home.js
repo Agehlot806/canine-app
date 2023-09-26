@@ -1278,7 +1278,7 @@ function PetshopHome(props) {
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
-                <Link to="/our-brand">See all</Link>
+                <Link to="/petshop-our-brand">See all</Link>
               </div>
             </Col>
           </Row>
@@ -1289,7 +1289,7 @@ function PetshopHome(props) {
                     brand.canine == "1" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
                         <div key={brand.id} className="Brand-card brand-1">
-                          <Link to={`/our-our-brand/${brand.id}`}>
+                          <Link to={`/petshop-our-Ourbrand/${brand.title}`}>
                             <div className="brandLOGO">
                               <img
                                 src={
@@ -1382,7 +1382,7 @@ function PetshopHome(props) {
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
+                <Link to="/petshop-shop-by-brand">See all</Link>
               </div>
             </Col>
           </Row>
@@ -1394,7 +1394,7 @@ function PetshopHome(props) {
                       brand.canine == "0" && (
                         <Col lg={3} sm={6} xs={6} className="mb-5">
                           <div key={brand.id} className="Brand-card brand-1">
-                            <Link to={`/shop-by-brand-list/${brand.id}`}>
+                            <Link to={`/petshop-shop-by-brandList/${brand.id}`}>
                               <div className="brandLOGO">
                                 <img
                                   src={

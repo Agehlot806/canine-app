@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import ourbrand from "../../assets/images/banner/ourbrand.png";
 import { Link, useParams } from "react-router-dom";
@@ -8,13 +7,14 @@ import product1 from "../../assets/images/img/product1.png";
 import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import Footer from "../../directives/footer";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import Carousel from "react-multi-carousel";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import product3 from "../../assets/images/img/product3.png";
 import { Toaster, toast } from "react-hot-toast";
+import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
 const clinetreview = {
   desktop: {
@@ -34,7 +34,7 @@ const clinetreview = {
   },
 };
 
-function Ourourbrand(props) {
+function PetshopOurourbrand(props) {
   // filter tabs
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
@@ -139,8 +139,7 @@ function Ourourbrand(props) {
     allHealthconditionshow();
     Allsubcategoriessecond();
   }, []);
-  const customer_id = localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const [allproduct, setallproduct] = useState([]);
   const [wishlistData, setWishlistData] = useState([]);
 
@@ -166,7 +165,7 @@ function Ourourbrand(props) {
           image: productDetails.image,
           quantity: productDetails.quantity,
           price: productDetails.price,
-          user_id: storedUserId,
+          user_id: storedWholesellerId,
           item_id: productDetails.id,
         }
       );
@@ -186,7 +185,7 @@ function Ourourbrand(props) {
   const fetchWishlistData = async () => {
     try {
       await axios
-        .get(`${BASE_URL}/customer/wish-list/${storedUserId}`)
+        .get(`${BASE_URL}/customer/wish-list/${storedWholesellerId}`)
         .then((response) => {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
@@ -221,14 +220,14 @@ function Ourourbrand(props) {
     }
   };
   const addToWishlist = async (item_id) => {
-    if (!storedUserId) {
+    if (!storedWholesellerId) {
       // If the user is not logged in, navigate to the login page
       navigate("/login");
       return; // Exit the function without adding to wishlist
     }
 
     const formData = new FormData();
-    formData.append("user_id", storedUserId);
+    formData.append("user_id", storedWholesellerId);
     formData.append("item_id", item_id);
     axios
       .post(`${BASE_URL}/customer/wish-list/add`, formData, {
@@ -610,7 +609,7 @@ function Ourourbrand(props) {
   return (
     <>
       <Toaster />
-      <Newheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={ourbrand} />
@@ -948,7 +947,7 @@ function Ourourbrand(props) {
                                   item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
                                 }
                                 onClick={(id) => {
-                                  if (storedUserId == null) {
+                                  if (storedWholesellerId == null) {
                                     toast.error("Please Login first");
                                   } else {
                                     addToWishlist(item.id);
@@ -1084,7 +1083,7 @@ function Ourourbrand(props) {
                                     item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
                                   }
                                   onClick={(id) => {
-                                    if (storedUserId == null) {
+                                    if (storedWholesellerId == null) {
                                       toast.error("Please Login first");
                                     } else {
                                       addToWishlist(item.id);
@@ -1142,9 +1141,9 @@ function Ourourbrand(props) {
         </Row>
       </Container>
 
-      <Footer />
+      <Petshopfooter />
     </>
   );
 }
 
-export default Ourourbrand;
+export default PetshopOurourbrand;

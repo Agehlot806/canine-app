@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ourbrand from "../../assets/images/banner/ourbrand.png";
 import brand1 from "../../assets/images/img/brand1.png";
@@ -9,13 +8,14 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import brandPro3 from "../../assets/images/img/brandPro3.png";
 import { BASE_URL } from "../../Constant/Index";
-import Footer from "../../directives/footer";
 import axios from "axios";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
 import { Link } from "react-router-dom";
+import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
-function Ourbrand() {
+function PetshopOurbrand() {
   const [thirdbanner, setthirdbanner] = useState([]);
   const [brands, setBrands] = useState([]);
 
@@ -53,7 +53,7 @@ function Ourbrand() {
 
   return (
     <>
-      <Newheader />
+      <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
           <img src={ourbrand} />
@@ -71,7 +71,7 @@ function Ourbrand() {
                       brand.canine == "1" && (
                         <Col lg={3} sm={6} xs={6} className="mb-5">
                           <div key={brand.id} className="Brand-card brand-1">
-                            <Link to={`/our-our-brand/${brand.title}`}>
+                            <Link to={`/petshop-our-Ourbrand/${brand.title}`}>
                               <div className="brandLOGO">
                                 <img
                                  src={
@@ -151,9 +151,9 @@ function Ourbrand() {
                 </Container>
             </section> */}
 
-      <Footer />
+      <Petshopfooter />
     </>
   );
 }
 
-export default Ourbrand;
+export default PetshopOurbrand;

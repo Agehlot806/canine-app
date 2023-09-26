@@ -7,7 +7,7 @@ import { BASE_URL } from '../../Constant/Index';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../directives/footer';
 
-function Shopbybrandlist() {
+function PetshopShopbybrandlist() {
     const { id } = useParams();
     const [brandproduct, setBrandproduct] = useState([]);
 
@@ -74,4 +74,4 @@ function Shopbybrandlist() {
     )
 }
 
-export default Shopbybrandlist
+export default PetshopShopbybrandlist
