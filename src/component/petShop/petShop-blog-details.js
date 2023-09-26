@@ -334,9 +334,10 @@ function PetshopBlogdetails() {
   }
   // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(
+    2
+  );
   const formattedAmount = Number(Amount).toString();
-
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -460,7 +461,7 @@ function PetshopBlogdetails() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -1089,10 +1090,10 @@ function PetshopBlogdetails() {
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
-                                                item.wholeprice * (quantity > 1 ? quantity : 1)
+                                                item.wholeprice *
+                                                  (quantity > 1 ? quantity : 1)
                                               ); // Store the price in state
                                             }}
-                                            
                                           >
                                             {item.type}
                                           </div>
@@ -1213,7 +1214,11 @@ function PetshopBlogdetails() {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
+                      <Button
+                        data-toggle="modal"
+                        data-target="#soldoutModel"
+                        data-dismiss="modal"
+                      >
                         Notify Me When Available
                       </Button>
                     </div>
@@ -1666,7 +1671,7 @@ function PetshopBlogdetails() {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.wholeprice );
+                                      setSelectedVariantPrice(item?.wholeprice);
                                     }}
                                   >
                                     {item?.type}

@@ -6,7 +6,13 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 import cart from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
-import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
@@ -31,8 +37,6 @@ function Addcart() {
   // const firstDiscount = couponlist.length > 0 ? couponlist[0] : null;
   // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
   // const firstDiscountAmount = firstDiscount ? firstDiscount.discount : "";
-
-
 
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
@@ -67,7 +71,7 @@ function Addcart() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -242,7 +246,6 @@ function Addcart() {
       console.error("Error removing product from cart:", error);
     }
   };
-  
 
   const [selectedCity, setSelectedCity] = useState("");
   const GetdataAll = async (e) => {
@@ -536,31 +539,31 @@ function Addcart() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -615,7 +618,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -750,9 +753,9 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                              originalPrice -
-                              disscountvalue?.discount ||
-                              originalPrice + taxamound
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                             )}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
@@ -826,10 +829,11 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${addressContentVisible
-                                ? "fa-arrow-up"
-                                : "fa-arrow-down"
-                                }`}
+                              className={`fa ${
+                                addressContentVisible
+                                  ? "fa-arrow-up"
+                                  : "fa-arrow-down"
+                              }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -925,9 +929,9 @@ function Addcart() {
                               )}`} */}
                               {`${parseInt(
                                 originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount ||
-                                originalPrice + taxamound
+                                  originalPrice -
+                                  disscountvalue?.discount ||
+                                  originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
@@ -938,7 +942,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                            // onClick={handleAddToCart}
+                              // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1470,14 +1474,13 @@ function Addcart() {
                     <select
                       className="form-control"
                       value={profileData.state || ""}
-                      onChange={(e) =>{
+                      onChange={(e) => {
                         Subscription(e);
                         setProfileData({
                           ...profileData,
                           state: e.target.value,
-                        })
-                      }
-                    }
+                        });
+                      }}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -1511,7 +1514,6 @@ function Addcart() {
                   </div>
                 </div>
               </div>
-
 
               <div class="form-group">
                 <label for="exampleFormControlInput1">Pincode</label>
@@ -1605,7 +1607,7 @@ function Addcart() {
                             onClick={(e) => coupendisscount(item)}
                             type="button"
                             className="btn btn-primary btn-apply coupon"
-                            data-dismiss="modal" 
+                            data-dismiss="modal"
                             // data-toggle="modal"
                             // data-target="#Coupon"
                           >

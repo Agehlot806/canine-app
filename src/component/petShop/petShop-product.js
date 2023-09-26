@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Table ,Form} from "react-bootstrap";
+import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import product from "../../assets/images/banner/product.png";
-import { Link, useNavigate,useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
@@ -698,9 +698,10 @@ function Petshopproduct(props) {
   }
   // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(
+    2
+  );
   const formattedAmount = Number(Amount).toString();
-
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -760,7 +761,7 @@ function Petshopproduct(props) {
   };
 
   const [addresslist, setAddressList] = useState([]);
- 
+
   const allAddressList = async () => {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
@@ -817,7 +818,7 @@ function Petshopproduct(props) {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -1188,49 +1189,49 @@ function Petshopproduct(props) {
     setProductDetails(null);
   };
 
-   // ****************notifyme
-   const [email, setEmail] = useState("");
-   const [variation, setVariation] = useState("");
-   const [emailError, setEmailError] = useState("");
-   const [variationError, setVariationError] = useState("");
-   const [isEmailValid, setIsEmailValid] = useState(true);
-   const isEmailFormatValid = (email) => {
-     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-     return emailRegex.test(email);
-   };
- 
-   const handleEmailChange = (e) => {
-     const emailValue = e.target.value;
-     setEmail(emailValue);
-     setIsEmailValid(isEmailFormatValid(emailValue));
-   };
-   const handleNotifymeSubmit = async (e) => {
-     e.preventDefault(); // Prevent default form submission behavior
- 
-     // Prepare form data
-     const notifymeData = new FormData();
-     notifymeData.append("email", email);
-     notifymeData.append("variation", variation);
-     notifymeData.append("stock", productDetails.stock);
-     notifymeData.append("user_id", storedWholesellerId);
-     notifymeData.append("item_id", productDetails.id);
- 
-     console.log("productDetails.id: ", productDetails?.id);
-     console.log("notifymeData", notifymeData);
- 
-     // Send a request
-     axios
-       .post(
-         `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
-         notifymeData
-       )
-       .then((response) => {
-         toast.success("Your data was successfully added");
-       })
-       .catch((error) => {
-         toast.error("An error occurred. Please try again.");
-       });
-   };
+  // ****************notifyme
+  const [email, setEmail] = useState("");
+  const [variation, setVariation] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [variationError, setVariationError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const isEmailFormatValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(isEmailFormatValid(emailValue));
+  };
+  const handleNotifymeSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Prepare form data
+    const notifymeData = new FormData();
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    notifymeData.append("stock", productDetails.stock);
+    notifymeData.append("user_id", storedWholesellerId);
+    notifymeData.append("item_id", productDetails.id);
+
+    console.log("productDetails.id: ", productDetails?.id);
+    console.log("notifymeData", notifymeData);
+
+    // Send a request
+    axios
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
+  };
 
   return (
     <>
@@ -1647,8 +1648,10 @@ function Petshopproduct(props) {
                                   <h6>₹{item.whole_price}</h6>
                                 </Col>
                                 <Col>
-                                  <Link to={`/petshop-add-cart/${item.id}`}
-                                onClick={handleAddToCart}>
+                                  <Link
+                                    to={`/petshop-add-cart/${item.id}`}
+                                    onClick={handleAddToCart}
+                                  >
                                     <img src={bag} />
                                   </Link>
                                 </Col>
@@ -1921,7 +1924,11 @@ function Petshopproduct(props) {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
+                      <Button
+                        data-toggle="modal"
+                        data-target="#soldoutModel"
+                        data-dismiss="modal"
+                      >
                         Notify Me When Available
                       </Button>
                     </div>
@@ -1934,9 +1941,6 @@ function Petshopproduct(props) {
         </div>
       </div>
       {/* all modals */}
-
-
-     
 
       {/* Modal */}
       <div

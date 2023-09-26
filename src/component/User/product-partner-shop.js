@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import Newheader from '../../directives/newheader';
-import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap'
-import shop from '../../assets/images/banner/shop.png'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import Newheader from "../../directives/newheader";
+import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
+import shop from "../../assets/images/banner/shop.png";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import bag from "../../assets/images/icon/bag.png";
-import axios from 'axios'
-import { BASE_URL } from '../../Constant/Index'
-import Footer from '../../directives/footer'
+import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
+import Footer from "../../directives/footer";
 import { styled } from "styled-components";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 
 function Productpartnershop() {
-
-
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
@@ -80,8 +78,6 @@ function Productpartnershop() {
     event.stopPropagation();
   };
 
-
-
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
   const { id } = useParams();
@@ -91,12 +87,12 @@ function Productpartnershop() {
   useEffect(() => {
     thirdBanner();
     allProduct();
-    allBrandshow()
-    allLifesageshow()
-    allBreedshow()
+    allBrandshow();
+    allLifesageshow();
+    allBreedshow();
     allHealthconditionshow();
-    allsubcategary()
-    fetchWishlistData()
+    allsubcategary();
+    fetchWishlistData();
     GetdataAll();
     couponlistdata();
     allReview();
@@ -136,14 +132,11 @@ function Productpartnershop() {
       });
   };
 
-
-
-
-  const [allbrand, setAllBrand] = useState("")
-  const [alllifesage, setAlllifesage] = useState("")
-  const [allbreed, setAllBreed] = useState("")
-  const [allsubcate, setAllSubcate] = useState("")
-  const [allhealth, setAllHealth] = useState("")
+  const [allbrand, setAllBrand] = useState("");
+  const [alllifesage, setAlllifesage] = useState("");
+  const [allbreed, setAllBreed] = useState("");
+  const [allsubcate, setAllSubcate] = useState("");
+  const [allhealth, setAllHealth] = useState("");
 
   const allBrandshow = async () => {
     axios
@@ -208,12 +201,12 @@ function Productpartnershop() {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const modalBackdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
       }
@@ -227,7 +220,7 @@ function Productpartnershop() {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -296,7 +289,6 @@ function Productpartnershop() {
       });
   };
 
-
   const allsubcategary = async () => {
     axios
       .get(`https://canine.hirectjob.in/api/v1/categories`)
@@ -329,14 +321,14 @@ function Productpartnershop() {
   const [selectedhealthIds, setSelectedhealthIds] = useState([]);
   const [selectedvegIds, setSelectedvegIds] = useState([]);
 
-  const [minpricevalue, setMinpricevalue] = useState([])
-  const [maxpricevalue, setMaxpricevalue] = useState([])
+  const [minpricevalue, setMinpricevalue] = useState([]);
+  const [maxpricevalue, setMaxpricevalue] = useState([]);
   const minprice = (e) => {
-    setMinpricevalue(e.target.value)
-  }
+    setMinpricevalue(e.target.value);
+  };
   const maxprice = (e) => {
-    setMaxpricevalue(e.target.value)
-  }
+    setMaxpricevalue(e.target.value);
+  };
 
   const handleDataListBrand = (brand_id) => {
     setSelectedBrandIds((prevSelectedBrandIds) => {
@@ -383,7 +375,13 @@ function Productpartnershop() {
       const updatedhealthIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedhealthIds
+      );
       return updatedhealthIds;
     });
   };
@@ -393,17 +391,33 @@ function Productpartnershop() {
       const updatedvegIds = prevSelectedvegIds.includes(value)
         ? prevSelectedvegIds.filter((id) => id !== value)
         : [...prevSelectedvegIds, value];
-      filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedvegIds
+      );
       return updatedvegIds;
     });
   };
   const applyprice = () => {
     filterProducts();
-  }
+  };
 
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds) => {
+  const filterProducts = async (
+    updatedBrandIds,
+    updatedLifeIds,
+    updatedBreedIds,
+    updatedcateIds,
+    updatedhealthIds,
+    updatedvegIds
+  ) => {
     try {
-      const response = await axios.get(`https://canine.hirectjob.in/api/v1/vendor/get-items-list/${id}`);
+      const response = await axios.get(
+        `https://canine.hirectjob.in/api/v1/vendor/get-items-list/${id}`
+      );
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -415,17 +429,16 @@ function Productpartnershop() {
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
-        // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+        // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
-      setallproduct(filteredProducts)
+      setallproduct(filteredProducts);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-
   };
 
   const applyFilters = ({
@@ -446,21 +459,42 @@ function Productpartnershop() {
     const selectedhealthSet = new Set(selecthealth);
     const selectedvegSet = new Set(selectedVegOptions);
 
-    return products.filter(product => {
-      const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
-      const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
-      const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
-      const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
-      const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
-      const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
-      const price = parseFloat(product.price);  // Parse the price to a number
-      const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+    return products.filter((product) => {
+      const brandFilter =
+        selectedBrands.length === 0 ||
+        selectedBrandSet.has(product.brand_id.toString());
+      const lifeStageFilter =
+        selectLifeStageFilterList.length === 0 ||
+        selectedLifeStageSet.has(product.lifeStage_id.toString());
+      const breedFilter =
+        selectBreedFilterList.length === 0 ||
+        selectedBreedSet.has(product.Petsbreeds_id.toString());
+      const cateFilter =
+        selectcate.length === 0 ||
+        selectedcateSet.has(product.category_ids.toString());
+      const healthFilter =
+        selecthealth.length === 0 ||
+        selectedhealthSet.has(product.helthCondition_id.toString());
+      const Filterveg =
+        selectedVegOptions.length === 0 ||
+        selectedvegSet.has(product.veg === 0 ? "0" : "1");
+      const price = parseFloat(product.price); // Parse the price to a number
+      const minPriceFilter = isNaN(minPrice) || price >= minPrice; // Check if price is NaN or greater than minPrice
       const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const price = parseFloat(product.price);  // Parse the price to a number
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter;
+      return (
+        brandFilter &&
+        lifeStageFilter &&
+        breedFilter &&
+        cateFilter &&
+        healthFilter &&
+        Filterveg &&
+        minPriceFilter &&
+        maxPriceFilter
+      );
     });
   };
 
@@ -564,7 +598,6 @@ function Productpartnershop() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
-
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -574,7 +607,7 @@ function Productpartnershop() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -582,7 +615,7 @@ function Productpartnershop() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -592,9 +625,7 @@ function Productpartnershop() {
   };
   const handeldataId = (id) => {
     productData(id);
-  }
-
-
+  };
 
   // ===============================================================
   // =================================================================
@@ -892,7 +923,10 @@ function Productpartnershop() {
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = (parseInt(Amount) * 0.05) + parseInt(Amount) - (disscountvalue?.discount ?? 0);
+    const orderAmount =
+      parseInt(Amount) * 0.05 +
+      parseInt(Amount) -
+      (disscountvalue?.discount ?? 0);
 
     const requestData = {
       user_id: storedUserId,
@@ -937,7 +971,6 @@ function Productpartnershop() {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
         console.log("order_id", responseData);
-
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -960,7 +993,9 @@ function Productpartnershop() {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const response = await fetch(
+        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+      );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -968,7 +1003,6 @@ function Productpartnershop() {
       console.log(error);
     }
   };
-
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -1000,7 +1034,7 @@ function Productpartnershop() {
     setProductDetails(null);
   };
 
-   // loadRazorpayScript
+  // loadRazorpayScript
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -1026,7 +1060,7 @@ function Productpartnershop() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -1069,7 +1103,6 @@ function Productpartnershop() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -1097,7 +1130,7 @@ function Productpartnershop() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -1118,8 +1151,8 @@ function Productpartnershop() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className='p-0'>
-        <div className='all-bg'>
+      <Container fluid className="p-0">
+        <div className="all-bg">
           <img src={shop} />
         </div>
       </Container>
@@ -1144,30 +1177,29 @@ function Productpartnershop() {
                   {brandDropdownVisible && (
                     <>
                       <div>
-                        {allbrand ? (
-                          allbrand.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-
-
-                                onClick={(e) => handleDataListBrand(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                        {allbrand
+                          ? allbrand.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onClick={(e) =>
+                                    handleDataListBrand(items.title)
+                                  }
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1186,30 +1218,27 @@ function Productpartnershop() {
                   {cateDropdownVisible && (
                     <>
                       <div>
-                        {allsubcate ? (
-                          allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-
-
-                                onClick={(e) => allcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                        {allsubcate
+                          ? allsubcate.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onClick={(e) => allcateselect(items.name)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1229,23 +1258,33 @@ function Productpartnershop() {
                   {priceDropdownVisible && (
                     <>
                       <div>
-
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={minprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={minprice}
+                          />
                         </div>
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={maxprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={maxprice}
+                          />
                         </div>
-                        <div className="form-range" >
+                        <div className="form-range">
                           {/* <span>₹</span> */}
                           <button onClick={applyprice}>Apply</button>
                         </div>
                       </div>
-
                     </>
                   )}
                 </div>
@@ -1263,29 +1302,29 @@ function Productpartnershop() {
                   {lifestageDropdownVisible && (
                     <>
                       <div>
-                        {alllifesage ? (
-                          alllifesage.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onChange={(e) => Lifesatedataselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                        {alllifesage
+                          ? alllifesage.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items.name)
+                                  }
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1304,29 +1343,27 @@ function Productpartnershop() {
                   {breedTypeDropdownVisible && (
                     <>
                       <div>
-                        {allbreed ? (
-                          allbreed.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onChange={(e) => allbreedselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                        {allbreed
+                          ? allbreed.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onChange={(e) => allbreedselect(items.name)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1345,29 +1382,27 @@ function Productpartnershop() {
                   {healthDropdownVisible && (
                     <>
                       <div>
-                        {allhealth ? (
-                          allhealth.map((items) => (
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                        {allhealth
+                          ? allhealth.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
-
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1413,7 +1448,6 @@ function Productpartnershop() {
                             type="checkbox"
                             id="defaultCheck1"
                             onClick={(e) => vegnonveghandler("0")}
-
                           />
                           <label
                             className="form-check-label"
@@ -1427,27 +1461,31 @@ function Productpartnershop() {
                   )}
                 </div>
                 <hr />
-
-
-
               </div>
             </section>
           </Col>
           <Col lg={9}>
-            <section className='section-padding'>
+            <section className="section-padding">
               <div className="needplace">
                 <Container>
                   <Row>
                     {allproduct && allproduct.length > 0 ? (
                       allproduct.map((item, index) => (
                         <Col lg={4} sm={6} xs={6} className="mb-4">
-                          <div className="food-product"
+                          <div
+                            className="food-product"
                             onMouseEnter={() => handleMouseEnter(item.id)}
                             onMouseLeave={() => handleMouseLeave(item.id)}
-                            style={{ background: gradientColors[index % gradientColors.length], }}>
+                            style={{
+                              background:
+                                gradientColors[index % gradientColors.length],
+                            }}
+                          >
                             <i
                               class={
-                                item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                                item.isFav
+                                  ? "fa-solid fa-heart"
+                                  : "fa-regular fa-heart"
                               }
                               onClick={(id) => {
                                 if (storedUserId == null) {
@@ -1481,13 +1519,16 @@ function Productpartnershop() {
                                 </Row>
                                 <Row>
                                   <Col className="align-self-center">
-                                    <h6>{`₹${item.price -
+                                    <h6>{`₹${
+                                      item.price -
                                       (item.price * item.discount) / 100
-                                      }`}</h6>
+                                    }`}</h6>
                                   </Col>
                                   <Col>
-                                    <Link to={`/add-cart/${item.id}`}
-                                onClick={handleAddToCart}>
+                                    <Link
+                                      to={`/add-cart/${item.id}`}
+                                      onClick={handleAddToCart}
+                                    >
                                       <img src={bag} />
                                     </Link>
                                   </Col>
@@ -1496,14 +1537,20 @@ function Productpartnershop() {
                             </Link>
                             {buttonVisibility[item.id] && (
                               <div className="button-container">
-                                <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
                                 <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
+                                  data-toggle="modal"
+                                  data-target=".bd-example-modal-lg"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Quick View
+                                </button>
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".buynow"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Buy Now
+                                </button>
                               </div>
                             )}
                           </div>
@@ -1520,18 +1567,18 @@ function Productpartnershop() {
               <Container>
                 {thirdbanner
                   ? thirdbanner.map(
-                    (item, index) =>
-                      item.title === "new" && (
-                        <div className="banner-bgmain" key={item.id}>
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                      )
-                  )
+                      (item, index) =>
+                        item.title === "new" && (
+                          <div className="banner-bgmain" key={item.id}>
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                        )
+                    )
                   : null}
               </Container>
             </section>
@@ -1541,7 +1588,13 @@ function Productpartnershop() {
       <Footer />
 
       {/* Product details Modal */}
-      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -1562,7 +1615,7 @@ function Productpartnershop() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1573,7 +1626,9 @@ function Productpartnershop() {
                                   >
                                     <div
                                       className="product-item-inner"
-                                      onClick={() => handleThumbnailClick(index)}
+                                      onClick={() =>
+                                        handleThumbnailClick(index)
+                                      }
                                     >
                                       <img
                                         src={
@@ -1601,16 +1656,17 @@ function Productpartnershop() {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1619,12 +1675,13 @@ function Productpartnershop() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
-                                (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1658,7 +1715,9 @@ function Productpartnershop() {
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
-                            <p>({productDetails.rating_count} customer reviews)</p>
+                            <p>
+                              ({productDetails.rating_count} customer reviews)
+                            </p>
                           </div>
                         </Wrapper>
 
@@ -1672,22 +1731,27 @@ function Productpartnershop() {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map((item, index) => (
-                                          <Col lg={4} key={index}>
-                                            <div
-                                              className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
+                                        productDetails.variations.map(
+                                          (item, index) => (
+                                            <Col lg={4} key={index}>
+                                              <div
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
                                                 }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(item.price);
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          </Col>
-                                        ))}
+                                                onClick={() => {
+                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariantPrice(
+                                                    item.price
+                                                  );
+                                                }}
+                                              >
+                                                {item.type}
+                                              </div>
+                                            </Col>
+                                          )
+                                        )}
                                     </Row>
                                   </div>
                                 </div>
@@ -1768,7 +1832,10 @@ function Productpartnershop() {
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
-                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart}>
+                        <Link
+                          to={`/add-cart/${productDetails.id}`}
+                          onClick={handleAddToCart}
+                        >
                           <i className="fa fa-shopping-bag" /> Add to cart
                         </Link>
                         <p>{addToCartStatus}</p>
@@ -1856,14 +1923,17 @@ function Productpartnershop() {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                            <Form.Group controlId="formVariations" className="mb-3">
+                            <Form.Group
+                              controlId="formVariations"
+                              className="mb-3"
+                            >
                               <Form.Label>Variations</Form.Label>
                               <Form.Control
                                 as="select"
                                 value={variation}
                                 onChange={(e) => {
                                   setVariation(e.target.value);
-                                  setVariationError(''); // Clear previous error when the value changes
+                                  setVariationError(""); // Clear previous error when the value changes
                                 }}
                                 required
                                 isInvalid={!!variationError}
@@ -1872,15 +1942,22 @@ function Productpartnershop() {
                                   Choose an option...
                                 </option>
                                 {productDetails?.variations &&
-                                  productDetails?.variations.map((item, index) => (
-                                    <option key={index}>{item.type}</option>
-                                  ))}
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <option key={index}>{item.type}</option>
+                                    )
+                                  )}
                               </Form.Control>
                               {variationError && (
-                                <div className="error-message">{variationError}</div>
+                                <div className="error-message">
+                                  {variationError}
+                                </div>
                               )}
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formGroupEmail"
+                            >
                               <Form.Control
                                 type="email"
                                 name="email"
@@ -1888,12 +1965,17 @@ function Productpartnershop() {
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
-                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                  setIsEmailValid(
+                                    isEmailFormatValid(e.target.value)
+                                  );
                                 }}
                                 isInvalid={!isEmailValid}
                               />
                               {!isEmailValid && (
-                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                <Form.Control.Feedback
+                                  type="invalid"
+                                  className="custom-form-control-feedback"
+                                >
                                   {/[A-Z]/.test(email) && !email.includes("@")
                                     ? "Email should not contain capital letters and must include '@'."
                                     : "Please enter a valid email address."}
@@ -1916,8 +1998,8 @@ function Productpartnershop() {
         </div>
       </div>
 
-        {/*  Modal */}
-        <div
+      {/*  Modal */}
+      <div
         className="modal fade editAddress"
         id="changeadress-model"
         tabIndex={-1}
@@ -2239,10 +2321,11 @@ function Productpartnershop() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2345,10 +2428,11 @@ function Productpartnershop() {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -2559,11 +2643,9 @@ function Productpartnershop() {
                             <Col>
                               <h5>
                                 ₹
-                                {
-                                  (parseInt(Amount) * 0.05) + parseInt(Amount) - (
-                                    (disscountvalue?.discount ?? 0)
-                                  )
-                                }
+                                {parseInt(Amount) * 0.05 +
+                                  parseInt(Amount) -
+                                  (disscountvalue?.discount ?? 0)}
                               </h5>
                             </Col>
                           </Row>
@@ -2716,11 +2798,11 @@ function Productpartnershop() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -2959,7 +3041,7 @@ function Productpartnershop() {
         </div>
       </div>
     </>
-  )
+  );
 }
 const Wrapper = styled.section`
   justify-content: flex-start;
@@ -2976,4 +3058,4 @@ const Wrapper = styled.section`
     padding-left: 1.2rem;
   }
 `;
-export default Productpartnershop
+export default Productpartnershop;

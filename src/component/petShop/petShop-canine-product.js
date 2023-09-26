@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Button, Table ,Form} from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
-import product from '../../assets/images/banner/product.png'
-import { Link, useNavigate } from 'react-router-dom'
-import product1 from '../../assets/images/img/product1.png'
-import product2 from '../../assets/images/img/product2.png'
-import product3 from '../../assets/images/img/product3.png'
-import productdetail from '../../assets/images/banner/productdetail.png'
-import bannerone from '../../assets/images/banner/banner.png'
-import { BASE_URL } from '../../Constant/Index';
-import axios from 'axios';
-import bag from '../../assets/images/icon/bag.png'
-import { Toaster, toast } from 'react-hot-toast';
-import PetShopHeader from '../../directives/petShopHeader';
-import Petshopfooter from '../../directives/petShop-Footer';
+import product from "../../assets/images/banner/product.png";
+import { Link, useNavigate } from "react-router-dom";
+import product1 from "../../assets/images/img/product1.png";
+import product2 from "../../assets/images/img/product2.png";
+import product3 from "../../assets/images/img/product3.png";
+import productdetail from "../../assets/images/banner/productdetail.png";
+import bannerone from "../../assets/images/banner/banner.png";
+import { BASE_URL } from "../../Constant/Index";
+import axios from "axios";
+import bag from "../../assets/images/icon/bag.png";
+import { Toaster, toast } from "react-hot-toast";
+import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 
@@ -21,18 +21,18 @@ const clinetreview = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 4,
-    slidesToSlide: 2 // optional, default to 1.
+    slidesToSlide: 2, // optional, default to 1.
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
     items: 2,
-    slidesToSlide: 1 // optional, default to 1.
+    slidesToSlide: 1, // optional, default to 1.
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
-    slidesToSlide: 1 // optional, default to 1.
-  }
+    slidesToSlide: 1, // optional, default to 1.
+  },
 };
 function PetShopcanineproduct(props) {
   const [categories, setcategories] = useState([]);
@@ -110,14 +110,14 @@ function PetShopcanineproduct(props) {
   useEffect(() => {
     categoriesProduct();
     allProduct();
-    allBrandshow()
-    allLifesageshow()
-    allBreedshow()
-    allsubcategary()
-    allHealthconditionshow()
-    Allsubcategories()
-    fetchWishlistData()
-    allAddressList()
+    allBrandshow();
+    allLifesageshow();
+    allBreedshow();
+    allsubcategary();
+    allHealthconditionshow();
+    Allsubcategories();
+    fetchWishlistData();
+    allAddressList();
   }, []);
 
   const categoriesProduct = async () => {
@@ -135,7 +135,7 @@ function PetShopcanineproduct(props) {
       .then((response) => {
         console.log(response);
         console.log("all product Successful");
-        setallproduct(response.data.data)
+        setallproduct(response.data.data);
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -188,12 +188,12 @@ function PetShopcanineproduct(props) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector(".modal");
     if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const modalBackdrop = document.querySelector('.modal-backdrop');
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
       }
@@ -207,7 +207,7 @@ function PetShopcanineproduct(props) {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -265,15 +265,13 @@ function PetShopcanineproduct(props) {
       });
   };
 
-
   ////filter tarun//
-  const [allbrand, setAllBrand] = useState("")
-  const [alllifesage, setAlllifesage] = useState("")
-  const [allbreed, setAllBreed] = useState("")
-  const [allsubcate, setAllSubcate] = useState("")
-  const [allhealth, setAllHealth] = useState("")
+  const [allbrand, setAllBrand] = useState("");
+  const [alllifesage, setAlllifesage] = useState("");
+  const [allbreed, setAllBreed] = useState("");
+  const [allsubcate, setAllSubcate] = useState("");
+  const [allhealth, setAllHealth] = useState("");
   const [subcategories, setsubcategories] = useState([]);
-
 
   const allBrandshow = async () => {
     axios
@@ -312,7 +310,6 @@ function PetShopcanineproduct(props) {
         console.log(error);
       });
   };
-
 
   const allsubcategary = async () => {
     axios
@@ -360,14 +357,14 @@ function PetShopcanineproduct(props) {
   const [selectedvegIds, setSelectedvegIds] = useState([]);
   const [selectedsubcateIds, setSelectedsubcateIds] = useState([]);
 
-  const [minpricevalue, setMinpricevalue] = useState([])
-  const [maxpricevalue, setMaxpricevalue] = useState([])
+  const [minpricevalue, setMinpricevalue] = useState([]);
+  const [maxpricevalue, setMaxpricevalue] = useState([]);
   const minprice = (e) => {
-    setMinpricevalue(e.target.value)
-  }
+    setMinpricevalue(e.target.value);
+  };
   const maxprice = (e) => {
-    setMaxpricevalue(e.target.value)
-  }
+    setMaxpricevalue(e.target.value);
+  };
 
   const handleDataListBrand = (brand_id) => {
     setSelectedBrandIds((prevSelectedBrandIds) => {
@@ -413,7 +410,13 @@ function PetShopcanineproduct(props) {
       const updatedhealthIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined, updatedhealthIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedhealthIds
+      );
       return updatedhealthIds;
     });
   };
@@ -423,7 +426,15 @@ function PetShopcanineproduct(props) {
       const updatesubcateIds = prevSelectedhealthIds.includes(name)
         ? prevSelectedhealthIds.filter((id) => id !== name)
         : [...prevSelectedhealthIds, name];
-      filterProducts(undefined, undefined, undefined, undefined, undefined, undefined, updatesubcateIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatesubcateIds
+      );
       return updatesubcateIds;
     });
   };
@@ -433,18 +444,34 @@ function PetShopcanineproduct(props) {
       const updatedvegIds = prevSelectedvegIds.includes(value)
         ? prevSelectedvegIds.filter((id) => id !== value)
         : [...prevSelectedvegIds, value];
-      filterProducts(undefined, undefined, undefined, undefined, undefined, updatedvegIds);
+      filterProducts(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        updatedvegIds
+      );
       return updatedvegIds;
     });
   };
   const applyprice = () => {
     filterProducts();
-  }
+  };
 
-
-  const filterProducts = async (updatedBrandIds, updatedLifeIds, updatedBreedIds, updatedcateIds, updatedhealthIds, updatedvegIds, updatesubcateIds) => {
+  const filterProducts = async (
+    updatedBrandIds,
+    updatedLifeIds,
+    updatedBreedIds,
+    updatedcateIds,
+    updatedhealthIds,
+    updatedvegIds,
+    updatesubcateIds
+  ) => {
     try {
-      const response = await axios.get("https://canine.hirectjob.in/api/v1/items/latest");
+      const response = await axios.get(
+        "https://canine.hirectjob.in/api/v1/items/latest"
+      );
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -457,17 +484,16 @@ function PetShopcanineproduct(props) {
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
-        // minPrice:  minpricevalue !== [] ? minpricevalue : null, 
+        // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
-      setallproduct(filteredProducts)
+      setallproduct(filteredProducts);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-
   };
 
   const applyFilters = ({
@@ -490,22 +516,46 @@ function PetShopcanineproduct(props) {
     const selectedvegSet = new Set(selectedVegOptions);
     const selectedsubcateSet = new Set(selectedsubcate);
 
-    return products.filter(product => {
-      const brandFilter = selectedBrands.length === 0 || selectedBrandSet.has(product.brand_id.toString());
-      const lifeStageFilter = selectLifeStageFilterList.length === 0 || selectedLifeStageSet.has(product.lifeStage_id.toString());
-      const breedFilter = selectBreedFilterList.length === 0 || selectedBreedSet.has(product.Petsbreeds_id.toString());
-      const cateFilter = selectcate.length === 0 || selectedcateSet.has(product.category_ids.toString());
-      const healthFilter = selecthealth.length === 0 || selectedhealthSet.has(product.helthCondition_id.toString());
-      const subcateFilter = selectedsubcate.length === 0 || selectedsubcateSet.has(product.sub_category.toString());
-      const Filterveg = selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "0" : "1");
-      const price = parseFloat(product.price);  // Parse the price to a number
-      const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
+    return products.filter((product) => {
+      const brandFilter =
+        selectedBrands.length === 0 ||
+        selectedBrandSet.has(product.brand_id.toString());
+      const lifeStageFilter =
+        selectLifeStageFilterList.length === 0 ||
+        selectedLifeStageSet.has(product.lifeStage_id.toString());
+      const breedFilter =
+        selectBreedFilterList.length === 0 ||
+        selectedBreedSet.has(product.Petsbreeds_id.toString());
+      const cateFilter =
+        selectcate.length === 0 ||
+        selectedcateSet.has(product.category_ids.toString());
+      const healthFilter =
+        selecthealth.length === 0 ||
+        selectedhealthSet.has(product.helthCondition_id.toString());
+      const subcateFilter =
+        selectedsubcate.length === 0 ||
+        selectedsubcateSet.has(product.sub_category.toString());
+      const Filterveg =
+        selectedVegOptions.length === 0 ||
+        selectedvegSet.has(product.veg === 0 ? "0" : "1");
+      const price = parseFloat(product.price); // Parse the price to a number
+      const minPriceFilter = isNaN(minPrice) || price >= minPrice; // Check if price is NaN or greater than minPrice
       const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const price = parseFloat(product.price);  // Parse the price to a number
       // const minPriceFilter = isNaN(minPrice) || price >= minPrice;  // Check if price is NaN or greater than minPrice
       // const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const Filterveg =selectedVegOptions.length === 0 || selectedvegSet.has(product.veg === 0 ? "veg" : "non-veg");
-      return brandFilter && lifeStageFilter && breedFilter && cateFilter && healthFilter && Filterveg && minPriceFilter && maxPriceFilter && subcateFilter;
+      return (
+        brandFilter &&
+        lifeStageFilter &&
+        breedFilter &&
+        cateFilter &&
+        healthFilter &&
+        Filterveg &&
+        minPriceFilter &&
+        maxPriceFilter &&
+        subcateFilter
+      );
     });
   };
 
@@ -619,15 +669,15 @@ function PetShopcanineproduct(props) {
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(
+    2
+  );
   const formattedAmount = Number(Amount).toString();
-
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
-
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -638,7 +688,7 @@ function PetShopcanineproduct(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -646,7 +696,7 @@ function PetShopcanineproduct(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -656,7 +706,7 @@ function PetShopcanineproduct(props) {
   };
   const handeldataId = (id) => {
     productData(id);
-  }
+  };
 
   let wholesellervariationprice = 0;
 
@@ -665,7 +715,7 @@ function PetShopcanineproduct(props) {
   }
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
 
-   // ===============================================================
+  // ===============================================================
   // =================================================================
   // Buy Now ------------------------
   // ==================================================================
@@ -746,7 +796,7 @@ function PetShopcanineproduct(props) {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -1163,9 +1213,9 @@ function PetShopcanineproduct(props) {
   return (
     <>
       <Toaster />
-      < PetShopHeader />
-      <Container fluid className='p-0'>
-        <div className='all-bg'>
+      <PetShopHeader />
+      <Container fluid className="p-0">
+        <div className="all-bg">
           <img src={product} />
         </div>
       </Container>
@@ -1191,29 +1241,28 @@ function PetShopcanineproduct(props) {
                   {brandDropdownVisible && (
                     <>
                       <div>
-                        {allbrand ? (
-                          allbrand.map((items) => (
-                            items.canine === 1 && (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-
-
-                                  onClick={(e) => handleDataListBrand(items.title)}
-                                />
-                                <label
-                                  className="form-check-label"
-                                >
-                                  {items.title}
-                                </label>
-                              </div>
+                        {allbrand
+                          ? allbrand.map(
+                              (items) =>
+                                items.canine === 1 && (
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) =>
+                                        handleDataListBrand(items.title)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.title}
+                                    </label>
+                                  </div>
+                                )
                             )
-                          ))
-                        ) : ""}
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1232,27 +1281,23 @@ function PetShopcanineproduct(props) {
                   {productTypeDropdownVisible && (
                     <>
                       <div>
-                        {subcategories ? (
-                          subcategories.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allsubcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {subcategories
+                          ? subcategories.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allsubcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1271,29 +1316,23 @@ function PetShopcanineproduct(props) {
                   {cateDropdownVisible && (
                     <>
                       <div>
-                        {allsubcate ? (
-                          allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-
-
-                                onClick={(e) => allcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-
+                        {allsubcate
+                          ? allsubcate.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1313,23 +1352,33 @@ function PetShopcanineproduct(props) {
                   {priceDropdownVisible && (
                     <>
                       <div>
-
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={minprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={minprice}
+                          />
                         </div>
-                        <div className="form-range" onClick={handleCheckboxClick}>
+                        <div
+                          className="form-range"
+                          onClick={handleCheckboxClick}
+                        >
                           <span>₹</span>
-                          <input type="number"
-                            placeholder="From" onChange={maxprice} />
+                          <input
+                            type="number"
+                            placeholder="From"
+                            onChange={maxprice}
+                          />
                         </div>
-                        <div className="form-range" >
+                        <div className="form-range">
                           {/* <span>₹</span> */}
                           <button onClick={applyprice}>Apply</button>
                         </div>
                       </div>
-
                     </>
                   )}
                 </div>
@@ -1347,27 +1396,25 @@ function PetShopcanineproduct(props) {
                   {lifestageDropdownVisible && (
                     <>
                       <div>
-                        {alllifesage ? (
-                          alllifesage.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) => Lifesatedataselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {alllifesage
+                          ? alllifesage.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items.name)
+                                  }
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1386,27 +1433,23 @@ function PetShopcanineproduct(props) {
                   {breedTypeDropdownVisible && (
                     <>
                       <div>
-                        {allbreed ? (
-                          allbreed.map((items) => (
-
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) => allbreedselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {allbreed
+                          ? allbreed.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) => allbreedselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1425,27 +1468,23 @@ function PetShopcanineproduct(props) {
                   {healthDropdownVisible && (
                     <>
                       <div>
-                        {allhealth ? (
-                          allhealth.map((items) => (
-
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
+                        {allhealth
+                          ? allhealth.map((items) => (
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
-                        ) : ""}
-
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label className="form-check-label">
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
+                          : ""}
                       </div>
                     </>
                   )}
@@ -1474,9 +1513,7 @@ function PetShopcanineproduct(props) {
                             type="checkbox"
                             onClick={(e) => vegnonveghandler("1")}
                           />
-                          <label
-                            className="form-check-label"
-                          >
+                          <label className="form-check-label">
                             Non-Veg (219)
                           </label>
                         </div>
@@ -1488,31 +1525,21 @@ function PetShopcanineproduct(props) {
                             className="form-check-input"
                             type="checkbox"
                             onClick={(e) => vegnonveghandler("0")}
-
                           />
-                          <label
-                            className="form-check-label"
-                          >
-                            Veg (73)
-                          </label>
+                          <label className="form-check-label">Veg (73)</label>
                         </div>
                       </div>
                     </>
                   )}
                 </div>
                 <hr />
-
-
-
               </div>
             </section>
           </Col>
           <Col lg={9}>
             <section className="section-padding">
               <Container>
-                <h1 className="main-head">
-                  Shop Deals For Your Best Buddy
-                </h1>
+                <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
               </Container>
               <Container fluid>
                 <Carousel
@@ -1535,7 +1562,13 @@ function PetShopcanineproduct(props) {
                 >
                   {categories.map((item) => (
                     <div className="product-Deals" key={item.id}>
-                      <img src={"https://canine.hirectjob.in/storage/app/public/category/" + item.image} onClick={(e) => allcateselect(item.name)} />
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/public/category/" +
+                          item.image
+                        }
+                        onClick={(e) => allcateselect(item.name)}
+                      />
                       <h1>{item.name}</h1>
                     </div>
                   ))}
@@ -1543,80 +1576,110 @@ function PetShopcanineproduct(props) {
               </Container>
             </section>
 
-
             <section className="section-padding food">
               <Container>
                 <Row>
                   {allproduct
                     ? allproduct.map(
-                      (item, index) =>
-                        item.module_id === 1 && (
-                          <Col lg={4} sm={6} xs={6} className="mb-4">
-                            <div className="food-product" key={item.id}
-                              onMouseEnter={() => handleMouseEnter(item.id)}
-                              onMouseLeave={() => handleMouseLeave(item.id)}
-                              style={{
-                                background:
-                                  gradientColors[index % gradientColors.length],
-                              }}>
-                              <i
-                                class={
-                                  item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                                }
-                                onClick={(id) => {
-                                  if (storedWholesellerId == null) {
-                                    toast.error("Please Login first");
-                                  } else {
-                                    addToWishlist(item.id);
-                                  }
+                        (item, index) =>
+                          item.module_id === 1 && (
+                            <Col lg={4} sm={6} xs={6} className="mb-4">
+                              <div
+                                className="food-product"
+                                key={item.id}
+                                onMouseEnter={() => handleMouseEnter(item.id)}
+                                onMouseLeave={() => handleMouseLeave(item.id)}
+                                style={{
+                                  background:
+                                    gradientColors[
+                                      index % gradientColors.length
+                                    ],
                                 }}
-                              />
-                              <Link to={`/petshop-productDetails/${item.id}`}>
-                                <div className='text-center'>
-                                  <img src={"https://canine.hirectjob.in//storage/app/public/product/" + item.image} />
-                                </div>
-                                <div>
-                                  <h6>{item.name}</h6>
-                                  <p>{item.description}</p>
-                                </div>
-                                <div className="product-bag">
-                                  <Row>
-                                    <Col className='align-self-center'><h6>₹{item.whole_price}</h6></Col>
-                                    <Col><Link to={`/petshop-add-cart/${item.id}`}
-                                onClick={handleAddToCart}><img src={bag} /></Link></Col>
-                                  </Row>
-                                </div>
-                              </Link>
+                              >
+                                <i
+                                  class={
+                                    item.isFav
+                                      ? "fa-solid fa-heart"
+                                      : "fa-regular fa-heart"
+                                  }
+                                  onClick={(id) => {
+                                    if (storedWholesellerId == null) {
+                                      toast.error("Please Login first");
+                                    } else {
+                                      addToWishlist(item.id);
+                                    }
+                                  }}
+                                />
+                                <Link to={`/petshop-productDetails/${item.id}`}>
+                                  <div className="text-center">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <div>
+                                    <h6>{item.name}</h6>
+                                    <p>{item.description}</p>
+                                  </div>
+                                  <div className="product-bag">
+                                    <Row>
+                                      <Col className="align-self-center">
+                                        <h6>₹{item.whole_price}</h6>
+                                      </Col>
+                                      <Col>
+                                        <Link
+                                          to={`/petshop-add-cart/${item.id}`}
+                                          onClick={handleAddToCart}
+                                        >
+                                          <img src={bag} />
+                                        </Link>
+                                      </Col>
+                                    </Row>
+                                  </div>
+                                </Link>
 
-                              {buttonVisibility[item.id] && (
-                                <div className="button-container">
-                                  <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
-                                  <button data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}>Buy Now</button>
-                                </div>
-                              )}
-                            </div>
-                          </Col>
-                        )
-                    )
+                                {buttonVisibility[item.id] && (
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lg"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Buy Now
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </Col>
+                          )
+                      )
                     : null}
                 </Row>
               </Container>
             </section>
-
-
           </Col>
         </Row>
-      </Container >
+      </Container>
 
+      <Petshopfooter />
 
-
-      < Petshopfooter />
-
-     
       {/* Product details Modal */}
-      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -1637,7 +1700,7 @@ function PetShopcanineproduct(props) {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                            productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1675,7 +1738,9 @@ function PetShopcanineproduct(props) {
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
-                            <p>({productDetails.rating_count} customer reviews)</p>
+                            <p>
+                              ({productDetails.rating_count} customer reviews)
+                            </p>
                           </div>
                         </Wrapper>
 
@@ -1687,22 +1752,27 @@ function PetShopcanineproduct(props) {
                                 <Row>
                                   {productDetails?.variations &&
                                     productDetails?.variations.length > 0 &&
-                                    productDetails.variations.map((item, index) => (
-                                      <Col lg={4} sm={4} xs={3} key={index}>
-                                        <div
-                                          className={`tab-variations ${selectedVariant === item.type
-                                            ? "active"
-                                            : ""
+                                    productDetails.variations.map(
+                                      (item, index) => (
+                                        <Col lg={4} sm={4} xs={3} key={index}>
+                                          <div
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
+                                                ? "active"
+                                                : ""
                                             }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.wholeprice); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      </Col>
-                                    ))}
+                                            onClick={() => {
+                                              setSelectedVariant(item.type);
+                                              setSelectedVariantPrice(
+                                                item.wholeprice
+                                              ); // Store the price in state
+                                            }}
+                                          >
+                                            {item.type}
+                                          </div>
+                                        </Col>
+                                      )
+                                    )}
                                 </Row>
                               </div>
                             </Col>
@@ -1816,7 +1886,11 @@ function PetShopcanineproduct(props) {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
+                      <Button
+                        data-toggle="modal"
+                        data-target="#soldoutModel"
+                        data-dismiss="modal"
+                      >
                         Notify Me When Available
                       </Button>
                     </div>
@@ -1828,9 +1902,9 @@ function PetShopcanineproduct(props) {
           </div>
         </div>
       </div>
-      
-       {/* Modal */}
-       <div
+
+      {/* Modal */}
+      <div
         className="modal fade editAddress"
         id="changeadress-model"
         tabIndex={-1}
@@ -2859,7 +2933,7 @@ function PetShopcanineproduct(props) {
         </div>
       </div>
     </>
-  )
+  );
 }
 const Wrapper = styled.section`
   justify-content: flex-start;
@@ -2876,4 +2950,4 @@ const Wrapper = styled.section`
     padding-left: 1.2rem;
   }
 `;
-export default PetShopcanineproduct
+export default PetShopcanineproduct;

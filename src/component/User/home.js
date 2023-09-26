@@ -465,7 +465,7 @@ function Home(props) {
     if (productDetails?.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails?.image
+          productDetails?.image
       );
     }
   }, [productDetails]);
@@ -473,7 +473,7 @@ function Home(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails?.images[index]
+        productDetails?.images[index]
     );
   };
 
@@ -828,9 +828,7 @@ function Home(props) {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/items/get_happyreview`
-      );
+      const response = await fetch(`${BASE_URL}/items/get_happyreview`);
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -883,11 +881,10 @@ function Home(props) {
 
   const handlePayment = async () => {
     try {
-
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -922,7 +919,6 @@ function Home(props) {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -950,7 +946,7 @@ function Home(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -995,100 +991,100 @@ function Home(props) {
             <div>
               {homebanner
                 ? homebanner.map(
-                  (item, index) =>
-                    item.type === "home_banner_1" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More{" "}
-                                <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    )
-                )
-                : null}
-            </div>
-            <div>
-              {homebanner
-                ? homebanner.map(
-                  (item, index) =>
-                    item.type === "home_banner_2" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-
-                              <div className="app-home">
-                                <Link>
-                                  <img src={app1} />
-                                </Link>
-
-                                <Link>
-                                  <img src={app2} />
-                                </Link>
+                    (item, index) =>
+                      item.type === "home_banner_1" && (
+                        <div className="home-img">
+                          <div className="">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <Row>
+                            <Col lg={7}>
+                              <div className="home-content">
+                                <h1>{item.title}</h1>
+                                <p>{item.description}</p>
+                                <Button>
+                                  Explore More{" "}
+                                  <i className="fa fa-angle-right" />
+                                </Button>
                               </div>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    )
-                )
+                            </Col>
+                          </Row>
+                        </div>
+                      )
+                  )
                 : null}
             </div>
             <div>
               {homebanner
                 ? homebanner.map(
-                  (item, index) =>
-                    item.type === "home_banner_3" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
+                    (item, index) =>
+                      item.type === "home_banner_2" && (
+                        <div className="home-img">
+                          <div className="">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <Row>
+                            <Col lg={7}>
+                              <div className="home-content">
+                                <h1>{item.title}</h1>
+                                <p>{item.description}</p>
+
+                                <div className="app-home">
+                                  <Link>
+                                    <img src={app1} />
+                                  </Link>
+
+                                  <Link>
+                                    <img src={app2} />
+                                  </Link>
+                                </div>
+                              </div>
+                            </Col>
+                          </Row>
                         </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More{" "}
-                                <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    )
-                )
+                      )
+                  )
+                : null}
+            </div>
+            <div>
+              {homebanner
+                ? homebanner.map(
+                    (item, index) =>
+                      item.type === "home_banner_3" && (
+                        <div className="home-img">
+                          <div className="">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <Row>
+                            <Col lg={7}>
+                              <div className="home-content">
+                                <h1>{item.title}</h1>
+                                <p>{item.description}</p>
+                                <Button>
+                                  Explore More{" "}
+                                  <i className="fa fa-angle-right" />
+                                </Button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                      )
+                  )
                 : null}
             </div>
           </Carousel>
@@ -1197,10 +1193,11 @@ function Home(props) {
                           <h6>{item.name}</h6>
                           {/* <p>{item.description}</p> */}
                           <p
-                            className={`truncate-text ${!expandedDescription[item.id]
+                            className={`truncate-text ${
+                              !expandedDescription[item.id]
                                 ? "read-more-link"
                                 : ""
-                              }`}
+                            }`}
                           >
                             {item.description}
                             {item.description.length > 100 &&
@@ -1237,9 +1234,10 @@ function Home(props) {
                             >
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${item.price -
+                                {`₹${
+                                  item.price -
                                   (item.price * item?.discount) / 100
-                                  }`}
+                                }`}
                               </h6>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
@@ -1304,116 +1302,11 @@ function Home(props) {
           <Row className="mt-4">
             {brands
               ? brands.map(
-                (brand) =>
-                  brand.canine == "1" && (
-                    <Col lg={3} sm={6} xs={6} className="mb-5">
-                      <div key={brand.id} className="Brand-card brand-1">
-                        <Link to={`/our-our-brand/${brand.id}`}>
-                          <div className="brandLOGO">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                brand.logo
-                              }
-                            />
-                          </div>
-                          <div className="brand-main">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                brand.image
-                              }
-                            />
-                          </div>
-                          <div className="brand-text">
-                            <h5>{brand.title}</h5>
-                          </div>
-                        </Link>
-                      </div>
-                    </Col>
-                  )
-              )
-              : null}
-          </Row>
-        </Container>
-      </section>
-
-      <section className="section-padding thirdbnner-area">
-        <Container>
-          <Row>
-            {homebanner
-              ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <Col lg={6} className="mb-4">
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/" +
-                          item.image
-                        }
-                      />
-                    </Col>
-                  )
-              )
-              : null}
-            <Col lg={6} className="align-self-center">
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "store_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "item_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Shop By Brands</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {brands
-                ? brands.map(
                   (brand) =>
-                    brand.canine == "0" && (
+                    brand.canine == "1" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
                         <div key={brand.id} className="Brand-card brand-1">
-                          <Link to={`/shop-by-brand-list/${brand.id}`}>
+                          <Link to={`/our-our-brand/${brand.id}`}>
                             <div className="brandLOGO">
                               <img
                                 src={
@@ -1438,6 +1331,111 @@ function Home(props) {
                       </Col>
                     )
                 )
+              : null}
+          </Row>
+        </Container>
+      </section>
+
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            {homebanner
+              ? homebanner.map(
+                  (item, index) =>
+                    item.type === "default" && (
+                      <Col lg={6} className="mb-4">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
+                      </Col>
+                    )
+                )
+              : null}
+            <Col lg={6} className="align-self-center">
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "store_wise" && (
+                          <Col sm={12} className="mb-4">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "item_wise" && (
+                          <Col sm={12} className="mb-4">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="section-padding">
+        <Container>
+          <Row>
+            <Col lg={6} sm={6} xs={6}>
+              <h1 className="main-head">Shop By Brands</h1>
+            </Col>
+            <Col lg={6} sm={6} xs={6}>
+              <div className="foodMore">
+                <Link to="/shop-by-brand">See all</Link>
+              </div>
+            </Col>
+          </Row>
+          <div className="needplace">
+            <Row>
+              {brands
+                ? brands.map(
+                    (brand) =>
+                      brand.canine == "0" && (
+                        <Col lg={3} sm={6} xs={6} className="mb-5">
+                          <div key={brand.id} className="Brand-card brand-1">
+                            <Link to={`/shop-by-brand-list/${brand.id}`}>
+                              <div className="brandLOGO">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                    brand.logo
+                                  }
+                                />
+                              </div>
+                              <div className="brand-main">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                    brand.image
+                                  }
+                                />
+                              </div>
+                              <div className="brand-text">
+                                <h5>{brand.title}</h5>
+                              </div>
+                            </Link>
+                          </div>
+                        </Col>
+                      )
+                  )
                 : null}
             </Row>
           </div>
@@ -1497,30 +1495,30 @@ function Home(props) {
           <div className="banner-video">
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "video" && (
-                    <Row>
-                      <Col lg={5} className="p-0">
-                        <div className="video-content">
-                          <h1 className="main-head">{item.title}</h1>
-                          <p>{item.description}</p>
-                          <Button>Shop Now</Button>
-                        </div>
-                      </Col>
-                      <Col lg={7} className="p-0">
-                        <video loop autoPlay muted>
-                          <source
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                            type="video/mp4"
-                          />
-                        </video>
-                      </Col>
-                    </Row>
-                  )
-              )
+                  (item, index) =>
+                    item.type === "video" && (
+                      <Row>
+                        <Col lg={5} className="p-0">
+                          <div className="video-content">
+                            <h1 className="main-head">{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>Shop Now</Button>
+                          </div>
+                        </Col>
+                        <Col lg={7} className="p-0">
+                          <video loop autoPlay muted>
+                            <source
+                              src={
+                                "https://canine.hirectjob.in/storage/app/" +
+                                item.image
+                              }
+                              type="video/mp4"
+                            />
+                          </video>
+                        </Col>
+                      </Row>
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -1574,22 +1572,21 @@ function Home(props) {
               <Col lg={4} sm={6} xs={6} key={order.id}>
                 <div className="Brand-cus">
                   <>
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/public/profile/" +
-                      order.user_id[0].image
-                    }
-                    alt={order.user_id[0].f_name}
-                  />
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/profile/" +
+                        order.user_id[0].image
+                      }
+                      alt={order.user_id[0].f_name}
+                    />
                   </>
                   <div className="brand-bg">
                     {order.user_id && order.user_id.length > 0 && (
                       <h5>
-                        {order.user_id[0].f_name}{" "}
-                        {order.user_id[0].l_name}
+                        {order.user_id[0].f_name} {order.user_id[0].l_name}
                       </h5>
                     )}
-                      <p>{order.comment}</p>
+                    <p>{order.comment}</p>
                     <div className="icon-style">
                       {Array.from({
                         length: order.rating,
@@ -1613,55 +1610,54 @@ function Home(props) {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "news_letter" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
-                      </div>
-                      <Row className="justify-content-center">
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <div className="Newsletter">
-                              <h1 className="main-head">
-                                Get Or Promo Code by Subscribing To our
-                                Newsletter
-                              </h1>
-                              <Form className="d-flex">
-                                <Form.Control
-                                  type="search"
-                                  placeholder="Enter your email"
-                                  className="me-2"
-                                  aria-label="Search"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <Button
-                                  variant="outline-success"
-                                  onClick={handleNewsletter}
-                                >
-                                  Subscribe
-                                </Button>
-                              </Form>
+                  (item, index) =>
+                    item.type === "news_letter" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row className="justify-content-center">
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <div className="Newsletter">
+                                <h1 className="main-head">
+                                  Get Or Promo Code by Subscribing To our
+                                  Newsletter
+                                </h1>
+                                <Form className="d-flex">
+                                  <Form.Control
+                                    type="search"
+                                    placeholder="Enter your email"
+                                    className="me-2"
+                                    aria-label="Search"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                  />
+                                  <Button
+                                    variant="outline-success"
+                                    onClick={handleNewsletter}
+                                  >
+                                    Subscribe
+                                  </Button>
+                                </Form>
+                              </div>
                             </div>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
               : null}
           </div>
         </Container>
       </section>
 
       <Footer />
-
 
       {/* Product details Modal */}
       <div
@@ -1691,7 +1687,7 @@ function Home(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1732,17 +1728,17 @@ function Home(props) {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1751,13 +1747,13 @@ function Home(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1811,10 +1807,11 @@ function Home(props) {
                                           (item, index) => (
                                             <Col lg={4} key={index}>
                                               <div
-                                                className={`tab-variations ${selectedVariant === item?.type
+                                                className={`tab-variations ${
+                                                  selectedVariant === item?.type
                                                     ? "active"
                                                     : ""
-                                                  }`}
+                                                }`}
                                                 onClick={() => {
                                                   setSelectedVariant(
                                                     item?.type
@@ -1907,7 +1904,7 @@ function Home(props) {
                     </Col>
                   </Row>
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 0 ? (
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
                         <Link
@@ -2001,14 +1998,17 @@ function Home(props) {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                            <Form.Group controlId="formVariations" className="mb-3">
+                            <Form.Group
+                              controlId="formVariations"
+                              className="mb-3"
+                            >
                               <Form.Label>Variations</Form.Label>
                               <Form.Control
                                 as="select"
                                 value={variation}
                                 onChange={(e) => {
                                   setVariation(e.target.value);
-                                  setVariationError(''); // Clear previous error when the value changes
+                                  setVariationError(""); // Clear previous error when the value changes
                                 }}
                                 required
                                 isInvalid={!!variationError}
@@ -2017,15 +2017,22 @@ function Home(props) {
                                   Choose an option...
                                 </option>
                                 {productDetails?.variations &&
-                                  productDetails?.variations.map((item, index) => (
-                                    <option key={index}>{item.type}</option>
-                                  ))}
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <option key={index}>{item.type}</option>
+                                    )
+                                  )}
                               </Form.Control>
                               {variationError && (
-                                <div className="error-message">{variationError}</div>
+                                <div className="error-message">
+                                  {variationError}
+                                </div>
                               )}
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formGroupEmail"
+                            >
                               <Form.Control
                                 type="email"
                                 name="email"
@@ -2033,12 +2040,17 @@ function Home(props) {
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
-                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                  setIsEmailValid(
+                                    isEmailFormatValid(e.target.value)
+                                  );
                                 }}
                                 isInvalid={!isEmailValid}
                               />
                               {!isEmailValid && (
-                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                <Form.Control.Feedback
+                                  type="invalid"
+                                  className="custom-form-control-feedback"
+                                >
                                   {/[A-Z]/.test(email) && !email.includes("@")
                                     ? "Email should not contain capital letters and must include '@'."
                                     : "Please enter a valid email address."}
@@ -2383,10 +2395,11 @@ function Home(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2489,10 +2502,11 @@ function Home(props) {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
                                         ? "active"
                                         : ""
-                                      }`}
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -2857,11 +2871,11 @@ function Home(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

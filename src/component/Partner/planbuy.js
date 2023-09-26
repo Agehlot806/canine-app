@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { loadRazorpay } from "../../utils";
 import { useState } from "react";
 import { useEffect } from "react";
-import moment from 'moment';
+import moment from "moment";
 function Planbuy() {
   const [paymentId, setPaymentId] = useState("");
   const [homebanner, sethomebanner] = useState([]);
@@ -31,7 +31,7 @@ function Planbuy() {
   // Access the "Monthly" and "price" properties
   const monthly = parsedPlanData.plantime;
   const price = parsedPlanData.price;
-  const image = parsedPlanData.image
+  const image = parsedPlanData.image;
   const advertisement = parsedPlanData.advertisement;
   const limit = parsedPlanData.limit;
   const expairedate = parsedPlanData.plan_expaire_date;
@@ -60,7 +60,7 @@ function Planbuy() {
         });
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -94,22 +94,22 @@ function Planbuy() {
   };
 
   const [initialDate] = useState(new Date());
-  const [item] = useState({ plantime: 'Monthly' }); // Replace with your actual item data
+  const [item] = useState({ plantime: "Monthly" }); // Replace with your actual item data
   const [expirationDate, setExpirationDate] = useState(null);
 
   useEffect(() => {
     const calculateExpirationDate = () => {
       let expirationDate = new Date(initialDate);
 
-      if (item.plantime === 'Monthly') {
+      if (item.plantime === "Monthly") {
         expirationDate.setDate(expirationDate.getDate() + 30);
-      } else if (item.plantime === 'Half-Yearly') {
+      } else if (item.plantime === "Half-Yearly") {
         expirationDate.setDate(expirationDate.getDate() + 30 * 6);
-      } else if (item.plantime === 'Annual') {
+      } else if (item.plantime === "Annual") {
         expirationDate.setDate(expirationDate.getDate() + 365);
       }
 
-      return moment(expirationDate).format('L');
+      return moment(expirationDate).format("L");
     };
 
     const formattedExpirationDate = calculateExpirationDate();
@@ -122,16 +122,16 @@ function Planbuy() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-            (item, index) =>
-              item.type === "default" && (
-                <img className="partner-img"
-                  src={
-                    "https://canine.hirectjob.in/storage/app/" +
-                    item.image
-                  }
-                />
-              )
-          )
+              (item, index) =>
+                item.type === "default" && (
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in/storage/app/" + item.image
+                    }
+                  />
+                )
+            )
           : null}
       </div>
 
@@ -146,10 +146,7 @@ function Planbuy() {
           </div>
           <div className="partner-img">
             <img
-              src={
-                "https://canine.hirectjob.in/uploads/subscription//" +
-                image
-              }
+              src={"https://canine.hirectjob.in/uploads/subscription//" + image}
             />
           </div>
         </Container>
@@ -167,7 +164,8 @@ function Planbuy() {
               <div className="plan-rupy">
                 <h2>{price}</h2>
                 <span>/{monthly}</span>
-              </div><br />
+              </div>
+              <br />
               <h4>Product upload Limit / {limit}</h4>
               <h4>{advertisement} Advertisement</h4>
               <Button onClick={() => handlePayment()}>Buy Now</Button>
@@ -177,7 +175,6 @@ function Planbuy() {
               <Link className="placDate">{expirationDate}</Link>
             </div>
           </div>
-
         </Container>
       </section>
       <Footer />

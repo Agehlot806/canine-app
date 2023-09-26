@@ -437,7 +437,9 @@ function PetshopHome(props) {
   }
   // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(2);
+  const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(
+    2
+  );
   const formattedAmount = Number(Amount).toString();
   // const Amount = Math.floor(
   //   uservariationprice - (uservariationprice * productDetails.discount) / 100
@@ -447,7 +449,6 @@ function PetshopHome(props) {
   // if (selectedVariantPrice !== null) {
   //   wholesellervariationprice = selectedVariantPrice;
   // }
-
 
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
@@ -570,7 +571,7 @@ function PetshopHome(props) {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -900,9 +901,7 @@ function PetshopHome(props) {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/items/get_happyreview`
-      );
+      const response = await fetch(`${BASE_URL}/items/get_happyreview`);
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -941,48 +940,47 @@ function PetshopHome(props) {
     setProductDetails(null);
   };
 
+  // ****************notifyme
+  const [variation, setVariation] = useState("");
+  const [variationError, setVariationError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const isEmailFormatValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
-   // ****************notifyme
-   const [variation, setVariation] = useState("");
-   const [variationError, setVariationError] = useState("");
-   const [isEmailValid, setIsEmailValid] = useState(true);
-   const isEmailFormatValid = (email) => {
-     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-     return emailRegex.test(email);
-   };
- 
-   const handleEmailChange = (e) => {
-     const emailValue = e.target.value;
-     setEmail(emailValue);
-     setIsEmailValid(isEmailFormatValid(emailValue));
-   };
-   const handleNotifymeSubmit = async (e) => {
-     e.preventDefault(); // Prevent default form submission behavior
- 
-     // Prepare form data
-     const notifymeData = new FormData();
-     notifymeData.append("email", email);
-     notifymeData.append("variation", variation);
-     notifymeData.append("stock", productDetails.stock);
-     notifymeData.append("user_id", storedWholesellerId);
-     notifymeData.append("item_id", productDetails.id);
- 
-     console.log("productDetails.id: ", productDetails?.id);
-     console.log("notifymeData", notifymeData);
- 
-     // Send a request
-     axios
-       .post(
-         `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
-         notifymeData
-       )
-       .then((response) => {
-         toast.success("Your data was successfully added");
-       })
-       .catch((error) => {
-         toast.error("An error occurred. Please try again.");
-       });
-   };
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    setIsEmailValid(isEmailFormatValid(emailValue));
+  };
+  const handleNotifymeSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Prepare form data
+    const notifymeData = new FormData();
+    notifymeData.append("email", email);
+    notifymeData.append("variation", variation);
+    notifymeData.append("stock", productDetails.stock);
+    notifymeData.append("user_id", storedWholesellerId);
+    notifymeData.append("item_id", productDetails.id);
+
+    console.log("productDetails.id: ", productDetails?.id);
+    console.log("notifymeData", notifymeData);
+
+    // Send a request
+    axios
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notify/${id}`,
+        notifymeData
+      )
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
+  };
 
   return (
     <>
@@ -1236,7 +1234,7 @@ function PetshopHome(props) {
                             </Col>
                             <Col>
                               <Link
-                               to={`/petshop-add-cart/${item.id}`}
+                                to={`/petshop-add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />
@@ -1511,22 +1509,21 @@ function PetshopHome(props) {
               <Col lg={4} sm={6} xs={6} key={order.id}>
                 <div className="Brand-cus">
                   <>
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/public/profile/" +
-                      order.user_id[0].image
-                    }
-                    alt={order.user_id[0].f_name}
-                  />
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/profile/" +
+                        order.user_id[0].image
+                      }
+                      alt={order.user_id[0].f_name}
+                    />
                   </>
                   <div className="brand-bg">
                     {order.user_id && order.user_id.length > 0 && (
                       <h5>
-                        {order.user_id[0].f_name}{" "}
-                        {order.user_id[0].l_name}
+                        {order.user_id[0].f_name} {order.user_id[0].l_name}
                       </h5>
                     )}
-                      <p>{order.comment}</p>
+                    <p>{order.comment}</p>
                     <div className="icon-style">
                       {Array.from({
                         length: order.rating,
@@ -1818,7 +1815,11 @@ function PetshopHome(props) {
                     <div className="sold-out-btn mt-3">
                       <Link>Sold Out</Link>
                       <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel" data-dismiss="modal">
+                      <Button
+                        data-toggle="modal"
+                        data-target="#soldoutModel"
+                        data-dismiss="modal"
+                      >
                         Notify Me When Available
                       </Button>
                     </div>

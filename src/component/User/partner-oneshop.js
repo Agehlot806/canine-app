@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader'
-import shop from '../../assets/images/banner/shop.png'
-import { Container, Table, Row, Col, Button, Form } from 'react-bootstrap'
+import Newheader from "../../directives/newheader";
+import shop from "../../assets/images/banner/shop.png";
+import { Container, Table, Row, Col, Button, Form } from "react-bootstrap";
 import bag from "../../assets/images/icon/bag.png";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import product1 from "../../assets/images/img/product1.png";
-import Footer from '../../directives/footer';
+import Footer from "../../directives/footer";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
@@ -14,8 +14,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 
 function Partneroneshop() {
-
-  const { state } = useLocation()
+  const { state } = useLocation();
   // console.log('state', state)
   const [vendorItemList, setVendorItemList] = useState([]);
   const [allproduct, setallproduct] = useState([]);
@@ -29,10 +28,12 @@ function Partneroneshop() {
     allAddressList();
   }, []);
 
-  // vendor item 
+  // vendor item
   const VendorItems = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/vendor/get-items-list/${state.item.id}`);
+      const response = await fetch(
+        `${BASE_URL}/vendor/get-items-list/${state.item.id}`
+      );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 8);
       setVendorItemList(latestPosts);
@@ -111,7 +112,6 @@ function Partneroneshop() {
     };
   }, [isFavCheck]);
 
-
   const fetchWishlistData = async () => {
     try {
       await axios
@@ -120,7 +120,7 @@ function Partneroneshop() {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -178,7 +178,6 @@ function Partneroneshop() {
       });
   };
 
-
   const productData = async (selctId) => {
     axios
       .get(`${BASE_URL}/items/product_details/${selctId}`)
@@ -232,7 +231,6 @@ function Partneroneshop() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
-
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -242,7 +240,7 @@ function Partneroneshop() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -250,7 +248,7 @@ function Partneroneshop() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -260,9 +258,7 @@ function Partneroneshop() {
   };
   const handeldataId = (id) => {
     productData(id);
-  }
-
-
+  };
 
   // ===============================================================
   // =================================================================
@@ -559,7 +555,10 @@ function Partneroneshop() {
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = (parseInt(Amount) * 0.05) + parseInt(Amount) - (disscountvalue?.discount ?? 0);
+    const orderAmount =
+      parseInt(Amount) * 0.05 +
+      parseInt(Amount) -
+      (disscountvalue?.discount ?? 0);
 
     const requestData = {
       user_id: storedUserId,
@@ -604,7 +603,6 @@ function Partneroneshop() {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
         console.log("order_id", responseData);
-
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -627,7 +625,9 @@ function Partneroneshop() {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/customer/order/list?id=${storedUserId}`);
+      const response = await fetch(
+        `${BASE_URL}/customer/order/list?id=${storedUserId}`
+      );
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -635,7 +635,6 @@ function Partneroneshop() {
       console.log(error);
     }
   };
-
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -731,7 +730,7 @@ function Partneroneshop() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -774,7 +773,6 @@ function Partneroneshop() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -802,7 +800,7 @@ function Partneroneshop() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -822,8 +820,8 @@ function Partneroneshop() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className='p-0'>
-        <div className='all-bg'>
+      <Container fluid className="p-0">
+        <div className="all-bg">
           <img
             src={
               "https://canine.hirectjob.in/storage/app/public/store/cover/" +
@@ -831,13 +829,16 @@ function Partneroneshop() {
             }
           />
         </div>
-        {console.log("coverPhoto",  "https://canine.hirectjob.in/storage/app/public/store/cover/" +
-              state?.item.cover_photo)}
+        {console.log(
+          "coverPhoto",
+          "https://canine.hirectjob.in/storage/app/public/store/cover/" +
+            state?.item.cover_photo
+        )}
       </Container>
 
-      <section className='section-padding'>
+      <section className="section-padding">
         <Container>
-          <div className='partner-oneshop'>
+          <div className="partner-oneshop">
             <Table>
               <tbody>
                 <tr>
@@ -861,16 +862,20 @@ function Partneroneshop() {
           </div>
         </Container>
       </section>
-      <section className='section-padding'>
+      <section className="section-padding">
         <Container>
           <Row>
             {vendorItemList && vendorItemList.length > 0 ? (
               vendorItemList.map((item, index) => (
                 <Col lg={3} sm={6} xs={6} className="mb-4">
-                  <div className="food-product"
+                  <div
+                    className="food-product"
                     onMouseEnter={() => handleMouseEnter(item.id)}
                     onMouseLeave={() => handleMouseLeave(item.id)}
-                    style={{ background: gradientColors[index % gradientColors.length], }}>
+                    style={{
+                      background: gradientColors[index % gradientColors.length],
+                    }}
+                  >
                     <i
                       class={
                         item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
@@ -907,13 +912,15 @@ function Partneroneshop() {
                         </Row>
                         <Row>
                           <Col className="align-self-center">
-                            <h6>{`₹${item.price -
-                              (item.price * item.discount) / 100
-                              }`}</h6>
+                            <h6>{`₹${
+                              item.price - (item.price * item.discount) / 100
+                            }`}</h6>
                           </Col>
                           <Col>
-                            <Link to={`/add-cart/${item.id}`}
-                                onClick={handleAddToCart}>
+                            <Link
+                              to={`/add-cart/${item.id}`}
+                              onClick={handleAddToCart}
+                            >
                               <img src={bag} />
                             </Link>
                           </Col>
@@ -922,7 +929,13 @@ function Partneroneshop() {
                     </Link>
                     {buttonVisibility[item.id] && (
                       <div className="button-container">
-                        <button data-toggle="modal" data-target=".bd-example-modal-lg" onClick={(e) => handeldataId(item.id)}>Quick View</button>
+                        <button
+                          data-toggle="modal"
+                          data-target=".bd-example-modal-lg"
+                          onClick={(e) => handeldataId(item.id)}
+                        >
+                          Quick View
+                        </button>
                         <button
                           data-toggle="modal"
                           data-target=".buynow"
@@ -941,7 +954,9 @@ function Partneroneshop() {
           </Row>
           <div className="allblogbtn">
             <Button key={state?.item.id}>
-              <Link to={`/product-partner-shop/${state?.item.id}`}>View All</Link>
+              <Link to={`/product-partner-shop/${state?.item.id}`}>
+                View All
+              </Link>
             </Button>
           </div>
         </Container>
@@ -949,7 +964,13 @@ function Partneroneshop() {
 
       <Footer />
       {/* Product details Modal */}
-      <div className="modal fade bd-example-modal-lg" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
@@ -970,7 +991,7 @@ function Partneroneshop() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -981,7 +1002,9 @@ function Partneroneshop() {
                                   >
                                     <div
                                       className="product-item-inner"
-                                      onClick={() => handleThumbnailClick(index)}
+                                      onClick={() =>
+                                        handleThumbnailClick(index)
+                                      }
                                     >
                                       <img
                                         src={
@@ -1009,16 +1032,17 @@ function Partneroneshop() {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1027,12 +1051,13 @@ function Partneroneshop() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
-                                (lightboxImageIndex + 1) % productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1066,7 +1091,9 @@ function Partneroneshop() {
                         <Wrapper>
                           <div className="icon-style">
                             {ratingStar}
-                            <p>({productDetails.rating_count} customer reviews)</p>
+                            <p>
+                              ({productDetails.rating_count} customer reviews)
+                            </p>
                           </div>
                         </Wrapper>
 
@@ -1080,22 +1107,27 @@ function Partneroneshop() {
                                     <Row>
                                       {productDetails?.variations &&
                                         productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map((item, index) => (
-                                          <Col lg={4} key={index}>
-                                            <div
-                                              className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
+                                        productDetails.variations.map(
+                                          (item, index) => (
+                                            <Col lg={4} key={index}>
+                                              <div
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
                                                 }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(item.price);
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          </Col>
-                                        ))}
+                                                onClick={() => {
+                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariantPrice(
+                                                    item.price
+                                                  );
+                                                }}
+                                              >
+                                                {item.type}
+                                              </div>
+                                            </Col>
+                                          )
+                                        )}
                                     </Row>
                                   </div>
                                 </div>
@@ -1176,7 +1208,10 @@ function Partneroneshop() {
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
-                        <Link to={`/add-cart/${productDetails.id}`} onClick={handleAddToCart}>
+                        <Link
+                          to={`/add-cart/${productDetails.id}`}
+                          onClick={handleAddToCart}
+                        >
                           <i className="fa fa-shopping-bag" /> Add to cart
                         </Link>
                         <p>{addToCartStatus}</p>
@@ -1264,14 +1299,17 @@ function Partneroneshop() {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                            <Form.Group controlId="formVariations" className="mb-3">
+                            <Form.Group
+                              controlId="formVariations"
+                              className="mb-3"
+                            >
                               <Form.Label>Variations</Form.Label>
                               <Form.Control
                                 as="select"
                                 value={variation}
                                 onChange={(e) => {
                                   setVariation(e.target.value);
-                                  setVariationError(''); // Clear previous error when the value changes
+                                  setVariationError(""); // Clear previous error when the value changes
                                 }}
                                 required
                                 isInvalid={!!variationError}
@@ -1280,15 +1318,22 @@ function Partneroneshop() {
                                   Choose an option...
                                 </option>
                                 {productDetails?.variations &&
-                                  productDetails?.variations.map((item, index) => (
-                                    <option key={index}>{item.type}</option>
-                                  ))}
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <option key={index}>{item.type}</option>
+                                    )
+                                  )}
                               </Form.Control>
                               {variationError && (
-                                <div className="error-message">{variationError}</div>
+                                <div className="error-message">
+                                  {variationError}
+                                </div>
                               )}
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formGroupEmail"
+                            >
                               <Form.Control
                                 type="email"
                                 name="email"
@@ -1296,12 +1341,17 @@ function Partneroneshop() {
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
-                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                  setIsEmailValid(
+                                    isEmailFormatValid(e.target.value)
+                                  );
                                 }}
                                 isInvalid={!isEmailValid}
                               />
                               {!isEmailValid && (
-                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                <Form.Control.Feedback
+                                  type="invalid"
+                                  className="custom-form-control-feedback"
+                                >
                                   {/[A-Z]/.test(email) && !email.includes("@")
                                     ? "Email should not contain capital letters and must include '@'."
                                     : "Please enter a valid email address."}
@@ -1647,10 +1697,11 @@ function Partneroneshop() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1753,10 +1804,11 @@ function Partneroneshop() {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   <div
-                                    className={`tab-variations ${selectedVariant === item?.type
-                                      ? "active"
-                                      : ""
-                                      }`}
+                                    className={`tab-variations ${
+                                      selectedVariant === item?.type
+                                        ? "active"
+                                        : ""
+                                    }`}
                                     onClick={() => {
                                       setSelectedVariant(item?.type);
                                       setSelectedVariantPrice(item?.price);
@@ -1967,11 +2019,9 @@ function Partneroneshop() {
                             <Col>
                               <h5>
                                 ₹
-                                {
-                                  (parseInt(Amount) * 0.05) + parseInt(Amount) - (
-                                    (disscountvalue?.discount ?? 0)
-                                  )
-                                }
+                                {parseInt(Amount) * 0.05 +
+                                  parseInt(Amount) -
+                                  (disscountvalue?.discount ?? 0)}
                               </h5>
                             </Col>
                           </Row>
@@ -2124,11 +2174,11 @@ function Partneroneshop() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -2367,7 +2417,7 @@ function Partneroneshop() {
         </div>
       </div>
     </>
-  )
+  );
 }
 const Wrapper = styled.section`
   justify-content: flex-start;
@@ -2384,4 +2434,4 @@ const Wrapper = styled.section`
     padding-left: 1.2rem;
   }
 `;
-export default Partneroneshop
+export default Partneroneshop;
