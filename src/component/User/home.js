@@ -115,11 +115,8 @@ function Home(props) {
     try {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
       setBrands(response.data.data);
-
-      // Handle response as needed
     } catch (error) {
       console.error(error);
-      // Handle error as needed
     }
   };
 
@@ -1308,7 +1305,7 @@ function Home(props) {
                   brand.canine == "1" && (
                     <Col lg={3} sm={6} xs={6} className="mb-5">
                       <div key={brand.id} className="Brand-card brand-1">
-                        <Link to={`/our-our-brand/${brand.id}`}>
+                        <Link to={`/our-our-brand/${brand.title}`}>
                           <div className="brandLOGO">
                             <img
                               src={

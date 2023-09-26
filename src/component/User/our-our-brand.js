@@ -14,6 +14,7 @@ import bannerPro from "../../assets/images/img/bannerPro.png";
 import Carousel from "react-multi-carousel";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import product3 from "../../assets/images/img/product3.png";
+import { Toaster, toast } from "react-hot-toast";
 
 const clinetreview = {
   desktop: {
@@ -98,11 +99,14 @@ function Ourourbrand(props) {
 
   const { id } = useParams();
   console.log("brand id", id);
+
   const [petitemproduct, setpetitemproduct] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
 
   useEffect(() => {
     Allsubcategories();
+    allProduct();
+    fetchBrands();
   }, []);
 
   const Allsubcategories = async () => {
@@ -246,8 +250,59 @@ function Ourourbrand(props) {
       });
   };
 
+  const [allproductbrand, setallproductbrand] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [brandIdsToFilter, setBrandIdsToFilter] = useState([]);
+  const [brandCanineToFilter, setBrandCanineToFilter] = useState([]);
+
+  console.log("brandIdsToFilter", brandIdsToFilter);
+  console.log("brandCanineToFilter", brandCanineToFilter);
+
+  const allProduct = async () => {
+    axios
+      .get(`${BASE_URL}/items/latest`)
+      .then((response) => {
+        console.log(response);
+        console.log("all product brand Successful");
+        const AllData = response.data.data
+        const data = AllData.filter((el) => el.module_id === 1)
+        const data1 = data.filter((item) => item.brand_id === id)  
+        console.log('data in fetch',data)
+        console.log('data1 in fetch',data1)
+        setallproductbrand(data1);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    // Add more gradient colors as needed
+  ];
+
+  const fetchBrands = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/brand`);
+      setBrands(response.data.data);
+      const titles = response?.data?.data.map((brand) => brand?.title);
+      const ourbrand = response?.data?.data.filter((brand) => brand?.canine === 0);
+      setBrandIdsToFilter(ourbrand);
+      setBrandCanineToFilter(ourbrand);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  
+
   return (
     <>
+      <Toaster />
       <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -1159,6 +1214,85 @@ function Ourourbrand(props) {
           <Col lg={9}>
             <section className="section-padding">
               <Container>
+                {/* <Row> */}
+                {brands.length > 0 ? (
+                  <Row>
+                    {allproductbrand
+                      ? allproductbrand.map((item, index) => {
+                        return (
+                          <Col lg={4} sm={6} xs={6} className="mb-4">
+                            <div className="food-product" key={item.id} style={{
+                              background:
+                                gradientColors[index % gradientColors.length],
+                            }}>
+                              <i
+                                class={
+                                  item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                                }
+                                onClick={(id) => {
+                                  if (storedUserId == null) {
+                                    toast.error("Please Login first");
+                                  } else {
+                                    addToWishlist(item.id);
+                                  }
+                                }}
+                              />
+                              <Link to="/product-details">
+                                <div className="text-center">
+                                  <img src={
+                                    "https://canine.hirectjob.in//storage/app/public/product/" +
+                                    item.image
+                                  }
+                                  />
+                                </div>
+                                <div>
+                                  <h6>{item.name}</h6>
+                                  <p>{item.description}</p>
+                                </div>
+                                <div className="product-bag">
+                                  <Row>
+                                    <Col>
+                                      <p>₹{item.price}</p>
+                                    </Col>
+                                    <Col>
+                                      <h5>{item.discount}%</h5>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col className="align-self-center">
+                                      <h6>{`₹${item.price -
+                                        (item.price * item.discount) / 100
+                                        }`}</h6>
+                                    </Col>
+                                    <Col>
+                                      <Link to="">
+                                        <img src={bag} />
+                                      </Link>
+                                    </Col>
+                                  </Row>
+                                </div>
+                              </Link>
+                            </div>
+                          </Col>
+                        );
+
+                      }
+                      )
+                      : <p className="emptyMSG">No Brands Product.</p>}
+                  </Row>
+                ) : (
+                  <p>429 Error...</p>
+                )}
+              </Container>
+
+
+
+
+
+
+
+
+              {/* <Container>
                 <Row>
                   <Col lg={6}>
                     <h1 className="main-head">Our Brand</h1>
@@ -1179,8 +1313,8 @@ function Ourourbrand(props) {
                     </div>
                   </Col>
                 </Row>
-              </Container>
-              <div className="needplace">
+              </Container> */}
+              {/* <div className="needplace">
                 <div className="dog-categorys-area">
                   <ul
                     className="nav nav-pills mb-3"
@@ -1248,9 +1382,9 @@ function Ourourbrand(props) {
                                   </div>
                                   <div>
                                     <h6>{item.title}</h6>
-                                    {/* <p>{item.description}</p> */}
+                                    <p>{item.description}</p>
                                   </div>
-                                  {/* <div className="product-bag">
+                                  <div className="product-bag">
                                     <Row>
                                       <Col>
                                         <p>₹{item.price}</p>
@@ -1272,7 +1406,7 @@ function Ourourbrand(props) {
                                         </Link>
                                       </Col>
                                     </Row>
-                                  </div> */}
+                                  </div>
                                 </Link>
                               </div>
                             </Col>
@@ -1284,7 +1418,7 @@ function Ourourbrand(props) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </section>
           </Col>
         </Row>
