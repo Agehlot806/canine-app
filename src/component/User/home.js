@@ -115,11 +115,8 @@ function Home(props) {
     try {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
       setBrands(response.data.data);
-
-      // Handle response as needed
     } catch (error) {
       console.error(error);
-      // Handle error as needed
     }
   };
 
@@ -828,9 +825,7 @@ function Home(props) {
   const [reviewlist, setreviewlist] = useState([]);
   const allReview = async () => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/items/get_reviewitem/1`
-      );
+      const response = await fetch(`${BASE_URL}/items/get_happyreview`);
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
       setreviewlist(latestPosts);
@@ -883,11 +878,10 @@ function Home(props) {
 
   const handlePayment = async () => {
     try {
-
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -922,7 +916,6 @@ function Home(props) {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -950,7 +943,7 @@ function Home(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -1308,7 +1301,7 @@ function Home(props) {
                   brand.canine == "1" && (
                     <Col lg={3} sm={6} xs={6} className="mb-5">
                       <div key={brand.id} className="Brand-card brand-1">
-                        <Link to={`/our-our-brand/${brand.id}`}>
+                        <Link to={`/our-our-brand/${brand.title}`}>
                           <div className="brandLOGO">
                             <img
                               src={
@@ -1335,6 +1328,112 @@ function Home(props) {
               )
               : null}
           </Row>
+        </Container>
+      </section>
+
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            {homebanner
+              ? homebanner.map(
+                (item, index) =>
+                  item.type === "default" && (
+                    <Col lg={6} className="mb-4">
+                      <img
+                        src={
+                          "https://canine.hirectjob.in/storage/app/" +
+                          item.image
+                        }
+                      />
+                    </Col>
+                  )
+              )
+              : null}
+            <Col lg={6} className="align-self-center">
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                    (item, index) =>
+                      item.type === "store_wise" && (
+                        <Col sm={12} className="mb-4">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                      )
+                  )
+                  : null}
+                {homebanner
+                  ? homebanner.map(
+                    (item, index) =>
+                      item.type === "item_wise" && (
+                        <Col sm={12} className="mb-4">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                      )
+                  )
+                  : null}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="section-padding">
+        <Container>
+          <Row>
+            <Col lg={6} sm={6} xs={6}>
+              <h1 className="main-head">Shop By Brands</h1>
+            </Col>
+            <Col lg={6} sm={6} xs={6}>
+              <div className="foodMore">
+                <Link to="/shop-by-brand">See all</Link>
+              </div>
+            </Col>
+          </Row>
+          <div className="needplace">
+            <Row>
+              {brands
+                ? brands.map(
+                  (brand) =>
+                    brand.canine == "1" && (
+                      <Col lg={3} sm={6} xs={6} className="mb-5">
+                        <div key={brand.id} className="Brand-card brand-1">
+                          <Link to={`/our-our-brand/${brand.id}`}>
+                            <div className="brandLOGO">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                  brand.logo
+                                }
+                              />
+                            </div>
+                            <div className="brand-main">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                  brand.image
+                                }
+                              />
+                            </div>
+                            <div className="brand-text">
+                              <h5>{brand.title}</h5>
+                            </div>
+                          </Link>
+                        </div>
+                      </Col>
+                    )
+                )
+                : null}
+            </Row>
+          </div>
         </Container>
       </section>
 
@@ -1574,22 +1673,21 @@ function Home(props) {
               <Col lg={4} sm={6} xs={6} key={order.id} className="mb-3">
                 <div className="Brand-cus">
                   <>
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/public/profile/" +
-                      order.user_id[0].image
-                    }
-                    alt={order.user_id[0].f_name}
-                  />
+                    <img
+                      src={
+                        "https://canine.hirectjob.in/storage/app/public/profile/" +
+                        order.user_id[0].image
+                      }
+                      alt={order.user_id[0].f_name}
+                    />
                   </>
                   <div className="brand-bg">
                     {order.user_id && order.user_id.length > 0 && (
                       <h5>
-                        {order.user_id[0].f_name}{" "}
-                        {order.user_id[0].l_name}
+                        {order.user_id[0].f_name} {order.user_id[0].l_name}
                       </h5>
                     )}
-                      <p>{order.comment}</p>
+                    <p>{order.comment}</p>
                     <div className="icon-style">
                       {Array.from({
                         length: order.rating,
@@ -1661,7 +1759,6 @@ function Home(props) {
       </section>
 
       <Footer />
-
 
       {/* Product details Modal */}
       <div
@@ -2001,14 +2098,17 @@ function Home(props) {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                            <Form.Group controlId="formVariations" className="mb-3">
+                            <Form.Group
+                              controlId="formVariations"
+                              className="mb-3"
+                            >
                               <Form.Label>Variations</Form.Label>
                               <Form.Control
                                 as="select"
                                 value={variation}
                                 onChange={(e) => {
                                   setVariation(e.target.value);
-                                  setVariationError(''); // Clear previous error when the value changes
+                                  setVariationError(""); // Clear previous error when the value changes
                                 }}
                                 required
                                 isInvalid={!!variationError}
@@ -2017,15 +2117,22 @@ function Home(props) {
                                   Choose an option...
                                 </option>
                                 {productDetails?.variations &&
-                                  productDetails?.variations.map((item, index) => (
-                                    <option key={index}>{item.type}</option>
-                                  ))}
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <option key={index}>{item.type}</option>
+                                    )
+                                  )}
                               </Form.Control>
                               {variationError && (
-                                <div className="error-message">{variationError}</div>
+                                <div className="error-message">
+                                  {variationError}
+                                </div>
                               )}
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formGroupEmail"
+                            >
                               <Form.Control
                                 type="email"
                                 name="email"
@@ -2033,12 +2140,17 @@ function Home(props) {
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
-                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                  setIsEmailValid(
+                                    isEmailFormatValid(e.target.value)
+                                  );
                                 }}
                                 isInvalid={!isEmailValid}
                               />
                               {!isEmailValid && (
-                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                <Form.Control.Feedback
+                                  type="invalid"
+                                  className="custom-form-control-feedback"
+                                >
                                   {/[A-Z]/.test(email) && !email.includes("@")
                                     ? "Email should not contain capital letters and must include '@'."
                                     : "Please enter a valid email address."}

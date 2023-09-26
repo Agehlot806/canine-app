@@ -248,7 +248,6 @@ function PetshopproductDetails() {
     }
   };
 
-
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   useEffect(() => {
@@ -334,7 +333,9 @@ function PetshopproductDetails() {
   if (selectedVariantPrice !== null) {
     wholesellervariationprice = selectedVariantPrice;
   }
-  const Amount = (wholesellervariationprice  * (quantity > 1 ? quantity : 1)).toFixed(2);
+  const Amount = (
+    wholesellervariationprice * (quantity > 1 ? quantity : 1)
+  ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
 
   const addToWishlist = async (item_id) => {
@@ -467,7 +468,7 @@ function PetshopproductDetails() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -1098,93 +1099,106 @@ function PetshopproductDetails() {
             <div className="Product-Review">
               <h1 className="main-head mt-4">Product Review</h1>
               {getreviewlist && getreviewlist.length > 1 ? (
-              getreviewlist.map(
-                (order, index) =>
-                  index === 0 && (
-                    <div key={order.id}>
-                      <div className="linereview">
-                        <p>{order.comment}</p>
-                        <div className="row">
-                          <div className="col-sm-3 col">
-                            <Wrapper>
-                              <div className="icon-style">
-                                {Array.from({
-                                  length: order.rating,
-                                }).map((_, index) => (
-                                  <i className="fa-solid fa-star" key={index} />
-                                ))}
-                              </div>
-                            </Wrapper>
-                          </div>
-                          <div className="col-sm-5 col">
-                            {order.user_id && order.user_id.length > 0 && (
-                              <div className="Product-img">
-                                <img src={"https://canine.hirectjob.in/storage/app/public/profile/" +
-                                  order.user_id[0].image} alt={order.user_id[0].f_name} />
-                                <span>
-                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-              )
-            ) : (
-              <p>No Review data</p>
-            )}
-
-            <div>
-              {showData ? (
-                <>
-                  {getreviewlist.map((order) => (
-                    <div key={order.id}>
-                      <div className="linereview">
-                        <p>{order.comment}</p>
-                        <div className="row">
-                          <div className="col-sm-3 col">
-                            <Wrapper>
-                              <div className="icon-style">
-                                {Array.from({
-                                  length: order.rating,
-                                }).map((_, index) => (
-                                  <i className="fa-solid fa-star" key={index} />
-                                ))}
-                              </div>
-                            </Wrapper>
-                          </div>
-                          <div className="col-sm-5 col">
-                            {order.user_id && order.user_id.length > 0 && (
-                              <div className="Product-img">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
-                                    order.user_id[0].image
-                                  }
-                                  alt={order.user_id[0].f_name}
-                                />
-                                <span>
-                                  {order.user_id[0].f_name} {order.user_id[0].l_name}
-                                </span>
-                              </div>
-                            )}
+                getreviewlist.map(
+                  (order, index) =>
+                    index === 0 && (
+                      <div key={order.id}>
+                        <div className="linereview">
+                          <p>{order.comment}</p>
+                          <div className="row">
+                            <div className="col-sm-3 col">
+                              <Wrapper>
+                                <div className="icon-style">
+                                  {Array.from({
+                                    length: order.rating,
+                                  }).map((_, index) => (
+                                    <i
+                                      className="fa-solid fa-star"
+                                      key={index}
+                                    />
+                                  ))}
+                                </div>
+                              </Wrapper>
+                            </div>
+                            <div className="col-sm-5 col">
+                              {order.user_id && order.user_id.length > 0 && (
+                                <div className="Product-img">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                      order.user_id[0].image
+                                    }
+                                    alt={order.user_id[0].f_name}
+                                  />
+                                  <span>
+                                    {order.user_id[0].f_name}{" "}
+                                    {order.user_id[0].l_name}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                  <a href="#" onClick={toggleData}>
-                    Read less
-                  </a>
-                </>
+                    )
+                )
               ) : (
-                <a href="#" onClick={toggleData}>
-                  Read more
-                </a>
+                <p>No Review data</p>
               )}
-            </div>
+
+              <div>
+                {showData ? (
+                  <>
+                    {getreviewlist.map((order) => (
+                      <div key={order.id}>
+                        <div className="linereview">
+                          <p>{order.comment}</p>
+                          <div className="row">
+                            <div className="col-sm-3 col">
+                              <Wrapper>
+                                <div className="icon-style">
+                                  {Array.from({
+                                    length: order.rating,
+                                  }).map((_, index) => (
+                                    <i
+                                      className="fa-solid fa-star"
+                                      key={index}
+                                    />
+                                  ))}
+                                </div>
+                              </Wrapper>
+                            </div>
+                            <div className="col-sm-5 col">
+                              {order.user_id && order.user_id.length > 0 && (
+                                <div className="Product-img">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                      order.user_id[0].image
+                                    }
+                                    alt={order.user_id[0].f_name}
+                                  />
+                                  <span>
+                                    {order.user_id[0].f_name}{" "}
+                                    {order.user_id[0].l_name}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <a href="#" onClick={toggleData}>
+                      Read less
+                    </a>
+                  </>
+                ) : (
+                  <a href="#" onClick={toggleData}>
+                    Read more
+                  </a>
+                )}
+              </div>
             </div>
           </>
         </Container>
@@ -1305,7 +1319,6 @@ function PetshopproductDetails() {
       </section>
       <Petshopfooter />
       {/* Modal */}
-      
 
       {/* Product details Modal */}
       <div
@@ -1526,7 +1539,7 @@ function PetshopproductDetails() {
                       </Button>
                     </div>
                   )}
-                      </Container>
+                </Container>
               </section>
             </div>
           </div>
@@ -2154,7 +2167,6 @@ function PetshopproductDetails() {
         </div>
       </div>
 
-
       <div
         className="modal fade"
         id="soldoutModel"
@@ -2208,7 +2220,7 @@ function PetshopproductDetails() {
           </div>
         </div>
       </div>
-      
+
       <div
         className="modal fade editAddress"
         id="update-model"

@@ -746,7 +746,7 @@ function Blogdetails() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -789,7 +789,6 @@ function Blogdetails() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-
     // if (!variation) {
     //   setVariationError('Please select a variation');
     // } else {
@@ -817,7 +816,7 @@ function Blogdetails() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log('productDetails.id: ', productDetails?.id);
+    console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
 
     // Send a request
@@ -1347,14 +1346,17 @@ function Blogdetails() {
           <div className="error-message">{variationError}</div>
         )}
       </Form.Group> */}
-                            <Form.Group controlId="formVariations" className="mb-3">
+                            <Form.Group
+                              controlId="formVariations"
+                              className="mb-3"
+                            >
                               <Form.Label>Variations</Form.Label>
                               <Form.Control
                                 as="select"
                                 value={variation}
                                 onChange={(e) => {
                                   setVariation(e.target.value);
-                                  setVariationError(''); // Clear previous error when the value changes
+                                  setVariationError(""); // Clear previous error when the value changes
                                 }}
                                 required
                                 isInvalid={!!variationError}
@@ -1363,15 +1365,22 @@ function Blogdetails() {
                                   Choose an option...
                                 </option>
                                 {productDetails?.variations &&
-                                  productDetails?.variations.map((item, index) => (
-                                    <option key={index}>{item.type}</option>
-                                  ))}
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <option key={index}>{item.type}</option>
+                                    )
+                                  )}
                               </Form.Control>
                               {variationError && (
-                                <div className="error-message">{variationError}</div>
+                                <div className="error-message">
+                                  {variationError}
+                                </div>
                               )}
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
+                            <Form.Group
+                              className="mb-3"
+                              controlId="formGroupEmail"
+                            >
                               <Form.Control
                                 type="email"
                                 name="email"
@@ -1379,12 +1388,17 @@ function Blogdetails() {
                                 value={email}
                                 onChange={(e) => {
                                   setEmail(e.target.value);
-                                  setIsEmailValid(isEmailFormatValid(e.target.value));
+                                  setIsEmailValid(
+                                    isEmailFormatValid(e.target.value)
+                                  );
                                 }}
                                 isInvalid={!isEmailValid}
                               />
                               {!isEmailValid && (
-                                <Form.Control.Feedback type="invalid" className="custom-form-control-feedback">
+                                <Form.Control.Feedback
+                                  type="invalid"
+                                  className="custom-form-control-feedback"
+                                >
                                   {/[A-Z]/.test(email) && !email.includes("@")
                                     ? "Email should not contain capital letters and must include '@'."
                                     : "Please enter a valid email address."}

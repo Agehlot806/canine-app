@@ -28,8 +28,13 @@ function Newheader(props) {
     AllDogsubcategories();
     categoriesProduct();
     addToCartData();
-    fetchNotifications();
+    // fetchNotifications();
   }, []);
+  useEffect(() => {
+   
+    fetchNotifications();
+  }, [notification]);
+
 
   const categoriesProduct = async () => {
     try {

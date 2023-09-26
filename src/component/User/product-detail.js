@@ -871,7 +871,7 @@ function Productdetail() {
       await loadRazorpayScript();
 
       const options = {
-        key: "rzp_test_FaUw0RsaEo9pZE", // Replace with your actual key
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
         amount: 10000, // Amount in paise (100 INR)
         currency: "INR",
         name: "HEllo world",
@@ -1514,10 +1514,10 @@ function Productdetail() {
                       Choose an option...
                     </option>
 
-                     {productDetails?.variations &&
+                    {productDetails?.variations &&
                       productDetails?.variations.map((item, index) => (
                         <option key={index}>{item.type}</option>
-                      ))} 
+                      ))}
                   </Form.Control>
                   {variationError && (
                     <div className="error-message">{variationError}</div>
