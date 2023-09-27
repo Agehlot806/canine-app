@@ -1076,7 +1076,7 @@ function Productdetail() {
                                 productDetails?.variations.map(
                                   (item, index) => (
                                     <Col lg={3} key={index}>
-                                      <div
+                                      {/* <div
                                         className={`tab-variations ${
                                           selectedVariant === item.type
                                             ? "active"
@@ -1088,7 +1088,31 @@ function Productdetail() {
                                         }}
                                       >
                                         {item.type}
-                                      </div>
+                                      </div> */}
+                                      {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
                                     </Col>
                                   )
                                 )}
@@ -1544,7 +1568,11 @@ function Productdetail() {
                   )}
                 </Form.Group>
 
-                <Button variant="primary mt-3" type="submit" data-dismiss="modal">
+                <Button
+                  variant="primary mt-3"
+                  type="submit"
+                  data-dismiss="modal"
+                >
                   Notify Me When Available
                 </Button>
               </Form>

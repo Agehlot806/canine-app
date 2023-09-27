@@ -3716,3 +3716,10 @@ li.nav-item.dropdown.new-mega-drop {
 }
 
 /* Add your own styling here */
+.disabledvariation {
+
+  opacity: 0.6;
+  cursor: not-allowed;
+  
+}
+
