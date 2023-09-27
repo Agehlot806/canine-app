@@ -10,6 +10,7 @@ import { useNotificationContext } from "../component/context/notificationContext
 import { Col, Row } from "react-bootstrap";
 import loicon1 from "../assets/images/img/loicon1.png";
 
+
 function Newheader(props) {
   // const { dataLength } = props;
   const [notification, setNotification] = useState([]);
@@ -29,11 +30,27 @@ function Newheader(props) {
     categoriesProduct();
     addToCartData();
     // fetchNotifications();
+    Notifynotification();
   }, []);
   useEffect(() => {
    
     fetchNotifications();
   }, [notification]);
+
+  const [notify, setNotify] = useState();
+
+const Notifynotification = () => {
+  axios.get(`https://canine.hirectjob.in/api/v1/items/notify_list/266`)
+    .then((response) => {
+      setNotify(response.data[0])
+      console.log("Notify-Notificationnnnnnnnnnnnn", response.data[0]);
+    })
+    .catch((error) => {
+      console.log("EEEEEEEEEErrrrorrrrrrr", error);
+    });
+}
+
+  
 
 
   const categoriesProduct = async () => {
@@ -728,7 +745,23 @@ function Newheader(props) {
               ) : (
                 <p className="emptyMSG">No Notification</p>
               )}
-              {console.log("notificationnotification", notification)}
+              {notify && notify.length > 0 ? (
+                notify.map((ob,index)=>(
+                  <div className="notification">
+                    <Row>
+                      <Col lg={2}>
+                        <img src=""/>
+                      </Col>
+                      <Col lg={10} className="align-self-center">
+                        <h6>Order ID :{ob.order_id}</h6>
+                        <p>Status :{ob.order_status}</p>
+                      </Col>
+                    </Row>
+                  </div>
+                ))
+              ): (
+                <p className="emptyMSG">No Notification</p>
+              )}
               <button
                 type="button"
                 className="btn btn-secondary"
