@@ -1791,21 +1791,30 @@ function PetshopPetcategory() {
                                     productDetails?.variations.map(
                                       (item, index) => (
                                         <Col lg={4} key={index}>
-                                          <div
-                                            className={`tab-variations ${
-                                              selectedVariant === item?.type
-                                                ? "active"
-                                                : ""
-                                            }`}
-                                            onClick={() => {
-                                              setSelectedVariant(item?.type);
-                                              setSelectedVariantPrice(
-                                                item?.wholeprice
-                                              );
-                                            }}
-                                          >
-                                            {item?.type}
-                                          </div>
+                                          {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
                                         </Col>
                                       )
                                     )}
@@ -2372,19 +2381,30 @@ function PetshopPetcategory() {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                  <div
-                                    className={`tab-variations ${
-                                      selectedVariant === item?.type
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.wholeprice);
-                                    }}
-                                  >
-                                    {item?.type}
-                                  </div>
+                                   {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
                                 </Col>
                               ))}
                           </Row>

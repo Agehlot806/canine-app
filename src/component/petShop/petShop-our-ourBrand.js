@@ -954,7 +954,7 @@ function PetshopOurourbrand(props) {
                                   }
                                 }}
                               />
-                              <Link to="/product-details">
+                              <Link to={`/petshop-productDetails/${item.id}`}>
                                 <div className="text-center">
                                   <img src={
                                     "https://canine.hirectjob.in//storage/app/public/product/" +
@@ -968,17 +968,9 @@ function PetshopOurourbrand(props) {
                                 </div>
                                 <div className="product-bag">
                                   <Row>
-                                    <Col>
-                                      <p>₹{item.price}</p>
-                                    </Col>
-                                    <Col>
-                                      <h5>{item.discount}%</h5>
-                                    </Col>
-                                  </Row>
-                                  <Row>
                                     <Col className="align-self-center">
-                                      <h6>{`₹${item.price -
-                                        (item.price * item.discount) / 100
+                                      <h6>{`₹${item.whole_price -
+                                        (item.whole_price * item.discount) / 100
                                         }`}</h6>
                                     </Col>
                                     <Col>
@@ -1090,7 +1082,7 @@ function PetshopOurourbrand(props) {
                                     }
                                   }}
                                 />
-                                <Link to="/product-details">
+                                <Link to={`/petshop-productDetails/${item.id}`}>
                                   <div className="text-center">
                                     <img src={
                                       "https://canine.hirectjob.in//storage/app/public/category/"
