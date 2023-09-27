@@ -979,6 +979,18 @@ function PetshopHome(props) {
       });
   };
 
+  const happyCus = [
+    "linear-gradient(180deg, #C6ECFC 0%, rgba(198.30, 235.76, 251.81, 0.43) 100%)",
+    "linear-gradient(180deg, #EEEEFF 0%, rgba(238.43, 238.43, 255, 0.45) 100%)",
+    "linear-gradient(180deg, #FFEAD2 0%, rgba(255, 234.18, 210.37, 0.33) 100%)",
+  ];
+  const ourBrand = [
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBCD 0%, rgba(253.94, 203.15, 204.70, 0) 100%)",
+  ];
+
   return (
     <>
       <Toaster />
@@ -1282,10 +1294,13 @@ function PetshopHome(props) {
           <Row className="mt-4">
             {brands
               ? brands.map(
-                  (brand) =>
+                  (brand,index) =>
                     brand.canine == "1" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
-                        <div key={brand.id} className="Brand-card brand-1">
+                        <div key={brand.id} className="Brand-card" style={{
+                        background:
+                          ourBrand[index % ourBrand.length],
+                      }}>
                           <Link to={`/petshop-our-Ourbrand/${brand.title}`}>
                             <div className="brandLOGO">
                               <img
@@ -1387,10 +1402,13 @@ function PetshopHome(props) {
             <Row>
               {brands
                 ? brands.map(
-                    (brand) =>
+                    (brand,index) =>
                       brand.canine == "0" && (
                         <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div key={brand.id} className="Brand-card brand-1">
+                          <div key={brand.id} className="Brand-card" style={{
+                        background:
+                          ourBrand[index % ourBrand.length],
+                      }}>
                             <Link to={`/petshop-shop-by-brandList/${brand.id}`}>
                               <div className="brandLOGO">
                                 <img
@@ -1502,9 +1520,12 @@ function PetshopHome(props) {
             </Col>
           </Row>
           <Row>
-            {reviewlist.map((order) => (
+            {reviewlist.map((order,index) => (
               <Col lg={4} sm={6} xs={6} key={order.id}>
-                <div className="Brand-cus">
+                <div className="Brand-cus" style={{
+                        background:
+                          happyCus[index % happyCus.length],
+                      }}>
                   <>
                     <img
                       src={
@@ -1526,7 +1547,7 @@ function PetshopHome(props) {
                         length: order.rating,
                       }).map((_, index) => (
                         <Link>
-                          <img src={vector} key={index} />
+                          <i class="fa fa-star" />
                         </Link>
                       ))}
                     </div>

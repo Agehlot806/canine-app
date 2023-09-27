@@ -491,10 +491,10 @@ a {
 
 /* ==============Happy Customer ====================== */
 .brand-bg {
-  background: #008efd;
+  /* background: #008efd; */
   text-align: left;
-  color: #fff;
-  padding: 15px;
+  color: #000;
+  /* padding: 15px; */
   height: 100%;
 }
 
@@ -504,24 +504,31 @@ a {
   text-align: center;
   height: 100%;
   display: inline-flex;
+  padding: 12px;
 }
 
 .Brand-cus img {
-  width: 100px;
+  width: 60px;
+  height: 60px;
+  margin: 0 10px 0 0;
+  border-radius: 50%;
+  align-self: center;
 }
 
 .brand-bg h5 {
   font-weight: 400;
   font-size: 25px;
+  margin: 0;
 }
 
 .brand-bg p {
   font-size: 15px;
+  margin: 0;
 }
 
 .brand-bg a {
-  margin: 0 4px 0 4px;
-  color: #fff;
+  margin: 0 2px 0 2px;
+  color: #f1c21b;
 }
 
 .brand-bg a img {

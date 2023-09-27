@@ -33,6 +33,15 @@ function Productbypartner() {
       });
   };
 
+
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    // Add more gradient colors as needed
+  ];
+  
   // all venders
   const AllVendorHomePage = () => {
     axios
@@ -62,7 +71,7 @@ function Productbypartner() {
           <div className="needplace">
             <Row>
               {allVendorShop && allVendorShop.length > 0 ? (
-                allVendorShop.map((item) => (
+                allVendorShop.map((item,index) => (
                   <Col lg={3} sm={6} xs={6} className="mb-5">
                     <a onClick={() => {
                       navigate('/product-partner-Oneshop',{
@@ -71,7 +80,10 @@ function Productbypartner() {
                         }
                       })
                     }}>
-                      <div className="ProductPartner-card">
+                      <div className="ProductPartner-card" style={{
+                    background:
+                      gradientColors[index % gradientColors.length],
+                  }}>
                         {/* <img src={item.logo} /> */}
                         <img
                           src={

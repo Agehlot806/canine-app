@@ -52,6 +52,13 @@ function Shopbybrand() {
     console.log("====================================");
     console.log(brands);
     console.log("====================================");
+
+    const ourBrand = [
+        "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+        "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+        "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+        "linear-gradient(180deg, #FECBCD 0%, rgba(253.94, 203.15, 204.70, 0) 100%)",
+      ];
     return (
         <>
             <Newheader />
@@ -67,10 +74,13 @@ function Shopbybrand() {
                     <div className="needplace">
                         <Row>
                             {brands ? (
-                                brands.map((brand) => (
+                                brands.map((brand,index) => (
                                     brand.canine == '0' && (
                                         <Col lg={3} sm={6} xs={6} className="mb-5">
-                                            <div key={brand.id} className="Brand-card brand-1">
+                                            <div key={brand.id} className="Brand-card" style={{
+                          background:
+                            ourBrand[index % ourBrand.length],
+                        }}>
                                                 <Link to={`/shop-by-brand-list/${brand.id}`}>
                                                     <div className="brandLOGO">
                                                         <img
