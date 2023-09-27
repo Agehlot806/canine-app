@@ -1201,8 +1201,8 @@ function Home(props) {
                           {/* <p>{item.description}</p> */}
                           <p
                             className={`truncate-text ${!expandedDescription[item.id]
-                                ? "read-more-link"
-                                : ""
+                              ? "read-more-link"
+                              : ""
                               }`}
                           >
                             {item.description}
@@ -1415,7 +1415,7 @@ function Home(props) {
             <Row>
               {brands
                 ? brands.map(
-                  (brand,index) =>
+                  (brand, index) =>
                     brand.canine == "0" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
                         <div key={brand.id} className="Brand-card" style={{
@@ -1468,7 +1468,7 @@ function Home(props) {
           <div className="needplace">
             <Row>
               {allVendorShop && allVendorShop.length > 0 ? (
-                allVendorShop.map((item,index) => (
+                allVendorShop.map((item, index) => (
                   <Col lg={3} sm={6} xs={6} className="mb-5" key={item.id} >
                     {/* <Link to={`/product-partner-Oneshop/${item.id}`}> */}
                     <a
@@ -1481,9 +1481,9 @@ function Home(props) {
                       }}
                     >
                       <div className="ProductPartner-card" style={{
-                    background:
-                      gradientColors[index % gradientColors.length],
-                  }}>
+                        background:
+                          gradientColors[index % gradientColors.length],
+                      }}>
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
@@ -1823,22 +1823,29 @@ function Home(props) {
                                         productDetails?.variations.map(
                                           (item, index) => (
                                             <Col lg={4} key={index}>
-                                              <div
-                                                className={`tab-variations ${selectedVariant === item?.type
-                                                    ? "active"
-                                                    : ""
-                                                  }`}
-                                                onClick={() => {
-                                                  setSelectedVariant(
-                                                    item?.type
-                                                  );
-                                                  setSelectedVariantPrice(
-                                                    item?.price
-                                                  );
-                                                }}
-                                              >
-                                                {item?.type}
-                                              </div>
+                                              {item.stock !== 0 ? (
+                                                <div
+                                                  className={`tab-variations ${selectedVariant === item.type
+                                                      ? "active"
+                                                      : ""
+                                                    }`}
+                                                  onClick={() => {
+                                                    setSelectedVariant(item.type);
+                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                  }}
+                                                >
+                                                  {item.type}
+                                                </div>
+                                              ) : (
+                                                <div
+                                                  className="tab-variations disabledvariation"
+                                                  title="Stock unavailable"
+                                                >
+                                                  {/* <span className="blurred-text"> */}
+                                                  {item.type}
+                                                  {/* </span> */}
+                                                </div>
+                                              )}
                                             </Col>
                                           )
                                         )}
@@ -2412,8 +2419,8 @@ function Home(props) {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2516,18 +2523,29 @@ function Home(props) {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                  <div
-                                    className={`tab-variations ${selectedVariant === item?.type
-                                        ? "active"
-                                        : ""
-                                      }`}
-                                    onClick={() => {
-                                      setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
-                                    }}
-                                  >
-                                    {item?.type}
-                                  </div>
+                                  {item.stock !== 0 ? (
+                                    <div
+                                      className={`tab-variations ${selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                        }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>

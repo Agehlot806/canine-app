@@ -361,7 +361,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -369,7 +369,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -920,31 +920,31 @@ function Productdetail() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -966,7 +966,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1005,16 +1005,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex + 1) % productDetails.images.length
+                      (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                          productDetails.images.length
+                      (lightboxImageIndex +
+                        productDetails.images.length -
+                        1) %
+                      productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1023,7 +1023,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                          productDetails.images.length
+                        productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1094,11 +1094,10 @@ function Productdetail() {
                                       </div> */}
                                       {item.stock !== 0 ? (
                                         <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
+                                          className={`tab-variations ${selectedVariant === item.type
+                                            ? "active"
+                                            : ""
+                                            }`}
                                           onClick={() => {
                                             setSelectedVariant(item.type);
                                             setSelectedVariantPrice(item.price); // Store the price in state
@@ -1332,24 +1331,24 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-            (item, index) =>
-              item.type === "item_wise" && (
-                <div className="product-innerBanner">
-                  <img
-                    src={
-                      "https://canine.hirectjob.in/storage/app/" + item.image
-                    }
-                  />
-                  <div className="home-content">
-                    <h1>{item.title}</h1>
-                    <p>{item.description}</p>
-                    <Button>
-                      Explore More <i className="fa fa-angle-right" />
-                    </Button>
-                  </div>
+          (item, index) =>
+            item.type === "item_wise" && (
+              <div className="product-innerBanner">
+                <img
+                  src={
+                    "https://canine.hirectjob.in/storage/app/" + item.image
+                  }
+                />
+                <div className="home-content">
+                  <h1>{item.title}</h1>
+                  <p>{item.description}</p>
+                  <Button>
+                    Explore More <i className="fa fa-angle-right" />
+                  </Button>
                 </div>
-              )
-          )
+              </div>
+            )
+        )
         : null}
 
       <section className="section-padding food">
@@ -1405,9 +1404,8 @@ function Productdetail() {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>{`₹${
-                                item.price - (item.price * item?.discount) / 100
-                              }`}</h6>
+                              <h6>{`₹${item.price - (item.price * item?.discount) / 100
+                                }`}</h6>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1612,7 +1610,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1652,17 +1650,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1671,13 +1669,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1728,21 +1726,29 @@ function Productdetail() {
                                         productDetails?.variations.map(
                                           (item, index) => (
                                             <Col lg={4} key={index}>
-                                              <div
-                                                className={`tab-variations ${
-                                                  selectedVariant === item.type
+                                              {item.stock !== 0 ? (
+                                                <div
+                                                  className={`tab-variations ${selectedVariant === item.type
                                                     ? "active"
                                                     : ""
-                                                }`}
-                                                onClick={() => {
-                                                  setSelectedVariant(item.type);
-                                                  setSelectedVariantPrice(
-                                                    item.price
-                                                  );
-                                                }}
-                                              >
-                                                {item.type}
-                                              </div>
+                                                    }`}
+                                                  onClick={() => {
+                                                    setSelectedVariant(item.type);
+                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                  }}
+                                                >
+                                                  {item.type}
+                                                </div>
+                                              ) : (
+                                                <div
+                                                  className="tab-variations disabledvariation"
+                                                  title="Stock unavailable"
+                                                >
+                                                  {/* <span className="blurred-text"> */}
+                                                  {item.type}
+                                                  {/* </span> */}
+                                                </div>
+                                              )}
                                             </Col>
                                           )
                                         )}
@@ -1925,11 +1931,10 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
+                                  className={`fa ${addressContentVisible
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2031,19 +2036,29 @@ function Productdetail() {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                  <div
-                                    className={`tab-variations ${
-                                      selectedVariant === item?.type
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
-                                    }}
-                                  >
-                                    {item?.type}
-                                  </div>
+                                  {item.stock !== 0 ? (
+                                    <div
+                                      className={`tab-variations ${selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                        }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>
@@ -2651,11 +2666,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

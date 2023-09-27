@@ -703,7 +703,7 @@ function Petcategory() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -711,7 +711,7 @@ function Petcategory() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -1273,22 +1273,22 @@ function Petcategory() {
                       <div>
                         {allbrand
                           ? allbrand.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) =>
-                                    handleDataListBrand(items.title)
-                                  }
-                                />
-                                <label className="form-check-label">
-                                  {items.title}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) =>
+                                  handleDataListBrand(items.title)
+                                }
+                              />
+                              <label className="form-check-label">
+                                {items.title}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1310,20 +1310,20 @@ function Petcategory() {
                       <div>
                         {subcategories
                           ? subcategories.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allsubcateselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allsubcateselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1345,20 +1345,20 @@ function Petcategory() {
                       <div>
                         {allsubcate
                           ? allsubcate.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allcateselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allcateselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1425,22 +1425,22 @@ function Petcategory() {
                       <div>
                         {alllifesage
                           ? alllifesage.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onChange={(e) =>
-                                    Lifesatedataselect(items.name)
-                                  }
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) =>
+                                  Lifesatedataselect(items.name)
+                                }
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1462,20 +1462,20 @@ function Petcategory() {
                       <div>
                         {allbreed
                           ? allbreed.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onChange={(e) => allbreedselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) => allbreedselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1497,20 +1497,20 @@ function Petcategory() {
                       <div>
                         {allhealth
                           ? allhealth.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allhealthselect(items.title)}
-                                />
-                                <label className="form-check-label">
-                                  {items.title}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allhealthselect(items.title)}
+                              />
+                              <label className="form-check-label">
+                                {items.title}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1577,9 +1577,8 @@ function Petcategory() {
                         subcategories.map((item, index) => (
                           <li className="nav-item" key={item.id}>
                             <a
-                              className={`nav-link ${
-                                item.id == id ? "active" : ""
-                              }`}
+                              className={`nav-link ${item.id == id ? "active" : ""
+                                }`}
                               id="pills-home-tab"
                               data-toggle="pill"
                               onClick={(e) => allsubcateselect(item.name)}
@@ -1764,7 +1763,7 @@ function Petcategory() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1805,17 +1804,17 @@ function Petcategory() {
                             nextSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1824,13 +1823,13 @@ function Petcategory() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1883,21 +1882,29 @@ function Petcategory() {
                                         productDetails.variations.map(
                                           (item, index) => (
                                             <Col lg={4} key={index}>
-                                              <div
-                                                className={`tab-variations ${
-                                                  selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
-                                                }`}
-                                                onClick={() => {
-                                                  setSelectedVariant(item.type);
-                                                  setSelectedVariantPrice(
-                                                    item.price
-                                                  );
-                                                }}
-                                              >
-                                                {item.type}
-                                              </div>
+                                              {item.stock !== 0 ? (
+                                                <div
+                                                  className={`tab-variations ${selectedVariant === item.type
+                                                      ? "active"
+                                                      : ""
+                                                    }`}
+                                                  onClick={() => {
+                                                    setSelectedVariant(item.type);
+                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                  }}
+                                                >
+                                                  {item.type}
+                                                </div>
+                                              ) : (
+                                                <div
+                                                  className="tab-variations disabledvariation"
+                                                  title="Stock unavailable"
+                                                >
+                                                  {/* <span className="blurred-text"> */}
+                                                  {item.type}
+                                                  {/* </span> */}
+                                                </div>
+                                              )}
                                             </Col>
                                           )
                                         )}
@@ -2220,11 +2227,10 @@ function Petcategory() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2326,19 +2332,30 @@ function Petcategory() {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                  <div
-                                    className={`tab-variations ${
-                                      selectedVariant === item?.type
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      setSelectedVariant(item?.type);
-                                      setSelectedVariantPrice(item?.price);
-                                    }}
-                                  >
-                                    {item?.type}
-                                  </div>
+                                  {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
                                 </Col>
                               ))}
                           </Row>
@@ -2946,11 +2963,11 @@ function Petcategory() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
