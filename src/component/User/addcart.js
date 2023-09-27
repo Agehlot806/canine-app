@@ -103,6 +103,7 @@ function Addcart() {
       console.error("Razorpay Load Error:", error);
     }
   };
+  
   // const originalPrice = addToCartProduct[0]?.price;
 
   let originalPrice = 0;
@@ -460,6 +461,32 @@ function Addcart() {
         console.error("Error sending request:", error);
       });
   };
+
+  // failed place api notifiction_post
+  const handlenotifictionpostSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Prepare form data
+    const notifymePostData = new FormData();
+    notifymePostData.append("order_status","Failed");
+    notifymePostData.append("user_id", storedUserId);
+    notifymePostData.append("item_id", "");
+    notifymePostData.append("order_id","");
+
+    console.log("productDetails.id: ", productDetails?.id);
+    console.log("notifymePostData", notifymePostData);
+
+    // Send a request
+    axios
+      .post(`https://canine.hirectjob.in/api/v1/items/notifiction_post`, notifymePostData)
+      .then((response) => {
+        toast.success("Your data was successfully added");
+      })
+      .catch((error) => {
+        toast.error("An error occurred. Please try again.");
+      });
+  };
+
   function formatAddress(selectedAddress) {
     return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
   }

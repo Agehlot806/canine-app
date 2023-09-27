@@ -30,6 +30,7 @@ import voch from "../../assets/images/icon/voch.png";
 function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
+  const [paymentId, setPaymentId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
   console.log("productDetails ", productDetails?.id);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
@@ -185,6 +186,8 @@ function Productdetail() {
         toast.error("An error occurred. Please try again.");
       });
   };
+
+  
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -1406,14 +1409,14 @@ function Productdetail() {
                                 item.price - (item.price * item?.discount) / 100
                               }`}</h6>
                             </Col>
-                            <Col lg={6} sm={6} xs={6}>
+                            {/* <Col lg={6} sm={6} xs={6}>
                               <Link
                                 to={`/add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />
                               </Link>
-                            </Col>
+                            </Col> */}
                           </Row>
                         </div>
                       </Link>

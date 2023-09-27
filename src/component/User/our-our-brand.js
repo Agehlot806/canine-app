@@ -984,11 +984,11 @@ function Ourourbrand(props) {
                                         (item.price * item.discount) / 100
                                         }`}</h6>
                                     </Col>
-                                    <Col>
+                                    {/* <Col>
                                       <Link to="">
                                         <img src={bag} />
                                       </Link>
-                                    </Col>
+                                    </Col> */}
                                   </Row>
                                 </div>
                               </Link>

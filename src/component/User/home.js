@@ -60,7 +60,7 @@ function Home(props) {
   const navigate = useNavigate();
   const [categories, setcategories] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
-
+  const [paymentId, setPaymentId] = useState("");
   const [allproduct, setallproduct] = useState([]);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
@@ -1245,14 +1245,14 @@ function Home(props) {
                                   }`}
                               </h6>
                             </Col>
-                            <Col lg={6} sm={6} xs={6}>
+                            {/* <Col lg={6} sm={6} xs={6}>
                               <Link
                                 to={`/add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />
                               </Link>
-                            </Col>
+                            </Col> */}
                           </Row>
                         </div>
                       </Link>

@@ -1280,14 +1280,14 @@ function PetshopproductDetails() {
                             <Col className="align-self-center">
                               <h6>₹{item.whole_price}</h6>
                             </Col>
-                            <Col>
+                            {/* <Col>
                               <Link
                                 to={`/petshop-add-cart/${item.id}`}
                                 onClick={handleAddToCart}
                               >
                                 <img src={bag} />
                               </Link>
-                            </Col>
+                            </Col> */}
                           </Row>
                         </div>
                       </Link>

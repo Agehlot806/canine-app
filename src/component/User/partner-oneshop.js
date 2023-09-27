@@ -18,6 +18,7 @@ function Partneroneshop() {
   // console.log('state', state)
   const [vendorItemList, setVendorItemList] = useState([]);
   const [allproduct, setallproduct] = useState([]);
+  const [paymentId, setPaymentId] = useState("");
 
   useEffect(() => {
     VendorItems();
@@ -913,14 +914,14 @@ function Partneroneshop() {
                               item.price - (item.price * item.discount) / 100
                             }`}</h6>
                           </Col>
-                          <Col>
+                          {/* <Col>
                             <Link
                               to={`/add-cart/${item.id}`}
                               onClick={handleAddToCart}
                             >
                               <img src={bag} />
                             </Link>
-                          </Col>
+                          </Col> */}
                         </Row>
                       </div>
                     </Link>
