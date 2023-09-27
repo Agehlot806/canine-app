@@ -105,6 +105,7 @@ function Petcategory() {
 
   // filter code ==========================
   const [allproduct, setallproduct] = useState([]);
+  const [paymentId, setPaymentId] = useState("");
 
   useEffect(() => {
     allProduct();
@@ -1669,14 +1670,14 @@ function Petcategory() {
                                     <Col className="align-self-center">
                                       <h6>₹{item.price}</h6>
                                     </Col>
-                                    <Col>
+                                    {/* <Col>
                                       <Link
                                         to={`/add-cart/${item.id}`}
                                         onClick={handleAddToCart}
                                       >
                                         <img src={bag} />
                                       </Link>
-                                    </Col>
+                                    </Col> */}
                                   </Row>
                                 </div>
                               </Link>

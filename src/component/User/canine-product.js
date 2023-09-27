@@ -40,6 +40,7 @@ const clinetreview = {
 function Canineproduct(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
+  const [paymentId, setPaymentId] = useState("");
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
@@ -1590,14 +1591,14 @@ function Canineproduct(props) {
                                       <Col className="align-self-center">
                                         <h6>₹{item.price}</h6>
                                       </Col>
-                                      <Col>
+                                      {/* <Col>
                                         <Link
                                           to={`/add-cart/${item.id}`}
                                           onClick={handleAddToCart}
                                         >
                                           <img src={bag} />
                                         </Link>
-                                      </Col>
+                                      </Col> */}
                                     </Row>
                                   </div>
                                 </Link>

@@ -27,6 +27,7 @@ function Blogdetails() {
   const [blogdata, setBlogdata] = useState([]);
   console.log("blogdata: ", blogdata);
   const [allproduct, setallproduct] = useState([]);
+  const [paymentId, setPaymentId] = useState("");
   const [expandedDescription, setExpandedDescription] = useState({});
   const [productIds, setProductIds] = useState([]);
   console.log("productIds: ", productIds);

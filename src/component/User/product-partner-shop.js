@@ -82,6 +82,7 @@ function Productpartnershop() {
   let storedUserId = JSON.parse(customer_id);
   const { id } = useParams();
   console.log("vendorlistid: ", id);
+  const [paymentId, setPaymentId] = useState("");
   const [thirdbanner, setthirdbanner] = useState([]);
   const [vendorItemList, setVendorItemList] = useState([]);
   useEffect(() => {
@@ -1521,14 +1522,14 @@ function Productpartnershop() {
                                       (item.price * item.discount) / 100
                                     }`}</h6>
                                   </Col>
-                                  <Col>
+                                  {/* <Col>
                                     <Link
                                       to={`/add-cart/${item.id}`}
                                       onClick={handleAddToCart}
                                     >
                                       <img src={bag} />
                                     </Link>
-                                  </Col>
+                                  </Col> */}
                                 </Row>
                               </div>
                             </Link>
