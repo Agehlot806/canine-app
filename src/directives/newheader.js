@@ -207,13 +207,22 @@ function Newheader(props) {
       .get(`https://canine.hirectjob.in/api/v1/items/notify_list/266`)
       .then((response) => {
         setNotify(response.data.data);
-        setDataZero(response.data['0']);
+        setDataZero(response.data.notification);
         console.log("Notify-Notificationnnnnnnnnnnnn", response.data);
-        console.log("Data Zero", response.data['0'][0]);
+        console.log("Data Zero", response.data.notification);
       })
       .catch((error) => {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
       });
+  }
+
+  const DeleteNotificaton = (id)=>{
+    axios.delete(`https://canine.hirectjob.in/api/v1/items/notify_delete/${id}`)
+    .then((response)=>{
+      Notifynotification()
+      console.log("Deleteeeeeeeeeeeeeeeeeee",response)
+    })
+    .catch((error)=>console.log("Errrrrrrrrrrrrrrr",error))
   }
 
 
@@ -756,13 +765,13 @@ function Newheader(props) {
               <div>
                 {notify && notify.length > 0 ? (
                   notify.map((ob, index) => (
-                    <div className="notification" key={index}>
+                    <div className="notification" key={index} onClick={()=>DeleteNotificaton(ob.item_id)}>
                       <Row>
                         <Col lg={2} className="align-self-center text-center">
                           <i className="fa fa-info-circle" />
                         </Col>
                         <Col lg={8} >
-                          <h6>Order ID : {ob.order_id}</h6>
+                          <h6>Item ID : {ob.item_id}</h6>
                           <p>Stock : {ob.stock}</p>
                           <p>Variation : {ob.variation}</p>
                           <p>Status : {ob.order_status}</p>
