@@ -33,24 +33,17 @@ function Newheader(props) {
     Notifynotification();
   }, []);
   useEffect(() => {
-   
+
     fetchNotifications();
   }, [notification]);
 
-  const [notify, setNotify] = useState();
+  const [notify, setNotify] = useState([]);
+  const [dataZero, setDataZero] = useState([]);
 
-const Notifynotification = () => {
-  axios.get(`https://canine.hirectjob.in/api/v1/items/notify_list/266`)
-    .then((response) => {
-      setNotify(response.data[0])
-      console.log("Notify-Notificationnnnnnnnnnnnn", response.data[0]);
-    })
-    .catch((error) => {
-      console.log("EEEEEEEEEErrrrorrrrrrr", error);
-    });
-}
 
-  
+
+
+
 
 
   const categoriesProduct = async () => {
@@ -208,6 +201,21 @@ const Notifynotification = () => {
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
+  const Notifynotification = () => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/items/notify_list/266`)
+      .then((response) => {
+        setNotify(response.data.data);
+        setDataZero(response.data['0']);
+        console.log("Notify-Notificationnnnnnnnnnnnn", response.data);
+        console.log("Data Zero", response.data['0'][0]);
+      })
+      .catch((error) => {
+        console.log("EEEEEEEEEErrrrorrrrrrr", error);
+      });
+  }
+
 
   return (
     <>
@@ -401,8 +409,8 @@ const Notifynotification = () => {
                     Cats
                   </a>
                   <div
-                     className="dropdown-menu"
-                     aria-labelledby="megaDropdown"
+                    className="dropdown-menu"
+                    aria-labelledby="megaDropdown"
                   >
                     <div className="row">
                       <div className="col-md-4">
@@ -620,7 +628,7 @@ const Notifynotification = () => {
                         // key={item.id}
                         className="nav-link profile-icon"
                         to=""
-                        // props.type === "salesman" ? "/salesman-dashboad" : "home"
+                      // props.type === "salesman" ? "/salesman-dashboad" : "home"
                       >
                         {/* <img
                           src={
@@ -634,7 +642,7 @@ const Notifynotification = () => {
                           src={
                             profileData?.image
                               ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                                profileData.image
+                              profileData.image
                               : loicon1
                           }
                           alt="Profile Image"
@@ -735,7 +743,7 @@ const Notifynotification = () => {
                       <Col lg={2}>
                         <img src={item.image} />
                       </Col>
-                      <Col lg={10} className="align-self-center">
+                      <Col lg={9} className="align-self-center">
                         <h6>{item.title}</h6>
                         <p>{item.description}</p>
                       </Col>
@@ -745,23 +753,56 @@ const Notifynotification = () => {
               ) : (
                 <p className="emptyMSG">No Notification</p>
               )}
-              {notify && notify.length > 0 ? (
-                notify.map((ob,index)=>(
-                  <div className="notification">
-                    <Row>
-                      <Col lg={2}>
-                        <img src=""/>
-                      </Col>
-                      <Col lg={10} className="align-self-center">
-                        <h6>Order ID :{ob.order_id}</h6>
-                        <p>Status :{ob.order_status}</p>
-                      </Col>
-                    </Row>
-                  </div>
-                ))
-              ): (
-                <p className="emptyMSG">No Notification</p>
-              )}
+              <div>
+                {notify && notify.length > 0 ? (
+                  notify.map((ob, index) => (
+                    <div className="notification" key={index}>
+                      <Row>
+                        <Col lg={2} className="align-self-center text-center">
+                          <i className="fa fa-info-circle" />
+                        </Col>
+                        <Col lg={8} >
+                          <h6>Order ID : {ob.order_id}</h6>
+                          <p>Stock : {ob.stock}</p>
+                          <p>Variation : {ob.variation}</p>
+                          <p>Status : {ob.order_status}</p>
+                        </Col>
+                        <Col lg={2} className="align-self-center text-left">
+                          {/* <button > */}
+                          <i className="fa fa-trash" />
+                          {/* </button> */}
+                        </Col>
+                      </Row>
+                    </div>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Notification</p>
+                )}
+
+                {dataZero && dataZero.length > 0 ? (
+                  dataZero.map((ob, index) => (
+                    <div className="notification" key={index}>
+                      <Row>
+                        <Col lg={2} className="align-self-center text-center">
+                          <i className="fa fa-info-circle" />
+                        </Col>
+                        <Col lg={8} >
+                          <h6>Order ID : {ob.order_id}</h6>
+                          <p>Status : {ob.order_status}</p>
+                        </Col>
+                        <Col lg={2} className="align-self-center text-left">
+                          {/* <button > */}
+                          <i className="fa fa-trash" />
+                          {/* </button> */}
+                        </Col>
+                      </Row>
+                    </div>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Data Zero</p>
+                )}
+              </div>
+
               <button
                 type="button"
                 className="btn btn-secondary"

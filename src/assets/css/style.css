@@ -2467,6 +2467,10 @@ a.placDate {
 
 .notification h6 {
   font-size: 18px;
+  margin: 0;
+}
+.notification p {
+  margin: 0;
 }
 
 .notification {
