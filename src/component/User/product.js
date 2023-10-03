@@ -887,7 +887,7 @@ function Product(props) {
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
       })
@@ -906,7 +906,7 @@ function Product(props) {
       // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
         fieldpagerefresh(); // Call fieldpagerefresh here

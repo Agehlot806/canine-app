@@ -103,7 +103,7 @@ function Addcart() {
       console.error("Razorpay Load Error:", error);
     }
   };
-  
+
   // const originalPrice = addToCartProduct[0]?.price;
 
   let originalPrice = 0;
@@ -316,7 +316,6 @@ function Addcart() {
       city: city,
       pincode: pincode,
     };
-
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/address/add`,
@@ -324,13 +323,16 @@ function Addcart() {
       );
       setResponseMessage(response.data.message);
       toast.success("Successfully added!");
-
       // Call allAddressList to update the address list
       await allAddressList();
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+
+
+
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
@@ -349,7 +351,7 @@ function Addcart() {
   let storedUserId = JSON.parse(customer_id);
   // ----------------------------------------
 
-  // const [addresslist, setaddresslist] = useState([]);
+  // const [addresslist, setAddressList] = useState([]);
   const [addresslist, setAddressList] = useState([]);
   const allAddressList = async () => {
     axios
@@ -373,7 +375,7 @@ function Addcart() {
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
       })
@@ -398,7 +400,8 @@ function Addcart() {
       // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
+
           prevAddressList.filter((item) => item.id !== id)
         );
         fieldpagerefresh(); // Call fieldpagerefresh here
@@ -468,10 +471,10 @@ function Addcart() {
 
     // Prepare form data
     const notifymePostData = new FormData();
-    notifymePostData.append("order_status","Failed");
+    notifymePostData.append("order_status", "Failed");
     notifymePostData.append("user_id", storedUserId);
     notifymePostData.append("item_id", "");
-    notifymePostData.append("order_id","");
+    notifymePostData.append("order_id", "");
 
     console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymePostData", notifymePostData);
@@ -566,31 +569,31 @@ function Addcart() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -645,7 +648,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -780,9 +783,9 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount ||
-                                originalPrice + taxamound
+                              originalPrice -
+                              disscountvalue?.discount ||
+                              originalPrice + taxamound
                             )}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
@@ -856,11 +859,10 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${
-                                addressContentVisible
+                              className={`fa ${addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                              }`}
+                                }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -956,9 +958,9 @@ function Addcart() {
                               )}`} */}
                               {`${parseInt(
                                 originalPrice * 0.05 +
-                                  originalPrice -
-                                  disscountvalue?.discount ||
-                                  originalPrice + taxamound
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
@@ -969,7 +971,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                              // onClick={handleAddToCart}
+                            // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1635,8 +1637,8 @@ function Addcart() {
                             type="button"
                             className="btn btn-primary btn-apply coupon"
                             data-dismiss="modal"
-                            // data-toggle="modal"
-                            // data-target="#Coupon"
+                          // data-toggle="modal"
+                          // data-target="#Coupon"
                           >
                             Apply
                           </button>

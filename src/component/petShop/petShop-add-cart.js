@@ -493,7 +493,7 @@ function PetshopAddCart() {
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
-        setaddresslist(response.data.data);
+        setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -509,7 +509,7 @@ function PetshopAddCart() {
       .then((response) => {
         toast.success("Address deleted successfully");
         console.log("Address deleted successfully:", response.data.message);
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
       })
@@ -533,7 +533,7 @@ function PetshopAddCart() {
       console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
-        setaddresslist((prevAddressList) =>
+        setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
         fieldpagerefresh(); // Call fieldpagerefresh here
@@ -603,7 +603,7 @@ function PetshopAddCart() {
     allOrders();
   }, []);
 
-  const [addresslist, setaddresslist] = useState([]);
+  const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Select Payment Time");
   const [isDropdownOpen, setDropdownOpen] = useState(false);

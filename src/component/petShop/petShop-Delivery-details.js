@@ -9,7 +9,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 
 
 const Petshopdeliverydetails = () => {
-  const [addresslist, setaddresslist] = useState([]);
+  const [addresslist, setAddressList] = useState([]);
 // storedUserId
 const customer_id = localStorage.getItem("userInfo");
 console.log("=======>>>>>> id", customer_id);
@@ -26,7 +26,7 @@ console.log("customer_id: ", customer_id);
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
-        setaddresslist(response.data.data);
+        setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);

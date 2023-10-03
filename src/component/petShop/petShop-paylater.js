@@ -29,7 +29,7 @@ function PetshopPayLater() {
     allOrders();
   }, []);
 
-  const [addresslist, setaddresslist] = useState([]);
+  const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Select Payment Time");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -87,7 +87,7 @@ function PetshopPayLater() {
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
-        setaddresslist(response.data.data);
+        setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);

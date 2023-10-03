@@ -26,7 +26,7 @@ function PetshopShipping() {
   }, []);
   const { id } = useParams();
   console.log("id: ", id);
-  const [addresslist, setaddresslist] = useState([]);
+  const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
 
   const allAddressList = async () => {
@@ -35,7 +35,7 @@ function PetshopShipping() {
       .then((response) => {
         console.log(response);
         console.log("address list Successful");
-        setaddresslist(response.data.data);
+        setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);
