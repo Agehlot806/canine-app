@@ -387,6 +387,7 @@ function Blogdetails() {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
+  const [responseMessage, setResponseMessage] = useState("")
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {

@@ -302,6 +302,7 @@ function Addcart() {
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
 
+  const [responseMessage, setResponseMessage] = useState("")
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
