@@ -17,6 +17,8 @@ function Newheader(props) {
   const [allproduct, setAllProduct] = useState([]);
   const [dogsubcategories, setdogsubcategories] = useState("");
   const [storedUserId, setStoredUserId] = useState(null);
+  const [notify, setNotify] = useState([]);
+  const [dataZero, setDataZero] = useState([]);
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
@@ -30,21 +32,13 @@ function Newheader(props) {
     categoriesProduct();
     addToCartData();
     // fetchNotifications();
-    Notifynotification();
+    
   }, []);
   useEffect(() => {
+    Notifynotification();
+  }, []);
 
-    fetchNotifications();
-  }, [notification]);
-
-  const [notify, setNotify] = useState([]);
-  const [dataZero, setDataZero] = useState([]);
-
-
-
-
-
-
+  
 
   const categoriesProduct = async () => {
     try {
@@ -141,6 +135,11 @@ function Newheader(props) {
       });
   };
 
+  // storedUserId
+  const customer_id = localStorage.getItem("userInfo");
+  // let storedUserId = JSON.parse(customer_id);
+  // =----------------------------
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -204,28 +203,39 @@ function Newheader(props) {
 
   const Notifynotification = () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/items/notify_list/266`)
+      .get(`${BASE_URL}/items/notify_list/${customer_id}`)
       .then((response) => {
         setNotify(response.data.data);
         setDataZero(response.data.notification);
-        console.log("Notify-Notificationnnnnnnnnnnnn", response.data);
+        console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         console.log("Data Zero", response.data.notification);
       })
       .catch((error) => {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
       });
-  }
+  };
 
-  const DeleteNotificaton = (id)=>{
-    axios.delete(`https://canine.hirectjob.in/api/v1/items/notify_delete/${id}`)
-    .then((response)=>{
-      Notifynotification()
-      console.log("Deleteeeeeeeeeeeeeeeeeee",response)
-    })
-    .catch((error)=>console.log("Errrrrrrrrrrrrrrr",error))
-  }
-
-
+  const DeleteNotification = (id) => {
+    axios
+      .delete(`${BASE_URL}/items/notify_delete/${id}`)
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          toast.success("Notification deleted successfully");
+          // Filter out the deleted item from the notify array based on its id
+          setNotify((prevNotify) => {
+            const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
+            return updatedNotify;
+          });
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting Notification:", error);
+      });
+  };
+  
+  
   return (
     <>
       <Toaster />
@@ -765,7 +775,8 @@ function Newheader(props) {
               <div>
                 {notify && notify.length > 0 ? (
                   notify.map((ob, index) => (
-                    <div className="notification" key={index} onClick={()=>DeleteNotificaton(ob.item_id)}>
+                    <div className="notification" key={index} >
+
                       <Row>
                         <Col lg={2} className="align-self-center text-center">
                           <i className="fa fa-info-circle" />
@@ -776,12 +787,13 @@ function Newheader(props) {
                           <p>Variation : {ob.variation}</p>
                           <p>Status : {ob.order_status}</p>
                         </Col>
-                        <Col lg={2} className="align-self-center text-left">
-                          {/* <button > */}
-                          <i className="fa fa-trash" />
-                          {/* </button> */}
+                        <Col lg={2}>
+                          <Link onClick={() => DeleteNotification(ob.id)} >
+                            <i className="fa fa-trash" />
+                          </Link>
                         </Col>
                       </Row>
+
                     </div>
                   ))
                 ) : (
@@ -795,14 +807,9 @@ function Newheader(props) {
                         <Col lg={2} className="align-self-center text-center">
                           <i className="fa fa-info-circle" />
                         </Col>
-                        <Col lg={8} >
+                        <Col lg={10} >
                           <h6>Order ID : {ob.order_id}</h6>
                           <p>Status : {ob.order_status}</p>
-                        </Col>
-                        <Col lg={2} className="align-self-center text-left">
-                          {/* <button > */}
-                          <i className="fa fa-trash" />
-                          {/* </button> */}
                         </Col>
                       </Row>
                     </div>
