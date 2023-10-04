@@ -238,8 +238,12 @@ function Updateprofile() {
                     )} */}
                     {/* <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' /> */}
                     <img
-                      src={selectedImage ? selectedImage : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`}
-                      alt="Image"
+                      src={
+                        selectedImage
+                          ? selectedImage
+                          : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`
+                      }
+                      alt={selectedImage ? "Image" : "Image not available"}
                       style={{ width: '100px', height: '100px' }}
                     />
                   </Form.Group>
