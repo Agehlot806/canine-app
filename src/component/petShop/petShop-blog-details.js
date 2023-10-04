@@ -49,6 +49,7 @@ function PetshopBlogdetails() {
   ];
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  const salesmanId = localStorage.getItem("salesmanId");
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   const [wishlistData, setWishlistData] = useState([]);
@@ -491,7 +492,7 @@ function PetshopBlogdetails() {
     }
   };
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -1080,29 +1081,31 @@ function PetshopBlogdetails() {
                                       (item, index) => (
                                         <Col lg={4} sm={4} xs={3} key={index}>
                                           {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                            <div
+                                              className={`tab-variations ${
+                                                selectedVariant === item.type
+                                                  ? "active"
+                                                  : ""
+                                              }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(
+                                                  item.price
+                                                ); // Store the price in state
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          ) : (
+                                            <div
+                                              className="tab-variations disabledvariation"
+                                              title="Stock unavailable"
+                                            >
+                                              {/* <span className="blurred-text"> */}
+                                              {item.type}
+                                              {/* </span> */}
+                                            </div>
+                                          )}
                                         </Col>
                                       )
                                     )}
@@ -1669,30 +1672,30 @@ function PetshopBlogdetails() {
                               productDetails?.variations?.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                  {item.stock !== 0 ? (
+                                    <div
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>

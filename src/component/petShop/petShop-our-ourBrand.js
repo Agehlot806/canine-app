@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import ourbrand from "../../assets/images/banner/ourbrand.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import filter from "../../assets/images/icon/filter.png";
@@ -16,6 +16,7 @@ import { Toaster, toast } from "react-hot-toast";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import paydone from "../../assets/images/icon/paydone.png";
+import { styled } from "styled-components";
 
 const clinetreview = {
   desktop: {
@@ -143,6 +144,8 @@ function PetshopOurourbrand(props) {
     Allsubcategoriessecond();
   }, []);
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  const salesmanId = localStorage.getItem("salesmanId");
+  console.log("storedWholesellerId: ", storedWholesellerId);
   const [allproduct, setallproduct] = useState([]);
   const [wishlistData, setWishlistData] = useState([]);
 
@@ -163,13 +166,15 @@ function PetshopOurourbrand(props) {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails.name,
-          // variant: productDetails.variations || "Default", // You may need to update this based on your data
-          image: productDetails.image,
-          quantity: productDetails.quantity,
-          price: productDetails.price,
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
+          min_order: productDetails.min_order,
           user_id: storedWholesellerId,
-          item_id: productDetails.id,
+          item_id: productDetails?.id,
+          seller_id: salesmanId ? Number(salesmanId) : "",
         }
       );
 
@@ -184,6 +189,16 @@ function PetshopOurourbrand(props) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
   };
   const fetchWishlistData = async () => {
     try {
@@ -193,7 +208,7 @@ function PetshopOurourbrand(props) {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -280,11 +295,11 @@ function PetshopOurourbrand(props) {
       .then((response) => {
         console.log(response);
         console.log("all product brand Successful");
-        const AllData = response.data.data
-        const data = AllData.filter((el) => el.module_id === 1)
-        const data1 = data.filter((item) => item.brand_id === id)  
-        console.log('data in fetch',data)
-        console.log('data1 in fetch',data1)
+        const AllData = response.data.data;
+        const data = AllData.filter((el) => el.module_id === 1);
+        const data1 = data.filter((item) => item.brand_id === id);
+        console.log("data in fetch", data);
+        console.log("data1 in fetch", data1);
         setallproductbrand(data1);
       })
       .catch((error) => {
@@ -305,7 +320,9 @@ function PetshopOurourbrand(props) {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
       setBrands(response.data.data);
       const titles = response?.data?.data.map((brand) => brand?.title);
-      const ourbrand = response?.data?.data.filter((brand) => brand?.canine === 0);
+      const ourbrand = response?.data?.data.filter(
+        (brand) => brand?.canine === 0
+      );
       setBrandIdsToFilter(ourbrand);
       setBrandCanineToFilter(ourbrand);
     } catch (error) {
@@ -660,7 +677,7 @@ function PetshopOurourbrand(props) {
         console.log(error);
       });
   };
-  console.log("addresslist------",addresslist);
+  console.log("addresslist------", addresslist);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
@@ -738,7 +755,7 @@ function PetshopOurourbrand(props) {
     }
   };
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -1117,7 +1134,6 @@ function PetshopOurourbrand(props) {
         toast.error("An error occurred. Please try again.");
       });
   };
- 
 
   // =============================================================================
   // ================================================================================
@@ -1234,7 +1250,7 @@ function PetshopOurourbrand(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -1242,7 +1258,7 @@ function PetshopOurourbrand(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -1265,7 +1281,7 @@ function PetshopOurourbrand(props) {
       </Container>
       <Container>
         <Row>
-        <Col lg={3}>
+          <Col lg={3}>
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
@@ -1582,20 +1598,25 @@ function PetshopOurourbrand(props) {
                 {/* <Row> */}
                 {brands.length > 0 ? (
                   <Row>
-                    {allproductbrand
-                      ? allproductbrand.map((item, index) => {
+                    {allproductbrand ? (
+                      allproductbrand.map((item, index) => {
                         return (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
-                            <div className="food-product" key={item.id} 
-                            onMouseEnter={() => handleMouseEnter(item.id)}
-                            onMouseLeave={() => handleMouseLeave(item.id)}
-                            style={{
-                              background:
-                                gradientColors[index % gradientColors.length],
-                            }}>
+                            <div
+                              className="food-product"
+                              key={item.id}
+                              onMouseEnter={() => handleMouseEnter(item.id)}
+                              onMouseLeave={() => handleMouseLeave(item.id)}
+                              style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}
+                            >
                               <i
                                 class={
-                                  item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                                  item.isFav
+                                    ? "fa-solid fa-heart"
+                                    : "fa-regular fa-heart"
                                 }
                                 onClick={(id) => {
                                   if (storedWholesellerId == null) {
@@ -1607,10 +1628,11 @@ function PetshopOurourbrand(props) {
                               />
                               <Link to={`/petshop-productDetails/${item.id}`}>
                                 <div className="text-center">
-                                  <img src={
-                                    "https://canine.hirectjob.in//storage/app/public/product/" +
-                                    item.image
-                                  }
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in//storage/app/public/product/" +
+                                      item.image
+                                    }
                                   />
                                 </div>
                                 <div>
@@ -1620,9 +1642,10 @@ function PetshopOurourbrand(props) {
                                 <div className="product-bag">
                                   <Row>
                                     <Col className="align-self-center">
-                                      <h6>{`₹${item.whole_price -
+                                      <h6>{`₹${
+                                        item.whole_price -
                                         (item.whole_price * item.discount) / 100
-                                        }`}</h6>
+                                      }`}</h6>
                                     </Col>
                                     {/* <Col>
                                       <Link to="">
@@ -1634,42 +1657,35 @@ function PetshopOurourbrand(props) {
                               </Link>
 
                               {buttonVisibility[item.id] && (
-                            <div className="button-container">
-                              <button
-                                data-toggle="modal"
-                                data-target=".bd-example-modal-lg"
-                                onClick={(e) => handeldataId(item.id)}
-                              >
-                                Quick View
-                              </button>
-                              <button
-                                data-toggle="modal"
-                                data-target=".buynow"
-                                onClick={(e) => handeldataId(item.id)}
-                              >
-                                Buy Now
-                              </button>
-                            </div>
-                          )}
+                                <div className="button-container">
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".bd-example-modal-lg"
+                                    onClick={(e) => handeldataId(item.id)}
+                                  >
+                                    Quick View
+                                  </button>
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".buynow"
+                                    onClick={(e) => handeldataId(item.id)}
+                                  >
+                                    Buy Now
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           </Col>
                         );
-
-                      }
-                      )
-                      : <p className="emptyMSG">No Brands Product.</p>}
+                      })
+                    ) : (
+                      <p className="emptyMSG">No Brands Product.</p>
+                    )}
                   </Row>
                 ) : (
                   <p>429 Error...</p>
                 )}
               </Container>
-
-
-
-
-
-
-
 
               {/* <Container>
                 <Row>
@@ -1805,6 +1821,248 @@ function PetshopOurourbrand(props) {
 
       <Petshopfooter />
 
+      {/* Product details Modal */}
+      <div
+        className="modal fade bd-example-modal-lg"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <section className="section-padding">
+                <Container>
+                  <Row>
+                    <Col lg={6}>
+                      <div>
+                        <div className="product-item quickviewimg">
+                          <img src={mainImage} alt="Product Image" />
+                        </div>
+                        <div className="needplace">
+                          <Row>
+                            {/* <Col sm={2} className="mb-3">
+                      <div
+                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
+                        <img src={singleImage} />
+                      </div></Col> */}
+                            {productDetails?.images &&
+                            productDetails?.images.length > 0 ? (
+                              productDetails?.images.map((item, index) => (
+                                <Col sm={3} className="mb-3" key={index}>
+                                  <div
+                                    className="product-item-inner"
+                                    onClick={() => handleThumbnailClick(index)}
+                                  >
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/public/product/" +
+                                        item
+                                      }
+                                      alt={`Image ${index}`}
+                                    />
+                                  </div>
+                                </Col>
+                              ))
+                            ) : (
+                              <p className="emptyMSG">No Related Image.</p>
+                            )}
+                          </Row>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={6}>
+                      <div className="productDetail-content">
+                        <Row>
+                          <Col lg={10}>
+                            <h4>{productDetails.name}</h4>
+                          </Col>
+                        </Row>
+                        <p>
+                          By <span>{productDetails.store_name}</span>
+                        </p>
+
+                        <Wrapper>
+                          <div className="icon-style">
+                            {ratingStar}
+                            <p>
+                              ({productDetails.rating_count} customer reviews)
+                            </p>
+                          </div>
+                        </Wrapper>
+
+                        <div className="needplaceProduct">
+                          <Row>
+                            <Col sm={6}>
+                              <div className="tab-container">
+                                <h6>Variations</h6>
+                                <Row>
+                                  {productDetails?.variations &&
+                                    productDetails?.variations.length > 0 &&
+                                    productDetails.variations.map(
+                                      (item, index) => (
+                                        <Col lg={4} sm={4} xs={3} key={index}>
+                                          {item.stock !== 0 ? (
+                                            <div
+                                              className={`tab-variations ${
+                                                selectedVariant === item.type
+                                                  ? "active"
+                                                  : ""
+                                              }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(
+                                                  item.price
+                                                ); // Store the price in state
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          ) : (
+                                            <div
+                                              className="tab-variations disabledvariation"
+                                              title="Stock unavailable"
+                                            >
+                                              {/* <span className="blurred-text"> */}
+                                              {item.type}
+                                              {/* </span> */}
+                                            </div>
+                                          )}
+                                        </Col>
+                                      )
+                                    )}
+                                </Row>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div className="quantity-btn quickbtn">
+                                <button onClick={handleDecrementOne}>
+                                  <i className="fa fa-minus" />
+                                </button>
+                                <form>
+                                  <div className="form-group">
+                                    <input
+                                      type="tel"
+                                      className="form-control"
+                                      placeholder="Quantity"
+                                      value={quantity}
+                                      onChange={handleQuantityChange}
+                                      autoComplete="new-number"
+                                    />
+                                  </div>
+                                </form>
+                                <button onClick={handleIncrementOne}>
+                                  <i className="fa fa-plus" />
+                                </button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                        <div className="needplaceProduct">
+                          <div className="product-deatils-price">
+                            <Row>
+                              {/* <Col lg={3}> */}
+                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
+                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
+                              {/* {console.log(
+                          "productDetails?.variations?.price: ",
+                          productDetails?.variations?.price
+                        )} */}
+                              {/* </Col> */}
+                              <Col lg={4}>
+                                <h5>{`₹${formattedAmount}`}</h5>
+                              </Col>
+                              {/* <Col lg={5}>
+                        <h6>
+                          Your save
+                          {formattedSavedAmount >= 0
+                            ? "₹" + formattedSavedAmount
+                            : "No savings"}
+                        </h6>
+                      </Col> */}
+                            </Row>
+                          </div>
+                        </div>
+                        <h5>About Us</h5>
+                        {console.log(
+                          "productDetails.brand_id: ",
+                          productDetails.brand_id
+                        )}
+
+                        {productDetails ? (
+                          <Table responsive>
+                            <tbody>
+                              <tr>
+                                <th>Brand</th>
+                                <td>{productDetails?.brand_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Age Range</th>
+                                <td>{productDetails?.lifeStage_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Health Condition</th>
+                                <td>{productDetails?.helthCondition_id}</td>
+                              </tr>
+                              <tr>
+                                <th>Target Species</th>
+                                <td>{productDetails?.Petsbreeds_id}</td>
+                              </tr>
+                              {/* <tr>
+                          <th>Item From</th>
+                          <td>Pellet</td>
+                        </tr> */}
+                            </tbody>
+                          </Table>
+                        ) : (
+                          <p>No data available for this product.</p>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      {verifiredIdaccess === 1 ? (
+                        <Button>
+                          <Link
+                            to={`/petshop-add-cart/${productDetails.id}`}
+                            onClick={handleAddToCart}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Button onClick={demousercheck}>
+                          <Link>
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                        </Button>
+                      )}
+                      <p>{addToCartStatus}</p>
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button
+                        data-toggle="modal"
+                        data-target="#soldoutModel"
+                        data-dismiss="modal"
+                      >
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
+                  {/* </Row> */}
+                </Container>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div
         className="modal fade buynow"
         tabIndex={-1}
@@ -1877,10 +2135,11 @@ function PetshopOurourbrand(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1984,10 +2243,11 @@ function PetshopOurourbrand(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2153,7 +2413,7 @@ function PetshopOurourbrand(props) {
                 </Container>
                 <div className="homecheckout">
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 10 ? (
+                  productDetails?.stock?.length !== 10 ? (
                     <button data-toggle="modal" data-target="#cod">
                       Checkout
                     </button>
@@ -2442,11 +2702,11 @@ function PetshopOurourbrand(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -2842,5 +3102,19 @@ function PetshopOurourbrand(props) {
     </>
   );
 }
+const Wrapper = styled.section`
+  justify-content: flex-start;
 
+  icon {
+    font-size: 2rem;
+    color: orange;
+  }
+  .emty-icon {
+    font-size: 2.6rem;
+  }
+  p {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+`;
 export default PetshopOurourbrand;

@@ -64,6 +64,9 @@ function PetshopHome(props) {
   const [blog, setblog] = useState([]);
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const demousercheck = () => {
+    toast.error("Profile is not verified");
+  };
 
   useEffect(() => {
     fetchBrands();
@@ -179,7 +182,9 @@ function PetshopHome(props) {
   };
 
   // storedWholesellerId
+  // *************************
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
+  const salesmanId = localStorage.getItem("salesmanId");
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
@@ -196,45 +201,45 @@ function PetshopHome(props) {
     };
   }, [isFavCheck]);
 
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/wish-list/add_product`,
-        {
-          item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
-          image: productDetails?.image,
-          quantity: quantity,
-          price: formattedAmount,
-          min_order: productDetails.min_order,
-          user_id: storedWholesellerId,
-          item_id: productDetails?.id,
-          seller_id: salesmanId ? Number(salesmanId) : "",
-        }
-      );
+  // const handleAddToCart = async () => {
+  //   try {
+  //     // const response = await axios.post(
+  //     //   `${BASE_URL}/customer/wish-list/add_product`,
+  //     //   {
+  //     //     item_name: productDetails?.name,
+  //     //     variant: selectedVariant, // You may need to update this based on your data
+  //     //     image: productDetails?.image,
+  //     //     quantity: quantity,
+  //     //     price: formattedAmount,
+  //     //     min_order: productDetails.min_order,
+  //     //     user_id: storedWholesellerId,
+  //     //     item_id: productDetails?.id,
+  //     //     seller_id: salesmanId ? Number(salesmanId) : "",
+  //     //   }
+  //     // );
 
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
-      }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      setAddToCartStatus("Error adding to cart");
-    }
-    const modal = document.querySelector(".modal");
-    if (modal) {
-      modal.classList.remove("show");
-      modal.style.display = "none";
-      document.body.classList.remove("modal-open");
-      const modalBackdrop = document.querySelector(".modal-backdrop");
-      if (modalBackdrop) {
-        modalBackdrop.remove();
-      }
-    }
-  };
+  //     if (response.data.success) {
+  //       const updatedCart = [...addToCartStatus, productDetails];
+  //       setAddToCartStatus(updatedCart);
+  //       // setAddToCartStatus("Added to cart!");
+  //       toast.success("Added to cart!");
+  //       // Navigate("/addcart")
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding to cart:", error);
+  //     setAddToCartStatus("Error adding to cart");
+  //   }
+  //   const modal = document.querySelector(".modal");
+  //   if (modal) {
+  //     modal.classList.remove("show");
+  //     modal.style.display = "none";
+  //     document.body.classList.remove("modal-open");
+  //     const modalBackdrop = document.querySelector(".modal-backdrop");
+  //     if (modalBackdrop) {
+  //       modalBackdrop.remove();
+  //     }
+  //   }
+  // };
   const fetchWishlistData = async () => {
     try {
       await axios
@@ -604,7 +609,6 @@ function PetshopHome(props) {
     }
   };
 
-  
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -744,7 +748,7 @@ function PetshopHome(props) {
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
-        setAddressList((prevAddressList) =>
+        setaddresslist((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
       })
@@ -763,7 +767,7 @@ function PetshopHome(props) {
       // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
-        setAddressList((prevAddressList) =>
+        setaddresslist((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
         fieldpagerefresh(); // Call fieldpagerefresh here
@@ -991,7 +995,48 @@ function PetshopHome(props) {
     "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
     "linear-gradient(180deg, #FECBCD 0%, rgba(253.94, 203.15, 204.70, 0) 100%)",
   ];
+  // ********************
+  // console.log("handleAddToCartF", handleAddToCart());
+  const handleAddToCart = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_product`,
+        {
+          item_name: productDetails?.name,
+          variant: selectedVariant, // You may need to update this based on your data
+          image: productDetails?.image,
+          quantity: quantity,
+          price: formattedAmount,
+          min_order: productDetails.min_order,
+          user_id: storedWholesellerId,
+          item_id: productDetails?.id,
+          seller_id: salesmanId ? Number(salesmanId) : "",
+        }
+      );
 
+      if (response.data.success) {
+        const updatedCart = [...addToCartStatus, productDetails];
+        setAddToCartStatus(updatedCart);
+        // setAddToCartStatus("Added to cart!");
+        toast.success("Added to cart!");
+        console.log("Added to cart");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
+  };
   return (
     <>
       <Toaster />
@@ -1295,13 +1340,16 @@ function PetshopHome(props) {
           <Row className="mt-4">
             {brands
               ? brands.map(
-                  (brand,index) =>
+                  (brand, index) =>
                     brand.canine == "1" && (
                       <Col lg={3} sm={6} xs={6} className="mb-5">
-                        <div key={brand.id} className="Brand-card" style={{
-                        background:
-                          ourBrand[index % ourBrand.length],
-                      }}>
+                        <div
+                          key={brand.id}
+                          className="Brand-card"
+                          style={{
+                            background: ourBrand[index % ourBrand.length],
+                          }}
+                        >
                           <Link to={`/petshop-our-Ourbrand/${brand.title}`}>
                             <div className="brandLOGO">
                               <img
@@ -1403,13 +1451,16 @@ function PetshopHome(props) {
             <Row>
               {brands
                 ? brands.map(
-                    (brand,index) =>
+                    (brand, index) =>
                       brand.canine == "0" && (
                         <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div key={brand.id} className="Brand-card" style={{
-                        background:
-                          ourBrand[index % ourBrand.length],
-                      }}>
+                          <div
+                            key={brand.id}
+                            className="Brand-card"
+                            style={{
+                              background: ourBrand[index % ourBrand.length],
+                            }}
+                          >
                             <Link to={`/petshop-shop-by-brandList/${brand.id}`}>
                               <div className="brandLOGO">
                                 <img
@@ -1521,12 +1572,14 @@ function PetshopHome(props) {
             </Col>
           </Row>
           <Row>
-            {reviewlist.map((order,index) => (
+            {reviewlist.map((order, index) => (
               <Col lg={4} sm={6} xs={6} key={order.id}>
-                <div className="Brand-cus" style={{
-                        background:
-                          happyCus[index % happyCus.length],
-                      }}>
+                <div
+                  className="Brand-cus"
+                  style={{
+                    background: happyCus[index % happyCus.length],
+                  }}
+                >
                   <>
                     <img
                       src={
@@ -1703,30 +1756,32 @@ function PetshopHome(props) {
                                     productDetails.variations.map(
                                       (item, index) => (
                                         <Col lg={4} sm={4} xs={3} key={index}>
-                                           {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                          {item.stock !== 0 ? (
+                                            <div
+                                              className={`tab-variations ${
+                                                selectedVariant === item.type
+                                                  ? "active"
+                                                  : ""
+                                              }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(
+                                                  item.price
+                                                ); // Store the price in state
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          ) : (
+                                            <div
+                                              className="tab-variations disabledvariation"
+                                              title="Stock unavailable"
+                                            >
+                                              {/* <span className="blurred-text"> */}
+                                              {item.type}
+                                              {/* </span> */}
+                                            </div>
+                                          )}
                                         </Col>
                                       )
                                     )}
@@ -2040,29 +2095,29 @@ function PetshopHome(props) {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                    <div
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>
@@ -2752,29 +2807,29 @@ function PetshopHome(props) {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                    <div
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>
