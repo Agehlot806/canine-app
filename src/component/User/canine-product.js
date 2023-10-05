@@ -1493,46 +1493,8 @@ function Canineproduct(props) {
             </section>
           </Col>
           <Col lg={9}>
-            <section className="section-padding">
-              <Container>
-                <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
-              </Container>
-              <Container fluid>
-                <Carousel
-                  swipeable={true}
-                  draggable={true}
-                  showDots={true}
-                  responsive={clinetreview}
-                  ssr={true} // means to render carousel on server-side.
-                  infinite={true}
-                  autoPlay={props.deviceType !== "mobile" ? true : false}
-                  autoPlaySpeed={2000}
-                  keyBoardControl={true}
-                  customTransition="all 1s"
-                  transitionDuration={1000}
-                  containerClass="carousel-container"
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  deviceType={props.deviceType}
-                  dotListClass="custom-dot-list-style"
-                  itemClass="carousel-item-padding-40-px"
-                >
-                  {categories.map((item) => (
-                    <div className="product-Deals" key={item.id}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/category/" +
-                          item.image
-                        }
-                        onClick={(e) => allcateselect(item?.name)}
-                      />
-                      <h1>{item?.name}</h1>
-                    </div>
-                  ))}
-                </Carousel>
-              </Container>
-            </section>
-
             <section className="section-padding food">
+            <h1 className="main-head">Canine Products</h1>
               <Container>
                 <Row>
                   {allproduct

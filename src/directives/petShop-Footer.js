@@ -71,11 +71,11 @@ function Petshopfooter() {
               </Col>
               <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
-                  <h5>Contact Us</h5>
+                  <h5>Conta ct Us</h5>
                   <ul>
                     <li>
                       <Link to="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmyaccount.google.com%2Femail&followup=https%3A%2F%2Fmyaccount.google.com%2Femail&ifkv=AXo7B7Xm-1RBYi8bBLAiZ5QxsIe8sy0uR4DDsBI5-wCY2jT0YmZ0XyP6ueHOjBTxAEja4ZXnyp6_&osid=1&passive=1209600&service=accountsettings&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S285245534%3A1692185345192690">
-                        <i className="fa fa-envelope-o" /> Mail Us
+                        <i className="fa fa-envelope-o" /> support@canineproducts.in
                       </Link>
                     </li>
                     <li>

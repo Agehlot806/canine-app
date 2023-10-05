@@ -405,7 +405,7 @@ function PetshopUpdateprofile() {
                       <img
                         src={
                           loginType === "salesman"
-                            ? `https://canine.hirectjob.in/storage/app/public/delivery-man/${imgage}`
+                            ? ` /public/delivery-man/${imgage}`
                             : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`
                         }
                         alt={selectedImage ? "Image" : "Image not available"}
