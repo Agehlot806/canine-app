@@ -9,6 +9,7 @@ import "../assets/css/style.css";
 import { useCartContext } from "../component/context/addToCartContext";
 import { useNotificationContext } from "../component/context/notificationContext";
 import loicon1 from "../assets/images/img/loicon1.png";
+import { Col, Row } from "react-bootstrap";
 
 function PetShopHeader(props) {
   const navigate = useNavigate();
@@ -164,9 +165,14 @@ function PetShopHeader(props) {
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [notify, setNotify] = useState([]);
+  const [dataZero, setDataZero] = useState([]);
 
   useEffect(() => {
     fetchData();
+  }, []);
+  useEffect(() => {
+    Notifynotification();
   }, []);
 
   useEffect(() => {
@@ -220,6 +226,80 @@ function PetShopHeader(props) {
 
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+
+  const Notifynotification = () => {
+    axios
+      .get(`${BASE_URL}/items/notify_list/${storedWholesellerId}`)
+      .then((response) => {
+        setNotify(response.data.data);
+        setDataZero(response.data.notification);
+        console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
+        console.log("Data Zero", response.data.notification);
+      })
+      .catch((error) => {
+        console.log("EEEEEEEEEErrrrorrrrrrr", error);
+      });
+  };
+
+  const DeleteNotification = (id) => {
+    axios
+      .delete(`${BASE_URL}/items/notify_delete/${id}`)
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          toast.success("Notification deleted successfully");
+          setNotify((prevNotify) => {
+            const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
+            return updatedNotify;
+          });
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting Notification:", error);
+      });
+      const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
+  };
+
+
+  const DeleteNotificationone = (id) => {
+    axios
+      .delete(`${BASE_URL}/items/notify_delete/${id}`)
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          toast.success("Notification deleted successfully");
+          setDataZero((prevDataZero) => {
+            const updatedDataZero = prevDataZero.filter((ob) => ob.id !== id);
+            return updatedDataZero;
+          });
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting Notification:", error);
+      });
+      const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
   };
 
   return (
@@ -749,45 +829,89 @@ function PetShopHeader(props) {
 
       {/* Modal */}
       <div
-        className="modal fade notification-area"
-        id="exampleModal"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h5>Notification</h5>
-              {notification && notification.length > 0 ? (
-                notification.map((item, index) => (
-                  <div className="notification">
-                    <Row>
-                      <Col lg={2}>
-                        <img src={pro} />
-                      </Col>
-                      <Col lg={10} className="align-self-center">
-                        <h6>{item.tergat}</h6>
-                      </Col>
-                    </Row>
+      className="modal fade notification-area"
+      id="exampleModal"
+      tabIndex={-1}
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-body">
+            <h5>Notification</h5>
+            {notification && notification.length > 0 ? (
+              notification.map((item, index) => (
+                <div className="notification">
+                  <Row>
+                    <Col lg={2}>
+                      <img src={item.image} />
+                    </Col>
+                    <Col lg={9} className="align-self-center">
+                      <h6>{item.title}</h6>
+                      <p>{item.description}</p>
+                    </Col>
+                  </Row>
+                </div>
+              ))
+            ) : (
+              <p className="emptyMSG">No Notification</p>
+            )}
+            <div>
+              {notify && notify.length > 0 ? (
+                notify.map((ob, index) => (
+                  <div className="notification" key={index} >
+                    <Link onClick={() => DeleteNotification(ob.id)} to={`/product-details/${ob.item_id}`}>
+                      <Row>
+                        <Col lg={2} className="align-self-center text-center">
+                          <i className="fa fa-info-circle" />
+                        </Col>
+                        <Col lg={8} >
+                          <h6>Item ID : {ob.item_id}</h6>
+                          <p>Stock : {ob.stock}</p>
+                          <p>Variation : {ob.variation}</p>
+                          <p>Status : {ob.order_status}</p>
+                        </Col>
+                      </Row>
+                    </Link>
                   </div>
                 ))
               ) : (
                 <p className="emptyMSG">No Notification</p>
               )}
 
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
+              {dataZero && dataZero.length > 0 ? (
+                dataZero.map((ob, index) => (
+                  <div className="notification" key={index}>
+                    <Link onClick={() => DeleteNotificationone(ob.id)} to={`/my-orders`} data-dismiss="modal">
+                      <Row>
+                        <Col lg={2} className="align-self-center text-center">
+                          <i className="fa fa-info-circle" />
+                        </Col>
+                        <Col lg={10} >
+                          <h6>Order ID : {ob.order_id}</h6>
+                          <p>Status : {ob.order_status}</p>
+                        </Col>
+                      </Row>
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p className="emptyMSG">No Data Zero</p>
+              )}
             </div>
+
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
+    </div>
       {/* Modal */}
       <div
         className="modal fade"

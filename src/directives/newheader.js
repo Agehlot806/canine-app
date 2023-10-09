@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, history } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
@@ -221,7 +221,6 @@ function Newheader(props) {
       .then((response) => {
         if (response.status === 200 || response.status === 204) {
           toast.success("Notification deleted successfully");
-          // Filter out the deleted item from the notify array based on its id
           setNotify((prevNotify) => {
             const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
             return updatedNotify;
@@ -233,9 +232,48 @@ function Newheader(props) {
       .catch((error) => {
         console.error("Error deleting Notification:", error);
       });
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
   };
 
 
+  const DeleteNotificationone = (id) => {
+    axios
+      .delete(`${BASE_URL}/items/notify_delete/${id}`)
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          toast.success("Notification deleted successfully");
+          setDataZero((prevDataZero) => {
+            const updatedDataZero = prevDataZero.filter((ob) => ob.id !== id);
+            return updatedDataZero;
+          });
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting Notification:", error);
+      });
+    const modal = document.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const modalBackdrop = document.querySelector(".modal-backdrop");
+      if (modalBackdrop) {
+        modalBackdrop.remove();
+      }
+    }
+  };
+  
   return (
     <>
       <Toaster />
@@ -251,6 +289,110 @@ function Newheader(props) {
                 <img src={logo} />
               </Link>
             </a>
+            <div className="menu-content">
+            <div className="hide-icons">
+              <li className="nav-item">
+                <a
+                  className="notification-btn"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  <i class="fa fa-bell-o" />
+                  <span>{notificationLength}</span>
+                </a>
+              </li>
+              {storedUserId ? (
+                // Display Logout button if user is logged in
+                <>
+                  <li className="nav-item">
+                    <button
+                      className="yellow-btn"
+                      data-toggle="modal"
+                      data-target="#logout-model"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/add-cart" className="notification-btn">
+                      <i class="fa fa-shopping-cart" />{" "}
+                      <span className="cart-count">{dataLength}</span>{" "}
+                    </Link>
+                  </li>
+                  <li className="nav-item dropdown profile-mainarea">
+                    {/* <a
+                      className="nav-link dropdown-toggle profile-icon"
+                      href="#"
+                      id="navbarDropdown"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    > */}
+                    <Link
+                      // key={item.id}
+                      className="nav-link profile-icon"
+                      to=""
+                    // props.type === "salesman" ? "/salesman-dashboad" : "home"
+                    >
+                      {/* <img
+                          src={
+                            profileData?.images ?
+                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              profileData?.image : loicon1
+                          }
+                        /> */}
+
+                      <img
+                        src={
+                          profileData?.image
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                            profileData.image
+                            : loicon1
+                        }
+                        alt="Profile Image"
+                      />
+                    </Link>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdown"
+                    >
+                      <Link className="dropdown-item" to={`/pet-profile/`}>
+                        Pet Profile
+                      </Link>
+                      <Link className="dropdown-item" to="/all-veterinary">
+                        All Veterinary
+                      </Link>
+                      <Link
+                        className="dropdown-item"
+                        to="/all-service-booking"
+                      >
+                        All Service Booking
+                      </Link>
+                      <Link className="dropdown-item" to="/my-orders">
+                        My Orders
+                      </Link>
+                      <Link className="dropdown-item" to="/wishlist-products">
+                        Wishlist Products
+                      </Link>
+                      <Link className="dropdown-item" to="/update-profile">
+                        Profile
+                      </Link>
+                      {/* <Link className="dropdown-item" onClick={logoutUser}>
+                                        Logout
+                                    </Link> */}
+                    </div>
+                  </li>
+                </>
+              ) : (
+                // Display Sign In button if user is not logged in
+                <li className="nav-item">
+                  <button className="yellow-btn">
+                    <Link to="/login">Sign In</Link>
+                  </button>
+                </li>
+              )}
+            </div>
             <button
               className="navbar-toggler"
               type="button"
@@ -262,8 +404,20 @@ function Newheader(props) {
             >
               <span className="navbar-toggler-icon" />
             </button>
+            </div>
             <div className="collapse navbar-collapse" id="megaMenu">
-              <ul className="navbar-nav m-auto">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#megaMenu"
+              aria-controls="megaMenu"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span>X</span>
+            </button>             
+             <ul className="navbar-nav m-auto">
                 {/* <li className="nav-item">
                 <Link
                   className="nav-link"
@@ -278,6 +432,7 @@ function Newheader(props) {
                 </Link>
               </li> */}
                 <li className="nav-item dropdown mega-dropdown-new">
+
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -840,7 +995,7 @@ function Newheader(props) {
                     Contact
                   </Link>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item nonhide">
                   <a className="nav-link">
                     <div className="header-inner-addon input-container">
                       <i className="fa fa-search" />
@@ -863,7 +1018,7 @@ function Newheader(props) {
                     </div>
                   </a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item nonhide">
                   <a
                     className="notification-btn"
                     data-toggle="modal"
@@ -877,7 +1032,7 @@ function Newheader(props) {
                 {storedUserId ? (
                   // Display Logout button if user is logged in
                   <>
-                    <li className="nav-item">
+                    <li className="nav-item nonhide">
                       <button
                         className="yellow-btn"
                         data-toggle="modal"
@@ -886,13 +1041,13 @@ function Newheader(props) {
                         Logout
                       </button>
                     </li>
-                    <li className="nav-item">
+                    <li className="nav-item nonhide">
                       <Link to="/add-cart" className="notification-btn">
                         <i class="fa fa-shopping-cart" />{" "}
                         <span className="cart-count">{dataLength}</span>{" "}
                       </Link>
                     </li>
-                    <li className="nav-item dropdown profile-mainarea">
+                    <li className="nav-item dropdown profile-mainarea nonhide">
                       {/* <a
                       className="nav-link dropdown-toggle profile-icon"
                       href="#"
@@ -959,13 +1114,38 @@ function Newheader(props) {
                   </>
                 ) : (
                   // Display Sign In button if user is not logged in
-                  <li className="nav-item">
+                  <li className="nav- nonhide">
                     <button className="yellow-btn">
                       <Link to="/login">Sign In</Link>
                     </button>
                   </li>
                 )}
               </ul>
+            </div>
+            <div className="hide-icons">
+              <li className="nav-item">
+                <a className="nav-link">
+                  <div className="header-inner-addon input-container">
+                    <i className="fa fa-search" />
+                    <input
+                      type="text"
+                      placeholder="What are you looking for?"
+                      value={searchQuery}
+                      onChange={handleSearchInputChange}
+                    />
+                  </div>
+
+                  <div className="search-results">
+                    {filteredProducts.map((product, index, id) => (
+                      <li key={index}>
+                        <Link to={`/product-details/${product.id}`}>
+                          {product.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </div>
+                </a>
+              </li>
             </div>
           </div>
         </nav>
@@ -1024,7 +1204,7 @@ function Newheader(props) {
                       <Col lg={9} className="align-self-center">
                         <h6>{item.title}</h6>
                         <p>{item.description}</p>
-                      </Col>   
+                      </Col>
                     </Row>
                   </div>
                 ))
@@ -1035,24 +1215,19 @@ function Newheader(props) {
                 {notify && notify.length > 0 ? (
                   notify.map((ob, index) => (
                     <div className="notification" key={index} >
-
-                      <Row>
-                        <Col lg={2} className="align-self-center text-center">
-                          <i className="fa fa-info-circle" />
-                        </Col>
-                        <Col lg={8} >
-                          <h6>Item ID : {ob.item_id}</h6>
-                          <p>Stock : {ob.stock}</p>
-                          <p>Variation : {ob.variation}</p>
-                          <p>Status : {ob.order_status}</p>
-                        </Col>
-                        <Col lg={2}>
-                          <Link onClick={() => DeleteNotification(ob.id)} >
-                            <i className="fa fa-trash" />
-                          </Link>
-                        </Col>
-                      </Row>
-
+                      <Link onClick={() => DeleteNotification(ob.id)} to={`/product-details/${ob.item_id}`}>
+                        <Row>
+                          <Col lg={2} className="align-self-center text-center">
+                            <i className="fa fa-info-circle" />
+                          </Col>
+                          <Col lg={8} >
+                            <h6>Item ID : {ob.item_id}</h6>
+                            <p>Stock : {ob.stock}</p>
+                            <p>Variation : {ob.variation}</p>
+                            <p>Status : {ob.order_status}</p>
+                          </Col>
+                        </Row>
+                      </Link>
                     </div>
                   ))
                 ) : (
@@ -1062,15 +1237,17 @@ function Newheader(props) {
                 {dataZero && dataZero.length > 0 ? (
                   dataZero.map((ob, index) => (
                     <div className="notification" key={index}>
-                      <Row>
-                        <Col lg={2} className="align-self-center text-center">
-                          <i className="fa fa-info-circle" />
-                        </Col>
-                        <Col lg={10} >
-                          <h6>Order ID : {ob.order_id}</h6>
-                          <p>Status : {ob.order_status}</p>
-                        </Col>
-                      </Row>
+                      <Link onClick={() => DeleteNotificationone(ob.id)} to={`/my-orders`} data-dismiss="modal">
+                        <Row>
+                          <Col lg={2} className="align-self-center text-center">
+                            <i className="fa fa-info-circle" />
+                          </Col>
+                          <Col lg={10} >
+                            <h6>Order ID : {ob.order_id}</h6>
+                            <p>Status : {ob.order_status}</p>
+                          </Col>
+                        </Row>
+                      </Link>
                     </div>
                   ))
                 ) : (

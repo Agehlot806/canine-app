@@ -70,6 +70,7 @@ a {
   top: 0;
   background-color: #ffffff;
   z-index: 100;
+  overflow-x: hidden;
 }
 
 .nav-btn button {
@@ -2469,6 +2470,7 @@ a.placDate {
   font-size: 18px;
   margin: 0;
 }
+
 .notification p {
   margin: 0;
 }
@@ -2810,13 +2812,6 @@ a.notification-btn i {
 .newheader ul li.nav-item {
   text-align: left;
   align-self: center;
-}
-
-.sticky-newheader {
-  position: sticky;
-  top: 0;
-  background-color: #ffffff;
-  z-index: 100;
 }
 
 .cart-count {
@@ -3344,7 +3339,7 @@ button.Apply-price {
   position: absolute;
   top: 100%;
   left: 50%;
-  width: 300px;
+  width: 100%;
   max-height: 200px;
   /* Set your desired max height */
   overflow-y: auto;
@@ -3628,7 +3623,7 @@ li.nav-item.dropdown.new-mega-drop {
 }
 
 .productDetail-content svg {
-    color: #ffc934;
+  color: #ffc934;
 }
 
 .react-datepicker__day-name {
@@ -3652,16 +3647,19 @@ li.nav-item.dropdown.new-mega-drop {
   justify-content: center;
   border: 2px solid #000;
 }
+
 /* .sevice-select-date .react-datepicker__day:hover {
   background-color: #f1c21b;
   color: #000;
 } */
-.sevice-select-date .react-datepicker__day--in-range, .react-datepicker__day--in-selecting-range, .react-datepicker__day--selected {
+.sevice-select-date .react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--selected {
   background-color: #f1c21b;
   color: #000;
 }
 
-.sevice-select-date .react-datepicker__day--disabled{
+.sevice-select-date .react-datepicker__day--disabled {
   color: #ccc;
   cursor: default;
   border: 2px solid #ccc;
@@ -3676,22 +3674,28 @@ li.nav-item.dropdown.new-mega-drop {
 
 
 .react-datepicker__navigation--previous.react-datepicker__navigation--previous--disabled .react-datepicker__navigation-icon--previous::before {
-  content: "\f104"; /* Unicode for the angle-left icon in Font Awesome */
-  font-family: FontAwesome; /* Specify the Font Awesome font family */
-  font-size: 16px; /* Adjust the font size as needed */
-  color: #000; /* Set the icon color */
+  content: "\f104";
+  /* Unicode for the angle-left icon in Font Awesome */
+  font-family: FontAwesome;
+  /* Specify the Font Awesome font family */
+  font-size: 16px;
+  /* Adjust the font size as needed */
+  color: #000;
+  /* Set the icon color */
   text-indent: -9999px;
 }
+
 .sold-out-btn.soldbtn-new a {
   padding: 8px 60px !important;
 }
+
 .sold-out-btn.soldbtn-new button {
-    margin: 15px 0 0 !important;
-    font-size: 22px;
-    background: #000;
-    width: 360px !important;
-    padding: 3px;
-    color: #000 !important;
+  margin: 15px 0 0 !important;
+  font-size: 22px;
+  background: #000;
+  width: 360px !important;
+  padding: 3px;
+  color: #000 !important;
   color: #ffc934;
 }
 
@@ -3703,7 +3707,7 @@ li.nav-item.dropdown.new-mega-drop {
 /* Custom styling for the mega dropdown */
 .mega-dropdown-new {
   position: static !important;
-  
+
 }
 
 .mega-dropdown-new .dropdown-menu {
@@ -3731,6 +3735,68 @@ li.nav-item.dropdown.new-mega-drop {
 
   opacity: 0.6;
   cursor: not-allowed;
-  
+
 }
+.flip-card {
+  background-color: transparent;
+  height: 190px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  /* position: relative; */
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+border-radius: 10px;
+text-align: center;
+}
+.flip-card-front h1 {
+  background: linear-gradient(rgb(203 214 254) 0%, rgba(254, 203, 240, 0) 100%);
+  font-size: 30px;
+  margin: 16px;
+  color: #000;
+}
+.flip-card-front h3 b {
+  font-size: 48px;
+}
+.flip-card-back {
+  background-color: #2980b9;
+  transform: rotateY(180deg);
+  border-radius: 10px;
+
+  padding: 31px;
+}
+.coupenCard {
+  padding: 20px;
+  border-radius: 40px;
+  height: 100%;
+}
+
+.hide-icons {
+  display: none;
+}
+li.nav-item.nonhide {
+    display: block;
+}
+
 
