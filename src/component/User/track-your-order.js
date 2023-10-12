@@ -6,6 +6,7 @@ import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
 import { useState ,useEffect} from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../Constant/Index";
 
 export default function Trackyourorder() {
   const { id } = useParams();
@@ -19,9 +20,15 @@ export default function Trackyourorder() {
       setTrackingValue(id);
     }
   }, [id]);
+
+  useEffect(() => {
+      orderViewdetails();
+  }, []);
+
   const handleInputChange = (e) => {
     setTrackingValue(e.target.value);
   };
+  const [orderDetails, setorderDetails] = useState([]);
   const [trankershowData, settrankershowData] = useState(false);
   const [steps, setSteps] = useState([
     'Pending',
@@ -35,7 +42,7 @@ export default function Trackyourorder() {
   const [isLoading, setIsLoading] = useState(true);
   const trackingtargetvaluenumber = () => {
     // Fetch order data from an API endpoint
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/tracking/${trackingValue}`)
+    fetch(`https://caninetest.xyz/api/v1/customer/order/tracking/${trackingValue}`)
       .then(response => response.json())
       .then(data => {
         setOrderData(data.data[0]);
@@ -47,9 +54,25 @@ export default function Trackyourorder() {
         setIsLoading(false);
       });
   };
+  const orderViewdetails = async () => {
+    axios
+      .get(`${BASE_URL}/customer/order/detail/${id}`)
+      .then((response) => {
+        console.log("Trackingggggggggggggggggggg", response.data.data)
+        console.log("=======>???????????????????????????????? ", response);
+        console.log("order Details Successful");
+        setorderDetails(response.data.data);
+        //       const item_id = response.data.data.item_id;
+        // console.log("Item ID:", item_id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const getCurrentStepIndex = () => {
-    if (orderData.delivered_status === 'delivered') {
-      return steps.length;
+    if (orderData.picked_up && new Date(orderData.delivered) <= new Date()) {
+      return 6;
     }
     else if (orderData.picked_up && new Date(orderData.picked_up) <= new Date()) {
       return 5; // Delivered
@@ -69,6 +92,7 @@ export default function Trackyourorder() {
       return 0; // Pending
     }
   };
+  const currentStepIndex = getCurrentStepIndex();
   const handleButtonClick = () => {
   };
 
@@ -81,7 +105,7 @@ export default function Trackyourorder() {
     formData.append('canceled', cancelValue);
     axios({
         method: "post",
-        url: `https://canine.hirectjob.in/api/v1/customer/order/cancel/${id}`,
+        url: `https://caninetest.xyz/api/v1/customer/order/cancel/${id}`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
     })
@@ -95,6 +119,43 @@ export default function Trackyourorder() {
 const Canceldata = (e)=>{
   setCancelValue(e.target.value)
   }
+
+  const [customerReason, setCustomerReason] = useState('');
+  const [customerNote, setCustomerNote] = useState('');
+  const [refundMethod, setRefundMethod] = useState('');
+  const handleReturnOrder = () => {
+    const formData = new FormData();
+    formData.append('user_id', storedUserId);
+    formData.append('order_id', id);
+    formData.append('refund_method', refundMethod);
+    formData.append('customer_reason', customerReason);
+    formData.append('customer_note', customerNote);
+    axios
+      .post('https://caninetest.xyz/api/v1/customer/order/refund-request', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        console.log('Return order request successful', response.data);
+        document.getElementById('returnModal').modal('hide');
+      })
+      .catch((error) => {
+        console.error('Error sending return order request:', error);
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          console.error('Server error data:', error.response.data);
+          console.error('Server error status:', error.response.status);
+          console.error('Server error headers:', error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error('No response from server:', error.request);
+        } else {
+          // Something happened in setting up the request
+          console.error('Error setting up the request:', error.message);
+        }
+      });
+  };
   return (
     <>
       <Newheader />
@@ -140,6 +201,7 @@ const Canceldata = (e)=>{
                         </span>
                       </div>
                       <div>
+                      {getCurrentStepIndex() >= 1 && getCurrentStepIndex() <= 5 ? (
                         <Button
                           className="cancel-btn"
                           data-toggle="modal"
@@ -147,6 +209,11 @@ const Canceldata = (e)=>{
                         >
                           Cancel Order
                         </Button>
+                        ) : (
+                          <Button className="cancel-btn" data-toggle="modal" data-target="#returnModal" >
+                            Return Order
+                          </Button>
+                        )}
                       </div>
                     </div>
 
@@ -360,6 +427,58 @@ const Canceldata = (e)=>{
           </div>
         </div>
       </div>
+      {/* Modal */}
+      {/* Return Order Code By Sohel */}
+      <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="returnModalLabel">Order Return</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body return-area">
+              {
+                orderDetails.map((ob, index) => <div key={index}>
+                  <Row>
+                   
+                    <img
+                      src={`https://caninetest.xyz//storage/app/public/product/${ob.item_details[0].image}`}
+                      alt="Item Image"
+                    />
+                     <h6>Order ID: {ob.order_id}</h6>
+                  </Row>
+                </div>)
+              }
+              <form>
+                <div class="form-group">
+                  <label for="customerreason">Customer reason</label>
+                  <input type="text" class="form-control" id="customerreason" placeholder="Enter reason" onChange={(e) => setCustomerReason(e.target.value)} />
+                </div>
+                <div class="form-group">
+                  <label for="Customernote">Customer note</label>
+                  <input type="text" class="form-control" id="Customernote" placeholder="Enter note" onChange={(e) => setCustomerNote(e.target.value)} />
+                </div>
+                <div class="form-group">
+                  <label for="refundmethod">Refund Method</label>
+                  <select class="form-control" id="refundmethod" onChange={(e) => setRefundMethod(e.target.value)}>
+                    <option>Select Method</option>
+                    <option>Cash on Delivery</option>
+                    <option>Online Payment</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              {/* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button> */}
+              <button type="button" class="btn btn-primary" onClick={() => handleReturnOrder()}>Return Order</button>
+            </div>
+          </div>
+        </div >
+      </div >
+      {/* Modal End */}
     </>
   );
 }

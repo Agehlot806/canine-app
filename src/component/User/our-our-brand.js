@@ -10,6 +10,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
+import { Fade } from "react-reveal";
   
 
 function Ourourbrand(props) {
@@ -316,7 +317,7 @@ function Ourourbrand(props) {
 
   const allBrandshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
+      .get(`https://caninetest.xyz/api/v1/auth/brand`)
       .then((response) => {
         // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
@@ -329,7 +330,7 @@ function Ourourbrand(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
+      .get(`https://caninetest.xyz/api/v1/auth/all_life_stage/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -342,7 +343,7 @@ function Ourourbrand(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
+      .get(`https://caninetest.xyz/api/v1/auth/all_pets_breed/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -354,7 +355,7 @@ function Ourourbrand(props) {
 
   const allsubcategary = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/categories`)
+      .get(`https://caninetest.xyz/api/v1/categories`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllSubcate(response.data.data);
@@ -366,7 +367,7 @@ function Ourourbrand(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
+      .get(`https://caninetest.xyz/api/v1/auth/health_condition/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -511,7 +512,7 @@ function Ourourbrand(props) {
   ) => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        "https://caninetest.xyz/api/v1/items/latest"
       );
       const products = response.data.data;
       const filteredProducts = applyFilters({
@@ -729,7 +730,7 @@ function Ourourbrand(props) {
   useEffect(() => {
     if (productDetails?.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "https://caninetest.xyz/storage/app/public/product/" +
         productDetails?.image
       );
     }
@@ -737,7 +738,7 @@ function Ourourbrand(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "https://caninetest.xyz/storage/app/public/product/" +
       productDetails?.images[index]
     );
   };
@@ -786,7 +787,7 @@ function Ourourbrand(props) {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1002,7 +1003,7 @@ function Ourourbrand(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -1020,7 +1021,7 @@ function Ourourbrand(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -1110,7 +1111,7 @@ function Ourourbrand(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1594,7 +1595,7 @@ function Ourourbrand(props) {
                               <Link to={`/product-details/${item.id}`}>
                                 <div className="text-center">
                                   <img src={
-                                    "https://canine.hirectjob.in//storage/app/public/product/" +
+                                    "https://caninetest.xyz//storage/app/public/product/" +
                                     item.image
                                   }
                                   />
@@ -1628,6 +1629,7 @@ function Ourourbrand(props) {
                               </Link>
 
                               {buttonVisibility[item.id] && (
+                                <Fade top>
                         <div className="button-container">
                           <button
                             data-toggle="modal"
@@ -1654,6 +1656,7 @@ function Ourourbrand(props) {
                         <p>{addToCartStatus}</p>
                       </Button> */}
                         </div>
+                        </Fade>
                       )}
                             </div>
                           </Col>
@@ -1720,7 +1723,7 @@ function Ourourbrand(props) {
                                 aria-selected="true"
                               >
                                 <img src={
-                                  "https://canine.hirectjob.in//storage/app/public/category/"
+                                  "https://caninetest.xyz//storage/app/public/category/"
                                   + item.image}
                                 />
                                 <h6>{item.name}</h6>
@@ -1759,7 +1762,7 @@ function Ourourbrand(props) {
                                 <Link to={`/product-details/${item.id}`}>
                                   <div className="text-center">
                                     <img src={
-                                      "https://canine.hirectjob.in//storage/app/public/category/"
+                                      "https://caninetest.xyz//storage/app/public/category/"
                                       + item.image}
                                     />
                                   </div>
@@ -1855,7 +1858,7 @@ function Ourourbrand(props) {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          "https://caninetest.xyz/storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1873,18 +1876,18 @@ function Ourourbrand(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex + 1) %
                               productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex +
                                 productDetails.images.length -
@@ -2645,7 +2648,7 @@ function Ourourbrand(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

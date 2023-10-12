@@ -30,7 +30,7 @@ function Contact() {
                 message: formData.message,
             };
 
-            const response = await fetch("https://canine.hirectjob.in/api/v1/auth/contact_us", {
+            const response = await fetch("https://caninetest.xyz/api/v1/auth/contact_us", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json", // Set appropriate content type

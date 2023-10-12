@@ -101,7 +101,7 @@ function PetshopAddCart() {
       order_amount: parseInt(originalPrice * 0.05 + originalPrice),
       cart: cartData,
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -505,7 +505,7 @@ function PetshopAddCart() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -528,7 +528,7 @@ function PetshopAddCart() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       console.log("response in edit", response);
@@ -565,6 +565,8 @@ function PetshopAddCart() {
       // credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "POST",
+      "Access-Control-Allow-Headers": "Content-Type",
       },
       body: JSON.stringify(data),
     })
@@ -696,7 +698,7 @@ function PetshopAddCart() {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -728,7 +730,7 @@ function PetshopAddCart() {
                   <Col lg={2} sm={2}>
                     <img
                       src={
-                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                        "https://caninetest.xyz//storage/app/public/product/" +
                         item.image
                       }
                     />

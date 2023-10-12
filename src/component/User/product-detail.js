@@ -26,6 +26,7 @@ import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css"; // Import the CSS for the lightbox styles
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
+import { Fade } from "react-reveal";
 
 function Productdetail() {
   const { id } = useParams();
@@ -178,7 +179,7 @@ function Productdetail() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -339,7 +340,7 @@ function Productdetail() {
   // useEffect(() => {
   //   if (productDetails.image) {
   //     setMainImage(
-  //       "https://canine.hirectjob.in/storage/app/public/product/" +
+  //       "https://caninetest.xyz/storage/app/public/product/" +
   //       productDetails.image
   //     );
   //   }
@@ -349,7 +350,7 @@ function Productdetail() {
   // const handleThumbnailClick = (index) => {
   //   const clickedImage = productDetails.images[index];
   //   setMainImage(
-  //     "https://canine.hirectjob.in/storage/app/public/product/" + clickedImage
+  //     "https://caninetest.xyz/storage/app/public/product/" + clickedImage
   //   );
   // };
 
@@ -360,7 +361,7 @@ function Productdetail() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "https://caninetest.xyz/storage/app/public/product/" +
         productDetails.image
       );
     }
@@ -368,7 +369,7 @@ function Productdetail() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "https://caninetest.xyz/storage/app/public/product/" +
       productDetails.images[index]
     );
   };
@@ -634,7 +635,7 @@ function Productdetail() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -652,7 +653,7 @@ function Productdetail() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -769,7 +770,7 @@ function Productdetail() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -927,7 +928,7 @@ function Productdetail() {
                       <div className="">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/" +
+                            "https://caninetest.xyz/storage/app/" +
                             item.image
                           }
                         />
@@ -982,7 +983,7 @@ function Productdetail() {
                             >
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/public/product/" +
+                                  "https://caninetest.xyz/storage/app/public/product/" +
                                   item
                                 }
                                 alt={`Image ${index}`}
@@ -1000,17 +1001,17 @@ function Productdetail() {
                 {lightboxIsOpen && (
                   <Lightbox
                     mainSrc={
-                      "https://canine.hirectjob.in/storage/app/public/product/" +
+                      "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[lightboxImageIndex]
                     }
                     nextSrc={
-                      "https://canine.hirectjob.in/storage/app/public/product/" +
+                      "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[
                       (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
-                      "https://canine.hirectjob.in/storage/app/public/product/" +
+                      "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[
                       (lightboxImageIndex +
                         productDetails.images.length -
@@ -1251,7 +1252,7 @@ function Productdetail() {
                               <div className="Product-img">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                    "https://caninetest.xyz/storage/app/public/profile/" +
                                     order.user_id[0].image
                                   }
                                   alt={order.user_id[0].f_name}
@@ -1296,7 +1297,7 @@ function Productdetail() {
                               <div className="Product-img">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/public/profile/" +
+                                    "https://caninetest.xyz/storage/app/public/profile/" +
                                     order.user_id[0].image
                                   }
                                   alt={order.user_id[0].f_name}
@@ -1337,7 +1338,7 @@ function Productdetail() {
               <div className="product-innerBanner">
                 <img
                   src={
-                    "https://canine.hirectjob.in/storage/app/" + item.image
+                    "https://caninetest.xyz/storage/app/" + item.image
                   }
                 />
                 <div className="home-content">
@@ -1380,7 +1381,7 @@ function Productdetail() {
                         <div className="text-center">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "https://caninetest.xyz//storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -1421,6 +1422,7 @@ function Productdetail() {
                       </Link>
 
                       {buttonVisibility[item.id] && (
+                        <Fade top>
                         <div className="button-container">
                           <button
                             data-toggle="modal"
@@ -1437,6 +1439,7 @@ function Productdetail() {
                             Buy Now
                           </button>
                         </div>
+                        </Fade>
                       )}
                     </div>
                   </Col>
@@ -1628,7 +1631,7 @@ function Productdetail() {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          "https://caninetest.xyz/storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1645,18 +1648,18 @@ function Productdetail() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex + 1) %
                               productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex +
                                 productDetails.images.length -
@@ -2023,7 +2026,7 @@ function Productdetail() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

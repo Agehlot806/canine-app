@@ -17,6 +17,9 @@ import app2 from "../../assets/images/img/app2.png";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 // import { loadRazorpay } from "../../utils";
+import Fade, { Flip } from 'react-reveal';
+import { AnimationOnScroll } from 'react-animation-on-scroll';
+import "animate.css/animate.min.css";
 
 const homeslider = {
   desktop: {
@@ -80,6 +83,8 @@ function PetshopHome(props) {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
+      response.headers['Access-Control-Allow-Methods'] = 'GET'; // Allow specified methods
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
     } catch (error) {
       console.error(error);
     }
@@ -468,7 +473,7 @@ function PetshopHome(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "https://caninetest.xyz/storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -476,7 +481,7 @@ function PetshopHome(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "https://caninetest.xyz/storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -743,7 +748,7 @@ function PetshopHome(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -761,7 +766,7 @@ function PetshopHome(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -867,7 +872,7 @@ function PetshopHome(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -975,7 +980,7 @@ function PetshopHome(props) {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1071,7 +1076,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/" +
+                                  "https://caninetest.xyz/storage/app/" +
                                   item.image
                                 }
                               />
@@ -1102,7 +1107,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/" +
+                                  "https://caninetest.xyz/storage/app/" +
                                   item.image
                                 }
                               />
@@ -1139,7 +1144,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/" +
+                                  "https://caninetest.xyz/storage/app/" +
                                   item.image
                                 }
                               />
@@ -1169,7 +1174,9 @@ function PetshopHome(props) {
       <section className="section-padding">
         <Container>
           <Row>
+          <AnimationOnScroll animateIn="animate__fadeInLeftBig" animateOnce={true}>
             <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
+            </AnimationOnScroll>
           </Row>
         </Container>
         <Container fluid>
@@ -1197,7 +1204,7 @@ function PetshopHome(props) {
                   <Link to={`/petshop-pet-category/${item.name}/${item.id}`}>
                     <img
                       src={
-                        "https://canine.hirectjob.in/storage/app/public/category/" +
+                        "https://caninetest.xyz/storage/app/public/category/" +
                         item.image
                       }
                     />
@@ -1214,7 +1221,9 @@ function PetshopHome(props) {
           <Row>
             <Col lg={6} sm={6}>
               {/* <h5>Dog Nutrients & Food </h5> */}
+              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
               <h1 className="main-head">Latest all Products</h1>
+              </AnimationOnScroll>
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
@@ -1258,7 +1267,7 @@ function PetshopHome(props) {
                         <div className="text-center">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "https://caninetest.xyz//storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -1300,6 +1309,7 @@ function PetshopHome(props) {
                       </Link>
 
                       {buttonVisibility[item.id] && (
+                        <Fade top>
                         <div className="button-container">
                           <button
                             data-toggle="modal"
@@ -1316,6 +1326,7 @@ function PetshopHome(props) {
                             Buy Now
                           </button>
                         </div>
+                        </Fade>
                       )}
                     </div>
                   </Col>
@@ -1329,7 +1340,9 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6}>
+            <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
               <h1 className="main-head">Our Brand</h1>
+              </AnimationOnScroll>
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
@@ -1354,7 +1367,7 @@ function PetshopHome(props) {
                             <div className="brandLOGO">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                  "https://caninetest.xyz/storage/app/public/brand_logo/" +
                                   brand.logo
                                 }
                               />
@@ -1362,7 +1375,7 @@ function PetshopHome(props) {
                             <div className="brand-main">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                  "https://caninetest.xyz/storage/app/public/brand/" +
                                   brand.image
                                 }
                               />
@@ -1390,7 +1403,7 @@ function PetshopHome(props) {
                       <Col lg={6} className="mb-4">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/" +
+                            "https://caninetest.xyz/storage/app/" +
                             item.image
                           }
                         />
@@ -1407,7 +1420,7 @@ function PetshopHome(props) {
                           <Col sm={12} className="mb-4">
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/" +
+                                "https://caninetest.xyz/storage/app/" +
                                 item.image
                               }
                             />
@@ -1422,7 +1435,7 @@ function PetshopHome(props) {
                           <Col sm={12} className="mb-4">
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/" +
+                                "https://caninetest.xyz/storage/app/" +
                                 item.image
                               }
                             />
@@ -1439,7 +1452,9 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6}>
+            <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
               <h1 className="main-head">Shop By Brands</h1>
+              </AnimationOnScroll>
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
@@ -1465,7 +1480,7 @@ function PetshopHome(props) {
                               <div className="brandLOGO">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                    "https://caninetest.xyz/storage/app/public/brand_logo/" +
                                     brand.logo
                                   }
                                 />
@@ -1473,7 +1488,7 @@ function PetshopHome(props) {
                               <div className="brand-main">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                    "https://caninetest.xyz/storage/app/public/brand/" +
                                     brand.image
                                   }
                                 />
@@ -1511,7 +1526,7 @@ function PetshopHome(props) {
                           <video loop autoPlay muted>
                             <source
                               src={
-                                "https://canine.hirectjob.in/storage/app/" +
+                                "https://caninetest.xyz/storage/app/" +
                                 item.image
                               }
                               type="video/mp4"
@@ -1529,7 +1544,9 @@ function PetshopHome(props) {
       <section className="section-padding">
         <Container>
           <div className="text-left">
+          <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
             <h1 className="main-head">Blog</h1>
+            </AnimationOnScroll>
           </div>
           <div className="needplace">
             <Row>
@@ -1539,7 +1556,7 @@ function PetshopHome(props) {
                     <div className="blog-card">
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/public/blog/" +
+                          "https://caninetest.xyz/storage/app/public/blog/" +
                           item.image
                         }
                       />
@@ -1568,7 +1585,9 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6}>
+              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
               <h1 className="main-head">Happy Customer</h1>
+              </AnimationOnScroll>
             </Col>
           </Row>
           <Row>
@@ -1583,7 +1602,7 @@ function PetshopHome(props) {
                   <>
                     <img
                       src={
-                        "https://canine.hirectjob.in/storage/app/public/profile/" +
+                        "https://caninetest.xyz/storage/app/public/profile/" +
                         order.user_id[0].image
                       }
                       alt={order.user_id[0].f_name}
@@ -1630,7 +1649,7 @@ function PetshopHome(props) {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -1639,10 +1658,12 @@ function PetshopHome(props) {
                           <Col lg={7}>
                             <div className="home-content">
                               <div className="Newsletter">
+                                <Flip right>
                                 <h1 className="main-head">
                                   Get Or Promo Code by Subscribing To our
                                   Newsletter
                                 </h1>
+                                </Flip>
                                 <Form className="d-flex">
                                   <Form.Control
                                     type="search"
@@ -1710,7 +1731,7 @@ function PetshopHome(props) {
                                   >
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in/storage/app/public/product/" +
+                                        "https://caninetest.xyz/storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2080,7 +2101,7 @@ function PetshopHome(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
@@ -2792,7 +2813,7 @@ function PetshopHome(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

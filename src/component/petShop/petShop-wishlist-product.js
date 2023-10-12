@@ -88,7 +88,7 @@ function PetshopWishlistproduct() {
                           item.store_id[0].image ? (
                             <img
                               src={
-                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                "https://caninetest.xyz//storage/app/public/product/" +
                                 item.store_id[0].image
                               }
                               alt="Product"

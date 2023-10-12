@@ -9,6 +9,7 @@ import { useCartContext } from "../component/context/addToCartContext";
 import { useNotificationContext } from "../component/context/notificationContext";
 import { Col, Row } from "react-bootstrap";
 import loicon1 from "../assets/images/img/loicon1.png";
+import { BiSolidOffer } from "react-icons/bi";
 
 
 function Newheader(props) {
@@ -19,10 +20,11 @@ function Newheader(props) {
   const [storedUserId, setStoredUserId] = useState(null);
   const [notify, setNotify] = useState([]);
   const [dataZero, setDataZero] = useState([]);
+  console.log("dataZero",dataZero);
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
-  const { notificationLength, dataLengthpetnotification } =
+  const { notificationLength, dataLengthpetnotification, totalLength } =
     useNotificationContext();
 
   useEffect(() => {
@@ -31,15 +33,19 @@ function Newheader(props) {
     AllDogsubcategories();
     categoriesProduct();
     addToCartData();
-    // fetchNotifications();
+    fetchNotifications();
 
   }, []);
   useEffect(() => {
     Notifynotification();
   }, []);
 
-
-
+  if (dataZero?.length > 0 && dataZero[0] && dataZero[0]?.id !== undefined) {
+    const dataZeroid = dataZero[0]?.id; // Access the first element's "id" property
+    console.log(dataZeroid);
+  } else {
+    console.log("The 'id' property is missing or undefined in the first object.");
+  }
   const categoriesProduct = async () => {
     try {
       const response = await fetch(`${BASE_URL}/categories`);
@@ -105,7 +111,7 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
+      .get(`https://caninetest.xyz/api/v1/auth/my_profile/${customer_id}`)
       .then((response) => {
         if (response.data.status === "200" && response.data.data.length > 0) {
           const profile = response.data.data[0];
@@ -189,7 +195,7 @@ function Newheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        "https://caninetest.xyz/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -214,6 +220,7 @@ function Newheader(props) {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
       });
   };
+  console.log("------------->id",dataZero);
 
   const DeleteNotification = (id) => {
     axios
@@ -273,7 +280,36 @@ function Newheader(props) {
       }
     }
   };
+
+  const [apiResponse, setApiResponse] = useState(null);
+const [apiError, setApiError] = useState(null);
   
+  const handleLinkClick = async (dataZeroid) => {
+    try {
+      const formData = new FormData();
+      formData.append('dataZeroid', dataZeroid);
+  
+      const response = await fetch(`${BASE_URL}/items/notify_view/${dataZeroid}`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (response.status === 200) {
+        const responseData = await response.json();
+        setApiResponse(responseData);
+      }
+    } catch (error) {
+      setApiError('Network error');
+      console.error(error);
+    }
+  };
+  
+  
+  const Modaloff = () => {
+    const modal = document.getElementById('exampleModal');
+    $(modal).modal('hide');  // Toggle the modal using Bootstrap's modal method
+  };
+
   return (
     <>
       <Toaster />
@@ -290,37 +326,37 @@ function Newheader(props) {
               </Link>
             </a>
             <div className="menu-content">
-            <div className="hide-icons">
-              <li className="nav-item">
-                <a
-                  className="notification-btn"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  <i class="fa fa-bell-o" />
-                  <span>{notificationLength}</span>
-                </a>
-              </li>
-              {storedUserId ? (
-                // Display Logout button if user is logged in
-                <>
-                  <li className="nav-item">
-                    <button
-                      className="yellow-btn"
-                      data-toggle="modal"
-                      data-target="#logout-model"
-                    >
-                      Logout
-                    </button>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/add-cart" className="notification-btn">
-                      <i class="fa fa-shopping-cart" />{" "}
-                      <span className="cart-count">{dataLength}</span>{" "}
-                    </Link>
-                  </li>
-                  <li className="nav-item dropdown profile-mainarea">
-                    {/* <a
+              <div className="hide-icons">
+                <li className="nav-item">
+                  <a
+                    className="notification-btn"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                  >
+                    <i class="fa fa-bell-o" />
+                    <span>{totalLength}</span>
+                  </a>
+                </li>
+                {storedUserId ? (
+                  // Display Logout button if user is logged in
+                  <>
+                    <li className="nav-item">
+                      <button
+                        className="yellow-btn"
+                        data-toggle="modal"
+                        data-target="#logout-model"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/add-cart" className="notification-btn">
+                        <i class="fa fa-shopping-cart" />{" "}
+                        <span className="cart-count">{dataLength}</span>{" "}
+                      </Link>
+                    </li>
+                    <li className="nav-item dropdown profile-mainarea">
+                      {/* <a
                       className="nav-link dropdown-toggle profile-icon"
                       href="#"
                       id="navbarDropdown"
@@ -329,95 +365,95 @@ function Newheader(props) {
                       aria-haspopup="true"
                       aria-expanded="false"
                     > */}
-                    <Link
-                      // key={item.id}
-                      className="nav-link profile-icon"
-                      to=""
-                    // props.type === "salesman" ? "/salesman-dashboad" : "home"
-                    >
-                      {/* <img
+                      <Link
+                        // key={item.id}
+                        className="nav-link profile-icon"
+                        to=""
+                      // props.type === "salesman" ? "/salesman-dashboad" : "home"
+                      >
+                        {/* <img
                           src={
                             profileData?.images ?
-                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              "https://caninetest.xyz/storage/app/public/profile/" +
                               profileData?.image : loicon1
                           }
                         /> */}
 
-                      <img
-                        src={
-                          profileData?.image
-                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
-                            : loicon1
-                        }
-                        alt="Profile Image"
-                      />
-                    </Link>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="navbarDropdown"
-                    >
-                      <Link className="dropdown-item" to={`/pet-profile/`}>
-                        Pet Profile
+                        <img
+                          src={
+                            profileData?.image
+                              ? "https://caninetest.xyz/storage/app/public/profile/" +
+                              profileData.image
+                              : loicon1
+                          }
+                          alt="Profile Image"
+                        />
                       </Link>
-                      <Link className="dropdown-item" to="/all-veterinary">
-                        All Veterinary
-                      </Link>
-                      <Link
-                        className="dropdown-item"
-                        to="/all-service-booking"
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
                       >
-                        All Service Booking
-                      </Link>
-                      <Link className="dropdown-item" to="/my-orders">
-                        My Orders
-                      </Link>
-                      <Link className="dropdown-item" to="/wishlist-products">
-                        Wishlist Products
-                      </Link>
-                      <Link className="dropdown-item" to="/update-profile">
-                        Profile
-                      </Link>
-                      {/* <Link className="dropdown-item" onClick={logoutUser}>
+                        <Link className="dropdown-item" to={`/pet-profile/`}>
+                          Pet Profile
+                        </Link>
+                        <Link className="dropdown-item" to="/all-veterinary">
+                          All Veterinary
+                        </Link>
+                        <Link
+                          className="dropdown-item"
+                          to="/all-service-booking"
+                        >
+                          All Service Booking
+                        </Link>
+                        <Link className="dropdown-item" to="/my-orders">
+                          My Orders
+                        </Link>
+                        <Link className="dropdown-item" to="/wishlist-products">
+                          Wishlist Products
+                        </Link>
+                        <Link className="dropdown-item" to="/update-profile">
+                          Profile
+                        </Link>
+                        {/* <Link className="dropdown-item" onClick={logoutUser}>
                                         Logout
                                     </Link> */}
-                    </div>
+                      </div>
+                    </li>
+                  </>
+                ) : (
+                  // Display Sign In button if user is not logged in
+                  <li className="nav-item">
+                    <button className="yellow-btn">
+                      <Link to="/login">Sign In</Link>
+                    </button>
                   </li>
-                </>
-              ) : (
-                // Display Sign In button if user is not logged in
-                <li className="nav-item">
-                  <button className="yellow-btn">
-                    <Link to="/login">Sign In</Link>
-                  </button>
-                </li>
-              )}
-            </div>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#megaMenu"
-              aria-controls="megaMenu"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon" />
-            </button>
+                )}
+              </div>
+              <button
+                className="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#megaMenu"
+                aria-controls="megaMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span className="navbar-toggler-icon" />
+              </button>
             </div>
             <div className="collapse navbar-collapse" id="megaMenu">
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#megaMenu"
-              aria-controls="megaMenu"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span>X</span>
-            </button>             
-             <ul className="navbar-nav m-auto">
+              <button
+                className="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#megaMenu"
+                aria-controls="megaMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span>X</span>
+              </button>
+              <ul className="navbar-nav m-auto">
                 {/* <li className="nav-item">
                 <Link
                   className="nav-link"
@@ -438,7 +474,7 @@ function Newheader(props) {
                     href="#"
                     id="megaDropdown"
                     role="button"
-                    // data-toggle="dropdown"
+                    data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -450,7 +486,7 @@ function Newheader(props) {
                   >
                     <div className="container">
                       <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <>
                             <h5 className="mega-title">Dog Food</h5>
                             <ul className="list-unstyled">
@@ -475,7 +511,7 @@ function Newheader(props) {
                             </ul>
                           </>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Treats & Chews</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -498,7 +534,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Toys</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -521,7 +557,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Collar Leashes & More</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -544,7 +580,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Shampoo & Perfumes</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -567,7 +603,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Beds Cages & Carriers</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -590,7 +626,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Training & Accessories</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -613,7 +649,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Bowls & Feeders</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -636,7 +672,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Grooming</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -659,7 +695,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Health Care</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -693,7 +729,7 @@ function Newheader(props) {
                     href="#"
                     id="megaDropdown"
                     role="button"
-                    // data-toggle="dropdown"
+                    data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -706,7 +742,7 @@ function Newheader(props) {
                   >
                     <div className="container">
                       <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <>
                             <h5 className="mega-title">Cat Food & Treats</h5>
                             <ul className="list-unstyled">
@@ -730,7 +766,7 @@ function Newheader(props) {
                           </>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <>
                             <h5 className="mega-title">Treats</h5>
                             <ul className="list-unstyled">
@@ -754,7 +790,7 @@ function Newheader(props) {
                           </>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Cat Litter & Accessories</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -773,7 +809,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Toys</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -792,7 +828,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Collar Leashes & More</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -811,7 +847,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Shampoo & Perfumes</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -830,7 +866,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Beds Cages, Scratcher & Crates</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -849,7 +885,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Clothing & Accessories</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -868,7 +904,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Bowls & Feeders</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -887,7 +923,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Grooming</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -906,7 +942,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Cat Litter & Scooper</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -925,7 +961,7 @@ function Newheader(props) {
                             )}
                           </ul>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4">
                           <h5 className="mega-title">Health Care</h5>
                           <ul className="list-unstyled">
                             {dogsubcategories ? (
@@ -1025,7 +1061,7 @@ function Newheader(props) {
                     data-target="#exampleModal"
                   >
                     <i class="fa fa-bell-o" />
-                    <span>{notificationLength}</span>
+                    <span>{totalLength}</span>
                   </a>
                 </li>
 
@@ -1066,7 +1102,7 @@ function Newheader(props) {
                         {/* <img
                           src={
                             profileData?.images ?
-                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              "https://caninetest.xyz/storage/app/public/profile/" +
                               profileData?.image : loicon1
                           }
                         /> */}
@@ -1074,7 +1110,7 @@ function Newheader(props) {
                         <img
                           src={
                             profileData?.image
-                              ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              ? "https://caninetest.xyz/storage/app/public/profile/" +
                               profileData.image
                               : loicon1
                           }
@@ -1180,7 +1216,6 @@ function Newheader(props) {
           </div>
         </div>
       </div>
-
       {/* Modal */}
       <div
         className="modal fade notification-area"
@@ -1194,74 +1229,173 @@ function Newheader(props) {
           <div className="modal-content">
             <div className="modal-body">
               <h5>Notification</h5>
-              {notification && notification.length > 0 ? (
-                notification.map((item, index) => (
-                  <div className="notification">
-                    <Row>
-                      <Col lg={2}>
-                        <img src={item.image} />
-                      </Col>
-                      <Col lg={9} className="align-self-center">
-                        <h6>{item.title}</h6>
-                        <p>{item.description}</p>
-                      </Col>
-                    </Row>
+              {/* Tabs Code By Sohel */}
+              <div className="Notifi-tab-area">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">All</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                      <span><BiSolidOffer/></span>
+                      Offers
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">
+                    <span><i class="fa fa-gift" aria-hidden="true"></i></span>
+                    Order info
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    {notification && notification.length > 0 ? (
+                      notification.map((item, index) => (
+                        <div className="notification">
+                          <Row>
+                            <Col lg={2}>
+                              <img src={item.image} />
+                            </Col>
+                            <Col lg={9} className="align-self-center">
+                              <h6>{item.title}</h6>
+                              <p>{item.description}</p>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Notification</p>
+                    )}
+                    <div>
+                      {notify && notify.length > 0 ? (
+                        notify.map((ob, index) => (
+                          <div className="notification" key={index} >
+                            <Link to="">
+                            <Row>
+                              <Col lg={2} className="align-self-center text-center">
+                                <Link  to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
+                                  <i className="fa fa-info-circle" />
+                                </Link>
+                              </Col>
+                              <Col lg={8} >
+                                <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)}>
+                                  <h6 className={ob.status === 'unread' ? 'unread' : 'read'}>Item ID : {ob.item_id}</h6>
+                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Stock : {ob.stock}</p>
+                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Variation : {ob.variation}</p>
+                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Status : {ob.order_status}</p>
+                                </Link>
+                              </Col>
+                              <Col lg={2}>
+                                <a onClick={() => DeleteNotification(ob.id)}> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                              </Col>
+                            </Row>
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Notification</p>
+                      )}
+                      {dataZero && dataZero.length > 0 ? (
+                        dataZero.map((ob, index) => (
+                          <div className={`notification ${ob.status === 'unread' ? 'unread' : 'read'}`} key={index}>
+                              <Row>
+                                <Col lg={2} className="align-self-center text-center">
+                                <Link to={`/my-orders`} data-dismiss="modal">
+                                  <i className="fa fa-info-circle" />
+                                  </Link>
+                                </Col>
+                                <Col lg={8} >
+                                <Link to={`/my-orders`} onClick={() => handleLinkClick(ob.id)}>
+                                  <h6 className={ob.status === 'unread' ? 'unread' : 'read'}>Order ID : {ob.order_id}</h6>
+                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Status : {ob.order_status}</p>
+                                  </Link>
+                                </Col>
+                                <Col lg={2}>
+                                <a onClick={() => DeleteNotification(ob.id)}> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                              </Col>
+                              </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p className="emptyMSG">No Notification</p>
-              )}
-              <div>
-                {notify && notify.length > 0 ? (
-                  notify.map((ob, index) => (
-                    <div className="notification" key={index} >
-                      <Link onClick={() => DeleteNotification(ob.id)} to={`/product-details/${ob.item_id}`}>
-                        <Row>
-                          <Col lg={2} className="align-self-center text-center">
-                            <i className="fa fa-info-circle" />
-                          </Col>
-                          <Col lg={8} >
-                            <h6>Item ID : {ob.item_id}</h6>
-                            <p>Stock : {ob.stock}</p>
-                            <p>Variation : {ob.variation}</p>
-                            <p>Status : {ob.order_status}</p>
-                          </Col>
-                        </Row>
-                      </Link>
+                  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    {notification && notification.length > 0 ? (
+                      notification.map((item, index) => (
+                        <div className="notification">
+                          <Row>
+                            <Col lg={2}>
+                              <img src={item.image} />
+                            </Col>
+                            <Col lg={9} className="align-self-center">
+                              <h6>{item.title}</h6>
+                              <p>{item.description}</p>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Notification</p>
+                    )}
+                  </div>
+                  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div>
+                      {notify && notify.length > 0 ? (
+                        notify.map((ob, index) => (
+                          <div className="notification" key={index} >
+                            <Link  to={`/product-details/${ob.item_id}`} onClick={()=>Modaloff()}>
+                              <Row>
+                                <Col lg={2} className="align-self-center text-center">
+                                  <i className="fa fa-info-circle" />
+                                </Col>
+                                <Col lg={8} >
+                                  <h6>Item ID : {ob.item_id}</h6>
+                                  <p>Stock : {ob.stock}</p>
+                                  <p>Variation : {ob.variation}</p>
+                                  <p>Status : {ob.order_status}</p>
+                                </Col>
+                              </Row>
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Notification</p>
+                      )}
+                      {dataZero && dataZero.length > 0 ? (
+                        dataZero.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Link to={`/my-orders`} onClick={()=>Modaloff()}>
+                              <Row>
+                                <Col lg={2} className="align-self-center text-center">
+                                  <i className="fa fa-info-circle" />
+                                </Col>
+                                <Col lg={10} >
+                                  <h6>Order ID : {ob.order_id}</h6>
+                                  <p>Status : {ob.order_status}</p>
+                                </Col>
+                              </Row>
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
                     </div>
-                  ))
-                ) : (
-                  <p className="emptyMSG">No Notification</p>
-                )}
-
-                {dataZero && dataZero.length > 0 ? (
-                  dataZero.map((ob, index) => (
-                    <div className="notification" key={index}>
-                      <Link onClick={() => DeleteNotificationone(ob.id)} to={`/my-orders`} data-dismiss="modal">
-                        <Row>
-                          <Col lg={2} className="align-self-center text-center">
-                            <i className="fa fa-info-circle" />
-                          </Col>
-                          <Col lg={10} >
-                            <h6>Order ID : {ob.order_id}</h6>
-                            <p>Status : {ob.order_status}</p>
-                          </Col>
-                        </Row>
-                      </Link>
-                    </div>
-                  ))
-                ) : (
-                  <p className="emptyMSG">No Data Zero</p>
-                )}
+                  </div>
+                </div>
               </div>
-
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
+              <div className="text-end">
+                <button
+                  type="button"
+                  className="btn"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

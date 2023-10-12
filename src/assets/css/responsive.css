@@ -107,7 +107,9 @@
     .totelPAYCAR button {
         font-size: 12px;
     }
-
+    .nav-item:hover .dropdown-menu {
+        display: contents;
+    }
     .foodMore {
         text-align: right;
         margin: 0;

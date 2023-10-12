@@ -179,7 +179,7 @@ function Petprofile() {
                       <h2>Avatar</h2>
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/public/category/" +
+                          "https://caninetest.xyz/storage/app/public/category/" +
                           selectedCategory.image
                         }
                         alt={selectedCategory.name}

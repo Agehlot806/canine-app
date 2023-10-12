@@ -38,7 +38,7 @@ function PetshopLogin() {
     formData.append("password", password);
     axios
       .post(
-        " https://canine.hirectjob.in/api/v1/auth/wholesaler_login",
+        " https://caninetest.xyz/api/v1/auth/wholesaler_login",
         formData
       )
       .then((response) => {

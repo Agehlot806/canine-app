@@ -52,7 +52,7 @@ function Service() {
                     <Link to={`/service-date/${item.id}`}>
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/public/service/" +
+                          "https://caninetest.xyz/storage/app/public/service/" +
                           item.image
                         }
                       />

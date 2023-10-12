@@ -30,7 +30,7 @@ function Partnerdashboard() {
   ];
 
   const [subscriptions, setSubscriptions] = useState([]);
-  const apiUrl = "https://canine.hirectjob.in/api/v1/auth/get_subscription";
+  const apiUrl = "https://caninetest.xyz/api/v1/auth/get_subscription";
 
   useEffect(() => {
     fetch(apiUrl)
@@ -56,7 +56,7 @@ function Partnerdashboard() {
   const fetchPurchaceplan = async () => {
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/purchace_plan",
+        "https://caninetest.xyz/api/v1/auth/purchace_plan",
         {}
       );
       const data = response.data.data;
@@ -101,7 +101,7 @@ function Partnerdashboard() {
                             item.type === "default" && (
                                 <img className="partner-img"
                                     src={
-                                        "https://canine.hirectjob.in/storage/app/" +
+                                        "https://caninetest.xyz/storage/app/" +
                                         item.image
                                     }
                                 />
@@ -132,7 +132,7 @@ function Partnerdashboard() {
                 <div className="Members-card Members-bg1">
                   <img
                     src={
-                      "https://canine.hirectjob.in/uploads/subscription//" +
+                      "https://caninetest.xyz/uploads/subscription//" +
                       subscription.image
                     }
                   />

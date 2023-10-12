@@ -34,6 +34,8 @@ function PetshopProductbypartner() {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
+      response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Allow specified methods
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
     } catch (error) {
       console.error(error);
     }
@@ -121,7 +123,7 @@ function PetshopProductbypartner() {
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/vendor/" +
+                            "https://caninetest.xyz/storage/app/public/vendor/" +
                             item.logo
                           }
                         />
@@ -163,7 +165,7 @@ function PetshopProductbypartner() {
                         <div className="text-center">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "https://caninetest.xyz//storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -196,7 +198,7 @@ function PetshopProductbypartner() {
                   //       {/* <img src={item.logo} /> */}
                   //       <img
                   //         src={
-                  //           "https://canine.hirectjob.in/storage/app/public/vendor/" +
+                  //           "https://caninetest.xyz/storage/app/public/vendor/" +
                   //           item.image
                   //         }
                   //       />
@@ -240,7 +242,7 @@ function PetshopProductbypartner() {
                     <div className="banner-bgmain" key={item.id}>
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/" +
+                          "https://caninetest.xyz/storage/app/" +
                           item.image
                         }
                       />
@@ -262,7 +264,7 @@ function PetshopProductbypartner() {
                       <div className="">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/" +
+                            "https://caninetest.xyz/storage/app/" +
                             item.image
                           }
                         />

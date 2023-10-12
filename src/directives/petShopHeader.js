@@ -216,7 +216,7 @@ function PetShopHeader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        "https://caninetest.xyz/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -723,11 +723,11 @@ function PetShopHeader(props) {
                           src={
                             loginType == "salesman"
                               ? salesmanProfile?.image
-                                ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
+                                ? "https://caninetest.xyz/storage/app/public/delivery-man/" +
                                   salesmanProfile?.image
                                 : loicon1
                               : profileData?.image
-                              ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              ? "https://caninetest.xyz/storage/app/public/profile/" +
                                 profileData?.image
                               : loicon1
                           }
@@ -735,8 +735,8 @@ function PetShopHeader(props) {
                         {/* <img
                           src={
                             loginType === "salesman" && salesmanProfile?.image
-                              ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" + salesmanProfile.image
-                              : "https://canine.hirectjob.in/storage/app/public/profile/" + (profileData?.image || "default-image-url")
+                              ? "https://caninetest.xyz/storage/app/public/delivery-man/" + salesmanProfile.image
+                              : "https://caninetest.xyz/storage/app/public/profile/" + (profileData?.image || "default-image-url")
                           }
                           alt="Profile Image"
                         /> */}

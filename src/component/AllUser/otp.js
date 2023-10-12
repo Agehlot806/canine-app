@@ -23,7 +23,7 @@ function Otp() {
 
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/otp_verify",
+        "https://caninetest.xyz/api/v1/auth/otp_verify",
         formData
       );
       console.log(response.data);

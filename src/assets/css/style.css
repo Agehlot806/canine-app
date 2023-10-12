@@ -70,7 +70,7 @@ a {
   top: 0;
   background-color: #ffffff;
   z-index: 100;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .nav-btn button {
@@ -347,6 +347,7 @@ a {
   padding: 15px 15px 25px;
   border-radius: 40px;
   height: 100%;
+
   /* background: #F8F8F8; */
   /* border: 1px solid #52aff080; */
 }
@@ -367,6 +368,21 @@ a {
   width: 160px;
   height: 160px;
   margin: 5px 0 20px;
+
+  transition: all 0.3s;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.food-product:hover img {
+  transform: rotateY(360deg);
+    -moz-transform: rotateY(360deg);
+    -webkit-transform: rotateY(360deg);
+    transform-origin: center;
+    -moz-transform-origin: center;
+    -webkit-transform-origin: center;
+    transition: 2.0s ease;
+    -moz-transition: 2.0s ease;
+    -webkit-transition: 2.0s ease;
 }
 
 .food-product i {
@@ -445,6 +461,18 @@ a {
   width: 150px;
   height: 150px;
   margin: 14px 0 0;
+}
+
+.brand-main:hover img {
+  transform: rotateY(360deg);
+    -moz-transform: rotateY(360deg);
+    -webkit-transform: rotateY(360deg);
+    transform-origin: center;
+    -moz-transform-origin: center;
+    -webkit-transform-origin: center;
+    transition: 2.0s ease;
+    -moz-transition: 2.0s ease;
+    -webkit-transition: 2.0s ease;
 }
 
 .brand-text {
@@ -2474,7 +2502,13 @@ a.placDate {
 .notification p {
   margin: 0;
 }
+.unread {
+  color: gray;
+}
 
+.read {
+  color: blue; 
+}
 .notification {
   background: rgba(105, 92, 212, 0.1);
   padding: 10px;
@@ -2497,11 +2531,8 @@ a.placDate {
 }
 
 .notification-area .modal-body button {
-  float: right;
   background: #f1c21b;
   border: none;
-  width: 130px;
-  height: 50px;
   font-size: 22px;
   font-weight: 500;
   color: #000;
@@ -3512,7 +3543,7 @@ button.Apply-price {
 .dow-summy table tbody tr td {
   text-align: right;
   position: relative;
-  left: 100%;
+  left: 70%;
 }
 
 .dow-summy table tbody tr p {
@@ -3715,7 +3746,7 @@ li.nav-item.dropdown.new-mega-drop {
   left: 0;
   box-shadow: none;
   padding: 15px;
-  margin-top: -25px;
+  margin-top: -5px;
 }
 
 .mega-dropdown-new .dropdown-menu .container {
@@ -3799,4 +3830,19 @@ li.nav-item.nonhide {
     display: block;
 }
 
+/* .notification a {
+  color: gray;
+} */
 
+.notificationBack {
+  /* background-color: #021e2e; */
+}
+
+.Notifi-tab-area ul li a span {
+  margin-right: 5px;
+}
+
+.modal-body.return-area img {
+  width: 130px;
+  margin: 10px 0;
+}

@@ -87,7 +87,7 @@ function PetshopUpdateprofile() {
 
     axios({
       method: "post",
-      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+      url: `https://caninetest.xyz/api/v1/auth/update-profile`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })
@@ -203,7 +203,7 @@ function PetshopUpdateprofile() {
   //   e.preventDefault();
   //   try {
   //     const response = await axios.post(
-  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
+  //       "https://caninetest.xyz/api/v1/auth/update-profile",
   //       profileData 
   //     );
   //     if (response.data.message === "Successfully updated!") {
@@ -388,7 +388,7 @@ function PetshopUpdateprofile() {
                       <div className="image-preview">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
+                            "https://caninetest.xyz/storage/app/public/delivery-man/" +
                             profileData.image
                           }
                           alt="profile"
@@ -397,7 +397,7 @@ function PetshopUpdateprofile() {
                     )} */}
                     <Form.Control type="file" onChange={halderimage} />
                     {/* <img src={
-                     loginType == "salesman" ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" + imgage : "https://canine.hirectjob.in/storage/app/public/profile/" + imgage
+                     loginType == "salesman" ? "https://caninetest.xyz/storage/app/public/delivery-man/" + imgage : "https://caninetest.xyz/storage/app/public/profile/" + imgage
                       } alt='' /> */}
                     {selectedImage ? (
                       <img src={selectedImage} alt="Selected Image" style={{ width: '100px', height: '100px' }} />
@@ -406,7 +406,7 @@ function PetshopUpdateprofile() {
                         src={
                           loginType === "salesman"
                             ? ` /public/delivery-man/${imgage}`
-                            : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`
+                            : `https://caninetest.xyz/storage/app/public/profile/${imgage}`
                         }
                         alt={selectedImage ? "Image" : "Image not available"}
                         style={{ width: '100px', height: '100px' }}

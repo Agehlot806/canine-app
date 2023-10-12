@@ -60,6 +60,14 @@ function Wishlistproduct() {
     }
   };
 
+  const gradientColors = [
+    "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
+    "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
+    "linear-gradient(180deg, #FECBF0 0%, rgba(254, 203, 240, 0) 100%)",
+    "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
+    // Add more gradient colors as needed
+  ];
+
 
   return (
     <>
@@ -71,15 +79,18 @@ function Wishlistproduct() {
           <div className='needplace'>
             <Row>
               {wishlistData && wishlistData.length > 0 ? (
-                wishlistData.map((item) => (
+                wishlistData.map((item, index) => (
                   <Col key={item.id} lg={3} sm={6} xs={6} className='mb-4'>
-                    <div className='food-product'>
+                    <div className='food-product' style={{
+                      background:
+                        gradientColors[index % gradientColors.length],
+                    }}>
                       <i className='fa fa-trash' onClick={() => handleRemoveFromWishlist(item.id)} />
                       <Link to=''>
                         <div className='text-center'>
                           {item.store_id && item.store_id[0] && item.store_id[0].image ? (
                             <img
-                              src={"https://canine.hirectjob.in//storage/app/public/product/" + item.store_id[0].image}
+                              src={"https://caninetest.xyz//storage/app/public/product/" + item.store_id[0].image}
                               alt='Product'
                             />
                           ) : (
@@ -109,11 +120,6 @@ function Wishlistproduct() {
                             <Row>
                               <Col className='align-self-center'>
                                 <h6>₹{item.store_id[0].price}</h6>
-                              </Col>
-                              <Col>
-                                <Link to=''>
-                                  <img src={bag} alt='Bag' />
-                                </Link>
                               </Col>
                             </Row>
                           </div>

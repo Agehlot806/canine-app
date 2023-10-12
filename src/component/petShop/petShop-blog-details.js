@@ -10,6 +10,7 @@ import bag from "../../assets/images/icon/bag.png";
 import toast, { Toaster } from "react-hot-toast";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
+import { Fade } from "react-reveal";
 
 function PetshopBlogdetails() {
   const { id } = useParams();
@@ -284,7 +285,7 @@ function PetshopBlogdetails() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -350,7 +351,7 @@ function PetshopBlogdetails() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "https://caninetest.xyz/storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -358,7 +359,7 @@ function PetshopBlogdetails() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "https://caninetest.xyz/storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -627,7 +628,7 @@ function PetshopBlogdetails() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -645,7 +646,7 @@ function PetshopBlogdetails() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -751,7 +752,7 @@ function PetshopBlogdetails() {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -856,7 +857,7 @@ function PetshopBlogdetails() {
                             /> */}
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/public/blog/" +
+                                "https://caninetest.xyz/storage/app/public/blog/" +
                                 item.image
                               }
                             />
@@ -917,7 +918,7 @@ function PetshopBlogdetails() {
                     <Link to={`/petshop-productDetails/${item[0]?.id}`}>
                       <div className="text-center">
                         <img
-                          src={`https://canine.hirectjob.in//storage/app/public/product/${item[0]?.image}`}
+                          src={`https://caninetest.xyz//storage/app/public/product/${item[0]?.image}`}
                           alt={item[0]?.name}
                         />
                       </div>
@@ -969,6 +970,7 @@ function PetshopBlogdetails() {
                       </div>
                     </Link>
                     {buttonVisibility[item[0].id] && (
+                    <Fade top>
                       <div className="button-container">
                         <button
                           data-toggle="modal"
@@ -985,6 +987,7 @@ function PetshopBlogdetails() {
                           Buy Now
                         </button>
                       </div>
+                      </Fade>
                     )}
                   </div>
                 </Col>
@@ -1034,7 +1037,7 @@ function PetshopBlogdetails() {
                                   >
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in/storage/app/public/product/" +
+                                        "https://caninetest.xyz/storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -1658,7 +1661,7 @@ function PetshopBlogdetails() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

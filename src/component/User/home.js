@@ -3,6 +3,7 @@ import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Fade, { Flip } from 'react-reveal';
 import bag from "../../assets/images/icon/bag.png";
 import cus1 from "../../assets/images/img/cus1.png";
 import cus2 from "../../assets/images/img/cus2.png";
@@ -18,6 +19,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { styled } from "styled-components";
 import { AiOutlineStar } from "react-icons/ai";
 import paydone from "../../assets/images/icon/paydone.png";
+import { AnimationOnScroll } from 'react-animation-on-scroll';
+import "animate.css/animate.min.css";
+
 
 const homeslider = {
   desktop: {
@@ -90,6 +94,8 @@ function Home(props) {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
+      response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Allow specified methods
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
     } catch (error) {
       console.error(error);
     }
@@ -474,7 +480,7 @@ function Home(props) {
   useEffect(() => {
     if (productDetails?.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "https://caninetest.xyz/storage/app/public/product/" +
         productDetails?.image
       );
     }
@@ -482,7 +488,7 @@ function Home(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "https://caninetest.xyz/storage/app/public/product/" +
       productDetails?.images[index]
     );
   };
@@ -690,7 +696,7 @@ function Home(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -708,7 +714,7 @@ function Home(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -798,7 +804,7 @@ function Home(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -961,7 +967,7 @@ function Home(props) {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1004,7 +1010,7 @@ function Home(props) {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -1035,7 +1041,7 @@ function Home(props) {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -1072,7 +1078,7 @@ function Home(props) {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -1123,6 +1129,7 @@ function Home(props) {
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
+            
             {categories &&
               categories.map((item) => (
                 <div className="Shop-Deals" key={item.id}>
@@ -1132,7 +1139,7 @@ function Home(props) {
                   >
                     <img
                       src={
-                        "https://canine.hirectjob.in/storage/app/public/category/" +
+                        "https://caninetest.xyz/storage/app/public/category/" +
                         item.image
                       }
                     />
@@ -1149,7 +1156,7 @@ function Home(props) {
           <Row>
             <Col lg={6} sm={6} xs={6}>
               <h1 className="main-head">Latest all Products</h1>
-            </Col>
+              </Col>
             <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/product">
@@ -1191,7 +1198,7 @@ function Home(props) {
                         <div className="text-center">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "https://caninetest.xyz//storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -1257,6 +1264,7 @@ function Home(props) {
                         </div>
                       </Link>
                       {buttonVisibility[item.id] && (
+                         <Fade top>
                         <div className="button-container">
                           <button
                             data-toggle="modal"
@@ -1283,6 +1291,7 @@ function Home(props) {
                         <p>{addToCartStatus}</p>
                       </Button> */}
                         </div>
+                        </Fade>
                       )}
                     </div>
                   </Col>
@@ -1297,13 +1306,14 @@ function Home(props) {
           <Row>
             <Col lg={6} sm={6} xs={6}>
               <h1 className="main-head">Our Brand</h1>
-            </Col>
+              </Col>
             <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/our-brand">See all</Link>
               </div>
             </Col>
           </Row>
+          <Fade left>
           <Row className="mt-4">
             {brands
               ? brands.map(
@@ -1318,7 +1328,7 @@ function Home(props) {
                           <div className="brandLOGO">
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                "https://caninetest.xyz/storage/app/public/brand_logo/" +
                                 brand.logo
                               }
                             />
@@ -1326,7 +1336,7 @@ function Home(props) {
                           <div className="brand-main">
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                "https://caninetest.xyz/storage/app/public/brand/" +
                                 brand.image
                               }
                             />
@@ -1341,6 +1351,7 @@ function Home(props) {
               )
               : null}
           </Row>
+          </Fade>
         </Container>
       </section>
 
@@ -1354,7 +1365,7 @@ function Home(props) {
                     <Col lg={6} className="mb-4">
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/" +
+                          "https://caninetest.xyz/storage/app/" +
                           item.image
                         }
                       />
@@ -1371,7 +1382,7 @@ function Home(props) {
                         <Col sm={12} className="mb-4">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -1386,7 +1397,7 @@ function Home(props) {
                         <Col sm={12} className="mb-4">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                           />
@@ -1404,7 +1415,7 @@ function Home(props) {
           <Row>
             <Col lg={6} sm={6} xs={6}>
               <h1 className="main-head">Shop By Brands</h1>
-            </Col>
+              </Col>
             <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/shop-by-brand">See all</Link>
@@ -1412,6 +1423,7 @@ function Home(props) {
             </Col>
           </Row>
           <div className="needplace">
+          <Fade right>
             <Row>
               {brands
                 ? brands.map(
@@ -1426,7 +1438,7 @@ function Home(props) {
                             <div className="brandLOGO">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                  "https://caninetest.xyz/storage/app/public/brand_logo/" +
                                   brand.logo
                                 }
                               />
@@ -1434,7 +1446,7 @@ function Home(props) {
                             <div className="brand-main">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                  "https://caninetest.xyz/storage/app/public/brand/" +
                                   brand.image
                                 }
                               />
@@ -1449,6 +1461,7 @@ function Home(props) {
                 )
                 : null}
             </Row>
+            </Fade>
           </div>
         </Container>
       </section>
@@ -1458,7 +1471,7 @@ function Home(props) {
           <Row>
             <Col lg={6} sm={6} xs={6}>
               <h1 className="main-head">Product By Partner</h1>
-            </Col>
+              </Col>
             <Col lg={6} sm={6} xs={6}>
               <div className="foodMore">
                 <Link to="/product-by-partner">See all</Link>
@@ -1487,7 +1500,7 @@ function Home(props) {
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/store/" +
+                            "https://caninetest.xyz/storage/app/public/store/" +
                             item.logo
                           }
                         />
@@ -1523,7 +1536,7 @@ function Home(props) {
                         <video loop autoPlay muted>
                           <source
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://caninetest.xyz/storage/app/" +
                               item.image
                             }
                             type="video/mp4"
@@ -1551,7 +1564,7 @@ function Home(props) {
                     <div className="blog-card">
                       <img
                         src={
-                          "https://canine.hirectjob.in/storage/app/public/blog/" +
+                          "https://caninetest.xyz/storage/app/public/blog/" +
                           item.image
                         }
                       />
@@ -1579,7 +1592,7 @@ function Home(props) {
           <Row>
             <Col lg={6}>
               <h1 className="main-head">Happy Customer</h1>
-            </Col>
+              </Col>
           </Row>
           <Row>
             {reviewlist.map((order, index) => (
@@ -1591,7 +1604,7 @@ function Home(props) {
                   <>
                     <img
                       src={
-                        "https://canine.hirectjob.in/storage/app/public/profile/" +
+                        "https://caninetest.xyz/storage/app/public/profile/" +
                         order.user_id[0].image
                       }
                       alt={order.user_id[0].f_name}
@@ -1633,7 +1646,7 @@ function Home(props) {
                       <div className="">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/" +
+                            "https://caninetest.xyz/storage/app/" +
                             item.image
                           }
                         />
@@ -1642,10 +1655,12 @@ function Home(props) {
                         <Col lg={7}>
                           <div className="home-content">
                             <div className="Newsletter">
+                            <Flip right>
                               <h1 className="main-head">
                                 Get Or Promo Code by Subscribing To our
                                 Newsletter
                               </h1>
+                              </Flip>
                               <Form className="d-flex">
                                 <Form.Control
                                   type="search"
@@ -1721,7 +1736,7 @@ function Home(props) {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          "https://caninetest.xyz/storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1739,18 +1754,18 @@ function Home(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex + 1) %
                               productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex +
                                 productDetails.images.length -
@@ -2509,7 +2524,7 @@ function Home(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

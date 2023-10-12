@@ -19,7 +19,7 @@ function Login() {
     customerData.append("cust_phone", phone);
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/customer",
+        "https://caninetest.xyz/api/v1/auth/customer",
         customerData
       );
       console.log(response.data);

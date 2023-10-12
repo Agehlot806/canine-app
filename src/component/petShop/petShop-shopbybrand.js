@@ -75,7 +75,7 @@ function PetShopShopbybrand() {
                                                     <div className="brandLOGO">
                                                         <img
                                                             src={
-                                                                "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                                                "https://caninetest.xyz/storage/app/public/brand_logo/" +
                                                                 brand.logo
                                                             }
                                                         />
@@ -83,7 +83,7 @@ function PetShopShopbybrand() {
                                                     <div className="brand-main">
                                                         <img
                                                             src={
-                                                                "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                                                "https://caninetest.xyz/storage/app/public/brand/" +
                                                                 brand.image
                                                             }
                                                         />
@@ -112,7 +112,7 @@ function PetShopShopbybrand() {
                                     <div className="banner-bgmain" key={item.id}>
                                         <img
                                             src={
-                                                "https://canine.hirectjob.in/storage/app/" +
+                                                "https://caninetest.xyz/storage/app/" +
                                                 item.image
                                             }
                                         />

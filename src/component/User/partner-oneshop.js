@@ -12,6 +12,7 @@ import { styled } from "styled-components";
 import toast, { Toaster } from "react-hot-toast";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
+import { Fade } from "react-reveal";
 
 function Partneroneshop() {
   const { state } = useLocation();
@@ -240,7 +241,7 @@ function Partneroneshop() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "https://caninetest.xyz/storage/app/public/product/" +
         productDetails.image
       );
     }
@@ -248,7 +249,7 @@ function Partneroneshop() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "https://caninetest.xyz/storage/app/public/product/" +
       productDetails.images[index]
     );
   };
@@ -456,7 +457,7 @@ function Partneroneshop() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -474,7 +475,7 @@ function Partneroneshop() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -591,7 +592,7 @@ function Partneroneshop() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -807,7 +808,7 @@ function Partneroneshop() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -823,14 +824,14 @@ function Partneroneshop() {
         <div className="all-bg">
           <img
             src={
-              "https://canine.hirectjob.in/storage/app/public/store/cover/" +
+              "https://caninetest.xyz/storage/app/public/store/cover/" +
               state?.item.cover_photo
             }
           />
         </div>
         {console.log(
           "coverPhoto",
-          "https://canine.hirectjob.in/storage/app/public/store/cover/" +
+          "https://caninetest.xyz/storage/app/public/store/cover/" +
           state?.item.cover_photo
         )}
       </Container>
@@ -891,7 +892,7 @@ function Partneroneshop() {
                       <div className="text-center">
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "https://caninetest.xyz//storage/app/public/product/" +
                             item.image
                           }
                         />
@@ -926,22 +927,24 @@ function Partneroneshop() {
                       </div>
                     </Link>
                     {buttonVisibility[item.id] && (
-                      <div className="button-container">
-                        <button
-                          data-toggle="modal"
-                          data-target=".bd-example-modal-lg"
-                          onClick={(e) => handeldataId(item.id)}
-                        >
-                          Quick View
-                        </button>
-                        <button
-                          data-toggle="modal"
-                          data-target=".buynow"
-                          onClick={(e) => handeldataId(item.id)}
-                        >
-                          Buy Now
-                        </button>
-                      </div>
+                      <Fade top>
+                        <div className="button-container">
+                          <button
+                            data-toggle="modal"
+                            data-target=".bd-example-modal-lg"
+                            onClick={(e) => handeldataId(item.id)}
+                          >
+                            Quick View
+                          </button>
+                          <button
+                            data-toggle="modal"
+                            data-target=".buynow"
+                            onClick={(e) => handeldataId(item.id)}
+                          >
+                            Buy Now
+                          </button>
+                        </div>
+                      </Fade>
                     )}
                   </div>
                 </Col>
@@ -1006,7 +1009,7 @@ function Partneroneshop() {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          "https://caninetest.xyz/storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1024,18 +1027,18 @@ function Partneroneshop() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex + 1) %
                               productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex +
                                 productDetails.images.length -
@@ -1111,8 +1114,8 @@ function Partneroneshop() {
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${selectedVariant === item.type
-                                                      ? "active"
-                                                      : ""
+                                                    ? "active"
+                                                    : ""
                                                     }`}
                                                   onClick={() => {
                                                     setSelectedVariant(item.type);
@@ -1704,8 +1707,8 @@ function Partneroneshop() {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -1794,7 +1797,7 @@ function Partneroneshop() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "https://caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
@@ -1809,29 +1812,28 @@ function Partneroneshop() {
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                    <div
+                                      className={`tab-variations ${selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                        }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>

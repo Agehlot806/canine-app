@@ -371,7 +371,7 @@ function Addcart() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -395,7 +395,7 @@ function Addcart() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        "https://caninetest.xyz/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -447,7 +447,7 @@ function Addcart() {
         ) || originalPrice * 0.05 + originalPrice,
       cart: cartData,
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -482,7 +482,7 @@ function Addcart() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notifiction_post`, notifymePostData)
+      .post(`https://caninetest.xyz/api/v1/items/notifiction_post`, notifymePostData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -576,7 +576,7 @@ function Addcart() {
                       <div className="">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/" +
+                            "https://caninetest.xyz/storage/app/" +
                             item.image
                           }
                         />
@@ -608,7 +608,7 @@ function Addcart() {
                   <Col lg={2} sm={2}>
                     <img
                       src={
-                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                        "https://caninetest.xyz//storage/app/public/product/" +
                         item.image
                       }
                     />

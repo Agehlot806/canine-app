@@ -32,7 +32,7 @@ function Updateprofile() {
   // useEffect(() => {
   //   // Fetch profile data from the API
   //   axios
-  //     .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
+  //     .get(`https://caninetest.xyz/api/v1/auth/my_profile/${storedUserId}`)
   //     .then((response) => {
   //       if (response.data.status === "200") {
   //         console.log("response.data:????? ", response.data);
@@ -79,7 +79,7 @@ function Updateprofile() {
   //   e.preventDefault();
   //   try {
   //     const response = await axios.post(
-  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
+  //       "https://caninetest.xyz/api/v1/auth/update-profile",
   //       profileData // Send the profileData object in the request
   //     );
   //     if (response.data.message === "Successfully updated!") {
@@ -103,7 +103,7 @@ function Updateprofile() {
   useEffect(() => {
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
+      .get(`https://caninetest.xyz/api/v1/auth/my_profile/${storedUserId}`)
       .then((response) => {
 
         console.log("response.data:????? ", response.data);
@@ -140,7 +140,7 @@ function Updateprofile() {
 
     axios({
       method: "post",
-      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+      url: `https://caninetest.xyz/api/v1/auth/update-profile`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })
@@ -236,12 +236,12 @@ function Updateprofile() {
                     {/* {selectedImage && (
                       <img src={selectedImage} alt="Selected Image" style={{ width: '100px', height: '100px' }} />
                     )} */}
-                    {/* <img src={"https://canine.hirectjob.in/storage/app/public/profile/" + imgage} alt='' /> */}
+                    {/* <img src={"https://caninetest.xyz/storage/app/public/profile/" + imgage} alt='' /> */}
                     <img
                       src={
                         selectedImage
                           ? selectedImage
-                          : `https://canine.hirectjob.in/storage/app/public/profile/${imgage}`
+                          : `https://caninetest.xyz/storage/app/public/profile/${imgage}`
                       }
                       alt={selectedImage ? "Image" : "Image not available"}
                       style={{ width: '100px', height: '100px' }}
