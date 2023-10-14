@@ -107,6 +107,8 @@ function Otp() {
                     </Form.Group> */}
                     <OtpInput
                       value={phone}
+                      className="justify-content-center"
+                      containerStyle={{justifyContent: 'center'}}
                       otpType="number"
                       onChange={(e) => {
                         const numericValue = e.replace(/\D/g, "");
@@ -120,7 +122,7 @@ function Otp() {
 
                     <div className="countdown-text">
                       <Row>
-                        <Col>
+                        <Col lg={6}>
                           <div>
                             {seconds > 0 || minutes > 0 ? (
                               <h6>
@@ -133,7 +135,7 @@ function Otp() {
                             )}
                           </div>
                         </Col>
-                        <Col>
+                        <Col lg={6}>
                           <button
                             disabled={seconds > 0 || minutes > 0}
                             style={{

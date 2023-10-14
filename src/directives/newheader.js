@@ -20,7 +20,7 @@ function Newheader(props) {
   const [storedUserId, setStoredUserId] = useState(null);
   const [notify, setNotify] = useState([]);
   const [dataZero, setDataZero] = useState([]);
-  console.log("dataZero",dataZero);
+  console.log("dataZero", dataZero);
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
@@ -39,7 +39,6 @@ function Newheader(props) {
   useEffect(() => {
     Notifynotification();
   }, []);
-
   if (dataZero?.length > 0 && dataZero[0] && dataZero[0]?.id !== undefined) {
     const dataZeroid = dataZero[0]?.id; // Access the first element's "id" property
     console.log(dataZeroid);
@@ -220,7 +219,7 @@ function Newheader(props) {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
       });
   };
-  console.log("------------->id",dataZero);
+  console.log("------------->id", dataZero);
 
   const DeleteNotification = (id) => {
     axios
@@ -282,18 +281,18 @@ function Newheader(props) {
   };
 
   const [apiResponse, setApiResponse] = useState(null);
-const [apiError, setApiError] = useState(null);
-  
+  const [apiError, setApiError] = useState(null);
+
   const handleLinkClick = async (dataZeroid) => {
     try {
       const formData = new FormData();
       formData.append('dataZeroid', dataZeroid);
-  
+
       const response = await fetch(`${BASE_URL}/items/notify_view/${dataZeroid}`, {
         method: 'POST',
         body: formData,
       });
-  
+
       if (response.status === 200) {
         const responseData = await response.json();
         setApiResponse(responseData);
@@ -303,14 +302,15 @@ const [apiError, setApiError] = useState(null);
       console.error(error);
     }
   };
-  
-  
+
+
   const Modaloff = () => {
     const modal = document.getElementById('exampleModal');
     $(modal).modal('hide');  // Toggle the modal using Bootstrap's modal method
   };
 
-  
+
+
   return (
     <>
       <Toaster />
@@ -468,6 +468,7 @@ const [apiError, setApiError] = useState(null);
                   New
                 </Link>
               </li> */}
+              
                 <li className="nav-item dropdown mega-dropdown-new">
 
                   <a
@@ -1243,14 +1244,14 @@ const [apiError, setApiError] = useState(null);
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                      <span><BiSolidOffer/></span>
+                      <span><BiSolidOffer /></span>
                       Offers
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">
-                    <span><i class="fa fa-gift" aria-hidden="true"></i></span>
-                    Order info
+                      <span><i class="fa fa-gift" aria-hidden="true"></i></span>
+                      Order info
                     </a>
                   </li>
                 </ul>
@@ -1278,24 +1279,24 @@ const [apiError, setApiError] = useState(null);
                         notify.map((ob, index) => (
                           <div className="notification" key={index} >
                             <Link to="">
-                            <Row>
-                              <Col lg={2} className="align-self-center text-center">
-                                <Link  to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
-                                  <i className="fa fa-info-circle" />
-                                </Link>
-                              </Col>
-                              <Col lg={8} >
-                                <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)}>
-                                  <h6 className={ob.status === 'unread' ? 'unread' : 'read'}>Item ID : {ob.item_id}</h6>
-                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Stock : {ob.stock}</p>
-                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Variation : {ob.variation}</p>
-                                  <p className={ob.status === 'unread' ? 'unread' : 'read'}>Status : {ob.order_status}</p>
-                                </Link>
-                              </Col>
-                              <Col lg={2}>
-                                <a onClick={() => DeleteNotification(ob.id)}> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                              </Col>
-                            </Row>
+                              <Row>
+                                <Col lg={2} className="align-self-center text-center">
+                                  <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
+                                    <i className="fa fa-info-circle" />
+                                  </Link>
+                                </Col>
+                                <Col lg={8} >
+                                  <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)}>
+                                    <h6 className={ob.status === 'unread' ? 'unread' : 'read'}>Item ID : {ob.item_id}</h6>
+                                    <p className={ob.status === 'unread' ? 'unread' : 'read'}>Stock : {ob.stock}</p>
+                                    <p className={ob.status === 'unread' ? 'unread' : 'read'}>Variation : {ob.variation}</p>
+                                    <p className={ob.status === 'unread' ? 'unread' : 'read'}>Status : {ob.order_status}</p>
+                                  </Link>
+                                </Col>
+                                <Col lg={2}>
+                                  <a onClick={() => DeleteNotification(ob.id)}> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </Col>
+                              </Row>
                             </Link>
                           </div>
                         ))
@@ -1305,22 +1306,22 @@ const [apiError, setApiError] = useState(null);
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div className={`notification ${ob.status === 'unread' ? 'unread' : 'read'}`} key={index}>
-                              <Row>
-                                <Col lg={2} className="align-self-center text-center">
+                            <Row>
+                              <Col lg={2} className="align-self-center text-center">
                                 <Link to={`/my-orders`} data-dismiss="modal">
                                   <i className="fa fa-info-circle" />
-                                  </Link>
-                                </Col>
-                                <Col lg={8} >
+                                </Link>
+                              </Col>
+                              <Col lg={8} >
                                 <Link to={`/my-orders`} onClick={() => handleLinkClick(ob.id)}>
                                   <h6 className={ob.status === 'unread' ? 'unread' : 'read'}>Order ID : {ob.order_id}</h6>
                                   <p className={ob.status === 'unread' ? 'unread' : 'read'}>Status : {ob.order_status}</p>
-                                  </Link>
-                                </Col>
-                                <Col lg={2}>
+                                </Link>
+                              </Col>
+                              <Col lg={2}>
                                 <a onClick={() => DeleteNotification(ob.id)}> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
                               </Col>
-                              </Row>
+                            </Row>
                           </div>
                         ))
                       ) : (
@@ -1352,7 +1353,7 @@ const [apiError, setApiError] = useState(null);
                       {notify && notify.length > 0 ? (
                         notify.map((ob, index) => (
                           <div className="notification" key={index} >
-                            <Link  to={`/product-details/${ob.item_id}`} onClick={()=>Modaloff()}>
+                            <Link to={`/product-details/${ob.item_id}`} onClick={() => Modaloff()}>
                               <Row>
                                 <Col lg={2} className="align-self-center text-center">
                                   <i className="fa fa-info-circle" />
@@ -1373,7 +1374,7 @@ const [apiError, setApiError] = useState(null);
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div className="notification" key={index}>
-                            <Link to={`/my-orders`} onClick={()=>Modaloff()}>
+                            <Link to={`/my-orders`} onClick={() => Modaloff()}>
                               <Row>
                                 <Col lg={2} className="align-self-center text-center">
                                   <i className="fa fa-info-circle" />

@@ -1653,7 +1653,7 @@ function Home(props) {
                       </div>
                       <Row className="justify-content-center">
                         <Col lg={7}>
-                          <div className="home-content">
+                          <div className="new-content">
                             <div className="Newsletter">
                             <Flip right>
                               <h1 className="main-head">
