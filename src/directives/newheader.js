@@ -24,7 +24,7 @@ function Newheader(props) {
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
-  const { notificationLength, dataLengthpetnotification, totalLength } =
+  const { totalLength } =
     useNotificationContext();
 
   useEffect(() => {
@@ -310,6 +310,7 @@ const [apiError, setApiError] = useState(null);
     $(modal).modal('hide');  // Toggle the modal using Bootstrap's modal method
   };
 
+  
   return (
     <>
       <Toaster />
@@ -1054,7 +1055,7 @@ const [apiError, setApiError] = useState(null);
                     </div>
                   </a>
                 </li>
-                <li className="nav-item nonhide">
+                <li className="nav-item nonhide"> {/* web*/}
                   <a
                     className="notification-btn"
                     data-toggle="modal"
@@ -1216,6 +1217,7 @@ const [apiError, setApiError] = useState(null);
           </div>
         </div>
       </div>
+
       {/* Modal */}
       <div
         className="modal fade notification-area"
@@ -1229,6 +1231,10 @@ const [apiError, setApiError] = useState(null);
           <div className="modal-content">
             <div className="modal-body">
               <h5>Notification</h5>
+              <p>
+                <i class="fa fa-bell-o" />
+                <span className="total-count">{totalLength}</span>
+              </p>
               {/* Tabs Code By Sohel */}
               <div className="Notifi-tab-area">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
