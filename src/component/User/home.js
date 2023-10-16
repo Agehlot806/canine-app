@@ -1596,7 +1596,7 @@ function Home(props) {
           </Row>
           <Row>
             {reviewlist.map((order, index) => (
-              <Col lg={4} sm={6} xs={6} key={order.id} className="mb-3">
+              <Col lg={4} sm={6} key={order.id} className="mb-3">
                 <div className="Brand-cus" style={{
                   background:
                     happyCus[index % happyCus.length],
