@@ -26,27 +26,20 @@ function Petcategory() {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
-  const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
-    useState(false);
+  const [productTypeDropdownVisible, setProductTypeDropdownVisible] = useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
-  const [lifestageDropdownVisible, setLifestageDropdownVisible] =
-    useState(false);
-  const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] =
-    useState(false);
+  const [lifestageDropdownVisible, setLifestageDropdownVisible] = useState(false);
+  const [breedTypeDropdownVisible, setBreedTypeDropdownVisible] = useState(false);
   const [breed, setBreed] = useState([]);
   const [healthcondition, setHealthcondition] = useState([]);
   const [lifestage, setlifestage] = useState([]);
   const [healthDropdownVisible, setHealthDropdownVisible] = useState(false);
-  const [specialDietDropdownVisible, setSpecialDietDropdownVisible] =
-    useState(false);
-  const [vegNonvegDropdownVisible, setVegNonvegDropdownVisible] =
-    useState(false);
-  const [groomingFeatureDropdownVisible, setGroomingFeatureDropdownVisible] =
-    useState(false);
-  const [groomingToolsDropdownVisible, setGroomingToolsDropdownVisible] =
-    useState(false);
-  const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] =
-    useState(false);
+  const [specialDietDropdownVisible, setSpecialDietDropdownVisible] = useState(false);
+  const [vegNonvegDropdownVisible, setVegNonvegDropdownVisible] = useState(false);
+  const [groomingFeatureDropdownVisible, setGroomingFeatureDropdownVisible] = useState(false);
+  const [groomingToolsDropdownVisible, setGroomingToolsDropdownVisible] = useState(false);
+  const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] = useState(false);
+  
   const handleParentClick = (dropdownName) => {
     switch (dropdownName) {
       case "brand":
@@ -1293,7 +1286,7 @@ function Petcategory() {
                           ))
                           : ""}
                       </div>
-                    </>
+                     </>
                   )}
                 </div>
                 <hr />

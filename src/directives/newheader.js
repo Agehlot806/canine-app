@@ -309,6 +309,8 @@ function Newheader(props) {
     $(modal).modal('hide');  // Toggle the modal using Bootstrap's modal method
   };
 
+  
+
 
 
   return (
@@ -1063,7 +1065,8 @@ function Newheader(props) {
                     data-target="#exampleModal"
                   >
                     <i class="fa fa-bell-o" />
-                    <span>{totalLength}</span>
+                    {/* <span>{totalLength}</span>  */}
+                    <span>{isNaN(totalLength) ? 0 : totalLength}</span>
                   </a>
                 </li>
 
@@ -1232,10 +1235,6 @@ function Newheader(props) {
           <div className="modal-content">
             <div className="modal-body">
               <h5>Notification</h5>
-              <p>
-                <i class="fa fa-bell-o" />
-                <span className="total-count">{totalLength}</span>
-              </p>
               {/* Tabs Code By Sohel */}
               <div className="Notifi-tab-area">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -1264,7 +1263,7 @@ function Newheader(props) {
                             <Col lg={2}>
                               <img src={item.image} />
                             </Col>
-                            <Col lg={9} className="align-self-center">
+                            <Col lg={8} className="align-self-center">
                               <h6>{item.title}</h6>
                               <p>{item.description}</p>
                             </Col>
@@ -1280,7 +1279,7 @@ function Newheader(props) {
                           <div className="notification" key={index} >
                             <Link to="">
                               <Row>
-                                <Col lg={2} className="align-self-center text-center">
+                                <Col lg={2} className="align-self-center">
                                   <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
                                     <i className="fa fa-info-circle" />
                                   </Link>
@@ -1307,7 +1306,7 @@ function Newheader(props) {
                         dataZero.map((ob, index) => (
                           <div className={`notification ${ob.status === 'unread' ? 'unread' : 'read'}`} key={index}>
                             <Row>
-                              <Col lg={2} className="align-self-center text-center">
+                              <Col lg={2} className="align-self-center">
                                 <Link to={`/my-orders`} data-dismiss="modal">
                                   <i className="fa fa-info-circle" />
                                 </Link>

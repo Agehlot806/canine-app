@@ -3824,7 +3824,6 @@ text-align: center;
   background-color: #2980b9;
   transform: rotateY(180deg);
   border-radius: 10px;
-
   padding: 31px;
 }
 .coupenCard {
@@ -3856,10 +3855,7 @@ li.nav-item.nonhide {
   width: 130px;
   margin: 10px 0;
 }
-.notification-area .modal-body p  {
-  text-align: center;
-  position: relative;
-}
+
 .total-count {
   background-color: #f00;
   color: #fff;

@@ -94,7 +94,7 @@ function Home(props) {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
-      response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Allow specified methods
+      response.headers['Access-Control-Allow-Methods'] = 'GET'; // Allow specified methods
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
     } catch (error) {
       console.error(error);

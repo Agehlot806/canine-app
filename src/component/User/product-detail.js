@@ -95,6 +95,12 @@ function Productdetail() {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Set appropriate content type
+            "Access-Control-Allow-Methods": 'POST',
+            "Access-Control-Allow-Headers": "Content-Type",
+        },
           item_name: productDetails?.name,
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
@@ -574,6 +580,8 @@ function Productdetail() {
     var headers = {
       Accept: "application/json",
       "Content-Data": "application/json",
+      "Access-Control-Allow-Methods": 'POST',
+            "Access-Control-Allow-Headers": "Content-Type",
     };
     await fetch(`${BASE_URL}/auth/state`, {
       method: "GET",
