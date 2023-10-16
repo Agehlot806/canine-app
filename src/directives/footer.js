@@ -19,7 +19,7 @@ function Footer() {
         <div className="section-padding">
           <Container>
             <Row>
-              <Col lg={3} sm={6} xs={6}>
+              <Col lg={3} sm={6}>
                 <div className="footer-list">
                   <h5>{strings.usefulLinks}</h5>
                   <ul>
@@ -50,7 +50,7 @@ function Footer() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6} xs={6}>
+              <Col lg={3} sm={6}>
                 <div className="footer-list">
                   <h5>Information</h5>
                   <ul>
@@ -75,7 +75,7 @@ function Footer() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6} xs={6}>
+              <Col lg={3} sm={6}>
                 <div className="footer-list">
                   <h5>Contact Us</h5>
                   <ul>
@@ -104,7 +104,7 @@ function Footer() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6} xs={6}>
+              <Col lg={3} sm={6}>
                 <div className="footer-list">
                   <h5>Download The Apps</h5>
                   <ul>

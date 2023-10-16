@@ -106,7 +106,10 @@
     .paw-right img {
         padding: 38px 0;
     }
-
+    .notification-btn span {
+        top: -18px;
+        left: -28px;
+    }
     .delete-addcard i {
         font-size: 30px;
     }
@@ -130,6 +133,7 @@
     }
     .hide-icons {
         display: flex;
+        align-items: center;
     }
     .otp-area {
         padding: 15px;
@@ -440,7 +444,7 @@
     }
 
     .main-head {
-        font-size: 25px;
+        font-size: 20px;
     }
 
     .foodMore {
@@ -499,11 +503,11 @@
     }
 
     .main-head {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .foodMore a {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .Shop-Deals img {
@@ -743,6 +747,9 @@
 }
 
 @media only screen and (max-width: 320px) {
+    nav .wrapper {
+        padding: 0px 10px !important;
+    }
     .food-product img {
         width: 100px;
         height: 100px;
