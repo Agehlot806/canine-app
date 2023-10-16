@@ -2537,7 +2537,7 @@ function Newheader(props) {
                 <i className="fa fa-search" />
                 <input
                   type="text"
-                  placeholder="What are you looking for ?"
+                  placeholder="What are you looking for"
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   className="homesea"
