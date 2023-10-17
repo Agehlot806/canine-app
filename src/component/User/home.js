@@ -980,7 +980,7 @@ function Home(props) {
     <>
       <Toaster />
       <Newheader />
-      {/* <section className="section-padding"> */}
+
       <div className="home-section">
         <Container fluid className="p-0">
           <Carousel
@@ -1102,8 +1102,7 @@ function Home(props) {
             </div>
           </Carousel>
         </Container>
-        </div>
-        {/* </section> */}
+      </div>
 
       <section className="section-padding">
         <Container>
@@ -1505,7 +1504,7 @@ function Home(props) {
                             item.logo
                           }
                         />
-                        <h4 className="text-dark">{item.name}</h4>
+                        <h3 className="text-dark">{item.name}</h3>
                       </div>
                     </a>
                   </Col>
@@ -1901,7 +1900,7 @@ function Home(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2511,7 +2510,7 @@ function Home(props) {
                                   </div>
                                 </Col>
                               )}
-                             </Row>
+                            </Row>
                           </Col>
                         </Row>
                       </div>
@@ -2615,7 +2614,8 @@ function Home(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                {console.log("NaNNNNN",formattedAmount)}
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
