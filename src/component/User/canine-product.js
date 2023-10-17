@@ -280,7 +280,7 @@ function Canineproduct(props) {
 
   const allBrandshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/brand`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
         // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
@@ -293,7 +293,7 @@ function Canineproduct(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/all_life_stage/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -306,7 +306,7 @@ function Canineproduct(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/all_pets_breed/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -318,7 +318,7 @@ function Canineproduct(props) {
 
   const allsubcategary = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/categories`)
+      .get(`https://canine.hirectjob.in/api/v1/categories`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllSubcate(response.data.data);
@@ -330,7 +330,7 @@ function Canineproduct(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/health_condition/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -475,7 +475,7 @@ function Canineproduct(props) {
   ) => {
     try {
       const response = await axios.get(
-        "https://caninetest.xyz/api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
       const filteredProducts = applyFilters({
@@ -679,7 +679,7 @@ function Canineproduct(props) {
     if (productDetails.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -687,7 +687,7 @@ function Canineproduct(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -761,7 +761,7 @@ function Canineproduct(props) {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -896,7 +896,7 @@ function Canineproduct(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -914,7 +914,7 @@ function Canineproduct(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -1031,7 +1031,7 @@ function Canineproduct(props) {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1200,25 +1200,25 @@ function Canineproduct(props) {
                       <div>
                         {allbrand
                           ? allbrand.map(
-                            (items) =>
-                              items.canine === 1 && (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onClick={(e) =>
-                                      handleDataListBrand(items.title)
-                                    }
-                                  />
-                                  <label className="form-check-label">
-                                    {items.title}
-                                  </label>
-                                </div>
-                              )
-                          )
+                              (items) =>
+                                items.canine === 1 && (
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) =>
+                                        handleDataListBrand(items.title)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.title}
+                                    </label>
+                                  </div>
+                                )
+                            )
                           : ""}
                       </div>
                     </>
@@ -1240,20 +1240,20 @@ function Canineproduct(props) {
                       <div>
                         {subcategories
                           ? subcategories.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allsubcateselect(items?.name)}
-                              />
-                              <label className="form-check-label">
-                                {items?.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allsubcateselect(items?.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items?.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1275,20 +1275,20 @@ function Canineproduct(props) {
                       <div>
                         {allsubcate
                           ? allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allcateselect(items?.name)}
-                              />
-                              <label className="form-check-label">
-                                {items?.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allcateselect(items?.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items?.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1355,22 +1355,22 @@ function Canineproduct(props) {
                       <div>
                         {alllifesage
                           ? alllifesage.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) =>
-                                  Lifesatedataselect(items?.name)
-                                }
-                              />
-                              <label className="form-check-label">
-                                {items?.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items?.name)
+                                  }
+                                />
+                                <label className="form-check-label">
+                                  {items?.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1392,20 +1392,20 @@ function Canineproduct(props) {
                       <div>
                         {allbreed
                           ? allbreed.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) => allbreedselect(items?.name)}
-                              />
-                              <label className="form-check-label">
-                                {items?.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) => allbreedselect(items?.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items?.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1427,20 +1427,20 @@ function Canineproduct(props) {
                       <div>
                         {allhealth
                           ? allhealth.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label className="form-check-label">
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label className="form-check-label">
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1495,67 +1495,67 @@ function Canineproduct(props) {
           </Col>
           <Col lg={9}>
             <section className="section-padding food">
-            <h1 className="main-head">Canine Products</h1>
+              <h1 className="main-head">Canine Products</h1>
               <Container>
                 <Row>
                   {allproduct
                     ? allproduct.map(
-                      (item, index) =>
-                        item.module_id === 1 && (
-                          <Col lg={4} sm={6} xs={6} className="mb-4">
-                            <div
-                              className="food-product"
-                              onMouseEnter={() => handleMouseEnter(item.id)}
-                              onMouseLeave={() => handleMouseLeave(item.id)}
-                              key={item.id}
-                              style={{
-                                background:
-                                  gradientColors[
-                                  index % gradientColors.length
-                                  ],
-                              }}
-                            >
-                              <i
-                                class={
-                                  item.isFav
-                                    ? "fa-solid fa-heart"
-                                    : "fa-regular fa-heart"
-                                }
-                                onClick={(id) => {
-                                  if (storedUserId == null) {
-                                    toast.error("Please Login first");
-                                  } else {
-                                    addToWishlist(item.id);
-                                  }
+                        (item, index) =>
+                          item.module_id === 1 && (
+                            <Col lg={4} sm={6} xs={6} className="mb-4">
+                              <div
+                                className="food-product"
+                                onMouseEnter={() => handleMouseEnter(item.id)}
+                                onMouseLeave={() => handleMouseLeave(item.id)}
+                                key={item.id}
+                                style={{
+                                  background:
+                                    gradientColors[
+                                      index % gradientColors.length
+                                    ],
                                 }}
-                              />
-                              <Link to={`/product-details/${item.id}`}>
-                                <div className="text-center">
-                                  <img
-                                    src={
-                                      "https://caninetest.xyz//storage/app/public/product/" +
-                                      item.image
+                              >
+                                <i
+                                  class={
+                                    item.isFav
+                                      ? "fa-solid fa-heart"
+                                      : "fa-regular fa-heart"
+                                  }
+                                  onClick={(id) => {
+                                    if (storedUserId == null) {
+                                      toast.error("Please Login first");
+                                    } else {
+                                      addToWishlist(item.id);
                                     }
-                                  />
-                                </div>
-                                <div>
-                                  <h6>{item.name}</h6>
-                                  <p>{item.description}</p>
-                                </div>
-                                <div className="product-bag">
-                                  <Row>
-                                    <Col>
-                                      <p>₹999.00</p>
-                                    </Col>
-                                    <Col>
-                                      <h5>20%</h5>
-                                    </Col>
-                                  </Row>
-                                  <Row>
-                                    <Col className="align-self-center">
-                                      <h6>₹{item?.price}</h6>
-                                    </Col>
-                                    {/* <Col>
+                                  }}
+                                />
+                                <Link to={`/product-details/${item.id}`}>
+                                  <div className="text-center">
+                                    <img
+                                      src={
+                                        "https://caninetest.xyz//storage/app/public/product/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <div>
+                                    <h6>{item.name}</h6>
+                                    <p>{item.description}</p>
+                                  </div>
+                                  <div className="product-bag">
+                                    <Row>
+                                      <Col>
+                                        <p>₹999.00</p>
+                                      </Col>
+                                      <Col>
+                                        <h5>20%</h5>
+                                      </Col>
+                                    </Row>
+                                    <Row>
+                                      <Col className="align-self-center">
+                                        <h6>₹{item?.price}</h6>
+                                      </Col>
+                                      {/* <Col>
                                       <Link
                                         to={`/add-cart/${item.id}`}
                                         onClick={handleAddToCart}
@@ -1563,33 +1563,33 @@ function Canineproduct(props) {
                                         <img src={bag} />
                                       </Link>
                                     </Col> */}
-                                  </Row>
-                                </div>
-                              </Link>
-                              {buttonVisibility[item.id] && (
-                              <Fade top>
-                                <div className="button-container">
-                                  <button
-                                    data-toggle="modal"
-                                    data-target=".bd-example-modal-lg"
-                                    onClick={(e) => handeldataId(item.id)}
-                                  >
-                                    Quick View
-                                  </button>
-                                  <button
-                                    data-toggle="modal"
-                                    data-target=".buynow"
-                                    onClick={(e) => handeldataId(item.id)}
-                                  >
-                                    Buy Now
-                                  </button>
-                                </div>
-                                </Fade>
-                              )}
-                            </div>
-                          </Col>
-                        )
-                    )
+                                    </Row>
+                                  </div>
+                                </Link>
+                                {buttonVisibility[item.id] && (
+                                  <Fade top>
+                                    <div className="button-container">
+                                      <button
+                                        data-toggle="modal"
+                                        data-target=".bd-example-modal-lg"
+                                        onClick={(e) => handeldataId(item.id)}
+                                      >
+                                        Quick View
+                                      </button>
+                                      <button
+                                        data-toggle="modal"
+                                        data-target=".buynow"
+                                        onClick={(e) => handeldataId(item.id)}
+                                      >
+                                        Buy Now
+                                      </button>
+                                    </div>
+                                  </Fade>
+                                )}
+                              </div>
+                            </Col>
+                          )
+                      )
                     : null}
                 </Row>
               </Container>
@@ -1628,7 +1628,7 @@ function Canineproduct(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1669,17 +1669,17 @@ function Canineproduct(props) {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1688,13 +1688,13 @@ function Canineproduct(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1749,13 +1749,19 @@ function Canineproduct(props) {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant === item.type
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
                                                       ? "active"
                                                       : ""
-                                                    }`}
+                                                  }`}
                                                   onClick={() => {
-                                                    setSelectedVariant(item.type);
-                                                    setSelectedVariantPrice(item?.price); // Store the price in state
+                                                    setSelectedVariant(
+                                                      item.type
+                                                    );
+                                                    setSelectedVariantPrice(
+                                                      item?.price
+                                                    ); // Store the price in state
                                                   }}
                                                 >
                                                   {item.type}
@@ -1953,10 +1959,11 @@ function Canineproduct(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2058,30 +2065,30 @@ function Canineproduct(props) {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item?.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                  {item.stock !== 0 ? (
+                                    <div
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item?.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>
@@ -2689,11 +2696,11 @@ function Canineproduct(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

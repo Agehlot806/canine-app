@@ -3,7 +3,7 @@ import "../../assets/css/order-tracker.css";
 import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
@@ -14,7 +14,7 @@ export default function Trackyourorder() {
   let storedUserId = JSON.parse(customer_id);
 
   const [trackingValue, setTrackingValue] = useState([]);
-  const [cancelValue, setCancelValue] = useState('');
+  const [cancelValue, setCancelValue] = useState("");
   useEffect(() => {
     if (id) {
       setTrackingValue(id);
@@ -22,7 +22,7 @@ export default function Trackyourorder() {
   }, [id]);
 
   useEffect(() => {
-      orderViewdetails();
+    orderViewdetails();
   }, []);
 
   const handleInputChange = (e) => {
@@ -31,26 +31,28 @@ export default function Trackyourorder() {
   const [orderDetails, setorderDetails] = useState([]);
   const [trankershowData, settrankershowData] = useState(false);
   const [steps, setSteps] = useState([
-    'Pending',
-    'Confirmed',
-    'Processing',
-    'Handover',
-    'Picked Up',
-    'Delivered'
+    "Pending",
+    "Confirmed",
+    "Processing",
+    "Handover",
+    "Picked Up",
+    "Delivered",
   ]);
   const [orderData, setOrderData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const trackingtargetvaluenumber = () => {
     // Fetch order data from an API endpoint
-    fetch(`https://caninetest.xyz/api/v1/customer/order/tracking/${trackingValue}`)
-      .then(response => response.json())
-      .then(data => {
+    fetch(
+      `https://canine.hirectjob.in/api/v1/customer/order/tracking/${trackingValue}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
         setOrderData(data.data[0]);
         setIsLoading(false);
-        settrankershowData(!trankershowData)
+        settrankershowData(!trankershowData);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
         setIsLoading(false);
       });
   };
@@ -58,7 +60,7 @@ export default function Trackyourorder() {
     axios
       .get(`${BASE_URL}/customer/order/detail/${id}`)
       .then((response) => {
-        console.log("Trackingggggggggggggggggggg", response.data.data)
+        console.log("Trackingggggggggggggggggggg", response.data.data);
         console.log("=======>???????????????????????????????? ", response);
         console.log("order Details Successful");
         setorderDetails(response.data.data);
@@ -73,86 +75,96 @@ export default function Trackyourorder() {
   const getCurrentStepIndex = () => {
     if (orderData.picked_up && new Date(orderData.delivered) <= new Date()) {
       return 6;
-    }
-    else if (orderData.picked_up && new Date(orderData.picked_up) <= new Date()) {
+    } else if (
+      orderData.picked_up &&
+      new Date(orderData.picked_up) <= new Date()
+    ) {
       return 5; // Delivered
-    }
-    else if (orderData.handover && new Date(orderData.handover) <= new Date()) {
+    } else if (
+      orderData.handover &&
+      new Date(orderData.handover) <= new Date()
+    ) {
       return 4; // Picked Up
-    }
-    else if (orderData.processing && new Date(orderData.processing) <= new Date()) {
+    } else if (
+      orderData.processing &&
+      new Date(orderData.processing) <= new Date()
+    ) {
       return 3; // Handover
-    }
-    else if (orderData.confirmed && new Date(orderData.confirmed) <= new Date()) {
+    } else if (
+      orderData.confirmed &&
+      new Date(orderData.confirmed) <= new Date()
+    ) {
       return 2; // Processing
-    }
-    else if (orderData.pending && new Date(orderData.pending) <= new Date()) {
+    } else if (orderData.pending && new Date(orderData.pending) <= new Date()) {
       return 1; // Confirmed
     } else {
       return 0; // Pending
     }
   };
   const currentStepIndex = getCurrentStepIndex();
-  const handleButtonClick = () => {
-  };
+  const handleButtonClick = () => {};
 
   const cancelorders = (e) => {
     e.preventDefault();
     var formData = new FormData();
     // formData.append('username', username);
-    formData.append('user_id', storedUserId);
-    formData.append('order_id', id);
-    formData.append('canceled', cancelValue);
+    formData.append("user_id", storedUserId);
+    formData.append("order_id", id);
+    formData.append("canceled", cancelValue);
     axios({
-        method: "post",
-        url: `https://caninetest.xyz/api/v1/customer/order/cancel/${id}`,
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
+      method: "post",
+      url: `https://canine.hirectjob.in/api/v1/customer/order/cancel/${id}`,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
     })
-        .then(response => {
-            console.log("respo", response);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
-const Canceldata = (e)=>{
-  setCancelValue(e.target.value)
-  }
-
-  const [customerReason, setCustomerReason] = useState('');
-  const [customerNote, setCustomerNote] = useState('');
-  const [refundMethod, setRefundMethod] = useState('');
-  const handleReturnOrder = () => {
-    const formData = new FormData();
-    formData.append('user_id', storedUserId);
-    formData.append('order_id', id);
-    formData.append('refund_method', refundMethod);
-    formData.append('customer_reason', customerReason);
-    formData.append('customer_note', customerNote);
-    axios
-      .post('https://caninetest.xyz/api/v1/customer/order/refund-request', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
       .then((response) => {
-        console.log('Return order request successful', response.data);
-        document.getElementById('returnModal').modal('hide');
+        console.log("respo", response);
       })
       .catch((error) => {
-        console.error('Error sending return order request:', error);
+        console.log(error);
+      });
+  };
+  const Canceldata = (e) => {
+    setCancelValue(e.target.value);
+  };
+
+  const [customerReason, setCustomerReason] = useState("");
+  const [customerNote, setCustomerNote] = useState("");
+  const [refundMethod, setRefundMethod] = useState("");
+  const handleReturnOrder = () => {
+    const formData = new FormData();
+    formData.append("user_id", storedUserId);
+    formData.append("order_id", id);
+    formData.append("refund_method", refundMethod);
+    formData.append("customer_reason", customerReason);
+    formData.append("customer_note", customerNote);
+    axios
+      .post(
+        "https://canine.hirectjob.in/api/v1/customer/order/refund-request",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Return order request successful", response.data);
+        document.getElementById("returnModal").modal("hide");
+      })
+      .catch((error) => {
+        console.error("Error sending return order request:", error);
         if (error.response) {
           // The request was made and the server responded with a status code
-          console.error('Server error data:', error.response.data);
-          console.error('Server error status:', error.response.status);
-          console.error('Server error headers:', error.response.headers);
+          console.error("Server error data:", error.response.data);
+          console.error("Server error status:", error.response.status);
+          console.error("Server error headers:", error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
-          console.error('No response from server:', error.request);
+          console.error("No response from server:", error.request);
         } else {
           // Something happened in setting up the request
-          console.error('Error setting up the request:', error.message);
+          console.error("Error setting up the request:", error.message);
         }
       });
   };
@@ -160,19 +172,28 @@ const Canceldata = (e)=>{
     <>
       <Newheader />
 
-
       <section className="tracker-bg">
         <div className="section-padding tracker-area">
-          <Container >
+          <Container>
             <Row className="justify-content-center">
               <Col lg={6}>
-
                 <div className="tranker-search">
                   <h4>Track Your Shipment</h4>
                   <form className="d-flex">
-                    <input placeholder="Please Enter your tracking number" type="text" className="me-2 form-control" value={trackingValue}
-                      onChange={handleInputChange} />
-                    <button type="button" className="btn" onClick={trackingtargetvaluenumber}>Track</button>
+                    <input
+                      placeholder="Please Enter your tracking number"
+                      type="text"
+                      className="me-2 form-control"
+                      value={trackingValue}
+                      onChange={handleInputChange}
+                    />
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={trackingtargetvaluenumber}
+                    >
+                      Track
+                    </button>
                     {/* <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button> */}
                   </form>
                 </div>
@@ -186,10 +207,7 @@ const Canceldata = (e)=>{
           <Container className="py-5 h-100">
             <Row className="justify-content-center align-items-center h-100">
               <Col>
-                <Card
-                  className="card-stepper"
-                  style={{ borderRadius: "10px" }}
-                >
+                <Card className="card-stepper" style={{ borderRadius: "10px" }}>
                   <Card.Body className="p-4">
                     <div className="d-flex justify-content-between align-items-center tranker-head">
                       <div className="d-flex flex-column">
@@ -201,16 +219,21 @@ const Canceldata = (e)=>{
                         </span>
                       </div>
                       <div>
-                      {getCurrentStepIndex() >= 1 && getCurrentStepIndex() <= 5 ? (
-                        <Button
-                          className="cancel-btn"
-                          data-toggle="modal"
-                          data-target="#cancle-order-Modal"
-                        >
-                          Cancel Order
-                        </Button>
+                        {getCurrentStepIndex() >= 1 &&
+                        getCurrentStepIndex() <= 5 ? (
+                          <Button
+                            className="cancel-btn"
+                            data-toggle="modal"
+                            data-target="#cancle-order-Modal"
+                          >
+                            Cancel Order
+                          </Button>
                         ) : (
-                          <Button className="cancel-btn" data-toggle="modal" data-target="#returnModal" >
+                          <Button
+                            className="cancel-btn"
+                            data-toggle="modal"
+                            data-target="#returnModal"
+                          >
                             Return Order
                           </Button>
                         )}
@@ -232,19 +255,24 @@ const Canceldata = (e)=>{
                                             <MDBIcon icon="check text-white" />
                                         </span>
                                     </div> */}
-                   <div id="progress">
+                    <div id="progress">
                       <div
                         id="progress-bar"
                         style={{
-                          width: (getCurrentStepIndex() - 1) / (steps.length - 1) * 100 + '%',
-                          backgroundColor: 'blue',
+                          width:
+                            ((getCurrentStepIndex() - 1) / (steps.length - 1)) *
+                              100 +
+                            "%",
+                          backgroundColor: "blue",
                         }}
                       ></div>
                       <ul id="progress-num">
                         {steps.map((step, index) => (
                           <li
                             key={index}
-                            className={`step ${index === 0 ? 'active' : ''} ${index < getCurrentStepIndex() ? 'active' : ''}`}
+                            className={`step ${index === 0 ? "active" : ""} ${
+                              index < getCurrentStepIndex() ? "active" : ""
+                            }`}
                           >
                             {/* {step} */}
                           </li>
@@ -258,25 +286,26 @@ const Canceldata = (e)=>{
                         steps.map((step, index) => (
                           <div
                             key={index}
-                            className={`d-flex flex-column ${index === getCurrentStepIndex() - 1 ? 'align-items-center' : 'align-items-' +
-                              (index < getCurrentStepIndex() - 1 ? 'start' : 'end')
-                              }`}
+                            className={`d-flex flex-column ${
+                              index === getCurrentStepIndex() - 1
+                                ? "align-items-center"
+                                : "align-items-" +
+                                  (index < getCurrentStepIndex() - 1
+                                    ? "start"
+                                    : "end")
+                            }`}
                           >
-                            {step === 'Picked Up' && orderData.picked_up ? (
+                            {step === "Picked Up" && orderData.picked_up ? (
                               <span>{orderData.picked_up} - Picked Up</span>
                             ) : (
-                              <span>{orderData[step.toLowerCase()]} - {step}</span>
+                              <span>
+                                {orderData[step.toLowerCase()]} - {step}
+                              </span>
                             )}
                           </div>
                         ))
                       )}
                     </div>
-
-
-
-
-
-
                   </Card.Body>
                 </Card>
               </Col>
@@ -329,13 +358,17 @@ const Canceldata = (e)=>{
             <div className="modal-body">
               <h2>Cancel Order</h2>
               <p>Select a reason for order cancellation:</p>
-              <div className="selct-cancle" value={cancelValue} onChange={Canceldata}>
+              <div
+                className="selct-cancle"
+                value={cancelValue}
+                onChange={Canceldata}
+              >
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    value='Damaged Product'
+                    value="Damaged Product"
                   />
                   <label className="form-check-label" htmlFor="exampleRadios1">
                     Damaged Product
@@ -346,7 +379,7 @@ const Canceldata = (e)=>{
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    value=' Late Delivery'
+                    value=" Late Delivery"
                   />
                   <label className="form-check-label" htmlFor="exampleRadios2">
                     Late Delivery
@@ -357,7 +390,7 @@ const Canceldata = (e)=>{
                     className="form-check-input"
                     type="radio"
                     name="exampleRadios"
-                    value='Changed My Mind'
+                    value="Changed My Mind"
                   />
                   <label className="form-check-label" htmlFor="exampleRadios2">
                     Changed My Mind
@@ -373,9 +406,13 @@ const Canceldata = (e)=>{
                     data-dismiss="modal"
                     data-target="#exampleModalCenter"
                   /> */}
-                  <label className="form-check-label"  data-toggle="modal"
+                  <label
+                    className="form-check-label"
+                    data-toggle="modal"
                     data-dismiss="modal"
-                    data-target="#exampleModalCenter" htmlFor="exampleRadios2">
+                    data-target="#exampleModalCenter"
+                    htmlFor="exampleRadios2"
+                  >
                     Other
                   </label>
                 </div>
@@ -415,54 +452,86 @@ const Canceldata = (e)=>{
                     className="form-control"
                     placeholder="Enter reason"
                     value={cancelValue}
-                    onChange={(e)=>setCancelValue(e.target.value)}
+                    onChange={(e) => setCancelValue(e.target.value)}
                   />
                 </div>
               </div>
               <Button className="bordercancle" data-dismiss="modal">
                 Cancel
               </Button>
-              <Button onClick={cancelorders} data-dismiss="modal"> Ok</Button>
+              <Button onClick={cancelorders} data-dismiss="modal">
+                {" "}
+                Ok
+              </Button>
             </div>
           </div>
         </div>
       </div>
       {/* Modal */}
       {/* Return Order Code By Sohel */}
-      <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+      <div
+        class="modal fade"
+        id="returnModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="returnModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="returnModalLabel">Order Return</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <h5 class="modal-title" id="returnModalLabel">
+                Order Return
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body return-area">
-              {
-                orderDetails.map((ob, index) => <div key={index}>
+              {orderDetails.map((ob, index) => (
+                <div key={index}>
                   <Row>
-                   
                     <img
                       src={`https://caninetest.xyz//storage/app/public/product/${ob.item_details[0].image}`}
                       alt="Item Image"
                     />
-                     <h6>Order ID: {ob.order_id}</h6>
+                    <h6>Order ID: {ob.order_id}</h6>
                   </Row>
-                </div>)
-              }
+                </div>
+              ))}
               <form>
                 <div class="form-group">
                   <label for="customerreason">Customer reason</label>
-                  <input type="text" class="form-control" id="customerreason" placeholder="Enter reason" onChange={(e) => setCustomerReason(e.target.value)} />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="customerreason"
+                    placeholder="Enter reason"
+                    onChange={(e) => setCustomerReason(e.target.value)}
+                  />
                 </div>
                 <div class="form-group">
                   <label for="Customernote">Customer note</label>
-                  <input type="text" class="form-control" id="Customernote" placeholder="Enter note" onChange={(e) => setCustomerNote(e.target.value)} />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="Customernote"
+                    placeholder="Enter note"
+                    onChange={(e) => setCustomerNote(e.target.value)}
+                  />
                 </div>
                 <div class="form-group">
                   <label for="refundmethod">Refund Method</label>
-                  <select class="form-control" id="refundmethod" onChange={(e) => setRefundMethod(e.target.value)}>
+                  <select
+                    class="form-control"
+                    id="refundmethod"
+                    onChange={(e) => setRefundMethod(e.target.value)}
+                  >
                     <option>Select Method</option>
                     <option>Cash on Delivery</option>
                     <option>Online Payment</option>
@@ -473,11 +542,17 @@ const Canceldata = (e)=>{
             <div class="modal-footer">
               {/* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">Save changes</button> */}
-              <button type="button" class="btn btn-primary" onClick={() => handleReturnOrder()}>Return Order</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={() => handleReturnOrder()}
+              >
+                Return Order
+              </button>
             </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
       {/* Modal End */}
     </>
   );

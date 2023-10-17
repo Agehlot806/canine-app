@@ -12,14 +12,14 @@ function Partnerdashboard() {
   const navigate = useNavigate();
   const [homebanner, sethomebanner] = useState([]);
   const allbanner = async () => {
-      try {
-          const response = await fetch(`${BASE_URL}/banners/`);
-          const data = await response.json();
-          const latestPosts = data.data.slice(0, 1);
-          sethomebanner(latestPosts);
-      } catch (error) {
-          console.log(error);
-      }
+    try {
+      const response = await fetch(`${BASE_URL}/banners/`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 1);
+      sethomebanner(latestPosts);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const gradientColors = [
@@ -30,7 +30,7 @@ function Partnerdashboard() {
   ];
 
   const [subscriptions, setSubscriptions] = useState([]);
-  const apiUrl = "https://caninetest.xyz/api/v1/auth/get_subscription";
+  const apiUrl = "https://canine.hirectjob.in/api/v1/auth/get_subscription";
 
   useEffect(() => {
     fetch(apiUrl)
@@ -50,13 +50,13 @@ function Partnerdashboard() {
 
   const [planData, setPlanData] = useState({});
   useEffect(() => {
-      fetchPurchaceplan();
-      allbanner();
+    fetchPurchaceplan();
+    allbanner();
   }, []);
   const fetchPurchaceplan = async () => {
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/auth/purchace_plan",
+        "https://canine.hirectjob.in/api/v1/auth/purchace_plan",
         {}
       );
       const data = response.data.data;
@@ -95,20 +95,18 @@ function Partnerdashboard() {
     <>
       <Newheader />
       <div className="home-section">
-                {homebanner
-                    ? homebanner.map(
-                        (item, index) =>
-                            item.type === "default" && (
-                                <img className="partner-img"
-                                    src={
-                                        "https://caninetest.xyz/storage/app/" +
-                                        item.image
-                                    }
-                                />
-                            )
-                    )
-                    : null}
-            </div>
+        {homebanner
+          ? homebanner.map(
+              (item, index) =>
+                item.type === "default" && (
+                  <img
+                    className="partner-img"
+                    src={"https://caninetest.xyz/storage/app/" + item.image}
+                  />
+                )
+            )
+          : null}
+      </div>
 
       <section className="section-padding">
         <Container>
@@ -143,7 +141,10 @@ function Partnerdashboard() {
                   </h5>
 
                   <div className="Members-monthly Members-monthly1">
-                    <h2>₹ {subscription.price}/<span>{subscription.plantime}</span></h2>
+                    <h2>
+                      ₹ {subscription.price}/
+                      <span>{subscription.plantime}</span>
+                    </h2>
                     <span>Limit : {subscription.limit}</span>
                   </div>
                   <ul>

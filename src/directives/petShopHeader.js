@@ -216,7 +216,7 @@ function PetShopHeader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://caninetest.xyz/api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -227,7 +227,6 @@ function PetShopHeader(props) {
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
 
   const Notifynotification = () => {
     axios
@@ -260,7 +259,7 @@ function PetShopHeader(props) {
       .catch((error) => {
         console.error("Error deleting Notification:", error);
       });
-      const modal = document.querySelector(".modal");
+    const modal = document.querySelector(".modal");
     if (modal) {
       modal.classList.remove("show");
       modal.style.display = "none";
@@ -271,7 +270,6 @@ function PetShopHeader(props) {
       }
     }
   };
-
 
   const DeleteNotificationone = (id) => {
     axios
@@ -290,7 +288,7 @@ function PetShopHeader(props) {
       .catch((error) => {
         console.error("Error deleting Notification:", error);
       });
-      const modal = document.querySelector(".modal");
+    const modal = document.querySelector(".modal");
     if (modal) {
       modal.classList.remove("show");
       modal.style.display = "none";
@@ -358,20 +356,17 @@ function PetShopHeader(props) {
               </li> */}
                 <li className="nav-item dropdown mega-dropdown-new">
                   <a
-                     className="nav-link dropdown-toggle"
-                     href="#"
-                     id="megaDropdown"
-                     role="button"
-                     // data-toggle="dropdown"
-                     aria-haspopup="true"
-                     aria-expanded="false"
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="megaDropdown"
+                    role="button"
+                    // data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
                     Dogs
                   </a>
-                  <div
-                   className="dropdown-menu"
-                   aria-labelledby="megaDropdown"
-                  >
+                  <div className="dropdown-menu" aria-labelledby="megaDropdown">
                     <div className="row">
                       <div className="col-md-4">
                         <>
@@ -480,20 +475,17 @@ function PetShopHeader(props) {
                 </li>
                 <li className="nav-item dropdown mega-dropdown-new">
                   <a
-                     className="nav-link dropdown-toggle"
-                     href="#"
-                     id="megaDropdown"
-                     role="button"
-                     // data-toggle="dropdown"
-                     aria-haspopup="true"
-                     aria-expanded="false"
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="megaDropdown"
+                    role="button"
+                    // data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
                     Cats
                   </a>
-                  <div
-                  className="dropdown-menu"
-                  aria-labelledby="megaDropdown"
-                  >
+                  <div className="dropdown-menu" aria-labelledby="megaDropdown">
                     <div className="row">
                       <div className="col-md-4">
                         <>
@@ -829,89 +821,96 @@ function PetShopHeader(props) {
 
       {/* Modal */}
       <div
-      className="modal fade notification-area"
-      id="exampleModal"
-      tabIndex={-1}
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-body">
-            <h5>Notification</h5>
-            {notification && notification.length > 0 ? (
-              notification.map((item, index) => (
-                <div className="notification">
-                  <Row>
-                    <Col lg={2}>
-                      <img src={item.image} />
-                    </Col>
-                    <Col lg={9} className="align-self-center">
-                      <h6>{item.title}</h6>
-                      <p>{item.description}</p>
-                    </Col>
-                  </Row>
-                </div>
-              ))
-            ) : (
-              <p className="emptyMSG">No Notification</p>
-            )}
-            <div>
-              {notify && notify.length > 0 ? (
-                notify.map((ob, index) => (
-                  <div className="notification" key={index} >
-                    <Link onClick={() => DeleteNotification(ob.id)} to={`/product-details/${ob.item_id}`}>
-                      <Row>
-                        <Col lg={2} className="align-self-center text-center">
-                          <i className="fa fa-info-circle" />
-                        </Col>
-                        <Col lg={8} >
-                          <h6>Item ID : {ob.item_id}</h6>
-                          <p>Stock : {ob.stock}</p>
-                          <p>Variation : {ob.variation}</p>
-                          <p>Status : {ob.order_status}</p>
-                        </Col>
-                      </Row>
-                    </Link>
+        className="modal fade notification-area"
+        id="exampleModal"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h5>Notification</h5>
+              {notification && notification.length > 0 ? (
+                notification.map((item, index) => (
+                  <div className="notification">
+                    <Row>
+                      <Col lg={2}>
+                        <img src={item.image} />
+                      </Col>
+                      <Col lg={9} className="align-self-center">
+                        <h6>{item.title}</h6>
+                        <p>{item.description}</p>
+                      </Col>
+                    </Row>
                   </div>
                 ))
               ) : (
                 <p className="emptyMSG">No Notification</p>
               )}
+              <div>
+                {notify && notify.length > 0 ? (
+                  notify.map((ob, index) => (
+                    <div className="notification" key={index}>
+                      <Link
+                        onClick={() => DeleteNotification(ob.id)}
+                        to={`/product-details/${ob.item_id}`}
+                      >
+                        <Row>
+                          <Col lg={2} className="align-self-center text-center">
+                            <i className="fa fa-info-circle" />
+                          </Col>
+                          <Col lg={8}>
+                            <h6>Item ID : {ob.item_id}</h6>
+                            <p>Stock : {ob.stock}</p>
+                            <p>Variation : {ob.variation}</p>
+                            <p>Status : {ob.order_status}</p>
+                          </Col>
+                        </Row>
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Notification</p>
+                )}
 
-              {dataZero && dataZero.length > 0 ? (
-                dataZero.map((ob, index) => (
-                  <div className="notification" key={index}>
-                    <Link onClick={() => DeleteNotificationone(ob.id)} to={`/my-orders`} data-dismiss="modal">
-                      <Row>
-                        <Col lg={2} className="align-self-center text-center">
-                          <i className="fa fa-info-circle" />
-                        </Col>
-                        <Col lg={10} >
-                          <h6>Order ID : {ob.order_id}</h6>
-                          <p>Status : {ob.order_status}</p>
-                        </Col>
-                      </Row>
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <p className="emptyMSG">No Data Zero</p>
-              )}
+                {dataZero && dataZero.length > 0 ? (
+                  dataZero.map((ob, index) => (
+                    <div className="notification" key={index}>
+                      <Link
+                        onClick={() => DeleteNotificationone(ob.id)}
+                        to={`/my-orders`}
+                        data-dismiss="modal"
+                      >
+                        <Row>
+                          <Col lg={2} className="align-self-center text-center">
+                            <i className="fa fa-info-circle" />
+                          </Col>
+                          <Col lg={10}>
+                            <h6>Order ID : {ob.order_id}</h6>
+                            <p>Status : {ob.order_status}</p>
+                          </Col>
+                        </Row>
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Data Zero</p>
+                )}
+              </div>
+
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
-
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
           </div>
         </div>
       </div>
-    </div>
       {/* Modal */}
       <div
         className="modal fade"

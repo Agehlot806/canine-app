@@ -6,15 +6,16 @@ export const useNotificationContext = () => {
 };
 export const NotificationProvider = ({ children }) => {
   const [notificationLength, setNotificationLength] = useState(0);
-  console.log("notificationLengthhhhhhhh",notificationLength);
-  const [dataLengthpetnotification, setDataLengthpetnotification] = useState(null); // Initialize as null
-  console.log("dataLengthpetnotificationnnnnnnnnnn",dataLengthpetnotification);
-  const [notifisecondLength,setNotifisecondLength] = useState();
-  console.log("secondddddddddd",notifisecondLength);
-  const [notifisecondData,setNotifisecondData] = useState()
-  const [notifithirdLength,setNotifithirdLength] = useState();
-  const [notifithirdData,setNotifithirdData] = useState()
-  const BASE_URL = "https://caninetest.xyz/api/v1";
+  console.log("notificationLengthhhhhhhh", notificationLength);
+  const [dataLengthpetnotification, setDataLengthpetnotification] =
+    useState(null); // Initialize as null
+  console.log("dataLengthpetnotificationnnnnnnnnnn", dataLengthpetnotification);
+  const [notifisecondLength, setNotifisecondLength] = useState();
+  console.log("secondddddddddd", notifisecondLength);
+  const [notifisecondData, setNotifisecondData] = useState();
+  const [notifithirdLength, setNotifithirdLength] = useState();
+  const [notifithirdData, setNotifithirdData] = useState();
+  const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");
   const customer_id =
     loginType === "wholeseller"
@@ -38,9 +39,9 @@ export const NotificationProvider = ({ children }) => {
       .get(`${BASE_URL}/items/notify_list/${customer_id}`)
       .then((response) => {
         setNotifisecondLength(response.data.data.length);
-        setNotifithirdLength(response.data.notification.length)
-        console.log("88888",response.data.data.length);
-        console.log("99999",response.data.notification.length)
+        setNotifithirdLength(response.data.notification.length);
+        console.log("88888", response.data.data.length);
+        console.log("99999", response.data.notification.length);
         // setNotifithirdLength(response.data.notification);
         // console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         // console.log("Data Zero", response.data.notification);
@@ -50,15 +51,22 @@ export const NotificationProvider = ({ children }) => {
       });
   };
   useEffect(() => {
-    fetchNotifications(),
-    Notifynotification()
+    fetchNotifications(), Notifynotification();
   }, []);
-  const totalLength = notificationLength + notifisecondLength + notifithirdLength
-  console.log("totleeeee",totalLength);
+  const totalLength =
+    notificationLength + notifisecondLength + notifithirdLength;
+  console.log("totleeeee", totalLength);
   return (
-    <NotificationContext.Provider value={{ notificationLength, dataLengthpetnotification,notifisecondLength,notifithirdLength,totalLength }}>
+    <NotificationContext.Provider
+      value={{
+        notificationLength,
+        dataLengthpetnotification,
+        notifisecondLength,
+        notifithirdLength,
+        totalLength,
+      }}
+    >
       {children}
     </NotificationContext.Provider>
   );
 };
-

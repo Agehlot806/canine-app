@@ -17,8 +17,8 @@ import app2 from "../../assets/images/img/app2.png";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 // import { loadRazorpay } from "../../utils";
-import Fade, { Flip } from 'react-reveal';
-import { AnimationOnScroll } from 'react-animation-on-scroll';
+import Fade, { Flip } from "react-reveal";
+import { AnimationOnScroll } from "react-animation-on-scroll";
 import "animate.css/animate.min.css";
 
 const homeslider = {
@@ -83,8 +83,8 @@ function PetshopHome(props) {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
-      response.headers['Access-Control-Allow-Methods'] = 'GET'; // Allow specified methods
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
+      response.headers["Access-Control-Allow-Methods"] = "GET"; // Allow specified methods
+      response.headers["Access-Control-Allow-Headers"] = "Content-Type"; // Allow specified headers
     } catch (error) {
       console.error(error);
     }
@@ -748,7 +748,7 @@ function PetshopHome(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -766,7 +766,7 @@ function PetshopHome(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -872,7 +872,7 @@ function PetshopHome(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -980,7 +980,7 @@ function PetshopHome(props) {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1174,8 +1174,11 @@ function PetshopHome(props) {
       <section className="section-padding">
         <Container>
           <Row>
-          <AnimationOnScroll animateIn="animate__fadeInLeftBig" animateOnce={true}>
-            <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
+            <AnimationOnScroll
+              animateIn="animate__fadeInLeftBig"
+              animateOnce={true}
+            >
+              <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
             </AnimationOnScroll>
           </Row>
         </Container>
@@ -1222,7 +1225,7 @@ function PetshopHome(props) {
             <Col lg={6} sm={6}>
               {/* <h5>Dog Nutrients & Food </h5> */}
               <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
-              <h1 className="main-head">Latest all Products</h1>
+                <h1 className="main-head">Latest all Products</h1>
               </AnimationOnScroll>
             </Col>
             <Col lg={6} sm={6}>
@@ -1310,22 +1313,22 @@ function PetshopHome(props) {
 
                       {buttonVisibility[item.id] && (
                         <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
+                          <div className="button-container">
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Quick View
+                            </button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
                         </Fade>
                       )}
                     </div>
@@ -1340,8 +1343,8 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6}>
-            <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
-              <h1 className="main-head">Our Brand</h1>
+              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
+                <h1 className="main-head">Our Brand</h1>
               </AnimationOnScroll>
             </Col>
             <Col lg={6} sm={6}>
@@ -1403,8 +1406,7 @@ function PetshopHome(props) {
                       <Col lg={6} className="mb-4">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/" +
-                            item.image
+                            "https://caninetest.xyz/storage/app/" + item.image
                           }
                         />
                       </Col>
@@ -1452,8 +1454,8 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6}>
-            <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
-              <h1 className="main-head">Shop By Brands</h1>
+              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
+                <h1 className="main-head">Shop By Brands</h1>
               </AnimationOnScroll>
             </Col>
             <Col lg={6} sm={6}>
@@ -1544,8 +1546,8 @@ function PetshopHome(props) {
       <section className="section-padding">
         <Container>
           <div className="text-left">
-          <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
-            <h1 className="main-head">Blog</h1>
+            <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
+              <h1 className="main-head">Blog</h1>
             </AnimationOnScroll>
           </div>
           <div className="needplace">
@@ -1586,7 +1588,7 @@ function PetshopHome(props) {
           <Row>
             <Col lg={6}>
               <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
-              <h1 className="main-head">Happy Customer</h1>
+                <h1 className="main-head">Happy Customer</h1>
               </AnimationOnScroll>
             </Col>
           </Row>
@@ -1649,8 +1651,7 @@ function PetshopHome(props) {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
+                              "https://caninetest.xyz/storage/app/" + item.image
                             }
                           />
                         </div>
@@ -1659,10 +1660,10 @@ function PetshopHome(props) {
                             <div className="home-content">
                               <div className="Newsletter">
                                 <Flip right>
-                                <h1 className="main-head">
-                                  Get Or Promo Code by Subscribing To our
-                                  Newsletter
-                                </h1>
+                                  <h1 className="main-head">
+                                    Get Or Promo Code by Subscribing To our
+                                    Newsletter
+                                  </h1>
                                 </Flip>
                                 <Form className="d-flex">
                                   <Form.Control

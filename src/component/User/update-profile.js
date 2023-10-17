@@ -7,10 +7,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 function Updateprofile() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
-
 
   // const navigate = useNavigate();
   // // const [uploadField, setUploadField] = useState([{image:""}])
@@ -32,7 +30,7 @@ function Updateprofile() {
   // useEffect(() => {
   //   // Fetch profile data from the API
   //   axios
-  //     .get(`https://caninetest.xyz/api/v1/auth/my_profile/${storedUserId}`)
+  //     .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
   //     .then((response) => {
   //       if (response.data.status === "200") {
   //         console.log("response.data:????? ", response.data);
@@ -79,7 +77,7 @@ function Updateprofile() {
   //   e.preventDefault();
   //   try {
   //     const response = await axios.post(
-  //       "https://caninetest.xyz/api/v1/auth/update-profile",
+  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
   //       profileData // Send the profileData object in the request
   //     );
   //     if (response.data.message === "Successfully updated!") {
@@ -92,29 +90,24 @@ function Updateprofile() {
   //   }
   // };
 
-
-  const [name, setname] = useState("")
-  const [namel, setnamel] = useState("")
-  const [email, setemail] = useState("")
-  const [phone, setphone] = useState("")
-  const [imgage, setimgage] = useState("")
-
+  const [name, setname] = useState("");
+  const [namel, setnamel] = useState("");
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [imgage, setimgage] = useState("");
 
   useEffect(() => {
     // Fetch profile data from the API
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/my_profile/${storedUserId}`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
       .then((response) => {
-
         console.log("response.data:????? ", response.data);
-        setname(response.data.data[0].f_name)
-        setnamel(response.data.data[0].l_name)
-        setemail(response.data.data[0].email)
-        setphone(response.data.data[0].phone)
-        setimgage(response.data.data[0].image)
+        setname(response.data.data[0].f_name);
+        setnamel(response.data.data[0].l_name);
+        setemail(response.data.data[0].email);
+        setphone(response.data.data[0].phone);
+        setimgage(response.data.data[0].image);
         // Update the profileData state
-
-
       })
       .catch((error) => {
         console.error(error);
@@ -123,39 +116,37 @@ function Updateprofile() {
   const halderimage = (e) => {
     // setimgage(e.target.files[0])
     const file = e.target.files[0];
-    setimgage(file);  // Store the file directly
+    setimgage(file); // Store the file directly
 
     // Create a preview URL for the selected image
     setSelectedImage(URL.createObjectURL(file));
-  }
+  };
   const UpdateProfile = (e) => {
     e.preventDefault();
     var formData = new FormData();
     // formData.append('username', username);
-    formData.append('f_name', name);
-    formData.append('l_name', namel);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('image', imgage);
+    formData.append("f_name", name);
+    formData.append("l_name", namel);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("image", imgage);
 
     axios({
       method: "post",
-      url: `https://caninetest.xyz/api/v1/auth/update-profile`,
+      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })
-      .then(response => {
+      .then((response) => {
         console.log(" New password updatesuccessfully");
-        toast.success("Successfully updated!")
+        toast.success("Successfully updated!");
         console.log("respo", response);
-        navigate("/")
+        navigate("/");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
-
-
-  }
+  };
 
   // setImagePhoto(true);
   //       setStorephotofiles(event.target.files[0])
@@ -169,7 +160,7 @@ function Updateprofile() {
             <Col lg={10}>
               <h1 className="main-head text-center">Profile</h1>
               <div className="contact-form">
-                <Form >
+                <Form>
                   <Row>
                     <Col lg={6} sm={6} xs={12}>
                       <Form.Group className="mb-3" controlId="formGridEmail">
@@ -182,7 +173,6 @@ function Updateprofile() {
                           name="f_name"
                           value={name}
                           onChange={(e) => setname(e.target.value)}
-
                         />
                       </Form.Group>
                     </Col>
@@ -225,7 +215,6 @@ function Updateprofile() {
                       maxLength={10}
                       value={phone}
                       onChange={(e) => setphone(e.target.value)}
-
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGridPhone">
@@ -244,12 +233,16 @@ function Updateprofile() {
                           : `https://caninetest.xyz/storage/app/public/profile/${imgage}`
                       }
                       alt={selectedImage ? "Image" : "Image not available"}
-                      style={{ width: '100px', height: '100px' }}
+                      style={{ width: "100px", height: "100px" }}
                     />
                   </Form.Group>
                   {/* {imagePhoto ?
                                                             <img src={filePhoto} alt="file"></img> : ""} */}
-                  <Button type="submit" className="mt-4" onClick={UpdateProfile}>
+                  <Button
+                    type="submit"
+                    className="mt-4"
+                    onClick={UpdateProfile}
+                  >
                     Update Profile
                   </Button>
                 </Form>

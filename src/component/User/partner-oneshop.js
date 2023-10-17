@@ -242,7 +242,7 @@ function Partneroneshop() {
     if (productDetails.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -250,7 +250,7 @@ function Partneroneshop() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -322,7 +322,7 @@ function Partneroneshop() {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -457,7 +457,7 @@ function Partneroneshop() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -475,7 +475,7 @@ function Partneroneshop() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -592,7 +592,7 @@ function Partneroneshop() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -808,7 +808,7 @@ function Partneroneshop() {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -832,37 +832,37 @@ function Partneroneshop() {
         {console.log(
           "coverPhoto",
           "https://caninetest.xyz/storage/app/public/store/cover/" +
-          state?.item.cover_photo
+            state?.item.cover_photo
         )}
       </Container>
 
       <section className="section-padding">
         <div className="uy">
-        <Container>
-          <div className="partner-oneshop">
-            <Table responsive>
-              <tbody>
-                <tr>
-                  <th>Partner Name :</th>
-                  <td>{state?.item.name}</td>
-                </tr>
-                <tr>
-                  <th>Address :</th>
-                  <td>{state?.item.address}</td>
-                </tr>
-                <tr>
-                  <th>Mobile :</th>
-                  <td>{state?.item.phone}</td>
-                </tr>
-                <tr>
-                  <th>Email ID :</th>
-                  <td>{state?.item.email}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </div>
+          <Container>
+            <div className="partner-oneshop">
+              <Table responsive>
+                <tbody>
+                  <tr>
+                    <th>Partner Name :</th>
+                    <td>{state?.item.name}</td>
+                  </tr>
+                  <tr>
+                    <th>Address :</th>
+                    <td>{state?.item.address}</td>
+                  </tr>
+                  <tr>
+                    <th>Mobile :</th>
+                    <td>{state?.item.phone}</td>
+                  </tr>
+                  <tr>
+                    <th>Email ID :</th>
+                    <td>{state?.item.email}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </div>
           </Container>
-          </div>
+        </div>
       </section>
       <section className="section-padding">
         <Container>
@@ -914,8 +914,9 @@ function Partneroneshop() {
                         </Row>
                         <Row>
                           <Col className="align-self-center">
-                            <h6>{`₹${item.price - (item.price * item.discount) / 100
-                              }`}</h6>
+                            <h6>{`₹${
+                              item.price - (item.price * item.discount) / 100
+                            }`}</h6>
                           </Col>
                           {/* <Col>
                             <Link
@@ -994,7 +995,7 @@ function Partneroneshop() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1035,17 +1036,17 @@ function Partneroneshop() {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1054,13 +1055,13 @@ function Partneroneshop() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1115,13 +1116,19 @@ function Partneroneshop() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
-                                                    setSelectedVariant(item.type);
-                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                    setSelectedVariant(
+                                                      item.type
+                                                    );
+                                                    setSelectedVariantPrice(
+                                                      item.price
+                                                    ); // Store the price in state
                                                   }}
                                                 >
                                                   {item.type}
@@ -1708,10 +1715,11 @@ function Partneroneshop() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1815,10 +1823,11 @@ function Partneroneshop() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2194,11 +2203,11 @@ function Partneroneshop() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

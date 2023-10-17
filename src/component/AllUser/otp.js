@@ -23,7 +23,7 @@ function Otp() {
 
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/auth/otp_verify",
+        "https://canine.hirectjob.in/api/v1/auth/otp_verify",
         formData
       );
       console.log(response.data);
@@ -108,7 +108,7 @@ function Otp() {
                     <OtpInput
                       value={phone}
                       className="justify-content-center"
-                      containerStyle={{justifyContent: 'center'}}
+                      containerStyle={{ justifyContent: "center" }}
                       otpType="number"
                       onChange={(e) => {
                         const numericValue = e.replace(/\D/g, "");

@@ -150,7 +150,7 @@ function PetshopproductDetails() {
     console.log("productDetails.id: ", productDetails?.id);
     console.log("notifymeData", notifymeData);
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify/2`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify/2`, notifymeData)
       .then((response) => {
         toast.success("Your data Successfully Add");
       })
@@ -167,9 +167,9 @@ function PetshopproductDetails() {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Set appropriate content type
-            "Access-Control-Allow-Methods": 'POST',
+            "Access-Control-Allow-Methods": "POST",
             "Access-Control-Allow-Headers": "Content-Type",
-        },
+          },
           item_name: productDetails?.name,
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
@@ -508,7 +508,7 @@ function PetshopproductDetails() {
     }
   };
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -643,7 +643,7 @@ function PetshopproductDetails() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -661,7 +661,7 @@ function PetshopproductDetails() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -767,7 +767,7 @@ function PetshopproductDetails() {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -868,8 +868,7 @@ function PetshopproductDetails() {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
+                              "https://caninetest.xyz/storage/app/" + item.image
                             }
                           />
                         </div>
@@ -955,35 +954,34 @@ function PetshopproductDetails() {
                       <div className="tab-container">
                         <h6>Variations</h6>
                         <Row>
-
                           {productDetails?.variations &&
                             productDetails?.variations.length > 0 &&
                             productDetails.variations.map((item, index) => (
                               <Col lg={3} sm={3} xs={3} key={index}>
                                 {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                  <div
+                                    className={`tab-variations ${
+                                      selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      setSelectedVariant(item.type);
+                                      setSelectedVariantPrice(item.price); // Store the price in state
+                                    }}
+                                  >
+                                    {item.type}
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="tab-variations disabledvariation"
+                                    title="Stock unavailable"
+                                  >
+                                    {/* <span className="blurred-text"> */}
+                                    {item.type}
+                                    {/* </span> */}
+                                  </div>
+                                )}
                               </Col>
                             ))}
                         </Row>
@@ -1234,8 +1232,7 @@ function PetshopproductDetails() {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
+                              "https://caninetest.xyz/storage/app/" + item.image
                             }
                           />
                         </div>
@@ -1313,23 +1310,23 @@ function PetshopproductDetails() {
                       </Link>
 
                       {buttonVisibility[item.id] && (
-                      <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
+                        <Fade top>
+                          <div className="button-container">
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Quick View
+                            </button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
                         </Fade>
                       )}
                     </div>
@@ -1426,29 +1423,31 @@ function PetshopproductDetails() {
                                       (item, index) => (
                                         <Col lg={4} sm={4} xs={3} key={index}>
                                           {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                            <div
+                                              className={`tab-variations ${
+                                                selectedVariant === item.type
+                                                  ? "active"
+                                                  : ""
+                                              }`}
+                                              onClick={() => {
+                                                setSelectedVariant(item.type);
+                                                setSelectedVariantPrice(
+                                                  item.price
+                                                ); // Store the price in state
+                                              }}
+                                            >
+                                              {item.type}
+                                            </div>
+                                          ) : (
+                                            <div
+                                              className="tab-variations disabledvariation"
+                                              title="Stock unavailable"
+                                            >
+                                              {/* <span className="blurred-text"> */}
+                                              {item.type}
+                                              {/* </span> */}
+                                            </div>
+                                          )}
                                         </Col>
                                       )
                                     )}
@@ -2009,30 +2008,30 @@ function PetshopproductDetails() {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                  {item.stock !== 0 ? (
+                                    <div
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>

@@ -98,9 +98,9 @@ function Productdetail() {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Set appropriate content type
-            "Access-Control-Allow-Methods": 'POST',
+            "Access-Control-Allow-Methods": "POST",
             "Access-Control-Allow-Headers": "Content-Type",
-        },
+          },
           item_name: productDetails?.name,
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
@@ -185,7 +185,7 @@ function Productdetail() {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -193,8 +193,6 @@ function Productdetail() {
         toast.error("An error occurred. Please try again.");
       });
   };
-
-  
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -368,7 +366,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -376,7 +374,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -506,7 +504,7 @@ function Productdetail() {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -580,8 +578,8 @@ function Productdetail() {
     var headers = {
       Accept: "application/json",
       "Content-Data": "application/json",
-      "Access-Control-Allow-Methods": 'POST',
-            "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "POST",
+      "Access-Control-Allow-Headers": "Content-Type",
     };
     await fetch(`${BASE_URL}/auth/state`, {
       method: "GET",
@@ -643,7 +641,7 @@ function Productdetail() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -661,7 +659,7 @@ function Productdetail() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -778,7 +776,7 @@ function Productdetail() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -930,31 +928,30 @@ function Productdetail() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://caninetest.xyz/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://caninetest.xyz/storage/app/" + item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -976,7 +973,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1015,16 +1012,16 @@ function Productdetail() {
                     nextSrc={
                       "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex + 1) % productDetails.images.length
+                        (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex +
-                        productDetails.images.length -
-                        1) %
-                      productDetails.images.length
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1033,7 +1030,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                        productDetails.images.length
+                          productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1104,10 +1101,11 @@ function Productdetail() {
                                       </div> */}
                                       {item.stock !== 0 ? (
                                         <div
-                                          className={`tab-variations ${selectedVariant === item.type
-                                            ? "active"
-                                            : ""
-                                            }`}
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
                                           onClick={() => {
                                             setSelectedVariant(item.type);
                                             setSelectedVariantPrice(item.price); // Store the price in state
@@ -1172,7 +1170,7 @@ function Productdetail() {
                           Your save
                           {formattedSavedAmount >= 0
                             ? "₹" + formattedSavedAmount
-                            : "No savings"}
+                            : " No savings"}
                         </h6>
                       </Col>
                     </Row>
@@ -1341,24 +1339,22 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-          (item, index) =>
-            item.type === "item_wise" && (
-              <div className="product-innerBanner">
-                <img
-                  src={
-                    "https://caninetest.xyz/storage/app/" + item.image
-                  }
-                />
-                <div className="home-content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button>
+            (item, index) =>
+              item.type === "item_wise" && (
+                <div className="product-innerBanner">
+                  <img
+                    src={"https://caninetest.xyz/storage/app/" + item.image}
+                  />
+                  <div className="home-content">
+                    <h1>{item.title}</h1>
+                    <p>{item.description}</p>
+                    <Button>
+                      Explore More <i className="fa fa-angle-right" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )
-        )
+              )
+          )
         : null}
 
       <section className="section-padding food">
@@ -1414,8 +1410,9 @@ function Productdetail() {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>{`₹${item.price - (item.price * item?.discount) / 100
-                                }`}</h6>
+                              <h6>{`₹${
+                                item.price - (item.price * item?.discount) / 100
+                              }`}</h6>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1431,22 +1428,22 @@ function Productdetail() {
 
                       {buttonVisibility[item.id] && (
                         <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
+                          <div className="button-container">
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Quick View
+                            </button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
                         </Fade>
                       )}
                     </div>
@@ -1622,7 +1619,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1662,17 +1659,17 @@ function Productdetail() {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1681,13 +1678,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1740,13 +1737,19 @@ function Productdetail() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
-                                                    setSelectedVariant(item.type);
-                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                    setSelectedVariant(
+                                                      item.type
+                                                    );
+                                                    setSelectedVariantPrice(
+                                                      item.price
+                                                    ); // Store the price in state
                                                   }}
                                                 >
                                                   {item.type}
@@ -1943,10 +1946,11 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2050,10 +2054,11 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2678,11 +2683,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

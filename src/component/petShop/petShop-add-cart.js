@@ -101,7 +101,7 @@ function PetshopAddCart() {
       order_amount: parseInt(originalPrice * 0.05 + originalPrice),
       cart: cartData,
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -403,7 +403,7 @@ function PetshopAddCart() {
   const [city, setcity] = useState("");
   const [paylaterMessage, setPaylaterMessage] = useState("");
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = (event) => {
     event.preventDefault();
     const data = {
@@ -505,7 +505,7 @@ function PetshopAddCart() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -528,7 +528,7 @@ function PetshopAddCart() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       console.log("response in edit", response);
@@ -566,7 +566,7 @@ function PetshopAddCart() {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods": "POST",
-      "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type",
       },
       body: JSON.stringify(data),
     })
@@ -698,8 +698,7 @@ function PetshopAddCart() {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
+                              "https://caninetest.xyz/storage/app/" + item.image
                             }
                           />
                         </div>

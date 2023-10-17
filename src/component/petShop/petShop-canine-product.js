@@ -277,7 +277,7 @@ function PetShopcanineproduct(props) {
 
   const allBrandshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/brand`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
         // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
@@ -290,7 +290,7 @@ function PetShopcanineproduct(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/all_life_stage/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -303,7 +303,7 @@ function PetShopcanineproduct(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/all_pets_breed/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -315,7 +315,7 @@ function PetShopcanineproduct(props) {
 
   const allsubcategary = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/categories`)
+      .get(`https://canine.hirectjob.in/api/v1/categories`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllSubcate(response.data.data);
@@ -327,7 +327,7 @@ function PetShopcanineproduct(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/health_condition/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -472,7 +472,7 @@ function PetShopcanineproduct(props) {
   ) => {
     try {
       const response = await axios.get(
-        "https://caninetest.xyz/api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
       const filteredProducts = applyFilters({
@@ -966,7 +966,7 @@ function PetShopcanineproduct(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -984,7 +984,7 @@ function PetShopcanineproduct(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -1090,7 +1090,7 @@ function PetShopcanineproduct(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1201,7 +1201,7 @@ function PetShopcanineproduct(props) {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1641,23 +1641,23 @@ function PetShopcanineproduct(props) {
                                 </Link>
 
                                 {buttonVisibility[item.id] && (
-                                <Fade top>
-                                  <div className="button-container">
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".bd-example-modal-lg"
-                                      onClick={(e) => handeldataId(item.id)}
-                                    >
-                                      Quick View
-                                    </button>
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".buynow"
-                                      onClick={(e) => handeldataId(item.id)}
-                                    >
-                                      Buy Now
-                                    </button>
-                                  </div>
+                                  <Fade top>
+                                    <div className="button-container">
+                                      <button
+                                        data-toggle="modal"
+                                        data-target=".bd-example-modal-lg"
+                                        onClick={(e) => handeldataId(item.id)}
+                                      >
+                                        Quick View
+                                      </button>
+                                      <button
+                                        data-toggle="modal"
+                                        data-target=".buynow"
+                                        onClick={(e) => handeldataId(item.id)}
+                                      >
+                                        Buy Now
+                                      </button>
+                                    </div>
                                   </Fade>
                                 )}
                               </div>

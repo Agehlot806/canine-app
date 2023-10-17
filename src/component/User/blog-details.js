@@ -388,7 +388,7 @@ function Blogdetails() {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -523,7 +523,7 @@ function Blogdetails() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -541,7 +541,7 @@ function Blogdetails() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -646,7 +646,7 @@ function Blogdetails() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -824,7 +824,7 @@ function Blogdetails() {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -977,22 +977,22 @@ function Blogdetails() {
                     </Link>
                     {buttonVisibility[item[0].id] && (
                       <Fade top>
-                      <div className="button-container">
-                        <button
-                          data-toggle="modal"
-                          data-target=".bd-example-modal-lg"
-                          onClick={() => handeldataId(item[0].id)}
-                        >
-                          Quick View
-                        </button>
-                        <button
-                          data-toggle="modal"
-                          data-target=".buynow"
-                          onClick={() => handeldataId(item[0].id)}
-                        >
-                          Buy Now
-                        </button>
-                      </div>
+                        <div className="button-container">
+                          <button
+                            data-toggle="modal"
+                            data-target=".bd-example-modal-lg"
+                            onClick={() => handeldataId(item[0].id)}
+                          >
+                            Quick View
+                          </button>
+                          <button
+                            data-toggle="modal"
+                            data-target=".buynow"
+                            onClick={() => handeldataId(item[0].id)}
+                          >
+                            Buy Now
+                          </button>
+                        </div>
                       </Fade>
                     )}
                   </div>
@@ -1151,30 +1151,35 @@ function Blogdetails() {
                                         productDetails.variations.map(
                                           (item, index) => (
                                             <Col lg={4} key={index}>
-                                               {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                              {item.stock !== 0 ? (
+                                                <div
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
+                                                  onClick={() => {
+                                                    setSelectedVariant(
+                                                      item.type
+                                                    );
+                                                    setSelectedVariantPrice(
+                                                      item.price
+                                                    ); // Store the price in state
+                                                  }}
+                                                >
+                                                  {item.type}
+                                                </div>
+                                              ) : (
+                                                <div
+                                                  className="tab-variations disabledvariation"
+                                                  title="Stock unavailable"
+                                                >
+                                                  {/* <span className="blurred-text"> */}
+                                                  {item.type}
+                                                  {/* </span> */}
+                                                </div>
+                                              )}
                                             </Col>
                                           )
                                         )}
@@ -1603,30 +1608,30 @@ function Blogdetails() {
                               productDetails?.variations.length > 0 &&
                               productDetails?.variations.map((item, index) => (
                                 <Col lg={3} key={index}>
-                                   {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                  {item.stock !== 0 ? (
+                                    <div
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        setSelectedVariant(item.type);
+                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                      }}
+                                    >
+                                      {item.type}
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="tab-variations disabledvariation"
+                                      title="Stock unavailable"
+                                    >
+                                      {/* <span className="blurred-text"> */}
+                                      {item.type}
+                                      {/* </span> */}
+                                    </div>
+                                  )}
                                 </Col>
                               ))}
                           </Row>

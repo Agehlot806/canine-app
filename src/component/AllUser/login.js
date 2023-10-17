@@ -19,7 +19,7 @@ function Login() {
     customerData.append("cust_phone", phone);
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/auth/customer",
+        "https://canine.hirectjob.in/api/v1/auth/customer",
         customerData
       );
       console.log(response.data);
@@ -41,7 +41,7 @@ function Login() {
   };
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <div className="users-bg">
         <Container>
           <div className="text-center">

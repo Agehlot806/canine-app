@@ -302,7 +302,7 @@ function Addcart() {
   const [state, setstate] = useState("");
   const [city, setcity] = useState("");
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -330,10 +330,6 @@ function Addcart() {
       console.error("Error:", error);
     }
   };
-
-
-
-
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
@@ -371,7 +367,7 @@ function Addcart() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -395,14 +391,13 @@ function Addcart() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
-
           prevAddressList.filter((item) => item.id !== id)
         );
         fieldpagerefresh(); // Call fieldpagerefresh here
@@ -447,7 +442,7 @@ function Addcart() {
         ) || originalPrice * 0.05 + originalPrice,
       cart: cartData,
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -482,7 +477,10 @@ function Addcart() {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notifiction_post`, notifymePostData)
+      .post(
+        `https://canine.hirectjob.in/api/v1/items/notifiction_post`,
+        notifymePostData
+      )
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -570,31 +568,30 @@ function Addcart() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://caninetest.xyz/storage/app/" +
-                            item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://caninetest.xyz/storage/app/" + item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -649,7 +646,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
+                      // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -784,9 +781,9 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                              originalPrice -
-                              disscountvalue?.discount ||
-                              originalPrice + taxamound
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                             )}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
@@ -860,10 +857,11 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${addressContentVisible
+                              className={`fa ${
+                                addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                                }`}
+                              }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -959,9 +957,9 @@ function Addcart() {
                               )}`} */}
                               {`${parseInt(
                                 originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount ||
-                                originalPrice + taxamound
+                                  originalPrice -
+                                  disscountvalue?.discount ||
+                                  originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
@@ -972,7 +970,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                            // onClick={handleAddToCart}
+                              // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1638,8 +1636,8 @@ function Addcart() {
                             type="button"
                             className="btn btn-primary btn-apply coupon"
                             data-dismiss="modal"
-                          // data-toggle="modal"
-                          // data-target="#Coupon"
+                            // data-toggle="modal"
+                            // data-target="#Coupon"
                           >
                             Apply
                           </button>

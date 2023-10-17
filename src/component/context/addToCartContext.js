@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
   const [dataLengthpetshop, setDataLengthpetshop] = useState();
 
   // Your BASE_URL and storedUserId
-  const BASE_URL = "https://caninetest.xyz/api/v1";
+  const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");
   const customer_id =
     loginType == "wholeseller"

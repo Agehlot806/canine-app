@@ -891,7 +891,7 @@ function PetshopPetcategory() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -909,7 +909,7 @@ function PetshopPetcategory() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -977,7 +977,7 @@ function PetshopPetcategory() {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1088,7 +1088,7 @@ function PetshopPetcategory() {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1518,22 +1518,22 @@ function PetshopPetcategory() {
                                   </Link>
                                   {buttonVisibility[item.id] && (
                                     <Fade top>
-                                    <div className="button-container">
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".bd-example-modal-lg"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Quick View
-                                      </button>
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".buynow"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Buy Now
-                                      </button>
-                                    </div>
+                                      <div className="button-container">
+                                        <button
+                                          data-toggle="modal"
+                                          data-target=".bd-example-modal-lg"
+                                          onClick={(e) => handeldataId(item.id)}
+                                        >
+                                          Quick View
+                                        </button>
+                                        <button
+                                          data-toggle="modal"
+                                          data-target=".buynow"
+                                          onClick={(e) => handeldataId(item.id)}
+                                        >
+                                          Buy Now
+                                        </button>
+                                      </div>
                                     </Fade>
                                   )}
                                 </div>
@@ -1680,22 +1680,22 @@ function PetshopPetcategory() {
                           </Link>
                           {buttonVisibility[item.id] && (
                             <Fade top>
-                            <div className="button-container">
-                              <button
-                                data-toggle="modal"
-                                data-target=".bd-example-modal-lg"
-                                onClick={(e) => handeldataId(item.id)}
-                              >
-                                Quick View
-                              </button>
-                              <button
-                                data-toggle="modal"
-                                data-target=".buynow"
-                                onClick={(e) => handeldataId(item.id)}
-                              >
-                                Buy Now
-                              </button>
-                            </div>
+                              <div className="button-container">
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".bd-example-modal-lg"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Quick View
+                                </button>
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".buynow"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Buy Now
+                                </button>
+                              </div>
                             </Fade>
                           )}
                         </div>

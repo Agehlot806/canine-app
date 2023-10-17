@@ -110,7 +110,7 @@
 //     const customer_id = localStorage.getItem("userInfo");
 //     // Fetch profile data from the API
 //     axios
-//       .get(`https://caninetest.xyz/api/v1/auth/my_profile/${customer_id}`)
+//       .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
 //       .then((response) => {
 //         if (response.data.status === "200" && response.data.data.length > 0) {
 //           const profile = response.data.data[0];
@@ -194,7 +194,7 @@
 //   const fetchData = async () => {
 //     try {
 //       const response = await axios.get(
-//         "https://caninetest.xyz/api/v1/items/latest"
+//         "https://canine.hirectjob.in/api/v1/items/latest"
 //       );
 //       setProducts(response.data.data);
 //     } catch (error) {
@@ -1580,8 +1580,6 @@
 
 // export default Newheader;
 
-
-
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, history } from "react-router-dom";
 import logo from "../assets/images/logo.png";
@@ -1717,7 +1715,7 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/my_profile/${customer_id}`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
       .then((response) => {
         if (response.data.status === "200" && response.data.data.length > 0) {
           const profile = response.data.data[0];
@@ -1801,7 +1799,7 @@ function Newheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://caninetest.xyz/api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -1920,18 +1918,18 @@ function Newheader(props) {
   return (
     <>
       <div className="sticky-newheader">
-      <nav className="navbar navbar-expand-lg navbar-light p-3">
-        <div className="wrapper">
-          <div className="logo">
-            <Link
-              to={props.type == "salesman" ? "/salesman-dashboad" : "/"}
-              className="logoBG"
-            >
-              <img src={logo} />
-            </Link>
-          </div>
-          <div className="hide-icons">
-            {/* <li>
+        <nav className="navbar navbar-expand-lg navbar-light p-3">
+          <div className="wrapper">
+            <div className="logo">
+              <Link
+                to={props.type == "salesman" ? "/salesman-dashboad" : "/"}
+                className="logoBG"
+              >
+                <img src={logo} />
+              </Link>
+            </div>
+            <div className="hide-icons">
+              {/* <li>
               <a
                 className="notification-btn"
                 data-toggle="modal"
@@ -1943,716 +1941,723 @@ function Newheader(props) {
               </a>
             </li> */}
 
-            {storedUserId ? (
-              <>
+              {storedUserId ? (
+                <>
+                  <li>
+                    <Link to="/add-cart" className="notification-btn">
+                      <i class="fa fa-shopping-cart" />{" "}
+                      <span className="cart-count">{dataLength}</span>{" "}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className=""
+                      data-toggle="modal"
+                      data-target="#logout-model"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </>
+              ) : (
                 <li>
-                  <Link to="/add-cart" className="notification-btn">
-                    <i class="fa fa-shopping-cart" />{" "}
-                    <span className="cart-count">{dataLength}</span>{" "}
-                  </Link>
+                  <Link to="/login">Login/Sign Up</Link>
                 </li>
-                <li>
-                  <Link
-                    className=""
-                    data-toggle="modal"
-                    data-target="#logout-model"
-                  >
-                    Logout
-                  </Link>
-                </li>
-                
-              </>
-            ) : (
+              )}
+            </div>
+            <input type="radio" name="slider" id="menu-btn" />
+            <input type="radio" name="slider" id="close-btn" />
+            <ul className="nav-links">
+              <label htmlFor="close-btn" className="btn close-btn">
+                <i className="fas fa-times" />
+              </label>
               <li>
-                <Link to="/login">Login/Sign Up</Link>
+                <a href="#" className="desktop-item">
+                  Dogs
+                </a>
+                <input type="checkbox" id="showMega" />
+                <label htmlFor="showMega" className="mobile-item">
+                  Dogs
+                </label>
+                <div className="mega-box">
+                  <div className="content">
+                    <Row>
+                      <Col lg={4} sm={6}>
+                        <header>Dog Food</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "food" && (
+                                  <li key={item.id}>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Dog Food Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Treats & Chews</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "treats" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Treats Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Toys</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "toys" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Supplies Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Collar Leashes & More</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Collar Leashes & More" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Shampoo & Perfumes</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Shampoo & Perfumes" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Beds Cages & Carriers</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Beds Cages & Carriers" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Training & Accessories</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Training & Accessories" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Accessories Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Bowls & Feeders</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Bowls & Feeders" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Grooming</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Grooming" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Health Care</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "medicine" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                    </Row>
+                  </div>
+                </div>
               </li>
-            )}
-          </div>
-          <input type="radio" name="slider" id="menu-btn" />
-          <input type="radio" name="slider" id="close-btn" />
-          <ul className="nav-links">
-            <label htmlFor="close-btn" className="btn close-btn">
-              <i className="fas fa-times" />
-            </label>
-            <li>
-              <a href="#" className="desktop-item">
-                Dogs
-              </a>
-              <input type="checkbox" id="showMega" />
-              <label htmlFor="showMega" className="mobile-item">
-                Dogs
-              </label>
-              <div className="mega-box">
-                <div className="content">
-                  <Row>
-                    <Col lg={4} sm={6}>
-                      <header>Dog Food</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "food" && (
-                                <li key={item.id}>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Dog Food Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Treats & Chews</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "treats" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">No Treats Sub Categories.</p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Toys</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "toys" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Supplies Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Collar Leashes & More</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Collar Leashes & More" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Shampoo & Perfumes</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Shampoo & Perfumes" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Beds Cages & Carriers</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Beds Cages & Carriers" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Training & Accessories</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Training & Accessories" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Accessories Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Bowls & Feeders</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Bowls & Feeders" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Grooming</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Grooming" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Health Care</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "medicine" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                  </Row>
+              <li>
+                <a href="#" className="desktop-item">
+                  Cats
+                </a>
+                <input type="checkbox" id="showMegaCat" />
+                <label htmlFor="showMegaCat" className="mobile-item">
+                  Cats
+                </label>
+                <div className="mega-box">
+                  <div className="content">
+                    <Row>
+                      <Col lg={4} sm={6}>
+                        <header>Cat Food & Treats</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "food" && (
+                                  <li key={item.id}>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Dog Food Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Treats</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "food" && (
+                                  <li key={item.id}>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Dog Food Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Cat Litter & Accessories</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "treats" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Treats Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Toys</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "toys" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Supplies Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Collar Leashes & More</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Collar Leashes & More" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Supplies Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Shampoo & Perfumes</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Shampoo & Perfumes" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Supplies Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Beds Cages, Scratcher & Crates</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name ==
+                                  "Beds Cages, Scratcher & Crates" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Supplies Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Clothing & Accessories</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Clothing & Accessories" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Accessories Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Bowls & Feeders</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Bowls & Feeders" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Accessories Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Grooming</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Grooming" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Accessories Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Cat Litter & Scooper</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "Cat Litter & Scooper" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Accessories Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                      <Col lg={4} sm={6}>
+                        <header>Health Care</header>
+                        <ul className="mega-links">
+                          {dogsubcategories ? (
+                            dogsubcategories.map(
+                              (item) =>
+                                item.name == "medicine" && (
+                                  <li>
+                                    <Link
+                                      to={`/pet-category/${item.name}/${item.id}`}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </li>
+                                )
+                            )
+                          ) : (
+                            <p className="emptyMSG">
+                              No Health Care Sub Categories.
+                            </p>
+                          )}
+                        </ul>
+                      </Col>
+                    </Row>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <a href="#" className="desktop-item">
-                Cats
-              </a>
-              <input type="checkbox" id="showMegaCat" />
-              <label htmlFor="showMegaCat" className="mobile-item">
-                Cats
-              </label>
-              <div className="mega-box">
-                <div className="content">
-                  <Row>
-                    <Col lg={4} sm={6}>
-                      <header>Cat Food & Treats</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "food" && (
-                                <li key={item.id}>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Dog Food Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Treats</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "food" && (
-                                <li key={item.id}>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Dog Food Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Cat Litter & Accessories</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "treats" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">No Treats Sub Categories.</p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Toys</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "toys" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Supplies Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Collar Leashes & More</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Collar Leashes & More" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Supplies Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Shampoo & Perfumes</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Shampoo & Perfumes" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Supplies Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Beds Cages, Scratcher & Crates</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Beds Cages, Scratcher & Crates" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Supplies Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Clothing & Accessories</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Clothing & Accessories" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Accessories Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Bowls & Feeders</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Bowls & Feeders" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Accessories Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Grooming</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Grooming" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Accessories Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Cat Litter & Scooper</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "Cat Litter & Scooper" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Accessories Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                    <Col lg={4} sm={6}>
-                      <header>Health Care</header>
-                      <ul className="mega-links">
-                        {dogsubcategories ? (
-                          dogsubcategories.map(
-                            (item) =>
-                              item.name == "medicine" && (
-                                <li>
-                                  <Link
-                                    to={`/pet-category/${item.name}/${item.id}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </li>
-                              )
-                          )
-                        ) : (
-                          <p className="emptyMSG">
-                            No Health Care Sub Categories.
-                          </p>
-                        )}
-                      </ul>
-                    </Col>
-                  </Row>
-                </div>
-              </div>
-            </li>
-            <li>
-              <a href="#" className="desktop-item">
-                Products
-              </a>
-              <input type="checkbox" id="showDrop" />
-              <label htmlFor="showDrop" className="mobile-item">
-                Products
-              </label>
-              <ul className="drop-menu">
-                <li>
-                  <Link className="dropdown-item" to="/product">
-                    All Product
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/canine-product">
-                    Canine Product
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to="/service">Services</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-            <li>
-              <Link className="profiledes searneee">
-                <i className="fa fa-search" />
-                <input
-                  type="text"
-                  placeholder="What are you looking for"
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                  className="homesea"
-                />
-                <ul className="drop-menu search-results">
-                  {filteredProducts.map((product, index, id) => (
-                    <li key={index}>
-                      <Link to={`/product-details/${product.id}`}>
-                        {product.name}
-                      </Link>
-                    </li>
-                  ))}
+              </li>
+              <li>
+                <a href="#" className="desktop-item">
+                  Products
+                </a>
+                <input type="checkbox" id="showDrop" />
+                <label htmlFor="showDrop" className="mobile-item">
+                  Products
+                </label>
+                <ul className="drop-menu">
+                  <li>
+                    <Link className="dropdown-item" to="/product">
+                      All Product
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/canine-product">
+                      Canine Product
+                    </Link>
+                  </li>
                 </ul>
-              </Link>
-            </li>
-           
-            <li className="nonhide">
-                  <Link to="/add-cart" className="profiledes notification-btn">
-                    <i class="fa fa-shopping-cart" />{" "}
-                    <span className="cart-count">{dataLength}</span>{" "}
-                  </Link>
-                </li>
-            {storedUserId ? (
-              <>
-                 <li className="nonhide">
-              <a
-                className="profiledes notification-btn"
-                data-toggle="modal"
-                data-target="#exampleModal"
-                onClick={handleBellClick}
-              >
-                <i class="fa fa-bell-o" />
-                {isTotalLengthVisible && <span>{totalLength}</span>}
-              </a>
-            </li>
-                <li className="nonhide">
-                  <Link
-                    className=""
-                    data-toggle="modal"
-                    data-target="#logout-model"
-                  >
-                    Logout
-                  </Link>
-                </li>
-
-                <li>
-                  <a href="#" className="profiledes desktop-item">
-                    <img
-                      src={
-                        profileData?.image
-                          ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
-                          : loicon1
-                      }
-                      alt="Profile Image"
-                    />
-                  </a>
-                  <input type="checkbox" id="showDropProfile" />
-                  <label htmlFor="showDropProfile" className="mobile-item">
-                    <img
-                      src={
-                        profileData?.image
-                          ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
-                          : loicon1
-                      }
-                      alt="Profile Image"
-                    />
-                  </label>
-                  <ul className="drop-menu">
-                    <li>
-                      <Link className="dropdown-item" to={`/pet-profile/`}>
-                        Pet Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/all-veterinary">
-                        All Veterinary
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/all-service-booking">
-                        All Service Booking
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/my-orders">
-                        My Orders
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/wishlist-products">
-                        Wishlist Products
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/update-profile">
-                        Profile
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-              </>
-            ) : (
-              <li className="nonhide">
-                <Link to="/login">Login/Sign Up</Link>
               </li>
-            )}
-          </ul>
-          <label htmlFor="menu-btn" className="btn menu-btn">
-            <i className="fas fa-bars" />
-          </label>
-        </div>
-      </nav>
+              <li>
+                <Link to="/service">Services</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+              <li>
+                <Link className="profiledes searneee">
+                  <i className="fa fa-search" />
+                  <input
+                    type="text"
+                    placeholder="What are you looking for"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    className="homesea"
+                  />
+                  <ul className="drop-menu search-results">
+                    {filteredProducts.map((product, index, id) => (
+                      <li key={index}>
+                        <Link to={`/product-details/${product.id}`}>
+                          {product.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Link>
+              </li>
+
+              <li className="nonhide">
+                <Link to="/add-cart" className="profiledes notification-btn">
+                  <i class="fa fa-shopping-cart" />{" "}
+                  <span className="cart-count">{dataLength}</span>{" "}
+                </Link>
+              </li>
+              {storedUserId ? (
+                <>
+                  <li className="nonhide">
+                    <a
+                      className="profiledes notification-btn"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                      onClick={handleBellClick}
+                    >
+                      <i class="fa fa-bell-o" />
+                      {isTotalLengthVisible && <span>{totalLength}</span>}
+                    </a>
+                  </li>
+                  <li className="nonhide">
+                    <Link
+                      className=""
+                      data-toggle="modal"
+                      data-target="#logout-model"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+
+                  <li>
+                    <a href="#" className="profiledes desktop-item">
+                      <img
+                        src={
+                          profileData?.image
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              profileData.image
+                            : loicon1
+                        }
+                        alt="Profile Image"
+                      />
+                    </a>
+                    <input type="checkbox" id="showDropProfile" />
+                    <label htmlFor="showDropProfile" className="mobile-item">
+                      <img
+                        src={
+                          profileData?.image
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              profileData.image
+                            : loicon1
+                        }
+                        alt="Profile Image"
+                      />
+                    </label>
+                    <ul className="drop-menu">
+                      <li>
+                        <Link className="dropdown-item" to={`/pet-profile/`}>
+                          Pet Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/all-veterinary">
+                          All Veterinary
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/all-service-booking"
+                        >
+                          All Service Booking
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/my-orders">
+                          My Orders
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/wishlist-products">
+                          Wishlist Products
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/update-profile">
+                          Profile
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </>
+              ) : (
+                <li className="nonhide">
+                  <Link to="/login">Login/Sign Up</Link>
+                </li>
+              )}
+            </ul>
+            <label htmlFor="menu-btn" className="btn menu-btn">
+              <i className="fas fa-bars" />
+            </label>
+          </div>
+        </nav>
       </div>
       {/* Modal */}
       <div
@@ -2777,7 +2782,10 @@ function Newheader(props) {
                             <Link to="">
                               <Row>
                                 <Col lg={2} className="align-self-center">
-                                  <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
+                                  <Link
+                                    to={`/product-details/${ob.item_id}`}
+                                    onClick={() => handleLinkClick(ob.item_id)}
+                                  >
                                     <i className="fa fa-info-circle" />
                                   </Link>
                                 </Col>
@@ -2914,7 +2922,7 @@ function Newheader(props) {
                       ))
                     ) : (
                       <p className="emptyMSG">No Notification</p>
-                    )} 
+                    )}
                   </div>
                   <div
                     class="tab-pane fade"
@@ -2990,4 +2998,3 @@ function Newheader(props) {
 }
 
 export default Newheader;
-

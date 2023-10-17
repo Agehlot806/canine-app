@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
-import { Container, Row, Col, Button, Form,Table } from "react-bootstrap";
+import Newheader from "../../directives/newheader";
+import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import ourbrand from "../../assets/images/banner/ourbrand.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -11,7 +11,6 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
-  
 
 function Ourourbrand(props) {
   // filter tabs
@@ -120,7 +119,7 @@ function Ourourbrand(props) {
     allHealthconditionshow();
     Allsubcategoriessecond();
     couponlistdata();
-     allAddressList();
+    allAddressList();
   }, []);
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
@@ -185,7 +184,7 @@ function Ourourbrand(props) {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -258,8 +257,6 @@ function Ourourbrand(props) {
       });
   };
 
-  
-
   const [allproductbrand, setallproductbrand] = useState([]);
   // const [brands, setBrands] = useState([]);
   const [brandIdsToFilter, setBrandIdsToFilter] = useState([]);
@@ -274,11 +271,11 @@ function Ourourbrand(props) {
       .then((response) => {
         console.log(response);
         console.log("all product brand Successful");
-        const AllData = response.data.data
-        const data = AllData.filter((el) => el.module_id === 1)
-        const data1 = data.filter((item) => item.brand_id === id)  
-        console.log('data in fetch',data)
-        console.log('data1 in fetch',data1)
+        const AllData = response.data.data;
+        const data = AllData.filter((el) => el.module_id === 1);
+        const data1 = data.filter((item) => item.brand_id === id);
+        console.log("data in fetch", data);
+        console.log("data1 in fetch", data1);
         setallproductbrand(data1);
       })
       .catch((error) => {
@@ -299,7 +296,9 @@ function Ourourbrand(props) {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
       setBrands(response.data.data);
       const titles = response?.data?.data.map((brand) => brand?.title);
-      const ourbrand = response?.data?.data.filter((brand) => brand?.canine === 0);
+      const ourbrand = response?.data?.data.filter(
+        (brand) => brand?.canine === 0
+      );
       setBrandIdsToFilter(ourbrand);
       setBrandCanineToFilter(ourbrand);
     } catch (error) {
@@ -317,7 +316,7 @@ function Ourourbrand(props) {
 
   const allBrandshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/brand`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
         // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
@@ -330,7 +329,7 @@ function Ourourbrand(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/all_life_stage/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -343,7 +342,7 @@ function Ourourbrand(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/all_pets_breed/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -355,7 +354,7 @@ function Ourourbrand(props) {
 
   const allsubcategary = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/categories`)
+      .get(`https://canine.hirectjob.in/api/v1/categories`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllSubcate(response.data.data);
@@ -367,7 +366,7 @@ function Ourourbrand(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://caninetest.xyz/api/v1/auth/health_condition/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -512,7 +511,7 @@ function Ourourbrand(props) {
   ) => {
     try {
       const response = await axios.get(
-        "https://caninetest.xyz/api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
       const filteredProducts = applyFilters({
@@ -607,7 +606,6 @@ function Ourourbrand(props) {
   // ================================================================================
   // =============================================================================
 
-
   const [buttonVisibility, setButtonVisibility] = useState({});
 
   // Function to handle mouse enter and mouse leave for a card
@@ -650,7 +648,7 @@ function Ourourbrand(props) {
   //   productData();
   // }, []);
 
- const productData = async (selctId) => {
+  const productData = async (selctId) => {
     axios
       .get(`${BASE_URL}/items/product_details/${selctId}`)
       .then((response) => {
@@ -731,7 +729,7 @@ function Ourourbrand(props) {
     if (productDetails?.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails?.image
+          productDetails?.image
       );
     }
   }, [productDetails]);
@@ -739,7 +737,7 @@ function Ourourbrand(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-      productDetails?.images[index]
+        productDetails?.images[index]
     );
   };
 
@@ -750,7 +748,6 @@ function Ourourbrand(props) {
   const handeldataId = (id) => {
     productData(id);
   };
-
 
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -787,7 +784,7 @@ function Ourourbrand(props) {
 
     // Send a request
     axios
-      .post(`https://caninetest.xyz/api/v1/items/notify`, notifymeData)
+      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -805,7 +802,6 @@ function Ourourbrand(props) {
       setSelectedVariantPrice(defaultVariant.price);
     }
   }, [productDetails]);
-
 
   // ===============================================================
   // =================================================================
@@ -868,7 +864,7 @@ function Ourourbrand(props) {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -1003,7 +999,7 @@ function Ourourbrand(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
+        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -1021,7 +1017,7 @@ function Ourourbrand(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://caninetest.xyz/api/v1/customer/address/update",
+        "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -1111,7 +1107,7 @@ function Ourourbrand(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://caninetest.xyz/api/v1/customer/order/place`, {
+    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1239,7 +1235,6 @@ function Ourourbrand(props) {
       console.error("Razorpay Load Error:", error);
     }
   };
-  
 
   return (
     <>
@@ -1252,7 +1247,7 @@ function Ourourbrand(props) {
       </Container>
       <Container>
         <Row>
-        <Col lg={3}>
+          <Col lg={3}>
             <section className="section-padding">
               <div className="filter-product">
                 <h3>Filters</h3>
@@ -1569,20 +1564,25 @@ function Ourourbrand(props) {
                 {/* <Row> */}
                 {brands.length > 0 ? (
                   <Row>
-                    {allproductbrand
-                      ? allproductbrand.map((item, index) => {
+                    {allproductbrand ? (
+                      allproductbrand.map((item, index) => {
                         return (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
-                            <div className="food-product" key={item.id} style={{
-                              background:
-                                gradientColors[index % gradientColors.length],
-                            }}
-                            onMouseEnter={() => handleMouseEnter(item.id)}
-                            onMouseLeave={() => handleMouseLeave(item.id)}
+                            <div
+                              className="food-product"
+                              key={item.id}
+                              style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}
+                              onMouseEnter={() => handleMouseEnter(item.id)}
+                              onMouseLeave={() => handleMouseLeave(item.id)}
                             >
                               <i
                                 class={
-                                  item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                                  item.isFav
+                                    ? "fa-solid fa-heart"
+                                    : "fa-regular fa-heart"
                                 }
                                 onClick={(id) => {
                                   if (storedUserId == null) {
@@ -1594,10 +1594,11 @@ function Ourourbrand(props) {
                               />
                               <Link to={`/product-details/${item.id}`}>
                                 <div className="text-center">
-                                  <img src={
-                                    "https://caninetest.xyz//storage/app/public/product/" +
-                                    item.image
-                                  }
+                                  <img
+                                    src={
+                                      "https://caninetest.xyz//storage/app/public/product/" +
+                                      item.image
+                                    }
                                   />
                                 </div>
                                 <div>
@@ -1615,9 +1616,10 @@ function Ourourbrand(props) {
                                   </Row>
                                   <Row>
                                     <Col className="align-self-center">
-                                      <h6>{`₹${item.price -
+                                      <h6>{`₹${
+                                        item.price -
                                         (item.price * item.discount) / 100
-                                        }`}</h6>
+                                      }`}</h6>
                                     </Col>
                                     {/* <Col>
                                       <Link to="">
@@ -1630,22 +1632,22 @@ function Ourourbrand(props) {
 
                               {buttonVisibility[item.id] && (
                                 <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Buy Now
-                          </button>
-                          {/* <Button>
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lg"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Buy Now
+                                    </button>
+                                    {/* <Button>
                         <Link
                           // to={`/add-cart/${productDetails.id}`}
                           to={`/add-cart/${productDetails.id}?gowithbuynow=true`}
@@ -1655,28 +1657,21 @@ function Ourourbrand(props) {
                         </Link>
                         <p>{addToCartStatus}</p>
                       </Button> */}
-                        </div>
-                        </Fade>
-                      )}
+                                  </div>
+                                </Fade>
+                              )}
                             </div>
                           </Col>
                         );
-
-                      }
-                      )
-                      : <p className="emptyMSG">No Brands Product.</p>}
+                      })
+                    ) : (
+                      <p className="emptyMSG">No Brands Product.</p>
+                    )}
                   </Row>
                 ) : (
                   <p>429 Error...</p>
                 )}
               </Container>
-
-
-
-
-
-
-
 
               {/* <Container>
                 <Row>
@@ -1812,7 +1807,6 @@ function Ourourbrand(props) {
 
       <Footer />
 
-
       {/* Product details Modal */}
       <div
         className="modal fade bd-example-modal-lg"
@@ -1841,7 +1835,7 @@ function Ourourbrand(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1882,17 +1876,17 @@ function Ourourbrand(props) {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1901,13 +1895,13 @@ function Ourourbrand(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1962,13 +1956,19 @@ function Ourourbrand(props) {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant === item.type
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
                                                       ? "active"
                                                       : ""
-                                                    }`}
+                                                  }`}
                                                   onClick={() => {
-                                                    setSelectedVariant(item.type);
-                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                    setSelectedVariant(
+                                                      item.type
+                                                    );
+                                                    setSelectedVariantPrice(
+                                                      item.price
+                                                    ); // Store the price in state
                                                   }}
                                                 >
                                                   {item.type}
@@ -2064,7 +2064,7 @@ function Ourourbrand(props) {
                     </Col>
                   </Row>
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 0 ? (
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
                         <Link
@@ -2233,9 +2233,8 @@ function Ourourbrand(props) {
         </div>
       </div>
 
-
-       {/*  Modal */}
-       <div
+      {/*  Modal */}
+      <div
         className="modal fade editAddress"
         id="changeadress-model"
         tabIndex={-1}
@@ -2557,10 +2556,11 @@ function Ourourbrand(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2664,10 +2664,11 @@ function Ourourbrand(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -3042,11 +3043,11 @@ function Ourourbrand(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
@@ -3284,7 +3285,6 @@ function Ourourbrand(props) {
           </div>
         </div>
       </div>
-
     </>
   );
 }
