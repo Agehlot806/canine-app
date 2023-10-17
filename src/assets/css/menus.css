@@ -115,6 +115,7 @@ nav .wrapper {
 }
 ul.mega-links p {
   color: #000;
+  margin: 0 19px;
 }
 .content .row .mega-links {
   margin-left: -50px;
