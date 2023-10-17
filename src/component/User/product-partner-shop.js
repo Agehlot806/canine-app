@@ -609,7 +609,7 @@ function Productpartnershop() {
     if (productDetails.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -617,7 +617,7 @@ function Productpartnershop() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -690,7 +690,7 @@ function Productpartnershop() {
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
 
-  const [responseMessage, setResponseMessage] = useState("")
+  const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
     event.preventDefault();
     const data = {
@@ -824,9 +824,7 @@ function Productpartnershop() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `https://caninetest.xyz/api/v1/customer/address/delete/${id}`
-      )
+      .delete(`https://caninetest.xyz/api/v1/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
@@ -1179,26 +1177,26 @@ function Productpartnershop() {
                       <div>
                         {allbrand
                           ? allbrand.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onClick={(e) =>
-                                  handleDataListBrand(items.title)
-                                }
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onClick={(e) =>
+                                    handleDataListBrand(items.title)
+                                  }
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1220,24 +1218,24 @@ function Productpartnershop() {
                       <div>
                         {allsubcate
                           ? allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onClick={(e) => allcateselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onClick={(e) => allcateselect(items.name)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1304,26 +1302,26 @@ function Productpartnershop() {
                       <div>
                         {alllifesage
                           ? alllifesage.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onChange={(e) =>
-                                  Lifesatedataselect(items.name)
-                                }
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items.name)
+                                  }
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1345,24 +1343,24 @@ function Productpartnershop() {
                       <div>
                         {allbreed
                           ? allbreed.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onChange={(e) => allbreedselect(items.name)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onChange={(e) => allbreedselect(items.name)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1384,24 +1382,24 @@ function Productpartnershop() {
                       <div>
                         {allhealth
                           ? allhealth.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="defaultCheck1"
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="defaultCheck1"
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
                               >
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="defaultCheck1"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="defaultCheck1"
+                                >
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1514,14 +1512,15 @@ function Productpartnershop() {
                                     <p>₹{item.price}</p>
                                   </Col>
                                   <Col>
-                                    <h5>{item.discount}</h5>
+                                    <h5>Save {parseInt(item.discount)} %</h5>
                                   </Col>
                                 </Row>
                                 <Row>
                                   <Col className="align-self-center">
-                                    <h6>{`₹${item.price -
+                                    <h6>{`₹${
+                                      item.price -
                                       (item.price * item.discount) / 100
-                                      }`}</h6>
+                                    }`}</h6>
                                   </Col>
                                   {/* <Col>
                                     <Link
@@ -1535,23 +1534,23 @@ function Productpartnershop() {
                               </div>
                             </Link>
                             {buttonVisibility[item.id] && (
-                            <Fade top>
-                              <div className="button-container">
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".bd-example-modal-lg"
-                                  onClick={(e) => handeldataId(item.id)}
-                                >
-                                  Quick View
-                                </button>
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".buynow"
-                                  onClick={(e) => handeldataId(item.id)}
-                                >
-                                  Buy Now
-                                </button>
-                              </div>
+                              <Fade top>
+                                <div className="button-container">
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".bd-example-modal-lg"
+                                    onClick={(e) => handeldataId(item.id)}
+                                  >
+                                    Quick View
+                                  </button>
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".buynow"
+                                    onClick={(e) => handeldataId(item.id)}
+                                  >
+                                    Buy Now
+                                  </button>
+                                </div>
                               </Fade>
                             )}
                           </div>
@@ -1568,18 +1567,18 @@ function Productpartnershop() {
               <Container>
                 {thirdbanner
                   ? thirdbanner.map(
-                    (item, index) =>
-                      item.title === "new" && (
-                        <div className="banner-bgmain" key={item.id}>
-                          <img
-                            src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                      )
-                  )
+                      (item, index) =>
+                        item.title === "new" && (
+                          <div className="banner-bgmain" key={item.id}>
+                            <img
+                              src={
+                                "https://caninetest.xyz/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                        )
+                    )
                   : null}
               </Container>
             </section>
@@ -1616,7 +1615,7 @@ function Productpartnershop() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1657,17 +1656,17 @@ function Productpartnershop() {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1676,13 +1675,13 @@ function Productpartnershop() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1737,13 +1736,19 @@ function Productpartnershop() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
-                                                    setSelectedVariant(item.type);
-                                                    setSelectedVariantPrice(item.price); // Store the price in state
+                                                    setSelectedVariant(
+                                                      item.type
+                                                    );
+                                                    setSelectedVariantPrice(
+                                                      item.price
+                                                    ); // Store the price in state
                                                   }}
                                                 >
                                                   {item.type}
@@ -2330,10 +2335,11 @@ function Productpartnershop() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2437,10 +2443,11 @@ function Productpartnershop() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2816,11 +2823,11 @@ function Productpartnershop() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

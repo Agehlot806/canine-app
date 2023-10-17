@@ -2537,7 +2537,7 @@ function Newheader(props) {
                 <i className="fa fa-search" />
                 <input
                   type="text"
-                  placeholder="What are you looking for ?"
+                  placeholder="What are you looking for"
                   value={searchQuery}
                   onChange={handleSearchInputChange}
                   className="homesea"
@@ -2553,7 +2553,16 @@ function Newheader(props) {
                 </ul>
               </Link>
             </li>
+           
             <li className="nonhide">
+                  <Link to="/add-cart" className="profiledes notification-btn">
+                    <i class="fa fa-shopping-cart" />{" "}
+                    <span className="cart-count">{dataLength}</span>{" "}
+                  </Link>
+                </li>
+            {storedUserId ? (
+              <>
+                 <li className="nonhide">
               <a
                 className="profiledes notification-btn"
                 data-toggle="modal"
@@ -2564,15 +2573,6 @@ function Newheader(props) {
                 {isTotalLengthVisible && <span>{totalLength}</span>}
               </a>
             </li>
-
-            {storedUserId ? (
-              <>
-                <li className="nonhide">
-                  <Link to="/add-cart" className="profiledes notification-btn">
-                    <i class="fa fa-shopping-cart" />{" "}
-                    <span className="cart-count">{dataLength}</span>{" "}
-                  </Link>
-                </li>
                 <li className="nonhide">
                   <Link
                     className=""
@@ -2926,7 +2926,7 @@ function Newheader(props) {
                       ))
                     ) : (
                       <p className="emptyMSG">No Notification</p>
-                    )}
+                    )} 
                   </div>
                   <div
                     class="tab-pane fade"

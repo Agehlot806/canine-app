@@ -980,7 +980,7 @@ function Home(props) {
     <>
       <Toaster />
       <Newheader />
-
+      <section className="section-padding">
       <div className="home-section">
         <Container fluid className="p-0">
           <Carousel
@@ -1102,7 +1102,8 @@ function Home(props) {
             </div>
           </Carousel>
         </Container>
-      </div>
+        </div>
+        </section>
 
       <section className="section-padding">
         <Container>
@@ -2510,7 +2511,7 @@ function Home(props) {
                                   </div>
                                 </Col>
                               )}
-                            </Row>
+                             </Row>
                           </Col>
                         </Row>
                       </div>
