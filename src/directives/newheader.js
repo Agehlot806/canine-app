@@ -1607,7 +1607,7 @@ function Newheader(props) {
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
   const { totalLength } = useNotificationContext();
-  const { notificationLength, dataLengthpetnotification } =
+  const { notificationLength, dataLengthpetnotification} =
     useNotificationContext();
 
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
