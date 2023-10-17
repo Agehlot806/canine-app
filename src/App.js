@@ -111,8 +111,9 @@ const ScrollToTop = () => {
 
 function App() {
   return (
-    <div className="cursor"
-      // className="dog-paw-cursor"
+    <div
+      // className="cursor"
+      className="dog-paw-cursor"
     >
       <BrowserRouter>
         <ScrollToTop /> {/* Add ScrollToTop component here */}
@@ -202,11 +203,8 @@ function App() {
             path="/petshop-wishlist-product"
             element={<PetshopWishlistproduct />}
           />
-           <Route
-            path="/petshop-our-brand"
-            element={<PetshopOurbrand />}
-          />
-           <Route
+          <Route path="/petshop-our-brand" element={<PetshopOurbrand />} />
+          <Route
             path="/petshop-our-Ourbrand/:id"
             element={<PetshopOurourbrand />}
           />
@@ -214,7 +212,7 @@ function App() {
             path="/petshop-shop-by-brand"
             element={<PetShopShopbybrand />}
           />
-           <Route
+          <Route
             path="/petshop-shop-by-brandList/:id"
             element={<PetshopShopbybrandlist />}
           />
@@ -273,7 +271,7 @@ function App() {
             path="/petshoptrackyourorde/:id"
             element={<Petshoptrackyourorder />}
           />
-                    <Route
+          <Route
             path="/petshoptrackyourorde"
             element={<Petshoptrackyourorder />}
           />
@@ -314,7 +312,7 @@ function App() {
           <Route path="/pay" element={<Pay />} />
 
           {/* page Not Found flow  */}
-          <Route path="*" element={<Notfound/>}/>
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
     </div>

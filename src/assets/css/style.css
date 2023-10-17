@@ -158,7 +158,7 @@ a {
 }
 
 .dog-paw-cursor {
-  /* cursor: url("../images/icon/image.png"), auto; */
+  cursor: url("../images/icon/image.png"), auto;
 }
 
 .header-inner-addon input:focus {
@@ -184,10 +184,9 @@ a {
   margin: 0 0 45px;
 }
 
-.home-section {
-  /* padding-top: 12px;
-  padding-bottom: 12px; */
-}
+/* .home-section {
+  padding: 50px 0 0; 
+} */
 
 .home-img img {
   width: 100%;
@@ -378,6 +377,7 @@ a {
 
 .food-product p {
   color: #979697;
+  word-break: break-all;
 }
 
 .food-product img {
@@ -449,6 +449,10 @@ a {
   font-size: 17px;
   font-weight: bold;
   margin: 0;
+  background: #f1c21b;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px;
 }
 
 /* ================= Our Brand ===================== */
@@ -530,7 +534,13 @@ a {
   width: 100px;
   height: 100px;
 }
-
+.uy {
+  background: linear-gradient(
+    180deg,
+    #c7ebff 58.58%,
+    rgba(199, 235, 255, 0) 104.1%
+  );
+}
 .Shop-Deals-inner h1 {
   font-size: 20px;
   margin: 18px;
@@ -1768,6 +1778,7 @@ a {
 .ProductPartner-card img {
   width: 100px;
   margin: 0 0 25px;
+  height: 100px;
 }
 
 .delete-addcard i {
@@ -3639,7 +3650,7 @@ button.Apply-price {
   border: none;
   margin: 0 8px;
   border-radius: 5px;
-  padding: 5px 11px;
+  padding: 5px 6px;
   font-weight: 600;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }

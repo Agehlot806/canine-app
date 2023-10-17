@@ -1561,7 +1561,7 @@ function Petcategory() {
           <Col lg={9}>
             <section className="section-padding food">
               <Container>
-                <div className="needplace">
+                {/* <div className="needplace">
                   <div className="dog-categorys-area">
                     <ul
                       className="nav nav-pills mb-3"
@@ -1607,7 +1607,7 @@ function Petcategory() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div>
                   <Row>
                     {paginatedCategories.map(
@@ -1654,15 +1654,16 @@ function Petcategory() {
                                 <div className="product-bag">
                                   <Row>
                                     <Col>
-                                      <p>₹999.00</p>
+                                      <p>₹{item.price}</p>
                                     </Col>
                                     <Col>
-                                      <h5>{item.discount}%</h5>
+                                      <h5>Save {parseInt(item.discount)} %</h5>
                                     </Col>
                                   </Row>
                                   <Row>
                                     <Col className="align-self-center">
-                                      <h6>₹{item.price}</h6>
+                                    <h6>{`₹${item.price - (item.price * item.discount) / 100
+                              }`}</h6>
                                     </Col>
                                     {/* <Col>
                                       <Link

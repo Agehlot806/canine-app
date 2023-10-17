@@ -40,7 +40,7 @@ function Shopbybrandlist() {
 
             <section className="section-padding">
                 <Container>
-                    <h1 className="main-head">Shop By Brands List</h1>
+                    <h1 className="main-head">Shop By Product List</h1>
                     <div className="needplace">
                         <Row>
                             {brandproduct && brandproduct.length > 0 ? (

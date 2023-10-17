@@ -1919,7 +1919,8 @@ function Newheader(props) {
 
   return (
     <>
-      <nav>
+      <div className="sticky-newheader">
+      <nav className="navbar navbar-expand-lg navbar-light p-3">
         <div className="wrapper">
           <div className="logo">
             <Link
@@ -1930,7 +1931,7 @@ function Newheader(props) {
             </Link>
           </div>
           <div className="hide-icons">
-            <li>
+            {/* <li>
               <a
                 className="notification-btn"
                 data-toggle="modal"
@@ -1940,7 +1941,7 @@ function Newheader(props) {
                 <i class="fa fa-bell-o" />
                 {isTotalLengthVisible && <span>{totalLength}</span>}
               </a>
-            </li>
+            </li> */}
 
             {storedUserId ? (
               <>
@@ -1963,7 +1964,7 @@ function Newheader(props) {
               </>
             ) : (
               <li>
-                <Link to="/login">Sign In</Link>
+                <Link to="/login">Login/Sign Up</Link>
               </li>
             )}
           </div>
@@ -2553,7 +2554,16 @@ function Newheader(props) {
                 </ul>
               </Link>
             </li>
+           
             <li className="nonhide">
+                  <Link to="/add-cart" className="profiledes notification-btn">
+                    <i class="fa fa-shopping-cart" />{" "}
+                    <span className="cart-count">{dataLength}</span>{" "}
+                  </Link>
+                </li>
+            {storedUserId ? (
+              <>
+                 <li className="nonhide">
               <a
                 className="profiledes notification-btn"
                 data-toggle="modal"
@@ -2564,15 +2574,6 @@ function Newheader(props) {
                 {isTotalLengthVisible && <span>{totalLength}</span>}
               </a>
             </li>
-
-            {storedUserId ? (
-              <>
-                <li className="nonhide">
-                  <Link to="/add-cart" className="profiledes notification-btn">
-                    <i class="fa fa-shopping-cart" />{" "}
-                    <span className="cart-count">{dataLength}</span>{" "}
-                  </Link>
-                </li>
                 <li className="nonhide">
                   <Link
                     className=""
@@ -2642,8 +2643,8 @@ function Newheader(props) {
                 </li>
               </>
             ) : (
-              <li>
-                <Link to="/login">Sign In</Link>
+              <li className="nonhide">
+                <Link to="/login">Login/Sign Up</Link>
               </li>
             )}
           </ul>
@@ -2652,7 +2653,7 @@ function Newheader(props) {
           </label>
         </div>
       </nav>
-
+      </div>
       {/* Modal */}
       <div
         className="modal fade"
@@ -2913,7 +2914,7 @@ function Newheader(props) {
                       ))
                     ) : (
                       <p className="emptyMSG">No Notification</p>
-                    )}
+                    )} 
                   </div>
                   <div
                     class="tab-pane fade"

@@ -1610,7 +1610,7 @@ function Ourourbrand(props) {
                                       <p>₹{item.price}</p>
                                     </Col>
                                     <Col>
-                                      <h5>{item.discount}%</h5>
+                                      <h5>Save {parseInt(item.discount)} %</h5>
                                     </Col>
                                   </Row>
                                   <Row>
