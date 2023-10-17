@@ -1942,7 +1942,7 @@ function Petcategory() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2406,7 +2406,7 @@ function Petcategory() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>

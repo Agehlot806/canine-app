@@ -1609,7 +1609,7 @@ function Newheader(props) {
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
   const { totalLength } = useNotificationContext();
-  const { notificationLength, dataLengthpetnotification } =
+  const { notificationLength, dataLengthpetnotification} =
     useNotificationContext();
 
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
@@ -2571,7 +2571,7 @@ function Newheader(props) {
                 onClick={handleBellClick}
               >
                 <i class="fa fa-bell-o" />
-                {isTotalLengthVisible && <span>{totalLength}</span>}
+                {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>}
               </a>
             </li>
                 <li className="nonhide">

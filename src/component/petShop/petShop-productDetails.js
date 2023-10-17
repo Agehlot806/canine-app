@@ -1025,7 +1025,7 @@ function PetshopproductDetails() {
                         )} */}
                       {/* </Col> */}
                       <Col lg={4}>
-                        <h5>{`₹${formattedAmount}`}</h5>
+                        <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                       </Col>
                       {/* <Col lg={5}>
                         <h6>
@@ -1491,7 +1491,7 @@ function PetshopproductDetails() {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2086,7 +2086,7 @@ function PetshopproductDetails() {
                                 <p>{`₹${wholesellervariationprice}`}</p>
                               </Col> */}
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
