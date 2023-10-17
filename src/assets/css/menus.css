@@ -1,9 +1,9 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-}
+} */
 nav {
   position: fixed;
   z-index: 99;
@@ -15,7 +15,7 @@ nav .wrapper {
   position: relative;
   max-width: 1300px;
   padding: 0px 30px;
-  height: 100px;
+  height: 60px;
   line-height: 70px;
   margin: auto;
   display: flex;
@@ -147,6 +147,9 @@ ul.mega-links p {
 }
 
 @media screen and (max-width: 970px) {
+  nav .wrapper {
+    display: contents;
+  }
   .wrapper .btn {
     display: block;
   }
@@ -318,6 +321,7 @@ a.desktop-item img {
 input.homesea {
   display: inline-block;
   border: none;
+  background: none;
 }
 input.homesea:focus-visible {
   outline: none;

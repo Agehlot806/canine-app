@@ -980,7 +980,7 @@ function Home(props) {
     <>
       <Toaster />
       <Newheader />
-      <section className="section-padding">
+      {/* <section className="section-padding"> */}
       <div className="home-section">
         <Container fluid className="p-0">
           <Carousel
@@ -1103,7 +1103,7 @@ function Home(props) {
           </Carousel>
         </Container>
         </div>
-        </section>
+        {/* </section> */}
 
       <section className="section-padding">
         <Container>
@@ -1505,7 +1505,7 @@ function Home(props) {
                             item.logo
                           }
                         />
-                        <h3 className="text-dark">{item.name}</h3>
+                        <h4 className="text-dark">{item.name}</h4>
                       </div>
                     </a>
                   </Col>

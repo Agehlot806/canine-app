@@ -958,14 +958,6 @@ function PetshopBlogdetails() {
                           >
                             <h6>₹{item[0]?.whole_price}</h6>
                           </Col>
-                          <Col lg={6} sm={6} xs={6}>
-                            <Link
-                              to={`/petshop-add-cart/${item[0]?.id}`}
-                              onClick={handleAddToCart}
-                            >
-                              <img src={bag} alt="Add to Cart" />
-                            </Link>
-                          </Col>
                         </Row>
                       </div>
                     </Link>

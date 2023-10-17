@@ -972,14 +972,6 @@ function Blogdetails() {
                               (item[0]?.price * item[0]?.discount) / 100
                             }`}</h6>
                           </Col>
-                          <Col lg={6} sm={6} xs={6}>
-                            <Link
-                              to={`/add-cart/${item[0]?.id}`}
-                              onClick={handleAddToCart}
-                            >
-                              <img src={bag} alt="Add to Cart" />
-                            </Link>
-                          </Col>
                         </Row>
                       </div>
                     </Link>

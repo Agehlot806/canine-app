@@ -377,6 +377,7 @@ a {
 
 .food-product p {
   color: #979697;
+  word-break: break-all;
 }
 
 .food-product img {
@@ -448,6 +449,10 @@ a {
   font-size: 17px;
   font-weight: bold;
   margin: 0;
+  background: #f1c21b;
+  border-radius: 4px;
+  text-align: center;
+  padding: 4px;
 }
 
 /* ================= Our Brand ===================== */
@@ -529,7 +534,13 @@ a {
   width: 100px;
   height: 100px;
 }
-
+.uy {
+  background: linear-gradient(
+    180deg,
+    #c7ebff 58.58%,
+    rgba(199, 235, 255, 0) 104.1%
+  );
+}
 .Shop-Deals-inner h1 {
   font-size: 20px;
   margin: 18px;
@@ -1767,6 +1778,7 @@ a {
 .ProductPartner-card img {
   width: 100px;
   margin: 0 0 25px;
+  height: 100px;
 }
 
 .delete-addcard i {

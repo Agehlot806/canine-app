@@ -837,6 +837,7 @@ function Partneroneshop() {
       </Container>
 
       <section className="section-padding">
+        <div className="uy">
         <Container>
           <div className="partner-oneshop">
             <Table responsive>
@@ -860,7 +861,8 @@ function Partneroneshop() {
               </tbody>
             </Table>
           </div>
-        </Container>
+          </Container>
+          </div>
       </section>
       <section className="section-padding">
         <Container>
@@ -907,7 +909,7 @@ function Partneroneshop() {
                             <p>₹{item.price}</p>
                           </Col>
                           <Col>
-                            <h5>{item.discount}</h5>
+                            <h5>Save {parseInt(item.discount)} %</h5>
                           </Col>
                         </Row>
                         <Row>
