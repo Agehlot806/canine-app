@@ -405,6 +405,7 @@ a {
   float: right;
   font-size: 25px;
   color: red;
+  cursor: pointer;
 }
 
 .product-bag h6 {

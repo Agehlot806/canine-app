@@ -177,7 +177,7 @@ function PetshopProductbypartner() {
                         <div className="product-bag">
                           <Row>
                             <Col className="align-self-center">
-                              <h6>₹{item.price}</h6>
+                              <h6>₹{parseFloat(item.price)}</h6>
                             </Col>
                             {/* <Col>
                               <Link

@@ -7,963 +7,963 @@
 } */
 
 @media only screen and (max-width: 1024px) {
-    .navbar-area a {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .sticky-newheader {
-        /* overflow-x: hidden; */
-    }
-    .search-results {
-        position: absolute;
-        top: 100%;
-        left: 45%;
-        width: 300px;
-        border: none;
-    }
-    .offer-productContent button {
-        width: 185px;
-        height: 60px;
-    }
+  .navbar-area a {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .sticky-newheader {
+    /* overflow-x: hidden; */
+  }
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 45%;
+    width: 300px;
+    border: none;
+  }
+  .offer-productContent button {
+    width: 185px;
+    height: 60px;
+  }
 
-    .newheader ul li a {
-        font-size: 14px;
-    }
+  .newheader ul li a {
+    font-size: 14px;
+  }
 
-    .home-content h1 {
-        /* font-size: 30px; */
-        font-size: 20px;
-    }
+  .home-content h1 {
+    /* font-size: 30px; */
+    font-size: 20px;
+  }
 
-    .home-content p {
-        margin: 10px 0;
-    }
+  .home-content p {
+    margin: 10px 0;
+  }
 
-    .home-content button {
-        border-radius: 5px;
-        height: 55px;
-        padding: 0 25px;
-    }
+  .home-content button {
+    border-radius: 5px;
+    height: 55px;
+    padding: 0 25px;
+  }
 
-    .Newsletter-bg img {
-        width: 100%;
-    }
+  .Newsletter-bg img {
+    width: 100%;
+  }
 
-    .product-item img {
-        width: 100%;
-        height: 350px;
-    }
+  .product-item img {
+    width: 100%;
+    height: 350px;
+  }
 
-    .product-bag h5 {
-        font-size: 20px;
-    }
+  .product-bag h5 {
+    font-size: 20px;
+  }
 
-    .product-deatils-price h6 {
-        font-size: 18px;
-    }
+  .product-deatils-price h6 {
+    font-size: 18px;
+  }
 
-    .sold-out-btn a {
-        border-radius: 5px;
-        padding: 10px 25px;
-    }
+  .sold-out-btn a {
+    border-radius: 5px;
+    padding: 10px 25px;
+  }
 
-    .sold-out-btn button {
-        margin: 20px 0;
-        padding: 10px 25px;
-    }
+  .sold-out-btn button {
+    margin: 20px 0;
+    padding: 10px 25px;
+  }
 
-    .quantity-btn button {
-        padding: 5px 14px;
-    }
+  .quantity-btn button {
+    padding: 5px 14px;
+  }
 
-    .totelPAYCAR button {
-        font-size: 16px;
-    }
+  .totelPAYCAR button {
+    font-size: 16px;
+  }
 
-    .myorder-btn button {
-        font-size: 15px;
-    }
+  .myorder-btn button {
+    font-size: 15px;
+  }
 
-    .add-upload label {
-        width: 100%;
-    }
+  .add-upload label {
+    width: 100%;
+  }
 
-    .add-upload-area .form-group ul li a {
-        margin: 10px;
-    }
+  .add-upload-area .form-group ul li a {
+    margin: 10px;
+  }
 
-    .add-upload-area .form-group select {
-        width: 100%;
-    }
+  .add-upload-area .form-group select {
+    width: 100%;
+  }
 
-    .add-upload-area .form-group input {
-        width: 100%;
-    }
+  .add-upload-area .form-group input {
+    width: 100%;
+  }
 }
 
-
 @media only screen and (max-width: 912px) {
-    .paw-right img {
-        padding: 38px 0;
-    }
-    .notification-btn span {
-        top: -18px;
-        left: -28px;
-    }
-    .delete-addcard i {
-        font-size: 30px;
-    }
+  .paw-right img {
+    padding: 38px 0;
+  }
+  .notification-btn span {
+    top: -18px;
+    left: -28px;
+  }
+  .delete-addcard i {
+    font-size: 30px;
+  }
 
-    .totelPAYCAR button {
-        font-size: 12px;
-    }
-    .nav-item:hover .dropdown-menu {
-        display: contents;
-    }
-    .foodMore {
-        text-align: right;
-        margin: 0;
-    }
+  .totelPAYCAR button {
+    font-size: 12px;
+  }
+  .nav-item:hover .dropdown-menu {
+    display: contents;
+  }
+  .foodMore {
+    text-align: right;
+    margin: 0;
+  }
 
-    li.nav-item.nonhide {
-        display: none;
-    }
-    li.nav-.nonhide {
-        display: none;
-    }
-    .hide-icons {
-        display: flex;
-        align-items: center;
-    }
-    .otp-area {
-        padding: 15px;
-    }
-    .otp-area input {
-        border-radius: 8px;
-        height: 50px;
-        width: 50px !important;
-        font-size: 27px;
-    }
-    .menu-content {
-        display: inline-flex;
-    }
+  li.nav-item.nonhide {
+    display: none;
+  }
+  li.nav-.nonhide {
+    display: none;
+  }
+  .hide-icons {
+    display: flex;
+    align-items: center;
+  }
+  .otp-area {
+    padding: 15px;
+  }
+  .otp-area input {
+    border-radius: 8px;
+    height: 50px;
+    width: 50px !important;
+    font-size: 27px;
+  }
+  .menu-content {
+    display: inline-flex;
+  }
 
-    .hide-icons .header-inner-addon {
-        margin: 25px 0;
-    }
+  .hide-icons .header-inner-addon {
+    margin: 25px 0;
+  }
 
-    .hide-icons li {
-        list-style-type: none;
-    }
+  .hide-icons li {
+    list-style-type: none;
+  }
 
-    .login-btns button {
-        padding: 0 50px;
-    }
-    .navbar-collapse {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 300px;
-        height: 100%;
-        background-color: #fff;
-        transition: right 0.3s ease-in-out;
-        z-index: 1;
-    }
+  .login-btns button {
+    padding: 0 50px;
+  }
+  .navbar-collapse {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    transition: right 0.3s ease-in-out;
+    z-index: 1;
+  }
 
-    .navbar-collapse.show {
-        right: 0;
-    }
+  .navbar-collapse.show {
+    right: 0;
+  }
 
-    .nav-item {
-        display: block;
-    }
+  .nav-item {
+    display: block;
+  }
 
-    .offer-rightIMG {
-        display: none;
-    }
+  .offer-rightIMG {
+    display: none;
+  }
 
-    .food-product img {
-        width: 100px;
-        height: 100px;
-    }
+  .food-product img {
+    width: 100px;
+    height: 100px;
+  }
 
-    .Newsletter-bg img {
-        width: 400px;
-    }
+  .Newsletter-bg img {
+    width: 400px;
+  }
 
-    .Newsletter-bg {
-        text-align: center;
-    }
+  .Newsletter-bg {
+    text-align: center;
+  }
 
-    .home-content {
-        /* left: 20px; */
-        left: 60px;
-    }
+  .home-content {
+    /* left: 20px; */
+    left: 60px;
+  }
 
-    .dowload-invioce {
-        text-align: left;
-        margin: 0 0 20px;
-    }
+  .dowload-invioce {
+    text-align: left;
+    margin: 0 0 20px;
+  }
 
-    .order-table {
-        margin: 16px 0 0;
-    }
+  .order-table {
+    margin: 16px 0 0;
+  }
 
-    .contact-form {
-        margin: 0 0 25px;
-    }
+  .contact-form {
+    margin: 0 0 25px;
+  }
 
-    .dash-tabs ul li a {
-        padding: 10px 0 0 !important;
-    }
+  .dash-tabs ul li a {
+    padding: 10px 0 0 !important;
+  }
 
-    .dash-tabs li {
-        margin: 0 0 20px;
-    }
+  .dash-tabs li {
+    margin: 0 0 20px;
+  }
 
-    .Newsletter form {
-        margin: 15px 0 0;
-    }
+  .Newsletter form {
+    margin: 15px 0 0;
+  }
 }
 
 @media only screen and (max-width: 820px) {
-    .home-content h1 {
-        /* font-size: 24px; */
-        font-size: 20px;
-    }
+  .home-content h1 {
+    /* font-size: 24px; */
+    font-size: 20px;
+  }
 
-    p {
-        font-size: 16px;
-    }
+  p {
+    font-size: 16px;
+  }
 
-    .home-content p {
-        margin: 0 0 10px;
-    }
+  .home-content p {
+    margin: 0 0 10px;
+  }
 
-    .home-content button {
-        height: 35px;
-        padding: 0 10px;
-        font-size: 16px;
-    }
+  .home-content button {
+    height: 35px;
+    padding: 0 10px;
+    font-size: 16px;
+  }
 }
 
 @media only screen and (max-width: 540px) {
-    ul.mega-links p {
-        margin: 0 0 0 36px;
-    }
-    .food-product button {
-        margin: 0 4px;
-        padding: 5px;
-        font-size: 12px;
-    }
-    .section-padding {
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-    .header-inner-addon input {
-        width: 510px;
-    }
-    .hide-icons li {
-        list-style-type: none;
-    }
+  .home-content {
+    top: 0;
+  }
+  ul.mega-links p {
+    margin: 0 0 0 36px;
+  }
+  .food-product button {
+    margin: 0 4px;
+    padding: 5px;
+    font-size: 12px;
+  }
+  .section-padding {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .header-inner-addon input {
+    width: 510px;
+  }
+  .hide-icons li {
+    list-style-type: none;
+  }
 
-    .add-cart img {
-        width: 70px;
-        height: 70px;
-    }
+  .add-cart img {
+    width: 70px;
+    height: 70px;
+  }
 
-    .app-home a img {
-        width: 80px;
-    }
+  .app-home a img {
+    width: 80px;
+  }
 
-    .Newsletter {
-        padding: 5px 0;
-    }
+  .Newsletter {
+    padding: 5px 0;
+  }
 
-    .addCARThead h2 {
-        font-size: 16px;
-    }
+  .addCARThead h2 {
+    font-size: 16px;
+  }
 
-    .addCARThead h3 {
-        font-size: 18px;
-    }
+  .addCARThead h3 {
+    font-size: 18px;
+  }
 
-    .quantity-btn button {
-        padding: 0 6px;
-        height: 25px;
-    }
+  .quantity-btn button {
+    padding: 0 6px;
+    height: 25px;
+  }
 
-    .quantity-btn input {
-        width: 70px;
-        height: 26px;
-        text-align: center;
-    }
+  .quantity-btn input {
+    width: 70px;
+    height: 26px;
+    text-align: center;
+  }
 
-    .quantity-btn {
-        margin: 0 -8px 15px;
-    }
+  .quantity-btn {
+    margin: 0 -8px 15px;
+  }
 
-    .contact-card i {
-        height: 50px;
-        width: 50px;
-        font-size: 20px;
-    }
+  .contact-card i {
+    height: 50px;
+    width: 50px;
+    font-size: 20px;
+  }
 
-    .contact-card h3 {
-        font-size: 14px;
-    }
+  .contact-card h3 {
+    font-size: 14px;
+  }
 
-    .contact-card p {
-        font-size: 12px;
-    }
+  .contact-card p {
+    font-size: 12px;
+  }
 
-    .contact-form {
-        padding: 20px;
-    }
+  .contact-form {
+    padding: 20px;
+  }
 
-    .contact-form input {
-        height: 46px;
-    }
+  .contact-form input {
+    height: 46px;
+  }
 
-    .contact-form textarea {
-        height: 46px;
-    }
+  .contact-form textarea {
+    height: 46px;
+  }
 
-    .add-cart-total h5 {
-        font-size: 13px;
-    }
+  .add-cart-total h5 {
+    font-size: 13px;
+  }
 
-    .address-card button {
-        font-size: 12px;
-        padding: 5px 20px;
-    }
+  .address-card button {
+    font-size: 12px;
+    padding: 5px 20px;
+  }
 
-    .quantity-btn button i {
-        font-size: 10px;
-    }
+  .quantity-btn button i {
+    font-size: 10px;
+  }
 
-    .delete-addcard i {
-        font-size: 20px;
-    }
+  .delete-addcard i {
+    font-size: 20px;
+  }
 
-    .home-content {
-        padding: 12px;
-    }
+  .home-content {
+    padding: 12px;
+  }
 
-    .home-content h1 {
-        font-size: 15px;
-    }
+  .home-content h1 {
+    font-size: 15px;
+  }
 
-    .home-content p {
-        font-size: 10px;
-    }
+  .home-content p {
+    font-size: 10px;
+  }
 
-    .food-product {
-        padding: 15px 15px 28px;
-    }
+  .food-product {
+    padding: 15px 15px 28px;
+  }
 
-    .offerProImg {
-        text-align: center;
-    }
+  .offerProImg {
+    text-align: center;
+  }
 
-    .offerProImg img {
-        width: 150px;
-    }
+  .offerProImg img {
+    width: 150px;
+  }
 
-    .offer-productContent h1 {
-        font-size: 22px;
-    }
+  .offer-productContent h1 {
+    font-size: 22px;
+  }
 
-    .food-product img {
-        width: 100px;
-        height: 100px;
-    }
+  .food-product img {
+    width: 100px;
+    height: 100px;
+  }
 
-    .food-product h6 {
-        font-size: 18px;
-    }
+  .food-product h6 {
+    font-size: 18px;
+  }
 
-    .product-bag h5 {
-        font-size: 12px;
-    }
+  .product-bag h5 {
+    font-size: 12px;
+  }
 
-    .product-bag a img {
-        width: 30px;
-        height: 30px;
-    }
+  .product-bag a img {
+    width: 30px;
+    height: 30px;
+  }
 
-    .brand-bg h5 {
-        font-size: 20px;
-    }
+  .brand-bg h5 {
+    font-size: 20px;
+  }
 
-    .brand-bg p {
-        font-size: 13px;
-    }
+  .brand-bg p {
+    font-size: 13px;
+  }
 
-    .brand-bg a img {
-        width: 25px;
-    }
+  .brand-bg a img {
+    width: 25px;
+  }
 
-    .Newsletter-bg img {
-        width: 200px;
-    }
+  .Newsletter-bg img {
+    width: 200px;
+  }
 
-    .Newsletter h1 {
-        /* font-size: 13px; */
-        font-size: 14px;
-    }
+  .Newsletter h1 {
+    /* font-size: 13px; */
+    font-size: 14px;
+  }
 
-    .food-product p {
-        font-size: 12px;
-    }
+  .food-product p {
+    font-size: 12px;
+  }
 
-    .Newsletter input {
-        border-radius: 1px;
-        height: 38px;
-        font-size: 12px;
-    }
+  .Newsletter input {
+    border-radius: 1px;
+    height: 38px;
+    font-size: 12px;
+  }
 
-    .Newsletter form {
-        margin: 0;
-    }
+  .Newsletter form {
+    margin: 0;
+  }
 
-    .home-content .Newsletter button {
-        border-radius: 2px;
-        height: 25px;
-        /* font-size: 12px */
-        font-size: 9px;
-    }
+  .home-content .Newsletter button {
+    border-radius: 2px;
+    height: 25px;
+    /* font-size: 12px */
+    font-size: 9px;
+  }
 
-    .brandLOGO img {
-        width: 100px;
-    }
+  .brandLOGO img {
+    width: 100px;
+  }
 
-    .brand-main img {
-        width: 125px;
-        height: 125px;
-    }
+  .brand-main img {
+    width: 125px;
+    height: 125px;
+  }
 
-    .brand-bg a {
-        margin: 0 2px 0 2px;
-    }
+  .brand-bg a {
+    margin: 0 2px 0 2px;
+  }
 
-    .all-btn button {
-        height: 40px;
-        padding: 0 25px;
-    }
+  .all-btn button {
+    height: 40px;
+    padding: 0 25px;
+  }
 
-    .main-head {
-        font-size: 20px;
-    }
+  .main-head {
+    font-size: 20px;
+  }
 
-    .foodMore {
-        margin: 0 0 20px;
-        text-align: left;
-    }
+  .foodMore {
+    margin: 0 0 20px;
+    text-align: left;
+  }
 
-    .delete-addcard {
-        text-align: right;
-        margin: 10px 0;
-    }
+  .delete-addcard {
+    text-align: right;
+    margin: 10px 0;
+  }
 
-    .Newsletter-bg {
-        text-align: center;
-    }
+  .Newsletter-bg {
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 414px) {
-    p {
-        font-size: 20px;
-    }
-    .header-inner-addon input {
-        width: 386px;
-    }
-    .add-cart img {
-        width: 60px;
-        height: 60px;
-    }
+  p {
+    font-size: 20px;
+  }
+  .header-inner-addon input {
+    width: 386px;
+  }
+  .add-cart img {
+    width: 60px;
+    height: 60px;
+  }
 
+  .home-content h1 {
+    font-size: 13px;
+    margin: 0;
+  }
 
-    .home-content h1 {
-        font-size: 13px;
-        margin: 0;
-    }
+  .veterinary-head-text {
+    padding: 15px 0px;
+  }
 
-    .veterinary-head-text {
-        padding: 15px 0px;
-    }
+  .addCARThead h2 {
+    font-size: 13px;
+  }
 
-    .addCARThead h2 {
-        font-size: 13px;
-    }
+  .home-content p {
+    font-size: 8px;
+  }
 
-    .home-content p {
-        font-size: 8px;
-    }
+  .home-content {
+    padding: 5px;
+  }
 
-    .home-content {
-        padding: 5px;
-    }
+  .home-content button {
+    height: 22px;
+    padding: 0 5px;
+    font-size: 8px;
+  }
 
-    .home-content button {
-        height: 22px;
-        padding: 0 5px;
-        font-size: 8px;
-    }
+  .main-head {
+    font-size: 16px;
+  }
 
-    .main-head {
-        font-size: 16px;
-    }
+  .foodMore a {
+    font-size: 16px;
+  }
 
-    .foodMore a {
-        font-size: 16px;
-    }
+  .Shop-Deals img {
+    width: 100px;
+  }
 
-    .Shop-Deals img {
-        width: 100px;
-    }
+  .Newsletter h1 {
+    /* font-size: 26px; */
+    font-size: 14px;
+  }
 
-    .Newsletter h1 {
-        /* font-size: 26px; */
-        font-size: 14px;
-    }
+  .brandLOGO img {
+    width: 70px;
+  }
 
-    .brandLOGO img {
-        width: 70px;
-    }
+  .food-product img {
+    width: 100px;
+    height: 100px;
+  }
 
-    .food-product img {
-        width: 100px;
-        height: 100px;
-    }
+  .food-product h6 {
+    font-size: 15px;
+  }
 
-    .food-product h6 {
-        font-size: 15px;
-    }
+  .video-content p {
+    font-size: 13px;
+  }
 
-    .video-content p {
-        font-size: 13px;
-    }
+  .all-btn button {
+    height: 30px;
+    padding: 0 18px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
 
-    .all-btn button {
-        height: 30px;
-        padding: 0 18px;
-        border-radius: 4px;
-        font-size: 12px;
-    }
+  .food-product {
+    padding: 12px 12px 0;
+    border-radius: 15px;
+  }
 
-    .food-product {
-        padding: 12px 12px 0;
-        border-radius: 15px;
-    }
+  .section-padding {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 
-    .section-padding {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
+  .Newsletter-bg img {
+    width: 200px;
+  }
 
-    .Newsletter-bg img {
-        width: 200px;
-    }
+  .brand-main img {
+    width: 100px;
+    height: 100px;
+    margin: 0;
+  }
 
-    .brand-main img {
-        width: 100px;
-        height: 100px;
-        margin: 0;
-    }
+  .brand-text h5 {
+    font-size: 17px;
+  }
 
-    .brand-text h5 {
-        font-size: 17px;
-    }
+  .product-bag h5 {
+    font-size: 9px;
+  }
 
-    .product-bag h5 {
-        font-size: 9px;
-    }
+  .product-bag a img {
+    width: 25px;
+    height: 25px;
+  }
 
-    .product-bag a img {
-        width: 25px;
-        height: 25px;
-    }
+  .food-product i {
+    font-size: 20px;
+  }
 
-    .food-product i {
-        font-size: 20px;
-    }
+  .brand-bg h5 {
+    font-size: 15px;
+  }
 
-    .brand-bg h5 {
-        font-size: 15px;
-    }
+  .brand-bg p {
+    font-size: 10px;
+  }
 
-    .brand-bg p {
-        font-size: 10px;
-    }
+  .brand-bg a img {
+    width: 16px;
+  }
 
-    .brand-bg a img {
-        width: 16px;
-    }
+  .product-item-inner img {
+    width: 65px;
+    height: 65px;
+  }
 
-    .product-item-inner img {
-        width: 65px;
-        height: 65px;
-    }
+  .quantity-btn button {
+    padding: 0px 4px;
+  }
 
-    .quantity-btn button {
-        padding: 0px 4px;
-    }
+  .sold-out-btn a {
+    border-radius: 5px;
+    padding: 5px 16px;
+    font-size: 15px;
+  }
 
-    .sold-out-btn a {
-        border-radius: 5px;
-        padding: 5px 16px;
-        font-size: 15px;
-    }
+  .delete-addcard i {
+    font-size: 15px;
+  }
 
-    .delete-addcard i {
-        font-size: 15px;
-    }
+  .address-card p {
+    font-size: 12px;
+  }
 
-    .address-card p {
-        font-size: 12px;
-    }
+  .Daynamic-address td {
+    font-size: 11px;
+  }
 
-    .Daynamic-address td {
-        font-size: 11px;
-    }
+  .Daynamic-address th {
+    font-size: 11px;
+  }
 
-    .Daynamic-address th {
-        font-size: 11px;
-    }
+  .chk-address {
+    padding: 15px;
+    border-radius: 10px;
+  }
 
-    .chk-address {
-        padding: 15px;
-        border-radius: 10px;
-    }
+  .sold-out-btn button {
+    margin: 20px 0;
+    padding: 5px 15px;
+    font-size: 15px;
+  }
 
-    .sold-out-btn button {
-        margin: 20px 0;
-        padding: 5px 15px;
-        font-size: 15px;
-    }
+  .footer-list h5 {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
 
-    .footer-list h5 {
-        font-size: 18px;
-        margin: 0 0 10px;
-    }
+  .Track-Your {
+    display: block;
+  }
 
-    .Track-Your {
-        display: block;
-    }
+  .tranker-search button {
+    position: relative;
+    right: 0;
+    top: 10px;
+    width: 150px;
+  }
 
-    .tranker-search button {
-        position: relative;
-        right: 0;
-        top: 10px;
-        width: 150px;
-    }
+  .tracker-content span {
+    font-size: 12px;
+  }
 
-    .tracker-content span {
-        font-size: 12px;
-    }
+  .tracker-content {
+    margin: 0 0 20px;
+  }
 
-    .tracker-content {
-        margin: 0 0 20px;
-    }
+  .tranker-head span {
+    font-size: 12px;
+  }
 
-    .tranker-head span {
-        font-size: 12px;
-    }
+  .cancel-btn {
+    font-size: 10px !important;
+  }
 
-    .cancel-btn {
-        font-size: 10px !important;
-    }
+  .needplace-card {
+    padding: 10px;
+  }
 
-    .needplace-card {
-        padding: 10px;
-    }
+  .needplace-card img {
+    width: 50px;
+  }
 
-    .needplace-card img {
-        width: 50px;
-    }
+  .needplace-card h4 {
+    font-size: 15px;
+  }
 
-    .needplace-card h4 {
-        font-size: 15px;
-    }
+  .needplace-card p {
+    font-size: 12px;
+  }
 
-    .needplace-card p {
-        font-size: 12px;
-    }
+  .add-upload label {
+    border-radius: 15px;
+    font-size: 32px;
+  }
 
-    .add-upload label {
-        border-radius: 15px;
-        font-size: 32px;
-    }
+  .add-upload-area .form-group label {
+    font-size: 14px;
+  }
 
-    .add-upload-area .form-group label {
-        font-size: 14px;
-    }
-
-    .add-upload-area .form-group ul li a {
-        border-radius: 8px;
-        width: 100px;
-        height: 38px;
-        font-size: 15px;
-    }
-
+  .add-upload-area .form-group ul li a {
+    border-radius: 8px;
+    width: 100px;
+    height: 38px;
+    font-size: 15px;
+  }
 }
 
 @media only screen and (max-width: 425px) {
-.header-inner-addon input {
+  .header-inner-addon input {
     width: 385px;
-}
+  }
 }
 @media only screen and (max-width: 393px) {
-    .aboutImg-main {
-        margin: 0 -15%;
-    }
-    .header-inner-addon input {
-        width: 335px;
-    }
-    .Shop-Deals h1 {
-        font-size: 20px;
-    }
+  .aboutImg-main {
+    margin: 0 -15%;
+  }
+  .header-inner-addon input {
+    width: 335px;
+  }
+  .Shop-Deals h1 {
+    font-size: 20px;
+  }
 
-    .ProductPartner-card h3 {
-        font-size: 20px;
-    }
+  .ProductPartner-card h3 {
+    font-size: 20px;
+  }
 
-    .blog-card p {
-        font-size: 15px;
-    }
+  .blog-card p {
+    font-size: 15px;
+  }
 
-    .footer-list ul li a img {
-        width: 100px;
-    }
+  .footer-list ul li a img {
+    width: 100px;
+  }
 
-    .footer-list ul li a {
-        font-size: 15px;
-    }
+  .footer-list ul li a {
+    font-size: 15px;
+  }
 
-    .video-right img {
-        left: 64%;
-    }
+  .video-right img {
+    left: 64%;
+  }
 
-    .video-right img {
-        width: 100px;
-        left: 55%;
-    }
+  .video-right img {
+    width: 100px;
+    left: 55%;
+  }
 
-    .food-right {
-        left: 60%;
-    }
+  .food-right {
+    left: 60%;
+  }
 }
 
 @media only screen and (max-width: 320px) {
-    nav .wrapper {
-        padding: 0px 10px !important;
-    }
-    .food-product img {
-        width: 100px;
-        height: 100px;
-    }
-    .header-inner-addon input {
-        width: 295px;
-    }
-    .payment-done p {
-        margin: 15px 0;
-        font-size: 14px;
-    }
+  nav .wrapper {
+    padding: 0px 10px !important;
+  }
+  .food-product img {
+    width: 100px;
+    height: 100px;
+  }
+  .header-inner-addon input {
+    width: 295px;
+  }
+  .payment-done p {
+    margin: 15px 0;
+    font-size: 14px;
+  }
 
-    p {
-        font-size: 15px;
-    }
+  p {
+    font-size: 15px;
+  }
 
-    .video-right img {
-        width: 100px;
-    }
+  .video-right img {
+    width: 100px;
+  }
 
-    .food-right {
-        left: 70%;
-    }
-    .product-bag h5 {
-        font-size: 7px;
-    }
+  .food-right {
+    left: 70%;
+  }
+  .product-bag h5 {
+    font-size: 7px;
+  }
 }
 
 @media only screen and (max-width: 280px) {
-    .food-product img {
-        width: 60px;
-        height: 60px;
-    }
-    a.profiledes.searneee i {
-        display: none;
-    }
-    .header-inner-addon input {
-        width: 255px;
-    }
-    .quantity-btn button {
-        margin: 0 4px;
-    }
+  .food-product img {
+    width: 60px;
+    height: 60px;
+  }
+  a.profiledes.searneee i {
+    display: none;
+  }
+  .header-inner-addon input {
+    width: 255px;
+  }
+  .quantity-btn button {
+    margin: 0 4px;
+  }
 
-    .food-product h6 {
-        font-size: 10px;
-    }
+  .food-product h6 {
+    font-size: 10px;
+  }
 
-    .product-item-inner img {
-        width: 50px;
-        height: 50px;
-    }
+  .product-item-inner img {
+    width: 50px;
+    height: 50px;
+  }
 
-    .food-product p {
-        font-size: 8px;
-    }
+  .food-product p {
+    font-size: 8px;
+  }
 
-    .home-content h1 {
-        font-size: 10px;
-        margin: 0;
-    }
+  .home-content h1 {
+    font-size: 10px;
+    margin: 0;
+  }
 
-    .home-content p {
-        margin: 0;
-    }
+  .home-content p {
+    margin: 0;
+  }
 
-    .home-content button {
-        height: 16px;
-        font-size: 7px;
-    }
+  .home-content button {
+    height: 16px;
+    font-size: 7px;
+  }
 
-    .food h5 {
-        font-size: 5px;
-    }
+  .food h5 {
+    font-size: 5px;
+  }
 
-    .product-bag a img {
-        width: 15px;
-        height: 15px;
-    }
+  .product-bag a img {
+    width: 15px;
+    height: 15px;
+  }
 
-    .main-head {
-        font-size: 10px;
-    }
+  .main-head {
+    font-size: 10px;
+  }
 
-    .Shop-Deals img {
-        width: 50px;
-    }
+  .Shop-Deals img {
+    width: 50px;
+  }
 
-    .Shop-Deals h1 {
-        font-size: 16px;
-    }
+  .Shop-Deals h1 {
+    font-size: 16px;
+  }
 
-    .foodMore a {
-        font-size: 10px;
-    }
+  .foodMore a {
+    font-size: 10px;
+  }
 
-    .video-right img {
-        width: 90px;
-    }
+  .video-right img {
+    width: 90px;
+  }
 
-    .home-content button i {
-        margin: 4px;
-    }
+  .home-content button i {
+    margin: 4px;
+  }
 
-    .food-right {
-        left: 60%;
-    }
+  .food-right {
+    left: 60%;
+  }
 
-    .brand-main img {
-        width: 65px;
-        height: 65px;
-    }
+  .brand-main img {
+    width: 65px;
+    height: 65px;
+  }
 
-    .brandLOGO img {
-        width: 55px;
-        padding: 11px;
-    }
+  .brandLOGO img {
+    width: 55px;
+    padding: 11px;
+  }
 
-    .brand-text h5 {
-        font-size: 12px;
-    }
+  .brand-text h5 {
+    font-size: 12px;
+  }
 
-    .ProductPartner-card img {
-        width: 65px;
-        margin: 0 0 5px;
-    }
+  .ProductPartner-card img {
+    width: 65px;
+    margin: 0 0 5px;
+  }
 
-    .ProductPartner-card h3 {
-        font-size: 12px;
-    }
+  .ProductPartner-card h3 {
+    font-size: 12px;
+  }
 
-    .ProductPartner-card {
-        padding: 7px;
-    }
+  .ProductPartner-card {
+    padding: 7px;
+  }
 
-    .video-content p {
-        font-size: 10px;
-    }
+  .video-content p {
+    font-size: 10px;
+  }
 
-    .blog-card img {
-        width: 65px;
-        height: 65px;
-    }
+  .blog-card img {
+    width: 65px;
+    height: 65px;
+  }
 
-    .blog-card h3 {
-        font-size: 12px;
-    }
+  .blog-card h3 {
+    font-size: 12px;
+  }
 
-    .blog-card p {
-        font-size: 8px;
-    }
+  .blog-card p {
+    font-size: 8px;
+  }
 
-    .brand-bg h5 {
-        font-size: 12px;
-    }
+  .brand-bg h5 {
+    font-size: 12px;
+  }
 
-    .brand-bg p {
-        font-size: 7px;
-        margin: 0;
-    }
+  .brand-bg p {
+    font-size: 7px;
+    margin: 0;
+  }
 
-    .brand-bg a img {
-        width: 10px;
-    }
+  .brand-bg a img {
+    width: 10px;
+  }
 
-    .footer-list h5 {
-        font-size: 14px;
-        margin: 0;
-    }
+  .footer-list h5 {
+    font-size: 14px;
+    margin: 0;
+  }
 
-    .footer-list ul li {
-        margin: 0;
-    }
+  .footer-list ul li {
+    margin: 0;
+  }
 
-    .footer-list ul li a {
-        font-size: 8px;
-    }
+  .footer-list ul li a {
+    font-size: 8px;
+  }
 
-    .Newsletter-bg img {
-        width: 130px;
-    }
+  .Newsletter-bg img {
+    width: 130px;
+  }
 
-    .Newsletter h1 {
-        /* font-size: 12px; */
-        font-size: 10px;
-    }
+  .Newsletter h1 {
+    /* font-size: 12px; */
+    font-size: 10px;
+  }
 
-    .Newsletter input::placeholder {
-        font-size: 10px;
-    }
+  .Newsletter input::placeholder {
+    font-size: 10px;
+  }
 
-    .video-content button {
-        height: 35px;
-        font-weight: 600;
-        font-size: 12px;
-        padding: 0 15px;
-    }
+  .video-content button {
+    height: 35px;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 0 15px;
+  }
 
-    .allblogbtn button {
-        height: 35px;
-        font-weight: 600;
-        font-size: 12px;
-        padding: 0 15px;
-    }
+  .allblogbtn button {
+    height: 35px;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 0 15px;
+  }
 
-    .Brand-cus img {
-        width: 60px;
-    }
+  .Brand-cus img {
+    width: 60px;
+  }
 }

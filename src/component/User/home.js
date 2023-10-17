@@ -92,7 +92,7 @@ function Home(props) {
   // ((price * discount) / 100)
   const homeAllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banner`);
       sethomebanner(response.data.data);
       response.headers['Access-Control-Allow-Methods'] = 'GET'; // Allow specified methods
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
@@ -1233,7 +1233,7 @@ function Home(props) {
                         <div className="product-bag">
                           <Row>
                             <Col lg={6} sm={6} xs={6}>
-                              <p>₹{item.price}</p>
+                              <p>₹{parseFloat(item.price)}</p>
                             </Col>
                             <Col lg={6} sm={6} xs={6}>
                               <h5>Save {parseFloat(item.discount)}%</h5>

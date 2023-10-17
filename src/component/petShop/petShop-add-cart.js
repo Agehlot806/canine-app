@@ -745,7 +745,7 @@ function PetshopAddCart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{item.price}</h3>
+                    <h3>₹{parseFloat(item.price)}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />

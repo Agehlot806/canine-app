@@ -906,7 +906,7 @@ function Partneroneshop() {
                       <div className="product-bag">
                         <Row>
                           <Col>
-                            <p>₹{item.price}</p>
+                            <p>₹{parseFloat(item.price)}</p>
                           </Col>
                           <Col>
                             <h5>Save {parseInt(item.discount)} %</h5>
