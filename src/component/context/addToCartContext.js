@@ -17,10 +17,18 @@ export const CartProvider = ({ children }) => {
   const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");
   const customer_id =
-    loginType == "wholeseller"
+    loginType === "wholeseller"
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
-  let storedUserId = JSON.parse(customer_id);
+
+  let storedUserId;
+
+  try {
+    storedUserId = JSON.parse(customer_id);
+  } catch (error) {
+    // Handle the error here, or provide a default value if needed
+    storedUserId = null; // You can choose a suitable default value
+  }
   // ----------------------------------------
 
   const addToCartData = async (id, quantity) => {

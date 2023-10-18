@@ -17,11 +17,23 @@ export const NotificationProvider = ({ children }) => {
   const [notifithirdData, setNotifithirdData] = useState();
   const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");
-  const customer_id =
-    loginType === "wholeseller"
-      ? Number(localStorage.getItem("UserWholesellerId"))
-      : localStorage.getItem("userInfo");
-  const storedUserId = JSON.parse(customer_id);
+  // const customer_id =
+  //   loginType === "wholeseller"
+  //     ? Number(localStorage.getItem("UserWholesellerId"))
+  //     : localStorage.getItem("userInfo");
+  // const storedUserId = JSON.parse(customer_id);
+  const customer_id = loginType === "wholeseller"
+  ? Number(localStorage.getItem("UserWholesellerId"))
+  : localStorage.getItem("userInfo");
+
+let storedUserId;
+
+try {
+  storedUserId = JSON.parse(customer_id);
+} catch (error) {
+  // Handle the error here, or provide a default value if needed
+  storedUserId = null; // You can choose a suitable default value
+}
   const fetchNotifications = async () => {
     try {
       const response = await axios.get(
