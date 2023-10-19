@@ -81,7 +81,7 @@ function PetshopHome(props) {
   // ((price * discount) / 100)
   const homeAllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/categories/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banner`);
       sethomebanner(response.data.data);
       response.headers["Access-Control-Allow-Methods"] = "GET"; // Allow specified methods
       response.headers["Access-Control-Allow-Headers"] = "Content-Type"; // Allow specified headers

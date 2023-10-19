@@ -11,9 +11,12 @@
     margin-left: 0;
     margin-right: 0;
   }
+  input.homesea {
+    display: contents !important;
+  }
   .Newsletter {
     padding: 0;
-}
+  }
   .sticky-newheader {
     /* overflow-x: hidden; */
   }
@@ -107,6 +110,26 @@
 @media only screen and (max-width: 912px) {
   .paw-right img {
     padding: 38px 0;
+  }
+  
+  li.webhide {
+    display: block !important;
+}
+  .hide-icons {
+    position: relative;
+    top: 0%;
+    left: 0;
+  }
+  /* input.homesea {
+  width: 450px;
+} */
+  .newnavv {
+    height: 100%;
+    padding: 0 10px !important;
+    align-items: baseline !important;
+  }
+  a.profiledes.searneee {
+    padding: 8px;
   }
   .Newsletter h1 {
     font-size: 25px;
@@ -257,16 +280,31 @@
     position: initial !important;
     height: 30px;
   }
+  
+  /* input.homesea {
+    width: 258px;
+} */
+  .hide-icons {
+    position: absolute;
+    top: 45%;
+    left: 12px;
+  }
+  nav .wrapper {
+    line-height: 0;
+  }
+  .newnavv {
+    height: 115px;
+  }
   .new-content {
     padding: 10px 0;
-}
-.home-content {
-  top: 10px;
-  left: 20px;
-}
-.home-content button {
+  }
+  .home-content {
+    top: 10px;
+    left: 20px;
+  }
+  .home-content button {
     font-size: 10px;
-}
+  }
   ul.mega-links p {
     margin: 0 0 0 36px;
   }
@@ -375,11 +413,11 @@
 
   .home-content p {
     font-size: 10px;
-      margin: 0;
+    margin: 0;
   }
   .app-home {
     margin: 0;
-}
+  }
 
   .food-product {
     padding: 15px 15px 28px;
@@ -492,11 +530,18 @@
   .Newsletter-bg {
     text-align: center;
   }
+  /* input.homesea {
+    width: 285px;
+} */
 }
 
 @media only screen and (max-width: 414px) {
   p {
     font-size: 20px;
+  }
+  a.notification-btn i {
+    font-size: 22px;
+    margin: 25px 0 0 8px;
   }
   .header-inner-addon input {
     width: 386px;
@@ -530,13 +575,13 @@
     height: 25px;
     font-size: 10px;
     padding: 10px 0px 10px 5px;
-}
-.Newsletter button {
-  height: 25px;
-  font-size: 10px;
-  padding: 7px;
-  border-radius: 0;
-}
+  }
+  .Newsletter button {
+    height: 25px;
+    font-size: 10px;
+    padding: 7px;
+    border-radius: 0;
+  }
   .home-content button {
     height: 22px;
     padding: 0 5px;
@@ -790,6 +835,10 @@
   nav .wrapper {
     padding: 0px 10px !important;
   }
+  /* input.homesea {
+    width: 176px;
+    font-size: 15px;
+} */
   .food-product img {
     width: 100px;
     height: 100px;

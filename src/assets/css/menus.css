@@ -163,7 +163,7 @@ ul.mega-links p {
     left: -100%;
     background: #fff;
     display: block;
-    padding: 50px 10px;
+    padding: 0;
     line-height: 50px;
     overflow-y: auto;
     box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.18);
@@ -237,6 +237,7 @@ ul.mega-links p {
   .drop-menu li {
     margin: 0;
   }
+ 
   .drop-menu li a {
     border-radius: 5px;
     font-size: 18px;
@@ -279,7 +280,7 @@ ul.mega-links p {
     font-size: 19px;
   }
   input.homesea {
-    display: inline-block;
+    display: inline-block !important;
     border: none;
     font-size: 17px;
 }
@@ -290,6 +291,10 @@ ul.mega-links p {
 a.profiledes.searneee {
   height: 56px;
 }
+label.mobile-item.proihg {
+  padding: 0;
+}
+
 }
 
 nav input {
@@ -334,5 +339,11 @@ a.profiledes.searneee i {
   margin: 0 10px 0 0;
 }
 
+.arrr {
+  margin: 0 0 0 5px;
+  font-size: 12px;
+}
 
-
+li.webhide {
+  display: none;
+}
