@@ -91,7 +91,7 @@ function Petshopdashboard() {
                       <div className="">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/" +
+                            "https://canine.hirectjob.in//storage/app/" +
                             item.image
                           }
                         />
@@ -291,7 +291,7 @@ function Petshopdashboard() {
                       <div className="">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/" +
+                            "https://canine.hirectjob.in//storage/app/" +
                             item.image
                           }
                         />

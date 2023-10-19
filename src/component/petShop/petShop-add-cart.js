@@ -698,7 +698,7 @@ function PetshopAddCart() {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" + item.image
                             }
                           />
                         </div>
@@ -729,7 +729,7 @@ function PetshopAddCart() {
                   <Col lg={2} sm={2}>
                     <img
                       src={
-                        "https://caninetest.xyz//storage/app/public/product/" +
+                        "https://canine.hirectjob.in///storage/app/public/product/" +
                         item.image
                       }
                     />

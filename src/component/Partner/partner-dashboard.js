@@ -101,7 +101,7 @@ function Partnerdashboard() {
                 item.type === "default" && (
                   <img
                     className="partner-img"
-                    src={"https://caninetest.xyz/storage/app/" + item.image}
+                    src={"https://canine.hirectjob.in//storage/app/" + item.image}
                   />
                 )
             )
@@ -130,7 +130,7 @@ function Partnerdashboard() {
                 <div className="Members-card Members-bg1">
                   <img
                     src={
-                      "https://caninetest.xyz/uploads/subscription//" +
+                      "https://canine.hirectjob.in//uploads/subscription//" +
                       subscription.image
                     }
                   />

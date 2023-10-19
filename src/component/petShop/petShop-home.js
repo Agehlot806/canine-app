@@ -81,7 +81,7 @@ function PetshopHome(props) {
   // ((price * discount) / 100)
   const homeAllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banners/`);
       sethomebanner(response.data.data);
       response.headers["Access-Control-Allow-Methods"] = "GET"; // Allow specified methods
       response.headers["Access-Control-Allow-Headers"] = "Content-Type"; // Allow specified headers
@@ -473,7 +473,7 @@ function PetshopHome(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://caninetest.xyz/storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -481,7 +481,7 @@ function PetshopHome(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://caninetest.xyz/storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -947,7 +947,6 @@ function PetshopHome(props) {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
-    setProductDetails(null);
   };
 
   // ****************notifyme
@@ -1076,7 +1075,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://caninetest.xyz/storage/app/" +
+                                  "https://canine.hirectjob.in//storage/app/" +
                                   item.image
                                 }
                               />
@@ -1107,7 +1106,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://caninetest.xyz/storage/app/" +
+                                  "https://canine.hirectjob.in//storage/app/" +
                                   item.image
                                 }
                               />
@@ -1144,7 +1143,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://caninetest.xyz/storage/app/" +
+                                  "https://canine.hirectjob.in//storage/app/" +
                                   item.image
                                 }
                               />
@@ -1207,7 +1206,7 @@ function PetshopHome(props) {
                   <Link to={`/petshop-pet-category/${item.name}/${item.id}`}>
                     <img
                       src={
-                        "https://caninetest.xyz/storage/app/public/category/" +
+                        "https://canine.hirectjob.in//storage/app/public/category/" +
                         item.image
                       }
                     />
@@ -1270,7 +1269,7 @@ function PetshopHome(props) {
                         <div className="text-center">
                           <img
                             src={
-                              "https://caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in///storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -1370,7 +1369,7 @@ function PetshopHome(props) {
                             <div className="brandLOGO">
                               <img
                                 src={
-                                  "https://caninetest.xyz/storage/app/public/brand_logo/" +
+                                  "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
                                   brand.logo
                                 }
                               />
@@ -1378,7 +1377,7 @@ function PetshopHome(props) {
                             <div className="brand-main">
                               <img
                                 src={
-                                  "https://caninetest.xyz/storage/app/public/brand/" +
+                                  "https://canine.hirectjob.in//storage/app/public/brand/" +
                                   brand.image
                                 }
                               />
@@ -1406,7 +1405,7 @@ function PetshopHome(props) {
                       <Col lg={6} className="mb-4">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/" + item.image
+                            "https://canine.hirectjob.in//storage/app/" + item.image
                           }
                         />
                       </Col>
@@ -1422,7 +1421,7 @@ function PetshopHome(props) {
                           <Col sm={12} className="mb-4">
                             <img
                               src={
-                                "https://caninetest.xyz/storage/app/" +
+                                "https://canine.hirectjob.in//storage/app/" +
                                 item.image
                               }
                             />
@@ -1437,7 +1436,7 @@ function PetshopHome(props) {
                           <Col sm={12} className="mb-4">
                             <img
                               src={
-                                "https://caninetest.xyz/storage/app/" +
+                                "https://canine.hirectjob.in//storage/app/" +
                                 item.image
                               }
                             />
@@ -1482,7 +1481,7 @@ function PetshopHome(props) {
                               <div className="brandLOGO">
                                 <img
                                   src={
-                                    "https://caninetest.xyz/storage/app/public/brand_logo/" +
+                                    "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
                                     brand.logo
                                   }
                                 />
@@ -1490,7 +1489,7 @@ function PetshopHome(props) {
                               <div className="brand-main">
                                 <img
                                   src={
-                                    "https://caninetest.xyz/storage/app/public/brand/" +
+                                    "https://canine.hirectjob.in//storage/app/public/brand/" +
                                     brand.image
                                   }
                                 />
@@ -1528,7 +1527,7 @@ function PetshopHome(props) {
                           <video loop autoPlay muted>
                             <source
                               src={
-                                "https://caninetest.xyz/storage/app/" +
+                                "https://canine.hirectjob.in//storage/app/" +
                                 item.image
                               }
                               type="video/mp4"
@@ -1558,7 +1557,7 @@ function PetshopHome(props) {
                     <div className="blog-card">
                       <img
                         src={
-                          "https://caninetest.xyz/storage/app/public/blog/" +
+                          "https://canine.hirectjob.in//storage/app/public/blog/" +
                           item.image
                         }
                       />
@@ -1604,7 +1603,7 @@ function PetshopHome(props) {
                   <>
                     <img
                       src={
-                        "https://caninetest.xyz/storage/app/public/profile/" +
+                        "https://canine.hirectjob.in//storage/app/public/profile/" +
                         order.user_id[0].image
                       }
                       alt={order.user_id[0].f_name}
@@ -1651,13 +1650,13 @@ function PetshopHome(props) {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" + item.image
                             }
                           />
                         </div>
                         <Row className="justify-content-center">
                           <Col lg={7}>
-                            <div className="home-content">
+                            <div className="new-content">
                               <div className="Newsletter">
                                 <Flip right>
                                   <h1 className="main-head">
@@ -1732,7 +1731,7 @@ function PetshopHome(props) {
                                   >
                                     <img
                                       src={
-                                        "https://caninetest.xyz/storage/app/public/product/" +
+                                        "https://canine.hirectjob.in//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2102,7 +2101,7 @@ function PetshopHome(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
@@ -2814,7 +2813,7 @@ function PetshopHome(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

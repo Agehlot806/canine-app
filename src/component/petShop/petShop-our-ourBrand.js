@@ -1092,7 +1092,6 @@ function PetshopOurourbrand(props) {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
-    setProductDetails(null);
   };
 
   // ****************notifyme
@@ -1250,7 +1249,7 @@ function PetshopOurourbrand(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://caninetest.xyz/storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -1258,7 +1257,7 @@ function PetshopOurourbrand(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://caninetest.xyz/storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1631,7 +1630,7 @@ function PetshopOurourbrand(props) {
                                 <div className="text-center">
                                   <img
                                     src={
-                                      "https://caninetest.xyz//storage/app/public/product/" +
+                                      "https://canine.hirectjob.in///storage/app/public/product/" +
                                       item.image
                                     }
                                   />
@@ -1735,7 +1734,7 @@ function PetshopOurourbrand(props) {
                                 aria-selected="true"
                               >
                                 <img src={
-                                  "https://caninetest.xyz//storage/app/public/category/"
+                                  "https://canine.hirectjob.in///storage/app/public/category/"
                                   + item.image}
                                 />
                                 <h6>{item.name}</h6>
@@ -1774,7 +1773,7 @@ function PetshopOurourbrand(props) {
                                 <Link to={`/petshop-productDetails/${item.id}`}>
                                   <div className="text-center">
                                     <img src={
-                                      "https://caninetest.xyz//storage/app/public/category/"
+                                      "https://canine.hirectjob.in///storage/app/public/category/"
                                       + item.image}
                                     />
                                   </div>
@@ -1861,7 +1860,7 @@ function PetshopOurourbrand(props) {
                                   >
                                     <img
                                       src={
-                                        "https://caninetest.xyz/storage/app/public/product/" +
+                                        "https://canine.hirectjob.in//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2230,7 +2229,7 @@ function PetshopOurourbrand(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

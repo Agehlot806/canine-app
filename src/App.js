@@ -112,8 +112,8 @@ const ScrollToTop = () => {
 function App() {
   return (
     <div
-      // className="cursor"
-      className="dog-paw-cursor"
+      className="cursor"
+      // className="dog-paw-cursor/"
     >
       <BrowserRouter>
         <ScrollToTop /> {/* Add ScrollToTop component here */}

@@ -225,12 +225,12 @@ function Updateprofile() {
                     {/* {selectedImage && (
                       <img src={selectedImage} alt="Selected Image" style={{ width: '100px', height: '100px' }} />
                     )} */}
-                    {/* <img src={"https://caninetest.xyz/storage/app/public/profile/" + imgage} alt='' /> */}
+                    {/* <img src={"https://canine.hirectjob.in//storage/app/public/profile/" + imgage} alt='' /> */}
                     <img
                       src={
                         selectedImage
                           ? selectedImage
-                          : `https://caninetest.xyz/storage/app/public/profile/${imgage}`
+                          : `https://canine.hirectjob.in//storage/app/public/profile/${imgage}`
                       }
                       alt={selectedImage ? "Image" : "Image not available"}
                       style={{ width: "100px", height: "100px" }}

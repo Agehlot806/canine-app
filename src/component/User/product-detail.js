@@ -367,7 +367,7 @@ function Productdetail() {
   // useEffect(() => {
   //   if (productDetails.image) {
   //     setMainImage(
-  //       "https://caninetest.xyz/storage/app/public/product/" +
+  //       "https://canine.hirectjob.in//storage/app/public/product/" +
   //       productDetails.image
   //     );
   //   }
@@ -377,7 +377,7 @@ function Productdetail() {
   // const handleThumbnailClick = (index) => {
   //   const clickedImage = productDetails.images[index];
   //   setMainImage(
-  //     "https://caninetest.xyz/storage/app/public/product/" + clickedImage
+  //     "https://canine.hirectjob.in//storage/app/public/product/" + clickedImage
   //   );
   // };
 
@@ -388,7 +388,7 @@ function Productdetail() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://caninetest.xyz/storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.image
       );
     }
@@ -396,7 +396,7 @@ function Productdetail() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://caninetest.xyz/storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
       productDetails.images[index]
     );
   };
@@ -873,7 +873,6 @@ function Productdetail() {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
-    setProductDetails(null);
   };
 
   // loadRazorpayScript
@@ -957,7 +956,7 @@ function Productdetail() {
                       <div className="">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/" + item.image
+                            "https://canine.hirectjob.in//storage/app/" + item.image
                           }
                         />
                       </div>
@@ -1011,7 +1010,7 @@ function Productdetail() {
                             >
                               <img
                                 src={
-                                  "https://caninetest.xyz/storage/app/public/product/" +
+                                  "https://canine.hirectjob.in//storage/app/public/product/" +
                                   item
                                 }
                                 alt={`Image ${index}`}
@@ -1029,17 +1028,17 @@ function Productdetail() {
                 {lightboxIsOpen && (
                   <Lightbox
                     mainSrc={
-                      "https://caninetest.xyz/storage/app/public/product/" +
+                      "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[lightboxImageIndex]
                     }
                     nextSrc={
-                      "https://caninetest.xyz/storage/app/public/product/" +
+                      "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[
                       (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
-                      "https://caninetest.xyz/storage/app/public/product/" +
+                      "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[
                       (lightboxImageIndex +
                         productDetails.images.length -
@@ -1185,7 +1184,7 @@ function Productdetail() {
                         {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
                       </Col>
                       <Col lg={4} sm={4} xs={3}>
-                        <h5>{`₹${formattedAmount}`}</h5>
+                        <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                       </Col>
                       <Col lg={5} sm={5} xs={3}>
                         <h6>
@@ -1299,7 +1298,7 @@ function Productdetail() {
                               <div className="Product-img">
                                 <img
                                   src={
-                                    "https://caninetest.xyz/storage/app/public/profile/" +
+                                    "https://canine.hirectjob.in//storage/app/public/profile/" +
                                     order.user_id[0].image
                                   }
                                   alt={order.user_id[0].f_name}
@@ -1344,7 +1343,7 @@ function Productdetail() {
                               <div className="Product-img">
                                 <img
                                   src={
-                                    "https://caninetest.xyz/storage/app/public/profile/" +
+                                    "https://canine.hirectjob.in//storage/app/public/profile/" +
                                     order.user_id[0].image
                                   }
                                   alt={order.user_id[0].f_name}
@@ -1384,7 +1383,7 @@ function Productdetail() {
             item.type === "item_wise" && (
               <div className="product-innerBanner">
                 <img
-                  src={"https://caninetest.xyz/storage/app/" + item.image}
+                  src={"https://canine.hirectjob.in//storage/app/" + item.image}
                 />
                 <div className="home-content">
                   <h1>{item.title}</h1>
@@ -1426,7 +1425,7 @@ function Productdetail() {
                         <div className="text-center">
                           <img
                             src={
-                              "https://caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in///storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -1676,7 +1675,7 @@ function Productdetail() {
                                     >
                                       <img
                                         src={
-                                          "https://caninetest.xyz/storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1693,18 +1692,18 @@ function Productdetail() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex + 1) %
                               productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex +
                                 productDetails.images.length -
@@ -1842,7 +1841,7 @@ function Productdetail() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2076,7 +2075,7 @@ function Productdetail() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
@@ -2166,7 +2165,7 @@ function Productdetail() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>

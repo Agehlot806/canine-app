@@ -135,7 +135,7 @@ function SalesmanaddProduct(props) {
                                 >
                                     {categories.map((item) => (
                                         <div className="Shop-Deals" key={item.id}>
-                                            <img src={"https://caninetest.xyz/storage/app/public/category/" + item.image} />
+                                            <img src={"https://canine.hirectjob.in//storage/app/public/category/" + item.image} />
                                             <h1>{item.name}</h1>
                                         </div>
                                     ))}
@@ -154,7 +154,7 @@ function SalesmanaddProduct(props) {
                                                 <i class="fa fa-heart-o" />
                                                 <Link to="/salesman-product-details">
                                                     <div className='text-center'>
-                                                        <img src={"https://caninetest.xyz//storage/app/public/product/" + item.image} />
+                                                        <img src={"https://canine.hirectjob.in///storage/app/public/product/" + item.image} />
                                                     </div>
                                                     <div>
                                                         <h6>{item.name}</h6>

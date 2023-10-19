@@ -4001,3 +4001,8 @@ li.nav-.nonhide {
   max-height: 500px; 
   transition: max-height 0.3s ease-in-out;
 }  */
+
+
+.selct-card-text input {
+  cursor: pointer;
+}

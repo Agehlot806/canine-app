@@ -123,7 +123,7 @@ function PetshopProductbypartner() {
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/vendor/" +
+                            "https://canine.hirectjob.in//storage/app/public/vendor/" +
                             item.logo
                           }
                         />
@@ -165,7 +165,7 @@ function PetshopProductbypartner() {
                         <div className="text-center">
                           <img
                             src={
-                              "https://caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in///storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -198,7 +198,7 @@ function PetshopProductbypartner() {
                   //       {/* <img src={item.logo} /> */}
                   //       <img
                   //         src={
-                  //           "https://caninetest.xyz/storage/app/public/vendor/" +
+                  //           "https://canine.hirectjob.in//storage/app/public/vendor/" +
                   //           item.image
                   //         }
                   //       />
@@ -242,7 +242,7 @@ function PetshopProductbypartner() {
                     <div className="banner-bgmain" key={item.id}>
                       <img
                         src={
-                          "https://caninetest.xyz/storage/app/" +
+                          "https://canine.hirectjob.in//storage/app/" +
                           item.image
                         }
                       />
@@ -264,7 +264,7 @@ function PetshopProductbypartner() {
                       <div className="">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/" +
+                            "https://canine.hirectjob.in//storage/app/" +
                             item.image
                           }
                         />
