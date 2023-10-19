@@ -228,7 +228,6 @@
 //     setSearchQuery(e.target.value);
 //   };
 
-
 //   const Notifynotification = () => {
 //     axios
 //       .get(`${BASE_URL}/items/notify_list/${storedWholesellerId}`)
@@ -271,7 +270,6 @@
 //       }
 //     }
 //   };
-
 
 //   const DeleteNotificationone = (id) => {
 //     axios
@@ -947,8 +945,6 @@
 
 // export default PetShopHeader;
 
-
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
@@ -1253,13 +1249,19 @@ function Newheader(props) {
       }
     }
   };
-  const [customCount, setCustomCount] = useState(0);
+  const { totalLength } = useNotificationContext();
+  // const { notificationLength, dataLengthpetnotification} =
+  //   useNotificationContext();
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
   const handleBellClick = () => {
-    setCustomCount(0);
-    localStorage.setItem("customCount", 0);
     setTotalLengthVisible(false);
+    localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
+    setTimeout(() => {
+      setTotalLengthVisible(true);
+      localStorage.setItem("totalLengthVisibility", JSON.stringify(true));
+    }, 30 * 60 * 1000);
   };
+
   return (
     <>
       <div className="sticky-newheader">
@@ -1278,25 +1280,10 @@ function Newheader(props) {
               </Link>
             </div>
             <div className="hide-icons">
-              {/* <li>
-              <a
-                className="notification-btn"
-                data-toggle="modal"
-                data-target="#exampleModal"
-                onClick={handleBellClick}
-              >
-                <i class="fa fa-bell-o" />
-                {isTotalLengthVisible && <span>{totalLength}</span>}
-              </a>
-            </li> */}
-
               {storedWholesellerId ? (
                 <>
                   <li>
-                    <Link
-                      to="/petShop-add-cart"
-                      className="profiledes notification-btn"
-                    >
+                    <Link to="/petShop-add-cart" className="notification-btn">
                       <i class="fa fa-shopping-cart" />{" "}
                       <span className="cart-countpetshop">
                         {dataLengthpetshop}
@@ -1894,7 +1881,7 @@ function Newheader(props) {
                   <i className="fa fa-search" />
                   <input
                     type="text"
-                    placeholder="What are you looking for?"
+                    placeholder="What are you looking for"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                     className="homesea"
@@ -1930,10 +1917,7 @@ function Newheader(props) {
                       onClick={handleBellClick}
                     >
                       <i class="fa fa-bell-o" />
-                      {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
-                      {isTotalLengthVisible && (
-                        <span>{isNaN(customCount) ? 0 : customCount}</span>
-                      )}
+                      {isTotalLengthVisible && <span>{totalLength}</span>}
                     </a>
                   </li>
                   <li className="nonhide">
@@ -2058,7 +2042,7 @@ function Newheader(props) {
                         : "/petshop-login"
                     }
                   >
-                    Login/Sign Up
+                    Sign In
                   </Link>
                 </li>
               )}
