@@ -110,7 +110,7 @@
 //     const customer_id = localStorage.getItem("userInfo");
 //     // Fetch profile data from the API
 //     axios
-//       .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
+//       .get(`https://caninetest.xyz/api/v1/auth/my_profile/${customer_id}`)
 //       .then((response) => {
 //         if (response.data.status === "200" && response.data.data.length > 0) {
 //           const profile = response.data.data[0];
@@ -194,7 +194,7 @@
 //   const fetchData = async () => {
 //     try {
 //       const response = await axios.get(
-//         "https://canine.hirectjob.in/api/v1/items/latest"
+//         "https://caninetest.xyz/api/v1/items/latest"
 //       );
 //       setProducts(response.data.data);
 //     } catch (error) {
@@ -1580,6 +1580,8 @@
 
 // export default Newheader;
 
+
+
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, history } from "react-router-dom";
 import logo from "../assets/images/logo.png";
@@ -1593,6 +1595,7 @@ import { Col, Row } from "react-bootstrap";
 import loicon1 from "../assets/images/img/loicon1.png";
 import { BiSolidOffer } from "react-icons/bi";
 import "../assets/css/menus.css";
+import { useCartWithoutLogin } from "../component/context/AddToCardWithoutLogin";
 
 function Newheader(props) {
   // const { dataLength } = props;
@@ -1607,9 +1610,16 @@ function Newheader(props) {
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, addToCartData } = useCartContext();
   const { totalLength } = useNotificationContext();
-  const { notificationLength, dataLengthpetnotification} =
+  const { notificationLength, dataLengthpetnotification } =
     useNotificationContext();
 
+  const { cart, dispatch } = useCartWithoutLogin();
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+      console.log('customerLoginId', customerLoginId);
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
   // ...
   useEffect(() => {
@@ -1715,7 +1725,7 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
+      .get(`https://caninetest.xyz/api/v1/auth/my_profile/${customer_id}`)
       .then((response) => {
         if (response.data.status === "200" && response.data.data.length > 0) {
           const profile = response.data.data[0];
@@ -1799,7 +1809,7 @@ function Newheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        "https://caninetest.xyz/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -1946,7 +1956,7 @@ function Newheader(props) {
                   <li>
                     <Link to="/add-cart" className="notification-btn">
                       <i class="fa fa-shopping-cart" />{" "}
-                      <span className="cart-count">{dataLength}</span>{" "}
+                      <span className="cart-count">{customerLoginId === null? cart?.length : dataLength}</span>{" "}
                     </Link>
                   </li>
                   <li>
@@ -1958,6 +1968,7 @@ function Newheader(props) {
                       Logout
                     </Link>
                   </li>
+
                 </>
               ) : (
                 <li>
@@ -2022,9 +2033,7 @@ function Newheader(props) {
                                 )
                             )
                           ) : (
-                            <p className="emptyMSG">
-                              No Treats Sub Categories.
-                            </p>
+                            <p className="emptyMSG">No Treats Sub Categories.</p>
                           )}
                         </ul>
                       </Col>
@@ -2290,9 +2299,7 @@ function Newheader(props) {
                                 )
                             )
                           ) : (
-                            <p className="emptyMSG">
-                              No Treats Sub Categories.
-                            </p>
+                            <p className="emptyMSG">No Treats Sub Categories.</p>
                           )}
                         </ul>
                       </Col>
@@ -2371,8 +2378,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name ==
-                                  "Beds Cages, Scratcher & Crates" && (
+                                item.name == "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2560,7 +2566,7 @@ function Newheader(props) {
               <li className="nonhide">
                 <Link to="/add-cart" className="profiledes notification-btn">
                   <i class="fa fa-shopping-cart" />{" "}
-                  <span className="cart-count">{dataLength}</span>{" "}
+                  <span className="cart-count">{customerLoginId === null? cart?.length : dataLength}</span>{" "}
                 </Link>
               </li>
               {storedUserId ? (
@@ -2592,7 +2598,7 @@ function Newheader(props) {
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
+                            profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2604,7 +2610,7 @@ function Newheader(props) {
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
+                            profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2622,10 +2628,7 @@ function Newheader(props) {
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to="/all-service-booking"
-                        >
+                        <Link className="dropdown-item" to="/all-service-booking">
                           All Service Booking
                         </Link>
                       </li>
@@ -2782,10 +2785,7 @@ function Newheader(props) {
                             <Link to="">
                               <Row>
                                 <Col lg={2} className="align-self-center">
-                                  <Link
-                                    to={`/product-details/${ob.item_id}`}
-                                    onClick={() => handleLinkClick(ob.item_id)}
-                                  >
+                                  <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
                                     <i className="fa fa-info-circle" />
                                   </Link>
                                 </Col>
@@ -2851,9 +2851,8 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${
-                              ob.status === "unread" ? "unread" : "read"
-                            }`}
+                            className={`notification ${ob.status === "unread" ? "unread" : "read"
+                              }`}
                             key={index}
                           >
                             <Row>
@@ -2998,3 +2997,4 @@ function Newheader(props) {
 }
 
 export default Newheader;
+

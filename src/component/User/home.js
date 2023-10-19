@@ -1712,7 +1712,7 @@ function Home(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+             <Link class="quickarea fa fa-times" data-dismiss="modal"> </Link>
               <section className="section-padding">
                 <Container>
                   <Row>

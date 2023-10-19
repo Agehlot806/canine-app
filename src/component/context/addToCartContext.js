@@ -43,7 +43,11 @@ export const CartProvider = ({ children }) => {
         }
       );
 
-      setDataLength(response.data.data.length);
+      const savedCartItem = JSON.parse(localStorage.getItem('savedCartItems')) || [];
+      console.log("savedCartItem",savedCartItem);
+      setDataLength(savedCartItem.length);
+
+      // setDataLength(response.data.data.length);
       setDataLengthpetshop(response.data.data.length);
 
       const newCartData = response.data.data.map((item) => ({

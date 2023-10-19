@@ -18,6 +18,7 @@ import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 import { loadRazorpay } from "../../utils";
 import paydone from "../../assets/images/icon/paydone.png";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Addcart() {
   const { id } = useParams();
@@ -33,6 +34,12 @@ function Addcart() {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
 
   // const firstDiscount = couponlist.length > 0 ? couponlist[0] : null;
   // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
@@ -568,38 +575,39 @@ function Addcart() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://caninetest.xyz/storage/app/" + item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://caninetest.xyz/storage/app/" + item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
       </div>
       <section className="section-padding">
         <div className="add-cart">
-          {addToCartProduct && addToCartProduct.length > 0 ? (
-            addToCartProduct.map((item, index) => (
+          {/* with out signin start */}
+          {customerLoginId === null ? cart && cart.length > 0 ? (
+            cart.map((item, index) => (
               <Container>
                 <Row>
                   <Col lg={2} sm={2}>
@@ -646,7 +654,7 @@ function Addcart() {
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
                       className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     >
                       <Link onClick={() => removeFromCart(item.id)}>
                         <i class="fa fa-trash-o" />
@@ -657,12 +665,101 @@ function Addcart() {
                 </Row>
               </Container>
             ))
+
           ) : (
             <div className="Emptycart">
               <img src={cart} />
               <p className="emptyMSG">Cart is Empty</p>
             </div>
-          )}
+          )
+            : addToCartProduct && addToCartProduct.length > 0 ? (
+              addToCartProduct.map((item, index) => (
+                <Container>
+                  <Row>
+                    <Col lg={2} sm={2}>
+                      <img
+                        src={
+                          "https://caninetest.xyz//storage/app/public/product/" +
+                          item.image
+                        }
+                      />
+                    </Col>
+                    <Col lg={6} sm={5} className="align-self-center addCARThead">
+                      <h2>{item.item_name}</h2>
+                      <p>Selected Variant : {item.variant}</p>
+                    </Col>
+                    <Col
+                      lg={2}
+                      sm={3}
+                      xs={6}
+                      className="align-self-center addCARThead"
+                    >
+                      <h3>₹{item.price}</h3>
+
+                      <div className="quantity-btn">
+                        <button onClick={() => handleDecrementone(index)}>
+                          <i className="fa fa-minus" />
+                        </button>
+                        <form>
+                          <div className="form-group">
+                            <input
+                              type="tel"
+                              className="form-control"
+                              placeholder="Quantity"
+                              value={item.quantity}
+                              onChange={handleQuantityChange}
+                              autoComplete="new-number"
+                            />
+                          </div>
+                        </form>
+                        <button onClick={() => handleIncrementone(index)}>
+                          <i className="fa fa-plus" />
+                        </button>
+                      </div>
+                    </Col>
+                    <Col lg={2} sm={2} xs={6} className="align-self-center">
+                      <div
+                        className="delete-addcard"
+                      // onClick={() => removeFromCart(item.id)}
+                      >
+                        <Link onClick={() => removeFromCart(item.id)}>
+                          <i class="fa fa-trash-o" />
+                        </Link>
+                      </div>
+                    </Col>
+                    <hr />
+                  </Row>
+                </Container>
+              ))
+            ) : (
+              <div className="Emptycart">
+                <img src={cart} />
+                <p className="emptyMSG">Cart is Empty</p>
+              </div>
+            )}
+
+          {customerLoginId === null  && (
+            <Col sm={6}>
+              {/* <Button onClick={() => handlePayment()}>
+                              Checkout
+                            </Button> */}
+              <Button
+                data-toggle="modal"
+                data-target="#cod"
+              // onClick={handleAddToCart}
+              >
+                {/* <Link
+                                // to="/user-pay-method"
+                              > */}
+                Checkout
+                {/* </Link> */}
+              </Button>
+              <Button>
+                <Link to="/product">Continue Shopping</Link>
+              </Button>
+            </Col>
+            )}
+
           {addToCartProduct && addToCartProduct.length > 0 ? (
             <Container>
               <div className="needplace">
@@ -781,9 +878,9 @@ function Addcart() {
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount ||
-                                originalPrice + taxamound
+                              originalPrice -
+                              disscountvalue?.discount ||
+                              originalPrice + taxamound
                             )}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
@@ -857,11 +954,10 @@ function Addcart() {
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${
-                                addressContentVisible
+                              className={`fa ${addressContentVisible
                                   ? "fa-arrow-up"
                                   : "fa-arrow-down"
-                              }`}
+                                }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -957,9 +1053,9 @@ function Addcart() {
                               )}`} */}
                               {`${parseInt(
                                 originalPrice * 0.05 +
-                                  originalPrice -
-                                  disscountvalue?.discount ||
-                                  originalPrice + taxamound
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
@@ -970,7 +1066,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                              // onClick={handleAddToCart}
+                            // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1636,8 +1732,8 @@ function Addcart() {
                             type="button"
                             className="btn btn-primary btn-apply coupon"
                             data-dismiss="modal"
-                            // data-toggle="modal"
-                            // data-target="#Coupon"
+                          // data-toggle="modal"
+                          // data-target="#Coupon"
                           >
                             Apply
                           </button>

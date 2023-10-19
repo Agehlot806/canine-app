@@ -27,13 +27,15 @@ import "react-image-lightbox/style.css"; // Import the CSS for the lightbox styl
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
+import { useContext } from "react";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Productdetail() {
   const { id } = useParams();
   console.log("id: ", id);
   const [paymentId, setPaymentId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
-  console.log("productDetails ", productDetails?.id);
+  console.log("productDetails ", productDetails);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [notifyMeData, setNotifyMeData] = useState("");
@@ -41,7 +43,12 @@ function Productdetail() {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -90,6 +97,17 @@ function Productdetail() {
   let storedUserId = JSON.parse(customer_id);
   console.log("customer_id: ", customer_id);
 
+  // ************************Save Cart
+  // useEffect(() => {
+  //   const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  //   setProductDetails(savedCartItems);
+  // }, []);
+
+  useEffect(() => {
+    // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    localStorage.setItem('savedCartItems', JSON.stringify([...addToCartStatus, productDetails]));
+    // setCartItems(savedCartItems);
+  }, [productDetails]);
   const handleAddToCart = async () => {
     try {
       const response = await axios.post(
@@ -112,9 +130,14 @@ function Productdetail() {
       );
 
       if (response.data.success) {
+        // Store the cart items in local storage
+        // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        // const updatedCart = [...savedCartItems, productDetails];
+        // localStorage.setItem('cart', JSON.stringify(updatedCart));
+
         const updatedCart = [...addToCartStatus, productDetails];
         setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
+        setAddToCartStatus("Added to cart!");
         toast.success("Added to cart!");
         // Navigate("/addcart")
       }
@@ -366,7 +389,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -374,7 +397,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -928,30 +951,30 @@ function Productdetail() {
           <div>
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://caninetest.xyz/storage/app/" + item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
+                (item, index) =>
+                  item.type === "default" && (
+                    <div className="home-img">
+                      <div className="">
+                        <img
+                          src={
+                            "https://caninetest.xyz/storage/app/" + item.image
+                          }
+                        />
                       </div>
-                    )
-                )
+                      <Row>
+                        <Col lg={7}>
+                          <div className="home-content">
+                            <h1>{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>
+                              Explore More <i className="fa fa-angle-right" />
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+              )
               : null}
           </div>
         </Container>
@@ -973,7 +996,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1012,16 +1035,16 @@ function Productdetail() {
                     nextSrc={
                       "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex + 1) % productDetails.images.length
+                      (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://caninetest.xyz/storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                          productDetails.images.length
+                      (lightboxImageIndex +
+                        productDetails.images.length -
+                        1) %
+                      productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1030,7 +1053,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                          productDetails.images.length
+                        productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1101,11 +1124,10 @@ function Productdetail() {
                                       </div> */}
                                       {item.stock !== 0 ? (
                                         <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
+                                          className={`tab-variations ${selectedVariant === item.type
+                                            ? "active"
+                                            : ""
+                                            }`}
                                           onClick={() => {
                                             setSelectedVariant(item.type);
                                             setSelectedVariantPrice(item.price); // Store the price in state
@@ -1210,12 +1232,31 @@ function Productdetail() {
           </Row>
           {productDetails.stock && productDetails.stock.length !== 0 ? (
             <div className="productBTNaddcard">
-              <Button>
-                <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
-                  <i className="fa fa-shopping-bag" /> Add to cart
-                </Link>
-                <p>{addToCartStatus}</p>
-              </Button>
+              {customerLoginId === null ?
+                <Button>
+                  <Link onClick={() => {
+                    dispatch({
+                      type: 'ADD_TO_CART',
+                      payload: {
+                        item_id: productDetails.id,
+                        variant: selectedVariant,
+                        price: selectedVariantPrice,
+                        quantity: quantity,
+                        name:productDetails.name,
+                      }
+                    })
+                  }}>
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                  <p>{addToCartStatus}</p>
+                </Button>
+                :
+                (<Button>
+                  <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                  <p>{addToCartStatus}</p>
+                </Button>)}
             </div>
           ) : (
             <div className="sold-out-btn mt-3">
@@ -1339,22 +1380,22 @@ function Productdetail() {
 
       {itemwiseonebanner
         ? itemwiseonebanner.map(
-            (item, index) =>
-              item.type === "item_wise" && (
-                <div className="product-innerBanner">
-                  <img
-                    src={"https://caninetest.xyz/storage/app/" + item.image}
-                  />
-                  <div className="home-content">
-                    <h1>{item.title}</h1>
-                    <p>{item.description}</p>
-                    <Button>
-                      Explore More <i className="fa fa-angle-right" />
-                    </Button>
-                  </div>
+          (item, index) =>
+            item.type === "item_wise" && (
+              <div className="product-innerBanner">
+                <img
+                  src={"https://caninetest.xyz/storage/app/" + item.image}
+                />
+                <div className="home-content">
+                  <h1>{item.title}</h1>
+                  <p>{item.description}</p>
+                  <Button>
+                    Explore More <i className="fa fa-angle-right" />
+                  </Button>
                 </div>
-              )
-          )
+              </div>
+            )
+        )
         : null}
 
       <section className="section-padding food">
@@ -1410,9 +1451,8 @@ function Productdetail() {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>{`₹${
-                                item.price - (item.price * item?.discount) / 100
-                              }`}</h6>
+                              <h6>{`₹${item.price - (item.price * item?.discount) / 100
+                                }`}</h6>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1619,7 +1659,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1659,17 +1699,17 @@ function Productdetail() {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1678,13 +1718,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1737,12 +1777,11 @@ function Productdetail() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
+                                                  className={`tab-variations ${selectedVariant ===
                                                     item.type
-                                                      ? "active"
-                                                      : ""
-                                                  }`}
+                                                    ? "active"
+                                                    : ""
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1946,11 +1985,10 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
+                                  className={`fa ${addressContentVisible
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2054,11 +2092,10 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`tab-variations ${selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2683,11 +2720,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
