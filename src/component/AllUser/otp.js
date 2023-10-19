@@ -4,12 +4,15 @@ import logo from "../../assets/images/logo.png";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
+import { BASE_URL } from "../../Constant/Index";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Otp() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(1234);
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(30);
+  const { cart, dispatch } = useCartWithoutLogin();
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -50,6 +53,7 @@ function Otp() {
         }
         console.log("response.data.data: ", response.data.data);
         navigate("/");
+        handleAddToCart(response.data.data[0].id)
       }
     } catch (error) {
       console.error(error);
@@ -82,6 +86,36 @@ function Otp() {
       clearInterval(interval);
     };
   }, [seconds]);
+
+
+  const handleAddToCart = async (id) => {
+    try {
+      const response = cart.forEach(element => {
+        const res = axios.post(
+          `${BASE_URL}/customer/wish-list/add_product`,
+          {
+           
+            item_name: element?.name,
+            variant: element.variant, // You may need to update this based on your data
+            image: element?.image,
+            quantity: element.quantity,
+            price: element.price,
+            user_id: id,
+            item_id: element?.item_id,
+          }
+        );
+        return res
+      });
+
+      if (response.data.success) {
+        toast.success("Added to cart!");
+        // Navigate("/addcart")
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
+
   return (
     <>
       <div className="otp-bg">
