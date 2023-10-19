@@ -70,7 +70,7 @@ function Planbuy() {
         handler: (response) => {
           setPaymentId(response.razorpay_payment_id);
           // Handle the success callback
-          window.location.href = "https://canine.hirectjob.in//admin/auth/login";
+          window.location.href = "https://canine.hirectjob.in/admin/auth/login";
           console.log("Payment Successful:", response);
         },
 

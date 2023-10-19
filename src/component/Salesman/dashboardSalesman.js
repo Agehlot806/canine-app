@@ -268,7 +268,7 @@ function DashboadSalesman() {
                           </li>
                         </ul>
                       </Col>
-                      <Col lg={6}>
+                      {/* <Col lg={6}>
                         <div className="side-filter">
                           <form className="form-inline my-2 my-lg-0">
                             <div className="left-inner-addon input-container">
@@ -285,7 +285,7 @@ function DashboadSalesman() {
                             </Link>
                           </form>
                         </div>
-                      </Col>
+                      </Col> */}
                     </Row>
 
                     <div className="tab-content" id="pills-tabContent">

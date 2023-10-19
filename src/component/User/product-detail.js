@@ -1239,9 +1239,10 @@ function Productdetail() {
                       payload: {
                         item_id: productDetails.id,
                         variant: selectedVariant,
-                        price: selectedVariantPrice,
+                        price: formattedAmount,
                         quantity: quantity,
                         name:productDetails.name,
+                        image: productDetails.image
                       }
                     })
                   }}>
