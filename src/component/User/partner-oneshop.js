@@ -241,7 +241,7 @@ function Partneroneshop() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://caninetest.xyz/storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -249,7 +249,7 @@ function Partneroneshop() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://caninetest.xyz/storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -666,7 +666,6 @@ function Partneroneshop() {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
-    setProductDetails(null);
   };
 
   const handleAddToCart = async () => {
@@ -824,14 +823,14 @@ function Partneroneshop() {
         <div className="all-bg">
           <img
             src={
-              "https://caninetest.xyz/storage/app/public/store/cover/" +
+              "https://canine.hirectjob.in//storage/app/public/store/cover/" +
               state?.item.cover_photo
             }
           />
         </div>
         {console.log(
           "coverPhoto",
-          "https://caninetest.xyz/storage/app/public/store/cover/" +
+          "https://canine.hirectjob.in//storage/app/public/store/cover/" +
             state?.item.cover_photo
         )}
       </Container>
@@ -894,7 +893,7 @@ function Partneroneshop() {
                       <div className="text-center">
                         <img
                           src={
-                            "https://caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in///storage/app/public/product/" +
                             item.image
                           }
                         />
@@ -1012,7 +1011,7 @@ function Partneroneshop() {
                                     >
                                       <img
                                         src={
-                                          "https://caninetest.xyz/storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1030,18 +1029,18 @@ function Partneroneshop() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -1807,7 +1806,7 @@ function Partneroneshop() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

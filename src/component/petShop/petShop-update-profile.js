@@ -378,7 +378,7 @@ function PetshopUpdateprofile() {
                       <div className="image-preview">
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/delivery-man/" +
+                            "https://canine.hirectjob.in//storage/app/public/delivery-man/" +
                             profileData.image
                           }
                           alt="profile"
@@ -387,7 +387,7 @@ function PetshopUpdateprofile() {
                     )} */}
                     <Form.Control type="file" onChange={halderimage} />
                     {/* <img src={
-                     loginType == "salesman" ? "https://caninetest.xyz/storage/app/public/delivery-man/" + imgage : "https://caninetest.xyz/storage/app/public/profile/" + imgage
+                     loginType == "salesman" ? "https://canine.hirectjob.in//storage/app/public/delivery-man/" + imgage : "https://canine.hirectjob.in//storage/app/public/profile/" + imgage
                       } alt='' /> */}
                     {selectedImage ? (
                       <img
@@ -400,7 +400,7 @@ function PetshopUpdateprofile() {
                         src={
                           loginType === "salesman"
                             ? ` /public/delivery-man/${imgage}`
-                            : `https://caninetest.xyz/storage/app/public/profile/${imgage}`
+                            : `https://canine.hirectjob.in//storage/app/public/profile/${imgage}`
                         }
                         alt={selectedImage ? "Image" : "Image not available"}
                         style={{ width: "100px", height: "100px" }}

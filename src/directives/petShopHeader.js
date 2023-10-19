@@ -715,11 +715,11 @@ function PetShopHeader(props) {
                           src={
                             loginType == "salesman"
                               ? salesmanProfile?.image
-                                ? "https://caninetest.xyz/storage/app/public/delivery-man/" +
+                                ? "https://canine.hirectjob.in//storage/app/public/delivery-man/" +
                                   salesmanProfile?.image
                                 : loicon1
                               : profileData?.image
-                              ? "https://caninetest.xyz/storage/app/public/profile/" +
+                              ? "https://canine.hirectjob.in//storage/app/public/profile/" +
                                 profileData?.image
                               : loicon1
                           }
@@ -727,8 +727,8 @@ function PetShopHeader(props) {
                         {/* <img
                           src={
                             loginType === "salesman" && salesmanProfile?.image
-                              ? "https://caninetest.xyz/storage/app/public/delivery-man/" + salesmanProfile.image
-                              : "https://caninetest.xyz/storage/app/public/profile/" + (profileData?.image || "default-image-url")
+                              ? "https://canine.hirectjob.in//storage/app/public/delivery-man/" + salesmanProfile.image
+                              : "https://canine.hirectjob.in//storage/app/public/profile/" + (profileData?.image || "default-image-url")
                           }
                           alt="Profile Image"
                         /> */}

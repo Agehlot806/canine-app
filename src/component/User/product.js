@@ -666,7 +666,7 @@ function Product(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://caninetest.xyz/storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -674,7 +674,7 @@ function Product(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://caninetest.xyz/storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1094,7 +1094,6 @@ function Product(props) {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
-    setProductDetails(null);
   };
   const [email, setEmail] = useState("");
   const [variation, setVariation] = useState("");
@@ -1467,7 +1466,7 @@ function Product(props) {
                       <Link to={`/pet-category/${item.id}`}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/category/" +
+                            "https://canine.hirectjob.in//storage/app/public/category/" +
                             item.image
                           }
                         />
@@ -1512,7 +1511,7 @@ function Product(props) {
                           <div className="text-center">
                             <img
                               src={
-                                "https://caninetest.xyz//storage/app/public/product/" +
+                                "https://canine.hirectjob.in///storage/app/public/product/" +
                                 item.image
                               }
                             />
@@ -1670,7 +1669,7 @@ function Product(props) {
                                     >
                                       <img
                                         src={
-                                          "https://caninetest.xyz/storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1688,18 +1687,18 @@ function Product(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://caninetest.xyz/storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -1840,7 +1839,7 @@ function Product(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2466,7 +2465,7 @@ function Product(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
@@ -2557,7 +2556,7 @@ function Product(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${formattedAmount}`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>

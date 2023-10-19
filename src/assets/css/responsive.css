@@ -11,6 +11,9 @@
     margin-left: 0;
     margin-right: 0;
   }
+  .Newsletter {
+    padding: 0;
+}
   .sticky-newheader {
     /* overflow-x: hidden; */
   }
@@ -104,6 +107,9 @@
 @media only screen and (max-width: 912px) {
   .paw-right img {
     padding: 38px 0;
+  }
+  .Newsletter h1 {
+    font-size: 25px;
   }
   .notification-btn span {
     top: -18px;
@@ -247,9 +253,20 @@
 }
 
 @media only screen and (max-width: 540px) {
-  .home-content {
-    top: 0;
+  .Newsletter button {
+    position: initial !important;
+    height: 30px;
   }
+  .new-content {
+    padding: 10px 0;
+}
+.home-content {
+  top: 10px;
+  left: 20px;
+}
+.home-content button {
+    font-size: 10px;
+}
   ul.mega-links p {
     margin: 0 0 0 36px;
   }
@@ -358,7 +375,11 @@
 
   .home-content p {
     font-size: 10px;
+      margin: 0;
   }
+  .app-home {
+    margin: 0;
+}
 
   .food-product {
     padding: 15px 15px 28px;
@@ -421,7 +442,7 @@
 
   .Newsletter input {
     border-radius: 1px;
-    height: 38px;
+    height: 30px;
     font-size: 12px;
   }
 
@@ -505,7 +526,17 @@
   .home-content {
     padding: 5px;
   }
-
+  .Newsletter input {
+    height: 25px;
+    font-size: 10px;
+    padding: 10px 0px 10px 5px;
+}
+.Newsletter button {
+  height: 25px;
+  font-size: 10px;
+  padding: 7px;
+  border-radius: 0;
+}
   .home-content button {
     height: 22px;
     padding: 0 5px;
@@ -526,7 +557,7 @@
 
   .Newsletter h1 {
     /* font-size: 26px; */
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .brandLOGO img {
@@ -791,6 +822,14 @@
   .food-product img {
     width: 60px;
     height: 60px;
+  }
+  .Newsletter input {
+    height: 20px;
+    font-size: 9px;
+  }
+  .Newsletter button {
+    height: 20px;
+    font-size: 6px;
   }
   a.profiledes.searneee i {
     display: none;

@@ -574,7 +574,7 @@ function Addcart() {
                         <div className="">
                           <img
                             src={
-                              "https://caninetest.xyz/storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" + item.image
                             }
                           />
                         </div>
@@ -605,7 +605,7 @@ function Addcart() {
                   <Col lg={2} sm={2}>
                     <img
                       src={
-                        "https://caninetest.xyz//storage/app/public/product/" +
+                        "https://canine.hirectjob.in///storage/app/public/product/" +
                         item.image
                       }
                     />
@@ -1021,6 +1021,7 @@ function Addcart() {
                 <div className="select-card select-card3">
                   <div className="selct-card-text">
                     <input
+                    // style={{cursor:""}}
                       className="form-check-input"
                       type="radio"
                       name="exampleRadios"

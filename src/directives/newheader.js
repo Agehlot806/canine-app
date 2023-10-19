@@ -374,7 +374,7 @@
 //                         {/* <img
 //                           src={
 //                             profileData?.images ?
-//                               "https://caninetest.xyz/storage/app/public/profile/" +
+//                               "https://canine.hirectjob.in//storage/app/public/profile/" +
 //                               profileData?.image : loicon1
 //                           }
 //                         /> */}
@@ -382,7 +382,7 @@
 //                         <img
 //                           src={
 //                             profileData?.image
-//                               ? "https://caninetest.xyz/storage/app/public/profile/" +
+//                               ? "https://canine.hirectjob.in//storage/app/public/profile/" +
 //                                 profileData.image
 //                               : loicon1
 //                           }
@@ -1145,7 +1145,7 @@
 //                         {/* <img
 //                           src={
 //                             profileData?.images ?
-//                               "https://caninetest.xyz/storage/app/public/profile/" +
+//                               "https://canine.hirectjob.in//storage/app/public/profile/" +
 //                               profileData?.image : loicon1
 //                           }
 //                         /> */}
@@ -1153,7 +1153,7 @@
 //                         <img
 //                           src={
 //                             profileData?.image
-//                               ? "https://caninetest.xyz/storage/app/public/profile/" +
+//                               ? "https://canine.hirectjob.in//storage/app/public/profile/" +
 //                                 profileData.image
 //                               : loicon1
 //                           }
@@ -1580,7 +1580,7 @@
 
 // export default Newheader;
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import { Link, Navigate, history } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
@@ -1612,24 +1612,50 @@ function Newheader(props) {
 
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
   // ...
-  useEffect(() => {
+  // useEffect(() => {
     // Check if the visibility state is stored in localStorage
+  //   const storedVisibility = localStorage.getItem("totalLengthVisibility");
+  //   if (storedVisibility) {
+  //     setTotalLengthVisible(JSON.parse(storedVisibility));
+  //   }
+  // }, []);
+  // The click handler for the bell icon
+  // const handleBellClick = () => {
+  //   setTotalLengthVisible(false);
+    // Store the visibility state in localStorage
+    // localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
+    // Set a timeout to make the span visible again after 30 minutes (30 minutes = 30 * 60 * 1000 milliseconds)
+  //   setTimeout(() => {
+  //     setTotalLengthVisible(true);
+  //     localStorage.setItem("totalLengthVisibility", JSON.stringify(true));
+  //   }, 30 * 60 * 1000);
+  // };
+
+  const [customCount, setCustomCount] = useState(0);
+console.log("lllll",customCount);
+  const prevTotalLength = useRef(totalLength);
+
+  const handleBellClick = () => {
+    setCustomCount(0);
+    localStorage.setItem("customCount", 0);
+    setTotalLengthVisible(false);
+  };
+
+  useEffect(() => {
     const storedVisibility = localStorage.getItem("totalLengthVisibility");
     if (storedVisibility) {
       setTotalLengthVisible(JSON.parse(storedVisibility));
     }
   }, []);
-  // The click handler for the bell icon
-  const handleBellClick = () => {
-    setTotalLengthVisible(false);
-    // Store the visibility state in localStorage
-    localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
-    // Set a timeout to make the span visible again after 30 minutes (30 minutes = 30 * 60 * 1000 milliseconds)
-    setTimeout(() => {
+
+  useEffect(() => {
+    if (prevTotalLength.current < totalLength) {
       setTotalLengthVisible(true);
-      localStorage.setItem("totalLengthVisibility", JSON.stringify(true));
-    }, 30 * 60 * 1000);
-  };
+      setCustomCount(totalLength);
+      localStorage.setItem("customCount", totalLength.toString());
+    }
+    prevTotalLength.current = totalLength;
+  }, [totalLength]);
 
   useEffect(() => {
     // fetchBrands();
@@ -2573,7 +2599,8 @@ function Newheader(props) {
                       onClick={handleBellClick}
                     >
                       <i class="fa fa-bell-o" />
-                      {isTotalLengthVisible && <span>{totalLength}</span>}
+                      {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
+                      {isTotalLengthVisible && <span>{isNaN(customCount) ? 0 : customCount}</span>}
                     </a>
                   </li>
                   <li className="nonhide">

@@ -87,7 +87,7 @@ function Productbypartner() {
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/store/" +
+                            "https://canine.hirectjob.in//storage/app/public/store/" +
                             item.logo
                           }
                         />
@@ -112,7 +112,7 @@ function Productbypartner() {
                     <div className="banner-bgmain" key={item.id}>
                       <img
                         src={
-                          "https://caninetest.xyz/storage/app/" +
+                          "https://canine.hirectjob.in//storage/app/" +
                           item.image
                         }
                       />

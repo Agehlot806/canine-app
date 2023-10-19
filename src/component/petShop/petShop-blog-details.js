@@ -351,7 +351,7 @@ function PetshopBlogdetails() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://caninetest.xyz/storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -359,7 +359,7 @@ function PetshopBlogdetails() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://caninetest.xyz/storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -829,7 +829,6 @@ function PetshopBlogdetails() {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
-    setProductDetails(null);
   };
 
   return (
@@ -857,7 +856,7 @@ function PetshopBlogdetails() {
                             /> */}
                             <img
                               src={
-                                "https://caninetest.xyz/storage/app/public/blog/" +
+                                "https://canine.hirectjob.in//storage/app/public/blog/" +
                                 item.image
                               }
                             />
@@ -918,7 +917,7 @@ function PetshopBlogdetails() {
                     <Link to={`/petshop-productDetails/${item[0]?.id}`}>
                       <div className="text-center">
                         <img
-                          src={`https://caninetest.xyz//storage/app/public/product/${item[0]?.image}`}
+                          src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
                           alt={item[0]?.name}
                         />
                       </div>
@@ -1029,7 +1028,7 @@ function PetshopBlogdetails() {
                                   >
                                     <img
                                       src={
-                                        "https://caninetest.xyz/storage/app/public/product/" +
+                                        "https://canine.hirectjob.in//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -1653,7 +1652,7 @@ function PetshopBlogdetails() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://caninetest.xyz/storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
