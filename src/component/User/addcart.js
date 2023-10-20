@@ -40,7 +40,15 @@ function Addcart() {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
+console.log('addToCartProduct',addToCartProduct);
 
+useEffect(() => {
+if(customerLoginId !== null){
+  dispatch({
+    type: 'CLEAR_CART'
+  })
+}
+},[customerLoginId])
   // const firstDiscount = couponlist.length > 0 ? couponlist[0] : null;
   // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
   // const firstDiscountAmount = firstDiscount ? firstDiscount.discount : "";
@@ -117,10 +125,18 @@ function Addcart() {
 
   const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
-  addToCartProduct.forEach((el) => {
-    let allPrice = parseInt(el.price) + parseInt(originalPrice);
-    originalPrice = allPrice;
-  });
+  if (customerLoginId === null) {
+    cart.forEach((el) => {
+      let allPrice = parseInt(el.price) + parseInt(originalPrice);
+      originalPrice = allPrice;
+    });
+
+  } else {
+    addToCartProduct.forEach((el) => {
+      let allPrice = parseInt(el.price) + parseInt(originalPrice);
+      originalPrice = allPrice;
+    });
+  }
   const taxamound = Math.floor(originalPrice * 0.05);
   console.log("allPrice: ", originalPrice);
   console.log("taxamound: ", taxamound);
@@ -607,65 +623,129 @@ function Addcart() {
         <div className="add-cart">
           {/* with out signin start */}
           {customerLoginId === null ? cart && cart.length > 0 ? (
-            cart.map((item, index) => (
-              <Container>
-                <Row>
-                  <Col lg={2} sm={2}>
-                    <img
-                      src={
-                        "https://canine.hirectjob.in///storage/app/public/product/" +
-                        item.image
-                      }
-                    />
-                  </Col>
-                  <Col lg={6} sm={5} className="align-self-center addCARThead">
-                    <h2>{item.item_name}</h2>
-                    <p>Selected Variant : {item.variant}</p>
-                  </Col>
-                  <Col
-                    lg={2}
-                    sm={3}
-                    xs={6}
-                    className="align-self-center addCARThead"
-                  >
-                    <h3>₹{item.price}</h3>
+            <>
+              {cart.map((item, index) => (
+                <>
+                  <Container>
+                    <Row>
+                      <Col lg={2} sm={2}>
+                        <img
+                          src={
+                            "https://canine.hirectjob.in///storage/app/public/product/" +
+                            item.image
+                          }
+                        />
+                      </Col>
+                      <Col lg={6} sm={5} className="align-self-center addCARThead">
+                        <h2>{item.name}</h2>
+                        <p>Selected Variant : {item.variant}</p>
+                      </Col>
+                      <Col
+                        lg={2}
+                        sm={3}
+                        xs={6}
+                        className="align-self-center addCARThead"
+                      >
+                        <h3>₹{item.price}</h3>
 
-                    <div className="quantity-btn">
-                      <button onClick={() => handleDecrementone(index)}>
+                        <div className="quantity-btn">
+                          {/* <button onClick={() => handleDecrementone(index)}>
                         <i className="fa fa-minus" />
-                      </button>
-                      <form>
-                        <div className="form-group">
-                          <input
-                            type="tel"
-                            className="form-control"
-                            placeholder="Quantity"
-                            value={item.quantity}
-                            onChange={handleQuantityChange}
-                            autoComplete="new-number"
-                          />
-                        </div>
-                      </form>
-                      <button onClick={() => handleIncrementone(index)}>
+                      </button> */}
+                          <button>Qut</button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                value={item.quantity}
+                                onChange={handleQuantityChange}
+                                autoComplete="new-number"
+                                disabled
+                              />
+                            </div>
+                          </form>
+                          {/* <button onClick={() => handleIncrementone(index)}>
                         <i className="fa fa-plus" />
-                      </button>
-                    </div>
-                  </Col>
-                  <Col lg={2} sm={2} xs={6} className="align-self-center">
-                    <div
-                      className="delete-addcard"
-                    // onClick={() => removeFromCart(item.id)}
-                    >
-                      <Link onClick={() => removeFromCart(item.id)}>
-                        <i class="fa fa-trash-o" />
-                      </Link>
-                    </div>
-                  </Col>
-                  <hr />
-                </Row>
-              </Container>
-            ))
+                      </button> */}
+                        </div>
+                      </Col>
+                      <Col lg={2} sm={2} xs={6} className="align-self-center">
+                        <div
+                          className="delete-addcard"
+                        // onClick={() => removeFromCart(item.id)}
+                        >
+                          <Link onClick={() => dispatch({
+                            type: 'REMOVE_FROM_CART',
+                            payload: item.item_id,
+                          })}>
+                            <i class="fa fa-trash-o" />
+                          </Link>
+                        </div>
+                      </Col>
+                      <hr />
+                    </Row>
+                  </Container>
+                </>
+              ))}
+              <Container>
+                <div className="needplace">
+                  <Row className="justify-content-center">
+                    <Col lg={8}>
+                      <div className="add-cart-total">
+                        <Row>
+                          <Col>
+                            <h5>Sub Total</h5>
+                          </Col>
+                          <Col>
+                            {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                            <h5>₹{originalPrice}</h5>
+                          </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                          <Col>
+                            <h5>Coupon Discount</h5>
+                          </Col>
+                          <Col>
+                            <h5>
+                              ₹
+                              {0}
+                            </h5>
+                          </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                          <Col>
+                            <h5>Tax(5%)</h5>
+                          </Col>
+                          <Col>
+                            <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
+                          </Col>
+                        </Row>
+                        <hr />
 
+                        <Row>
+                          <Col>
+                            <h5>Rounding Adjust</h5>
+                          </Col>
+                          <Col>
+                            <h5>
+                              ₹
+                              {`${parseInt(
+                                originalPrice + taxamound
+                              )}`}
+                              {/* Calculate  and display the Rounding Adjust */}
+                            </h5>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Container>
+            </>
           ) : (
             <div className="Emptycart">
               <img src={cart} />
@@ -737,28 +817,29 @@ function Addcart() {
                 <p className="emptyMSG">Cart is Empty</p>
               </div>
             )}
-
-          {customerLoginId === null  && (
-            <Col sm={6}>
-              {/* <Button onClick={() => handlePayment()}>
+          <Container>
+            {customerLoginId === null && (
+              <div className="check-Continue">
+                {/* <Button onClick={() => handlePayment()}>
                               Checkout
                             </Button> */}
-              <Button
-                data-toggle="modal"
-                data-target="#cod"
-              // onClick={handleAddToCart}
-              >
-                {/* <Link
-                                // to="/user-pay-method"
-                              > */}
-                Checkout
-                {/* </Link> */}
-              </Button>
-              <Button>
-                <Link to="/product">Continue Shopping</Link>
-              </Button>
-            </Col>
+                <Button
+                  // data-toggle="modal"
+                  // data-target="#cod"
+                // onClick={handleAddToCart}
+                >
+                  <Link
+                                to="/login"
+                              >
+                  Checkout
+                  </Link>
+                </Button>
+                <Button>
+                  <Link to="/product">Continue Shopping</Link>
+                </Button>
+              </div>
             )}
+          </Container>
 
           {addToCartProduct && addToCartProduct.length > 0 ? (
             <Container>
@@ -955,8 +1036,8 @@ function Addcart() {
                             Select Address{" "}
                             <i
                               className={`fa ${addressContentVisible
-                                  ? "fa-arrow-up"
-                                  : "fa-arrow-down"
+                                ? "fa-arrow-up"
+                                : "fa-arrow-down"
                                 }`}
                               aria-hidden="true"
                             ></i>
@@ -1117,7 +1198,7 @@ function Addcart() {
                 <div className="select-card select-card3">
                   <div className="selct-card-text">
                     <input
-                    // style={{cursor:""}}
+                      // style={{cursor:""}}
                       className="form-check-input"
                       type="radio"
                       name="exampleRadios"
