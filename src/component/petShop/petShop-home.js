@@ -164,7 +164,7 @@ function PetshopHome(props) {
 
   const thirdBanner = () => {
     axios
-      .get(`${BASE_URL}/banners`)
+      .get(`${BASE_URL}/categories/banner`)
       .then((response) => {
         console.log(response.data.data);
         setthirdbanner(response.data.data);

@@ -1315,10 +1315,12 @@ function Newheader(props) {
               <li>
                 <a href="#" className="desktop-item">
                   Dogs
+                  <i class="fa fa-angle-down arrr" />
                 </a>
                 <input type="checkbox" id="showMega" />
                 <label htmlFor="showMega" className="mobile-item">
                   Dogs
+                  <i class="fa fa-angle-down arrr" />
                 </label>
                 <div className="mega-box">
                   <div className="content">
@@ -1560,10 +1562,12 @@ function Newheader(props) {
               <li>
                 <a href="#" className="desktop-item">
                   Cats
+                  <i class="fa fa-angle-down arrr" />
                 </a>
                 <input type="checkbox" id="showMegaCat" />
                 <label htmlFor="showMegaCat" className="mobile-item">
                   Cats
+                  <i class="fa fa-angle-down arrr" />
                 </label>
                 <div className="mega-box">
                   <div className="content">
@@ -1852,10 +1856,12 @@ function Newheader(props) {
               <li>
                 <a href="#" className="desktop-item">
                   Products
+                  <i class="fa fa-angle-down arrr" />
                 </a>
                 <input type="checkbox" id="showDrop" />
                 <label htmlFor="showDrop" className="mobile-item">
                   Products
+                  <i class="fa fa-angle-down arrr" />
                 </label>
                 <ul className="drop-menu">
                   <li>

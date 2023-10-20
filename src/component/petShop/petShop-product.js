@@ -1601,8 +1601,11 @@ function Petshopproduct(props) {
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {paginatedCategories &&
-                    paginatedCategories.map((item, index) => (
+                {paginatedCategories
+                    ? paginatedCategories.map(
+                        (item, index) =>
+                          item.module_id === 1 && (
+
                       <Col lg={4} sm={6} xs={6} className="mb-4">
                         <div
                           className="food-product"
@@ -1681,7 +1684,9 @@ function Petshopproduct(props) {
                           )}
                         </div>
                       </Col>
-                    ))}
+                   )
+                   )
+                 : null}
                 </Row>
                 <div className="pagination-area">
                   <ul className="pagination">
