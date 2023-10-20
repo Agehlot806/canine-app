@@ -1580,7 +1580,7 @@
 
 // export default Newheader;
 
-import React, { useEffect, useState ,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, Navigate, history } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
@@ -1617,11 +1617,11 @@ function Newheader(props) {
     loginType === "wholeseller"
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
-      console.log('customerLoginId', customerLoginId);
+  console.log("customerLoginId", customerLoginId);
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
   // ...
   // useEffect(() => {
-    // Check if the visibility state is stored in localStorage
+  // Check if the visibility state is stored in localStorage
   //   const storedVisibility = localStorage.getItem("totalLengthVisibility");
   //   if (storedVisibility) {
   //     setTotalLengthVisible(JSON.parse(storedVisibility));
@@ -1630,9 +1630,9 @@ function Newheader(props) {
   // The click handler for the bell icon
   // const handleBellClick = () => {
   //   setTotalLengthVisible(false);
-    // Store the visibility state in localStorage
-    // localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
-    // Set a timeout to make the span visible again after 30 minutes (30 minutes = 30 * 60 * 1000 milliseconds)
+  // Store the visibility state in localStorage
+  // localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
+  // Set a timeout to make the span visible again after 30 minutes (30 minutes = 30 * 60 * 1000 milliseconds)
   //   setTimeout(() => {
   //     setTotalLengthVisible(true);
   //     localStorage.setItem("totalLengthVisibility", JSON.stringify(true));
@@ -1640,7 +1640,7 @@ function Newheader(props) {
   // };
 
   const [customCount, setCustomCount] = useState(0);
-console.log("lllll",customCount);
+  console.log("lllll", customCount);
   const prevTotalLength = useRef(totalLength);
 
   const handleBellClick = () => {
@@ -1729,6 +1729,7 @@ console.log("lllll",customCount);
         console.log("Logged out user with ID: ", customer_id);
         setStoredUserId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
+        window.location.reload(false)
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
       }
@@ -1952,7 +1953,7 @@ console.log("lllll",customCount);
   return (
     <>
       <div className="sticky-newheader">
-        <nav className="navbar navbar-expand-lg navbar-light p-3">
+        <nav className="navbar navbar-expand-lg navbar-light newnavv">
           <div className="wrapper">
             <div className="logo">
               <Link
@@ -1963,27 +1964,50 @@ console.log("lllll",customCount);
               </Link>
             </div>
             <div className="hide-icons">
-              {/* <li>
-              <a
-                className="notification-btn"
-                data-toggle="modal"
-                data-target="#exampleModal"
-                onClick={handleBellClick}
-              >
-                <i class="fa fa-bell-o" />
-                {isTotalLengthVisible && <span>{totalLength}</span>}
-              </a>
-            </li> */}
-
-              {storedUserId ? (
-                <>
-                  <li>
-                    <Link to="/add-cart" className="notification-btn">
-                      <i class="fa fa-shopping-cart" />{" "}
-                      <span className="cart-count">{customerLoginId === null? cart?.length : dataLength}</span>{" "}
-                    </Link>
-                  </li>
-                  <li>
+              <li>
+                <Link className="profiledes searneee">
+                  <i className="fa fa-search" />
+                  <input
+                    type="text"
+                    placeholder="What are you looking for"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    className="homesea"
+                  />
+                  <ul className="drop-menu search-results">
+                    {filteredProducts.map((product, index, id) => (
+                      <li key={index}>
+                        <Link to={`/product-details/${product.id}`}>
+                          {product.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </Link>
+              </li>
+              {
+                storedUserId ? (
+                  <>
+                    <li>
+                      <Link to="/add-cart" className="notification-btn">
+                        <i class="fa fa-shopping-cart" />{" "}
+                        <span className="cart-count">
+                          {customerLoginId === null ? cart?.length : dataLength}
+                        </span>{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <a
+                        className="notification-btn"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        onClick={handleBellClick}
+                      >
+                        <i class="fa fa-bell-o" />
+                        {isTotalLengthVisible && <span>{totalLength}</span>}
+                      </a>
+                    </li>
+                    {/* <li>
                     <Link
                       className=""
                       data-toggle="modal"
@@ -1991,14 +2015,15 @@ console.log("lllll",customCount);
                     >
                       Logout
                     </Link>
-                  </li>
-
-                </>
-              ) : (
-                <li>
-                  <Link to="/login">Login/Sign Up</Link>
-                </li>
-              )}
+                  </li> */}
+                  </>
+                ) : null
+                //   (
+                //   <li>
+                //     <Link to="/login">Login/Sign Up</Link>
+                //   </li>
+                // )
+              }
             </div>
             <input type="radio" name="slider" id="menu-btn" />
             <input type="radio" name="slider" id="close-btn" />
@@ -2006,14 +2031,78 @@ console.log("lllll",customCount);
               <label htmlFor="close-btn" className="btn close-btn">
                 <i className="fas fa-times" />
               </label>
+
+              <li className="webhide">
+                    <a href="#" className="profiledes desktop-item">
+                      <img
+                        src={
+                          profileData?.image
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              profileData.image
+                            : loicon1
+                        }
+                        alt="Profile Image"
+                      />
+                    </a>
+                    <input type="checkbox" id="showDropProfile" />
+                    <label htmlFor="showDropProfile" className="mobile-item proihg">
+                      <img
+                        src={
+                          profileData?.image
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              profileData.image
+                            : loicon1
+                        }
+                        alt="Profile Image"
+                      />
+                    </label>
+                    <ul className="drop-menu">
+                      <li>
+                        <Link className="dropdown-item" to={`/pet-profile/`}>
+                          Pet Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/all-veterinary">
+                          All Veterinary
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/all-service-booking"
+                        >
+                          All Service Booking
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/my-orders">
+                          My Orders
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/wishlist-products">
+                          Wishlist Products
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/update-profile">
+                          Profile
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
               <li>
                 <a href="#" className="desktop-item">
                   Dogs
+                  <i class="fa fa-angle-down arrr" />
                 </a>
                 <input type="checkbox" id="showMega" />
                 <label htmlFor="showMega" className="mobile-item">
                   Dogs
+                  <i class="fa fa-angle-down arrr" />
                 </label>
+                
                 <div className="mega-box">
                   <div className="content">
                     <Row>
@@ -2057,7 +2146,9 @@ console.log("lllll",customCount);
                                 )
                             )
                           ) : (
-                            <p className="emptyMSG">No Treats Sub Categories.</p>
+                            <p className="emptyMSG">
+                              No Treats Sub Categories.
+                            </p>
                           )}
                         </ul>
                       </Col>
@@ -2252,10 +2343,12 @@ console.log("lllll",customCount);
               <li>
                 <a href="#" className="desktop-item">
                   Cats
+                  <i class="fa fa-angle-down arrr" />
                 </a>
                 <input type="checkbox" id="showMegaCat" />
                 <label htmlFor="showMegaCat" className="mobile-item">
                   Cats
+                  <i class="fa fa-angle-down arrr" />
                 </label>
                 <div className="mega-box">
                   <div className="content">
@@ -2323,7 +2416,9 @@ console.log("lllll",customCount);
                                 )
                             )
                           ) : (
-                            <p className="emptyMSG">No Treats Sub Categories.</p>
+                            <p className="emptyMSG">
+                              No Treats Sub Categories.
+                            </p>
                           )}
                         </ul>
                       </Col>
@@ -2402,7 +2497,8 @@ console.log("lllll",customCount);
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Beds Cages, Scratcher & Crates" && (
+                                item.name ==
+                                  "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2541,10 +2637,12 @@ console.log("lllll",customCount);
               <li>
                 <a href="#" className="desktop-item">
                   Products
+                  <i class="fa fa-angle-down arrr" />
                 </a>
                 <input type="checkbox" id="showDrop" />
                 <label htmlFor="showDrop" className="mobile-item">
                   Products
+                  <i class="fa fa-angle-down arrr" />
                 </label>
                 <ul className="drop-menu">
                   <li>
@@ -2565,7 +2663,7 @@ console.log("lllll",customCount);
               <li>
                 <Link to="/contact">Contact</Link>
               </li>
-              <li>
+              <li className="nonhide">
                 <Link className="profiledes searneee">
                   <i className="fa fa-search" />
                   <input
@@ -2590,7 +2688,9 @@ console.log("lllll",customCount);
               <li className="nonhide">
                 <Link to="/add-cart" className="profiledes notification-btn">
                   <i class="fa fa-shopping-cart" />{" "}
-                  <span className="cart-count">{customerLoginId === null? cart?.length : dataLength}</span>{" "}
+                  <span className="cart-count">
+                    {customerLoginId === null ? cart?.length : dataLength}
+                  </span>{" "}
                 </Link>
               </li>
               {storedUserId ? (
@@ -2604,10 +2704,12 @@ console.log("lllll",customCount);
                     >
                       <i class="fa fa-bell-o" />
                       {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
-                      {isTotalLengthVisible && <span>{isNaN(customCount) ? 0 : customCount}</span>}
+                      {isTotalLengthVisible && (
+                        <span>{isNaN(customCount) ? 0 : customCount}</span>
+                      )}
                     </a>
                   </li>
-                  <li className="nonhide">
+                  <li className="">
                     <Link
                       className=""
                       data-toggle="modal"
@@ -2617,13 +2719,13 @@ console.log("lllll",customCount);
                     </Link>
                   </li>
 
-                  <li>
+                  <li className="nonhide">
                     <a href="#" className="profiledes desktop-item">
                       <img
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                              profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2635,7 +2737,7 @@ console.log("lllll",customCount);
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                              profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2653,7 +2755,10 @@ console.log("lllll",customCount);
                         </Link>
                       </li>
                       <li>
-                        <Link className="dropdown-item" to="/all-service-booking">
+                        <Link
+                          className="dropdown-item"
+                          to="/all-service-booking"
+                        >
                           All Service Booking
                         </Link>
                       </li>
@@ -2676,7 +2781,7 @@ console.log("lllll",customCount);
                   </li>
                 </>
               ) : (
-                <li className="nonhide">
+                <li className="">
                   <Link to="/login">Login/Sign Up</Link>
                 </li>
               )}
@@ -2687,6 +2792,8 @@ console.log("lllll",customCount);
           </div>
         </nav>
       </div>
+
+     
       {/* Modal */}
       <div
         className="modal fade"
@@ -2810,7 +2917,10 @@ console.log("lllll",customCount);
                             <Link to="">
                               <Row>
                                 <Col lg={2} className="align-self-center">
-                                  <Link to={`/product-details/${ob.item_id}`} onClick={() => handleLinkClick(ob.item_id)} >
+                                  <Link
+                                    to={`/product-details/${ob.item_id}`}
+                                    onClick={() => handleLinkClick(ob.item_id)}
+                                  >
                                     <i className="fa fa-info-circle" />
                                   </Link>
                                 </Col>
@@ -2876,8 +2986,9 @@ console.log("lllll",customCount);
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${ob.status === "unread" ? "unread" : "read"
-                              }`}
+                            className={`notification ${
+                              ob.status === "unread" ? "unread" : "read"
+                            }`}
                             key={index}
                           >
                             <Row>
@@ -3022,4 +3133,3 @@ console.log("lllll",customCount);
 }
 
 export default Newheader;
-

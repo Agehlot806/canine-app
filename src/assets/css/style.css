@@ -1155,7 +1155,7 @@ a {
   font-family: Poppins;
   letter-spacing: 0.36px;
   color: #000;
-  padding: 10px 0px 0;
+  padding: 30px 0px 0;
 }
 
 .dash-tabs ul li a:hover {
@@ -4005,4 +4005,22 @@ li.nav-.nonhide {
 
 .selct-card-text input {
   cursor: pointer;
+}
+
+.button-container {
+  text-align: center ;
+}
+
+.check-Continue {
+  text-align: right;
+}
+.check-Continue button a {
+  color: #000;
+}
+.check-Continue button {
+  background: #FFC934;
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0 5px;
 }
