@@ -1265,7 +1265,7 @@ function Newheader(props) {
   return (
     <>
       <div className="sticky-newheader">
-        <nav className="navbar navbar-expand-lg navbar-light p-3">
+        <nav className="navbar navbar-expand-lg navbar-light newnavv">
           <div className="wrapper">
             <div className="logo">
               <Link

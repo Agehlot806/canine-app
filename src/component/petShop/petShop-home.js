@@ -1072,6 +1072,7 @@ function PetshopHome(props) {
                       (item, index) =>
                         item.type === "home_banner_1" && (
                           <div className="home-img">
+                             <Link to={item.default_link}>
                             <div className="">
                               <img
                                 src={
@@ -1092,6 +1093,7 @@ function PetshopHome(props) {
                                 </div>
                               </Col>
                             </Row>
+                            </Link>
                           </div>
                         )
                     )
@@ -1103,6 +1105,7 @@ function PetshopHome(props) {
                       (item, index) =>
                         item.type === "home_banner_2" && (
                           <div className="home-img">
+                             <Link to={item.default_link}>
                             <div className="">
                               <img
                                 src={
@@ -1129,6 +1132,7 @@ function PetshopHome(props) {
                                 </div>
                               </Col>
                             </Row>
+                            </Link>
                           </div>
                         )
                     )
@@ -1140,7 +1144,8 @@ function PetshopHome(props) {
                       (item, index) =>
                         item.type === "home_banner_3" && (
                           <div className="home-img">
-                            <div className="">
+                             <Link to={item.default_link}>
+                            <div>
                               <img
                                 src={
                                   "https://canine.hirectjob.in//storage/app/" +
@@ -1160,6 +1165,7 @@ function PetshopHome(props) {
                                 </div>
                               </Col>
                             </Row>
+                            </Link>
                           </div>
                         )
                     )

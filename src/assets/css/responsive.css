@@ -287,17 +287,17 @@
     width: 258px;
 } */
 .hide-icons {
-  position: absolute;
-  top: 45%;
-  left: 0;
-  right: 0;
-  justify-content: center;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 30px; */
+  /* right: 0; */
+  /* justify-content: center; */
 }
   nav .wrapper {
     line-height: 0;
   }
   .newnavv {
-    height: 115px;
+    /* height: 115px; */
   }
   .new-content {
     padding: 10px 0;
@@ -540,6 +540,13 @@
 }
 
 @media only screen and (max-width: 414px) {
+  .logoBG img {
+    width: 50px;
+}
+input.homesea {
+  font-size: 10px;
+}
+
   p {
     font-size: 20px;
   }
@@ -548,10 +555,28 @@
     top: -50px;
     right: 12px;
 }
-  a.notification-btn i {
-    font-size: 22px;
-    margin: 25px 0 0 8px;
-  }
+a.notification-btn i {
+  font-size: 17px;
+  margin: 0px 4px;
+}
+input.homesea {
+  font-size: 10px;
+}
+a.profiledes.searneee {
+  padding: 0 !important;
+}
+a.profiledes.searneee i {
+  padding: 5px !important;
+  margin: 0 4px 0 0 !important;
+}
+.wrapper .btn {
+  font-size: 15px !important ;
+  padding: 4px 8px !important;
+}
+.hide-icons {
+  position: absolute;
+  left: 74px;
+}
   .header-inner-addon input {
     width: 386px;
   }
@@ -840,6 +865,12 @@
   }
 }
 
+/* @media only screen and (max-width: 375px){
+.hide-icons {
+    position: absolute;
+    left: 84px;
+}
+} */
 @media only screen and (max-width: 320px) {
   nav .wrapper {
     padding: 0px 10px !important;

@@ -980,10 +980,10 @@ a {
   border-radius: 10px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   color: #fff;
-  font-size: 22.1195px;
+  font-size: 22px;
   font-weight: 600;
-  height: 66px;
-  padding: 0 150px;
+  /* height: 66px; */
+  padding: 10px 45px;
   -webkit-transform: perspective(500px) rotateY(-330deg);
   transform: perspective(500px) rotateY(-330deg);
   -webkit-transform: perspective(500px) rotateY(calc(330deg * var(--_i, -1)));
@@ -3031,8 +3031,8 @@ ul.list-unstyled li a {
 }
 
 .Emptycart img {
-  width: 200px !important;
-  height: 200px !important;
+  width: 150px !important;
+  height: 150px !important;
 }
 
 .Emptycart p {
@@ -4035,3 +4035,7 @@ li.nav-.nonhide {
   padding: 15px 15px 0!important;
 }
 
+.form-area label {
+  font-weight: 600;
+  color: #000;
+}
