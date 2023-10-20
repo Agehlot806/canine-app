@@ -1963,6 +1963,7 @@ function Newheader(props) {
                 <img src={logo} />
               </Link>
             </div>
+            
             <div className="hide-icons">
               <li>
                 <Link className="profiledes searneee">

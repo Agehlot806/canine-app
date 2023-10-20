@@ -135,9 +135,11 @@ function Petshopdashboard() {
                   aria-controls="pills-home"
                   aria-selected="true"
                 >
+                  <div className="text-center">
                   <h3>Total Order</h3>
                   <h5>50</h5>
-                  <p>+10.80%</p>
+                    <p>+10.80%</p>
+                    </div>
                 </a>
               </li>
               <li className="nav-item">
