@@ -7,10 +7,24 @@ import { BASE_URL } from "../../Constant/Index";
 import axios from 'axios'
 
 function Partners() {
-    
+
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
-    const [partnerData, setpartnerData] = useState({});
+    const [partnerData, setpartnerData] = useState({
+        s_name: '',
+        gst: '',
+        address: '',
+        cover_photo: "",
+        logo: "",
+        zone_id: '',
+        latitude: '',
+        f_name: '',
+        l_name: '',
+        phone: '',
+        email: '',
+        password: '',
+        longitude: "",
+    });
     const [zoneList, setZoneList] = useState([]);
     const [errors, setErrors] = useState({
         s_name: '',
@@ -20,11 +34,17 @@ function Partners() {
         logo: '',
         zone_id: '',
         latitude: '',
+        f_name: '',
+        l_name: '',
+        phone: '',
     });
 
     const shopNameRegex = /^[a-zA-Z ]*$/; // Allows only letters and spaces /^[A-Za-z\s]+$/
-    const gstRegex = /^\d{15}$/ // GST format (15 digits)   /^\d{15}$/
+    const gstRegex = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/ // GST format (15 digits)   /^\d{15}$/
     const addressRegex = /^[A-Za-z0-9\s,.#-]+$/; // Allows letters, numbers, spaces, and common address characters
+    const firstNameRegex = /^[a-zA-Z ]*$/
+    const lastNameRegex = /^[a-zA-Z ]*$/
+    const phoneRegex = /[^0-9+]/g
 
     const validateStep = () => {
         const newErrors = {
@@ -35,10 +55,13 @@ function Partners() {
             logo: '',         // Add error field for partners logo
             zone_id: '',      // Add error field for zone
             latitude: '',     // Add error field for latitude
+            f_name: '',
+            l_name: '',
+            phone: '',
         };
 
         let isValid = true;
-       
+
         if (step === 1) {
             // if (!partnerData.s_name) {
             //     newErrors.s_name = 'Shop Name is required';
@@ -47,7 +70,7 @@ function Partners() {
             if (!partnerData.s_name) {
                 newErrors.s_name = 'Shop Name is required';
                 isValid = false;
-            } 
+            }
             /*else if (!shopNameRegex.test(partnerData.s_name)) {
                 newErrors.s_name = 'Invalid Shop Name';
                 isValid = false;
@@ -92,6 +115,18 @@ function Partners() {
             }
         }
         else if (step === 2) {
+            if (!partnerData.f_name) {
+                newErrors.f_name = 'First Name is required';
+                isValid = false;
+            }
+            if (!partnerData.l_name) {
+                newErrors.l_name = 'Last Name is required';
+                isValid = false;
+            }
+            if (!partnerData.phone) {
+                newErrors.phone = 'Phone Number is required';
+                isValid = false;
+            }
 
         }
         else if (step === 3) {
@@ -102,17 +137,17 @@ function Partners() {
         return isValid;
     };
 
-    const handleNext = () => {
-        if (validateStep()) {
-            setStep(step + 1);
-            // Clear the error message for the current step
-            const newErrors = { ...errors };
-            if (step === 1) {
-                newErrors['s_name'] = '';
-            }
-            setErrors(newErrors);
-        }
-    };
+    // const handleNext = () => {
+    //     if (validateStep()) {
+    //         setStep(step + 1);
+    //         // Clear the error message for the current step
+    //         const newErrors = { ...errors };
+    //         if (step === 1) {
+    //             newErrors['s_name'] = '';
+    //         }
+    //         setErrors(newErrors);
+    //     }
+    // };
 
 
     const nextStep = () => {
@@ -127,14 +162,23 @@ function Partners() {
         }
     };
 
-    const prevStep = () => {
-        setStep((prevStep) => prevStep - 1);
-        // Clear the error message for the current step
-        const newErrors = { ...errors };
-        if (step === 1) {
-            newErrors['s_name'] = '';
+    // const prevStep = () => {
+    //     setStep((prevStep) => prevStep - 1);
+    //     // Clear the error message for the current step
+    //     const newErrors = { ...errors };
+    //     if (step === 1) {
+    //         newErrors['s_name'] = '';
+    //     }
+    //     setErrors(newErrors);
+    // };
+    const handleNext = () => {
+        if (validateStep()) {
+            setStep(step + 1);
         }
-        setErrors(newErrors);
+    };
+
+    const prevStep = () => {
+        setStep(step - 1);
     };
 
 
@@ -154,10 +198,29 @@ function Partners() {
     };
 
     const handleOnChange = (e) => {
-        
+        const { name, value, type, files } = e.target;
+
+        if (type === 'file') {
+            setpartnerData({
+                ...partnerData,
+                [name]: files[0],
+            });
+        } else {
+            setpartnerData({
+                ...partnerData,
+                [name]: value,
+            });
+        }
+        // setpartnerData({
+        //     ...partnerData,
+        //     [e.target.name]: e.target.value,
+        // });
+    };
+    const imageUploadHandler = (e) => {
+        const { name, files } = e.target;
         setpartnerData({
             ...partnerData,
-            [e.target.name]: e.target.value,
+            [name]: files[0], // Store the selected file in partnerData
         });
     };
 
@@ -192,12 +255,7 @@ function Partners() {
     };
 
 
-    const imageUploadHandler = (e) => {
-        setpartnerData({
-            ...partnerData,
-            [e.target.name]: e.target.files[0],
-        });
-    };
+
     return (
         <>
             <div className='users-bg'>
@@ -219,34 +277,35 @@ function Partners() {
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>Shop Name</Form.Label>
                                                         <Form.Control
-                                                         type="text" 
-                                                         placeholder="Shop Name" 
-                                                         name="s_name" 
-                                                        //  onChange={
-                                                        //     (e) => {handleOnChange(e)
-                                                        //         const newErrors={...errors}
-                                                        //         const isValid = true;
-                                                        //     if (!shopNameRegex.test(partnerData.s_name)) {
-                                                        //         newErrors.s_name = 'Invalid Shop Name';
-                                                        //         isValid = false;
-                                                        //     }}
-                                                        // } 
-                                                        onChange={(e) => {
-                                                            handleOnChange(e);
-                                                            const newErrors = { ...errors };
-                                                            let isValid = true;
-                                                    
-                                                            if (!e.target.value) {
-                                                                // If the input field is empty, clear the error message
-                                                                newErrors.s_name = '';
-                                                            } else if (!shopNameRegex.test(e.target.value)) {
-                                                                newErrors.s_name = 'Invalid Shop Name';
-                                                                isValid = false;
-                                                            }
-                                                            
-                                                            setErrors(newErrors); // Update errors state within the onChange function
-                                                        }} 
-                                                         isInvalid={!!errors.s_name} />
+                                                            type="text"
+                                                            placeholder="Shop Name"
+                                                            name="s_name"
+                                                            value={partnerData.s_name}
+                                                            //  onChange={
+                                                            //     (e) => {handleOnChange(e)
+                                                            //         const newErrors={...errors}
+                                                            //         const isValid = true;
+                                                            //     if (!shopNameRegex.test(partnerData.s_name)) {
+                                                            //         newErrors.s_name = 'Invalid Shop Name';
+                                                            //         isValid = false;
+                                                            //     }}
+                                                            // } 
+                                                            onChange={(e) => {
+                                                                handleOnChange(e);
+                                                                const newErrors = { ...errors };
+                                                                let isValid = true;
+
+                                                                if (!e.target.value) {
+                                                                    // If the input field is empty, clear the error message
+                                                                    newErrors.s_name = '';
+                                                                } else if (!shopNameRegex.test(e.target.value)) {
+                                                                    newErrors.s_name = 'Invalid Shop Name';
+                                                                    isValid = false;
+                                                                }
+
+                                                                setErrors(newErrors); // Update errors state within the onChange function
+                                                            }}
+                                                            isInvalid={!!errors.s_name} />
                                                         {/* {errors.s_name && <p>{errors.s_name}</p>} */}
                                                         <FormControl.Feedback type="invalid">
                                                             {errors.s_name}
@@ -254,52 +313,57 @@ function Partners() {
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>GST Number</Form.Label>
-                                                        <Form.Control 
-                                                        type="tel" 
-                                                        placeholder="GST number" 
-                                                        name="gst" 
-                                                        onChange={(e) => {
-                                                            handleOnChange(e);
-                                                            const newErrors = { ...errors };
-                                                            let isValid = true;
-                                                    
-                                                            if (!e.target.value) {
-                                                                // If the input field is empty, clear the error message
-                                                                newErrors.gst = '';
-                                                            } else if (!gstRegex.test(e.target.value)) {
-                                                                newErrors.gst = 'Invalid GST Number';
-                                                                isValid = false;
-                                                            }
-                                                            
-                                                            setErrors(newErrors); // Update errors state within the onChange function
-                                                        }} 
-                                                        isInvalid={!!errors.gst} />
+                                                        <Form.Control
+                                                            type="text"
+                                                            placeholder="GST number"
+                                                            name="gst"
+                                                            value={partnerData.gst}
+                                                            onChange={(e) => {
+                                                                handleOnChange(e);
+                                                                const newErrors = { ...errors };
+                                                                let isValid = true;
+
+                                                                if (!e.target.value) {
+                                                                    // If the input field is empty, clear the error message
+                                                                    newErrors.gst = '';
+                                                                } else if (e.target.value.length > 15) {
+                                                                    newErrors.gst = 'GST Number must be 15 characters or less';
+                                                                    isValid = false;
+                                                                } else if (!gstRegex.test(e.target.value)) {
+                                                                    newErrors.gst = 'Invalid GST Number';
+                                                                    isValid = false;
+                                                                }
+
+                                                                setErrors(newErrors); // Update errors state within the onChange function
+                                                            }}
+                                                            isInvalid={!!errors.gst} />
                                                         <FormControl.Feedback type="invalid">
                                                             {errors.gst}
                                                         </FormControl.Feedback>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>Shop Address</Form.Label>
-                                                        <Form.Control 
-                                                        type="text" 
-                                                        placeholder="Shop Address" 
-                                                        name="address" 
-                                                        onChange={(e) => {
-                                                            handleOnChange(e);
-                                                            const newErrors = { ...errors };
-                                                            let isValid = true;
-                                                    
-                                                            if (!e.target.value) {
-                                                                // If the input field is empty, clear the error message
-                                                                newErrors.address = '';
-                                                            } else if (!addressRegex.test(e.target.value)) {
-                                                                newErrors.address = 'Invalid Shop Name';
-                                                                isValid = false;
-                                                            }
-                                                            
-                                                            setErrors(newErrors); // Update errors state within the onChange function
-                                                        }}
-                                                        isInvalid={!!errors.address} />
+                                                        <Form.Control
+                                                            type="text"
+                                                            placeholder="Shop Address"
+                                                            name="address"
+                                                            value={partnerData.address}
+                                                            onChange={(e) => {
+                                                                handleOnChange(e);
+                                                                const newErrors = { ...errors };
+                                                                let isValid = true;
+
+                                                                if (!e.target.value) {
+                                                                    // If the input field is empty, clear the error message
+                                                                    newErrors.address = '';
+                                                                } else if (!addressRegex.test(e.target.value)) {
+                                                                    newErrors.address = 'Invalid Shop Name';
+                                                                    isValid = false;
+                                                                }
+
+                                                                setErrors(newErrors); // Update errors state within the onChange function
+                                                            }}
+                                                            isInvalid={!!errors.address} />
                                                         {/* {errors.address && <p>{errors.address}</p>} */}
                                                         <FormControl.Feedback type="invalid">
                                                             {errors.address}
@@ -333,6 +397,7 @@ function Partners() {
                                                                 name="zone_id"
                                                                 onChange={(e) => handleOnChange(e)}
                                                                 isInvalid={!!errors.zone_id}
+                                                            // value={"partnerData.zone_id"}
                                                             >
                                                                 <option value={""}>Select Zone</option>
                                                                 {zoneList.map((zonedata) => (
@@ -373,15 +438,81 @@ function Partners() {
                                                     <h4><i className="fa fa-user" />  Owner Information</h4>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>First Name</Form.Label>
-                                                        <Form.Control type="text" placeholder="First Name" name="f_name" onChange={(e) => handleOnChange(e)} />
+                                                        <Form.Control type="text" 
+                                                        placeholder="First Name" 
+                                                        name="f_name" 
+                                                        onChange={(e) => {
+                                                            handleOnChange(e)
+                                                            const newErrors = { ...errors };
+                                                                let isValid = true;
+
+                                                                if (!e.target.value) {
+                                                                    // If the input field is empty, clear the error message
+                                                                    newErrors.f_name = '';
+                                                                } else if (!firstNameRegex.test(e.target.value)) {
+                                                                    newErrors.f_name = 'Invalid Shop Name';
+                                                                    isValid = false;
+                                                                }
+
+                                                                setErrors(newErrors); // Update errors state within the onChange function
+                                                        }} 
+                                                        isInvalid={!!errors.f_name}/>
+                                                        <FormControl.Feedback type="invalid">
+                                                                {errors.f_name}
+                                                            </FormControl.Feedback>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>Last Name</Form.Label>
-                                                        <Form.Control type="text" placeholder="Last Name" name="l_name" onChange={(e) => handleOnChange(e)} />
+                                                        <Form.Control 
+                                                        type="text" 
+                                                        placeholder="Last Name" 
+                                                        name="l_name" 
+                                                        onChange={(e) => {
+                                                            handleOnChange(e)
+                                                            const newErrors = { ...errors };
+                                                                let isValid = true;
+
+                                                                if (!e.target.value) {
+                                                                    // If the input field is empty, clear the error message
+                                                                    newErrors.l_name = '';
+                                                                } else if (!lastNameRegex.test(e.target.value)) {
+                                                                    newErrors.l_name = 'Invalid Shop Name';
+                                                                    isValid = false;
+                                                                }
+
+                                                                setErrors(newErrors); // Update errors state within the onChange function
+                                                        }} 
+                                                        isInvalid={!!errors.l_name}/>
+                                                        <FormControl.Feedback type="invalid">
+                                                                {errors.l_name}
+                                                            </FormControl.Feedback>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>Phone</Form.Label>
-                                                        <Form.Control type="number" placeholder="Ex:007*****" name="phone" onChange={(e) => handleOnChange(e)} />
+                                                        <Form.Control 
+                                                        type="number" 
+                                                        placeholder="phone" 
+                                                        name="phone" 
+                                                        onChange={(e) => 
+                                                        {handleOnChange(e)
+                                                            handleOnChange(e)
+                                                            const newErrors = { ...errors };
+                                                                let isValid = true;
+
+                                                                if (!e.target.value) {
+                                                                    // If the input field is empty, clear the error message
+                                                                    newErrors.phone = '';
+                                                                } else if (!phoneRegex.test(e.target.value)) {
+                                                                    newErrors.phone = ' Enter Valid Mobile Name';
+                                                                    isValid = false;
+                                                                }
+
+                                                                setErrors(newErrors); // Update errors state within the onChange function
+                                                        }} 
+                                                        isInvalid={!!errors.phone}/>
+                                                        <FormControl.Feedback type="invalid">
+                                                                {errors.phone}
+                                                            </FormControl.Feedback>
                                                     </Form.Group>
                                                     <div className="mainForm-btn">
                                                         <Button
