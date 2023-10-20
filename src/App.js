@@ -97,6 +97,7 @@ import PetshopOurourbrand from "./component/petShop/petShop-our-ourBrand";
 import PetShopShopbybrand from "./component/petShop/petShop-shopbybrand";
 import PetshopShopbybrandlist from "./component/petShop/petShop-shop-by-brand-list";
 import Latestheader from "./directives/latestheader";
+import Navber from "./directives/navber";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -120,6 +121,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/latestheader" element={<Latestheader />} />
+          <Route path="/nav" element={<Navber />} />
           <Route path="/about-us" element={<Aboutus />} />
           <Route path="/service" element={<Service />} />
           <Route path="/product" element={<Product />} />
