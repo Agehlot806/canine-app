@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../../assets/images/logo.png'
 import login from '../../assets/images/img/login.png'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Feedback, FormControl } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { BASE_URL } from "../../Constant/Index";
 import axios from 'axios'
 
 function Partners() {
+    
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
     const [partnerData, setpartnerData] = useState({});
@@ -21,48 +22,74 @@ function Partners() {
         latitude: '',
     });
 
+    const shopNameRegex = /^[a-zA-Z ]*$/; // Allows only letters and spaces /^[A-Za-z\s]+$/
+    const gstRegex = /^\d{15}$/ // GST format (15 digits)   /^\d{15}$/
+    const addressRegex = /^[A-Za-z0-9\s,.#-]+$/; // Allows letters, numbers, spaces, and common address characters
+
     const validateStep = () => {
         const newErrors = {
-          s_name: '',
-          gst: '',
-          address: '',
-          cover_photo: '',  // Add error field for cover photo
-          logo: '',         // Add error field for partners logo
-          zone_id: '',      // Add error field for zone
-          latitude: '',     // Add error field for latitude
+            s_name: '',
+            gst: '',
+            address: '',
+            cover_photo: '',  // Add error field for cover photo
+            logo: '',         // Add error field for partners logo
+            zone_id: '',      // Add error field for zone
+            latitude: '',     // Add error field for latitude
         };
 
         let isValid = true;
-
+       
         if (step === 1) {
+            // if (!partnerData.s_name) {
+            //     newErrors.s_name = 'Shop Name is required';
+            //     isValid = false;
+            // }
             if (!partnerData.s_name) {
                 newErrors.s_name = 'Shop Name is required';
                 isValid = false;
-              }
-              if (!partnerData.gst) {
+            } 
+            /*else if (!shopNameRegex.test(partnerData.s_name)) {
+                newErrors.s_name = 'Invalid Shop Name';
+                isValid = false;
+            }*/
+            // if (!partnerData.gst) {
+            //     newErrors.gst = 'GST Number is required';
+            //     isValid = false;
+            // }
+            if (!partnerData.gst) {
                 newErrors.gst = 'GST Number is required';
                 isValid = false;
-              }
-              if (!partnerData.address) {
+            } /*else if (!gstRegex.test(partnerData.gst)) {
+                newErrors.gst = 'Invalid GST Number';
+                isValid = false;
+            }*/
+            // if (!partnerData.address) {
+            //     newErrors.address = 'Shop Address is required';
+            //     isValid = false;
+            // }
+            if (!partnerData.address) {
                 newErrors.address = 'Shop Address is required';
                 isValid = false;
-              }
-              if (!partnerData.cover_photo) {
+            } /*else if (!addressRegex.test(partnerData.address)) {
+                newErrors.address = 'Invalid Shop Address';
+                isValid = false;
+            }*/
+            if (!partnerData.cover_photo) {
                 newErrors.cover_photo = 'Cover Photo is required';
                 isValid = false;
-              }
-              if (!partnerData.logo) {
+            }
+            if (!partnerData.logo) {
                 newErrors.logo = 'Partners Logo is required';
                 isValid = false;
-              }
-              if (!partnerData.zone_id) {
+            }
+            if (!partnerData.zone_id) {
                 newErrors.zone_id = 'Zone is required';
                 isValid = false;
-              }
-              if (!partnerData.latitude) {
+            }
+            if (!partnerData.latitude) {
                 newErrors.latitude = 'Latitude is required';
                 isValid = false;
-              }
+            }
         }
         else if (step === 2) {
 
@@ -78,21 +105,38 @@ function Partners() {
     const handleNext = () => {
         if (validateStep()) {
             setStep(step + 1);
+            // Clear the error message for the current step
+            const newErrors = { ...errors };
+            if (step === 1) {
+                newErrors['s_name'] = '';
+            }
+            setErrors(newErrors);
         }
     };
 
+
     const nextStep = () => {
         if (validateStep()) {
-
             setStep((prevStep) => prevStep + 1);
+            // Clear the error message for the current step
+            const newErrors = { ...errors };
+            if (step === 1) {
+                newErrors['s_name'] = '';
+            }
+            setErrors(newErrors);
         }
     };
 
     const prevStep = () => {
-        if (validateStep()) {
-            setStep((prevStep) => prevStep - 1);
+        setStep((prevStep) => prevStep - 1);
+        // Clear the error message for the current step
+        const newErrors = { ...errors };
+        if (step === 1) {
+            newErrors['s_name'] = '';
         }
+        setErrors(newErrors);
     };
+
 
     useEffect(() => {
         getZoneList();
@@ -110,6 +154,7 @@ function Partners() {
     };
 
     const handleOnChange = (e) => {
+        
         setpartnerData({
             ...partnerData,
             [e.target.name]: e.target.value,
@@ -173,32 +218,112 @@ function Partners() {
                                                     <h4><i className="fa fa-home" />  Partners Information</h4>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>Shop Name</Form.Label>
-                                                        <Form.Control type="text" placeholder="Shop Name" name="s_name" onChange={(e) => handleOnChange(e)} />
-                                                        {errors.s_name && <p>{errors.s_name}</p>}
+                                                        <Form.Control
+                                                         type="text" 
+                                                         placeholder="Shop Name" 
+                                                         name="s_name" 
+                                                        //  onChange={
+                                                        //     (e) => {handleOnChange(e)
+                                                        //         const newErrors={...errors}
+                                                        //         const isValid = true;
+                                                        //     if (!shopNameRegex.test(partnerData.s_name)) {
+                                                        //         newErrors.s_name = 'Invalid Shop Name';
+                                                        //         isValid = false;
+                                                        //     }}
+                                                        // } 
+                                                        onChange={(e) => {
+                                                            handleOnChange(e);
+                                                            const newErrors = { ...errors };
+                                                            let isValid = true;
+                                                    
+                                                            if (!e.target.value) {
+                                                                // If the input field is empty, clear the error message
+                                                                newErrors.s_name = '';
+                                                            } else if (!shopNameRegex.test(e.target.value)) {
+                                                                newErrors.s_name = 'Invalid Shop Name';
+                                                                isValid = false;
+                                                            }
+                                                            
+                                                            setErrors(newErrors); // Update errors state within the onChange function
+                                                        }} 
+                                                         isInvalid={!!errors.s_name} />
+                                                        {/* {errors.s_name && <p>{errors.s_name}</p>} */}
+                                                        <FormControl.Feedback type="invalid">
+                                                            {errors.s_name}
+                                                        </FormControl.Feedback>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>GST Number</Form.Label>
-                                                        <Form.Control type="number" placeholder="GST number" name="gst" onChange={(e) => handleOnChange(e)} />
-                                                        {errors.gst && <p>{errors.gst}</p>}
+                                                        <Form.Control 
+                                                        type="tel" 
+                                                        placeholder="GST number" 
+                                                        name="gst" 
+                                                        onChange={(e) => {
+                                                            handleOnChange(e);
+                                                            const newErrors = { ...errors };
+                                                            let isValid = true;
+                                                    
+                                                            if (!e.target.value) {
+                                                                // If the input field is empty, clear the error message
+                                                                newErrors.gst = '';
+                                                            } else if (!gstRegex.test(e.target.value)) {
+                                                                newErrors.gst = 'Invalid GST Number';
+                                                                isValid = false;
+                                                            }
+                                                            
+                                                            setErrors(newErrors); // Update errors state within the onChange function
+                                                        }} 
+                                                        isInvalid={!!errors.gst} />
+                                                        <FormControl.Feedback type="invalid">
+                                                            {errors.gst}
+                                                        </FormControl.Feedback>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formGroupEmail">
                                                         <Form.Label>Shop Address</Form.Label>
-                                                        <Form.Control type="text" placeholder="Shop Address" name="address" onChange={(e) => handleOnChange(e)} />
-                                                        {errors.address && <p>{errors.address}</p>}
+                                                        <Form.Control 
+                                                        type="text" 
+                                                        placeholder="Shop Address" 
+                                                        name="address" 
+                                                        onChange={(e) => {
+                                                            handleOnChange(e);
+                                                            const newErrors = { ...errors };
+                                                            let isValid = true;
+                                                    
+                                                            if (!e.target.value) {
+                                                                // If the input field is empty, clear the error message
+                                                                newErrors.address = '';
+                                                            } else if (!addressRegex.test(e.target.value)) {
+                                                                newErrors.address = 'Invalid Shop Name';
+                                                                isValid = false;
+                                                            }
+                                                            
+                                                            setErrors(newErrors); // Update errors state within the onChange function
+                                                        }}
+                                                        isInvalid={!!errors.address} />
+                                                        {/* {errors.address && <p>{errors.address}</p>} */}
+                                                        <FormControl.Feedback type="invalid">
+                                                            {errors.address}
+                                                        </FormControl.Feedback>
                                                     </Form.Group>
                                                     <Row className="mb-3">
                                                         <Form.Group as={Col}>
                                                             <Form.Label>Upload Cover Photo (Ratio 2:1)</Form.Label>
                                                             <Form.Control type="file" name="cover_photo"
-                                                                onChange={(e) => imageUploadHandler(e)} />
+                                                                onChange={(e) => imageUploadHandler(e)} isInvalid={!!errors.cover_photo} />
                                                         </Form.Group>
-                                                        {errors.cover_photo && <p className="error-message">{errors.cover_photo}</p>}
+                                                        {/* {errors.cover_photo && <p className="error-message">{errors.cover_photo}</p>} */}
+                                                        <FormControl.Feedback type="invalid">
+                                                            {errors.cover_photo}
+                                                        </FormControl.Feedback>
                                                         <Form.Group as={Col}>
                                                             <Form.Label>Partners Logo ( Ratio 1:1 )</Form.Label>
                                                             <Form.Control type="file" name="logo"
-                                                                onChange={(e) => imageUploadHandler(e)} />
+                                                                onChange={(e) => imageUploadHandler(e)} isInvalid={!!errors.logo} />
                                                         </Form.Group>
-                                                        {errors.logo && <p className="error-message">{errors.logo}</p>}
+                                                        {/* {errors.logo && <p className="error-message">{errors.logo}</p>} */}
+                                                        <FormControl.Feedback type="invalid">
+                                                            {errors.logo}
+                                                        </FormControl.Feedback>
                                                     </Row>
                                                     <Row className="mb-3">
                                                         <Form.Group as={Col}>
@@ -207,25 +332,35 @@ function Partners() {
                                                                 defaultValue="Select Zone"
                                                                 name="zone_id"
                                                                 onChange={(e) => handleOnChange(e)}
+                                                                isInvalid={!!errors.zone_id}
                                                             >
                                                                 <option value={""}>Select Zone</option>
                                                                 {zoneList.map((zonedata) => (
                                                                     <option value={zonedata.id}>{zonedata.name}</option>
                                                                 ))}
                                                             </Form.Select>
-                                                            {errors.zone_id && <p className="error-message">{errors.zone_id}</p>}
+                                                            {/* {errors.zone_id && <p className="error-message">{errors.zone_id}</p>} */}
+                                                            <FormControl.Feedback type="invalid">
+                                                                {errors.zone_id}
+                                                            </FormControl.Feedback>
                                                         </Form.Group>
                                                     </Row>
                                                     <Row className="mb-3">
                                                         <Form.Group as={Col} controlId="formGridState">
                                                             <Form.Label>Latitude</Form.Label>
-                                                            <Form.Control type="number" placeholder="Ex: -94.22213" name="latitude" onChange={(e) => handleOnChange(e)} />
-                                                            {errors.latitude && <p className="error-message">{errors.latitude}</p>}
+                                                            <Form.Control type="number" placeholder="Ex: -94.22213" name="latitude" onChange={(e) => handleOnChange(e)} isInvalid={!!errors.latitude} />
+                                                            {/* {errors.latitude && <p className="error-message">{errors.latitude}</p>} */}
+                                                            <FormControl.Feedback type="invalid">
+                                                                {errors.latitude}
+                                                            </FormControl.Feedback>
                                                         </Form.Group>
                                                         <Form.Group as={Col} controlId="formGridCity">
                                                             <Form.Label>Longitude </Form.Label>
-                                                            <Form.Control type="number" placeholder="Ex: 103.344322" name="longitude" onChange={(e) => handleOnChange(e)} />
-                                                            {errors.latitude && <p className="error-message">{errors.latitude}</p>}
+                                                            <Form.Control type="number" placeholder="Ex: 103.344322" name="longitude" onChange={(e) => handleOnChange(e)} isInvalid={!!errors.latitude} />
+                                                            {/* {errors.latitude && <p className="error-message">{errors.latitude}</p>} */}
+                                                            <FormControl.Feedback type="invalid">
+                                                                {errors.latitude}
+                                                            </FormControl.Feedback>
                                                         </Form.Group>
                                                     </Row>
                                                     <div className="mainForm-btn">
