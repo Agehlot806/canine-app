@@ -4,7 +4,8 @@ import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
-import cart from "../../assets/images/icon/cart1.png";
+// import Cart from "../../assets/images/icon/cart.png";
+import CartOne from '../../assets/images/logo.png'
 import Footer from "../../directives/footer";
 import {
   Link,
@@ -652,7 +653,7 @@ if(customerLoginId !== null){
                           {/* <button onClick={() => handleDecrementone(index)}>
                         <i className="fa fa-minus" />
                       </button> */}
-                          <button>Qut</button>
+                          <button>Qty</button>
                           <form>
                             <div className="form-group">
                               <input
@@ -744,11 +745,30 @@ if(customerLoginId !== null){
                     </Col>
                   </Row>
                 </div>
+                <div className="check-Continue">
+                {/* <Button onClick={() => handlePayment()}>
+                              Checkout
+                            </Button> */}
+                <Button
+                  // data-toggle="modal"
+                  // data-target="#cod"
+                // onClick={handleAddToCart}
+                >
+                  <Link
+                                to="/login"
+                              >
+                  Checkout
+                  </Link>
+                </Button>
+                <Button>
+                  <Link to="/product">Continue Shopping</Link>
+                </Button>
+              </div>
               </Container>
             </>
           ) : (
             <div className="Emptycart">
-              <img src={cart} />
+              <img src={CartOne} />
               <p className="emptyMSG">Cart is Empty</p>
             </div>
           )
@@ -813,33 +833,11 @@ if(customerLoginId !== null){
               ))
             ) : (
               <div className="Emptycart">
-                <img src={cart} />
+                <img src={CartOne} />
                 <p className="emptyMSG">Cart is Empty</p>
               </div>
             )}
-          <Container>
-            {customerLoginId === null && (
-              <div className="check-Continue">
-                {/* <Button onClick={() => handlePayment()}>
-                              Checkout
-                            </Button> */}
-                <Button
-                  // data-toggle="modal"
-                  // data-target="#cod"
-                // onClick={handleAddToCart}
-                >
-                  <Link
-                                to="/login"
-                              >
-                  Checkout
-                  </Link>
-                </Button>
-                <Button>
-                  <Link to="/product">Continue Shopping</Link>
-                </Button>
-              </div>
-            )}
-          </Container>
+          
 
           {addToCartProduct && addToCartProduct.length > 0 ? (
             <Container>

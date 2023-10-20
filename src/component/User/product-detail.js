@@ -1233,7 +1233,7 @@ function Productdetail() {
             <div className="productBTNaddcard">
               {customerLoginId === null ?
                 <Button>
-                  <Link onClick={() => {
+                  <Link to={"/add-cart"} onClick={() => {
                     dispatch({
                       type: 'ADD_TO_CART',
                       payload: {

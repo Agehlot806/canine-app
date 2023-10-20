@@ -12,6 +12,7 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Blogdetails() {
   const { id } = useParams();
@@ -31,6 +32,14 @@ function Blogdetails() {
   const [paymentId, setPaymentId] = useState("");
   const [expandedDescription, setExpandedDescription] = useState({});
   const [productIds, setProductIds] = useState([]);
+   // without signup add cart start
+   const loginType = localStorage.getItem("loginType");
+   const customerLoginId =
+     loginType === "wholeseller"
+       ? Number(localStorage.getItem("UserWholesellerId"))
+       : localStorage.getItem("userInfo");
+   const { cart, dispatch } = useCartWithoutLogin();
+    // without signup add cart end
   console.log("productIds: ", productIds);
   // const relatedProductData = blogdata?.product_id;
   // console.log("relatedProductData: ", relatedProductData);
@@ -987,7 +996,14 @@ function Blogdetails() {
                           <button
                             data-toggle="modal"
                             data-target=".buynow"
-                            onClick={() => handeldataId(item[0].id)}
+                            // onClick={() => handeldataId(item[0].id)}
+                            onClick={(e) => {
+                              if (!storedUserId) {
+                                shippingpage('/login')
+                              } else {
+                                handeldataId(item.id);
+                              }
+                            }}
                           >
                             Buy Now
                           </button>
@@ -1259,7 +1275,47 @@ function Blogdetails() {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                   {/* without sign in quick view add cart */}
+                   {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      {customerLoginId === null ?
+                        <Button data-dismiss="modal">
+                          <Link onClick={() => {
+                            dispatch({
+                              type: 'ADD_TO_CART',
+                              payload: {
+                                item_id: productDetails.id,
+                                variant: selectedVariant,
+                                price: formattedAmount,
+                                quantity: quantity,
+                                name: productDetails.name,
+                                image: productDetails.image
+                              }
+                            })
+
+                          }} >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                        :
+                        (<Button>
+                          <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>)}
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
+                  {/* {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
                         <Link
@@ -1279,7 +1335,7 @@ function Blogdetails() {
                         Notify Me When Available
                       </Button>
                     </div>
-                  )}
+                  )} */}
                   <div
                     className="modal fade"
                     id="soldoutModel"

@@ -11,6 +11,7 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Ourourbrand(props) {
   // filter tabs
@@ -88,6 +89,14 @@ function Ourourbrand(props) {
 
   const [petitemproduct, setpetitemproduct] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
+    // without signup add cart start
+    const loginType = localStorage.getItem("loginType");
+    const customerLoginId =
+      loginType === "wholeseller"
+        ? Number(localStorage.getItem("UserWholesellerId"))
+        : localStorage.getItem("userInfo");
+    const { cart, dispatch } = useCartWithoutLogin();
+     // without signup add cart end
 
   useEffect(() => {
     Allsubcategories();
@@ -1642,7 +1651,15 @@ function Ourourbrand(props) {
                                     <button
                                       data-toggle="modal"
                                       data-target=".buynow"
-                                      onClick={(e) => handeldataId(item.id)}
+                                      onClick={(e) => {
+                                        if (!storedUserId) {
+                                          // window.location.href = '/login'; 
+                                          shippingpage('/login')
+                                        } else {
+                                          handeldataId(item.id); 
+                                        }
+                                      }}
+                                      // onClick={(e) => handeldataId(item.id)}
                                     >
                                       Buy Now
                                     </button>
@@ -2062,7 +2079,47 @@ function Ourourbrand(props) {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails?.stock &&
+                   {/* without sign in quick view add cart */}
+                   {productDetails.stock && productDetails.stock.length !== 0 ? (
+            <div className="productBTNaddcard">
+              {customerLoginId === null ?
+                <Button data-dismiss="modal">
+                  <Link onClick={() => {
+                    dispatch({
+                      type: 'ADD_TO_CART',
+                      payload: {
+                        item_id: productDetails.id,
+                        variant: selectedVariant,
+                        price: formattedAmount,
+                        quantity: quantity,
+                        name:productDetails.name,
+                        image: productDetails.image
+                      }
+                    })
+                    
+                  }} >
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                  <p>{addToCartStatus}</p>
+                </Button>
+                :
+                (<Button>
+                  <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                  <p>{addToCartStatus}</p>
+                </Button>)}
+            </div>
+          ) : (
+            <div className="sold-out-btn mt-3">
+              <Link>Sold Out</Link>
+              <br />
+              <Button data-toggle="modal" data-target="#soldoutModel">
+                Notify Me When Available
+              </Button>
+            </div>
+          )}
+                  {/* {productDetails?.stock &&
                   productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
@@ -2083,7 +2140,7 @@ function Ourourbrand(props) {
                         Notify Me When Available
                       </Button>
                     </div>
-                  )}
+                  )} */}
                   <div
                     className="modal fade"
                     id="soldoutModel"

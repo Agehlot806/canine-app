@@ -21,6 +21,7 @@ import { AiOutlineStar } from "react-icons/ai";
 import paydone from "../../assets/images/icon/paydone.png";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import "animate.css/animate.min.css";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 const homeslider = {
   desktop: {
@@ -53,7 +54,7 @@ const clinetreview = {
   },
   mobile: {
     breakpoint: { max: 540, min: 0 },
-    items: 1,
+    items: 2,
     slidesToSlide: 1, // optional, default to 1.
   },
 };
@@ -75,6 +76,14 @@ function Home(props) {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [responseMessage, setResponseMessage] = useState("");
   const [wishlistData, setWishlistData] = useState([]);
+  // without signup add cart start
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
+   // without signup add cart end
   const isEmailFormatValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -1270,22 +1279,18 @@ function Home(props) {
                             <button
                               data-toggle="modal"
                               data-target=".bd-example-modal-lg"
-                              onClick={(e) => {
-                                if (!storedUserId) {
-                                  // window.location.href = '/login'; 
-                                  shippingpage('/login')
-                                } else {
-                                  handeldataId(item.id); 
-                                }
-                              }}
                               // onClick={(e) => {
-                              //   if(){
+                              //   if (!storedUserId) {
+                              //     // window.location.href = '/login'; 
                               //     shippingpage('/login')
-                              //   }else{
-
-                              //     handeldataId(item.id)
+                              //   } else {
+                              //     handeldataId(item.id); 
                               //   }
                               // }}
+                              onClick={(e) => {
+
+                                  handeldataId(item.id)
+                                }}
                             >
                               Quick View
                             </button>
@@ -1980,7 +1985,48 @@ function Home(props) {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails?.stock &&
+                  {/* without sign in quick view add cart */}
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+            <div className="productBTNaddcard">
+              {customerLoginId === null ?
+                <Button data-dismiss="modal">
+                  <Link onClick={() => {
+                    dispatch({
+                      type: 'ADD_TO_CART',
+                      payload: {
+                        item_id: productDetails.id,
+                        variant: selectedVariant,
+                        price: formattedAmount,
+                        quantity: quantity,
+                        name:productDetails.name,
+                        image: productDetails.image
+                      }
+                    })
+                    
+                  }} >
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                  <p>{addToCartStatus}</p>
+                </Button>
+                :
+                (<Button>
+                  <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                    <i className="fa fa-shopping-bag" /> Add to cart
+                  </Link>
+                  <p>{addToCartStatus}</p>
+                </Button>)}
+            </div>
+          ) : (
+            <div className="sold-out-btn mt-3">
+              <Link>Sold Out</Link>
+              <br />
+              <Button data-toggle="modal" data-target="#soldoutModel">
+                Notify Me When Available
+              </Button>
+            </div>
+          )}
+
+                  {/* {productDetails?.stock &&
                   productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       <Button>
@@ -2001,7 +2047,7 @@ function Home(props) {
                         Notify Me When Available
                       </Button>
                     </div>
-                  )}
+                  )} */}
                   <div
                     className="modal fade"
                     id="soldoutModel"
