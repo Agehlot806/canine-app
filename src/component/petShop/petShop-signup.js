@@ -209,6 +209,7 @@ function PetshopSignUp() {
                   </p>
                   <Form onSubmit={handleFormSubmit}>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>First Name</Form.Label>
                       <Form.Control
                         type="text"
                         name="f_name"
@@ -218,6 +219,7 @@ function PetshopSignUp() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Last Name</Form.Label>
                       <Form.Control
                         type="text"
                         name="l_name"
@@ -227,6 +229,7 @@ function PetshopSignUp() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Date of Registration</Form.Label>
                       <Form.Control
                         type="date"
                         name="dateofbirth"
@@ -236,6 +239,7 @@ function PetshopSignUp() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Email ID</Form.Label>
                       <Form.Control
                         type="email"
                         name="email"
@@ -256,6 +260,7 @@ function PetshopSignUp() {
                       )}
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Mobile Number</Form.Label>
                       <Form.Control
                         type="tel"
                         name="phone"
@@ -275,6 +280,7 @@ function PetshopSignUp() {
                     <div className="row mb-3">
                       <div className="col">
                         <div className="form-group">
+                        <Form.Label>State</Form.Label>
                           <select
                             className="form-control"
                             onChange={Subscription}
@@ -291,6 +297,7 @@ function PetshopSignUp() {
                       </div>
                       <div className="col">
                         <div className="form-group">
+                        <Form.Label>City</Form.Label>
                           <select
                             className="form-control"
                             onChange={(e) => setSelectedCity(e.target.value)}
@@ -310,6 +317,7 @@ function PetshopSignUp() {
                       </div>
                     </div>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Business Name</Form.Label>
                       <Form.Control
                         type="text"
                         name="business_name"
@@ -319,6 +327,7 @@ function PetshopSignUp() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Aadhar Number</Form.Label>
                       <Form.Control
                         type="tel"
                         name="aadhar_number"
@@ -336,6 +345,7 @@ function PetshopSignUp() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>GST Number</Form.Label>
                       <Form.Control
                         type="tel"
                         name="gst_number"
@@ -370,6 +380,7 @@ function PetshopSignUp() {
                       </Form.Group>
                     </Row>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Pincode</Form.Label>
                       <Form.Control
                         type="number"
                         name="pincode"
@@ -380,6 +391,7 @@ function PetshopSignUp() {
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Password</Form.Label>
                       <Form.Control
                         type="password"
                         name="password"

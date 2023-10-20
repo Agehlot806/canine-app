@@ -3,7 +3,7 @@ import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 // import { Link, useParams } from 'react-router-dom'
-import cart from "../../assets/images/icon/cart1.png";
+import Cartone from "../../assets/images/icon/cart1.png";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
@@ -793,7 +793,7 @@ function PetshopAddCart() {
             ))
           ) : (
             <div className="Emptycart">
-              <img src={cart} />
+              <img src={Cartone} />
               <p className="emptyMSG">Cart is Empty</p>
             </div>
           )}

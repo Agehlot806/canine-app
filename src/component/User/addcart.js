@@ -5,7 +5,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 // import Cart from "../../assets/images/icon/cart.png";
-import CartOne from '../../assets/images/logo.png'
+import CartOne from '../../assets/images/icon/cart1.png'
 import Footer from "../../directives/footer";
 import {
   Link,

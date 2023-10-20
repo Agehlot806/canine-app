@@ -14,6 +14,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import toast, { Toaster } from "react-hot-toast";
+import Fade, { Flip } from "react-reveal";
 
 function Petshopdashboard() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Petshopdashboard() {
 
   const AllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banner`);
       sethomebanner(response.data.data);
     } catch (error) {
       console.error(error);
@@ -88,7 +89,8 @@ function Petshopdashboard() {
                 (item, index) =>
                   item.type === "default" && (
                     <div className="home-img">
-                      <div className="">
+                      <Link to={item.default_link}>
+                      <div>
                         <img
                           src={
                             "https://canine.hirectjob.in//storage/app/" +
@@ -107,6 +109,7 @@ function Petshopdashboard() {
                           </div>
                         </Col>
                       </Row>
+                      </Link>
                     </div>
                   )
               )
@@ -293,18 +296,20 @@ function Petshopdashboard() {
                       <div className="">
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/" +
-                            item.image
+                            "https://caninetest.xyz/storage/app/" + item.image
                           }
                         />
                       </div>
                       <Row className="justify-content-center">
                         <Col lg={7}>
-                          <div className="home-content">
+                          <div className="new-content">
                             <div className="Newsletter">
-                              <h1 className="main-head">
-                                Get Or Promo Code by Subscribing To our Newsletter
-                              </h1>
+                              <Flip right>
+                                <h1 className="main-head">
+                                  Get Or Promo Code by Subscribing To our
+                                  Newsletter
+                                </h1>
+                              </Flip>
                               <Form className="d-flex">
                                 <Form.Control
                                   type="search"

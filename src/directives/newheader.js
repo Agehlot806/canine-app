@@ -1986,10 +1986,7 @@ function Newheader(props) {
                   </ul>
                 </Link>
               </li>
-              {
-                storedUserId ? (
-                  <>
-                    <li>
+              <li>
                       <Link to="/add-cart" className="notification-btn">
                         <i class="fa fa-shopping-cart" />{" "}
                         <span className="cart-count">
@@ -1997,34 +1994,7 @@ function Newheader(props) {
                         </span>{" "}
                       </Link>
                     </li>
-                    <li>
-                      <a
-                        className="notification-btn"
-                        data-toggle="modal"
-                        data-target="#exampleModal"
-                        onClick={handleBellClick}
-                      >
-                        <i class="fa fa-bell-o" />
-                        {isTotalLengthVisible && <span>{totalLength}</span>}
-                      </a>
-                    </li>
-                    {/* <li>
-                    <Link
-                      className=""
-                      data-toggle="modal"
-                      data-target="#logout-model"
-                    >
-                      Logout
-                    </Link>
-                  </li> */}
-                  </>
-                ) : null
-                //   (
-                //   <li>
-                //     <Link to="/login">Login/Sign Up</Link>
-                //   </li>
-                // )
-              }
+              
             </div>
             <input type="radio" name="slider" id="menu-btn" />
             <input type="radio" name="slider" id="close-btn" />
@@ -2032,7 +2002,7 @@ function Newheader(props) {
               <label htmlFor="close-btn" className="btn close-btn">
                 <i className="fas fa-times" />
               </label>
-
+<div className="web-icon">
               <li className="webhide">
                     <a href="#" className="profiledes desktop-item">
                       <img
@@ -2093,6 +2063,21 @@ function Newheader(props) {
                       </li>
                     </ul>
                   </li>
+                  <li className="webhide">
+                    <a
+                      className="profiledes notification-btn"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                      onClick={handleBellClick}
+                    >
+                      <i class="fa fa-bell-o" />
+                      {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
+                      {isTotalLengthVisible && (
+                        <span>{isNaN(customCount) ? 0 : customCount}</span>
+                      )}
+                    </a>
+                  </li>
+                  </div>
               <li>
                 <a href="#" className="desktop-item">
                   Dogs
