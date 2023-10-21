@@ -816,7 +816,7 @@ function PetshopAddCart() {
                       <hr />
                       <Row>
                         <Col>
-                          <h5>Tax(5%)</h5>
+                          <h5>GST(5%)</h5>
                         </Col>
                         <Col>
                           <h5>₹{Math.floor(originalPrice * 0.05)}</h5>

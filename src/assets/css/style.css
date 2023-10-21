@@ -1584,6 +1584,7 @@ a {
 /* add cart */
 .quantity-btn input {
   width: 60px;
+  text-align: center;
   /* height: 40px;
     border-radius: 50px; */
 }
@@ -2147,7 +2148,7 @@ a.placDate {
 }
 
 .select-card {
-  padding: 20px;
+  padding: 4px;
   border-radius: 10px;
   margin: 20px 0;
 }
@@ -2158,12 +2159,12 @@ a.placDate {
 
 .selct-card-text input {
   font-size: 32px;
-  margin: 10px 18px 0 0 !important;
+  margin: 16px 18px 0 0 !important;
 }
 
 .selct-card-text p {
   font-family: Poppins;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 2.391px;
   margin: 8px 0 0 30px;
@@ -2250,7 +2251,8 @@ a.placDate {
 }
 
 .payment-done p {
-  margin: 20px 0 40px;
+  margin: 12px 0;
+  font-weight: 600;
 }
 
 /* service date page css */
@@ -2609,10 +2611,11 @@ a.placDate {
 
 .notification-area .modal-body button {
   background: #f1c21b;
-  border: none;
-  font-size: 22px;
-  font-weight: 500;
-  color: #000;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    padding: 6px 10px;
 }
 
 /* edit address modal */
@@ -3491,6 +3494,7 @@ button.Apply-price {
 
 .payletter-btn {
   text-align: center;
+  margin: 10px 0;
 }
 
 .payletter-btn button {
@@ -3520,7 +3524,9 @@ button.Apply-price {
   color: blue;
   cursor: pointer;
 }
-
+.logout-area {
+  text-align: center;
+}
 .logout-area button {
   background: #ffc934;
   margin: 0 4px;
@@ -4038,4 +4044,8 @@ li.nav-.nonhide {
 .form-area label {
   font-weight: 600;
   color: #000;
+}
+
+.coup-area {
+  text-align: right;
 }

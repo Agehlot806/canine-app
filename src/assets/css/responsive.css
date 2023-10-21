@@ -280,6 +280,10 @@
     position: initial !important;
     height: 30px;
   }
+  a.notification-btn i {
+    font-size: 18px;
+    margin: 12px 0 0 30px;
+}
   .logo {
     margin: -12px 0;
 }
@@ -557,7 +561,7 @@ input.homesea {
 }
 a.notification-btn i {
   font-size: 17px;
-  margin: 0px 4px;
+  margin: 0px 10px;
 }
 input.homesea {
   font-size: 10px;
@@ -566,8 +570,9 @@ a.profiledes.searneee {
   padding: 0 !important;
 }
 a.profiledes.searneee i {
-  padding: 5px !important;
+  padding: 5.9px !important;
   margin: 0 4px 0 0 !important;
+  font-size: 12px;
 }
 .wrapper .btn {
   font-size: 15px !important ;

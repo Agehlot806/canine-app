@@ -1963,7 +1963,7 @@ function Newheader(props) {
                 <img src={logo} />
               </Link>
             </div>
-            
+
             <div className="hide-icons">
               <li>
                 <Link className="profiledes searneee">
@@ -1987,14 +1987,14 @@ function Newheader(props) {
                 </Link>
               </li>
               <li>
-                      <Link to="/add-cart" className="notification-btn">
-                        <i class="fa fa-shopping-cart" />{" "}
-                        <span className="cart-count">
-                          {customerLoginId === null ? cart?.length : dataLength}
-                        </span>{" "}
-                      </Link>
-                    </li>
-              
+                <Link to="/add-cart" className="notification-btn">
+                  <i class="fa fa-shopping-cart" />{" "}
+                  <span className="cart-count">
+                    {customerLoginId === null ? cart?.length : dataLength}
+                  </span>{" "}
+                </Link>
+              </li>
+
             </div>
             <input type="radio" name="slider" id="menu-btn" />
             <input type="radio" name="slider" id="close-btn" />
@@ -2002,82 +2002,82 @@ function Newheader(props) {
               <label htmlFor="close-btn" className="btn close-btn">
                 <i className="fas fa-times" />
               </label>
-<div className="web-icon">
-              <li className="webhide">
-                    <a href="#" className="profiledes desktop-item">
-                      <img
-                        src={
-                          profileData?.image
-                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
-                            : loicon1
-                        }
-                        alt="Profile Image"
-                      />
-                    </a>
-                    <input type="checkbox" id="showDropProfile" />
-                    <label htmlFor="showDropProfile" className="mobile-item proihg">
-                      <img
-                        src={
-                          profileData?.image
-                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
-                            : loicon1
-                        }
-                        alt="Profile Image"
-                      />
-                    </label>
-                    <ul className="drop-menu">
-                      <li>
-                        <Link className="dropdown-item" to={`/pet-profile/`}>
-                          Pet Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/all-veterinary">
-                          All Veterinary
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className="dropdown-item"
-                          to="/all-service-booking"
-                        >
-                          All Service Booking
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/my-orders">
-                          My Orders
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/wishlist-products">
-                          Wishlist Products
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/update-profile">
-                          Profile
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="webhide">
-                    <a
-                      className="profiledes notification-btn"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                      onClick={handleBellClick}
-                    >
-                      <i class="fa fa-bell-o" />
-                      {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
-                      {isTotalLengthVisible && (
-                        <span>{isNaN(customCount) ? 0 : customCount}</span>
-                      )}
-                    </a>
-                  </li>
-                  </div>
+              <div className="web-icon">
+                <li className="webhide">
+                  <a href="#" className="profiledes desktop-item">
+                    <img
+                      src={
+                        profileData?.image
+                          ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                          profileData.image
+                          : loicon1
+                      }
+                      alt="Profile Image"
+                    />
+                  </a>
+                  <input type="checkbox" id="showDropProfile" />
+                  <label htmlFor="showDropProfile" className="mobile-item proihg">
+                    <img
+                      src={
+                        profileData?.image
+                          ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                          profileData.image
+                          : loicon1
+                      }
+                      alt="Profile Image"
+                    />
+                  </label>
+                  <ul className="drop-menu">
+                    <li>
+                      <Link className="dropdown-item" to={`/pet-profile/`}>
+                        Pet Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/all-veterinary">
+                        All Veterinary
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        to="/all-service-booking"
+                      >
+                        All Service Booking
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/my-orders">
+                        My Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/wishlist-products">
+                        Wishlist Products
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/update-profile">
+                        Profile
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="webhide">
+                  <a
+                    className="profiledes notification-btn"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    onClick={handleBellClick}
+                  >
+                    <i class="fa fa-bell-o" />
+                    {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
+                    {isTotalLengthVisible && (
+                      <span>{isNaN(customCount) ? 0 : customCount}</span>
+                    )}
+                  </a>
+                </li>
+              </div>
               <li>
                 <a href="#" className="desktop-item">
                   Dogs
@@ -2088,7 +2088,7 @@ function Newheader(props) {
                   Dogs
                   <i class="fa fa-angle-down arrr" />
                 </label>
-                
+
                 <div className="mega-box">
                   <div className="content">
                     <Row>
@@ -2484,7 +2484,7 @@ function Newheader(props) {
                             dogsubcategories.map(
                               (item) =>
                                 item.name ==
-                                  "Beds Cages, Scratcher & Crates" && (
+                                "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2711,7 +2711,7 @@ function Newheader(props) {
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
+                            profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2723,7 +2723,7 @@ function Newheader(props) {
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
+                            profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2779,7 +2779,7 @@ function Newheader(props) {
         </nav>
       </div>
 
-     
+
       {/* Modal */}
       <div
         className="modal fade"
@@ -2972,9 +2972,8 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${
-                              ob.status === "unread" ? "unread" : "read"
-                            }`}
+                            className={`notification ${ob.status === "unread" ? "unread" : "read"
+                              }`}
                             key={index}
                           >
                             <Row>

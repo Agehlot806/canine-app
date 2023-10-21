@@ -344,11 +344,13 @@ input.homesea:focus-visible {
 a.profiledes.searneee {
   border: 1px solid #000;
   padding: 4px 0;
+  border-radius: 22px;
 }
 a.profiledes.searneee i {
   margin: 0 10px 0 0;
   background: #ffc934;
   padding: 8px;
+  border-radius: 22px;
 }
 
 .arrr {

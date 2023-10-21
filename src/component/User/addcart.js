@@ -719,7 +719,7 @@ if(customerLoginId !== null){
                         <hr />
                         <Row>
                           <Col>
-                            <h5>Tax(5%)</h5>
+                            <h5>GST(5%)</h5>
                           </Col>
                           <Col>
                             <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
@@ -940,7 +940,7 @@ if(customerLoginId !== null){
                       <hr />
                       <Row>
                         <Col>
-                          <h5>Tax(5%)</h5>
+                          <h5>GST(5%)</h5>
                         </Col>
                         <Col>
                           <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
@@ -1803,7 +1803,7 @@ if(customerLoginId !== null){
                           </tbody>
                         </table>
 
-                        <div className="text-center">
+                        <div className="coup-area">
                           <button
                             // onClick={() => {
                             //   setcoupenCode(!coupencode);

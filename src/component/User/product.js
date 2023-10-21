@@ -1557,7 +1557,7 @@ function Product(props) {
                                 <p>₹{parseFloat(item.price)}</p>
                               </Col>
                               <Col>
-                                <h5>{item?.discount}%</h5>
+                                <h5>Save {parseFloat(item.discount)}%</h5>
                               </Col>
                             </Row>
                             <Row>
