@@ -1606,7 +1606,8 @@ function Newheader(props) {
   console.log("dataZero", dataZero);
   const [categories, setcategories] = useState([]);
   const salesmanId = localStorage.getItem("salesmanId");
-  const { cartData, dataLength, addToCartData } = useCartContext();
+  const { cartData, dataLength, dataLengthpetshop, addToCartData } =
+    useCartContext();
   const { totalLength } = useNotificationContext();
   const { notificationLength, dataLengthpetnotification } =
     useNotificationContext();
@@ -1729,7 +1730,7 @@ function Newheader(props) {
         console.log("Logged out user with ID: ", customer_id);
         setStoredUserId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
-        window.location.reload(false)
+        window.location.reload(false);
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
       }
@@ -1990,11 +1991,12 @@ function Newheader(props) {
                 <Link to="/add-cart" className="notification-btn">
                   <i class="fa fa-shopping-cart" />{" "}
                   <span className="cart-count">
-                    {customerLoginId === null ? cart?.length : dataLength}
+                    {customerLoginId === null
+                      ? cart?.length
+                      : dataLengthpetshop}
                   </span>{" "}
                 </Link>
               </li>
-
             </div>
             <input type="radio" name="slider" id="menu-btn" />
             <input type="radio" name="slider" id="close-btn" />
@@ -2009,19 +2011,22 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
                     />
                   </a>
                   <input type="checkbox" id="showDropProfile" />
-                  <label htmlFor="showDropProfile" className="mobile-item proihg">
+                  <label
+                    htmlFor="showDropProfile"
+                    className="mobile-item proihg"
+                  >
                     <img
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2039,10 +2044,7 @@ function Newheader(props) {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        className="dropdown-item"
-                        to="/all-service-booking"
-                      >
+                      <Link className="dropdown-item" to="/all-service-booking">
                         All Service Booking
                       </Link>
                     </li>
@@ -2484,7 +2486,7 @@ function Newheader(props) {
                             dogsubcategories.map(
                               (item) =>
                                 item.name ==
-                                "Beds Cages, Scratcher & Crates" && (
+                                  "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2675,7 +2677,9 @@ function Newheader(props) {
                 <Link to="/add-cart" className="profiledes notification-btn">
                   <i class="fa fa-shopping-cart" />{" "}
                   <span className="cart-count">
-                    {customerLoginId === null ? cart?.length : dataLength}
+                    {customerLoginId === null
+                      ? cart?.length
+                      : dataLengthpetshop}
                   </span>{" "}
                 </Link>
               </li>
@@ -2711,7 +2715,7 @@ function Newheader(props) {
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                              profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2723,7 +2727,7 @@ function Newheader(props) {
                         src={
                           profileData?.image
                             ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                              profileData.image
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2778,7 +2782,6 @@ function Newheader(props) {
           </div>
         </nav>
       </div>
-
 
       {/* Modal */}
       <div
@@ -2972,8 +2975,9 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${ob.status === "unread" ? "unread" : "read"
-                              }`}
+                            className={`notification ${
+                              ob.status === "unread" ? "unread" : "read"
+                            }`}
                             key={index}
                           >
                             <Row>

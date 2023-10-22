@@ -13,29 +13,70 @@ import PlacesAutocomplete, {
 function Partners() {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
-  const [partnerData, setpartnerData] = useState({
-    s_name: "",
-    gst: "",
-    address: "",
-    cover_photo: null,
-    logo: null,
-    zone_id: "",
-  });
+  //   const [partnerData, setpartnerData] = useState({
+  //     s_name: "",
+  //     gst: "",
+  //     address: "",
+  //     cover_photo: null,
+  //     logo: null,
+  //     zone_id: "",
+  //   });
   const [zoneList, setZoneList] = useState([]);
   const [address, setAddress] = useState("");
+  const [shopNameStored, setShopNameStored] = useState("");
+  const [zoneIdstored, setZoneIdstored] = useState("");
+  const [gstNumberStored, setGstNumberStored] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
   const [isFormValid, setIsFormValid] = useState(false);
-
-  const validateFields = () => {
-    const isValid =
-      nameValid(partnerData.s_name) &&
-      gstNumberValid(partnerData.gst) &&
-      addressValid(partnerData.address) &&
-      partnerData.cover_photo !== null &&
-      partnerData.logo !== null &&
-      partnerData.zone_id !== "";
-
-    setIsFormValid(isValid);
+  // STEP 1 Handle Form Data start
+  const handleZoneIdChange = (event) => {
+    setZoneIdstored(event.target.value);
   };
+  const handleNameStoredChange = (event) => {
+    setShopNameStored(event.target.value);
+  };
+  const handleGstNumberChange = (event) => {
+    setGstNumberStored(event.target.value);
+  };
+  // STEP 1 Handle Form Data end
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  // STEP 2 Handle Form Data start
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  };
+  const handlePhoneNumChange = (event) => {
+    setPhoneNum(event.target.value);
+  };
+
+  // STEP 2 Handle Form Data end
+  const [emailStored, setEmailStored] = useState("");
+  const [passwordStored, setPasswordStored] = useState("");
+  // STEP 3 Handle Form Data Start
+  const handleEmailChange = (event) => {
+    setEmailStored(event.target.value);
+  };
+  const handlePasswordChange = (event) => {
+    setPasswordStored(event.target.value);
+  };
+  // STEP 3 Handle Form Data end
+
+  //   const validateFields = () => {
+  //     const isValid =
+  //       nameValid(partnerData.s_name) && gstNumberValid(partnerData.gst);
+  //     //   addressValid(partnerData.address) &&
+  //     //   partnerData.cover_photo !== null &&
+  //     //   partnerData.logo !== null &&
+  //     //   partnerData.zone_id !== "";
+
+  //     setIsFormValid(isValid);
+  //   };
 
   const nameValid = (name) => {
     if (name?.length <= 15 && /^[a-zA-Z\s]*$/.test(name)) {
@@ -85,21 +126,23 @@ function Partners() {
       .then((results) => getLatLng(results[0]))
       .then((latLng) => {
         console.log("Success", latLng);
-
+        setAddress(selectedAddress);
+        setLatitude(latLng.lat);
+        setLongitude(latLng.lng);
         // Update the location state with latitude and longitude
-        setpartnerData({
-          address: selectedAddress,
-          latitude: latLng.lat,
-          longitude: latLng.lng,
-        });
-        validateFields();
+        // setpartnerData({
+        //   address: selectedAddress,
+        //   latitude: latLng.lat,
+        //   longitude: latLng.lng,
+        // });
+        // validateFields();
       })
       .catch((error) => console.error("Error", error));
   };
   const nextStep = () => {
-    if (isFormValid) {
-      setStep((prevStep) => prevStep + 1);
-    }
+    // if (isFormValid) {
+    setStep((prevStep) => prevStep + 1);
+    // }
   };
 
   const prevStep = () => {
@@ -129,13 +172,21 @@ function Partners() {
         console.log("error in zone list", error);
       });
   };
-
+  //   const handleInputChange = (event) => {
+  //     const { name, value, type } = event.target;
+  //     setFormData({
+  //       ...formData,
+  //       [name]: type === 'file' ? event.target.files[0] : value,
+  //     });
+  //   }
   const handleOnChange = (e) => {
+    const { name, value } = e.target;
     setpartnerData({
       ...partnerData,
-      [e.target.name]: e.target.value,
+      //   [e.target.name]: e.target.value,
+      [name]: value,
     });
-    validateFields();
+    // validateFields();
   };
 
   // post data
@@ -143,20 +194,20 @@ function Partners() {
     // if (!handleValid()) {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("f_name", partnerData.f_name);
-    formData.append("l_name", partnerData.l_name);
-    formData.append("email", partnerData.email);
-    formData.append("s_name", partnerData.s_name);
-    formData.append("zone_id", partnerData.zone_id);
-    formData.append("address", partnerData.address);
-    formData.append("latitude", partnerData.latitude);
-    formData.append("longitude", partnerData.longitude);
-    formData.append("cover_photo", partnerData.cover_photo);
-    formData.append("phone", partnerData.phone);
-    formData.append("password", partnerData.password);
-    formData.append("logo", partnerData.logo);
-    formData.append("zone_id", partnerData.zone_id);
-    formData.append("gst", partnerData.gst);
+    formData.append("f_name", firstName);
+    formData.append("l_name", lastName);
+    formData.append("email", emailStored);
+    formData.append("s_name", shopNameStored);
+    formData.append("zone_id", zoneIdstored);
+    formData.append("address", address);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
+    formData.append("cover_photo", coverPhotoStored);
+    formData.append("phone", phoneNum);
+    formData.append("password", passwordStored);
+    formData.append("logo", logoPhotoStored);
+    // formData.append("zone_id", partnerData.zone_id);
+    formData.append("gst", gstNumberStored);
 
     await axios
       .post(`${BASE_URL}/auth/register`, formData)
@@ -177,53 +228,35 @@ function Partners() {
   //     });
   //     validateFields();
   //   };
-  const [coverPhotoError, setCoverPhotoError] = useState(false);
-  const [logoError, setLogoError] = useState(false);
-  const [zoneError, setZoneError] = useState(false);
-  const handleImageUpload = (e) => {
-    const fieldName = e.target.name;
-    if (!e.target.files.length) {
-      if (fieldName === "cover_photo") {
-        setCoverPhotoError(true);
-      } else if (fieldName === "logo") {
-        setLogoError(true);
-      }
-    } else {
-      // File selected, no error
-      if (fieldName === "cover_photo") {
-        setCoverPhotoError(false);
-      } else if (fieldName === "logo") {
-        setLogoError(false);
-      }
-    }
+  //   const [coverPhotoError, setCoverPhotoError] = useState(false);
+  //   const [logoError, setLogoError] = useState(false);
+  //     const [zoneError, setZoneError] = useState(false);
+  const [coverPhotoStored, setCoverPhotoStored] = useState(null);
+  const [logoPhotoStored, setLogoPhotoStored] = useState(null);
+  const handleCoverImageChange = (event) => {
+    setCoverPhotoStored(event.target.files[0]);
   };
-
-  // For "Zone"
-  const handleZoneChange = (e) => {
-    const zoneId = e.target.value;
-    if (zoneId === "") {
-      setZoneError(true);
-    } else {
-      setZoneError(false);
-    }
+  const handleLogoImageChange = (event) => {
+    setLogoPhotoStored(event.target.files[0]);
   };
-  //   const [formVaild, setFormVaild] = useState(null);
-  //   const handleValid = () => {
-  //     let err = {};
-  //     let formError = false;
-  //     if (!partnerData.s_name) {
-  //       formError = true;
-  //       err["s_name"] = "firstnameErr";
-  //     } else if (!nameValid(partnerData.s_name)) {
-  //       formError = true;
-  //       err["s_name"] = "nameValidErr";
+  //   const handleImageUpload = (e) => {
+  //     const fieldName = e.target.name;
+  //     if (!e.target.files.length) {
+  //       if (fieldName === "cover_photo") {
+  //         setCoverPhotoError(true);
+  //       } else if (fieldName === "logo") {
+  //         setLogoError(true);
+  //       }
+  //     } else {
+  //       // File selected, no error
+  //       if (fieldName === "cover_photo") {
+  //         setCoverPhotoError(false);
+  //       } else if (fieldName === "logo") {
+  //         setLogoError(false);
+  //       }
   //     }
-  //     if (!isEmpty(err)) {
-  //       formError = true;
-  //     }
-  //     setFormVaild(err);
-  //     return formError;
   //   };
+
   return (
     <>
       <div className="users-bg">
@@ -257,16 +290,16 @@ function Partners() {
                               type="text"
                               placeholder="Shop Name"
                               name="s_name"
-                              onChange={(e) => handleOnChange(e)}
-                              //   error={formVaild?.firstname}
+                              value={shopNameStored}
+                              onChange={handleNameStoredChange}
                             />
-                            {!nameValid(partnerData.s_name) && (
+                            {/* {!nameValid(partnerData.s_name) && (
                               <span className="error-text">
-                                {partnerData.s_name.length > 15
+                                {partnerData.s_name?.length > 15
                                   ? "Shop Name can be up to 15 characters"
                                   : "Invalid Shop Name"}
                               </span>
-                            )}
+                            )} */}
                           </Form.Group>
                           <Form.Group
                             className="mb-3"
@@ -277,15 +310,18 @@ function Partners() {
                               type="text"
                               placeholder="GST number"
                               name="gst"
-                              onChange={(e) => handleOnChange(e)}
+                              //   value={partnerData.gst}
+                              //   onChange={(e) => handleOnChange(e)}
+                              value={gstNumberStored}
+                              onChange={handleGstNumberChange}
                             />
-                            {!gstNumberValid(partnerData.gst) && (
+                            {/* {!gstNumberValid(partnerData.gst) && (
                               <span className="error-text">
-                                {partnerData.gst.length > 15
+                                {partnerData.gst?.length > 15
                                   ? "GST Number can be up to 15 characters and digits"
                                   : "Invalid GST Number"}
                               </span>
-                            )}
+                            )} */}
                           </Form.Group>
                           <Form.Group
                             className="mb-3"
@@ -297,7 +333,6 @@ function Partners() {
                               onChange={handleChange}
                               searchOptions={searchoptions}
                               onSelect={handleSelect}
-                              //   className="form-control"
                             >
                               {({
                                 getInputProps,
@@ -346,36 +381,24 @@ function Partners() {
                                 </div>
                               )}
                             </PlacesAutocomplete>
-                            {!addressValid(partnerData.address) && (
-                              <span className="error-text">
-                                {partnerData.address.length > 15
-                                  ? "Address can be up to 15 characters"
-                                  : "Invalid  Address"}
-                              </span>
-                            )}
-                            {/* 
-                            <Form.Control
-                              type="text"
-                              placeholder="Shop Address"
-                              name="address"
-                              onChange={(e) => handleOnChange(e)}
-                            /> */}
                           </Form.Group>
                           <Row className="mb-3">
-                            {/* <Form.Group as={Col}>
+                            <Form.Group as={Col}>
                               <Form.Label>
                                 Upload Cover Photo (Ratio 2:1)
                               </Form.Label>
                               <Form.Control
                                 type="file"
                                 name="cover_photo"
-                                onChange={(e) => imageuploadhandler(e)}
+                                // onChange={(e) => handleImageUpload(e)}
+                                onChange={handleCoverImageChange}
+                                // value={coverPhotoStored}
                               />
-                              {!partnerData.cover_photo && (
+                              {/* {coverPhotoError && (
                                 <span className="error-text">
                                   Cover Photo is required
                                 </span>
-                              )}
+                              )} */}
                             </Form.Group>
                             <Form.Group as={Col}>
                               <Form.Label>
@@ -384,43 +407,15 @@ function Partners() {
                               <Form.Control
                                 type="file"
                                 name="logo"
-                                onChange={(e) => imageuploadhandler(e)}
+                                // onChange={(e) => handleImageUpload(e)}
+                                onChange={handleLogoImageChange}
+                                // value={logoPhotoStored}
                               />
-                              {!partnerData.logo && (
+                              {/* {logoError && (
                                 <span className="error-text">
                                   Partners Logo is required
                                 </span>
-                              )}
-                            </Form.Group> */}
-                            <Form.Group as={Col}>
-                              <Form.Label>
-                                Upload Cover Photo (Ratio 2:1)
-                              </Form.Label>
-                              <Form.Control
-                                type="file"
-                                name="cover_photo"
-                                onChange={(e) => handleImageUpload(e)}
-                              />
-                              {coverPhotoError && (
-                                <span className="error-text">
-                                  Cover Photo is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col}>
-                              <Form.Label>
-                                Partners Logo ( Ratio 1:1 )
-                              </Form.Label>
-                              <Form.Control
-                                type="file"
-                                name="logo"
-                                onChange={(e) => handleImageUpload(e)}
-                              />
-                              {logoError && (
-                                <span className="error-text">
-                                  Partners Logo is required
-                                </span>
-                              )}
+                              )} */}
                             </Form.Group>
                           </Row>
                           <Row className="mb-3">
@@ -429,7 +424,9 @@ function Partners() {
                               <Form.Select
                                 defaultValue=""
                                 name="zone_id"
-                                onChange={(e) => handleZoneChange(e)}
+                                // onChange={(e) => handleZoneChange(e)}
+                                value={zoneIdstored}
+                                onChange={handleZoneIdChange}
                               >
                                 <option value="" disabled>
                                   Select Zone
@@ -440,55 +437,18 @@ function Partners() {
                                   </option>
                                 ))}
                               </Form.Select>
-                              {zoneError && (
+                              {/* {zoneError && (
                                 <span className="error-text">
                                   Zone is required
                                 </span>
-                              )}
+                              )} */}
                             </Form.Group>
-                            {/* <Form.Group as={Col}>
-                              <Form.Label>Zone</Form.Label>
-                              <Form.Select
-                                defaultValue="Select Zone"
-                                name="zone_id"
-                                onChange={handleOnChange}
-                              >
-                                <option value={""}>Select Zone</option>
-                                {zoneList.map((zonedata) => (
-                                  <option key={zonedata.id} value={zonedata.id}>
-                                    {zonedata.name}
-                                  </option>
-                                ))}
-                              </Form.Select>
-                              {partnerData.zone_id === "" && (
-                                <span className="error-text">
-                                  Zone is required
-                                </span>
-                              )}
-                            </Form.Group> */}
                           </Row>
-                          {/* <Row className="mb-3">
-                            <Form.Group as={Col} controlId="formGridState">
-                              <Form.Label>Latitude</Form.Label>
-                              <Form.Control
-                                type="number"
-                                placeholder="Ex: -94.22213"
-                                name="latitude"
-                                onChange={(e) => handleOnChange(e)}
-                              />
-                            </Form.Group>
-                            <Form.Group as={Col} controlId="formGridCity">
-                              <Form.Label>Longitude </Form.Label>
-                              <Form.Control
-                                type="number"
-                                placeholder="Ex: 103.344322"
-                                name="longitude"
-                                onChange={(e) => handleOnChange(e)}
-                              />
-                            </Form.Group>
-                          </Row> */}
                           <div className="mainForm-btn">
-                            <Button onClick={nextStep} disabled={!isFormValid}>
+                            <Button
+                              onClick={nextStep}
+                              //   disabled={!isFormValid}
+                            >
                               Next
                             </Button>
                           </div>
@@ -508,7 +468,9 @@ function Partners() {
                               type="text"
                               placeholder="First Name"
                               name="f_name"
-                              onChange={(e) => handleOnChange(e)}
+                              //   onChange={(e) => handleOnChange(e)}
+                              onChange={handleFirstNameChange}
+                              value={firstName}
                             />
                           </Form.Group>
                           <Form.Group
@@ -520,7 +482,9 @@ function Partners() {
                               type="text"
                               placeholder="Last Name"
                               name="l_name"
-                              onChange={(e) => handleOnChange(e)}
+                              //   onChange={(e) => handleOnChange(e)}
+                              onChange={handleLastNameChange}
+                              value={lastName}
                             />
                           </Form.Group>
                           <Form.Group
@@ -532,7 +496,9 @@ function Partners() {
                               type="number"
                               placeholder="Ex:007*****"
                               name="phone"
-                              onChange={(e) => handleOnChange(e)}
+                              //   onChange={(e) => handleOnChange(e)}
+                              onChange={handlePhoneNumChange}
+                              value={phoneNum}
                             />
                           </Form.Group>
                           <div className="mainForm-btn">
@@ -561,7 +527,9 @@ function Partners() {
                               type="email"
                               placeholder="email"
                               name="email"
-                              onChange={(e) => handleOnChange(e)}
+                              //   onChange={(e) => handleOnChange(e)}
+                              onChange={handleEmailChange}
+                              value={emailStored}
                             />
                           </Form.Group>
                           <Form.Group
@@ -573,7 +541,9 @@ function Partners() {
                               type="password"
                               placeholder="password"
                               name="password"
-                              onChange={(e) => handleOnChange(e)}
+                              //   onChange={(e) => handleOnChange(e)}
+                              onChange={handlePasswordChange}
+                              value={passwordStored}
                             />
                           </Form.Group>
                           <div className="mainForm-btn">

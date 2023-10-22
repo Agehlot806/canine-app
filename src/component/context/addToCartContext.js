@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-// Define the context
 const CartContext = createContext();
 
 export const useCartContext = () => {
@@ -11,9 +10,10 @@ export const useCartContext = () => {
 export const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
   const [dataLength, setDataLength] = useState(0);
+  console.log('dataLength: ', dataLength);
   const [dataLengthpetshop, setDataLengthpetshop] = useState();
+  console.log('dataLengthpetshop: ', dataLengthpetshop);
 
-  // Your BASE_URL and storedUserId
   const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");
   const customer_id =
@@ -26,13 +26,13 @@ export const CartProvider = ({ children }) => {
   try {
     storedUserId = JSON.parse(customer_id);
   } catch (error) {
-    // Handle the error here, or provide a default value if needed
-    storedUserId = null; // You can choose a suitable default value
+    storedUserId = null;
   }
-  // ----------------------------------------
 
   const addToCartData = async (id, quantity) => {
     try {
+      console.log("Before API call: storedUserId", storedUserId);
+
       const response = await axios.get(
         `${BASE_URL}/customer/wish-list/add_to_card/${storedUserId}`,
         {
@@ -43,11 +43,15 @@ export const CartProvider = ({ children }) => {
         }
       );
 
-      const savedCartItem = JSON.parse(localStorage.getItem('savedCartItems')) || [];
-      console.log("savedCartItem",savedCartItem);
-      setDataLength(savedCartItem.length);
+      console.log("API Response: ", response.data);
 
-      // setDataLength(response.data.data.length);
+      const savedCartItem =
+        JSON.parse(localStorage.getItem("savedCartItems")) || [];
+      console.log("Saved Cart Items: ", savedCartItem);
+
+      console.log("Data Length (Before Setting): ", dataLength);
+
+      setDataLength(savedCartItem.length);
       setDataLengthpetshop(response.data.data.length);
 
       const newCartData = response.data.data.map((item) => ({
@@ -58,11 +62,23 @@ export const CartProvider = ({ children }) => {
       }));
 
       setCartData([...newCartData]);
-
-      // Clear the quantity input field after adding the item to the cart
-      //   setQuantity(1);
     } catch (error) {
-      console.log(error);
+      console.log("Error: ", error);
+    }
+  };
+
+  const removeFromSavedCart = (itemIdToRemove) => {
+    const savedCartItem =
+      JSON.parse(localStorage.getItem("savedCartItems")) || [];
+
+    const itemIndexToRemove = savedCartItem.findIndex(
+      (item) => item.id === itemIdToRemove
+    );
+
+    if (itemIndexToRemove !== -1) {
+      savedCartItem.splice(itemIndexToRemove, 1);
+      localStorage.setItem("savedCartItems", JSON.stringify(savedCartItem));
+      setDataLength(savedCartItem.length);
     }
   };
 
@@ -71,6 +87,7 @@ export const CartProvider = ({ children }) => {
     dataLength,
     dataLengthpetshop,
     addToCartData,
+    removeFromSavedCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
