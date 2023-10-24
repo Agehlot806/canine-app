@@ -280,6 +280,10 @@
     width: 100%;
     height: 100%;
   }
+  .totelPAYCAR button {
+    /* height: 55px; */
+    margin: 3px;
+}
   .dash-addProduct-btn button {
     border-radius: 5px;
     font-size: 16px;
