@@ -4063,3 +4063,8 @@ li.nav-.nonhide {
 .RemoveImg-button:hover {
   background-color: #f1c21b; /* Change the hover background color as needed */
 }
+
+.error {
+    color: red;
+    margin: 8px;
+}

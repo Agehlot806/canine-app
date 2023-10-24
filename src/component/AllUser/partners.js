@@ -221,6 +221,7 @@ function Partners() {
   const [shopNameError, setShopNameError] = useState("");
   const nextStep = () => {
     // if (isFormValid) {
+      
     let hasErrors = false; // Flag to track whether there are validation errors
     if (shopNameStored.trim() === "") {
       setShopNameError("Shop Name is required");
@@ -246,6 +247,10 @@ function Partners() {
     // } else {
     //   setcoverPhotoError("");
     // }
+
+    if (!hasErrors) {
+      setStep((prevStep) => prevStep + 1);
+    }
     // ************
     if (firstName.trim() === "") {
       setFirstNameError("First name is required");
