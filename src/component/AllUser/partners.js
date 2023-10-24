@@ -13,14 +13,6 @@ import PlacesAutocomplete, {
 function Partners() {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
-  //   const [partnerData, setpartnerData] = useState({
-  //     s_name: "",
-  //     gst: "",
-  //     address: "",
-  //     cover_photo: null,
-  //     logo: null,
-  //     zone_id: "",
-  //   });
   const [zoneList, setZoneList] = useState([]);
   const [address, setAddress] = useState("");
   const [shopNameStored, setShopNameStored] = useState("");
@@ -141,6 +133,7 @@ function Partners() {
   };
   const nextStep = () => {
     // if (isFormValid) {
+
     setStep((prevStep) => prevStep + 1);
     // }
   };
@@ -232,13 +225,44 @@ function Partners() {
   //   const [logoError, setLogoError] = useState(false);
   //     const [zoneError, setZoneError] = useState(false);
   const [coverPhotoStored, setCoverPhotoStored] = useState(null);
+  const [selectedImageCover, setSelectedImageCover] = useState(null);
+  const [disableInputCover, setDisableInputCover] = useState(false);
+
   const [logoPhotoStored, setLogoPhotoStored] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [disableInput, setDisableInput] = useState(false);
   const handleCoverImageChange = (event) => {
+    const coverfile = event.target.files[0];
     setCoverPhotoStored(event.target.files[0]);
+    if (coverfile) {
+      setSelectedImageCover(URL.createObjectURL(coverfile));
+      setDisableInputCover(true);
+    }
   };
   const handleLogoImageChange = (event) => {
-    setLogoPhotoStored(event.target.files[0]);
+    const file = event.target.files[0];
+    setLogoPhotoStored(file);
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+      setDisableInput(true);
+    }
   };
+  const handleRemoveImageCover = () => {
+    setSelectedImageCover(null);
+    setDisableInputCover(false);
+  };
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setDisableInput(false);
+  };
+  // const halderimage = (e) => {
+  //     // setimgage(e.target.files[0])
+  //     const file = e.target.files[0];
+  //     setimgage(file); // Store the file directly
+
+  //     // Create a preview URL for the selected image
+  //     setSelectedImage(URL.createObjectURL(file));
+  //   };
   //   const handleImageUpload = (e) => {
   //     const fieldName = e.target.name;
   //     if (!e.target.files.length) {
@@ -315,6 +339,7 @@ function Partners() {
                               value={gstNumberStored}
                               onChange={handleGstNumberChange}
                             />
+
                             {/* {!gstNumberValid(partnerData.gst) && (
                               <span className="error-text">
                                 {partnerData.gst?.length > 15
@@ -387,13 +412,36 @@ function Partners() {
                               <Form.Label>
                                 Upload Cover Photo (Ratio 2:1)
                               </Form.Label>
-                              <Form.Control
+                              {selectedImageCover ? (
+                                <div>
+                                  <img
+                                    src={selectedImageCover}
+                                    alt="Image"
+                                    style={{ width: "100px", height: "100px" }}
+                                  />
+                                  <button
+                                    class="RemoveImg-button"
+                                    // style={{ fontSize: 48, color: red }}
+                                    onClick={handleRemoveImageCover}
+                                  >
+                                    X
+                                  </button>
+                                </div>
+                              ) : (
+                                <Form.Control
+                                  type="file"
+                                  name="logo"
+                                  onChange={handleCoverImageChange}
+                                  disabled={disableInputCover}
+                                />
+                              )}
+                              {/* <Form.Control
                                 type="file"
                                 name="cover_photo"
                                 // onChange={(e) => handleImageUpload(e)}
                                 onChange={handleCoverImageChange}
                                 // value={coverPhotoStored}
-                              />
+                              /> */}
                               {/* {coverPhotoError && (
                                 <span className="error-text">
                                   Cover Photo is required
@@ -404,18 +452,54 @@ function Partners() {
                               <Form.Label>
                                 Partners Logo ( Ratio 1:1 )
                               </Form.Label>
-                              <Form.Control
+                              {/* <Form.Control
                                 type="file"
                                 name="logo"
                                 // onChange={(e) => handleImageUpload(e)}
                                 onChange={handleLogoImageChange}
+                                disabled={disableInput}
                                 // value={logoPhotoStored}
-                              />
+                              /> */}
                               {/* {logoError && (
                                 <span className="error-text">
                                   Partners Logo is required
                                 </span>
                               )} */}
+                              {/* {selectedImage && (
+                                <div>
+                                  <img
+                                    src={selectedImage}
+                                    alt="Image"
+                                    style={{ width: "100px", height: "100px" }}
+                                  />
+                                  <button onClick={handleRemoveImage}>
+                                    Remove Image
+                                  </button>
+                                </div>
+                              )}
+                            </Form.Group> */}
+                              {selectedImage ? (
+                                <div>
+                                  <img
+                                    src={selectedImage}
+                                    alt="Image"
+                                    style={{ width: "100px", height: "100px" }}
+                                  />
+                                  <button
+                                    class="RemoveImg-button"
+                                    onClick={handleRemoveImage}
+                                  >
+                                    X
+                                  </button>
+                                </div>
+                              ) : (
+                                <Form.Control
+                                  type="file"
+                                  name="logo"
+                                  onChange={handleLogoImageChange}
+                                  disabled={disableInput}
+                                />
+                              )}
                             </Form.Group>
                           </Row>
                           <Row className="mb-3">

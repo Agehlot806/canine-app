@@ -2611,11 +2611,11 @@ a.placDate {
 
 .notification-area .modal-body button {
   background: #f1c21b;
-    border: none;
-    font-size: 18px;
-    font-weight: 500;
-    color: #000;
-    padding: 6px 10px;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  padding: 6px 10px;
 }
 
 /* edit address modal */
@@ -4010,13 +4010,12 @@ li.nav-.nonhide {
   transition: max-height 0.3s ease-in-out;
 }  */
 
-
 .selct-card-text input {
   cursor: pointer;
 }
 
 .button-container {
-  text-align: center ;
+  text-align: center;
 }
 
 .check-Continue {
@@ -4027,7 +4026,7 @@ li.nav-.nonhide {
   color: #000;
 }
 .check-Continue button {
-  background: #FFC934;
+  background: #ffc934;
   color: #000;
   font-weight: bold;
   font-size: 16px;
@@ -4038,7 +4037,7 @@ li.nav-.nonhide {
 
 .dash-tabs .nav-pills .nav-link {
   --mdb-nav-pills-link-padding-top: 0 !important;
-  padding: 15px 15px 0!important;
+  padding: 15px 15px 0 !important;
 }
 
 .form-area label {
@@ -4048,4 +4047,19 @@ li.nav-.nonhide {
 
 .coup-area {
   text-align: right;
+}
+/* 23-oct-2023 */
+.RemoveImg-button {
+  /* background-color: transparent; */
+  border: none;
+  color: black; /* Change the color as needed */
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.RemoveImg-button:hover {
+  background-color: #f1c21b; /* Change the hover background color as needed */
 }
