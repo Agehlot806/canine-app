@@ -15,9 +15,11 @@ function Partners() {
   const navigate = useNavigate();
   const [zoneList, setZoneList] = useState([]);
   const [address, setAddress] = useState("");
+  const [addressError, setAddressError] = useState("");
   const [shopNameStored, setShopNameStored] = useState("");
   const [zoneIdstored, setZoneIdstored] = useState("");
   const [gstNumberStored, setGstNumberStored] = useState("");
+  const [gstError, setGstError] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
@@ -28,34 +30,79 @@ function Partners() {
   };
   const handleNameStoredChange = (event) => {
     setShopNameStored(event.target.value);
+    if (event.target.value.trim() === "") {
+      setShopNameError("Shop name is required");
+    } else {
+      setShopNameError("");
+    }
   };
   const handleGstNumberChange = (event) => {
     setGstNumberStored(event.target.value);
+    if (event.target.value.trim() === "") {
+      setGstError("GST is required");
+    } else {
+      setGstError("");
+    }
   };
   // STEP 1 Handle Form Data end
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
+  // error
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [phoneNumError, setPhoneNumError] = useState("");
   // STEP 2 Handle Form Data start
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
+    if (event.target.value.trim() === "") {
+      setFirstNameError("First name is required");
+    } else {
+      setFirstNameError("");
+    }
   };
   const handleLastNameChange = (event) => {
     setLastName(event.target.value);
+    if (event.target.value.trim() === "") {
+      setLastNameError("Last name is required");
+    } else {
+      setLastNameError("");
+    }
   };
   const handlePhoneNumChange = (event) => {
     setPhoneNum(event.target.value);
+    if (event.target.value.trim() === "") {
+      setPhoneNumError("Phone number is required");
+    } else {
+      setPhoneNumError("");
+    }
   };
 
   // STEP 2 Handle Form Data end
   const [emailStored, setEmailStored] = useState("");
   const [passwordStored, setPasswordStored] = useState("");
+  // error
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   // STEP 3 Handle Form Data Start
   const handleEmailChange = (event) => {
     setEmailStored(event.target.value);
+    if (
+      event.target.value.trim() === "" ||
+      !/^\S+@\S+\.\S+$/.test(event.target.value)
+    ) {
+      setEmailError("Email is not valid");
+    } else {
+      setEmailError("");
+    }
   };
   const handlePasswordChange = (event) => {
     setPasswordStored(event.target.value);
+    if (event.target.value.trim() === "") {
+      setPasswordError("Password is required");
+    } else {
+      setPasswordError("");
+    }
   };
   // STEP 3 Handle Form Data end
 
@@ -105,13 +152,53 @@ function Partners() {
   //       gstNumber.length <= 15
   //     );
   //   };
+  // *************************************
 
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!shopNameStored.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Email is not valid";
+    }
+
+    //   if (!formData.username.trim()) {
+    //     newErrors.username = "Username is required";
+    //   }
+
+    //   if (!formData.email.trim()) {
+    //     newErrors.email = "Email is required";
+    //   } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+    //     newErrors.email = "Email is not valid";
+    //   }
+
+    //   if (!formData.password.trim()) {
+    //     newErrors.password = "Password is required";
+    //   }
+
+    setErrors(newErrors);
+
+    // If there are no errors, you can submit the form
+    if (Object.keys(newErrors).length === 0) {
+      // Submit the form or perform other actions
+    }
+  };
+
+  // *********************************************
   const searchoptions = {
     types: ["(regions)"],
     componentRestrictions: { country: "in" },
   };
   const handleChange = (newAddress) => {
     setAddress(newAddress);
+    if (newAddress.trim() === "") {
+      setAddressError("Shop Address is required");
+    } else {
+      setAddressError("");
+    }
   };
   const handleSelect = (selectedAddress) => {
     geocodeByAddress(selectedAddress)
@@ -131,11 +218,56 @@ function Partners() {
       })
       .catch((error) => console.error("Error", error));
   };
+  const [shopNameError, setShopNameError] = useState("");
   const nextStep = () => {
     // if (isFormValid) {
-
-    setStep((prevStep) => prevStep + 1);
+    let hasErrors = false; // Flag to track whether there are validation errors
+    if (shopNameStored.trim() === "") {
+      setShopNameError("Shop Name is required");
+      hasErrors = true;
+    } else {
+      setShopNameError("");
+    }
+    if (gstNumberStored.trim() === "") {
+      setGstError("GST is required");
+      hasErrors = true;
+    } else {
+      setGstError("");
+    }
+    if (address.trim() === "") {
+      setAddressError("Shop Address is required");
+      hasErrors = true;
+    } else {
+      setAddressError("");
+    }
+    // if (coverPhotoStored.trim() === "") {
+    //   setcoverPhotoError("Cover Photo is required");
+    //   hasErrors = true;
+    // } else {
+    //   setcoverPhotoError("");
     // }
+    // ************
+    if (firstName.trim() === "") {
+      setFirstNameError("First name is required");
+      hasErrors = true;
+    } else {
+      setFirstNameError("");
+    }
+    if (lastName.trim() === "") {
+      setLastNameError("Last name is required");
+      hasErrors = true;
+    } else {
+      setLastNameError("");
+    }
+    if (phoneNum.trim() === "") {
+      setPhoneNumError("Phone Number is required");
+      hasErrors = true;
+    } else {
+      setPhoneNumError("");
+    }
+    if (!hasErrors) {
+      setStep((prevStep) => prevStep + 1);
+    }
   };
 
   const prevStep = () => {
@@ -186,32 +318,49 @@ function Partners() {
   const handleSubmit = async (e) => {
     // if (!handleValid()) {
     e.preventDefault();
-    let formData = new FormData();
-    formData.append("f_name", firstName);
-    formData.append("l_name", lastName);
-    formData.append("email", emailStored);
-    formData.append("s_name", shopNameStored);
-    formData.append("zone_id", zoneIdstored);
-    formData.append("address", address);
-    formData.append("latitude", latitude);
-    formData.append("longitude", longitude);
-    formData.append("cover_photo", coverPhotoStored);
-    formData.append("phone", phoneNum);
-    formData.append("password", passwordStored);
-    formData.append("logo", logoPhotoStored);
-    // formData.append("zone_id", partnerData.zone_id);
-    formData.append("gst", gstNumberStored);
+    let hasErrors = false; // Flag to track whether there are validation errors
 
-    await axios
-      .post(`${BASE_URL}/auth/register`, formData)
-      .then((res) => {
-        // toast.success("Application placed successfully");
-        navigate("/partner-dashboad");
-      })
-      .catch((error) => {
-        console.log("error in submit", error);
-      });
-    // }
+    if (emailStored.trim() === "" || !/^\S+@\S+\.\S+$/.test(emailStored)) {
+      setEmailError("Email is not valid");
+      hasErrors = true;
+    } else {
+      setEmailError("");
+    }
+
+    if (passwordStored.trim() === "") {
+      setPasswordError("Password is required");
+      hasErrors = true;
+    } else {
+      setPasswordError("");
+    }
+
+    if (!hasErrors) {
+      let formData = new FormData();
+      formData.append("f_name", firstName);
+      formData.append("l_name", lastName);
+      formData.append("email", emailStored);
+      formData.append("s_name", shopNameStored);
+      formData.append("zone_id", zoneIdstored);
+      formData.append("address", address);
+      formData.append("latitude", latitude);
+      formData.append("longitude", longitude);
+      formData.append("cover_photo", coverPhotoStored);
+      formData.append("phone", phoneNum);
+      formData.append("password", passwordStored);
+      formData.append("logo", logoPhotoStored);
+      // formData.append("zone_id", partnerData.zone_id);
+      formData.append("gst", gstNumberStored);
+
+      await axios
+        .post(`${BASE_URL}/auth/register`, formData)
+        .then((res) => {
+          // toast.success("Application placed successfully");
+          navigate("/partner-dashboad");
+        })
+        .catch((error) => {
+          console.log("error in submit", error);
+        });
+    }
   };
 
   //   const imageuploadhandler = (e) => {
@@ -225,6 +374,7 @@ function Partners() {
   //   const [logoError, setLogoError] = useState(false);
   //     const [zoneError, setZoneError] = useState(false);
   const [coverPhotoStored, setCoverPhotoStored] = useState(null);
+  const [coverPhotoError, setcoverPhotoError] = useState(null);
   const [selectedImageCover, setSelectedImageCover] = useState(null);
   const [disableInputCover, setDisableInputCover] = useState(false);
 
@@ -309,14 +459,16 @@ function Partners() {
                             controlId="formGroupEmail"
                           >
                             <Form.Label>Shop Name</Form.Label>
-
                             <Form.Control
                               type="text"
                               placeholder="Shop Name"
                               name="s_name"
                               value={shopNameStored}
                               onChange={handleNameStoredChange}
-                            />
+                            />{" "}
+                            {shopNameError && (
+                              <div className="error">{shopNameError}</div>
+                            )}
                             {/* {!nameValid(partnerData.s_name) && (
                               <span className="error-text">
                                 {partnerData.s_name?.length > 15
@@ -339,7 +491,9 @@ function Partners() {
                               value={gstNumberStored}
                               onChange={handleGstNumberChange}
                             />
-
+                            {gstError && (
+                              <div className="error">{gstError}</div>
+                            )}
                             {/* {!gstNumberValid(partnerData.gst) && (
                               <span className="error-text">
                                 {partnerData.gst?.length > 15
@@ -406,6 +560,9 @@ function Partners() {
                                 </div>
                               )}
                             </PlacesAutocomplete>
+                            {addressError && (
+                              <div className="error">{addressError}</div>
+                            )}
                           </Form.Group>
                           <Row className="mb-3">
                             <Form.Group as={Col}>
@@ -561,6 +718,10 @@ function Partners() {
                             className="mb-3"
                             controlId="formGroupEmail"
                           >
+                            {" "}
+                            {firstNameError && (
+                              <div className="error">{firstNameError}</div>
+                            )}
                             <Form.Label>Last Name</Form.Label>
                             <Form.Control
                               type="text"
@@ -569,7 +730,10 @@ function Partners() {
                               //   onChange={(e) => handleOnChange(e)}
                               onChange={handleLastNameChange}
                               value={lastName}
-                            />
+                            />{" "}
+                            {lastNameError && (
+                              <div className="error">{lastNameError}</div>
+                            )}
                           </Form.Group>
                           <Form.Group
                             className="mb-3"
@@ -583,7 +747,10 @@ function Partners() {
                               //   onChange={(e) => handleOnChange(e)}
                               onChange={handlePhoneNumChange}
                               value={phoneNum}
-                            />
+                            />{" "}
+                            {phoneNumError && (
+                              <div className="error">{phoneNumError}</div>
+                            )}
                           </Form.Group>
                           <div className="mainForm-btn">
                             <Button
@@ -615,6 +782,9 @@ function Partners() {
                               onChange={handleEmailChange}
                               value={emailStored}
                             />
+                            {emailError && (
+                              <div className="error">{emailError}</div>
+                            )}
                           </Form.Group>
                           <Form.Group
                             className="mb-3"
@@ -628,7 +798,10 @@ function Partners() {
                               //   onChange={(e) => handleOnChange(e)}
                               onChange={handlePasswordChange}
                               value={passwordStored}
-                            />
+                            />{" "}
+                            {passwordError && (
+                              <div className="error">{passwordError}</div>
+                            )}
                           </Form.Group>
                           <div className="mainForm-btn">
                             <Button
