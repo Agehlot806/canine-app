@@ -37,17 +37,48 @@ function Partners() {
     }
   };
   const handleNameStoredChange = (event) => {
-    setShopNameStored(event.target.value);
-    if (event.target.value.trim() === "") {
+    const shopName = event.target.value;
+    setShopNameStored(shopName);
+    // if (event.target.value.trim() === "") {
+    //   setShopNameError("Shop name is required");
+    // } else {
+    //   setShopNameError("");
+    // }
+    // Define the regex pattern
+    if (shopName.length <= 15) {
+      setShopNameStored(shopName);
+    }
+    const shopNameRegex = /^[A-Za-z\s]{1,15}$/;
+
+    // Validate shop name against the pattern
+    if (shopName.trim() === "") {
       setShopNameError("Shop name is required");
+    } else if (!shopNameRegex.test(shopName)) {
+      setShopNameError(
+        "Shop name can only contain alphabetic characters and spaces, up to 15 characters"
+      );
     } else {
       setShopNameError("");
     }
   };
   const handleGstNumberChange = (event) => {
-    setGstNumberStored(event.target.value);
-    if (event.target.value.trim() === "") {
+    const gstNumber = event.target.value;
+    setGstNumberStored(gstNumber);
+    // if (event.target.value.trim() === "") {
+    //   setGstError("GST is required");
+    // } else {
+    //   setGstError("");
+    // }
+    // Define the GST regex pattern
+    const gstRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][A-Z0-9]Z[A-Z0-9]$/;
+
+    // Validate GST number against the pattern
+    if (gstNumber.trim() === "") {
       setGstError("GST is required");
+    } else if (gstNumber.length > 15) {
+      setGstError("GST number must not exceed 15 characters");
+    } else if (!gstRegex.test(gstNumber)) {
+      setGstError("Invalid GST format");
     } else {
       setGstError("");
     }

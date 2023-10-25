@@ -293,6 +293,7 @@ function Home(props) {
       const modalBackdrop = document.querySelector(".modal-backdrop");
       if (modalBackdrop) {
         modalBackdrop.remove();
+        modalBackdrop();
       }
     }
   };
@@ -489,7 +490,7 @@ function Home(props) {
     if (productDetails?.image) {
       setMainImage(
         "https://caninetest.xyz/storage/app/public/product/" +
-        productDetails?.image
+          productDetails?.image
       );
     }
   }, [productDetails]);
@@ -497,7 +498,7 @@ function Home(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://caninetest.xyz/storage/app/public/product/" +
-      productDetails?.images[index]
+        productDetails?.images[index]
     );
   };
 
@@ -890,6 +891,9 @@ function Home(props) {
     setQuantity(1);
     setProductDetails(null);
   };
+  const modalBackdrop = () => {
+    setQuantity(1);
+  };
 
   // loadRazorpayScript
   const loadRazorpayScript = () => {
@@ -1012,106 +1016,106 @@ function Home(props) {
             <div>
               {homebanner
                 ? homebanner.map(
-                  (item, index) =>
-                    item.type === "home_banner_1" && (
-                      <div className="home-img">
-                        <Link to={item.default_link}>
-                          <div className="">
-                            <img
-                              src={
-                                "https://caninetest.xyz/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More{" "}
-                                  <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Link>
-                      </div>
-                    )
-                )
-                : null}
-            </div>
-            <div>
-              {homebanner
-                ? homebanner.map(
-                  (item, index) =>
-                    item.type === "home_banner_2" && (
-                      <div className="home-img">
-                        <Link to={item.default_link}>
-                          <div className="">
-                            <img
-                              src={
-                                "https://caninetest.xyz/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-
-                                <div className="app-home">
-                                  <Link>
-                                    <img src={app1} />
-                                  </Link>
-
-                                  <Link>
-                                    <img src={app2} />
-                                  </Link>
+                    (item, index) =>
+                      item.type === "home_banner_1" && (
+                        <div className="home-img">
+                          <Link to={item.default_link}>
+                            <div className="">
+                              <img
+                                src={
+                                  "https://caninetest.xyz/storage/app/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <Row>
+                              <Col lg={7}>
+                                <div className="home-content">
+                                  <h1>{item.title}</h1>
+                                  <p>{item.description}</p>
+                                  <Button>
+                                    Explore More{" "}
+                                    <i className="fa fa-angle-right" />
+                                  </Button>
                                 </div>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Link>
-                      </div>
-                    )
-                )
+                              </Col>
+                            </Row>
+                          </Link>
+                        </div>
+                      )
+                  )
                 : null}
             </div>
             <div>
               {homebanner
                 ? homebanner.map(
-                  (item, index) =>
-                    item.type === "home_banner_3" && (
-                      <div className="home-img">
-                        <Link to={item.default_link}>
-                          <div className="">
-                            <img
-                              src={
-                                "https://caninetest.xyz/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More{" "}
-                                  <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Link>
-                      </div>
-                    )
-                )
+                    (item, index) =>
+                      item.type === "home_banner_2" && (
+                        <div className="home-img">
+                          <Link to={item.default_link}>
+                            <div className="">
+                              <img
+                                src={
+                                  "https://caninetest.xyz/storage/app/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <Row>
+                              <Col lg={7}>
+                                <div className="home-content">
+                                  <h1>{item.title}</h1>
+                                  <p>{item.description}</p>
+
+                                  <div className="app-home">
+                                    <Link>
+                                      <img src={app1} />
+                                    </Link>
+
+                                    <Link>
+                                      <img src={app2} />
+                                    </Link>
+                                  </div>
+                                </div>
+                              </Col>
+                            </Row>
+                          </Link>
+                        </div>
+                      )
+                  )
+                : null}
+            </div>
+            <div>
+              {homebanner
+                ? homebanner.map(
+                    (item, index) =>
+                      item.type === "home_banner_3" && (
+                        <div className="home-img">
+                          <Link to={item.default_link}>
+                            <div className="">
+                              <img
+                                src={
+                                  "https://caninetest.xyz/storage/app/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <Row>
+                              <Col lg={7}>
+                                <div className="home-content">
+                                  <h1>{item.title}</h1>
+                                  <p>{item.description}</p>
+                                  <Button>
+                                    Explore More{" "}
+                                    <i className="fa fa-angle-right" />
+                                  </Button>
+                                </div>
+                              </Col>
+                            </Row>
+                          </Link>
+                        </div>
+                      )
+                  )
                 : null}
             </div>
           </Carousel>
@@ -1221,10 +1225,11 @@ function Home(props) {
                           <h6>{item.name}</h6>
                           {/* <p>{item.description}</p> */}
                           <p
-                            className={`truncate-text ${!expandedDescription[item.id]
+                            className={`truncate-text ${
+                              !expandedDescription[item.id]
                                 ? "read-more-link"
                                 : ""
-                              }`}
+                            }`}
                           >
                             {item.description}
                             {item.description.length > 100 &&
@@ -1261,9 +1266,10 @@ function Home(props) {
                             >
                               <h6>
                                 {/* {`₹${(item.price * item.discount) / 100}`} */}
-                                {`₹${item.price -
+                                {`₹${
+                                  item.price -
                                   (item.price * item?.discount) / 100
-                                  }`}
+                                }`}
                               </h6>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
@@ -1285,15 +1291,14 @@ function Home(props) {
                               data-target=".bd-example-modal-lg"
                               // onClick={(e) => {
                               //   if (!storedUserId) {
-                              //     // window.location.href = '/login'; 
+                              //     // window.location.href = '/login';
                               //     shippingpage('/login')
                               //   } else {
-                              //     handeldataId(item.id); 
+                              //     handeldataId(item.id);
                               //   }
                               // }}
                               onClick={(e) => {
-
-                                handeldataId(item.id)
+                                handeldataId(item.id);
                               }}
                             >
                               Quick View
@@ -1303,13 +1308,13 @@ function Home(props) {
                               data-target=".buynow"
                               onClick={(e) => {
                                 if (!storedUserId) {
-                                  // window.location.href = '/login'; 
-                                  shippingpage('/login')
+                                  // window.location.href = '/login';
+                                  shippingpage("/login");
                                 } else {
                                   handeldataId(item.id);
                                 }
                               }}
-                            // onClick={(e) => handeldataId(item.id)}
+                              // onClick={(e) => handeldataId(item.id)}
                             >
                               Buy Now
                             </button>
@@ -1350,120 +1355,8 @@ function Home(props) {
             <Row className="mt-4">
               {brands
                 ? brands.map(
-                  (brand, index) =>
-                    brand.canine == "1" && (
-                      <Col lg={3} sm={6} xs={6} className="mb-5">
-                        <div
-                          key={brand.id}
-                          className="Brand-card"
-                          style={{
-                            background: ourBrand[index % ourBrand.length],
-                          }}
-                        >
-                          <Link to={`/our-our-brand/${brand.title}`}>
-                            <div className="brandLOGO">
-                              <img
-                                src={
-                                  "https://caninetest.xyz/storage/app/public/brand_logo/" +
-                                  brand.logo
-                                }
-                              />
-                            </div>
-                            <div className="brand-main">
-                              <img
-                                src={
-                                  "https://caninetest.xyz/storage/app/public/brand/" +
-                                  brand.image
-                                }
-                              />
-                            </div>
-                            <div className="brand-text">
-                              <h5>{brand.title}</h5>
-                            </div>
-                          </Link>
-                        </div>
-                      </Col>
-                    )
-                )
-                : null}
-            </Row>
-          </Fade>
-        </Container>
-      </section>
-
-      <section className="section-padding thirdbnner-area">
-        <Container>
-          <Row>
-            {homebanner
-              ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <Col lg={6} className="mb-4">
-                      <img
-                        src={
-                          "https://caninetest.xyz/storage/app/" + item.image
-                        }
-                      />
-                    </Col>
-                  )
-              )
-              : null}
-            <Col lg={6} className="align-self-center">
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "store_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "item_wise" && (
-                        <Col sm={12} className="mb-4">
-                          <img
-                            src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Shop By Brands</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Fade right>
-              <Row>
-                {brands
-                  ? brands.map(
                     (brand, index) =>
-                      brand.canine == "0" && (
+                      brand.canine == "1" && (
                         <Col lg={3} sm={6} xs={6} className="mb-5">
                           <div
                             key={brand.id}
@@ -1472,7 +1365,7 @@ function Home(props) {
                               background: ourBrand[index % ourBrand.length],
                             }}
                           >
-                            <Link to={`/shop-by-brand-list/${brand.id}`}>
+                            <Link to={`/our-our-brand/${brand.title}`}>
                               <div className="brandLOGO">
                                 <img
                                   src={
@@ -1497,6 +1390,118 @@ function Home(props) {
                         </Col>
                       )
                   )
+                : null}
+            </Row>
+          </Fade>
+        </Container>
+      </section>
+
+      <section className="section-padding thirdbnner-area">
+        <Container>
+          <Row>
+            {homebanner
+              ? homebanner.map(
+                  (item, index) =>
+                    item.type === "default" && (
+                      <Col lg={6} className="mb-4">
+                        <img
+                          src={
+                            "https://caninetest.xyz/storage/app/" + item.image
+                          }
+                        />
+                      </Col>
+                    )
+                )
+              : null}
+            <Col lg={6} className="align-self-center">
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "store_wise" && (
+                          <Col sm={12} className="mb-4">
+                            <img
+                              src={
+                                "https://caninetest.xyz/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "item_wise" && (
+                          <Col sm={12} className="mb-4">
+                            <img
+                              src={
+                                "https://caninetest.xyz/storage/app/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      <section className="section-padding">
+        <Container>
+          <Row>
+            <Col lg={6} sm={6} xs={6}>
+              <h1 className="main-head">Shop By Brands</h1>
+            </Col>
+            <Col lg={6} sm={6} xs={6}>
+              <div className="foodMore">
+                <Link to="/shop-by-brand">See all</Link>
+              </div>
+            </Col>
+          </Row>
+          <div className="needplace">
+            <Fade right>
+              <Row>
+                {brands
+                  ? brands.map(
+                      (brand, index) =>
+                        brand.canine == "0" && (
+                          <Col lg={3} sm={6} xs={6} className="mb-5">
+                            <div
+                              key={brand.id}
+                              className="Brand-card"
+                              style={{
+                                background: ourBrand[index % ourBrand.length],
+                              }}
+                            >
+                              <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                <div className="brandLOGO">
+                                  <img
+                                    src={
+                                      "https://caninetest.xyz/storage/app/public/brand_logo/" +
+                                      brand.logo
+                                    }
+                                  />
+                                </div>
+                                <div className="brand-main">
+                                  <img
+                                    src={
+                                      "https://caninetest.xyz/storage/app/public/brand/" +
+                                      brand.image
+                                    }
+                                  />
+                                </div>
+                                <div className="brand-text">
+                                  <h5>{brand.title}</h5>
+                                </div>
+                              </Link>
+                            </div>
+                          </Col>
+                        )
+                    )
                   : null}
               </Row>
             </Fade>
@@ -1563,30 +1568,30 @@ function Home(props) {
           <div className="banner-video">
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "video" && (
-                    <Row>
-                      <Col lg={5} className="p-0">
-                        <div className="video-content">
-                          <h1 className="main-head">{item.title}</h1>
-                          <p>{item.description}</p>
-                          <Button>Shop Now</Button>
-                        </div>
-                      </Col>
-                      <Col lg={7} className="p-0">
-                        <video loop autoPlay muted>
-                          <source
-                            src={
-                              "https://caninetest.xyz/storage/app/" +
-                              item.image
-                            }
-                            type="video/mp4"
-                          />
-                        </video>
-                      </Col>
-                    </Row>
-                  )
-              )
+                  (item, index) =>
+                    item.type === "video" && (
+                      <Row>
+                        <Col lg={5} className="p-0">
+                          <div className="video-content">
+                            <h1 className="main-head">{item.title}</h1>
+                            <p>{item.description}</p>
+                            <Button>Shop Now</Button>
+                          </div>
+                        </Col>
+                        <Col lg={7} className="p-0">
+                          <video loop autoPlay muted>
+                            <source
+                              src={
+                                "https://caninetest.xyz/storage/app/" +
+                                item.image
+                              }
+                              type="video/mp4"
+                            />
+                          </video>
+                        </Col>
+                      </Row>
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -1683,49 +1688,49 @@ function Home(props) {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "news_letter" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://caninetest.xyz/storage/app/" + item.image
-                          }
-                        />
-                      </div>
-                      <Row className="justify-content-center">
-                        <Col lg={7}>
-                          <div className="new-content">
-                            <div className="Newsletter">
-                              <Flip right>
-                                <h1 className="main-head">
-                                  Get Or Promo Code by Subscribing To our
-                                  Newsletter
-                                </h1>
-                              </Flip>
-                              <Form className="d-flex">
-                                <Form.Control
-                                  type="search"
-                                  placeholder="Enter your email"
-                                  className="me-2"
-                                  aria-label="Search"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <Button
-                                  variant="outline-success"
-                                  onClick={handleNewsletter}
-                                >
-                                  Subscribe
-                                </Button>
-                              </Form>
+                  (item, index) =>
+                    item.type === "news_letter" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://caninetest.xyz/storage/app/" + item.image
+                            }
+                          />
+                        </div>
+                        <Row className="justify-content-center">
+                          <Col lg={7}>
+                            <div className="new-content">
+                              <div className="Newsletter">
+                                <Flip right>
+                                  <h1 className="main-head">
+                                    Get Or Promo Code by Subscribing To our
+                                    Newsletter
+                                  </h1>
+                                </Flip>
+                                <Form className="d-flex">
+                                  <Form.Control
+                                    type="search"
+                                    placeholder="Enter your email"
+                                    className="me-2"
+                                    aria-label="Search"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                  />
+                                  <Button
+                                    variant="outline-success"
+                                    onClick={handleNewsletter}
+                                  >
+                                    Subscribe
+                                  </Button>
+                                </Form>
+                              </div>
                             </div>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -1744,7 +1749,13 @@ function Home(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <Link class="quickarea fa fa-times" data-dismiss="modal"> </Link>
+              <Link
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                // onClick={handleResetClickWithoutL}
+              >
+                {" "}
+              </Link>
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1761,7 +1772,7 @@ function Home(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1802,17 +1813,17 @@ function Home(props) {
                             nextSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1821,13 +1832,13 @@ function Home(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1882,11 +1893,12 @@ function Home(props) {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
-                                                      item.type
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
                                                       ? "active"
                                                       : ""
-                                                    }`}
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1991,33 +2003,39 @@ function Home(props) {
                   {/* without sign in quick view add cart */}
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      {customerLoginId === null ?
+                      {customerLoginId === null ? (
                         <Button data-dismiss="modal">
-                          <Link onClick={() => {
-                            dispatch({
-                              type: 'ADD_TO_CART',
-                              payload: {
-                                item_id: productDetails.id,
-                                variant: selectedVariant,
-                                price: formattedAmount,
-                                quantity: quantity,
-                                name: productDetails.name,
-                                image: productDetails.image
-                              }
-                            })
-
-                          }} >
+                        {/* <Button> */}
+                          <Link
+                            onClick={() => {
+                              dispatch({
+                                type: "ADD_TO_CART",
+                                payload: {
+                                  item_id: productDetails.id,
+                                  variant: selectedVariant,
+                                  price: formattedAmount,
+                                  quantity: quantity,
+                                  name: productDetails.name,
+                                  image: productDetails.image,
+                                },
+                              });
+                            }}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
                         </Button>
-                        :
-                        (<Button>
-                          <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${id}`}
+                            onClick={handleAddToCart}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
-                        </Button>)}
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">
@@ -2521,10 +2539,11 @@ function Home(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2628,10 +2647,11 @@ function Home(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -3006,11 +3026,11 @@ function Home(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
