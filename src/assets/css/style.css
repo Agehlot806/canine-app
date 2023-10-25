@@ -4068,3 +4068,9 @@ li.nav-.nonhide {
     color: red;
     margin: 8px;
 }
+.form-range button {
+  border: none;
+  background-color: #ffc934;
+  padding: 0 10px;
+  border-radius: 5px;
+}

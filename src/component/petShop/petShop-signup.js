@@ -190,6 +190,11 @@ function PetshopSignUp() {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <>
       <Toaster />
@@ -392,8 +397,9 @@ function PetshopSignUp() {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Form.Label>Password</Form.Label>
+                    <div className="form-area eyeicon">
                       <Form.Control
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         placeholder="Password"
                         value={password}
@@ -406,6 +412,24 @@ function PetshopSignUp() {
                         }}
                         isInvalid={!isPasswordValid || !hasSpecialCharacter}
                       />
+                      <button
+                          type="button"
+                          // className="btn btn-secondary"
+                          style={{
+                            border: "none",
+                            borderRadius: "37.75px",
+                            height: "55px",
+                          }}
+                          onClick={togglePassword}
+                        >
+                          <i
+                            className={`fa ${
+                              showPassword ? "fa-eye" : "fa-eye-slash"
+                            }`}
+                            aria-hidden="true"
+                          />
+                        </button>
+                        </div>
                       {(!isPasswordValid || !hasSpecialCharacter) && (
                         <Form.Control.Feedback type="invalid">
                           Your password should be at least 8 characters and
