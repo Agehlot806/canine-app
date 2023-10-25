@@ -444,6 +444,11 @@ function Partners() {
     setDisableInput(false);
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <>
       <div className="users-bg">
@@ -534,13 +539,13 @@ function Partners() {
                                       // inline style for demonstration purpose
                                       const style = suggestion.active
                                         ? {
-                                            backgroundColor: "#fafafa",
-                                            cursor: "pointer",
-                                          }
+                                          backgroundColor: "#fafafa",
+                                          cursor: "pointer",
+                                        }
                                         : {
-                                            backgroundColor: "#ffffff",
-                                            cursor: "pointer",
-                                          };
+                                          backgroundColor: "#ffffff",
+                                          cursor: "pointer",
+                                        };
                                       return (
                                         <div
                                           {...getSuggestionItemProps(
@@ -653,7 +658,7 @@ function Partners() {
                           <div className="mainForm-btn">
                             <Button
                               onClick={nextStep}
-                              //   disabled={!isFormValid}
+                            //   disabled={!isFormValid}
                             >
                               Next
                             </Button>
@@ -756,14 +761,33 @@ function Partners() {
                             controlId="formGroupEmail"
                           >
                             <Form.Label>Password</Form.Label>
-                            <Form.Control
-                              type="password"
-                              placeholder="password"
-                              name="password"
-                              //   onChange={(e) => handleOnChange(e)}
-                              onChange={handlePasswordChange}
-                              value={passwordStored}
-                            />{" "}
+                            <div className="form-area eyeicon">
+                              <Form.Control
+                                type={showPassword ? "text" : "password"}
+                                placeholder="password"
+                                name="password"
+                                //   onChange={(e) => handleOnChange(e)}
+                                onChange={handlePasswordChange}
+                                value={passwordStored}
+                              />
+                              <button
+                                type="button"
+                                // className="btn btn-secondary"
+                                style={{
+                                  border: "none",
+                                  borderRadius: "37.75px",
+                                  height: "55px",
+                                }}
+                                onClick={togglePassword}
+                              >
+                                <i
+                                  className={`fa ${showPassword ? "fa-eye" : "fa-eye-slash"
+                                    }`}
+                                  aria-hidden="true"
+                                />
+                              </button>
+                            </div>
+                            {" "}
                             {passwordError && (
                               <div className="error">{passwordError}</div>
                             )}

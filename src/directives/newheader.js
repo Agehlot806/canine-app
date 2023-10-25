@@ -2077,6 +2077,7 @@ function Newheader(props) {
                     {isTotalLengthVisible && (
                       <span>{isNaN(customCount) ? 0 : customCount}</span>
                     )}
+                    {console.log("custommmmmm",customCount)}
                   </a>
                 </li>
               </div>
