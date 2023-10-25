@@ -132,7 +132,7 @@ const SalesmanLogin = () => {
             </Col>
             <Col lg={6}>
               <div className="login-img">
-                <img src={login} alt="Login" />
+                <img src={login} alt="Login" className="bounce-in"/>
               </div>
             </Col>
           </Row>

@@ -2108,7 +2108,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "food" && (
+                                item.heading == "Food" && (
                                   <li key={item.id}>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2131,7 +2131,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "treats" && (
+                                item.heading == "Treats" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2154,7 +2154,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "toys" && (
+                                item.heading == "Toys" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2177,7 +2177,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Collar Leashes & More" && (
+                                item.heading == "Collar Leashes & More" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2200,7 +2200,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Shampoo & Perfumes" && (
+                                item.heading == "Shampoo & Perfumes" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2223,7 +2223,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Beds Cages & Carriers" && (
+                                item.heading == "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2246,7 +2246,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Training & Accessories" && (
+                                item.heading == "Training & Accessories" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2269,7 +2269,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Bowls & Feeders" && (
+                                item.heading == "Bowls & Feeders" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2292,7 +2292,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Grooming" && (
+                                item.heading == "Grooming" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2315,7 +2315,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "medicine" && (
+                                item.heading == "Health Care" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2350,12 +2350,12 @@ function Newheader(props) {
                   <div className="content">
                     <Row>
                       <Col lg={4} sm={6}>
-                        <header>Cat Food & Treats</header>
+                        <header>Cat Food</header>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "food" && (
+                                item.heading == "Food" && (
                                   <li key={item.id}>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2378,7 +2378,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "food" && (
+                                item.heading == "Treats" && (
                                   <li key={item.id}>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2395,13 +2395,13 @@ function Newheader(props) {
                           )}
                         </ul>
                       </Col>
-                      <Col lg={4} sm={6}>
+                      {/* <Col lg={4} sm={6}>
                         <header>Cat Litter & Accessories</header>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "treats" && (
+                                item.heading == "Treats" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2417,14 +2417,14 @@ function Newheader(props) {
                             </p>
                           )}
                         </ul>
-                      </Col>
+                      </Col> */}
                       <Col lg={4} sm={6}>
                         <header>Toys</header>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "toys" && (
+                                item.heading == "Toys" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2447,7 +2447,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Collar Leashes & More" && (
+                                item.heading == "Collar Leashes & More" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2470,7 +2470,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Shampoo & Perfumes" && (
+                                item.heading == "Shampoo & Perfumes" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2493,7 +2493,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name ==
+                                item.heading ==
                                   "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
@@ -2517,7 +2517,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Clothing & Accessories" && (
+                                item.heading == "Clothing & Accessories" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2540,7 +2540,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Bowls & Feeders" && (
+                                item.heading == "Bowls & Feeders" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2563,7 +2563,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Grooming" && (
+                                item.heading == "Grooming" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2586,7 +2586,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Cat Litter & Scooper" && (
+                                item.heading == "Cat Litter & Scooper" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2609,7 +2609,7 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "medicine" && (
+                                item.heading == "Health Care" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2725,7 +2725,7 @@ function Newheader(props) {
                   </li>
 
                   <li className="nonhide">
-                    <a href="#" className="profiledes desktop-item">
+                    <a href="#" className="profiledes desktop-item p-0">
                       <img
                         src={
                           profileData?.image

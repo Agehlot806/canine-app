@@ -47,7 +47,7 @@ function Otherlogin() {
                             </Col>
                             <Col lg={6}>
                                 <div className='login-img'>
-                                    <img src={login} />
+                                    <img src={login} className="bounce-in"/>
                                 </div>
                             </Col>
                         </Row>

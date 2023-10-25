@@ -384,15 +384,14 @@ a {
   width: 160px;
   height: 160px;
   margin: 5px 0 20px;
-
   transition: all 0.3s;
   box-sizing: border-box;
   max-width: 100%;
 }
 .food-product:hover img {
-  transform: rotateY(360deg);
-  -moz-transform: rotateY(360deg);
-  -webkit-transform: rotateY(360deg);
+  transform: rotateY(25deg);
+  -moz-transform: rotateY(25deg);
+  -webkit-transform: rotateY(25deg);
   transform-origin: center;
   -moz-transform-origin: center;
   -webkit-transform-origin: center;
@@ -4101,4 +4100,24 @@ li.nextbtn a {
 li.previousbtn a {
   font-size: 25px;
   color: #000 !important;
+}
+.bounce-in {
+  -webkit-animation: bounce-in 5s ease infinite;
+  animation: bounce-in 5s ease infinite;
+}
+@keyframes bounce-in {
+  0% {
+    opacity: 0.9;
+    transform: scale(.9);
+}
+50% {
+    opacity: 1;
+    transform: scale(1.0);
+}
+70% {
+    transform: scale(.9);
+}
+100% {
+    transform: scale(1);
+}
 }
