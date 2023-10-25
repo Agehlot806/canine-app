@@ -27,7 +27,7 @@ function Petshopdashboard() {
     totalOrders();
     AllBanner();
   }, []);
-  
+
   const handleNewsletter = (event) => {
     event.preventDefault();
     const data = {
@@ -53,8 +53,8 @@ function Petshopdashboard() {
     }
   };
 
-  const handleOrderHistory =  (id) => {
-     
+  const handleOrderHistory = (id) => {
+
     navigate(`/order-view-details/${id}`)
   };
 
@@ -70,16 +70,33 @@ function Petshopdashboard() {
         console.log(error);
       });
   };
+  const deliveredOrders = totalorder.filter(order => order.order_status === "delivered");
+  const pendingOrders = totalorder.filter(order => order.order_status === "pending");
   const gradientColors = [
     "linear-gradient(180deg, #eef 70%, rgba(238, 238, 255, 0) 100%)",
     "linear-gradient(180deg, #ffead2 0%, rgba(255, 234, 210, 0) 100%)",
     "linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%)",
   ];
-  
-  
+
+
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/auth/wholesaler_orders/${storedWholesellerId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.data);
+        // console.log("data",data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   return (
     <>
-    <Toaster />
+      <Toaster />
       <PetShopHeader />
       <div className="home-section">
         <Container fluid className="p-0">
@@ -90,25 +107,25 @@ function Petshopdashboard() {
                   item.type === "default" && (
                     <div className="home-img">
                       <Link to={item.default_link}>
-                      <div>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/" +
-                            item.image
-                          }
-                        />
-                      </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
+                        <div>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </Link>
                     </div>
                   )
@@ -139,10 +156,10 @@ function Petshopdashboard() {
                   aria-selected="true"
                 >
                   <div className="text-center">
-                  <h3>Total Order</h3>
-                  <h5>50</h5>
-                    <p>+10.80%</p>
-                    </div>
+                    <h3>Total Order</h3>
+                    <h5>{data.length}</h5>
+                    {/* <p>+10.80%</p> */}
+                  </div>
                 </a>
               </li>
               <li className="nav-item">
@@ -156,8 +173,7 @@ function Petshopdashboard() {
                   aria-selected="false"
                 >
                   <h3>Completed Order</h3>
-                  <h5>$22k</h5>
-                  <p>+10.80%</p>
+                  <h5>{deliveredOrders.length}</h5>
                 </a>
               </li>
               <li className="nav-item">
@@ -171,8 +187,7 @@ function Petshopdashboard() {
                   aria-selected="false"
                 >
                   <h3>Pending Order</h3>
-                  <h5>50</h5>
-                  <p>+10.80%</p>
+                  <h5>{pendingOrders.length}</h5>
                 </a>
               </li>
               <li className="nav-item">
@@ -187,7 +202,6 @@ function Petshopdashboard() {
                 >
                   <h3>Balance</h3>
                   <h5>10</h5>
-                  <p>+10.80%</p>
                 </a>
               </li>
             </ul>
@@ -269,9 +283,9 @@ function Petshopdashboard() {
                             </div>
                             <div className="text-center mt-3">
                               <Button
-                               onClick={() => {
-                                          handleOrderHistory(item.id)
-                                        }}
+                                onClick={() => {
+                                  handleOrderHistory(item.id)
+                                }}
                               >Detail Order</Button>
                             </div>
                           </div>
@@ -286,57 +300,57 @@ function Petshopdashboard() {
 
 
                 <section className="section-padding">
-        <Container>
-          <div>
-            {homebanner
-              ? homebanner.map(
-                (item, index) =>
-                  item.type === "news_letter" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://caninetest.xyz/storage/app/" + item.image
-                          }
-                        />
-                      </div>
-                      <Row className="justify-content-center">
-                        <Col lg={7}>
-                          <div className="new-content">
-                            <div className="Newsletter">
-                              <Flip right>
-                                <h1 className="main-head">
-                                  Get Or Promo Code by Subscribing To our
-                                  Newsletter
-                                </h1>
-                              </Flip>
-                              <Form className="d-flex">
-                                <Form.Control
-                                  type="search"
-                                  placeholder="Enter your email"
-                                  className="me-2"
-                                  aria-label="Search"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <Button
-                                  variant="outline-success"
-                                  onClick={handleNewsletter}
-                                >
-                                  Subscribe
-                                </Button>
-                              </Form>
-                            </div>
-                          </div>
-                        </Col>
-                      </Row>
+                  <Container>
+                    <div>
+                      {homebanner
+                        ? homebanner.map(
+                          (item, index) =>
+                            item.type === "news_letter" && (
+                              <div className="home-img">
+                                <div className="">
+                                  <img
+                                    src={
+                                      "https://caninetest.xyz/storage/app/" + item.image
+                                    }
+                                  />
+                                </div>
+                                <Row className="justify-content-center">
+                                  <Col lg={7}>
+                                    <div className="new-content">
+                                      <div className="Newsletter">
+                                        <Flip right>
+                                          <h1 className="main-head">
+                                            Get Or Promo Code by Subscribing To our
+                                            Newsletter
+                                          </h1>
+                                        </Flip>
+                                        <Form className="d-flex">
+                                          <Form.Control
+                                            type="search"
+                                            placeholder="Enter your email"
+                                            className="me-2"
+                                            aria-label="Search"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                          />
+                                          <Button
+                                            variant="outline-success"
+                                            onClick={handleNewsletter}
+                                          >
+                                            Subscribe
+                                          </Button>
+                                        </Form>
+                                      </div>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </div>
+                            )
+                        )
+                        : null}
                     </div>
-                  )
-              )
-              : null}
-          </div>
-        </Container>
-      </section>
+                  </Container>
+                </section>
 
               </div>
               <div
@@ -346,183 +360,87 @@ function Petshopdashboard() {
                 aria-labelledby="pills-profile-tab"
               >
                 <div className="needplace">
-                  <div className="dash-head">
-                    <h1>Order Details</h1>
+                <div className="dash-head">
+                    <h1>Completed Order</h1>
                   </div>
-                  <div className="needplace">
-                    <div className="oder-detail-card">
-                      <Row>
-                        <Col lg={5}>
-                          <div className="product-details">
-                            <div>
-                              <img src={logo} />
-                            </div>
-                            <div>
-                              <h5>Canine Products</h5>
-                              <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col lg={7}>
-                          <div className="dowload-invioce">
-                            <Button className="invoice-1">
-                              <img src={invoice} /> download invoice
-                            </Button>
-                            <Button className="invoice-2">
-                              <img src={invoice} /> download summary
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={5}>
-                          <div className="order-minicard">
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
+                  <Row>
+                    {totalorder
+                      ? totalorder.map(
+                        (item, index) =>
+                          item.order_status == "delivered" && (
+                            <Col lg={4} sm={6} className="mb-4">
+                              <div className="order-card order-bg1" style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}>
+                                <div className="order-status">
+                                  <h6>{item.payment_status}</h6>
                                 </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
+                                <div className="order-content">
+                                  <Row>
+                                    <Col sm={3}>
+                                      <div className="dash-logo">
+                                        <img src={logo} />
+                                      </div>
+                                    </Col>
+                                    <Col sm={9}>
+                                      <div className="dashCard-detail">
+                                        <h6>
+                                          Order ID : <span>{item.id}
+                                          </span>
+                                        </h6>
+                                        <p>
+                                          Payment status : <span>{item.payment_status}</span>
+                                        </p>
+                                        <p>
+                                          Order By : <span>{item.user_id ? "Wholeseller" : ""}</span>
+                                        </p>
+                                        <p>
+                                          Total Amount : <span>₹ {item.order_amount}</span>
+                                        </p>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                  <p>{item.user_id ? "Wholeseller" : ""}</p>
+                                  <div className="dash-review">
+                                    {item.callback.map((callbackItem, callbackIndex) => (
+                                      <h6>{callbackItem.variant}</h6>
+                                    ))}
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i
+                                        class="fa fa-star-half-o"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                  </div>
                                 </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
+                                <div className="text-center mt-3">
+                                  <Button
+                                    onClick={() => {
+                                      handleOrderHistory(item.id)
+                                    }}
+                                  >Detail Order</Button>
                                 </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                              <h6>Order ID : 125683</h6>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>1 X Food bowl</p>
-                                </div>
-                              </Col>
-                              <Col>
-                                <div className="order-ids">
-                                  <p>$138.00</p>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Col>
-                        <Col lg={7} className="align-self-center">
-                          <div className="order-table">
-                            <Table responsive>
-                              <tbody>
-                                <tr>
-                                  <th>Sub Total</th>
-                                  <td>$50</td>
-                                </tr>
-                                <tr>
-                                  <th>
-                                    Moving Cart <br />
-                                    <p>Additional Services</p>
-                                  </th>
-                                  <td>$10</td>
-                                </tr>
-                                <tr>
-                                  <th>
-                                    Discount <br />
-                                    <p>Promo Code: 554dffd</p>
-                                  </th>
-                                  <td>$20</td>
-                                </tr>
-                                <tr>
-                                  <th>Total</th>
-                                  <td>$138.00</td>
-                                </tr>
-                              </tbody>
-                            </Table>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                  <div className="needplace">
-                    <Row>
-                      <Col lg={4}>
-                        <div className="order-details">
-                          <h5>Order Details</h5>
-                          <h6>ORDER NUMBER</h6>
-                          <p>4797290627</p>
-                          <h6>PAYMENT</h6>
-                          <p>Paid: Using Upi</p>
-                          <h6>Date</h6>
-                          <p>10 Feb 2023 10:20 AM</p>
-                          <h6>Phone Number</h6>
-                          <p>10 Feb 2023 10:20 AM</p>
-                          <h6>Deliver To</h6>
-                          <p>10 Feb 2023 10:20 AM</p>
-                        </div>
-                        <p>Calll</p>
-                        <div className="order-details-cards">
-                          <div>
-                            <h5>Nity Make</h5>
-                            <p>+91 000000000</p>
-                          </div>
-                          <div>
-                            <img src={icon} />
-                          </div>
-                        </div>
-                      </Col>
-                      <Col lg={8}>
-                        <div className="order-main-deals">
-                          <img src={orders} />
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
+                              </div>
+                            </Col>
+                          )
+                      )
+                      : (
+                        <p className="emptyMSG">No Pending Order</p>
+                      )}
+                  </Row>
                 </div>
               </div>
               <div
@@ -536,390 +454,82 @@ function Petshopdashboard() {
                     <h1>Pending Order</h1>
                   </div>
                   <Row>
-                    <Col lg={4} className="mb-4">
-                      <div className="order-card order-bg1">
-                        <div className="order-status">
-                          <h6>Completed</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
+                    {totalorder
+                      ? totalorder.map(
+                        (item, index) =>
+                          item.order_status == "pending" && (
+                            <Col lg={4} sm={6} className="mb-4">
+                              <div className="order-card order-bg1" style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}>
+                                <div className="order-status">
+                                  <h6>{item.payment_status}</h6>
+                                </div>
+                                <div className="order-content">
+                                  <Row>
+                                    <Col sm={3}>
+                                      <div className="dash-logo">
+                                        <img src={logo} />
+                                      </div>
+                                    </Col>
+                                    <Col sm={9}>
+                                      <div className="dashCard-detail">
+                                        <h6>
+                                          Order ID : <span>{item.id}
+                                          </span>
+                                        </h6>
+                                        <p>
+                                          Payment status : <span>{item.payment_status}</span>
+                                        </p>
+                                        <p>
+                                          Order By : <span>{item.user_id ? "Wholeseller" : ""}</span>
+                                        </p>
+                                        <p>
+                                          Total Amount : <span>₹ {item.order_amount}</span>
+                                        </p>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                  <p>{item.user_id ? "Wholeseller" : ""}</p>
+                                  <div className="dash-review">
+                                    {item.callback.map((callbackItem, callbackIndex) => (
+                                      <h6>{callbackItem.variant}</h6>
+                                    ))}
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                    </a>
+                                    <a>
+                                      <i
+                                        class="fa fa-star-half-o"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div className="text-center mt-3">
+                                  <Button
+                                    onClick={() => {
+                                      handleOrderHistory(item.id)
+                                    }}
+                                  >Detail Order</Button>
+                                </div>
                               </div>
                             </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} className="mb-4">
-                      <div className="order-card order-bg2">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} className="mb-4">
-                      <div className="order-card order-bg3">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} className="mb-4">
-                      <div className="order-card order-bg1">
-                        <div className="order-status">
-                          <h6>Completed</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} className="mb-4">
-                      <div className="order-card order-bg2">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col lg={4} className="mb-4">
-                      <div className="order-card order-bg3">
-                        <div className="order-status">
-                          <h6>Pending</h6>
-                        </div>
-                        <div className="order-content">
-                          <Row>
-                            <Col sm={3}>
-                              <div className="dash-logo">
-                                <img src={logo} />
-                              </div>
-                            </Col>
-                            <Col sm={7}>
-                              <div className="dashCard-detail">
-                                <h6>
-                                  Order ID : <span>123456</span>
-                                </h6>
-                                <p>
-                                  Payment status : <span>Completed</span>
-                                </p>
-                                <p>
-                                  Order By : <span>Sales Man</span>
-                                </p>
-                              </div>
-                            </Col>
-                            <Col sm={2}>
-                              <div className="dashcard-text">
-                                <h6>$138.00</h6>
-                                <p>2+ more</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <p>sales Man</p>
-                          <div className="dash-review">
-                            <h6>Nity Make</h6>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                            </a>
-                            <a>
-                              <i
-                                class="fa fa-star-half-o"
-                                aria-hidden="true"
-                              ></i>
-                            </a>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-center mt-3">
-                          <Button>Detail Order</Button>
-                        </div>
-                      </div>
-                    </Col>
+                          )
+                      )
+                      : (
+                        <p className="emptyMSG">No Pending Order</p>
+                      )}
                   </Row>
                 </div>
               </div>
@@ -934,7 +544,7 @@ function Petshopdashboard() {
                     <Col lg={8}>
                       <div className="balance-card">
                         <h5>Current Balance</h5>
-                        <h1>$143,421.20</h1>
+                        <h1>₹143,421.20</h1>
                         <Button>+ Add Balance</Button>
                       </div>
                     </Col>
@@ -944,7 +554,7 @@ function Petshopdashboard() {
                   <Row className="justify-content-center">
                     <Col lg={6}>
                       <div className="Withdrawal-card">
-                        <Button>Withdrawal Amount</Button>
+                        {/* <Button>Withdrawal Amount</Button> */}
                         <h5>Transactions</h5>
                         <div className="with-table">
                           <div>

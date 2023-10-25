@@ -164,7 +164,7 @@ function DashboadSalesman() {
                 >
                   <h3>Total Wholeseller</h3>
                   <h5>{wholeSellerList?.length}</h5>
-                  <p>+10.80%</p>
+                  
                 </a>
               </li>
               <li className="nav-item">
@@ -179,7 +179,7 @@ function DashboadSalesman() {
                 >
                   <h3>Transactions</h3>
                   <h5>₹{totalTransactions}</h5>
-                  <p>+10.80%</p>
+                  
                 </a>
               </li>
               <li className="nav-item">
@@ -194,7 +194,7 @@ function DashboadSalesman() {
                 >
                   <h3>Total order</h3>
                   <h5>{orderList?.length}</h5>
-                  <p>+10.80%</p>
+                  
                 </a>
               </li>
               <li className="nav-item">
@@ -209,7 +209,7 @@ function DashboadSalesman() {
                 >
                   <h3>Completed Order</h3>
                   <h5>{completedOders?.length}</h5>
-                  <p>+10.80%</p>
+                  
                 </a>
               </li>
             </ul>
