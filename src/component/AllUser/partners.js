@@ -19,6 +19,7 @@ function Partners() {
   const [shopNameStored, setShopNameStored] = useState("");
   const [zoneIdstored, setZoneIdstored] = useState("");
   const [gstNumberStored, setGstNumberStored] = useState("");
+  const [zoneError, setZoneError] = useState("");
   const [gstError, setGstError] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -26,7 +27,14 @@ function Partners() {
   const [isFormValid, setIsFormValid] = useState(false);
   // STEP 1 Handle Form Data start
   const handleZoneIdChange = (event) => {
-    setZoneIdstored(event.target.value);
+    //   setZoneIdstored(event.target.value);
+    const zoneId = event.target.value;
+    setZoneIdstored(zoneId);
+    if (!zoneId) {
+      setZoneError("Zone is required");
+    } else {
+      setZoneError("");
+    }
   };
   const handleNameStoredChange = (event) => {
     setShopNameStored(event.target.value);
@@ -104,18 +112,6 @@ function Partners() {
       setPasswordError("");
     }
   };
-  // STEP 3 Handle Form Data end
-
-  //   const validateFields = () => {
-  //     const isValid =
-  //       nameValid(partnerData.s_name) && gstNumberValid(partnerData.gst);
-  //     //   addressValid(partnerData.address) &&
-  //     //   partnerData.cover_photo !== null &&
-  //     //   partnerData.logo !== null &&
-  //     //   partnerData.zone_id !== "";
-
-  //     setIsFormValid(isValid);
-  //   };
 
   const nameValid = (name) => {
     if (name?.length <= 15 && /^[a-zA-Z\s]*$/.test(name)) {
@@ -144,16 +140,6 @@ function Partners() {
     }
   };
 
-  //   const gstRegex = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
-
-  //   const gstNumberValid = (gstNumber) => {
-  //     return (
-  //       /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][A-Z0-9]Z[A-Z0-9]$/.test(gstNumber) &&
-  //       gstNumber.length <= 15
-  //     );
-  //   };
-  // *************************************
-
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -165,20 +151,6 @@ function Partners() {
       newErrors.email = "Email is not valid";
     }
 
-    //   if (!formData.username.trim()) {
-    //     newErrors.username = "Username is required";
-    //   }
-
-    //   if (!formData.email.trim()) {
-    //     newErrors.email = "Email is required";
-    //   } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-    //     newErrors.email = "Email is not valid";
-    //   }
-
-    //   if (!formData.password.trim()) {
-    //     newErrors.password = "Password is required";
-    //   }
-
     setErrors(newErrors);
 
     // If there are no errors, you can submit the form
@@ -186,8 +158,6 @@ function Partners() {
       // Submit the form or perform other actions
     }
   };
-
-  // *********************************************
   const searchoptions = {
     types: ["(regions)"],
     componentRestrictions: { country: "in" },
@@ -221,8 +191,13 @@ function Partners() {
   const [shopNameError, setShopNameError] = useState("");
   const nextStep = () => {
     // if (isFormValid) {
-      
     let hasErrors = false; // Flag to track whether there are validation errors
+    //   if (emailStored.trim() === "" || !/^\S+@\S+\.\S+$/.test(emailStored)) {
+    //     setEmailError("Email is not valid");
+    //     hasErrors = true;
+    //   } else {
+    //     setEmailError("");
+    //   }
     if (shopNameStored.trim() === "") {
       setShopNameError("Shop Name is required");
       hasErrors = true;
@@ -241,17 +216,55 @@ function Partners() {
     } else {
       setAddressError("");
     }
-    // if (coverPhotoStored.trim() === "") {
-    //   setcoverPhotoError("Cover Photo is required");
-    //   hasErrors = true;
-    // } else {
-    //   setcoverPhotoError("");
-    // }
+    // Validate Cover Photo
+    if (!coverPhotoStored) {
+      setCoverPhotoError("Cover Photo is required");
+      hasErrors = true;
+    } else {
+      setCoverPhotoError(""); // Clear the error if valid
+    }
 
+    // Validate Logo Photo
+    if (!logoPhotoStored) {
+      setLogoPhotoError("Logo Photo is required");
+      hasErrors = true;
+    } else {
+      setLogoPhotoError(""); // Clear the error if valid
+    }
+
+    // Validate Zone ID
+    if (!zoneIdstored) {
+      setZoneError("Zone is required");
+      hasErrors = true;
+    } else {
+      setZoneError(""); // Clear the error if valid
+    }
     if (!hasErrors) {
       setStep((prevStep) => prevStep + 1);
     }
-    // ************
+    //   ********************************
+    if (firstName.trim() === "") {
+      setFirstNameError("First name is required");
+      hasErrors = true;
+    } else {
+      setFirstNameError("");
+    }
+    if (lastName.trim() === "") {
+      setLastNameError("Last name is required");
+      hasErrors = true;
+    } else {
+      setLastNameError("");
+    }
+    if (phoneNum.trim() === "") {
+      setPhoneNumError("Phone Number is required");
+      hasErrors = true;
+    } else {
+      setPhoneNumError("");
+    }
+  };
+  const nextStepTwo = () => {
+    let hasErrors = false; // Flag to track whether there are validation errors
+
     if (firstName.trim() === "") {
       setFirstNameError("First name is required");
       hasErrors = true;
@@ -279,15 +292,6 @@ function Partners() {
     setStep((prevStep) => prevStep - 1);
   };
 
-  //   const nextStep = () => {
-  //     setStep((prevStep) => prevStep + 1);
-  //   };
-
-  //   // Function to move to the previous step
-  //   const prevStep = () => {
-  //     setStep((prevStep) => prevStep - 1);
-  //   };
-
   useEffect(() => {
     getZoneList();
   }, []);
@@ -302,13 +306,6 @@ function Partners() {
         console.log("error in zone list", error);
       });
   };
-  //   const handleInputChange = (event) => {
-  //     const { name, value, type } = event.target;
-  //     setFormData({
-  //       ...formData,
-  //       [name]: type === 'file' ? event.target.files[0] : value,
-  //     });
-  //   }
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setpartnerData({
@@ -368,22 +365,13 @@ function Partners() {
     }
   };
 
-  //   const imageuploadhandler = (e) => {
-  //     setpartnerData({
-  //       ...partnerData,
-  //       [e.target.name]: e.target.files[0],
-  //     });
-  //     validateFields();
-  //   };
-  //   const [coverPhotoError, setCoverPhotoError] = useState(false);
-  //   const [logoError, setLogoError] = useState(false);
-  //     const [zoneError, setZoneError] = useState(false);
   const [coverPhotoStored, setCoverPhotoStored] = useState(null);
-  const [coverPhotoError, setcoverPhotoError] = useState(null);
+  const [coverPhotoError, setCoverPhotoError] = useState(null);
   const [selectedImageCover, setSelectedImageCover] = useState(null);
   const [disableInputCover, setDisableInputCover] = useState(false);
 
   const [logoPhotoStored, setLogoPhotoStored] = useState(null);
+  const [logoPhotoError, setLogoPhotoError] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [disableInput, setDisableInput] = useState(false);
   const handleCoverImageChange = (event) => {
@@ -393,11 +381,25 @@ function Partners() {
       setSelectedImageCover(URL.createObjectURL(coverfile));
       setDisableInputCover(true);
     }
+    if (!coverfile) {
+      setCoverPhotoError("Cover Photo is required");
+    } else {
+      setCoverPhotoError("");
+      setSelectedImageCover(URL.createObjectURL(coverfile));
+      setDisableInputCover(true);
+    }
   };
   const handleLogoImageChange = (event) => {
     const file = event.target.files[0];
     setLogoPhotoStored(file);
     if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+      setDisableInput(true);
+    }
+    if (!file) {
+      setLogoPhotoError("Logo Photo is required");
+    } else {
+      setLogoPhotoError("");
       setSelectedImage(URL.createObjectURL(file));
       setDisableInput(true);
     }
@@ -410,31 +412,6 @@ function Partners() {
     setSelectedImage(null);
     setDisableInput(false);
   };
-  // const halderimage = (e) => {
-  //     // setimgage(e.target.files[0])
-  //     const file = e.target.files[0];
-  //     setimgage(file); // Store the file directly
-
-  //     // Create a preview URL for the selected image
-  //     setSelectedImage(URL.createObjectURL(file));
-  //   };
-  //   const handleImageUpload = (e) => {
-  //     const fieldName = e.target.name;
-  //     if (!e.target.files.length) {
-  //       if (fieldName === "cover_photo") {
-  //         setCoverPhotoError(true);
-  //       } else if (fieldName === "logo") {
-  //         setLogoError(true);
-  //       }
-  //     } else {
-  //       // File selected, no error
-  //       if (fieldName === "cover_photo") {
-  //         setCoverPhotoError(false);
-  //       } else if (fieldName === "logo") {
-  //         setLogoError(false);
-  //       }
-  //     }
-  //   };
 
   return (
     <>
@@ -474,13 +451,6 @@ function Partners() {
                             {shopNameError && (
                               <div className="error">{shopNameError}</div>
                             )}
-                            {/* {!nameValid(partnerData.s_name) && (
-                              <span className="error-text">
-                                {partnerData.s_name?.length > 15
-                                  ? "Shop Name can be up to 15 characters"
-                                  : "Invalid Shop Name"}
-                              </span>
-                            )} */}
                           </Form.Group>
                           <Form.Group
                             className="mb-3"
@@ -499,13 +469,6 @@ function Partners() {
                             {gstError && (
                               <div className="error">{gstError}</div>
                             )}
-                            {/* {!gstNumberValid(partnerData.gst) && (
-                              <span className="error-text">
-                                {partnerData.gst?.length > 15
-                                  ? "GST Number can be up to 15 characters and digits"
-                                  : "Invalid GST Number"}
-                              </span>
-                            )} */}
                           </Form.Group>
                           <Form.Group
                             className="mb-3"
@@ -597,49 +560,14 @@ function Partners() {
                                   disabled={disableInputCover}
                                 />
                               )}
-                              {/* <Form.Control
-                                type="file"
-                                name="cover_photo"
-                                // onChange={(e) => handleImageUpload(e)}
-                                onChange={handleCoverImageChange}
-                                // value={coverPhotoStored}
-                              /> */}
-                              {/* {coverPhotoError && (
-                                <span className="error-text">
-                                  Cover Photo is required
-                                </span>
-                              )} */}
+                              {coverPhotoError && (
+                                <div className="error">{coverPhotoError}</div>
+                              )}
                             </Form.Group>
                             <Form.Group as={Col}>
                               <Form.Label>
                                 Partners Logo ( Ratio 1:1 )
                               </Form.Label>
-                              {/* <Form.Control
-                                type="file"
-                                name="logo"
-                                // onChange={(e) => handleImageUpload(e)}
-                                onChange={handleLogoImageChange}
-                                disabled={disableInput}
-                                // value={logoPhotoStored}
-                              /> */}
-                              {/* {logoError && (
-                                <span className="error-text">
-                                  Partners Logo is required
-                                </span>
-                              )} */}
-                              {/* {selectedImage && (
-                                <div>
-                                  <img
-                                    src={selectedImage}
-                                    alt="Image"
-                                    style={{ width: "100px", height: "100px" }}
-                                  />
-                                  <button onClick={handleRemoveImage}>
-                                    Remove Image
-                                  </button>
-                                </div>
-                              )}
-                            </Form.Group> */}
                               {selectedImage ? (
                                 <div>
                                   <img
@@ -662,6 +590,9 @@ function Partners() {
                                   disabled={disableInput}
                                 />
                               )}
+                              {logoPhotoError && (
+                                <div className="error">{logoPhotoError}</div>
+                              )}
                             </Form.Group>
                           </Row>
                           <Row className="mb-3">
@@ -683,11 +614,9 @@ function Partners() {
                                   </option>
                                 ))}
                               </Form.Select>
-                              {/* {zoneError && (
-                                <span className="error-text">
-                                  Zone is required
-                                </span>
-                              )} */}
+                              {zoneError && (
+                                <div className="error">{zoneError}</div>
+                              )}
                             </Form.Group>
                           </Row>
                           <div className="mainForm-btn">
@@ -764,7 +693,7 @@ function Partners() {
                             >
                               Previous
                             </Button>
-                            <Button onClick={nextStep}>Next</Button>
+                            <Button onClick={nextStepTwo}>Next</Button>
                           </div>
                         </div>
                       )}
