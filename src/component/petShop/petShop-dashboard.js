@@ -310,7 +310,7 @@ function Petshopdashboard() {
                                 <div className="">
                                   <img
                                     src={
-                                      "https://caninetest.xyz/storage/app/" + item.image
+                                      "https://canine.hirectjob.in/storage/app/" + item.image
                                     }
                                   />
                                 </div>

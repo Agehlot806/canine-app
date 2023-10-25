@@ -1977,13 +1977,20 @@ function Newheader(props) {
                     className="homesea"
                   />
                   <ul className="drop-menu search-results">
-                    {filteredProducts.map((product, index, id) => (
+                    {/* {filteredProducts.map((product, index, id) => (
                       <li key={index}>
                         <Link to={`/product-details/${product.id}`}>
                           {product.name}
                         </Link>
                       </li>
-                    ))}
+                    ))} */}
+                    {filteredProducts.map((product, index, id) => (
+                        <li key={index}>
+                          <Link to={`/product-details/${product.id}`}>
+                            {product.name}
+                          </Link>
+                        </li>
+                      ))}
                   </ul>
                 </Link>
               </li>
@@ -2663,13 +2670,20 @@ function Newheader(props) {
                     className="homesea"
                   />
                   <ul className="drop-menu search-results">
-                    {filteredProducts.map((product, index, id) => (
+                    {/* {filteredProducts.map((product, index, id) => (
                       <li key={index}>
                         <Link to={`/product-details/${product.id}`}>
                           {product.name}
                         </Link>
                       </li>
-                    ))}
+                    ))} */}
+                    {filteredProducts.map((product, index, id) => (
+                        <li key={index}>
+                          <Link to={`/product-details/${product.id}`}>
+                            {product.name}
+                          </Link>
+                        </li>
+                      ))}
                   </ul>
                 </Link>
               </li>
