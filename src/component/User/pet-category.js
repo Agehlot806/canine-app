@@ -19,6 +19,7 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
+import ReactPaginate from "react-paginate";
 
 function Petcategory() {
   //     const { id } = useParams();
@@ -445,23 +446,23 @@ function Petcategory() {
 
   /////pagination//
 
-  const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
-  useEffect(() => {
-    // Update the paginated categories whenever brandcategories or currentPage changes
-    pagination(currentPage);
-  }, [allproduct, currentPage]);
+  // const [paginatedCategories, setPaginatedCategories] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const pageSize = 6;
+  // useEffect(() => {
+  //   // Update the paginated categories whenever brandcategories or currentPage changes
+  //   pagination(currentPage);
+  // }, [allproduct, currentPage]);
 
-  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
-  const pages = _.range(1, pageCount + 1);
+  // const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  // const pages = _.range(1, pageCount + 1);
 
-  const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
-    const startIndex = (pageNo - 1) * pageSize;
-    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
-    setPaginatedCategories(paginated);
-  };
+  // const pagination = (pageNo) => {
+  //   setCurrentPage(pageNo);
+  //   const startIndex = (pageNo - 1) * pageSize;
+  //   const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+  //   setPaginatedCategories(paginated);
+  // };
 
   const [subid, setsubid] = useState("");
   const [petitemproduct, setpetitemproduct] = useState([]);
@@ -1242,6 +1243,18 @@ function Petcategory() {
         toast.error("An error occurred. Please try again.");
       });
   };
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 35;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
   return (
     <>
       <Toaster />
@@ -1617,7 +1630,7 @@ function Petcategory() {
                 </div> */}
                 <div>
                   <Row>
-                    {paginatedCategories.map(
+                    {itemsToDisplay.map(
                       (item, index) =>
                         item.category_id == id && (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
@@ -1710,7 +1723,20 @@ function Petcategory() {
                         )
                     )}
                   </Row>
-                  <div className="pagination-area">
+                  <ReactPaginate
+                    previousLabel={"< previous"}
+                    nextLabel={"next >"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
+                  {/* <div className="pagination-area">
                     <ul className="pagination">
                       {pages.map((page) => (
                         <li
@@ -1730,7 +1756,7 @@ function Petcategory() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
 
                 <Row></Row>
@@ -1957,7 +1983,9 @@ function Petcategory() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2423,7 +2451,9 @@ function Petcategory() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>

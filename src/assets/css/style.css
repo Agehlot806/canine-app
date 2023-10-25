@@ -4065,12 +4065,40 @@ li.nav-.nonhide {
 }
 
 .error {
-    color: red;
-    margin: 8px;
+  color: red;
+  margin: 8px;
 }
 .form-range button {
   border: none;
   background-color: #ffc934;
   padding: 0 10px;
   border-radius: 5px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+.pagination li {
+  margin: 0 24px;
+    cursor: pointer;
+    font-weight: bold;
+    align-self: center;
+}
+li.activebtn a {
+  background: #ffc934;
+  color: #000;
+  padding: 8px 20px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+li.nextbtn a {
+  font-size: 25px;
+  color: #000 !important;
+}
+li.previousbtn a {
+  font-size: 25px;
+  color: #000 !important;
 }
