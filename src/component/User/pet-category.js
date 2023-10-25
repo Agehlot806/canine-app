@@ -1724,8 +1724,8 @@ function Petcategory() {
                     )}
                   </Row>
                   <ReactPaginate
-                    previousLabel={"< previous"}
-                    nextLabel={"next >"}
+                    previousLabel={"<"}
+                    nextLabel={">"}
                     breakLabel={"..."}
                     pageCount={Math.ceil(allproduct.length / itemsPerPage)}
                     marginPagesDisplayed={2}

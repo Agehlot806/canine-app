@@ -455,7 +455,11 @@ function Partners() {
         <Container>
           <div className="text-center">
             <img src={logo} />
+            <h4 className="mt-3">
+              Already a Partner? <Link>Login Here</Link>
+            </h4>
           </div>
+
           <section className="section-padding">
             <div>
               <Row>
@@ -539,13 +543,13 @@ function Partners() {
                                       // inline style for demonstration purpose
                                       const style = suggestion.active
                                         ? {
-                                          backgroundColor: "#fafafa",
-                                          cursor: "pointer",
-                                        }
+                                            backgroundColor: "#fafafa",
+                                            cursor: "pointer",
+                                          }
                                         : {
-                                          backgroundColor: "#ffffff",
-                                          cursor: "pointer",
-                                        };
+                                            backgroundColor: "#ffffff",
+                                            cursor: "pointer",
+                                          };
                                       return (
                                         <div
                                           {...getSuggestionItemProps(
@@ -658,7 +662,7 @@ function Partners() {
                           <div className="mainForm-btn">
                             <Button
                               onClick={nextStep}
-                            //   disabled={!isFormValid}
+                              //   disabled={!isFormValid}
                             >
                               Next
                             </Button>
@@ -781,13 +785,13 @@ function Partners() {
                                 onClick={togglePassword}
                               >
                                 <i
-                                  className={`fa ${showPassword ? "fa-eye" : "fa-eye-slash"
-                                    }`}
+                                  className={`fa ${
+                                    showPassword ? "fa-eye" : "fa-eye-slash"
+                                  }`}
                                   aria-hidden="true"
                                 />
                               </button>
-                            </div>
-                            {" "}
+                            </div>{" "}
                             {passwordError && (
                               <div className="error">{passwordError}</div>
                             )}
