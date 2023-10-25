@@ -216,7 +216,7 @@
 //   const fetchData = async () => {
 //     try {
 //       const response = await axios.get(
-//         "https://caninetest.xyz/api/v1/items/latest"
+//         "https://canine.hirectjob.in/api/v1/items/latest"
 //       );
 //       setProducts(response.data.data);
 //     } catch (error) {
@@ -721,11 +721,11 @@
 //                           src={
 //                             loginType == "salesman"
 //                               ? salesmanProfile?.image
-//                                 ? "https://caninetest.xyz/storage/app/public/delivery-man/" +
+//                                 ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
 //                                   salesmanProfile?.image
 //                                 : loicon1
 //                               : profileData?.image
-//                               ? "https://caninetest.xyz/storage/app/public/profile/" +
+//                               ? "https://canine.hirectjob.in/storage/app/public/profile/" +
 //                                 profileData?.image
 //                               : loicon1
 //                           }
@@ -733,8 +733,8 @@
 //                         {/* <img
 //                           src={
 //                             loginType === "salesman" && salesmanProfile?.image
-//                               ? "https://caninetest.xyz/storage/app/public/delivery-man/" + salesmanProfile.image
-//                               : "https://caninetest.xyz/storage/app/public/profile/" + (profileData?.image || "default-image-url")
+//                               ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" + salesmanProfile.image
+//                               : "https://canine.hirectjob.in/storage/app/public/profile/" + (profileData?.image || "default-image-url")
 //                           }
 //                           alt="Profile Image"
 //                         /> */}
@@ -2749,7 +2749,7 @@ function Petshopheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://caninetest.xyz/api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -3614,11 +3614,11 @@ function Petshopheader(props) {
                         src={
                           loginType == "salesman"
                             ? salesmanProfile?.image
-                              ? "https://caninetest.xyz/storage/app/public/delivery-man/" +
+                              ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
                                 salesmanProfile?.image
                               : loicon1
                             : profileData?.image
-                            ? "https://caninetest.xyz/storage/app/public/profile/" +
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                               profileData?.image
                             : loicon1
                         }
@@ -3630,11 +3630,11 @@ function Petshopheader(props) {
                         src={
                           loginType == "salesman"
                             ? salesmanProfile?.image
-                              ? "https://caninetest.xyz/storage/app/public/delivery-man/" +
+                              ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
                                 salesmanProfile?.image
                               : loicon1
                             : profileData?.image
-                            ? "https://caninetest.xyz/storage/app/public/profile/" +
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                               profileData?.image
                             : loicon1
                         }
