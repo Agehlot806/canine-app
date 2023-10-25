@@ -27,6 +27,7 @@ function Planbuy() {
   }, []);
   const storedPlanData = localStorage.getItem("planData");
   const parsedPlanData = JSON.parse(storedPlanData);
+  console.log('storedPlanData: ', storedPlanData);
 
   // Access the "Monthly" and "price" properties
   const monthly = parsedPlanData.plantime;
@@ -70,7 +71,8 @@ function Planbuy() {
         handler: (response) => {
           setPaymentId(response.razorpay_payment_id);
           // Handle the success callback
-          window.location.href = "https://canine.hirectjob.in/admin/auth/login";
+          window.location.href =
+            "https://canine.hirectjob.in/store-panel/auth/login";
           console.log("Payment Successful:", response);
         },
 
@@ -146,7 +148,9 @@ function Planbuy() {
           </div>
           <div className="partner-img">
             <img
-              src={"https://canine.hirectjob.in//uploads/subscription//" + image}
+              src={
+                "https://canine.hirectjob.in//uploads/subscription//" + image
+              }
             />
           </div>
         </Container>
