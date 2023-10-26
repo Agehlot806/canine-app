@@ -13,6 +13,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import ReactPaginate from "react-paginate";
 
 function Productpartnershop() {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
@@ -1155,6 +1156,36 @@ function Productpartnershop() {
       });
   };
 
+
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+  
   return (
     <>
       <Toaster />
@@ -1477,8 +1508,8 @@ function Productpartnershop() {
               <div className="needplace">
                 <Container>
                   <Row>
-                    {allproduct && allproduct.length > 0 ? (
-                      allproduct.map((item, index) => (
+                    {itemsToDisplay && itemsToDisplay.length > 0 ? (
+                      itemsToDisplay.map((item, index) => (
                         <Col lg={4} sm={6} xs={6} className="mb-4">
                           <div
                             className="food-product"
@@ -1514,7 +1545,7 @@ function Productpartnershop() {
                               </div>
                               <div>
                                 <h6>{item.name}</h6>
-                                <p>{item.description}</p>
+                                <p>{renderProductDescription(item.description)}</p>
                               </div>
                               <div className="product-bag">
                                 <Row>
@@ -1577,6 +1608,19 @@ function Productpartnershop() {
                       <p className="emptyMSG">No Product By Partner Data.</p>
                     )}
                   </Row>
+                  <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
                 </Container>
               </div>
             </section>

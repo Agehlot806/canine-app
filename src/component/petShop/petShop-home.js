@@ -1041,6 +1041,22 @@ function PetshopHome(props) {
       }
     }
   };
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
@@ -1282,7 +1298,7 @@ function PetshopHome(props) {
                         </div>
                         <div>
                           <h6>{item.name}</h6>
-                          <p>{item.description}</p>
+                          <p>{renderProductDescription(item.description)}</p>
                         </div>
                         <div className="product-bag">
                           {/* <Row>

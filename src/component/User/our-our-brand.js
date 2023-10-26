@@ -12,6 +12,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import ReactPaginate from "react-paginate";
 
 function Ourourbrand(props) {
   // filter tabs
@@ -89,14 +90,14 @@ function Ourourbrand(props) {
 
   const [petitemproduct, setpetitemproduct] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
-    // without signup add cart start
-    const loginType = localStorage.getItem("loginType");
-    const customerLoginId =
-      loginType === "wholeseller"
-        ? Number(localStorage.getItem("UserWholesellerId"))
-        : localStorage.getItem("userInfo");
-    const { cart, dispatch } = useCartWithoutLogin();
-     // without signup add cart end
+  // without signup add cart start
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
+  // without signup add cart end
 
   useEffect(() => {
     Allsubcategories();
@@ -738,7 +739,7 @@ function Ourourbrand(props) {
     if (productDetails?.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails?.image
+        productDetails?.image
       );
     }
   }, [productDetails]);
@@ -746,7 +747,7 @@ function Ourourbrand(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails?.images[index]
+      productDetails?.images[index]
     );
   };
 
@@ -1244,6 +1245,34 @@ function Ourourbrand(props) {
     }
   };
 
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproductbrand.slice(startIndex, endIndex);
+
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
@@ -1313,20 +1342,20 @@ function Ourourbrand(props) {
                       <div>
                         {subcategories
                           ? subcategories.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allsubcateselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allsubcateselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1348,20 +1377,20 @@ function Ourourbrand(props) {
                       <div>
                         {allsubcate
                           ? allsubcate.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allcateselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allcateselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1428,22 +1457,22 @@ function Ourourbrand(props) {
                       <div>
                         {alllifesage
                           ? alllifesage.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onChange={(e) =>
-                                    Lifesatedataselect(items.name)
-                                  }
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) =>
+                                  Lifesatedataselect(items.name)
+                                }
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1465,20 +1494,20 @@ function Ourourbrand(props) {
                       <div>
                         {allbreed
                           ? allbreed.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onChange={(e) => allbreedselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) => allbreedselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1500,20 +1529,20 @@ function Ourourbrand(props) {
                       <div>
                         {allhealth
                           ? allhealth.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allhealthselect(items.title)}
-                                />
-                                <label className="form-check-label">
-                                  {items.title}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allhealthselect(items.title)}
+                              />
+                              <label className="form-check-label">
+                                {items.title}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1572,8 +1601,8 @@ function Ourourbrand(props) {
                 {/* <Row> */}
                 {brands.length > 0 ? (
                   <Row>
-                    {allproductbrand ? (
-                      allproductbrand.map((item, index) => {
+                    {itemsToDisplay ? (
+                      itemsToDisplay.map((item, index) => {
                         return (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
                             <div
@@ -1611,7 +1640,7 @@ function Ourourbrand(props) {
                                 </div>
                                 <div>
                                   <h6>{item.name}</h6>
-                                  <p>{item.description}</p>
+                                  <p>{renderProductDescription(item.description)}</p>
                                 </div>
                                 <div className="product-bag">
                                   <Row>
@@ -1624,10 +1653,9 @@ function Ourourbrand(props) {
                                   </Row>
                                   <Row>
                                     <Col className="align-self-center">
-                                      <h6>{`₹${
-                                        item.price -
+                                      <h6>{`₹${item.price -
                                         (item.price * item.discount) / 100
-                                      }`}</h6>
+                                        }`}</h6>
                                     </Col>
                                     {/* <Col>
                                       <Link to="">
@@ -1656,10 +1684,10 @@ function Ourourbrand(props) {
                                           // window.location.href = '/login'; 
                                           shippingpage('/login')
                                         } else {
-                                          handeldataId(item.id); 
+                                          handeldataId(item.id);
                                         }
                                       }}
-                                      // onClick={(e) => handeldataId(item.id)}
+                                    // onClick={(e) => handeldataId(item.id)}
                                     >
                                       Buy Now
                                     </button>
@@ -1684,9 +1712,23 @@ function Ourourbrand(props) {
                       <p className="emptyMSG">No Brands Product.</p>
                     )}
                   </Row>
+
                 ) : (
-                  <p>429 Error...</p>
+                  <p>No Brand Product</p>
                 )}
+                <ReactPaginate
+                  previousLabel={"<"}
+                  nextLabel={">"}
+                  breakLabel={"..."}
+                  pageCount={Math.ceil(allproductbrand.length / itemsPerPage)}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageChange}
+                  containerClassName={"pagination"}
+                  activeClassName={"activebtn"}
+                  nextClassName={"nextbtn"}
+                  previousClassName={"previousbtn"}
+                />
               </Container>
 
               {/* <Container>
@@ -1851,7 +1893,7 @@ function Ourourbrand(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1892,17 +1934,17 @@ function Ourourbrand(props) {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1911,13 +1953,13 @@ function Ourourbrand(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1972,12 +2014,11 @@ function Ourourbrand(props) {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
+                                                  className={`tab-variations ${selectedVariant ===
+                                                      item.type
                                                       ? "active"
                                                       : ""
-                                                  }`}
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2079,46 +2120,46 @@ function Ourourbrand(props) {
                       </div>
                     </Col>
                   </Row>
-                   {/* without sign in quick view add cart */}
-                   {productDetails.stock && productDetails.stock.length !== 0 ? (
-            <div className="productBTNaddcard">
-              {customerLoginId === null ?
-                <Button data-dismiss="modal">
-                  <Link onClick={() => {
-                    dispatch({
-                      type: 'ADD_TO_CART',
-                      payload: {
-                        item_id: productDetails.id,
-                        variant: selectedVariant,
-                        price: formattedAmount,
-                        quantity: quantity,
-                        name:productDetails.name,
-                        image: productDetails.image
-                      }
-                    })
-                    
-                  }} >
-                    <i className="fa fa-shopping-bag" /> Add to cart
-                  </Link>
-                  <p>{addToCartStatus}</p>
-                </Button>
-                :
-                (<Button>
-                  <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
-                    <i className="fa fa-shopping-bag" /> Add to cart
-                  </Link>
-                  <p>{addToCartStatus}</p>
-                </Button>)}
-            </div>
-          ) : (
-            <div className="sold-out-btn mt-3">
-              <Link>Sold Out</Link>
-              <br />
-              <Button data-toggle="modal" data-target="#soldoutModel">
-                Notify Me When Available
-              </Button>
-            </div>
-          )}
+                  {/* without sign in quick view add cart */}
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                    <div className="productBTNaddcard">
+                      {customerLoginId === null ?
+                        <Button data-dismiss="modal">
+                          <Link onClick={() => {
+                            dispatch({
+                              type: 'ADD_TO_CART',
+                              payload: {
+                                item_id: productDetails.id,
+                                variant: selectedVariant,
+                                price: formattedAmount,
+                                quantity: quantity,
+                                name: productDetails.name,
+                                image: productDetails.image
+                              }
+                            })
+
+                          }} >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                        :
+                        (<Button>
+                          <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>)}
+                    </div>
+                  ) : (
+                    <div className="sold-out-btn mt-3">
+                      <Link>Sold Out</Link>
+                      <br />
+                      <Button data-toggle="modal" data-target="#soldoutModel">
+                        Notify Me When Available
+                      </Button>
+                    </div>
+                  )}
                   {/* {productDetails?.stock &&
                   productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
@@ -2612,11 +2653,10 @@ function Ourourbrand(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2720,11 +2760,10 @@ function Ourourbrand(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -3099,11 +3138,11 @@ function Ourourbrand(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

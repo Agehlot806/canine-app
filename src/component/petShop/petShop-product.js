@@ -18,6 +18,7 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import { loadRazorpay } from "../../utils";
 import { Fade } from "react-reveal";
+import ReactPaginate from "react-paginate";
 
 const clinetreview = {
   desktop: {
@@ -565,22 +566,22 @@ function Petshopproduct(props) {
   };
 
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 24;
-  useEffect(() => {
-    // Update the paginated categories whenever brandcategories or currentPage changes
-    pagination(currentPage);
-  }, [allproduct, currentPage]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const pageSize = 24;
+  // useEffect(() => {
+  //   // Update the paginated categories whenever brandcategories or currentPage changes
+  //   pagination(currentPage);
+  // }, [allproduct, currentPage]);
 
-  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
-  const pages = _.range(1, pageCount + 1);
+  // const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  // const pages = _.range(1, pageCount + 1);
 
-  const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
-    const startIndex = (pageNo - 1) * pageSize;
-    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
-    setPaginatedCategories(paginated);
-  };
+  // const pagination = (pageNo) => {
+  //   setCurrentPage(pageNo);
+  //   const startIndex = (pageNo - 1) * pageSize;
+  //   const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+  //   setPaginatedCategories(paginated);
+  // };
   const gradientColors = [
     "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
     "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
@@ -1233,6 +1234,19 @@ function Petshopproduct(props) {
       });
   };
 
+
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
   return (
     <>
       <PetShopHeader />
@@ -1559,50 +1573,12 @@ function Petshopproduct(props) {
             </section>
           </Col>
           <Col lg={9}>
-            <section className="section-padding">
-              <Container>
-                <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
-              </Container>
-              <Container fluid>
-                <Carousel
-                  swipeable={true}
-                  draggable={true}
-                  showDots={true}
-                  responsive={clinetreview}
-                  ssr={true} // means to render carousel on server-side.
-                  infinite={true}
-                  autoPlay={props.deviceType !== "mobile" ? true : false}
-                  autoPlaySpeed={2000}
-                  keyBoardControl={true}
-                  customTransition="all 1s"
-                  transitionDuration={1000}
-                  containerClass="carousel-container"
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  deviceType={props.deviceType}
-                  dotListClass="custom-dot-list-style"
-                  itemClass="carousel-item-padding-40-px"
-                >
-                  {categories.map((item) => (
-                    <div className="Shop-Deals" key={item.id}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in//storage/app/public/category/" +
-                          item.image
-                        }
-                        onClick={(e) => allcateselect(item.name)}
-                      />
-                      <h1>{item.name}</h1>
-                    </div>
-                  ))}
-                </Carousel>
-              </Container>
-            </section>
 
             <section className="section-padding food">
               <Container>
                 <Row>
-                {paginatedCategories
-                    ? paginatedCategories.map(
+                {itemsToDisplay
+                    ? itemsToDisplay.map(
                         (item, index) =>
                           item.module_id === 1 && (
 
@@ -1688,27 +1664,20 @@ function Petshopproduct(props) {
                    )
                  : null}
                 </Row>
-                <div className="pagination-area">
-                  <ul className="pagination">
-                    {pages.map((page) => (
-                      <li
-                        key={page}
-                        className={
-                          page === currentPage
-                            ? "page-item active"
-                            : "page-item"
-                        }
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => pagination(page)}
-                        >
-                          {page}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+
+                 <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
               </Container>
             </section>
           </Col>

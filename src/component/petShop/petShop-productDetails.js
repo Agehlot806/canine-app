@@ -858,7 +858,7 @@ function PetshopproductDetails() {
   return (
     <>
       <PetShopHeader />
-      <div className="home-section">
+      {/* <div className="home-section">
         <Container fluid className="p-0">
           <div>
             {homebanner
@@ -891,7 +891,7 @@ function PetshopproductDetails() {
               : null}
           </div>
         </Container>
-      </div>
+      </div> */}
       <section className="section-padding">
         <Container>
           <Row>
@@ -1225,40 +1225,6 @@ function PetshopproductDetails() {
           </>
         </Container>
       </section>
-      <Container fluid className="p-0">
-        <div className="product-innerBanner">
-          <div>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "item_wise" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    )
-                )
-              : null}
-          </div>
-        </div>
-      </Container>
 
       <section className="section-padding food">
         <Container>

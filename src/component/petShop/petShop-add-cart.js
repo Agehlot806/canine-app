@@ -596,7 +596,7 @@ function PetshopAddCart() {
   const [homebanner, sethomebanner] = useState([]);
   const AllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banner`);
       sethomebanner(response.data.data);
     } catch (error) {
       console.error(error);
@@ -699,40 +699,26 @@ function PetshopAddCart() {
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
-      <div className="home-section">
+      {/* <div className="home-section">
         <Container fluid className="p-0">
-          <div>
+          <div className="allBG">
             {homebanner
               ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    )
+                (item, index) =>
+                item.type === "common" && (
+                  <Col lg={6} className="mb-4">
+                    <img
+                      src={
+                        "https://canine.hirectjob.in//storage/app/" + item.image
+                      }
+                    />
+                  </Col>
+                )
                 )
               : null}
           </div>
         </Container>
-      </div>
+      </div> */}
       <section className="section-padding">
         <div className="add-cart">
           {addToCartProduct && addToCartProduct.length > 0 ? (

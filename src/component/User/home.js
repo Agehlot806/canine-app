@@ -988,6 +988,23 @@ function Home(props) {
       });
   };
 
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -1223,8 +1240,8 @@ function Home(props) {
                         </div>
                         <div>
                           <h6>{item.name}</h6>
-                          {/* <p>{item.description}</p> */}
-                          <p
+                          <p>{renderProductDescription(item.description)}</p>
+                          {/* <p
                             className={`truncate-text ${
                               !expandedDescription[item.id]
                                 ? "read-more-link"
@@ -1246,7 +1263,7 @@ function Home(props) {
                                   Read More
                                 </span>
                               )}
-                          </p>
+                          </p> */}
                         </div>
                         <div className="product-bag">
                           <Row>

@@ -17,6 +17,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
+import ReactPaginate from "react-paginate";
 
 const clinetreview = {
   desktop: {
@@ -1210,6 +1211,35 @@ function PetShopcanineproduct(props) {
       });
   };
 
+   // PAGINATON
+   const [currentPage, setCurrentPage] = useState(0);
+   const itemsPerPage = 24;
+ 
+   const handlePageChange = (selected) => {
+     setCurrentPage(selected.selected);
+   };
+ 
+   const startIndex = currentPage * itemsPerPage;
+   const endIndex = startIndex + itemsPerPage;
+   const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
+
+   const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -1537,50 +1567,11 @@ function PetShopcanineproduct(props) {
             </section>
           </Col>
           <Col lg={9}>
-            <section className="section-padding">
-              <Container>
-                <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
-              </Container>
-              <Container fluid>
-                <Carousel
-                  swipeable={true}
-                  draggable={true}
-                  showDots={true}
-                  responsive={clinetreview}
-                  ssr={true} // means to render carousel on server-side.
-                  infinite={true}
-                  autoPlay={props.deviceType !== "mobile" ? true : false}
-                  autoPlaySpeed={2000}
-                  keyBoardControl={true}
-                  customTransition="all 1s"
-                  transitionDuration={1000}
-                  containerClass="carousel-container"
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  deviceType={props.deviceType}
-                  dotListClass="custom-dot-list-style"
-                  itemClass="carousel-item-padding-40-px"
-                >
-                  {categories.map((item) => (
-                    <div className="product-Deals" key={item.id}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in//storage/app/public/category/" +
-                          item.image
-                        }
-                        onClick={(e) => allcateselect(item.name)}
-                      />
-                      <h1>{item.name}</h1>
-                    </div>
-                  ))}
-                </Carousel>
-              </Container>
-            </section>
-
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {allproduct
-                    ? allproduct.map(
+                  {itemsToDisplay
+                    ? itemsToDisplay.map(
                         (item, index) =>
                           item.module_id === 1 && (
                             <Col lg={4} sm={6} xs={6} className="mb-4">
@@ -1621,7 +1612,7 @@ function PetShopcanineproduct(props) {
                                   </div>
                                   <div>
                                     <h6>{item.name}</h6>
-                                    <p>{item.description}</p>
+                                    <p>{renderProductDescription(item.description)}</p>
                                   </div>
                                   <div className="product-bag">
                                     <Row>
@@ -1666,6 +1657,20 @@ function PetShopcanineproduct(props) {
                       )
                     : null}
                 </Row>
+
+                <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
               </Container>
             </section>
           </Col>

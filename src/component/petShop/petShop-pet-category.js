@@ -13,7 +13,8 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
-
+import ReactPaginate from "react-paginate";
+ 
 function PetshopPetcategory() {
   //     const { id } = useParams();
   //   console.log("id", id);
@@ -1113,6 +1114,35 @@ function PetshopPetcategory() {
   }, [id]);
   console.log("categoriescategories",banner);
 
+
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
@@ -1434,7 +1464,7 @@ function PetshopPetcategory() {
           <Col lg={9}>
             <section className="section-padding food">
               <Container>
-                <div className="needplace">
+              {/* <div className="needplace">
                   <div className="dog-categorys-area">
                     <ul
                       className="nav nav-pills mb-3"
@@ -1593,14 +1623,14 @@ function PetshopPetcategory() {
                               }
                             }}
                           />
-                          {/* <Link to={`/petshop-productDetails/${item.id}`}> */}
+                          <Link to={`/petshop-productDetails/${item.id}`}>
                           <div className="text-center">
-                            {/* <img
+                            <img
                                         src={
                                           "https://canine.hirectjob.in///storage/app/public/product/" +
                                           item.image
                                         }
-                                      /> */}
+                                      />
                           </div>
                           <div>
                             <h6>{item.name}</h6>
@@ -1609,36 +1639,36 @@ function PetshopPetcategory() {
                           </div>
                           <div className="product-bag">
                             <Row>
-                              <Col>{/* <p>₹{product.price}</p> */}</Col>
+                              <Col><p>₹{product.price}</p></Col>
                               <Col>
                                 <h5>₹{item.whole_price}</h5>
                               </Col>
                             </Row>
                             <Row>
                               <Col className="align-self-center">
-                                {/* <h6>{`₹${item.price -
+                                <h6>{`₹${item.price -
                                             (item.price * item.discount) / 100
-                                            }`}</h6> */}
+                                            }`}</h6>
                               </Col>
-                              {/* <Col>
+                              <Col>
                                 <Link
                                   to={`/petshop-add-cart/${item.id}`}
                                   onClick={handleAddToCart}
                                 >
                                   <img src={bag} />
                                 </Link>
-                              </Col> */}
+                              </Col>
                             </Row>
                           </div>
-                          {/* </Link> */}
+                          </Link>
                         </div>
                       </Col>
                     ))}
                   </Row>
-                </div>
+                </div> */}
 
                 <Row>
-                  {(selectedBrand !== null ? dataList : allproduct).map(
+                  {(selectedBrand !== null ? dataList : itemsToDisplay).map(
                     (item, index) => (
                       <Col lg={4} sm={6} xs={6} className="mb-4" key={item.id}>
                         <div
@@ -1676,7 +1706,7 @@ function PetshopPetcategory() {
                             </div>
                             <div>
                               <h6>{item.name}</h6>
-                              <p>{item.description}</p>
+                              <p>{renderProductDescription(item.description)}</p>
                             </div>
                             <div className="product-bag">
                               <Row>
@@ -1722,6 +1752,20 @@ function PetshopPetcategory() {
                     <div>No data available for the selected brand.</div>
                   )}
                 </Row>
+
+                <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
               </Container>
             </section>
           </Col>

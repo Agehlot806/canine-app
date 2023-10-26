@@ -586,7 +586,7 @@ function Addcart() {
     <>
       <Toaster />
       <Newheader dataLength={dataLength} />
-      <div className="home-section">
+      {/* <div className="home-section">
         <Container fluid className="p-0">
           <div>
             {homebanner
@@ -619,7 +619,7 @@ function Addcart() {
               : null}
           </div>
         </Container>
-      </div>
+      </div> */}
       <section className="section-padding">
         <div className="add-cart">
           {/* with out signin start */}
