@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../Constant/Index"; import HomeImg from "../../assets/images/img/home.png";
+import { BASE_URL } from "../../Constant/Index";
+import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import icon from "../../assets/images/icon/pro.png";
@@ -27,7 +28,6 @@ function Petshopdashboard() {
     totalOrders();
     AllBanner();
   }, []);
-
   const handleNewsletter = (event) => {
     event.preventDefault();
     const data = {
@@ -43,7 +43,78 @@ function Petshopdashboard() {
         toast.error("The email field is required");
       });
   };
+  const [totalUnpaidAmount, setTotalUnpaidAmount] = useState(0);
 
+  useEffect(() => {
+    // Calculate the total unpaid amount whenever totalorder changes
+    let unpaidAmount = 0;
+    totalorder.forEach((item) => {
+      if (item.payment_status === "unpaid") {
+        unpaidAmount += parseFloat(item.order_amount.replace(/,/g, ""));
+      }
+    });
+    setTotalUnpaidAmount(unpaidAmount);
+  }, [totalorder]);
+
+  // Razorpay
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async () => {
+    try {
+      // const response = await loadRazorpay();
+      // loadRazorpay()
+      //   .then((response) => {
+      //     console.log("response handlePayment: ", response);
+      //     // Code to execute after the script has loaded
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error loading Razorpay script:", error);
+      //   });
+      await loadRazorpayScript();
+
+      const options = {
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
+        amount: 10000, // Amount in paise (100 INR)
+        currency: "INR",
+        name: "HEllo world",
+        description: "Test Payment",
+        image: "https://your_logo_url.png",
+        // order_id: response.id, // Order ID obtained from Razorpay
+        handler: (response) => {
+          setPaymentId(response.razorpay_payment_id);
+          // Handle the success callback
+          window.location.href = "/shipping";
+          console.log("Payment Successful:", response);
+        },
+
+        prefill: {
+          email: "test@example.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "1234, Demo Address",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Razorpay Load Error:", error);
+    }
+  };
+  // Razorpay
   const AllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/categories/banner`);
@@ -54,8 +125,7 @@ function Petshopdashboard() {
   };
 
   const handleOrderHistory = (id) => {
-
-    navigate(`/order-view-details/${id}`)
+    navigate(`/order-view-details/${id}`);
   };
 
   const totalOrders = async () => {
@@ -70,15 +140,17 @@ function Petshopdashboard() {
         console.log(error);
       });
   };
-  const deliveredOrders = totalorder.filter(order => order.order_status === "delivered");
-  const pendingOrders = totalorder.filter(order => order.order_status === "pending");
+  const deliveredOrders = totalorder.filter(
+    (order) => order.order_status === "delivered"
+  );
+  const pendingOrders = totalorder.filter(
+    (order) => order.order_status === "pending"
+  );
   const gradientColors = [
     "linear-gradient(180deg, #eef 70%, rgba(238, 238, 255, 0) 100%)",
     "linear-gradient(180deg, #ffead2 0%, rgba(255, 234, 210, 0) 100%)",
     "linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%)",
   ];
-
-
 
   const [data, setData] = useState([]);
 
@@ -90,7 +162,7 @@ function Petshopdashboard() {
         // console.log("data",data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -103,33 +175,34 @@ function Petshopdashboard() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <Link to={item.default_link}>
-                        <div>
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </Link>
-                    </div>
-                  )
-              )
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <Link to={item.default_link}>
+                          <div>
+                            <img
+                              src={
+                                "https://canine.hirectjob.in//storage/app/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <Row>
+                            <Col lg={7}>
+                              <div className="home-content">
+                                <h1>{item.title}</h1>
+                                <p>{item.description}</p>
+                                <Button>
+                                  Explore More{" "}
+                                  <i className="fa fa-angle-right" />
+                                </Button>
+                              </div>
+                            </Col>
+                          </Row>
+                        </Link>
+                      </div>
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -200,8 +273,8 @@ function Petshopdashboard() {
                   aria-controls="Balance"
                   aria-selected="false"
                 >
-                  <h3>Balance</h3>
-                  <h5>10</h5>
+                  <h3>Remaning Balance</h3>
+                  <h5>{parseInt(totalUnpaidAmount)}</h5>
                 </a>
               </li>
             </ul>
@@ -218,140 +291,180 @@ function Petshopdashboard() {
                   </div>
                   <Row>
                     {totalorder && totalorder.length > 0 ? (
-                      totalorder.map((item, index) => (
-                        <Col lg={4} sm={6} className="mb-4">
-                          <div className="order-card order-bg1" style={{
-                            background:
-                              gradientColors[index % gradientColors.length],
-                          }}>
-                            <div className="order-status">
-                              <h6>{item.payment_status}</h6>
-                            </div>
-                            <div className="order-content">
-                              <Row>
-                                <Col sm={3}>
-                                  <div className="dash-logo">
-                                    <img src={logo} />
-                                  </div>
-                                </Col>
-                                <Col sm={9}>
-                                  <div className="dashCard-detail">
-                                    <h6>
-                                      Order ID : <span>{item.id}
-                                      </span>
-                                    </h6>
-                                    <p>
-                                      Payment status : <span>{item.payment_status}</span>
-                                    </p>
-                                    <p>
-                                      Order By : <span>{item.user_id ? "Wholeseller" : ""}</span>
-                                    </p>
-                                    <p>
-                                      Total Amount : <span>₹ {item.order_amount}</span>
-                                    </p>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <p>{item.user_id ? "Wholeseller" : ""}</p>
-                              <div className="dash-review">
-                                {item.callback.map((callbackItem, callbackIndex) => (
-                                  <h6>{callbackItem.variant}</h6>
-                                ))}
-                                <a>
-                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                </a>
-                                <a>
-                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                </a>
-                                <a>
-                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                </a>
-                                <a>
-                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                </a>
-                                <a>
-                                  <i
-                                    class="fa fa-star-half-o"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                                {/* <p>
+                      totalorder.map((item, index) => {
+                        const paymentStatus = item.payment_status;
+                        const orderAmount = parseFloat(
+                          item.order_amount.replace(/,/g, "")
+                        );
+                        return (
+                          <Col lg={4} sm={6} className="mb-4">
+                            <div
+                              className="order-card order-bg1"
+                              style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}
+                            >
+                              <div className="order-status">
+                                <h6>{item.payment_status}</h6>
+                              </div>
+                              <div className="order-content">
+                                <Row>
+                                  <Col sm={3}>
+                                    <div className="dash-logo">
+                                      <img src={logo} />
+                                    </div>
+                                  </Col>
+                                  <Col sm={9}>
+                                    <div className="dashCard-detail">
+                                      <h6>
+                                        Order ID : <span>{item.id}</span>
+                                      </h6>
+                                      <p>
+                                        Payment status :{" "}
+                                        <span>{item.payment_status}</span>
+                                      </p>
+                                      <p>
+                                        Order By :{" "}
+                                        <span>
+                                          {item.user_id ? "Wholeseller" : ""}
+                                        </span>
+                                      </p>
+                                      <p>
+                                        Total Amount :{" "}
+                                        <span>₹ {item.order_amount}</span>
+                                      </p>
+                                    </div>
+                                  </Col>
+                                </Row>
+                                <p>{item.user_id ? "Wholeseller" : ""}</p>
+                                <div className="dash-review">
+                                  {item.callback.map(
+                                    (callbackItem, callbackIndex) => (
+                                      <h6>{callbackItem.variant}</h6>
+                                    )
+                                  )}
+                                  <a>
+                                    <i
+                                      class="fa fa-star"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </a>
+                                  <a>
+                                    <i
+                                      class="fa fa-star"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </a>
+                                  <a>
+                                    <i
+                                      class="fa fa-star"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </a>
+                                  <a>
+                                    <i
+                                      class="fa fa-star"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </a>
+                                  <a>
+                                    <i
+                                      class="fa fa-star-half-o"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </a>
+                                  {/* <p>
                                   Lorem Ipsum is simply dummy text of the printing
                                   and typesetting
                                 </p> */}
+                                </div>
                               </div>
+                              <div className="text-center mt-3">
+                                <Button
+                                  onClick={() => {
+                                    handleOrderHistory(item.id);
+                                  }}
+                                >
+                                  Detail Order
+                                </Button>
+                                <Button
+                                  // onClick={() => {
+                                  //   handleOrderHistory(item.id);
+                                  // }}
+                                  data-toggle="modal"
+                                  data-target="#PayModal"
+                                >
+                                  Pay
+                                </Button>
+                              </div>
+                              {/* <div className="text-center mt-3"> */}
+                              {/* </div> */}
                             </div>
-                            <div className="text-center mt-3">
-                              <Button
-                                onClick={() => {
-                                  handleOrderHistory(item.id)
-                                }}
-                              >Detail Order</Button>
-                            </div>
-                          </div>
-                        </Col>
-                      ))
+                          </Col>
+                        );
+                      })
                     ) : (
                       <p className="emptyMSG">No Total Order</p>
                     )}
                   </Row>
                 </div>
 
-
-
                 <section className="section-padding">
                   <Container>
                     <div>
                       {homebanner
                         ? homebanner.map(
-                          (item, index) =>
-                            item.type === "news_letter" && (
-                              <div className="home-img">
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/" + item.image
-                                    }
-                                  />
-                                </div>
-                                <Row className="justify-content-center">
-                                  <Col lg={7}>
-                                    <div className="new-content">
-                                      <div className="Newsletter">
-                                        <Flip right>
-                                          <h1 className="main-head">
-                                            Get Or Promo Code by Subscribing To our
-                                            Newsletter
-                                          </h1>
-                                        </Flip>
-                                        <Form className="d-flex">
-                                          <Form.Control
-                                            type="search"
-                                            placeholder="Enter your email"
-                                            className="me-2"
-                                            aria-label="Search"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                          />
-                                          <Button
-                                            variant="outline-success"
-                                            onClick={handleNewsletter}
-                                          >
-                                            Subscribe
-                                          </Button>
-                                        </Form>
+                            (item, index) =>
+                              item.type === "news_letter" && (
+                                <div className="home-img">
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row className="justify-content-center">
+                                    <Col lg={7}>
+                                      <div className="new-content">
+                                        <div className="Newsletter">
+                                          <Flip right>
+                                            <h1 className="main-head">
+                                              Get Or Promo Code by Subscribing
+                                              To our Newsletter
+                                            </h1>
+                                          </Flip>
+                                          <Form className="d-flex">
+                                            <Form.Control
+                                              type="search"
+                                              placeholder="Enter your email"
+                                              className="me-2"
+                                              aria-label="Search"
+                                              value={email}
+                                              onChange={(e) =>
+                                                setEmail(e.target.value)
+                                              }
+                                            />
+                                            <Button
+                                              variant="outline-success"
+                                              onClick={handleNewsletter}
+                                            >
+                                              Subscribe
+                                            </Button>
+                                          </Form>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </div>
-                            )
-                        )
+                                    </Col>
+                                  </Row>
+                                </div>
+                              )
+                          )
                         : null}
                     </div>
                   </Container>
                 </section>
-
               </div>
               <div
                 className="tab-pane fade"
@@ -360,19 +473,24 @@ function Petshopdashboard() {
                 aria-labelledby="pills-profile-tab"
               >
                 <div className="needplace">
-                <div className="dash-head">
+                  <div className="dash-head">
                     <h1>Completed Order</h1>
                   </div>
                   <Row>
-                    {totalorder
-                      ? totalorder.map(
+                    {totalorder ? (
+                      totalorder.map(
                         (item, index) =>
                           item.order_status == "delivered" && (
                             <Col lg={4} sm={6} className="mb-4">
-                              <div className="order-card order-bg1" style={{
-                                background:
-                                  gradientColors[index % gradientColors.length],
-                              }}>
+                              <div
+                                className="order-card order-bg1"
+                                style={{
+                                  background:
+                                    gradientColors[
+                                      index % gradientColors.length
+                                    ],
+                                }}
+                              >
                                 <div className="order-status">
                                   <h6>{item.payment_status}</h6>
                                 </div>
@@ -386,37 +504,55 @@ function Petshopdashboard() {
                                     <Col sm={9}>
                                       <div className="dashCard-detail">
                                         <h6>
-                                          Order ID : <span>{item.id}
-                                          </span>
+                                          Order ID : <span>{item.id}</span>
                                         </h6>
                                         <p>
-                                          Payment status : <span>{item.payment_status}</span>
+                                          Payment status :{" "}
+                                          <span>{item.payment_status}</span>
                                         </p>
                                         <p>
-                                          Order By : <span>{item.user_id ? "Wholeseller" : ""}</span>
+                                          Order By :{" "}
+                                          <span>
+                                            {item.user_id ? "Wholeseller" : ""}
+                                          </span>
                                         </p>
                                         <p>
-                                          Total Amount : <span>₹ {item.order_amount}</span>
+                                          Total Amount :{" "}
+                                          <span>₹ {item.order_amount}</span>
                                         </p>
                                       </div>
                                     </Col>
                                   </Row>
                                   <p>{item.user_id ? "Wholeseller" : ""}</p>
                                   <div className="dash-review">
-                                    {item.callback.map((callbackItem, callbackIndex) => (
-                                      <h6>{callbackItem.variant}</h6>
-                                    ))}
+                                    {item.callback.map(
+                                      (callbackItem, callbackIndex) => (
+                                        <h6>{callbackItem.variant}</h6>
+                                      )
+                                    )}
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
                                       <i
@@ -429,17 +565,19 @@ function Petshopdashboard() {
                                 <div className="text-center mt-3">
                                   <Button
                                     onClick={() => {
-                                      handleOrderHistory(item.id)
+                                      handleOrderHistory(item.id);
                                     }}
-                                  >Detail Order</Button>
+                                  >
+                                    Detail Order
+                                  </Button>
                                 </div>
                               </div>
                             </Col>
                           )
                       )
-                      : (
-                        <p className="emptyMSG">No Pending Order</p>
-                      )}
+                    ) : (
+                      <p className="emptyMSG">No Pending Order</p>
+                    )}
                   </Row>
                 </div>
               </div>
@@ -454,15 +592,20 @@ function Petshopdashboard() {
                     <h1>Pending Order</h1>
                   </div>
                   <Row>
-                    {totalorder
-                      ? totalorder.map(
+                    {totalorder ? (
+                      totalorder.map(
                         (item, index) =>
                           item.order_status == "pending" && (
                             <Col lg={4} sm={6} className="mb-4">
-                              <div className="order-card order-bg1" style={{
-                                background:
-                                  gradientColors[index % gradientColors.length],
-                              }}>
+                              <div
+                                className="order-card order-bg1"
+                                style={{
+                                  background:
+                                    gradientColors[
+                                      index % gradientColors.length
+                                    ],
+                                }}
+                              >
                                 <div className="order-status">
                                   <h6>{item.payment_status}</h6>
                                 </div>
@@ -476,37 +619,55 @@ function Petshopdashboard() {
                                     <Col sm={9}>
                                       <div className="dashCard-detail">
                                         <h6>
-                                          Order ID : <span>{item.id}
-                                          </span>
+                                          Order ID : <span>{item.id}</span>
                                         </h6>
                                         <p>
-                                          Payment status : <span>{item.payment_status}</span>
+                                          Payment status :{" "}
+                                          <span>{item.payment_status}</span>
                                         </p>
                                         <p>
-                                          Order By : <span>{item.user_id ? "Wholeseller" : ""}</span>
+                                          Order By :{" "}
+                                          <span>
+                                            {item.user_id ? "Wholeseller" : ""}
+                                          </span>
                                         </p>
                                         <p>
-                                          Total Amount : <span>₹ {item.order_amount}</span>
+                                          Total Amount :{" "}
+                                          <span>₹ {item.order_amount}</span>
                                         </p>
                                       </div>
                                     </Col>
                                   </Row>
                                   <p>{item.user_id ? "Wholeseller" : ""}</p>
                                   <div className="dash-review">
-                                    {item.callback.map((callbackItem, callbackIndex) => (
-                                      <h6>{callbackItem.variant}</h6>
-                                    ))}
+                                    {item.callback.map(
+                                      (callbackItem, callbackIndex) => (
+                                        <h6>{callbackItem.variant}</h6>
+                                      )
+                                    )}
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
-                                      <i class="fa fa-star" aria-hidden="true"></i>
+                                      <i
+                                        class="fa fa-star"
+                                        aria-hidden="true"
+                                      ></i>
                                     </a>
                                     <a>
                                       <i
@@ -519,17 +680,19 @@ function Petshopdashboard() {
                                 <div className="text-center mt-3">
                                   <Button
                                     onClick={() => {
-                                      handleOrderHistory(item.id)
+                                      handleOrderHistory(item.id);
                                     }}
-                                  >Detail Order</Button>
+                                  >
+                                    Detail Order
+                                  </Button>
                                 </div>
                               </div>
                             </Col>
                           )
                       )
-                      : (
-                        <p className="emptyMSG">No Pending Order</p>
-                      )}
+                    ) : (
+                      <p className="emptyMSG">No Pending Order</p>
+                    )}
                   </Row>
                 </div>
               </div>
@@ -545,7 +708,9 @@ function Petshopdashboard() {
                       <div className="balance-card">
                         <h5>Current Balance</h5>
                         <h1>₹143,421.20</h1>
-                        <Button>+ Add Balance</Button>
+                        <Button onClick={() => handlePayment()}>
+                          + Add Balance
+                        </Button>
                       </div>
                     </Col>
                   </Row>
@@ -626,6 +791,58 @@ function Petshopdashboard() {
         </Container>
       </section>
       <Petshopfooter />
+      {/* Pay Modal */}
+      <div
+        className="modal fade"
+        id="PayModal"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      data-dismiss="modal"
+                      onClick={() => handlePayment()}
+                    />
+                    <p>Online Payment</p>
+                  </div>
+                </div>
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      data-dismiss="modal"
+                      // onClick={() => handlePayment()}
+                    />
+                    <p>wallet</p>
+                  </div>
+                </div>
+                <Button
+                  // disabled={!selectedInput}
+                  // data-toggle="modal"
+                  // data-target="#paysubmit"
+                  data-toggle="modal"
+                  data-target="#PayModal"
+                  data-dismiss="modal"
+                >
+                  <Link>Close</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

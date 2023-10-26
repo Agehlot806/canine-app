@@ -456,7 +456,10 @@ function Partners() {
           <div className="text-center">
             <img src={logo} />
             <h4 className="mt-3">
-              Already a Partner? <Link>Login Here</Link>
+              Already a Partner?{" "}
+              <Link to={"https://canine.hirectjob.in/store-panel/auth/login"}>
+                Login Here
+              </Link>
             </h4>
           </div>
 
@@ -817,7 +820,7 @@ function Partners() {
                 </Col>
                 <Col lg={5}>
                   <div className="login-img">
-                    <img src={login} className="bounce-in"/>
+                    <img src={login} className="bounce-in" />
                   </div>
                 </Col>
               </Row>

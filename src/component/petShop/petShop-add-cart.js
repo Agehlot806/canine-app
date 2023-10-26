@@ -78,11 +78,11 @@ function PetshopAddCart() {
     const requestData = {
       user_id: storedWholesellerId,
       seller_id: Number(salesmanId),
-      coupon_discount_amount: "200",
+      coupon_discount_amount: "",
       discount_on_item: "",
-      coupon_discount_title: "sdcdvsdff",
-      payment_status: "paid",
-      order_status: "completed",
+      coupon_discount_title: "",
+      payment_status: "unpaid",
+      order_status: "pending",
       total_tax_amount: taxamound,
       gst_bill: selectedValue,
       payment_day: selectedOption,
@@ -131,17 +131,29 @@ function PetshopAddCart() {
   //   console.log("disccount?????", dis);
   // };
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePayment = async () => {
     try {
       // const response = await loadRazorpay();
-      loadRazorpay()
-        .then((response) => {
-          console.log("response handlePayment: ", response);
-          // Code to execute after the script has loaded
-        })
-        .catch((error) => {
-          console.error("Error loading Razorpay script:", error);
-        });
+      // loadRazorpay()
+      //   .then((response) => {
+      //     console.log("response handlePayment: ", response);
+      //     // Code to execute after the script has loaded
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error loading Razorpay script:", error);
+      //   });
+      await loadRazorpayScript();
 
       const options = {
         key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
@@ -154,7 +166,7 @@ function PetshopAddCart() {
         handler: (response) => {
           setPaymentId(response.razorpay_payment_id);
           // Handle the success callback
-          window.location.href = "/petshop-shipping";
+          window.location.href = "/shipping";
           console.log("Payment Successful:", response);
         },
 
@@ -698,7 +710,8 @@ function PetshopAddCart() {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
                             }
                           />
                         </div>
@@ -744,7 +757,7 @@ function PetshopAddCart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{parseFloat(item.price)}</h3>
+                    <h3>₹{parseFloat(item.price * item.quantity)}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />

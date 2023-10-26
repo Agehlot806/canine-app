@@ -45,6 +45,7 @@ function PetshopproductDetails() {
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  console.log("selectedVariantPrice: ", selectedVariantPrice);
 
   // const handleIncrementone = () => {
   //   if (verifiredIdaccess === 1) {
@@ -174,7 +175,7 @@ function PetshopproductDetails() {
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price: selectedVariantPrice,
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
@@ -336,6 +337,7 @@ function PetshopproductDetails() {
     // Add more gradient colors as needed
   ];
   let wholesellervariationprice = 0;
+  console.log("wholesellervariationpriceeee: ", wholesellervariationprice);
 
   if (selectedVariantPrice !== null) {
     wholesellervariationprice = selectedVariantPrice;
@@ -867,7 +869,8 @@ function PetshopproductDetails() {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
                             }
                           />
                         </div>
@@ -1022,7 +1025,9 @@ function PetshopproductDetails() {
                         )} */}
                       {/* </Col> */}
                       <Col lg={4}>
-                        <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                        <h5>{`₹${
+                          isNaN(formattedAmount) ? 0 : formattedAmount
+                        }`}</h5>
                       </Col>
                       {/* <Col lg={5}>
                         <h6>
@@ -1231,7 +1236,8 @@ function PetshopproductDetails() {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
                             }
                           />
                         </div>
@@ -1489,7 +1495,9 @@ function PetshopproductDetails() {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2084,7 +2092,9 @@ function PetshopproductDetails() {
                                 <p>{`₹${wholesellervariationprice}`}</p>
                               </Col> */}
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
