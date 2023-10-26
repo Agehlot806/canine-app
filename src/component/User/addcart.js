@@ -5,7 +5,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
 import voch from "../../assets/images/icon/voch.png";
 // import Cart from "../../assets/images/icon/cart.png";
-import CartOne from '../../assets/images/icon/cart1.png'
+import CartOne from "../../assets/images/icon/cart1.png";
 import Footer from "../../directives/footer";
 import {
   Link,
@@ -41,15 +41,15 @@ function Addcart() {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
-console.log('addToCartProduct',addToCartProduct);
+  console.log("addToCartProduct", addToCartProduct);
 
-useEffect(() => {
-if(customerLoginId !== null){
-  dispatch({
-    type: 'CLEAR_CART'
-  })
-}
-},[customerLoginId])
+  useEffect(() => {
+    if (customerLoginId !== null) {
+      dispatch({
+        type: "CLEAR_CART",
+      });
+    }
+  }, [customerLoginId]);
   // const firstDiscount = couponlist.length > 0 ? couponlist[0] : null;
   // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
   // const firstDiscountAmount = firstDiscount ? firstDiscount.discount : "";
@@ -131,7 +131,6 @@ if(customerLoginId !== null){
       let allPrice = parseInt(el.price) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
-
   } else {
     addToCartProduct.forEach((el) => {
       let allPrice = parseInt(el.price) + parseInt(originalPrice);
@@ -592,30 +591,31 @@ if(customerLoginId !== null){
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/" + item.image
-                          }
-                        />
+                  (item, index) =>
+                    item.type === "default" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row>
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <h1>{item.title}</h1>
+                              <p>{item.description}</p>
+                              <Button>
+                                Explore More <i className="fa fa-angle-right" />
+                              </Button>
+                            </div>
+                          </Col>
+                        </Row>
                       </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -623,223 +623,219 @@ if(customerLoginId !== null){
       <section className="section-padding">
         <div className="add-cart">
           {/* with out signin start */}
-          {customerLoginId === null ? cart && cart.length > 0 ? (
-            <>
-              {cart.map((item, index) => (
-                <>
-                  <Container>
-                    <Row>
-                      <Col lg={2} sm={2}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in///storage/app/public/product/" +
-                            item.image
-                          }
-                        />
-                      </Col>
-                      <Col lg={6} sm={5} className="align-self-center addCARThead">
-                        <h2>{item.name}</h2>
-                        <p>Selected Variant : {item.variant}</p>
-                      </Col>
-                      <Col
-                        lg={2}
-                        sm={3}
-                        xs={6}
-                        className="align-self-center addCARThead"
-                      >
-                        <h3>₹{item.price}</h3>
+          {customerLoginId === null ? (
+            cart && cart.length > 0 ? (
+              <>
+                {cart.map((item, index) => (
+                  <>
+                    <Container>
+                      <Row>
+                        <Col lg={2} sm={2}>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in///storage/app/public/product/" +
+                              item.image
+                            }
+                          />
+                        </Col>
+                        <Col
+                          lg={6}
+                          sm={5}
+                          className="align-self-center addCARThead"
+                        >
+                          <h2>{item.name}</h2>
+                          <p>Selected Variant : {item.variant}</p>
+                        </Col>
+                        <Col
+                          lg={2}
+                          sm={3}
+                          xs={6}
+                          className="align-self-center addCARThead"
+                        >
+                          <h3>₹{item.price}</h3>
 
-                        <div className="quantity-btn">
-                          {/* <button onClick={() => handleDecrementone(index)}>
+                          <div className="quantity-btn">
+                            {/* <button onClick={() => handleDecrementone(index)}>
                         <i className="fa fa-minus" />
                       </button> */}
-                          <button>Qty</button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={item.quantity}
-                                onChange={handleQuantityChange}
-                                autoComplete="new-number"
-                                disabled
-                              />
-                            </div>
-                          </form>
-                          {/* <button onClick={() => handleIncrementone(index)}>
+                            <button>Qty</button>
+                            <form>
+                              <div className="form-group">
+                                <input
+                                  type="tel"
+                                  className="form-control"
+                                  placeholder="Quantity"
+                                  value={item.quantity}
+                                  onChange={handleQuantityChange}
+                                  autoComplete="new-number"
+                                  disabled
+                                />
+                              </div>
+                            </form>
+                            {/* <button onClick={() => handleIncrementone(index)}>
                         <i className="fa fa-plus" />
                       </button> */}
-                        </div>
-                      </Col>
-                      <Col lg={2} sm={2} xs={6} className="align-self-center">
-                        <div
-                          className="delete-addcard"
-                        // onClick={() => removeFromCart(item.id)}
-                        >
-                          <Link onClick={() => dispatch({
-                            type: 'REMOVE_FROM_CART',
-                            payload: item.item_id,
-                          })}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col>
-                      <hr />
-                    </Row>
-                  </Container>
-                </>
-              ))}
-              <Container>
-                <div className="needplace">
-                  <Row className="justify-content-center">
-                    <Col lg={8}>
-                      <div className="add-cart-total">
-                        <Row>
-                          <Col>
-                            <h5>Sub Total</h5>
-                          </Col>
-                          <Col>
-                            {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                            <h5>₹{originalPrice}</h5>
-                          </Col>
-                        </Row>
+                          </div>
+                        </Col>
+                        <Col lg={2} sm={2} xs={6} className="align-self-center">
+                          <div
+                            className="delete-addcard"
+                            // onClick={() => removeFromCart(item.id)}
+                          >
+                            <Link
+                              onClick={() =>
+                                dispatch({
+                                  type: "REMOVE_FROM_CART",
+                                  payload: item.item_id,
+                                })
+                              }
+                            >
+                              <i class="fa fa-trash-o" />
+                            </Link>
+                          </div>
+                        </Col>
                         <hr />
-                        <Row>
-                          <Col>
-                            <h5>Coupon Discount</h5>
-                          </Col>
-                          <Col>
-                            <h5>
-                              ₹
-                              {0}
-                            </h5>
-                          </Col>
-                        </Row>
-                        <hr />
-                        <Row>
-                          <Col>
-                            <h5>GST(5%)</h5>
-                          </Col>
-                          <Col>
-                            <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
-                          </Col>
-                        </Row>
-                        <hr />
+                      </Row>
+                    </Container>
+                  </>
+                ))}
+                <Container>
+                  <div className="needplace">
+                    <Row className="justify-content-center">
+                      <Col lg={8}>
+                        <div className="add-cart-total">
+                          <Row>
+                            <Col>
+                              <h5>Sub Total</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{originalPrice}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Coupon Discount</h5>
+                            </Col>
+                            <Col>
+                              <h5>₹{0}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>GST(5%)</h5>
+                            </Col>
+                            <Col>
+                              <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
 
-                        <Row>
-                          <Col>
-                            <h5>Rounding Adjust</h5>
-                          </Col>
-                          <Col>
-                            <h5>
-                              ₹
-                              {`${parseInt(
-                                originalPrice + taxamound
-                              )}`}
-                              {/* Calculate  and display the Rounding Adjust */}
-                            </h5>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="check-Continue">
-                {/* <Button onClick={() => handlePayment()}>
+                          <Row>
+                            <Col>
+                              <h5>Rounding Adjust</h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                ₹{`${parseInt(originalPrice + taxamound)}`}
+                                {/* Calculate  and display the Rounding Adjust */}
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                  <div className="check-Continue">
+                    {/* <Button onClick={() => handlePayment()}>
                               Checkout
                             </Button> */}
-                <Button
-                  // data-toggle="modal"
-                  // data-target="#cod"
-                // onClick={handleAddToCart}
-                >
-                  <Link
-                                to="/login"
-                              >
-                  Checkout
-                  </Link>
-                </Button>
-                <Button>
-                  <Link to="/product">Continue Shopping</Link>
-                </Button>
-              </div>
-              </Container>
-            </>
-          ) : (
-            <div className="Emptycart">
-              <img src={CartOne} />
-              <p className="emptyMSG">Cart is Empty</p>
-            </div>
-          )
-            : addToCartProduct && addToCartProduct.length > 0 ? (
-              addToCartProduct.map((item, index) => (
-                <Container>
-                  <Row>
-                    <Col lg={2} sm={2}>
-                      <Link to={`/product-details/${item.id}`}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in///storage/app/public/product/" +
-                          item.image
-                        }
-                      />
-                      </Link>
-                    </Col>
-                    <Col lg={6} sm={5} className="align-self-center addCARThead">
-                      <h2>{item.item_name}</h2>
-                      <p>Selected Variant : {item.variant}</p>
-                    </Col>
-                    <Col
-                      lg={2}
-                      sm={3}
-                      xs={6}
-                      className="align-self-center addCARThead"
+                    <Button
+                    // data-toggle="modal"
+                    // data-target="#cod"
+                    // onClick={handleAddToCart}
                     >
-                      <h3>₹{item.price}</h3>
-
-                      <div className="quantity-btn">
-                        <button onClick={() => handleDecrementone(index)}>
-                          <i className="fa fa-minus" />
-                        </button>
-                        <form>
-                          <div className="form-group">
-                            <input
-                              type="tel"
-                              className="form-control"
-                              placeholder="Quantity"
-                              value={item.quantity}
-                              onChange={handleQuantityChange}
-                              autoComplete="new-number"
-                            />
-                          </div>
-                        </form>
-                        <button onClick={() => handleIncrementone(index)}>
-                          <i className="fa fa-plus" />
-                        </button>
-                      </div>
-                    </Col>
-                    <Col lg={2} sm={2} xs={6} className="align-self-center">
-                      <div
-                        className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
-                      >
-                        <Link onClick={() => removeFromCart(item.id)}>
-                          <i class="fa fa-trash-o" />
-                        </Link>
-                      </div>
-                    </Col>
-                    <hr />
-                  </Row>
+                      <Link to="/login">Checkout</Link>
+                    </Button>
+                    <Button>
+                      <Link to="/product">Continue Shopping</Link>
+                    </Button>
+                  </div>
                 </Container>
-              ))
+              </>
             ) : (
               <div className="Emptycart">
                 <img src={CartOne} />
                 <p className="emptyMSG">Cart is Empty</p>
               </div>
-            )}
-          
+            )
+          ) : addToCartProduct && addToCartProduct.length > 0 ? (
+            addToCartProduct.map((item, index) => (
+              <Container>
+                <Row>
+                  <Col lg={2} sm={2}>
+                    <img
+                      src={
+                        "https://canine.hirectjob.in///storage/app/public/product/" +
+                        item.image
+                      }
+                    />
+                  </Col>
+                  <Col lg={6} sm={5} className="align-self-center addCARThead">
+                    <h2>{item.item_name}</h2>
+                    <p>Selected Variant : {item.variant}</p>
+                  </Col>
+                  <Col
+                    lg={2}
+                    sm={3}
+                    xs={6}
+                    className="align-self-center addCARThead"
+                  >
+                    <h3>₹{item.price}</h3>
+
+                    <div className="quantity-btn">
+                      <button onClick={() => handleDecrementone(index)}>
+                        <i className="fa fa-minus" />
+                      </button>
+                      <form>
+                        <div className="form-group">
+                          <input
+                            type="tel"
+                            className="form-control"
+                            placeholder="Quantity"
+                            value={item.quantity}
+                            onChange={handleQuantityChange}
+                            autoComplete="new-number"
+                          />
+                        </div>
+                      </form>
+                      <button onClick={() => handleIncrementone(index)}>
+                        <i className="fa fa-plus" />
+                      </button>
+                    </div>
+                  </Col>
+                  <Col lg={2} sm={2} xs={6} className="align-self-center">
+                    <div
+                      className="delete-addcard"
+                      // onClick={() => removeFromCart(item.id)}
+                    >
+                      <Link onClick={() => removeFromCart(item.id)}>
+                        <i class="fa fa-trash-o" />
+                      </Link>
+                    </div>
+                  </Col>
+                  <hr />
+                </Row>
+              </Container>
+            ))
+          ) : (
+            <div className="Emptycart">
+              <img src={CartOne} />
+              <p className="emptyMSG">Cart is Empty</p>
+            </div>
+          )}
 
           {addToCartProduct && addToCartProduct.length > 0 ? (
             <Container>
@@ -959,9 +955,9 @@ if(customerLoginId !== null){
                             ₹
                             {`${parseInt(
                               originalPrice * 0.05 +
-                              originalPrice -
-                              disscountvalue?.discount ||
-                              originalPrice + taxamound
+                                originalPrice -
+                                disscountvalue?.discount ||
+                                originalPrice + taxamound
                             )}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
@@ -1035,10 +1031,11 @@ if(customerLoginId !== null){
                           <button onClick={toggleAddressContent}>
                             Select Address{" "}
                             <i
-                              className={`fa ${addressContentVisible
-                                ? "fa-arrow-up"
-                                : "fa-arrow-down"
-                                }`}
+                              className={`fa ${
+                                addressContentVisible
+                                  ? "fa-arrow-up"
+                                  : "fa-arrow-down"
+                              }`}
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -1134,9 +1131,9 @@ if(customerLoginId !== null){
                               )}`} */}
                               {`${parseInt(
                                 originalPrice * 0.05 +
-                                originalPrice -
-                                disscountvalue?.discount ||
-                                originalPrice + taxamound
+                                  originalPrice -
+                                  disscountvalue?.discount ||
+                                  originalPrice + taxamound
                               )}`}
                             </h2>
                           </Col>
@@ -1147,7 +1144,7 @@ if(customerLoginId !== null){
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
-                            // onClick={handleAddToCart}
+                              // onClick={handleAddToCart}
                             >
                               {/* <Link
                                 // to="/user-pay-method"
@@ -1814,8 +1811,8 @@ if(customerLoginId !== null){
                             type="button"
                             className="btn btn-primary btn-apply coupon"
                             data-dismiss="modal"
-                          // data-toggle="modal"
-                          // data-target="#Coupon"
+                            // data-toggle="modal"
+                            // data-target="#Coupon"
                           >
                             Apply
                           </button>

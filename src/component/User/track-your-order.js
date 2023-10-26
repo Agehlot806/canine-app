@@ -330,7 +330,7 @@ export default function Trackyourorder() {
             <div className="modal-body">
               <h3>Cancel Order</h3>
               <p>Are you sure you want to cancel this order?</p>
-              <Button className="bordercancle">Cancel</Button>
+              <Button className="bordercancle" data-dismiss="modal">Cancel</Button>
               <Button
                 data-toggle="modal"
                 data-dismiss="modal"
@@ -417,7 +417,7 @@ export default function Trackyourorder() {
                   </label>
                 </div>
               </div>
-              <Button className="bordercancle">Cancel</Button>
+              <Button className="bordercancle" data-dismiss="modal">Cancel</Button>
               <Button
                 data-toggle="modal"
                 data-dismiss="modal"
