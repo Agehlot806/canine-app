@@ -126,25 +126,34 @@ function Serviceaddpet() {
       </Container>
       <section className="section-padding">
         <Container>
-        <Row className="justify-content-center">
-                  <Col lg={8}>
-          <div className="add-upload-area">
-            <form>
-              <div className="form-group add-upload">
-                <label htmlFor="exampleFormControlFile1">
-                  Upload image
-                  <i class="fa fa-upload" />
-                </label>
-                <input
-                  type="file"
-                  className="form-control-file"
-                  id="exampleFormControlFile1"
-                  onChange={(e) => setimage(e.target.files[0])}
-                />
-              </div>
-              <div className="needplace">
-             
-                  {/* {selectedCategory && (
+          <Row className="justify-content-center">
+            <Col lg={8}>
+              <div className="add-upload-area">
+                <form>
+                  <div className="form-group add-upload">
+                    <label htmlFor="exampleFormControlFile1">
+                      Upload image
+                      <i class="fa fa-upload" />
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control-file"
+                      id="exampleFormControlFile1"
+                      onChange={(e) => setimage(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="selected-image">
+                    {image && (
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="Selected Image"
+                        // style={{ maxWidth: '100%', height: 'auto' }}
+                      />
+                    )}
+                  </div>
+                  <div className="needplace">
+
+                    {/* {selectedCategory && (
                     <div className="selectedCategory">
                       <h2>Avatar</h2>
                       <img
@@ -156,7 +165,7 @@ function Serviceaddpet() {
                       />
                     </div>
                   )} */}
-               
+
                     <div className="form-group">
                       <label>Pet type</label>
                       <ul className="nav nav-pills mb-3" role="tablist">
@@ -182,9 +191,8 @@ function Serviceaddpet() {
                       <ul className="nav nav-pills mb-3" role="tablist">
                         <li className="nav-item">
                           <a
-                            className={`nav-link ${
-                              gender === "Male" ? "active" : "inactive"
-                            }`}
+                            className={`nav-link ${gender === "Male" ? "active" : "inactive"
+                              }`}
                             onClick={() => handleGenderChange("Male")}
                           >
                             Male
@@ -192,9 +200,8 @@ function Serviceaddpet() {
                         </li>
                         <li className="nav-item">
                           <a
-                            className={`nav-link ${
-                              gender === "Female" ? "active" : "inactive  "
-                            }`}
+                            className={`nav-link ${gender === "Female" ? "active" : "inactive  "
+                              }`}
                             onClick={() => handleGenderChange("Female")}
                           >
                             Female
@@ -264,12 +271,12 @@ function Serviceaddpet() {
                     <div className="add-petbtn">
                       <Button onClick={handlePetsadd}>Add Pet</Button>
                     </div>
-                  
+
+                  </div>
+                </form>
               </div>
-            </form>
-              </div>
-              </Col>
-                </Row>
+            </Col>
+          </Row>
         </Container>
       </section>
 

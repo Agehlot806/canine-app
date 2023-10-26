@@ -1751,8 +1751,9 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in//api/v1/auth/my_profile/${customer_id}`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`) 
       .then((response) => {
+        console.log("imageupdate",response.data);
         if (response.data.status === "200" && response.data.data.length > 0) {
           const profile = response.data.data[0];
           console.log("response.data: ", response.data);
@@ -1985,12 +1986,12 @@ function Newheader(props) {
                       </li>
                     ))} */}
                     {filteredProducts.map((product, index, id) => (
-                        <li key={index}>
-                          <Link to={`/product-details/${product.id}`}>
-                            {product.name}
-                          </Link>
-                        </li>
-                      ))}
+                      <li key={index}>
+                        <Link to={`/product-details/${product.id}`}>
+                          {product.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </Link>
               </li>
@@ -2018,7 +2019,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                          profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2033,7 +2034,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                          profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2084,7 +2085,7 @@ function Newheader(props) {
                     {isTotalLengthVisible && (
                       <span>{isNaN(customCount) ? 0 : customCount}</span>
                     )}
-                    {console.log("custommmmmm",customCount)}
+                    {console.log("custommmmmm", customCount)}
                   </a>
                 </li>
               </div>
@@ -2494,7 +2495,7 @@ function Newheader(props) {
                             dogsubcategories.map(
                               (item) =>
                                 item.heading ==
-                                  "Beds Cages, Scratcher & Crates" && (
+                                "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/pet-category/${item.name}/${item.id}`}
@@ -2678,12 +2679,12 @@ function Newheader(props) {
                       </li>
                     ))} */}
                     {filteredProducts.map((product, index, id) => (
-                        <li key={index}>
-                          <Link to={`/product-details/${product.id}`}>
-                            {product.name}
-                          </Link>
-                        </li>
-                      ))}
+                      <li key={index}>
+                        <Link to={`/product-details/${product.id}`}>
+                          {product.name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </Link>
               </li>
@@ -2728,9 +2729,12 @@ function Newheader(props) {
                     <a href="#" className="profiledes desktop-item p-0">
                       <img
                         src={
-                          profileData?.image
-                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
+                          // profileData?.image
+                          //   ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                          //     profileData.image
+                          //   : loicon1
+                          profileData.image
+                            ? `https://canine.hirectjob.in/storage/app/public/profile/${profileData.image}`
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2740,9 +2744,12 @@ function Newheader(props) {
                     <label htmlFor="showDropProfile" className="mobile-item">
                       <img
                         src={
-                          profileData?.image
-                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                              profileData.image
+                          // profileData?.image
+                          //   ? "https://canine.hirectjob.in/storage/app/public/profile/" +
+                          //   profileData.image
+                          //   : loicon1
+                          profileData.image
+                            ? `https://canine.hirectjob.in/storage/app/public/profile/${profileData.image}`
                             : loicon1
                         }
                         alt="Profile Image"
@@ -2990,9 +2997,8 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${
-                              ob.status === "unread" ? "unread" : "read"
-                            }`}
+                            className={`notification ${ob.status === "unread" ? "unread" : "read"
+                              }`}
                             key={index}
                           >
                             <Row>

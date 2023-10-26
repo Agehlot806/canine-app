@@ -777,12 +777,14 @@ if(customerLoginId !== null){
                 <Container>
                   <Row>
                     <Col lg={2} sm={2}>
+                      <Link to={`/product-details/${item.id}`}>
                       <img
                         src={
                           "https://canine.hirectjob.in///storage/app/public/product/" +
                           item.image
                         }
                       />
+                      </Link>
                     </Col>
                     <Col lg={6} sm={5} className="align-self-center addCARThead">
                       <h2>{item.item_name}</h2>

@@ -5,7 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const SalesmanLogin = () => {
   const navigate = useNavigate();
@@ -29,16 +29,16 @@ const SalesmanLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (phone == "" && password == "") {
-      toast.error("ffff");
+      toast.error("Please enter both phone number and password.");
     } else {
       const formData = new FormData();
       formData.append("phone", phone);
       formData.append("password", password);
       axios
-        .post(`${BASE_URL}/auth/delivery-man/login`, formData)
-        .then((response) => {
-          console.log("tarun", response);
-          if (response.data.status === "200") {
+      .post(`${BASE_URL}/auth/delivery-man/login`, formData)
+      .then((response) => {
+        console.log("tarun????????", response);
+        if (response.data.message === "Login Successfull") {
             localStorage.setItem("salesmanId", response.data.data[0].id);
             localStorage.setItem("salesmanPhone", response.data.data[0].phone);
             localStorage.setItem("loginType", "salesman"); 
@@ -48,20 +48,25 @@ const SalesmanLogin = () => {
             navigate("/salesman-dashboad");
             toast.success("Successfully");
           }
-          if (response.data.message === "User Not Exit") {
+
+           if (response.data.message === "User Not Exit") {
             toast.error("User Not Exit");
+            // alert("nvnhg")
+          }else if(response.data.message ==="Your Password Not Match"){
+            toast.error("Your Password Not Match")
           }
-          // Handle the response as needed
-          //
+         
         })
         .catch((error) => {
           console.log(error);
-          // Handle errors if any
+          
         });
     }
   };
   return (
+    
     <div className="users-bg">
+      <Toaster/>
       <Container>
         <div className="text-center">
           <img src={logo} alt="Logo" />

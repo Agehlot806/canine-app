@@ -92,26 +92,68 @@ function Partners() {
   const [lastNameError, setLastNameError] = useState("");
   const [phoneNumError, setPhoneNumError] = useState("");
   // STEP 2 Handle Form Data start
+  const firstNameRegex = /^[A-Za-z\s]{1,15}$/;
   const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-    if (event.target.value.trim() === "") {
+    const firstName = event.target.value;
+    // setFirstName(event.target.value);
+    setFirstName(firstName);
+    // if (event.target.value.trim() === "") {
+    //   setFirstNameError("First name is required");
+    // } else {
+    //   setFirstNameError("");
+    // }
+    if (firstName.trim() === "") {
       setFirstNameError("First name is required");
+    } else if (!firstNameRegex.test(firstName)) {
+      setFirstNameError(
+        "First name can only contain alphabetic characters and spaces, up to 15 characters"
+      );
     } else {
       setFirstNameError("");
     }
   };
+  const lastNameRegex = /^[A-Za-z\s]{1,15}$/;
   const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-    if (event.target.value.trim() === "") {
+    const lastName = event.target.value;
+    // setLastName(event.target.value);
+    setLastName(lastName);
+    // if (event.target.value.trim() === "") {
+    //   setLastNameError("Last name is required");
+    // } else {
+    //   setLastNameError("");
+    // }
+    if (lastName.trim() === "") {
       setLastNameError("Last name is required");
+    } else if (!lastNameRegex.test(lastName)) {
+      setLastNameError(
+        "Last name can only contain alphabetic characters and spaces, up to 15 characters"
+      );
     } else {
       setLastNameError("");
     }
   };
+  // const phoneNumberRegex = /^\(\d{3}\) \d{3}-\d{4}$/;
+  const phoneNumberRegex = /^\d{1,10}$/;
   const handlePhoneNumChange = (event) => {
-    setPhoneNum(event.target.value);
-    if (event.target.value.trim() === "") {
+    const phoneNum = event.target.value;
+    // setPhoneNum(event.target.value);
+    setPhoneNum(phoneNum);
+    // if (event.target.value.trim() === "") {
+    //   setPhoneNumError("Phone number is required");
+    // } else {
+    //   setPhoneNumError("");
+    // }
+    // if (phoneNum.trim() === "") {
+    //   setPhoneNumError("Phone number is required");
+    // } else if (!phoneNumberRegex.test(phoneNum)) {
+    //   setPhoneNumError("Invalid phone number format, e.g., (123) 456-7890");
+    // } else {
+    //   setPhoneNumError("");
+    // }
+    if (phoneNum.trim() === "") {
       setPhoneNumError("Phone number is required");
+    } else if (!phoneNumberRegex.test(phoneNum)) {
+      setPhoneNumError("Invalid phone number. It should be up to 10 digits.");
     } else {
       setPhoneNumError("");
     }

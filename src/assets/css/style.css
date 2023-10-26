@@ -4122,3 +4122,10 @@ li.previousbtn a {
     transform: scale(1);
 }
 }
+.selected-image img {
+  width: 100px;
+  height: 100px;
+}
+.selected-image {
+  text-align: center;
+}

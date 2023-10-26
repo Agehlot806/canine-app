@@ -42,18 +42,19 @@ function PetshopLogin() {
         formData
       )
       .then((response) => {
-        console.log("tarun", response);
-        localStorage.setItem("UserWholesellerId", response.data.data[0].id);
+        console.log("tarunnnnn", response);
+        
+        if (response.data.message === "Login Successfull") {
+          localStorage.setItem("UserWholesellerId", response.data.data[0].id);
         localStorage.setItem("verifiedId", response.data.data[0].verified);
         localStorage.setItem("loginType", "wholeseller");
-        if (response.data.message === "Login Successfull") {
           navigate("/petshop-dashboard");
           toast.success("Successfully");
         }
-        if (response.data.message === "User Not Exit") {
+        else if (response.data.message === "User Not Exit") {
           toast.error("User Not Exit");
         }
-        if (response.data.message === "Your Password Not Match") {
+       else if (response.data.message === "Your Password Not Match") {
           toast.error("Your Password Not Match");
         }
         // Handle the response as needed
