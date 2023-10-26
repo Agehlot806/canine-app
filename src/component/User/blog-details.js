@@ -840,7 +840,21 @@ function Blogdetails() {
         toast.error("An error occurred. Please try again.");
       });
   };
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
 
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
@@ -935,7 +949,7 @@ function Blogdetails() {
                       </div>
                       <div>
                         <h6>{item[0]?.name}</h6>
-                        <p
+                        {/* <p
                           className={`truncate-text ${
                             !expandedDescription[item[0]?.id]
                               ? "read-more-link"
@@ -957,7 +971,8 @@ function Blogdetails() {
                                 Read More
                               </span>
                             )}
-                        </p>
+                        </p> */}
+                        <p>{renderProductDescription(item[0].description)}</p>
                       </div>
                       <div className="product-bag">
                         <Row>

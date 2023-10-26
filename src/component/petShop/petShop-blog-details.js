@@ -831,6 +831,23 @@ function PetshopBlogdetails() {
     setQuantity(1);
   };
 
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -923,7 +940,7 @@ function PetshopBlogdetails() {
                       </div>
                       <div>
                         <h6>{item[0]?.name}</h6>
-                        <p
+                        {/* <p
                           className={`truncate-text ${
                             !expandedDescription[item[0]?.id]
                               ? "read-more-link"
@@ -945,7 +962,8 @@ function PetshopBlogdetails() {
                                 Read More
                               </span>
                             )}
-                        </p>
+                        </p> */}
+                        <p>{renderProductDescription(item.description)}</p>
                       </div>
                       <div className="product-bag">
                         <Row>

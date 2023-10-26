@@ -22,6 +22,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import ReactPaginate from "react-paginate";
 
 const clinetreview = {
   desktop: {
@@ -296,22 +297,22 @@ function Product(props) {
   ];
 
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
-  useEffect(() => {
-    // Update the paginated categories whenever brandcategories or currentPage changes
-    pagination(currentPage);
-  }, [allproduct, currentPage]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const pageSize = 6;
+  // useEffect(() => {
+  //   // Update the paginated categories whenever brandcategories or currentPage changes
+  //   pagination(currentPage);
+  // }, [allproduct, currentPage]);
 
-  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
-  const pages = _.range(1, pageCount + 1);
+  // const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  // const pages = _.range(1, pageCount + 1);
 
-  const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
-    const startIndex = (pageNo - 1) * pageSize;
-    const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
-    setPaginatedCategories(paginated);
-  };
+  // const pagination = (pageNo) => {
+  //   setCurrentPage(pageNo);
+  //   const startIndex = (pageNo - 1) * pageSize;
+  //   const paginated = _(allproduct).slice(startIndex).take(pageSize).value();
+  //   setPaginatedCategories(paginated);
+  // };
 
   /////tarunbirla////
 
@@ -1156,6 +1157,18 @@ function Product(props) {
       });
   };
 
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
   return (
     <>
       <Toaster />
@@ -1447,7 +1460,7 @@ function Product(props) {
             </section>
           </Col>
           <Col lg={9}>
-            <section className="section-padding">
+            {/* <section className="section-padding">
               <Container>
                 <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
               </Container>
@@ -1485,12 +1498,12 @@ function Product(props) {
                   ))}
                 </Carousel>
               </Container>
-            </section>
+            </section> */}
 
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {paginatedCategories.map((item, index) => (
+                  {itemsToDisplay.map((item, index) => (
                     <Col lg={4} sm={6} xs={6} className="mb-4">
                       <div
                         className="food-product"
@@ -1608,8 +1621,20 @@ function Product(props) {
                     </Col>
                   ))}
                 </Row>
-
-                <div className="pagination-area">
+                <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
+                {/* <div className="pagination-area">
                   <ul className="pagination">
                     {pages.map((page) => (
                       <li
@@ -1629,7 +1654,7 @@ function Product(props) {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </Container>
             </section>
           </Col>

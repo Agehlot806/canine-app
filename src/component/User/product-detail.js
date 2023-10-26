@@ -945,7 +945,7 @@ function Productdetail() {
       <Toaster />
 
       <Newheader />
-      <div className="home-section">
+      {/* <div className="home-section">
         <Container fluid className="p-0">
           <div>
             {homebanner
@@ -977,7 +977,7 @@ function Productdetail() {
               : null}
           </div>
         </Container>
-      </div>
+      </div> */}  
 
       <section className="section-padding">
         <Container>
@@ -1374,29 +1374,7 @@ function Productdetail() {
         </Container>
       </section>
 
-      <Container fluid className="p-0">
-        <div className="product-innerBanner">{/* <img src={product} /> */}</div>
-      </Container>
-
-      {itemwiseonebanner
-        ? itemwiseonebanner.map(
-          (item, index) =>
-            item.type === "item_wise" && (
-              <div className="product-innerBanner">
-                <img
-                  src={"https://canine.hirectjob.in//storage/app/" + item.image}
-                />
-                <div className="home-content">
-                  <h1>{item.title}</h1>
-                  <p>{item.description}</p>
-                  <Button>
-                    Explore More <i className="fa fa-angle-right" />
-                  </Button>
-                </div>
-              </div>
-            )
-        )
-        : null}
+    
 
       <section className="section-padding food">
         <Container>

@@ -107,7 +107,7 @@ function DashboadSalesman() {
   return (
     <>
       <PetShopHeader type={"salesman"} />
-      <div className="home-section">
+      {/* <div className="home-section">
         <Container fluid className="p-0">
           <div>
             {homebanner
@@ -140,7 +140,7 @@ function DashboadSalesman() {
               : null}
           </div>
         </Container>
-      </div>
+      </div> */}
       {/* <section className="dash-addProduct-btn">
         <div className="text-center mt-3">
           <Button>

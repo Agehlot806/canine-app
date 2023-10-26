@@ -19,6 +19,7 @@ import { AiOutlineStar } from "react-icons/ai";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
+import ReactPaginate from "react-paginate";
 
 const clinetreview = {
   desktop: {
@@ -1166,6 +1167,18 @@ function Canineproduct(props) {
     }
   };
 
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
   return (
     <>
       <Toaster />
@@ -1593,6 +1606,19 @@ function Canineproduct(props) {
                       )
                     : null}
                 </Row>
+                <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
               </Container>
             </section>
           </Col>

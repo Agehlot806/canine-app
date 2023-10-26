@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Newheader from "../../directives/newheader";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import HomeImg from "../../assets/images/img/home.png";
 import partner from "../../assets/images/img/partner.png";
@@ -7,6 +6,7 @@ import Footer from "../../directives/footer";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { useNavigate } from "react-router-dom";
+import Petshopheader from "../../directives/petShopHeader";
 
 function Partnerdashboard() {
   const navigate = useNavigate();
@@ -93,12 +93,12 @@ function Partnerdashboard() {
   };
   return (
     <>
-      <Newheader />
+      <Petshopheader />
       <div className="home-section">
         {homebanner
           ? homebanner.map(
               (item, index) =>
-                item.type === "default" && (
+                item.type === "common" && (
                   <img
                     className="partner-img"
                     src={"https://canine.hirectjob.in//storage/app/" + item.image}

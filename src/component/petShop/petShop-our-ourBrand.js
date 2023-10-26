@@ -18,6 +18,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import paydone from "../../assets/images/icon/paydone.png";
 import { styled } from "styled-components";
 import { Fade } from "react-reveal";
+import ReactPaginate from "react-paginate";
 
 const clinetreview = {
   desktop: {
@@ -1270,6 +1271,35 @@ function PetshopOurourbrand(props) {
     productData(id);
   };
 
+
+  // PAGINATON
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 24;
+
+  const handlePageChange = (selected) => {
+    setCurrentPage(selected.selected);
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToDisplay = allproductbrand.slice(startIndex, endIndex);
+
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
@@ -1598,8 +1628,8 @@ function PetshopOurourbrand(props) {
                 {/* <Row> */}
                 {brands.length > 0 ? (
                   <Row>
-                    {allproductbrand ? (
-                      allproductbrand.map((item, index) => {
+                    {itemsToDisplay ? (
+                      itemsToDisplay.map((item, index) => {
                         return (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
                             <div
@@ -1637,7 +1667,7 @@ function PetshopOurourbrand(props) {
                                 </div>
                                 <div>
                                   <h6>{item.name}</h6>
-                                  <p>{item.description}</p>
+                                  <p>{renderProductDescription(item.description)}</p>
                                 </div>
                                 <div className="product-bag">
                                   <Row>
@@ -1685,8 +1715,22 @@ function PetshopOurourbrand(props) {
                     )}
                   </Row>
                 ) : (
-                  <p>429 Error...</p>
+                  <p>No Our Brand Product</p>
                 )}
+
+<ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    pageCount={Math.ceil(allproductbrand.length / itemsPerPage)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"activebtn"}
+                    nextClassName={"nextbtn"}
+                    previousClassName={"previousbtn"}
+                  />
               </Container>
 
               {/* <Container>

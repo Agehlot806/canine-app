@@ -98,7 +98,7 @@ function Petshopdashboard() {
     <>
       <Toaster />
       <PetShopHeader />
-      <div className="home-section">
+      {/* <div className="home-section">
         <Container fluid className="p-0">
           <div>
             {homebanner
@@ -133,7 +133,7 @@ function Petshopdashboard() {
               : null}
           </div>
         </Container>
-      </div>
+      </div> */}
       <section className="dash-addProduct-btn">
         <div className="text-center mt-3">
           <Button>

@@ -121,7 +121,7 @@ function Planbuy() {
   return (
     <>
       <Newheader />
-      <div className="home-section">
+      {/* <div className="home-section">
         {homebanner
           ? homebanner.map(
               (item, index) =>
@@ -135,7 +135,7 @@ function Planbuy() {
                 )
             )
           : null}
-      </div>
+      </div> */}
 
       <section className="section-padding">
         <Container>

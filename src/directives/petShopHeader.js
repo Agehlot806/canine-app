@@ -1440,7 +1440,7 @@
 //                                     item.name == "food" && (
 //                                       <li key={item.id}>
 //                                         <Link
-//                                           to={`/pet-category/${item.name}/${item.id}`}
+//                                           to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                         >
 //                                           {item.name}
 //                                         </Link>
@@ -1464,7 +1464,7 @@
 //                                   item.name == "Treats & Chews" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1487,7 +1487,7 @@
 //                                   item.name == "toys" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1510,7 +1510,7 @@
 //                                   item.name == "Collar Leashes & More" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1533,7 +1533,7 @@
 //                                   item.name == "Shampoo & Perfumes" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1556,7 +1556,7 @@
 //                                   item.name == "Beds Cages & Carriers" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1579,7 +1579,7 @@
 //                                   item.name == "Training & Accessories" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1602,7 +1602,7 @@
 //                                   item.name == "Bowls & Feeders" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1625,7 +1625,7 @@
 //                                   item.name == "Grooming" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1648,7 +1648,7 @@
 //                                   item.name == "medicine" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1692,7 +1692,7 @@
 //                                     item.name == "food" && (
 //                                       <li key={item.id}>
 //                                         <Link
-//                                           to={`/pet-category/${item.name}/${item.id}`}
+//                                           to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                         >
 //                                           {item.name}
 //                                         </Link>
@@ -1718,7 +1718,7 @@
 //                                     item.name == "food" && (
 //                                       <li key={item.id}>
 //                                         <Link
-//                                           to={`/pet-category/${item.name}/${item.id}`}
+//                                           to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                         >
 //                                           {item.name}
 //                                         </Link>
@@ -1745,7 +1745,7 @@
 //                                   item.name == "treats" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1768,7 +1768,7 @@
 //                                   item.name == "toys" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1791,7 +1791,7 @@
 //                                   item.name == "Collar Leashes & More" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1814,7 +1814,7 @@
 //                                   item.name == "Shampoo & Perfumes" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1840,7 +1840,7 @@
 //                                     "Beds Cages, Scratcher & Crates" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1863,7 +1863,7 @@
 //                                   item.name == "Clothing & Accessories" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1886,7 +1886,7 @@
 //                                   item.name == "Bowls & Feeders" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1909,7 +1909,7 @@
 //                                   item.name == "Grooming" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1932,7 +1932,7 @@
 //                                   item.name == "Cat Litter & Scooper" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1955,7 +1955,7 @@
 //                                   item.name == "medicine" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/petshop-pet-category/${item.name}/${item.id}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -3006,9 +3006,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "food" && (
+                                item.heading == "Food" && (
                                   <li key={item.id}>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3029,9 +3029,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "treats" && (
+                                item.heading == "Treats" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3052,9 +3052,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "toys" && (
+                                item.heading == "Toys" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3075,9 +3075,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Collar Leashes & More" && (
+                                item.heading == "Collar Leashes & More" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3098,9 +3098,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Shampoo & Perfumes" && (
+                                item.heading == "Shampoo & Perfumes" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3121,9 +3121,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Beds Cages & Carriers" && (
+                                item.heading == "Beds Cages, Scratcher & Crates" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3144,9 +3144,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Training & Accessories" && (
+                                item.heading == "Training & Accessories" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3167,9 +3167,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Bowls & Feeders" && (
+                                item.heading == "Bowls & Feeders" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3190,9 +3190,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Grooming" && (
+                                item.heading == "Grooming" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3213,9 +3213,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "medicine" && (
+                                item.heading == "Health Care" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3248,14 +3248,14 @@ function Petshopheader(props) {
                   <div className="content">
                     <Row>
                       <Col lg={4} sm={6}>
-                        <header>Cat Food & Treats</header>
+                        <header>Cat Food</header>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "food" && (
+                                item.heading == "Food" && (
                                   <li key={item.id}>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3276,9 +3276,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "food" && (
+                                item.heading == "Treats" && (
                                   <li key={item.id}>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3293,15 +3293,15 @@ function Petshopheader(props) {
                           )}
                         </ul>
                       </Col>
-                      <Col lg={4} sm={6}>
+                      {/* <Col lg={4} sm={6}>
                         <header>Cat Litter & Accessories</header>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "treats" && (
+                                item.heading == "Treats" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3315,16 +3315,16 @@ function Petshopheader(props) {
                             </p>
                           )}
                         </ul>
-                      </Col>
+                      </Col> */}
                       <Col lg={4} sm={6}>
                         <header>Toys</header>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "toys" && (
+                                item.heading == "Toys" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3345,9 +3345,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Collar Leashes & More" && (
+                                item.heading == "Collar Leashes & More" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3368,9 +3368,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Shampoo & Perfumes" && (
+                                item.heading == "Shampoo & Perfumes" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3391,10 +3391,10 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name ==
+                                item.heading ==
                                   "Beds Cages, Scratcher & Crates" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3415,9 +3415,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Clothing & Accessories" && (
+                                item.heading == "Clothing & Accessories" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3438,9 +3438,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Bowls & Feeders" && (
+                                item.heading == "Bowls & Feeders" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3461,9 +3461,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Grooming" && (
+                                item.heading == "Grooming" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3484,9 +3484,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "Cat Litter & Scooper" && (
+                                item.heading == "Cat Litter & Scooper" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}
@@ -3507,9 +3507,9 @@ function Petshopheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.name == "medicine" && (
+                                item.heading == "Health Care" && (
                                   <li>
-                                     <Link
+                                    <Link
                                       to={`/petshop-pet-category/${item.name}/${item.id}`}
                                     >
                                       {item.name}

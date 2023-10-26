@@ -1245,7 +1245,7 @@ function Petcategory() {
   };
   // PAGINATON
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 35;
+  const itemsPerPage = 24;
 
   const handlePageChange = (selected) => {
     setCurrentPage(selected.selected);
@@ -1254,6 +1254,23 @@ function Petcategory() {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
 
   return (
     <>
@@ -1669,7 +1686,7 @@ function Petcategory() {
                                 </div>
                                 <div>
                                   <h6>{item.name}</h6>
-                                  <p>{item.description}</p>
+                                  <p>{renderProductDescription(item.description)}</p>
                                 </div>
                                 <div className="product-bag">
                                   <Row>
