@@ -2700,6 +2700,7 @@ function Petshopheader(props) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [notify, setNotify] = useState([]);
   const [dataZero, setDataZero] = useState([]);
+  const [allnotification,setAllnotification] = useState([])
 
   useEffect(() => {
     fetchData();
@@ -2769,6 +2770,8 @@ function Petshopheader(props) {
         setDataZero(response.data.notification);
         console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         console.log("Data Zero", response.data.notification);
+        setAllnotification(response.data.all_notification)
+        console.log("allenSolly",response.data.all_notification);
       })
       .catch((error) => {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
@@ -3804,6 +3807,25 @@ function Petshopheader(props) {
                 ) : (
                   <p className="emptyMSG">No Data Zero</p>
                 )}
+                {allnotification && allnotification.length > 0 ? (
+                        allnotification.map((ob,index)=>(
+                          <div className="notification" key={index}>
+                            <Row>
+                              <Col lg={2}>
+                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}/>
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.title}</h6>
+                              </Col>
+                              <Col lg={4}>
+                                <p>{ob.description  }</p>
+                              </Col>
+                            </Row>
+                          </div>
+                        ))
+                      ): (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
               </div>
 
               <button
