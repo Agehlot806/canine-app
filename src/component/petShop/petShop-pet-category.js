@@ -1115,6 +1115,42 @@ function PetshopPetcategory() {
   console.log("categoriescategories",banner);
 
 
+  const [sortOption, setSortOption] = useState('default'); 
+
+  const sortedProducts = () => {
+    let sortedItems = [...allproduct];
+    switch (sortOption) {
+      case 'A-Z':
+        sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'Z-A':
+        sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'PriceLowToHigh':
+        sortedItems.sort((a, b) => a.price - b.price);
+        break;
+      case 'PriceHighToLow':
+        sortedItems.sort((a, b) => b.price - a.price);
+        break;
+      case 'DateOldToNew':
+        sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+      case 'DateNewToOld':
+        sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      default:
+        // Default sorting (as per API response)
+        break;
+    }
+    if (sortOption === 'DateNewToOld') {
+      // If sorting by DateNewToOld, reverse the array
+      sortedItems = sortedItems.reverse();
+    }
+    return sortedItems;
+  };
+
+
+
   // PAGINATON
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 24;
@@ -1125,7 +1161,8 @@ function PetshopPetcategory() {
 
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = allproduct.slice(startIndex, endIndex);
+  const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
+
 
 
   const renderProductDescription = (description) => {
@@ -1666,6 +1703,27 @@ function PetshopPetcategory() {
                     ))}
                   </Row>
                 </div> */}
+
+<Row>
+  <Col lg={2}>
+    Sort By
+  </Col>
+  <Col lg={3}>
+  <select
+              className="form-control"
+              onChange={(e) => setSortOption(e.target.value)}
+              value={sortOption}
+            >
+              <option value="default">Default (API Order)</option>
+              <option value="A-Z">Alphabetically, A-Z</option>
+              <option value="Z-A">Alphabetically, Z-A</option>
+              <option value="PriceLowToHigh">Price, Low to High</option>
+              <option value="PriceHighToLow">Price, High to Low</option>
+              <option value="DateOldToNew">Date, Old to New</option>
+              <option value="DateNewToOld">Date, New to Old</option>
+            </select>
+  </Col>
+</Row>
 
                 <Row>
                   {(selectedBrand !== null ? dataList : itemsToDisplay).map(
