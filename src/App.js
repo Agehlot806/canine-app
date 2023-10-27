@@ -98,6 +98,8 @@ import PetShopShopbybrand from "./component/petShop/petShop-shopbybrand";
 import PetshopShopbybrandlist from "./component/petShop/petShop-shop-by-brand-list";
 import Latestheader from "./directives/latestheader";
 import Navber from "./directives/navber";
+import SubcategoriesProduct from "./component/User/sub-categoriesProduct";
+import PetShopSubcategoriesProduct from "./component/petShop/petShop-SubcategoriesProduct";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -125,6 +127,7 @@ function App() {
           <Route path="/about-us" element={<Aboutus />} />
           <Route path="/service" element={<Service />} />
           <Route path="/product" element={<Product />} />
+          <Route path="/sub-categoriesProduct/:name" element={<SubcategoriesProduct />} />
           <Route path="/product-details/:id" element={<Productdetail />} />
           <Route path="/quick-view/:id" element={<Quickview />} />
           <Route path="/canine-product" element={<Canineproduct />} />
@@ -221,6 +224,10 @@ function App() {
           <Route
             path="/petshop-productDetails/:id"
             element={<PetshopproductDetails />}
+          />
+          <Route
+            path="/petShop-subcategoriesProduct/:name"
+            element={<PetShopSubcategoriesProduct />}
           />
           <Route path="/petshop-contact" element={<PetshopContact />} />
           <Route

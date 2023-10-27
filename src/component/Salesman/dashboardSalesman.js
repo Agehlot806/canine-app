@@ -91,7 +91,7 @@ function DashboadSalesman() {
 
   const AllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banner`);
       sethomebanner(response.data.data);
     } catch (error) {
       console.error(error);
@@ -107,47 +107,23 @@ function DashboadSalesman() {
   return (
     <>
       <PetShopHeader type={"salesman"} />
-      {/* <div className="home-section">
-        <Container fluid className="p-0">
-          <div>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <div className="">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/" +
-                              item.image
-                            }
-                          />
-                        </div>
-                        <Row>
-                          <Col lg={7}>
-                            <div className="home-content">
-                              <h1>{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>
-                                Explore More <i className="fa fa-angle-right" />
-                              </Button>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    )
-                )
-              : null}
-          </div>
-        </Container>
-      </div> */}
-      {/* <section className="dash-addProduct-btn">
-        <div className="text-center mt-3">
-          <Button>
-            <Link to="/salesman-add-product">Add Products</Link>
-          </Button>
-        </div>
-      </section> */}
+      <div className="home-section">
+        {homebanner
+          ? homebanner.map(
+            (item, index) =>
+              item.type === "common" && (
+                <Link to={item.default_link}>
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in//storage/app/" + item.image
+                    }
+                  />
+                </Link>
+              )
+          )
+          : null}
+      </div>
       <section className="section-padding">
         <Container>
           <div className="dash-tabs">

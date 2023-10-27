@@ -257,7 +257,7 @@ function Productdetail() {
 
   const itemWiseBanner = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/banners/`);
+      const response = await fetch(`${BASE_URL}/categories/banner`);
       const data = await response.json();
       const latestPosts = data.data.slice(0, 2);
       setitemwiseonebanner(latestPosts);
@@ -412,7 +412,7 @@ function Productdetail() {
   const [homebanner, sethomebanner] = useState([]);
   const AllBanner = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/banners/`);
+      const response = await axios.get(`${BASE_URL}/categories/banner`);
       sethomebanner(response.data.data);
     } catch (error) {
       console.error(error);
@@ -945,39 +945,23 @@ function Productdetail() {
       <Toaster />
 
       <Newheader />
-      {/* <div className="home-section">
-        <Container fluid className="p-0">
-          <div>
-            {homebanner
-              ? homebanner.map(
-                (item, index) =>
-                  item.type === "default" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/" + item.image
-                          }
-                        />
-                      </div>
-                      <Row>
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <h1>{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>
-                              Explore More <i className="fa fa-angle-right" />
-                            </Button>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
+      <div className="home-section">
+        {homebanner
+          ? homebanner.map(
+            (item, index) =>
+              item.type === "common" && (
+                <Link to={item.default_link}>
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in//storage/app/" + item.image
+                    }
+                  />
+                </Link>
               )
-              : null}
-          </div>
-        </Container>
-      </div> */}  
+          )
+          : null}
+      </div>
 
       <section className="section-padding">
         <Container>
