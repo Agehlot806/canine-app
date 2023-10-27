@@ -3754,15 +3754,13 @@ li.nav-item.dropdown.new-mega-drop {
 }
 
 .react-datepicker__day-name {
-  display: inline-flex;
   font-size: 20px;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 50px;
-  width: 130px;
-  justify-content: center;
-  background-color: #f1c21b;
-  color: #000;
+    background-color: #f1c21b;
+    color: #000;
+    margin: 15px !important;
+    padding: 10px;
+    border-radius: 4px;
+    width: 120px !important;
 }
 
 .sevice-select-date .react-datepicker__day {

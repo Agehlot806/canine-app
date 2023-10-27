@@ -1335,6 +1335,7 @@ function Home(props) {
                             >
                               Buy Now
                             </button>
+                            
                             {/* <Button>
                         <Link
                           // to={`/add-cart/${productDetails.id}`}

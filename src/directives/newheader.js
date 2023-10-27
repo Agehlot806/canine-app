@@ -493,7 +493,7 @@
 //                                     item.name == "food" && (
 //                                       <li key={item.id}>
 //                                         <Link
-//                                           to={`/pet-category/${item.name}/${item.id}`}
+//                                           to={`/sub-categoriesProduct/${item.name}`}
 //                                         >
 //                                           {item.name}
 //                                         </Link>
@@ -517,7 +517,7 @@
 //                                   item.name == "Treats & Chews" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -540,7 +540,7 @@
 //                                   item.name == "toys" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -563,7 +563,7 @@
 //                                   item.name == "Collar Leashes & More" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -586,7 +586,7 @@
 //                                   item.name == "Shampoo & Perfumes" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -609,7 +609,7 @@
 //                                   item.name == "Beds Cages & Carriers" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -632,7 +632,7 @@
 //                                   item.name == "Training & Accessories" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -655,7 +655,7 @@
 //                                   item.name == "Bowls & Feeders" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -678,7 +678,7 @@
 //                                   item.name == "Grooming" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -701,7 +701,7 @@
 //                                   item.name == "medicine" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -745,7 +745,7 @@
 //                                     item.name == "food" && (
 //                                       <li key={item.id}>
 //                                         <Link
-//                                           to={`/pet-category/${item.name}/${item.id}`}
+//                                           to={`/sub-categoriesProduct/${item.name}`}
 //                                         >
 //                                           {item.name}
 //                                         </Link>
@@ -771,7 +771,7 @@
 //                                     item.name == "food" && (
 //                                       <li key={item.id}>
 //                                         <Link
-//                                           to={`/pet-category/${item.name}/${item.id}`}
+//                                           to={`/sub-categoriesProduct/${item.name}`}
 //                                         >
 //                                           {item.name}
 //                                         </Link>
@@ -798,7 +798,7 @@
 //                                   item.name == "treats" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -821,7 +821,7 @@
 //                                   item.name == "toys" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -844,7 +844,7 @@
 //                                   item.name == "Collar Leashes & More" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -867,7 +867,7 @@
 //                                   item.name == "Shampoo & Perfumes" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -893,7 +893,7 @@
 //                                     "Beds Cages, Scratcher & Crates" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -916,7 +916,7 @@
 //                                   item.name == "Clothing & Accessories" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -939,7 +939,7 @@
 //                                   item.name == "Bowls & Feeders" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -962,7 +962,7 @@
 //                                   item.name == "Grooming" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -985,7 +985,7 @@
 //                                   item.name == "Cat Litter & Scooper" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1008,7 +1008,7 @@
 //                                   item.name == "medicine" && (
 //                                     <li>
 //                                       <Link
-//                                         to={`/pet-category/${item.name}/${item.id}`}
+//                                         to={`/sub-categoriesProduct/${item.name}`}
 //                                       >
 //                                         {item.name}
 //                                       </Link>
@@ -1598,6 +1598,7 @@ import { useCartWithoutLogin } from "../component/context/AddToCardWithoutLogin"
 function Newheader(props) {
   // const { dataLength } = props;
   const [notification, setNotification] = useState([]);
+  const [allnotification, setAllnotification] = useState([])
   const [allproduct, setAllProduct] = useState([]);
   const [dogsubcategories, setdogsubcategories] = useState("");
   const [storedUserId, setStoredUserId] = useState(null);
@@ -1751,9 +1752,9 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`) 
+      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
       .then((response) => {
-        console.log("imageupdate",response.data);
+        console.log("imageupdate", response.data);
         if (response.data.status === "200" && response.data.data.length > 0) {
           const profile = response.data.data[0];
           console.log("response.data: ", response.data);
@@ -1856,6 +1857,8 @@ function Newheader(props) {
         setDataZero(response.data.notification);
         console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         console.log("Data Zero", response.data.notification);
+        setAllnotification(response.data.all_notification)
+        console.log("allnotificationnnnnn", response.data.all_notification);
       })
       .catch((error) => {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
@@ -2112,7 +2115,7 @@ function Newheader(props) {
                                 item.heading == "Food" && (
                                   <li key={item.id}>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2135,7 +2138,7 @@ function Newheader(props) {
                                 item.heading == "Treats" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2158,7 +2161,7 @@ function Newheader(props) {
                                 item.heading == "Toys" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2181,7 +2184,7 @@ function Newheader(props) {
                                 item.heading == "Collar Leashes & More" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2204,7 +2207,7 @@ function Newheader(props) {
                                 item.heading == "Shampoo & Perfumes" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2227,7 +2230,7 @@ function Newheader(props) {
                                 item.heading == "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2250,7 +2253,7 @@ function Newheader(props) {
                                 item.heading == "Training & Accessories" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2273,7 +2276,7 @@ function Newheader(props) {
                                 item.heading == "Bowls & Feeders" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2296,7 +2299,7 @@ function Newheader(props) {
                                 item.heading == "Grooming" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2319,7 +2322,7 @@ function Newheader(props) {
                                 item.heading == "Health Care" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2359,7 +2362,7 @@ function Newheader(props) {
                                 item.heading == "Food" && (
                                   <li key={item.id}>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2382,7 +2385,7 @@ function Newheader(props) {
                                 item.heading == "Treats" && (
                                   <li key={item.id}>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2405,7 +2408,7 @@ function Newheader(props) {
                                 item.heading == "Treats" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2428,7 +2431,7 @@ function Newheader(props) {
                                 item.heading == "Toys" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2451,7 +2454,7 @@ function Newheader(props) {
                                 item.heading == "Collar Leashes & More" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2474,7 +2477,7 @@ function Newheader(props) {
                                 item.heading == "Shampoo & Perfumes" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2498,7 +2501,7 @@ function Newheader(props) {
                                 "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2521,7 +2524,7 @@ function Newheader(props) {
                                 item.heading == "Clothing & Accessories" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2544,7 +2547,7 @@ function Newheader(props) {
                                 item.heading == "Bowls & Feeders" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2567,7 +2570,7 @@ function Newheader(props) {
                                 item.heading == "Grooming" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2590,7 +2593,7 @@ function Newheader(props) {
                                 item.heading == "Cat Litter & Scooper" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -2613,7 +2616,7 @@ function Newheader(props) {
                                 item.heading == "Health Care" && (
                                   <li>
                                     <Link
-                                      to={`/pet-category/${item.name}/${item.id}`}
+                                      to={`/sub-categoriesProduct/${item.name}`}
                                     >
                                       {item.name}
                                     </Link>
@@ -3043,6 +3046,8 @@ function Newheader(props) {
                       ) : (
                         <p className="emptyMSG">No Data Zero</p>
                       )}
+
+
                     </div>
                   </div>
                   <div
@@ -3120,6 +3125,27 @@ function Newheader(props) {
                                 </Col>
                               </Row>
                             </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
+
+                      {allnotification && allnotification.length > 0 ? (
+                        allnotification.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Row>
+                              <Col lg={2}>
+                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                {console.log("emage", ob.image)}
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.title}</h6>
+                              </Col>
+                              <Col lg={4}>
+                                <p>{ob.description}</p>
+                              </Col>
+                            </Row>
                           </div>
                         ))
                       ) : (
