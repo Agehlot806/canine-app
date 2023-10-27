@@ -42,21 +42,25 @@ function PetshopAddCart() {
   };
   // ************************
   // let wholesellervariationprice = 0;
-
+  let itemQty = addToCartProduct[0]?.quantity;
+  console.log("itemQty: ", itemQty);
   // if (addToCartProduct && addToCartProduct.length > 0) {
-  //   wholesellervariationprice = addToCartProduct[0].whole_price;
+  //   itemQty = addToCartProduct[0].quantity;
   // }
-
+  const [getQuantityValue, setGetQuantityValue] = useState();
+  const stroredQuantity = () => {
+    setGetQuantityValue();
+  };
   let originalPrice = 0;
 
   const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
-    let allPrice = parseInt(el.price) + parseInt(originalPrice);
+    let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
   const taxamound = Math.floor(originalPrice * 0.05);
-  // console.log("allPrice: ", originalPrice);
+  console.log("allPrice: ", originalPrice);
   // console.log("taxamound: ", taxamound);
   const [selectedValue, setSelectedValue] = useState(0);
   const handleRadioButton = (event) => {
@@ -64,7 +68,10 @@ function PetshopAddCart() {
   };
 
   const shippingpage = useNavigate("");
+  // const [itemQty, setItemQty] = useState(second);
+  // console.log("itemQty: ", itemQty);
   const [sendcartdata, setSandCartData] = useState([]);
+
   const handleSendRequest = async () => {
     const cartData = sendcartdata.map((item) => ({
       product_id: item.item_id,
@@ -72,7 +79,7 @@ function PetshopAddCart() {
       price: item.price,
       quantity: item.quantity,
       min_order: item.min_order,
-      tax_amount: taxamound,
+      tax_amount: parseInt(item.price * 0.05),
       discount_on_item: "",
     }));
     const requestData = {
@@ -84,6 +91,7 @@ function PetshopAddCart() {
       payment_status: "unpaid",
       order_status: "pending",
       total_tax_amount: taxamound,
+      // * itemQty,
       gst_bill: selectedValue,
       payment_day: selectedOption,
       payment_mode: selectedOptiontwo,
@@ -98,7 +106,12 @@ function PetshopAddCart() {
       delivered_status: "undelivered",
       delivery_address: "hgsdjhgdhg",
       item_campaign_id: "",
-      order_amount: parseInt(originalPrice * 0.05 + originalPrice),
+      // order_amount: parseInt(originalPrice * 0.05 + originalPrice),
+      order_amount: parseInt(
+        // itemQty * (
+        originalPrice * 0.05 + originalPrice
+        // )
+      ),
       cart: cartData,
     };
     fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
@@ -567,7 +580,11 @@ function PetshopAddCart() {
 
     const data = {
       user_id: storedWholesellerId,
-      amount: parseInt(originalPrice * 0.05 + originalPrice),
+      amount: parseInt(
+        // itemQty * (
+        originalPrice * 0.05 + originalPrice
+        // )
+      ),
       paydate: formattedDate, // Formatted current date
     };
 
@@ -699,26 +716,23 @@ function PetshopAddCart() {
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
-      {/* <div className="home-section">
-        <Container fluid className="p-0">
-          <div className="allBG">
-            {homebanner
-              ? homebanner.map(
-                (item, index) =>
-                item.type === "common" && (
-                  <Col lg={6} className="mb-4">
-                    <img
-                      src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
-                      }
-                    />
-                  </Col>
-                )
-                )
-              : null}
-          </div>
-        </Container>
-      </div> */}
+      <div className="home-section">
+        {homebanner
+          ? homebanner.map(
+            (item, index) =>
+              item.type === "common" && (
+                <Link to={item.default_link}>
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in//storage/app/" + item.image
+                    }
+                  />
+                </Link>
+              )
+          )
+          : null}
+      </div>
       <section className="section-padding">
         <div className="add-cart">
           {addToCartProduct && addToCartProduct.length > 0 ? (
@@ -743,7 +757,7 @@ function PetshopAddCart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{parseFloat(item.price * item.quantity)}</h3>
+                    <h3>₹{parseInt(item.price * item.quantity)}</h3>
                     {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />
@@ -809,7 +823,13 @@ function PetshopAddCart() {
                         </Col>
                         <Col>
                           {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                          <h5>₹{originalPrice}</h5>
+                          <h5>
+                            ₹
+                            {
+                              originalPrice
+                              // * itemQty
+                            }
+                          </h5>
                         </Col>
                       </Row>
                       <hr />
@@ -818,7 +838,14 @@ function PetshopAddCart() {
                           <h5>GST(5%)</h5>
                         </Col>
                         <Col>
-                          <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
+                          <h5>
+                            ₹
+                            {Math.floor(
+                              // itemQty * (
+                              originalPrice * 0.05
+                              // )
+                            )}
+                          </h5>
                         </Col>
                       </Row>
                       <hr />
@@ -830,7 +857,9 @@ function PetshopAddCart() {
                           <h5>
                             ₹
                             {`${parseInt(
+                              // itemQty * (
                               originalPrice * 0.05 + originalPrice
+                              // )
                             )}`}
                             {/* Calculate and display the Rounding Adjust */}
                           </h5>
@@ -1000,7 +1029,9 @@ function PetshopAddCart() {
                             <h2>
                               ₹{" "}
                               {`${parseInt(
+                                // itemQty * (
                                 originalPrice * 0.05 + originalPrice
+                                // )
                               )}`}
                             </h2>
                           </Col>

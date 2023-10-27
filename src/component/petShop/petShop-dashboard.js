@@ -22,8 +22,11 @@ function Petshopdashboard() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   const [totalorder, settotalorder] = useState([]);
+  console.log("totalorder: ", totalorder);
   const [homebanner, sethomebanner] = useState([]);
   const [email, setEmail] = useState("");
+  // const [responseMessagePA, setResponseMessagePA] = useState("");
+  // const [responseMessage, setResponseMessage] = useState("");
   useEffect(() => {
     totalOrders();
     AllBanner();
@@ -55,7 +58,51 @@ function Petshopdashboard() {
     });
     setTotalUnpaidAmount(unpaidAmount);
   }, [totalorder]);
+  const walletPayClick = () => {
+    const data = {
+      order_id: idItem.id,
+      user_id: storedWholesellerId,
+      amount: idItem.order_amount,
+      pay_mode: "offline",
+    };
+    axios
+      .post(`https://canine.hirectjob.in/api/v1/auth/pay_amount`, data)
+      .then((response) => {
+        console.log("responseqqqq: ", response);
+        // setResponseMessagePA(response.data.message);
+        // toast.success("Payment Successfully Completed");
+        if (response.status === 200) {
+          // setResponseMessagePA(response.data.message);
+          toast.success("Payment Successfully Completed");
+          window.location.reload(false);
+        } else if (response.status === 201) {
+          toast.error(response.data.message);
+        }
+      })
 
+      .catch((error) => {
+        toast.error("The email field is required");
+      });
+  };
+  const [amount, setAmount] = useState([]);
+  const handleAddAmount = () => {
+    // Make a POST request to the API
+    axios
+      .post("https://canine.hirectjob.in/api/v1/auth/add_amount", {
+        user_id: storedWholesellerId,
+        amount: amount,
+      })
+      .then((response) => {
+        // Handle the response as needed
+        toast.success("Payment Add Wallet Successfully");
+        console.log("POST request was successful:", response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        toast.error("The email field is required");
+        console.error("POST request failed:", error);
+      });
+  };
   // Razorpay
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -67,7 +114,7 @@ function Petshopdashboard() {
       document.body.appendChild(script);
     });
   };
-
+  const [paymentId, setPaymentId] = useState("");
   const handlePayment = async () => {
     try {
       // const response = await loadRazorpay();
@@ -83,16 +130,17 @@ function Petshopdashboard() {
 
       const options = {
         key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
-        amount: 10000, // Amount in paise (100 INR)
+        amount: amount, // Amount in paise (100 INR)
         currency: "INR",
-        name: "HEllo world",
+        name: "ritik vyas",
         description: "Test Payment",
         image: "https://your_logo_url.png",
         // order_id: response.id, // Order ID obtained from Razorpay
         handler: (response) => {
           setPaymentId(response.razorpay_payment_id);
+          handleAddAmount();
           // Handle the success callback
-          window.location.href = "/shipping";
+          // window.location.href = "/shipping";
           console.log("Payment Successful:", response);
         },
 
@@ -126,6 +174,11 @@ function Petshopdashboard() {
 
   const handleOrderHistory = (id) => {
     navigate(`/order-view-details/${id}`);
+  };
+  const [idItem, setIdItem] = useState("");
+  console.log("idItem: ", idItem);
+  const SaveItemId = (item) => {
+    setIdItem(item);
   };
 
   const totalOrders = async () => {
@@ -170,43 +223,23 @@ function Petshopdashboard() {
     <>
       <Toaster />
       <PetShopHeader />
-      {/* <div className="home-section">
-        <Container fluid className="p-0">
-          <div>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <div className="home-img">
-                        <Link to={item.default_link}>
-                          <div>
-                            <img
-                              src={
-                                "https://canine.hirectjob.in//storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row>
-                            <Col lg={7}>
-                              <div className="home-content">
-                                <h1>{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>
-                                  Explore More{" "}
-                                  <i className="fa fa-angle-right" />
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Link>
-                      </div>
-                    )
-                )
-              : null}
-          </div>
-        </Container>
-      </div> */}
+      <div className="home-section">
+        {homebanner
+          ? homebanner.map(
+            (item, index) =>
+              item.type === "common" && (
+                <Link to={item.default_link}>
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in//storage/app/" + item.image
+                    }
+                  />
+                </Link>
+              )
+          )
+          : null}
+      </div>
       <section className="dash-addProduct-btn">
         <div className="text-center mt-3">
           <Button>
@@ -296,6 +329,8 @@ function Petshopdashboard() {
                         const orderAmount = parseFloat(
                           item.order_amount.replace(/,/g, "")
                         );
+                        // Check if payment_status is "paid"
+                        const isPaid = paymentStatus === "paid";
                         return (
                           <Col lg={4} sm={6} className="mb-4">
                             <div
@@ -388,15 +423,18 @@ function Petshopdashboard() {
                                 >
                                   Detail Order
                                 </Button>
-                                <Button
-                                  // onClick={() => {
-                                  //   handleOrderHistory(item.id);
-                                  // }}
-                                  data-toggle="modal"
-                                  data-target="#PayModal"
-                                >
-                                  Pay
-                                </Button>
+                                {/* Conditionally render the "Pay" button */}
+                                {!isPaid && (
+                                  <Button
+                                    onClick={() => {
+                                      SaveItemId(item);
+                                    }}
+                                    data-toggle="modal"
+                                    data-target="#PayModal"
+                                  >
+                                    Pay
+                                  </Button>
+                                )}
                               </div>
                               {/* <div className="text-center mt-3"> */}
                               {/* </div> */}
@@ -708,6 +746,19 @@ function Petshopdashboard() {
                       <div className="balance-card">
                         <h5>Current Balance</h5>
                         <h1>₹143,421.20</h1>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">₹</div>
+                          </div>
+                          <input
+                            class="form-control"
+                            id="inlineFormInputGroupUsername"
+                            placeholder="Add Balance"
+                            type="number"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                          />
+                        </div>
                         <Button onClick={() => handlePayment()}>
                           + Add Balance
                         </Button>
@@ -823,7 +874,7 @@ function Petshopdashboard() {
                       type="radio"
                       name="exampleRadios"
                       data-dismiss="modal"
-                      // onClick={() => handlePayment()}
+                      onClick={() => walletPayClick()}
                     />
                     <p>wallet</p>
                   </div>

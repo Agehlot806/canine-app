@@ -14,7 +14,9 @@ import { useReactToPrint } from "react-to-print";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
+  console.log("AAallorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
+  console.log("AAorderDetails: ", orderDetails);
 
   const { id } = useParams();
   console.log("order id ", id);
@@ -24,17 +26,19 @@ function PetshopOrderviewdetails() {
     allOrders();
   }, []);
   let subTotal = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.price),
+    (total, order) => total + parseFloat(order.price * order.quantity),
     0
   );
   let TaxAmount = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.tax_amount),
+    (total, order) => total + parseFloat(order.tax_amount * order.quantity),
     0
   );
   let SubTotalTaxAmount = orderDetails.reduce(
     (total, order) => total + parseFloat(order.total_add_on_price),
     0
   );
+  let SubTotalData = subTotal + TaxAmount;
+  console.log("SubTotalTaxAmount: ", SubTotalTaxAmount);
 
   // let couponDiscount = orderDetails.reduce(
   //   (total, order) => total + parseFloat(order.coupon_discount_amount),
@@ -193,7 +197,7 @@ function PetshopOrderviewdetails() {
               </Col>
             </Row>
             <Row>
-            <Col lg={5} className="align-self-center">
+              <Col lg={5} className="align-self-center">
                 <div className="order-minicard">
                   {orderDetails && orderDetails.length > 0 ? (
                     orderDetails.map((order) => {
@@ -208,7 +212,13 @@ function PetshopOrderviewdetails() {
                                 </p>
                                 <p>
                                   Price:{" "}
-                                  <span>₹{parseFloat(order.price, 0)}</span>
+                                  <span>
+                                    ₹
+                                    {parseFloat(
+                                      order.price * order.quantity,
+                                      0
+                                    )}
+                                  </span>
                                 </p>
                                 <p>
                                   quantity: <span>{order.quantity}</span>
@@ -237,8 +247,9 @@ function PetshopOrderviewdetails() {
                                   {[1, 2, 3, 4, 5].map((index) => (
                                     <div
                                       key={index}
-                                      className={`star ${index <= rating ? "filled" : ""
-                                        }`}
+                                      className={`star ${
+                                        index <= rating ? "filled" : ""
+                                      }`}
                                       onClick={() => handleStarClick(index)}
                                     ></div>
                                   ))}
@@ -251,7 +262,9 @@ function PetshopOrderviewdetails() {
                                         className="form-control mb-3"
                                         rows={3}
                                         value={comment}
-                                        onChange={(e) => setcomment(e.target.value)}
+                                        onChange={(e) =>
+                                          setcomment(e.target.value)
+                                        }
                                       />
                                     </div>
                                     <button
@@ -262,7 +275,9 @@ function PetshopOrderviewdetails() {
                                     </button>
                                   </form>
                                 )}
-                                {!showForm && <p>Review submitted. Thank you!</p>}
+                                {!showForm && (
+                                  <p>Review submitted. Thank you!</p>
+                                )}
                               </div>
                             ) : null}
                           </div>
@@ -293,24 +308,42 @@ function PetshopOrderviewdetails() {
                                   <>
                                     <tbody>
                                       <tr>
-                                        <th><p>Total</p></th>
-                                        <td><p>₹{subTotal}</p></td>
+                                        <th>
+                                          <p>Total</p>
+                                        </th>
+                                        <td>
+                                          <p>₹{subTotal}</p>
+                                        </td>
                                       </tr>
                                       <tr>
-                                        <th><p>Tax:</p></th>
-                                        <td><p>₹{TaxAmount}</p></td>
+                                        <th>
+                                          <p>Tax:</p>
+                                        </th>
+                                        <td>
+                                          <p>₹{TaxAmount}</p>
+                                        </td>
                                       </tr>
                                       <tr>
-                                        <th><p>Sub Total</p></th>
-                                        <td><p>₹{SubTotalTaxAmount}</p></td>
+                                        <th>
+                                          <p>Sub Total</p>
+                                        </th>
+                                        <td>
+                                          <p>₹{SubTotalData}</p>
+                                        </td>
                                       </tr>
                                       <tr>
-                                        <th><p>Delivery Charge</p></th>
-                                        <td><p>₹{deliveryCharge}</p></td>
+                                        <th>
+                                          <p>Delivery Charge</p>
+                                        </th>
+                                        <td>
+                                          <p>₹{deliveryCharge}</p>
+                                        </td>
                                       </tr>
                                       <tr>
                                         <th>Total</th>
-                                        <td>₹{GrandTotal}</td>
+                                        <td>
+                                          ₹{SubTotalData + deliveryCharge}
+                                        </td>
                                       </tr>
                                     </tbody>
                                   </>
@@ -369,7 +402,10 @@ function PetshopOrderviewdetails() {
                                           {parseInt(
                                             orderDetails.reduce(
                                               (total, order) =>
-                                                total + parseFloat(order.price),
+                                                total +
+                                                parseFloat(
+                                                  order.price * order.quantity
+                                                ),
                                               0
                                             )
                                           )}
@@ -381,7 +417,7 @@ function PetshopOrderviewdetails() {
                                         <p>Sub Total:</p>
                                       </th>
                                       <td>
-                                        <p>₹{SubTotalTaxAmount}</p>
+                                        <p>₹{SubTotalData}</p>
                                       </td>
                                     </tr>
 
@@ -398,7 +434,9 @@ function PetshopOrderviewdetails() {
                                         <h4>Total:</h4>
                                       </th>
                                       <td>
-                                        <h4>₹{GrandTotal}</h4>
+                                        <h4>
+                                          ₹{SubTotalData + deliveryCharge}
+                                        </h4>
                                       </td>
                                     </tr>
                                   </tbody>

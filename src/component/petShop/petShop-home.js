@@ -206,45 +206,6 @@ function PetshopHome(props) {
     };
   }, [isFavCheck]);
 
-  // const handleAddToCart = async () => {
-  //   try {
-  //     // const response = await axios.post(
-  //     //   `${BASE_URL}/customer/wish-list/add_product`,
-  //     //   {
-  //     //     item_name: productDetails?.name,
-  //     //     variant: selectedVariant, // You may need to update this based on your data
-  //     //     image: productDetails?.image,
-  //     //     quantity: quantity,
-  //     //     price: formattedAmount,
-  //     //     min_order: productDetails.min_order,
-  //     //     user_id: storedWholesellerId,
-  //     //     item_id: productDetails?.id,
-  //     //     seller_id: salesmanId ? Number(salesmanId) : "",
-  //     //   }
-  //     // );
-
-  //     if (response.data.success) {
-  //       const updatedCart = [...addToCartStatus, productDetails];
-  //       setAddToCartStatus(updatedCart);
-  //       // setAddToCartStatus("Added to cart!");
-  //       toast.success("Added to cart!");
-  //       // Navigate("/addcart")
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding to cart:", error);
-  //     setAddToCartStatus("Error adding to cart");
-  //   }
-  //   const modal = document.querySelector(".modal");
-  //   if (modal) {
-  //     modal.classList.remove("show");
-  //     modal.style.display = "none";
-  //     document.body.classList.remove("modal-open");
-  //     const modalBackdrop = document.querySelector(".modal-backdrop");
-  //     if (modalBackdrop) {
-  //       modalBackdrop.remove();
-  //     }
-  //   }
-  // };
   const fetchWishlistData = async () => {
     try {
       await axios
@@ -369,6 +330,7 @@ function PetshopHome(props) {
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  console.log("selectedVariantPrice: ", selectedVariantPrice);
 
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
@@ -843,9 +805,9 @@ function PetshopHome(props) {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price: Amount,
+      price: selectedVariantPrice,
       quantity: quantity,
-      tax_amount: Math.floor(Amount * 0.05),
+      tax_amount: Math.floor(selectedVariantPrice * 0.05),
       discount_on_item: "",
     };
     // Calculate the order_amount
@@ -1010,7 +972,7 @@ function PetshopHome(props) {
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price: selectedVariantPrice,
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
@@ -1088,27 +1050,27 @@ function PetshopHome(props) {
                       (item, index) =>
                         item.type === "home_banner_1" && (
                           <div className="home-img">
-                             <Link to={item.default_link}>
-                            <div className="">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <Row>
-                              <Col lg={7}>
-                                <div className="home-content">
-                                  <h1>{item.title}</h1>
-                                  <p>{item.description}</p>
-                                  <Button>
-                                    Explore More{" "}
-                                    <i className="fa fa-angle-right" />
-                                  </Button>
-                                </div>
-                              </Col>
-                            </Row>
+                            <Link to={item.default_link}>
+                              <div className="">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <Row>
+                                <Col lg={7}>
+                                  <div className="home-content">
+                                    <h1>{item.title}</h1>
+                                    <p>{item.description}</p>
+                                    <Button>
+                                      Explore More{" "}
+                                      <i className="fa fa-angle-right" />
+                                    </Button>
+                                  </div>
+                                </Col>
+                              </Row>
                             </Link>
                           </div>
                         )
@@ -1121,33 +1083,33 @@ function PetshopHome(props) {
                       (item, index) =>
                         item.type === "home_banner_2" && (
                           <div className="home-img">
-                             <Link to={item.default_link}>
-                            <div className="">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <Row>
-                              <Col lg={7}>
-                                <div className="home-content">
-                                  <h1>{item.title}</h1>
-                                  <p>{item.description}</p>
+                            <Link to={item.default_link}>
+                              <div className="">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <Row>
+                                <Col lg={7}>
+                                  <div className="home-content">
+                                    <h1>{item.title}</h1>
+                                    <p>{item.description}</p>
 
-                                  <div className="app-home">
-                                    <Link>
-                                      <img src={app1} />
-                                    </Link>
+                                    <div className="app-home">
+                                      <Link>
+                                        <img src={app1} />
+                                      </Link>
 
-                                    <Link>
-                                      <img src={app2} />
-                                    </Link>
+                                      <Link>
+                                        <img src={app2} />
+                                      </Link>
+                                    </div>
                                   </div>
-                                </div>
-                              </Col>
-                            </Row>
+                                </Col>
+                              </Row>
                             </Link>
                           </div>
                         )
@@ -1160,27 +1122,27 @@ function PetshopHome(props) {
                       (item, index) =>
                         item.type === "home_banner_3" && (
                           <div className="home-img">
-                             <Link to={item.default_link}>
-                            <div>
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <Row>
-                              <Col lg={7}>
-                                <div className="home-content">
-                                  <h1>{item.title}</h1>
-                                  <p>{item.description}</p>
-                                  <Button>
-                                    Explore More{" "}
-                                    <i className="fa fa-angle-right" />
-                                  </Button>
-                                </div>
-                              </Col>
-                            </Row>
+                            <Link to={item.default_link}>
+                              <div>
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <Row>
+                                <Col lg={7}>
+                                  <div className="home-content">
+                                    <h1>{item.title}</h1>
+                                    <p>{item.description}</p>
+                                    <Button>
+                                      Explore More{" "}
+                                      <i className="fa fa-angle-right" />
+                                    </Button>
+                                  </div>
+                                </Col>
+                              </Row>
                             </Link>
                           </div>
                         )
@@ -1427,7 +1389,8 @@ function PetshopHome(props) {
                       <Col lg={6} className="mb-4">
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/" + item.image
+                            "https://canine.hirectjob.in//storage/app/" +
+                            item.image
                           }
                         />
                       </Col>
@@ -1672,7 +1635,8 @@ function PetshopHome(props) {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/" + item.image
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
                             }
                           />
                         </div>
@@ -1867,7 +1831,9 @@ function PetshopHome(props) {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2214,7 +2180,9 @@ function PetshopHome(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col> */}
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2926,7 +2894,9 @@ function PetshopHome(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
