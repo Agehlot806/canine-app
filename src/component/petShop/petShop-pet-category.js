@@ -1180,6 +1180,11 @@ function PetshopPetcategory() {
       </>
     );
   };
+
+  const demousercheck = () => {
+    toast.error("Profile is not verified");
+  };
+  
   return (
     <>
       <Toaster />
@@ -1516,7 +1521,7 @@ function PetshopPetcategory() {
                         onChange={(e) => setSortOption(e.target.value)}
                         value={sortOption}
                       >
-                        <option value="default">Default (API Order)</option>
+                        <option value="default">Choose...</option>
                         <option value="A-Z">Alphabetically, A-Z</option>
                         <option value="Z-A">Alphabetically, Z-A</option>
                         <option value="PriceLowToHigh">Price, Low to High</option>
@@ -1737,6 +1742,7 @@ function PetshopPetcategory() {
                 <Row>
                   {(selectedBrand !== null ? dataList : itemsToDisplay).map(
                     (item, index) => (
+                      item.category_id == id && (
                       <Col lg={4} sm={6} xs={6} className="mb-4" key={item.id}>
                         <div
                           className="food-product"
@@ -1813,6 +1819,7 @@ function PetshopPetcategory() {
                           )}
                         </div>
                       </Col>
+                      )
                     )
                   )}
                   {dataList.length === 0 && selectedBrand !== null && (

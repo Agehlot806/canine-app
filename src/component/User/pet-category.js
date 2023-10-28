@@ -102,7 +102,7 @@ function Petcategory() {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   console.log("=======>>>>>> id", customer_id);
-  let storedUserId = JSON.p(customer_id);
+  let storedUserId = JSON.parse(customer_id);
   console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
@@ -141,7 +141,7 @@ function Petcategory() {
         console.log(error);
       });
   };
-
+// console.log("allproductallproduct",allproduct);
   ////filter tarun//
   const [allbrand, setAllBrand] = useState("");
   const [alllifesage, setAlllifesage] = useState("");
@@ -1654,6 +1654,29 @@ function Petcategory() {
             </section>
           </Col>
           <Col lg={9}>
+          <div className="sort-by">
+<Row>
+  <Col lg={2}>
+    Sort By
+  </Col>
+  <Col lg={3}>
+  <select
+              className="form-control"
+              onChange={(e) => setSortOption(e.target.value)}
+              value={sortOption}
+            >
+              <option value="default">Choose...</option>
+              <option value="A-Z">Alphabetically, A-Z</option>
+              <option value="Z-A">Alphabetically, Z-A</option>
+              <option value="PriceLowToHigh">Price, Low to High</option>
+              <option value="PriceHighToLow">Price, High to Low</option>
+              <option value="DateOldToNew">Date, Old to New</option>
+              <option value="DateNewToOld">Date, New to Old</option>
+            </select>
+  </Col>
+</Row>
+</div>
+
             <section className="section-padding food">
               <Container>
                 {/* <div className="needplace">
@@ -1703,32 +1726,11 @@ function Petcategory() {
                     </div>
                   </div>
                 </div> */}
-<div className="sort-by">
-<Row>
-  <Col lg={2}>
-    Sort By
-  </Col>
-  <Col lg={3}>
-  <select
-              className="form-control"
-              onChange={(e) => setSortOption(e.target.value)}
-              value={sortOption}
-            >
-              <option value="default">Default (API Order)</option>
-              <option value="A-Z">Alphabetically, A-Z</option>
-              <option value="Z-A">Alphabetically, Z-A</option>
-              <option value="PriceLowToHigh">Price, Low to High</option>
-              <option value="PriceHighToLow">Price, High to Low</option>
-              <option value="DateOldToNew">Date, Old to New</option>
-              <option value="DateNewToOld">Date, New to Old</option>
-            </select>
-  </Col>
-</Row>
-</div>
+
 
                 <div>
                   <Row>
-                    {itemsToDisplay.map(
+                    {allproduct.map(
                       (item, index) =>
                         item.category_id == id && (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
@@ -1828,7 +1830,7 @@ function Petcategory() {
                         )
                     )}
                   </Row>
-                  <ReactPaginate
+                  {/* <ReactPaginate
                     previousLabel={"<"}
                     nextLabel={">"}
                     breakLabel={"..."}
@@ -1840,7 +1842,7 @@ function Petcategory() {
                     activeClassName={"activebtn"}
                     nextClassName={"nextbtn"}
                     previousClassName={"previousbtn"}
-                  />
+                  /> */}
                   {/* <div className="pagination-area">
                     <ul className="pagination">
                       {pages.map((page) => (

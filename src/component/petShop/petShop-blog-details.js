@@ -301,6 +301,10 @@ function PetshopBlogdetails() {
     }
   };
 
+  const demousercheck = () => {
+    toast.error("Profile is not verified");
+  };
+
   const handleIncrementOne = () => {
     setQuantity(quantity + 1);
   };

@@ -1283,6 +1283,11 @@ function Petshopproduct(props) {
   const endIndex = startIndex + itemsPerPage;
   const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
 
+
+  const demousercheck = () => {
+    toast.error("Profile is not verified");
+  };
+  
   return (
     <>
       <PetShopHeader />
@@ -1620,7 +1625,7 @@ function Petshopproduct(props) {
                   onChange={(e) => setSortOption(e.target.value)}
                   value={sortOption}
                 >
-                  <option value="default">Default (API Order)</option>
+                  <option value="default">Choose...</option>
                   <option value="A-Z">Alphabetically, A-Z</option>
                   <option value="Z-A">Alphabetically, Z-A</option>
                   <option value="PriceLowToHigh">Price, Low to High</option>

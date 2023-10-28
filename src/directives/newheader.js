@@ -2093,7 +2093,7 @@ function Newheader(props) {
                 </li>
               </div>
               <li>
-                <a href="#" className="desktop-item">
+                <a className="desktop-item">
                   Dogs
                   <i class="fa fa-angle-down arrr" />
                 </a>
@@ -2341,7 +2341,7 @@ function Newheader(props) {
                 </div>
               </li>
               <li>
-                <a href="#" className="desktop-item">
+                <a className="desktop-item">
                   Cats
                   <i class="fa fa-angle-down arrr" />
                 </a>
@@ -2635,7 +2635,7 @@ function Newheader(props) {
                 </div>
               </li>
               <li>
-                <a href="#" className="desktop-item">
+                <a className="desktop-item">
                   Products
                   <i class="fa fa-angle-down arrr" />
                 </a>
