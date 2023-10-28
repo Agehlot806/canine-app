@@ -108,6 +108,21 @@
 }
 
 @media only screen and (max-width: 912px) {
+  .sort-by {
+    padding: 20px 0 0;
+  }
+  .row .mega-links li a {
+    position: relative;
+}
+.row .mega-links li a:before {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  height: 2px;
+  content: "";
+  background-color: #000;
+}
   .paw-right img {
     padding: 38px 0;
   }
@@ -276,9 +291,24 @@
 }
 
 @media only screen and (max-width: 540px) {
+  .row .mega-links li a {
+    font-size: 15px !important;
+}
   .pagination li {
     margin: 0 3px;
   }
+  .web-icon {
+    display: inline-flex;
+}
+a.profiledes {
+  padding: 10px 0 !important;
+}
+a.profiledes.notification-btn.notimob {
+  margin: 9px -25vh;
+}
+.row .mega-links li a {
+  font-size: 15px;
+}
   li.activebtn a {
     padding: 0 10px;
     font-size: 18px;

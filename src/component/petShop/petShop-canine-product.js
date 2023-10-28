@@ -650,7 +650,7 @@ function PetShopcanineproduct(props) {
     }
   };
 
-  
+
   const ratingStar = Array.from({ length: 5 }, (item, index) => {
     let number = index + 0.5;
     return (
@@ -692,7 +692,7 @@ function PetShopcanineproduct(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -700,7 +700,7 @@ function PetShopcanineproduct(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -1211,7 +1211,7 @@ function PetShopcanineproduct(props) {
       });
   };
 
-  const [sortOption, setSortOption] = useState('default'); 
+  const [sortOption, setSortOption] = useState('default');
 
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
@@ -1260,7 +1260,7 @@ function PetShopcanineproduct(props) {
   const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
 
 
-   const renderProductDescription = (description) => {
+  const renderProductDescription = (description) => {
     const maxCharacters = 35; // Number of characters to show initially
 
     if (description.length <= maxCharacters) {
@@ -1309,25 +1309,25 @@ function PetShopcanineproduct(props) {
                       <div>
                         {allbrand
                           ? allbrand.map(
-                              (items) =>
-                                items.canine === 1 && (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        handleDataListBrand(items.title)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.title}
-                                    </label>
-                                  </div>
-                                )
-                            )
+                            (items) =>
+                              items.canine === 1 && (
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      handleDataListBrand(items.title)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.title}
+                                  </label>
+                                </div>
+                              )
+                          )
                           : ""}
                       </div>
                     </>
@@ -1349,20 +1349,20 @@ function PetShopcanineproduct(props) {
                       <div>
                         {subcategories
                           ? subcategories.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allsubcateselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allsubcateselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1384,20 +1384,20 @@ function PetShopcanineproduct(props) {
                       <div>
                         {allsubcate
                           ? allsubcate.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allcateselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allcateselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1464,22 +1464,22 @@ function PetShopcanineproduct(props) {
                       <div>
                         {alllifesage
                           ? alllifesage.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onChange={(e) =>
-                                    Lifesatedataselect(items.name)
-                                  }
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) =>
+                                  Lifesatedataselect(items.name)
+                                }
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1501,20 +1501,20 @@ function PetShopcanineproduct(props) {
                       <div>
                         {allbreed
                           ? allbreed.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onChange={(e) => allbreedselect(items.name)}
-                                />
-                                <label className="form-check-label">
-                                  {items.name}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onChange={(e) => allbreedselect(items.name)}
+                              />
+                              <label className="form-check-label">
+                                {items.name}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1536,20 +1536,20 @@ function PetShopcanineproduct(props) {
                       <div>
                         {allhealth
                           ? allhealth.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) => allhealthselect(items.title)}
-                                />
-                                <label className="form-check-label">
-                                  {items.title}
-                                </label>
-                              </div>
-                            ))
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                onClick={(e) => allhealthselect(items.title)}
+                              />
+                              <label className="form-check-label">
+                                {items.title}
+                              </label>
+                            </div>
+                          ))
                           : ""}
                       </div>
                     </>
@@ -1604,80 +1604,81 @@ function PetShopcanineproduct(props) {
           </Col>
           <Col lg={9}>
 
-
-          <Row>
-  <Col lg={2}>
-    Sort By
-  </Col>
-  <Col lg={3}>
-  <select
-              className="form-control"
-              onChange={(e) => setSortOption(e.target.value)}
-              value={sortOption}
-            >
-              <option value="default">Default (API Order)</option>
-              <option value="A-Z">Alphabetically, A-Z</option>
-              <option value="Z-A">Alphabetically, Z-A</option>
-              <option value="PriceLowToHigh">Price, Low to High</option>
-              <option value="PriceHighToLow">Price, High to Low</option>
-              <option value="DateOldToNew">Date, Old to New</option>
-              <option value="DateNewToOld">Date, New to Old</option>
-            </select>
-  </Col>
-</Row>
+            <div className="sort-by">
+              <Row>
+                <Col lg={2}>
+                  Sort By
+                </Col>
+                <Col lg={3}>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setSortOption(e.target.value)}
+                    value={sortOption}
+                  >
+                    <option value="default">Default (API Order)</option>
+                    <option value="A-Z">Alphabetically, A-Z</option>
+                    <option value="Z-A">Alphabetically, Z-A</option>
+                    <option value="PriceLowToHigh">Price, Low to High</option>
+                    <option value="PriceHighToLow">Price, High to Low</option>
+                    <option value="DateOldToNew">Date, Old to New</option>
+                    <option value="DateNewToOld">Date, New to Old</option>
+                  </select>
+                </Col>
+              </Row>
+            </div>
             <section className="section-padding food">
               <Container>
                 <Row>
                   {itemsToDisplay
                     ? itemsToDisplay.map(
-                        (item, index) =>
-                          item.module_id === 1 && (
-                            <Col lg={4} sm={6} xs={6} className="mb-4">
-                              <div
-                                className="food-product"
-                                key={item.id}
-                                onMouseEnter={() => handleMouseEnter(item.id)}
-                                onMouseLeave={() => handleMouseLeave(item.id)}
-                                style={{
-                                  background:
-                                    gradientColors[
-                                      index % gradientColors.length
-                                    ],
-                                }}
-                              >
-                                <i
-                                  class={
-                                    item.isFav
-                                      ? "fa-solid fa-heart"
-                                      : "fa-regular fa-heart"
+                      (item, index) =>
+                        item.module_id === 1 && (
+                          <Col lg={4} sm={6} xs={6} className="mb-4">
+                            <div
+                              className="food-product"
+                              key={item.id}
+                              onMouseEnter={() => handleMouseEnter(item.id)}
+                              onMouseLeave={() => handleMouseLeave(item.id)}
+                              style={{
+                                background:
+                                  gradientColors[
+                                  index % gradientColors.length
+                                  ],
+                              }}
+                            >
+                              <i
+                                class={
+                                  item.isFav
+                                    ? "fa-solid fa-heart"
+                                    : "fa-regular fa-heart"
+                                }
+                                onClick={(id) => {
+                                  if (storedWholesellerId == null) {
+                                    toast.error("Please Login first");
+                                  } else {
+                                    addToWishlist(item.id);
                                   }
-                                  onClick={(id) => {
-                                    if (storedWholesellerId == null) {
-                                      toast.error("Please Login first");
-                                    } else {
-                                      addToWishlist(item.id);
+                                }}
+                              />
+                              <Link to={`/petshop-productDetails/${item.id}`}>
+                                <div className="text-center">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in///storage/app/public/product/" +
+                                      item.image
                                     }
-                                  }}
-                                />
-                                <Link to={`/petshop-productDetails/${item.id}`}>
-                                  <div className="text-center">
-                                    <img
-                                      src={
-                                        "https://canine.hirectjob.in///storage/app/public/product/" +
-                                        item.image
-                                      }
-                                    />
-                                  </div>
-                                  <div>
-                                    <h6>{item.name}</h6>
-                                    <p>{renderProductDescription(item.description)}</p>
-                                  </div>
-                                  <div className="product-bag">
-                                    <Row>
-                                      <Col className="align-self-center">
-                                        <h6>₹{item.whole_price}</h6>
-                                      </Col>
-                                      {/* <Col>
+                                  />
+                                </div>
+                                <div>
+                                  <h6>{item.name}</h6>
+                                  <p>{renderProductDescription(item.description)}</p>
+                                </div>
+                                <div className="product-bag">
+                                  <Row>
+                                    <Col className="align-self-center">
+                                      <h6>₹{item.whole_price}</h6>
+                                    </Col>
+                                    {/* <Col>
                                         <Link
                                           to={`/petshop-add-cart/${item.id}`}
                                           onClick={handleAddToCart}
@@ -1685,50 +1686,50 @@ function PetShopcanineproduct(props) {
                                           <img src={bag} />
                                         </Link>
                                       </Col> */}
-                                    </Row>
-                                  </div>
-                                </Link>
+                                  </Row>
+                                </div>
+                              </Link>
 
-                                {buttonVisibility[item.id] && (
-                                  <Fade top>
-                                    <div className="button-container">
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".bd-example-modal-lg"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Quick View
-                                      </button>
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".buynow"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Buy Now
-                                      </button>
-                                    </div>
-                                  </Fade>
-                                )}
-                              </div>
-                            </Col>
-                          )
-                      )
+                              {buttonVisibility[item.id] && (
+                                <Fade top>
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lg"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Buy Now
+                                    </button>
+                                  </div>
+                                </Fade>
+                              )}
+                            </div>
+                          </Col>
+                        )
+                    )
                     : null}
                 </Row>
 
                 <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"activebtn"}
-                    nextClassName={"nextbtn"}
-                    previousClassName={"previousbtn"}
-                  />
+                  previousLabel={"<"}
+                  nextLabel={">"}
+                  breakLabel={"..."}
+                  pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageChange}
+                  containerClassName={"pagination"}
+                  activeClassName={"activebtn"}
+                  nextClassName={"nextbtn"}
+                  previousClassName={"previousbtn"}
+                />
               </Container>
             </section>
           </Col>
@@ -1765,7 +1766,7 @@ function PetShopcanineproduct(props) {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                            productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1822,11 +1823,10 @@ function PetShopcanineproduct(props) {
                                         <Col lg={4} sm={4} xs={3} key={index}>
                                           {item.stock !== 0 ? (
                                             <div
-                                              className={`tab-variations ${
-                                                selectedVariant === item.type
+                                              className={`tab-variations ${selectedVariant === item.type
                                                   ? "active"
                                                   : ""
-                                              }`}
+                                                }`}
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
                                                 setSelectedVariantPrice(
@@ -2303,11 +2303,10 @@ function PetShopcanineproduct(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2411,11 +2410,10 @@ function PetShopcanineproduct(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2581,7 +2579,7 @@ function PetShopcanineproduct(props) {
                 </Container>
                 <div className="homecheckout">
                   {productDetails?.stock &&
-                  productDetails?.stock?.length !== 10 ? (
+                    productDetails?.stock?.length !== 10 ? (
                     <button data-toggle="modal" data-target="#cod">
                       Checkout
                     </button>
@@ -2870,11 +2868,11 @@ function PetShopcanineproduct(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

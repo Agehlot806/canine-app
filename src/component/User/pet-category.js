@@ -102,7 +102,7 @@ function Petcategory() {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   console.log("=======>>>>>> id", customer_id);
-  let storedUserId = JSON.stringify(customer_id);
+  let storedUserId = JSON.p(customer_id);
   console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
@@ -1309,13 +1309,34 @@ function Petcategory() {
     );
   };
 
+  const [banner, setBanner] = useState('');
+  useEffect(() => {
+    const apiUrl = 'https://canine.hirectjob.in/api/v1/categories';
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const category = data.data.find((category) => category.id == parseInt(id));
+        if (category) {
+          setBanner(category.banner);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [id]);
+
   return (
     <>
       <Toaster />
       <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
-          <img src={product} />
+        {banner && <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/public/category/" +
+                                    banner
+                                  }
+                                />}
         </div>
       </Container>
 
@@ -1682,7 +1703,7 @@ function Petcategory() {
                     </div>
                   </div>
                 </div> */}
-
+<div className="sort-by">
 <Row>
   <Col lg={2}>
     Sort By
@@ -1703,6 +1724,7 @@ function Petcategory() {
             </select>
   </Col>
 </Row>
+</div>
 
                 <div>
                   <Row>
@@ -1787,7 +1809,14 @@ function Petcategory() {
                                     <button
                                       data-toggle="modal"
                                       data-target=".buynow"
-                                      onClick={(e) => handeldataId(item.id)}
+                                      onClick={(e) => {
+                                        if (!storedUserId) {
+                                          // window.location.href = '/login';
+                                          shippingpage ("/login");
+                                        } else {
+                                          handeldataId(item.id);
+                                        }
+                                      }}
                                     >
                                       Buy Now
                                     </button>

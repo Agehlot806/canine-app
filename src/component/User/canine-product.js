@@ -1542,6 +1542,7 @@ function Canineproduct(props) {
             </section>
           </Col>
           <Col lg={9}>
+          <div className="sort-by">
           <Row>
   <Col lg={2}>
     Sort By
@@ -1562,7 +1563,7 @@ function Canineproduct(props) {
             </select>
   </Col>
 </Row>
-
+</div>
             <section className="section-padding food">
               <h1 className="main-head">Canine Products</h1>
               <Container>

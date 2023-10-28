@@ -1609,6 +1609,7 @@ function Petshopproduct(props) {
             </section>
           </Col>
           <Col lg={9}>
+            <div className="sort-by">
             <Row>
               <Col lg={2}>
                 Sort By
@@ -1629,6 +1630,7 @@ function Petshopproduct(props) {
                 </select>
               </Col>
             </Row>
+            </div>
             <section className="section-padding food">
               <Container>
                 <Row>
