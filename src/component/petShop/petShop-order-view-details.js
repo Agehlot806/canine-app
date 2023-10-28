@@ -9,6 +9,7 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import paydone from "../../assets/images/icon/paydone.png";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
@@ -65,6 +66,11 @@ function PetshopOrderviewdetails() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   // =----------------------------
+  // salesmanId
+  const loginType = localStorage.getItem("loginType");
+  const salesmanId = localStorage.getItem("salesmanId");
+  console.log("salesmanId: ", salesmanId);
+
   const allOrders = async () => {
     axios
       .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
@@ -76,6 +82,64 @@ function PetshopOrderviewdetails() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async () => {
+    try {
+      // const response = await loadRazorpay();
+      // loadRazorpay()
+      //   .then((response) => {
+      //     console.log("response handlePayment: ", response);
+      //     // Code to execute after the script has loaded
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error loading Razorpay script:", error);
+      //   });
+      await loadRazorpayScript();
+
+      const options = {
+        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
+        amount: 10000, // Amount in paise (100 INR)
+        currency: "INR",
+        name: "HEllo world",
+        description: "Test Payment",
+        image: "https://your_logo_url.png",
+        // order_id: response.id, // Order ID obtained from Razorpay
+        handler: (response) => {
+          setPaymentId(response.razorpay_payment_id);
+          // Handle the success callback
+          window.location.href = "/shipping";
+          console.log("Payment Successful:", response);
+        },
+
+        prefill: {
+          email: "test@example.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "1234, Demo Address",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Razorpay Load Error:", error);
+    }
   };
 
   const tableRef = useRef();
@@ -239,6 +303,28 @@ function PetshopOrderviewdetails() {
                               </div>
                             </Col>
                           </Row>
+                          {salesmanId &&
+                          allorder[0]?.payment_status === "unpaid" ? (
+                            <Row>
+                              <h6>Total outstanding amount</h6>
+                              <h4>₹{SubTotalData + deliveryCharge}</h4>
+                              <Col sm={3}>
+                                <div className="order-ids">
+                                  <Button
+                                    data-toggle="modal"
+                                    data-target="#cod"
+                                  >
+                                    {/* <Link
+                                      to={`/add-cart/${order.item_id}`}
+                                      onClick={handleAddToCart}
+                                    > */}
+                                    Proceed to Pay
+                                    {/* </Link> */}
+                                  </Button>
+                                </div>
+                              </Col>
+                            </Row>
+                          ) : null}
                           <div>
                             {allorder.order_status === "delivered" ? (
                               <div>
@@ -394,6 +480,14 @@ function PetshopOrderviewdetails() {
                                     </tr>
                                     <tr>
                                       <th>
+                                        <p>Payment Status:</p>
+                                      </th>
+                                      <td>
+                                        <p>{allorder[0]?.payment_status}</p>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <th>
                                         <p>Total Before Tax:</p>
                                       </th>
                                       <td>
@@ -460,6 +554,137 @@ function PetshopOrderviewdetails() {
         </Container>
       </section>
       <Petshopfooter />
+      {/* Modal */}
+      <div
+        className="modal fade"
+        id="cod"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      data-dismiss="modal"
+                      onClick={() => handlePayment()}
+                    />
+                    <p>Online Payment</p>
+                  </div>
+                </div>
+                {/* <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      value="second"
+                      checked={selectedInput}
+                      onChange={handleRadioChange}
+                    />
+                    <p>Canine Pay Later</p>
+                    <p>₹ 100000 Available</p>
+                  </div>
+                </div> */}
+                {/* <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      value="second"
+                      // checked={selectedInput}
+                      // onChange={handleRadioChange}
+                    />
+                     <p>Cash On Delivery</p>
+                    <p>Canine Pay Later</p>
+                  </div>
+                </div> */}
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      value="second"
+                      // checked={selectedInput}
+                      // onChange={handleRadioChange}
+                    />
+                    {/* <p>Cash On Delivery</p> */}
+                    <p>Payment By Cheque </p>
+                  </div>
+                </div>
+                <div className="select-card select-card3">
+                  <div className="selct-card-text">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="exampleRadios"
+                      value="second"
+                      // checked={selectedInput}
+                      // onChange={handleRadioChange}
+                    />
+                    {/* <p>Cash On Delivery</p> */}
+                    <p>Payment By Cash</p>
+                  </div>
+                </div>
+                <Button
+                  // disabled={!selectedInput}
+                  // data-toggle="modal"
+                  // data-target="#paysubmit"
+                  data-toggle="modal"
+                  data-target="#paysubmit"
+                  data-dismiss="modal"
+                >
+                  <Link>pay</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* modal pay butto */}
+      <div
+        className="modal fade"
+        id="paysubmit"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="payment-done">
+                <img src={paydone} />
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesettingLorem Ipsum is simply dummy text of the printing
+                  and typesetting
+                </p>
+                <Button
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  // onClick={handleSendRequest}
+                >
+                  <Link
+                  // to="/shipping"
+                  >
+                    Done
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

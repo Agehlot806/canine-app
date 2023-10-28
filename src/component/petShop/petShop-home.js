@@ -20,6 +20,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import Fade, { Flip } from "react-reveal";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import "animate.css/animate.min.css";
+import logo from "../../assets/images/logo.png";
 
 const homeslider = {
   desktop: {
@@ -909,6 +910,67 @@ function PetshopHome(props) {
     setAddressContentVisible(null);
     setSelectedAddress(null);
     setQuantity(1);
+  };
+  const [selectedValue, setSelectedValue] = useState(0);
+  const handleRadioButton = (event) => {
+    setSelectedValue(parseInt(event.target.value, 10));
+  };
+  const [selectedOption, setSelectedOption] = useState("Select Payment Time");
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedOptiontwo, setSelectedOptiontwo] = useState(
+    "Select Payment Mode"
+  );
+  const [isDropdownOpentwo, setDropdownOpentwo] = useState(false);
+  const [showPaymentModeDropdown, setShowPaymentModeDropdown] = useState(false);
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState(null);
+  const [showGstOptions, setShowGstOptions] = useState(false);
+
+  const handleOptionSelect = (option) => {
+    if (option !== selectedOption) {
+      setSelectedOption(option);
+      setDropdownOpen(false);
+      setShowPaymentModeDropdown(true);
+    }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleOptionSelecttwo = (option, mode) => {
+    if (option !== selectedOptiontwo) {
+      setSelectedOptiontwo(option);
+      setDropdownOpentwo(false);
+      setSelectedPaymentMode(mode);
+      // setShowPaymentModeDropdown(false);
+      // Check if both "Cheque" and "UPI" are selected, and set GST as default
+      // Check if both "Cheque" and "UPI" are selected, and set GST as default
+      if (selectedOptiontwo === "Cheque" && option === "UPI") {
+        setSelectedPaymentMode("GST");
+      } else if (selectedOptiontwo === "UPI" && option === "Cheque") {
+        setSelectedPaymentMode("GST");
+      } else if (
+        selectedOptiontwo === "GST" &&
+        option !== "Cheque" &&
+        option !== "UPI"
+      ) {
+        setSelectedPaymentMode(""); // Reset the payment mode if neither "Cheque" nor "UPI" is selected
+      }
+      // Check if "Cash" is selected to show/hide GST options
+      if (option === "Cash" || option === "Cheque" || option === "UPI") {
+        setShowGstOptions(true);
+      } else {
+        setShowGstOptions(false);
+      }
+    }
+  };
+
+  const toggleDropdowntwo = () => {
+    setDropdownOpentwo(!isDropdownOpentwo);
+  };
+
+  const handlePaymentModeSelect = (mode) => {
+    setSelectedPaymentMode(mode);
   };
 
   // ****************notifyme
@@ -2339,18 +2401,284 @@ function PetshopHome(props) {
                       checked={selectedInput}
                       onChange={handleRadioChange}
                     />
-                    <p>Cash On Delivery</p>
+                    {/* <p>Cash On Delivery</p> */}
+                    <p>Canine Pay Later</p>
                   </div>
                 </div>
                 <Button
                   disabled={!selectedInput}
                   data-toggle="modal"
-                  data-target="#paysubmit"
+                  data-target=".Canine-Products"
                   data-dismiss="modal"
                 >
                   <Link>pay</Link>
                 </Button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade Canine-Products"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-body">
+              <Container>
+                <div className="oder-detail-card">
+                  <Row>
+                    <Col lg={5}>
+                      <div className="product-details">
+                        <div>
+                          <img src={logo} />
+                        </div>
+                        <div>
+                          <h5>Canine Products</h5>
+                          <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={7} className="d-flex justify-content-center">
+                      <div className="product-details text-center">
+                        <div>
+                          <h5>Canine Pay Later</h5>
+                          <p>Your total approved credit is ₹ 10,0000</p>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col lg={5}>
+                      <div className="payment-time">
+                        <div className="dropdown">
+                          <button
+                            className="btn dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            aria-haspopup="true"
+                            aria-expanded={isDropdownOpen}
+                            onClick={toggleDropdown}
+                          >
+                            {selectedOption}
+                          </button>
+                          <div
+                            className={`dropdown-menu ${
+                              isDropdownOpen ? "show" : ""
+                            }`}
+                            aria-labelledby="dropdownMenuButton"
+                          >
+                            <div
+                              className="form-check"
+                              onClick={() => handleOptionSelect("15 Days")}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="paymentTimeRadios"
+                                id="15Days"
+                                checked={selectedOption == "15"}
+                                readOnly
+                              />
+                              <label className="form-check-label">
+                                15 Days
+                              </label>
+                            </div>
+                            {/* Add similar code for other options */}
+                            <div
+                              className="form-check"
+                              onClick={() => handleOptionSelect("30 Days")}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="paymentTimeRadios"
+                                id="30Days"
+                                checked={selectedOption == "30"}
+                                readOnly
+                              />
+                              <label className="form-check-label">
+                                30 Days
+                              </label>
+                            </div>
+                            <div
+                              className="form-check"
+                              onClick={() => handleOptionSelect("45 Days")}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="radio"
+                                name="paymentTimeRadios"
+                                id="45Days"
+                                checked={selectedOption == "45"}
+                                readOnly
+                              />
+                              <label className="form-check-label">
+                                45 Days
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        {showPaymentModeDropdown && (
+                          <div className="dropdown">
+                            <button
+                              className="btn dropdown-toggle"
+                              type="button"
+                              id="paymentModeDropdownButton"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded={isDropdownOpentwo}
+                              onClick={toggleDropdowntwo}
+                            >
+                              {selectedOptiontwo}
+                            </button>
+                            <div
+                              className={`dropdown-menu ${
+                                isDropdownOpentwo ? "show" : ""
+                              }`}
+                              aria-labelledby="paymentModeDropdownButton"
+                            >
+                              <div
+                                className="form-check"
+                                onClick={() => handleOptionSelecttwo("UPI")}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentModeRadios"
+                                  id="UPI"
+                                  checked={selectedOptiontwo == "UPI"}
+                                  readOnly
+                                />
+                                <label className="form-check-label">UPI</label>
+                              </div>
+                              {/* Add similar code for other payment modes */}
+                              <div
+                                className="form-check"
+                                onClick={() => handleOptionSelecttwo("Cheque")}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentModeRadios"
+                                  id="Cheque"
+                                  checked={selectedOptiontwo == "Cheque"}
+                                  readOnly
+                                />
+                                <label className="form-check-label">
+                                  Cheque
+                                </label>
+                              </div>
+                              <div
+                                className="form-check"
+                                onClick={() => handleOptionSelecttwo("Cash")}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentModeRadios"
+                                  id="Cash"
+                                  checked={selectedOptiontwo == "Cash"}
+                                  readOnly
+                                />
+                                <label className="form-check-label">Cash</label>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div>
+                          {showGstOptions && (
+                            <div>
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="gstRadios"
+                                  id="withoutGST"
+                                  value={0}
+                                  onChange={handleRadioButton}
+                                  disabled={
+                                    selectedOptiontwo == "Cheque" ||
+                                    selectedOptiontwo == "UPI"
+                                  }
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="withoutGST"
+                                >
+                                  Without GST
+                                </label>
+                              </div>
+                              <div className="form-check form-check-inline">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="gstRadios"
+                                  id="withGST"
+                                  value={1}
+                                  onChange={handleRadioButton}
+                                  // checked={
+                                  //   selectedPaymentMode == "GST"
+                                  //     ? selectedOptiontwo == "Cheque"
+                                  //     : selectedOptiontwo == "UPI"
+                                  // }
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="withGST"
+                                >
+                                  GST
+                                </label>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <div className="payletter-btn">
+                          <button
+                            data-toggle="modal"
+                            data-dismiss="modal"
+                            data-target="#paysubmit"
+                          >
+                            Sumbit
+                          </button>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col lg={7} className="align-self-center">
+                      <div className="order-table">
+                        <Table responsive>
+                          <tbody>
+                            <tr>
+                              <th>Utilised Credit</th>
+                              <td>₹0</td>
+                            </tr>
+                            <tr>
+                              <th>Available Credit</th>
+                              <td>₹10,0000</td>
+                            </tr>
+                            <tr>
+                              <th>Total Approved Credit</th>
+                              <td>₹10,0000</td>
+                            </tr>
+                            <tr>
+                              {/* <th>(All due are debited on 5th of each month)</th> */}
+                              {/* <td>₹138.00</td> */}
+                            </tr>
+                          </tbody>
+                        </Table>
+                        <p className="d-flex justify-content-center">
+                          (All due are debited on 5th of each month)
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Container>
             </div>
           </div>
         </div>

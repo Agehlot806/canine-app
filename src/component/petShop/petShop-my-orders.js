@@ -21,7 +21,9 @@ function PetshopMyorder() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
-
+  // salesmanId
+  const salesmanId = localStorage.getItem("salesmanId");
+  console.log("salesmanId: ", salesmanId);
   const allOrders = async () => {
     axios
       .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
@@ -47,6 +49,7 @@ function PetshopMyorder() {
         <Container>
           <h1 className="main-head">My Orders</h1>
           <div className="needplace">
+            {console.log("allorder: ", allorder)}
             {allorder && allorder.length > 0 ? (
               allorder.map((item, index) => (
                 <div className="myorder-list">
@@ -58,6 +61,7 @@ function PetshopMyorder() {
                       <h3>Order Id: {item.id}</h3>
                       <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
                       <h3>Payment Method: {item.payment_method}</h3>
+                      <h3>Payment Status: {item.payment_status}</h3>
                       <h3>
                         Order Amount: ₹
                         {item.order_amount + item.total_tax_amount}
@@ -125,13 +129,22 @@ function PetshopMyorder() {
                     <Col lg={3} sm={3} className="align-self-center">
                       <div className="myorder-btn">
                         <Button>
-                          <Link to={`/order-view-details/${item.id}`}>
+                          <Link to={`/petShop-order-view-details/${item.id}`}>
                             View
                           </Link>
                         </Button>
                         <Button>
-                          <Link to={`/petshoptrackyourorde/${item.id}`}>Track</Link>
+                          <Link to={`/petshoptrackyourorde/${item.id}`}>
+                            Track
+                          </Link>
                         </Button>
+                        {salesmanId && item.payment_status === "unpaid" ? (
+                          <Button>
+                            <Link to={`/petShop-order-view-details/${item.id}`}>
+                              Pay
+                            </Link>
+                          </Button>
+                        ) : null}
                       </div>
                     </Col>
                   </Row>
