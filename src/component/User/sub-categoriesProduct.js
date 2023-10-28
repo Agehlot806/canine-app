@@ -1703,7 +1703,7 @@ function SubcategoriesProduct() {
                         </section>
                     </Col>
                     <Col lg={9}>
-
+<div className="sort-by">
                     <Row>
           <Col lg={2}>
             <h4>Sort by</h4>
@@ -1724,6 +1724,7 @@ function SubcategoriesProduct() {
             </select>
           </Col>
         </Row>
+        </div>
                         <section className="section-padding food">
                             <Container>
                                 {/* <div className="needplace">

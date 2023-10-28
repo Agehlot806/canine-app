@@ -14,7 +14,7 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
- 
+
 function PetshopPetcategory() {
   //     const { id } = useParams();
   //   console.log("id", id);
@@ -695,7 +695,7 @@ function PetshopPetcategory() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -703,7 +703,7 @@ function PetshopPetcategory() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -1112,10 +1112,10 @@ function PetshopPetcategory() {
         console.error('Error fetching data:', error);
       });
   }, [id]);
-  console.log("categoriescategories",banner);
+  console.log("categoriescategories", banner);
 
 
-  const [sortOption, setSortOption] = useState('default'); 
+  const [sortOption, setSortOption] = useState('default');
 
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
@@ -1186,7 +1186,12 @@ function PetshopPetcategory() {
       <PetShopHeader />
       <Container fluid className="p-0">
         <div className="all-bg">
-        {banner && <img src={banner} alt="Category Banner" />}
+          {banner && <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/public/category/" +
+                                    banner
+                                  }
+                                />}
         </div>
       </Container>
 
@@ -1211,38 +1216,38 @@ function PetshopPetcategory() {
                     <>
                       {brands
                         ? brands.map(
-                            (item) =>
-                              item.canine == "1" && (
-                                <div>
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
+                          (item) =>
+                            item.canine == "1" && (
+                              <div>
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="defaultCheck1"
+                                    checked={selectedBrand !== null}
+                                    onChange={() => {
+                                      if (selectedBrand === null) {
+                                        handleDataListBrand(
+                                          allproduct[0].brand_id
+                                        ); // Set initial brand ID
+                                      } else {
+                                        handleClearFilter();
+                                      }
+                                    }}
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="defaultCheck1"
                                   >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id="defaultCheck1"
-                                      checked={selectedBrand !== null}
-                                      onChange={() => {
-                                        if (selectedBrand === null) {
-                                          handleDataListBrand(
-                                            allproduct[0].brand_id
-                                          ); // Set initial brand ID
-                                        } else {
-                                          handleClearFilter();
-                                        }
-                                      }}
-                                    />
-                                    <label
-                                      className="form-check-label"
-                                      htmlFor="defaultCheck1"
-                                    >
-                                      {item.title}
-                                    </label>
-                                  </div>
+                                    {item.title}
+                                  </label>
                                 </div>
-                              )
-                          )
+                              </div>
+                            )
+                        )
                         : null}
                     </>
                   )}
@@ -1262,26 +1267,26 @@ function PetshopPetcategory() {
                     <>
                       {subcategories && subcategories.length > 0
                         ? subcategories.map((item) => (
-                            <div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                onClick={handleFilterClick}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
                               >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                  onClick={handleFilterClick}
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {item.name}
-                                </label>
-                              </div>
+                                {item.name}
+                              </label>
                             </div>
-                          ))
+                          </div>
+                        ))
                         : null}
                     </>
                   )}
@@ -1302,7 +1307,7 @@ function PetshopPetcategory() {
                       <div
                         className="form-range"
                         onClick={handleFilterClick}
-                        // onClick={handleCheckboxClick}
+                      // onClick={handleCheckboxClick}
                       >
                         <span>₹</span>
                         <input type="number" placeholder="From" />
@@ -1310,7 +1315,7 @@ function PetshopPetcategory() {
                       <div
                         className="form-range"
                         onClick={handleFilterClick}
-                        // onClick={handleCheckboxClick}
+                      // onClick={handleCheckboxClick}
                       >
                         <span>₹</span>
                         <input type="number" placeholder="From" />
@@ -1333,35 +1338,35 @@ function PetshopPetcategory() {
                     <>
                       {lifestage && lifestage.length > 0
                         ? lifestage.map((item) => (
-                            <div>
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
+                          <div>
+                            <div
+                              className="form-check"
+                              onClick={handleCheckboxClick}
+                            >
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="defaultCheck1"
+                                checked={selectedBrand !== null}
+                                onChange={() => {
+                                  if (selectedBrand === null) {
+                                    handleSelectedlifeStage(
+                                      allproduct[0].lifeStage_id
+                                    ); // Set initial brand ID
+                                  } else {
+                                    handleClearFilterlifeStage();
+                                  }
+                                }}
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="defaultCheck1"
                               >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  id="defaultCheck1"
-                                  checked={selectedBrand !== null}
-                                  onChange={() => {
-                                    if (selectedBrand === null) {
-                                      handleSelectedlifeStage(
-                                        allproduct[0].lifeStage_id
-                                      ); // Set initial brand ID
-                                    } else {
-                                      handleClearFilterlifeStage();
-                                    }
-                                  }}
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="defaultCheck1"
-                                >
-                                  {item.name}
-                                </label>
-                              </div>
+                                {item.name}
+                              </label>
                             </div>
-                          ))
+                          </div>
+                        ))
                         : null}
                     </>
                   )}
@@ -1499,9 +1504,33 @@ function PetshopPetcategory() {
             </section>
           </Col>
           <Col lg={9}>
+
+          <div className="sort-by">
+                  <Row>
+                    <Col lg={2}>
+                      Sort By
+                    </Col>
+                    <Col lg={3}>
+                      <select
+                        className="form-control"
+                        onChange={(e) => setSortOption(e.target.value)}
+                        value={sortOption}
+                      >
+                        <option value="default">Default (API Order)</option>
+                        <option value="A-Z">Alphabetically, A-Z</option>
+                        <option value="Z-A">Alphabetically, Z-A</option>
+                        <option value="PriceLowToHigh">Price, Low to High</option>
+                        <option value="PriceHighToLow">Price, High to Low</option>
+                        <option value="DateOldToNew">Date, Old to New</option>
+                        <option value="DateNewToOld">Date, New to Old</option>
+                      </select>
+                    </Col>
+
+                  </Row>
+                </div>
             <section className="section-padding food">
               <Container>
-              {/* <div className="needplace">
+                {/* <div className="needplace">
                   <div className="dog-categorys-area">
                     <ul
                       className="nav nav-pills mb-3"
@@ -1703,27 +1732,7 @@ function PetshopPetcategory() {
                     ))}
                   </Row>
                 </div> */}
-
-<Row>
-  <Col lg={2}>
-    Sort By
-  </Col>
-  <Col lg={3}>
-  <select
-              className="form-control"
-              onChange={(e) => setSortOption(e.target.value)}
-              value={sortOption}
-            >
-              <option value="default">Default (API Order)</option>
-              <option value="A-Z">Alphabetically, A-Z</option>
-              <option value="Z-A">Alphabetically, Z-A</option>
-              <option value="PriceLowToHigh">Price, Low to High</option>
-              <option value="PriceHighToLow">Price, High to Low</option>
-              <option value="DateOldToNew">Date, Old to New</option>
-              <option value="DateNewToOld">Date, New to Old</option>
-            </select>
-  </Col>
-</Row>
+               
 
                 <Row>
                   {(selectedBrand !== null ? dataList : itemsToDisplay).map(
@@ -1812,18 +1821,18 @@ function PetshopPetcategory() {
                 </Row>
 
                 <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"activebtn"}
-                    nextClassName={"nextbtn"}
-                    previousClassName={"previousbtn"}
-                  />
+                  previousLabel={"<"}
+                  nextLabel={">"}
+                  breakLabel={"..."}
+                  pageCount={Math.ceil(allproduct.length / itemsPerPage)}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageChange}
+                  containerClassName={"pagination"}
+                  activeClassName={"activebtn"}
+                  nextClassName={"nextbtn"}
+                  previousClassName={"previousbtn"}
+                />
               </Container>
             </section>
           </Col>
@@ -1860,7 +1869,7 @@ function PetshopPetcategory() {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                            productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1917,11 +1926,10 @@ function PetshopPetcategory() {
                                         <Col lg={4} key={index}>
                                           {item.stock !== 0 ? (
                                             <div
-                                              className={`tab-variations ${
-                                                selectedVariant === item.type
+                                              className={`tab-variations ${selectedVariant === item.type
                                                   ? "active"
                                                   : ""
-                                              }`}
+                                                }`}
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
                                                 setSelectedVariantPrice(
@@ -2401,11 +2409,10 @@ function PetshopPetcategory() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2509,11 +2516,10 @@ function PetshopPetcategory() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2679,7 +2685,7 @@ function PetshopPetcategory() {
                 </Container>
                 <div className="homecheckout">
                   {productDetails?.stock &&
-                  productDetails?.stock?.length !== 10 ? (
+                    productDetails?.stock?.length !== 10 ? (
                     <button data-toggle="modal" data-target="#cod">
                       Checkout
                     </button>
@@ -2837,11 +2843,11 @@ function PetshopPetcategory() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

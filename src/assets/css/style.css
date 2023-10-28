@@ -3670,7 +3670,7 @@ button.Apply-price {
 .form-area.eyeicon button {
   position: absolute;
   right: 20px;
-  top: 0;
+  top: -10px;
   background: none;
 }
 
@@ -4126,4 +4126,15 @@ li.previousbtn a {
 }
 .selected-image {
   text-align: center;
+}
+
+ul.nav-links.wrappertwo {
+    padding: 0 80px 0 0;
+}
+
+.sort-by {
+  padding: 20px 23px 0;
+  color: #000;
+  font-weight: bold;
+  font-size: 22px;
 }

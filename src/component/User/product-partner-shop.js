@@ -1540,6 +1540,7 @@ function Productpartnershop() {
             </section>
           </Col>
           <Col lg={9}>
+          <div className="sort-by">
           <Row>
   <Col lg={2}>
     Sort By
@@ -1560,6 +1561,7 @@ function Productpartnershop() {
             </select>
   </Col>
 </Row>
+</div>
 
             <section className="section-padding">
               <div className="needplace">

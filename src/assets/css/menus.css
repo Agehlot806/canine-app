@@ -259,7 +259,7 @@ ul.mega-links p {
     top: 65px;
     opacity: 1;
     visibility: visible;
-    padding: 0 20px;
+    padding: 0;
     max-height: 0px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -267,7 +267,7 @@ ul.mega-links p {
   .mega-box .content {
     box-shadow: none;
     flex-direction: column;
-    padding: 20px 20px 0 20px;
+    padding: 0 1%;
   }
   .mega-box .content .row {
     width: 100%;
@@ -287,6 +287,7 @@ ul.mega-links p {
   }
   .content .row header {
     font-size: 19px;
+    padding: 0 5px;
   }
   input.homesea {
     display: inline-block !important;

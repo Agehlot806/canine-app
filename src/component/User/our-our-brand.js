@@ -1632,7 +1632,7 @@ function Ourourbrand(props) {
             </section>
           </Col>
           <Col lg={9}>
-
+          <div className="sort-by">
           <Row>
   <Col lg={2}>
     Sort By
@@ -1652,7 +1652,9 @@ function Ourourbrand(props) {
               <option value="DateNewToOld">Date, New to Old</option>
             </select>
   </Col>
+
 </Row>
+</div>
 
             <section className="section-padding">
               <Container>

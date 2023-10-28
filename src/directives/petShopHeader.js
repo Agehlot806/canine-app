@@ -2861,7 +2861,7 @@ function Petshopheader(props) {
     <>
       <div className="sticky-newheader">
         <nav className="navbar navbar-expand-lg navbar-light newnavv">
-          <div className="wrapper">
+          <div className="wrapper container wrappertwo">
             <div className="logo">
               <Link
                 to={
@@ -2909,7 +2909,7 @@ function Petshopheader(props) {
             </div>
             <input type="radio" name="slider" id="menu-btn" />
             <input type="radio" name="slider" id="close-btn" />
-            <ul className="nav-links">
+            <ul className="nav-links wrappertwo">
               <label htmlFor="close-btn" className="btn close-btn">
                 <i className="fas fa-times" />
               </label>
@@ -2989,7 +2989,7 @@ function Petshopheader(props) {
                   </a>
                 </li>
               </div>
-              <li>
+              {/* <li>
                 <a href="#" className="desktop-item">
                   Dogs
                   <i class="fa fa-angle-down arrr" />
@@ -3296,29 +3296,7 @@ function Petshopheader(props) {
                           )}
                         </ul>
                       </Col>
-                      {/* <Col lg={4} sm={6}>
-                        <header>Cat Litter & Accessories</header>
-                        <ul className="mega-links">
-                          {dogsubcategories ? (
-                            dogsubcategories.map(
-                              (item) =>
-                                item.heading == "Treats" && (
-                                  <li>
-                                    <Link
-                                      to={`/petShop-subcategoriesProduct/${item.name}`}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  </li>
-                                )
-                            )
-                          ) : (
-                            <p className="emptyMSG">
-                              No Treats Sub Categories.
-                            </p>
-                          )}
-                        </ul>
-                      </Col> */}
+                     
                       <Col lg={4} sm={6}>
                         <header>Toys</header>
                         <ul className="mega-links">
@@ -3553,7 +3531,7 @@ function Petshopheader(props) {
                     </Link>
                   </li>
                 </ul>
-              </li>
+              </li> */}
               <li>
                 <Link to="/petshop-contact">Contact</Link>
               </li>

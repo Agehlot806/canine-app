@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import product from "../../assets/images/banner/product.png";
-import { Link, useNavigate ,useParams} from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
@@ -1224,7 +1224,38 @@ function PetShopSubcategoriesProduct(props) {
     const startIndex = currentPage * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const itemsToDisplay = allproduct.slice(startIndex, endIndex);
-
+    const [sortOption, setSortOption] = useState('default');
+    const sortedProducts = () => {
+        let sortedItems = [...allproduct];
+        switch (sortOption) {
+            case 'A-Z':
+                sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'Z-A':
+                sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'PriceLowToHigh':
+                sortedItems.sort((a, b) => a.price - b.price);
+                break;
+            case 'PriceHighToLow':
+                sortedItems.sort((a, b) => b.price - a.price);
+                break;
+            case 'DateOldToNew':
+                sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'DateNewToOld':
+                sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            default:
+                // Default sorting (as per API response)
+                break;
+        }
+        if (sortOption === 'DateNewToOld') {
+            // If sorting by DateNewToOld, reverse the array
+            sortedItems = sortedItems.reverse();
+        }
+        return sortedItems;
+    };
 
     const renderProductDescription = (description) => {
         const maxCharacters = 35; // Number of characters to show initially
@@ -1569,12 +1600,35 @@ function PetShopSubcategoriesProduct(props) {
                         </section>
                     </Col>
                     <Col lg={9}>
+                    <div className="sort-by">
+
+                        <Row>
+                            <Col lg={2}>
+                                <h4>Sort by</h4>
+                            </Col>
+                            <Col lg={4}>
+                                <select
+                                    className="form-control"
+                                    onChange={(e) => setSortOption(e.target.value)}
+                                    value={sortOption}
+                                >
+                                    <option value="default">Default (API Order)</option>
+                                    <option value="A-Z">Alphabetically, A-Z</option>
+                                    <option value="Z-A">Alphabetically, Z-A</option>
+                                    <option value="PriceLowToHigh">Price, Low to High</option>
+                                    <option value="PriceHighToLow">Price, High to Low</option>
+                                    <option value="DateOldToNew">Date, Old to New</option>
+                                    <option value="DateNewToOld">Date, New to Old</option>
+                                </select>
+                            </Col>
+                        </Row>
+                        </div>
                         <section className="section-padding food">
                             <Container>
-                            <h1 className="main-head mb-4">All {name} Products</h1>
+                                <h1 className="main-head mb-4">All {name} Products</h1>
                                 <Row>
-                                    {allproduct.length > 0 ? (
-                                        allproduct.map((item, index) =>
+                                    {sortedProducts().length > 0 ? (
+                                        sortedProducts().map((item, index) =>
                                             item.sub_category === name && (
                                                 <Col lg={4} sm={6} xs={6} className="mb-4">
                                                     <div
@@ -1769,8 +1823,8 @@ function PetShopSubcategoriesProduct(props) {
                                                                                     {item.stock !== 0 ? (
                                                                                         <div
                                                                                             className={`tab-variations ${selectedVariant === item.type
-                                                                                                    ? "active"
-                                                                                                    : ""
+                                                                                                ? "active"
+                                                                                                : ""
                                                                                                 }`}
                                                                                             onClick={() => {
                                                                                                 setSelectedVariant(item.type);
@@ -2249,8 +2303,8 @@ function PetShopSubcategoriesProduct(props) {
                                                                 Select Address{" "}
                                                                 <i
                                                                     className={`fa ${addressContentVisible
-                                                                            ? "fa-arrow-up"
-                                                                            : "fa-arrow-down"
+                                                                        ? "fa-arrow-up"
+                                                                        : "fa-arrow-down"
                                                                         }`}
                                                                     aria-hidden="true"
                                                                 ></i>
@@ -2356,8 +2410,8 @@ function PetShopSubcategoriesProduct(props) {
                                                                     {item.stock !== 0 ? (
                                                                         <div
                                                                             className={`tab-variations ${selectedVariant === item.type
-                                                                                    ? "active"
-                                                                                    : ""
+                                                                                ? "active"
+                                                                                : ""
                                                                                 }`}
                                                                             onClick={() => {
                                                                                 setSelectedVariant(item.type);

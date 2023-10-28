@@ -3,7 +3,7 @@ import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import product from "../../assets/images/banner/product.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import product1 from "../../assets/images/img/product1.png";
 import product2 from "../../assets/images/img/product2.png";
 import product3 from "../../assets/images/img/product3.png";
@@ -42,6 +42,7 @@ const clinetreview = {
   },
 };
 function Product(props) {
+  const { id } = useParams();
   const [expandedDescription, setExpandedDescription] = useState({});
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
@@ -1537,7 +1538,7 @@ function Product(props) {
                 </Carousel>
               </Container>
             </section> */}
-
+<div className="sort-by">
 <Row>
   <Col lg={2}>
     Sort By
@@ -1558,7 +1559,7 @@ function Product(props) {
             </select>
   </Col>
 </Row>
-
+</div>
 
             <section className="section-padding food">
               <Container>

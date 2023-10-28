@@ -3,7 +3,7 @@ import Newheader from "../../directives/newheader";
 import shop from "../../assets/images/banner/shop.png";
 import { Container, Table, Row, Col, Button, Form } from "react-bootstrap";
 import bag from "../../assets/images/icon/bag.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import product1 from "../../assets/images/img/product1.png";
 import Footer from "../../directives/footer";
 import axios from "axios";
@@ -16,6 +16,7 @@ import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Partneroneshop() {
+  const { id } = useParams();
   const { state } = useLocation();
   // console.log('state', state)
   const [vendorItemList, setVendorItemList] = useState([]);
@@ -1279,6 +1280,7 @@ function Partneroneshop() {
                         </Button>
                         :
                         (<Button>
+
                           <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>

@@ -453,52 +453,52 @@ function Petshopdashboard() {
                     <div>
                       {homebanner
                         ? homebanner.map(
-                            (item, index) =>
-                              item.type === "news_letter" && (
-                                <div className="home-img">
-                                  <div className="">
-                                    <img
-                                      src={
-                                        "https://canine.hirectjob.in/storage/app/" +
-                                        item.image
-                                      }
-                                    />
-                                  </div>
-                                  <Row className="justify-content-center">
-                                    <Col lg={7}>
-                                      <div className="new-content">
-                                        <div className="Newsletter">
-                                          <Flip right>
-                                            <h1 className="main-head">
-                                              Get Or Promo Code by Subscribing
-                                              To our Newsletter
-                                            </h1>
-                                          </Flip>
-                                          <Form className="d-flex">
-                                            <Form.Control
-                                              type="search"
-                                              placeholder="Enter your email"
-                                              className="me-2"
-                                              aria-label="Search"
-                                              value={email}
-                                              onChange={(e) =>
-                                                setEmail(e.target.value)
-                                              }
-                                            />
-                                            <Button
-                                              variant="outline-success"
-                                              onClick={handleNewsletter}
-                                            >
-                                              Subscribe
-                                            </Button>
-                                          </Form>
-                                        </div>
-                                      </div>
-                                    </Col>
-                                  </Row>
+                          (item, index) =>
+                            item.type === "news_letter" && (
+                              <div className="home-img">
+                                <div className="">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/" +
+                                      item.image
+                                    }
+                                  />
                                 </div>
-                              )
-                          )
+                                <Row className="justify-content-center">
+                                  <Col lg={7}>
+                                    <div className="new-content">
+                                      <div className="Newsletter">
+                                        <Flip right>
+                                          <h1 className="main-head">
+                                            Get Or Promo Code by Subscribing
+                                            To our Newsletter
+                                          </h1>
+                                        </Flip>
+                                        <Form className="d-flex">
+                                          <Form.Control
+                                            type="search"
+                                            placeholder="Enter your email"
+                                            className="me-2"
+                                            aria-label="Search"
+                                            value={email}
+                                            onChange={(e) =>
+                                              setEmail(e.target.value)
+                                            }
+                                          />
+                                          <Button
+                                            variant="outline-success"
+                                            onClick={handleNewsletter}
+                                          >
+                                            Subscribe
+                                          </Button>
+                                        </Form>
+                                      </div>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </div>
+                            )
+                        )
                         : null}
                     </div>
                   </Container>
@@ -525,7 +525,7 @@ function Petshopdashboard() {
                                 style={{
                                   background:
                                     gradientColors[
-                                      index % gradientColors.length
+                                    index % gradientColors.length
                                     ],
                                 }}
                               >
@@ -640,7 +640,7 @@ function Petshopdashboard() {
                                 style={{
                                   background:
                                     gradientColors[
-                                      index % gradientColors.length
+                                    index % gradientColors.length
                                     ],
                                 }}
                               >
@@ -745,7 +745,12 @@ function Petshopdashboard() {
                     <Col lg={8}>
                       <div className="balance-card">
                         <h5>Current Balance</h5>
-                        <h1>₹143,421.20</h1>
+                        {totalorder && totalorder.map((order) => (
+  <div key={order.id}>
+    <h1>{order?.callback?.user_profile?.wallet_balance}</h1>
+    {console.log("order?.callback?.user_profile?.wallet_balance",order?.callback?.user_profile?.wallet_balance)}
+  </div>
+))}
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <div class="input-group-text">₹</div>
