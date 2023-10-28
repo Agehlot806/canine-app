@@ -42,6 +42,7 @@ const SalesmanLogin = () => {
             localStorage.setItem("salesmanId", response.data.data[0].id);
             localStorage.setItem("salesmanPhone", response.data.data[0].phone);
             localStorage.setItem("loginType", "salesman"); 
+            localStorage.setItem("wallet_balance", response.data.data[0].wallet_balance); 
             localStorage.setItem("zoneId", response.data.data[0].zone_id);
             localStorage.setItem("verifiedId", response.data.data[0].status);
 

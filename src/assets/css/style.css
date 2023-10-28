@@ -373,6 +373,7 @@ a {
   font-weight: 600;
   letter-spacing: 0.05em;
   color: #000;
+  word-break: break-all;
 }
 
 .food-product p {
@@ -1329,11 +1330,15 @@ a {
 .balance-card {
   background: #008efd;
   text-align: center;
-  padding: 80px;
+  padding: 80px 190px;
   border-radius: 40px;
   font-family: Poppins;
 }
-
+.balance-card .input-group-text {
+  background: #FFC934;
+  color: #000;
+  font-weight: bold;
+}
 .balance-card h5 {
   font-size: 25px;
   font-weight: 400;
@@ -4091,6 +4096,12 @@ li.activebtn a {
   padding: 8px 20px;
   font-size: 20px;
   border-radius: 10px;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: #000;
+  background-color: #ffc934 !important;
+  border-color: #ffc934 !important;
 }
 li.nextbtn a {
   font-size: 25px;

@@ -1192,11 +1192,11 @@ function PetshopPetcategory() {
       <Container fluid className="p-0">
         <div className="all-bg">
           {banner && <img
-                                  src={
-                                    "https://canine.hirectjob.in//storage/app/public/category/" +
-                                    banner
-                                  }
-                                />}
+            src={
+              "https://canine.hirectjob.in//storage/app/public/category/" +
+              banner
+            }
+          />}
         </div>
       </Container>
 
@@ -1531,8 +1531,8 @@ function PetshopPetcategory() {
                       </select>
                     </Col>
 
-                  </Row>
-                </div>
+              </Row>
+            </div>
             <section className="section-padding food">
               <Container>
                 {/* <div className="needplace">
@@ -1737,7 +1737,7 @@ function PetshopPetcategory() {
                     ))}
                   </Row>
                 </div> */}
-               
+
 
                 <Row>
                   {(selectedBrand !== null ? dataList : itemsToDisplay).map(
@@ -1934,8 +1934,8 @@ function PetshopPetcategory() {
                                           {item.stock !== 0 ? (
                                             <div
                                               className={`tab-variations ${selectedVariant === item.type
-                                                  ? "active"
-                                                  : ""
+                                                ? "active"
+                                                : ""
                                                 }`}
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
@@ -2417,8 +2417,8 @@ function PetshopPetcategory() {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2524,8 +2524,8 @@ function PetshopPetcategory() {
                                   {item.stock !== 0 ? (
                                     <div
                                       className={`tab-variations ${selectedVariant === item.type
-                                          ? "active"
-                                          : ""
+                                        ? "active"
+                                        : ""
                                         }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
