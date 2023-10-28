@@ -127,7 +127,10 @@ function App() {
           <Route path="/about-us" element={<Aboutus />} />
           <Route path="/service" element={<Service />} />
           <Route path="/product" element={<Product />} />
-          <Route path="/sub-categoriesProduct/:name" element={<SubcategoriesProduct />} />
+          <Route
+            path="/sub-categoriesProduct/:name"
+            element={<SubcategoriesProduct />}
+          />
           <Route path="/product-details/:id" element={<Productdetail />} />
           <Route path="/quick-view/:id" element={<Quickview />} />
           <Route path="/canine-product" element={<Canineproduct />} />
@@ -258,7 +261,7 @@ function App() {
             element={<Orderviewdetails />}
           />
           <Route
-            path="/petShop-order-view-details/:id"
+            path="/petShop-order-view-details/"
             element={<PetshopOrderviewdetails />}
           />
 

@@ -43,18 +43,20 @@ function PetshopLogin() {
       )
       .then((response) => {
         console.log("tarunnnnn", response);
-        
+
         if (response.data.message === "Login Successfull") {
           localStorage.setItem("UserWholesellerId", response.data.data[0].id);
-        localStorage.setItem("verifiedId", response.data.data[0].verified);
-        localStorage.setItem("loginType", "wholeseller");
+          localStorage.setItem("verifiedId", response.data.data[0].verified);
+          localStorage.setItem(
+            "wallet_balance",
+            response.data.data[0].wallet_balance
+          );
+          localStorage.setItem("loginType", "wholeseller");
           navigate("/petshop-dashboard");
           toast.success("Successfully");
-        }
-        else if (response.data.message === "User Not Exit") {
+        } else if (response.data.message === "User Not Exit") {
           toast.error("User Not Exit");
-        }
-       else if (response.data.message === "Your Password Not Match") {
+        } else if (response.data.message === "Your Password Not Match") {
           toast.error("Your Password Not Match");
         }
         // Handle the response as needed
@@ -163,7 +165,7 @@ function PetshopLogin() {
               </Col>
               <Col lg={6}>
                 <div className="login-img">
-                  <img src={login} alt="Login" className="bounce-in"/>
+                  <img src={login} alt="Login" className="bounce-in" />
                 </div>
               </Col>
             </Row>
