@@ -110,18 +110,18 @@ function DashboadSalesman() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-            (item, index) =>
-              item.type === "common" && (
-                <Link to={item.default_link}>
-                  <img
-                    className="partner-img"
-                    src={
-                      "https://canine.hirectjob.in//storage/app/" + item.image
-                    }
-                  />
-                </Link>
-              )
-          )
+              (item, index) =>
+                item.type === "common" && (
+                  <Link to={item.default_link}>
+                    <img
+                      className="partner-img"
+                      src={
+                        "https://canine.hirectjob.in//storage/app/" + item.image
+                      }
+                    />
+                  </Link>
+                )
+            )
           : null}
       </div>
       <section className="section-padding">
@@ -140,7 +140,6 @@ function DashboadSalesman() {
                 >
                   <h3>Total Wholeseller</h3>
                   <h5>{wholeSellerList?.length}</h5>
-                  
                 </a>
               </li>
               <li className="nav-item">
@@ -155,7 +154,6 @@ function DashboadSalesman() {
                 >
                   <h3>Transactions</h3>
                   <h5>₹{totalTransactions}</h5>
-                  
                 </a>
               </li>
               <li className="nav-item">
@@ -170,7 +168,6 @@ function DashboadSalesman() {
                 >
                   <h3>Total order</h3>
                   <h5>{orderList?.length}</h5>
-                  
                 </a>
               </li>
               <li className="nav-item">
@@ -185,7 +182,6 @@ function DashboadSalesman() {
                 >
                   <h3>Completed Order</h3>
                   <h5>{completedOders?.length}</h5>
-                  
                 </a>
               </li>
             </ul>
