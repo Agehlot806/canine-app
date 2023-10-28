@@ -63,7 +63,7 @@ function Veterinaryservice() {
 
   const GetdCityAll = (state) => {
     axios
-      .get(`${BASE_URL}/auth/city?state=${state}`, {
+      .post(`${BASE_URL}/auth/city?state=${state}`, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {

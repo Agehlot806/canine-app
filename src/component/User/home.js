@@ -661,7 +661,7 @@ function Home(props) {
 
   const Getdatacity = (state) => {
     axios
-      .get(`${BASE_URL}/auth/city?state=${state}`, {
+      .post(`${BASE_URL}/auth/city?state=${state}`, {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
@@ -1027,7 +1027,7 @@ function Home(props) {
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
             deviceType={props.deviceType}
-            // dotListClass="custom-dot-list-style"
+            dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
             <div>
@@ -1722,7 +1722,6 @@ function Home(props) {
                               <div className="Newsletter">
                                 <Flip right>
                                   <h1 className="main-head">
-                                    Get Or Promo Code by Subscribing To our
                                     Newsletter
                                   </h1>
                                 </Flip>
@@ -1737,7 +1736,14 @@ function Home(props) {
                                   />
                                   <Button
                                     variant="outline-success"
-                                    onClick={handleNewsletter}
+                                    // onClick={handleNewsletter}
+                                    onClick={() => {
+                                      if(!storedUserId){
+                                         toast.error("Please Login first") 
+                                      }else{
+                                        handleNewsletter
+                                      }
+                                    }}
                                   >
                                     Subscribe
                                   </Button>

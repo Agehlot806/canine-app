@@ -946,7 +946,7 @@ function Petshopproduct(props) {
 
   const Getdatacity = (state) => {
     axios
-      .get(`${BASE_URL}/auth/city?state=${state}`, {
+      .post(`${BASE_URL}/auth/city?state=${state}`, {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {

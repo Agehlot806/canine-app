@@ -172,7 +172,7 @@ function PetshopSignUp() {
   };
   const Getdatacity = (state) => {
     axios
-      .get(`${BASE_URL}/auth/city?state=${state}`, {
+      .post(`${BASE_URL}/auth/city?state=${state}`, {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
@@ -240,7 +240,14 @@ function PetshopSignUp() {
                         name="dateofbirth"
                         placeholder="Date of Birth"
                         value={dateOfBirth}
-                        onChange={(e) => setDateOfBirth(e.target.value)}
+                        // onChange={(e) => setDateOfBirth(e.target.value)}
+                        onChange={(e) => {
+                          // Check if the entered value is in the "YYYY-MM-DD" format
+                          const value = e.target.value;
+                          if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                            setDateOfBirth(value);
+                          }
+                        }}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formGroupEmail">

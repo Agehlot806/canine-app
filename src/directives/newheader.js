@@ -1673,7 +1673,7 @@ function Newheader(props) {
     AllDogsubcategories();
     categoriesProduct();
     addToCartData();
-    fetchNotifications();
+    // fetchNotifications();
   }, []);
   useEffect(() => {
     Notifynotification();
@@ -1853,9 +1853,9 @@ function Newheader(props) {
     axios
       .get(`${BASE_URL}/items/notify_list/${customer_id}`)
       .then((response) => {
-        setNotify(response.data.data);
+        // setNotify(response.data.data);
+        // console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         setDataZero(response.data.notification);
-        console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         console.log("Data Zero", response.data.notification);
         setAllnotification(response.data.all_notification)
         console.log("allnotificationnnnnn", response.data.all_notification);
@@ -1895,34 +1895,34 @@ function Newheader(props) {
     }
   };
 
-  const DeleteNotificationone = (id) => {
-    axios
-      .delete(`${BASE_URL}/items/notify_delete/${id}`)
-      .then((response) => {
-        if (response.status === 200 || response.status === 204) {
-          toast.success("Notification deleted successfully");
-          setDataZero((prevDataZero) => {
-            const updatedDataZero = prevDataZero.filter((ob) => ob.id !== id);
-            return updatedDataZero;
-          });
-        } else {
-          console.error("Unexpected response status:", response.status);
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting Notification:", error);
-      });
-    const modal = document.querySelector(".modal");
-    if (modal) {
-      modal.classList.remove("show");
-      modal.style.display = "none";
-      document.body.classList.remove("modal-open");
-      const modalBackdrop = document.querySelector(".modal-backdrop");
-      if (modalBackdrop) {
-        modalBackdrop.remove();
-      }
-    }
-  };
+  // const DeleteNotificationone = (id) => {
+  //   axios
+  //     .delete(`${BASE_URL}/items/notify_delete/${id}`)
+  //     .then((response) => {
+  //       if (response.status === 200 || response.status === 204) {
+  //         toast.success("Notification deleted successfully");
+  //         setDataZero((prevDataZero) => {
+  //           const updatedDataZero = prevDataZero.filter((ob) => ob.id !== id);
+  //           return updatedDataZero;
+  //         });
+  //       } else {
+  //         console.error("Unexpected response status:", response.status);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error deleting Notification:", error);
+  //     });
+  //   const modal = document.querySelector(".modal");
+  //   if (modal) {
+  //     modal.classList.remove("show");
+  //     modal.style.display = "none";
+  //     document.body.classList.remove("modal-open");
+  //     const modalBackdrop = document.querySelector(".modal-backdrop");
+  //     if (modalBackdrop) {
+  //       modalBackdrop.remove();
+  //     }
+  //   }
+  // };
 
   const [apiResponse, setApiResponse] = useState(null);
   const [apiError, setApiError] = useState(null);
@@ -2078,7 +2078,7 @@ function Newheader(props) {
                 </li>
                 <li className="webhide">
                   <a
-                    className="profiledes notification-btn"
+                    className="profiledes notification-btn notimob"
                     data-toggle="modal"
                     data-target="#exampleModal"
                     onClick={handleBellClick}
@@ -2907,12 +2907,12 @@ function Newheader(props) {
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
                   >
-                    {notification && notification.length > 0 ? (
+                    {/* {notification && notification.length > 0 ? (
                       notification.map((item, index) => (
                         <div className="notification">
                           <Row>
                             <Col lg={2}>
-                              <img src={item.image} />
+                              <img src={`https://canine.hirectjob.in/storage/app/public/notification/${item.image}`} />
                             </Col>
                             <Col lg={8} className="align-self-center">
                               <h6>{item.title}</h6>
@@ -2923,9 +2923,9 @@ function Newheader(props) {
                       ))
                     ) : (
                       <p className="emptyMSG">No Notification</p>
-                    )}
+                    )} */}
                     <div>
-                      {notify && notify.length > 0 ? (
+                      {/* {notify && notify.length > 0 ? (
                         notify.map((ob, index) => (
                           <div className="notification" key={index}>
                             <Link to="">
@@ -2996,7 +2996,7 @@ function Newheader(props) {
                         ))
                       ) : (
                         <p className="emptyMSG">No Notification</p>
-                      )}
+                      )} */}
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
@@ -3046,7 +3046,27 @@ function Newheader(props) {
                       ) : (
                         <p className="emptyMSG">No Data Zero</p>
                       )}
-
+                      {allnotification && allnotification.length > 0 ? (
+                        allnotification.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Row>
+                              <Col lg={2}>
+                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                {console.log("emage", ob.image)}
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.title}</h6>
+                                <p>{ob.description}</p>
+                              </Col>
+                              {/* <Col lg={4}>
+                                
+                              </Col> */}
+                            </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
 
                     </div>
                   </div>
@@ -3056,12 +3076,12 @@ function Newheader(props) {
                     role="tabpanel"
                     aria-labelledby="pills-profile-tab"
                   >
-                    {notification && notification.length > 0 ? (
+                    {/* {notification && notification.length > 0 ? (
                       notification.map((item, index) => (
                         <div className="notification">
                           <Row>
                             <Col lg={2}>
-                              <img src={item.image} />
+                              <img src={`https://canine.hirectjob.in/storage/app/public/notification/${item.image}`} />
                             </Col>
                             <Col lg={9} className="align-self-center">
                               <h6>{item.title}</h6>
@@ -3072,7 +3092,28 @@ function Newheader(props) {
                       ))
                     ) : (
                       <p className="emptyMSG">No Notification</p>
-                    )}
+                    )} */}
+                    {allnotification && allnotification.length > 0 ? (
+                        allnotification.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Row>
+                              <Col lg={2}>
+                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                {console.log("emage", ob.image)}
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.title}</h6>
+                                <p>{ob.description}</p>
+                              </Col>
+                              {/* <Col lg={4}>
+                                
+                              </Col> */}
+                            </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
                   </div>
                   <div
                     class="tab-pane fade"
@@ -3131,26 +3172,7 @@ function Newheader(props) {
                         <p className="emptyMSG">No Data Zero</p>
                       )}
 
-                      {allnotification && allnotification.length > 0 ? (
-                        allnotification.map((ob, index) => (
-                          <div className="notification" key={index}>
-                            <Row>
-                              <Col lg={2}>
-                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
-                                {console.log("emage", ob.image)}
-                              </Col>
-                              <Col lg={8}>
-                                <h6>{ob.title}</h6>
-                              </Col>
-                              <Col lg={4}>
-                                <p>{ob.description}</p>
-                              </Col>
-                            </Row>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No Data Zero</p>
-                      )}
+                      
                     </div>
                   </div>
                 </div>
