@@ -47,7 +47,8 @@ function Petshopdashboard() {
       });
   };
   const [totalUnpaidAmount, setTotalUnpaidAmount] = useState(0);
-
+  // storedUserId
+  const walletBalance = localStorage.getItem("wallet_balance");
   useEffect(() => {
     // Calculate the total unpaid amount whenever totalorder changes
     let unpaidAmount = 0;
@@ -226,18 +227,18 @@ function Petshopdashboard() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-            (item, index) =>
-              item.type === "common" && (
-                <Link to={item.default_link}>
-                  <img
-                    className="partner-img"
-                    src={
-                      "https://canine.hirectjob.in//storage/app/" + item.image
-                    }
-                  />
-                </Link>
-              )
-          )
+              (item, index) =>
+                item.type === "common" && (
+                  <Link to={item.default_link}>
+                    <img
+                      className="partner-img"
+                      src={
+                        "https://canine.hirectjob.in//storage/app/" + item.image
+                      }
+                    />
+                  </Link>
+                )
+            )
           : null}
       </div>
       <section className="dash-addProduct-btn">
@@ -453,52 +454,52 @@ function Petshopdashboard() {
                     <div>
                       {homebanner
                         ? homebanner.map(
-                          (item, index) =>
-                            item.type === "news_letter" && (
-                              <div className="home-img">
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row className="justify-content-center">
-                                  <Col lg={7}>
-                                    <div className="new-content">
-                                      <div className="Newsletter">
-                                        <Flip right>
-                                          <h1 className="main-head">
-                                            Get Or Promo Code by Subscribing
-                                            To our Newsletter
-                                          </h1>
-                                        </Flip>
-                                        <Form className="d-flex">
-                                          <Form.Control
-                                            type="search"
-                                            placeholder="Enter your email"
-                                            className="me-2"
-                                            aria-label="Search"
-                                            value={email}
-                                            onChange={(e) =>
-                                              setEmail(e.target.value)
-                                            }
-                                          />
-                                          <Button
-                                            variant="outline-success"
-                                            onClick={handleNewsletter}
-                                          >
-                                            Subscribe
-                                          </Button>
-                                        </Form>
+                            (item, index) =>
+                              item.type === "news_letter" && (
+                                <div className="home-img">
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row className="justify-content-center">
+                                    <Col lg={7}>
+                                      <div className="new-content">
+                                        <div className="Newsletter">
+                                          <Flip right>
+                                            <h1 className="main-head">
+                                              Get Or Promo Code by Subscribing
+                                              To our Newsletter
+                                            </h1>
+                                          </Flip>
+                                          <Form className="d-flex">
+                                            <Form.Control
+                                              type="search"
+                                              placeholder="Enter your email"
+                                              className="me-2"
+                                              aria-label="Search"
+                                              value={email}
+                                              onChange={(e) =>
+                                                setEmail(e.target.value)
+                                              }
+                                            />
+                                            <Button
+                                              variant="outline-success"
+                                              onClick={handleNewsletter}
+                                            >
+                                              Subscribe
+                                            </Button>
+                                          </Form>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </div>
-                            )
-                        )
+                                    </Col>
+                                  </Row>
+                                </div>
+                              )
+                          )
                         : null}
                     </div>
                   </Container>
@@ -525,7 +526,7 @@ function Petshopdashboard() {
                                 style={{
                                   background:
                                     gradientColors[
-                                    index % gradientColors.length
+                                      index % gradientColors.length
                                     ],
                                 }}
                               >
@@ -640,7 +641,7 @@ function Petshopdashboard() {
                                 style={{
                                   background:
                                     gradientColors[
-                                    index % gradientColors.length
+                                      index % gradientColors.length
                                     ],
                                 }}
                               >
@@ -745,12 +746,13 @@ function Petshopdashboard() {
                     <Col lg={8}>
                       <div className="balance-card">
                         <h5>Current Balance</h5>
-                        {totalorder && totalorder.map((order) => (
+                        {/* {totalorder && totalorder.map((order) => (
   <div key={order.id}>
     <h1>{order?.callback?.user_profile?.wallet_balance}</h1>
     {console.log("order?.callback?.user_profile?.wallet_balance",order?.callback?.user_profile?.wallet_balance)}
   </div>
-))}
+))} */}
+                        <h1>₹{parseInt(walletBalance)}</h1>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <div class="input-group-text">₹</div>
@@ -771,11 +773,11 @@ function Petshopdashboard() {
                     </Col>
                   </Row>
                 </div>
-                <div className="needplace">
+                {/* <div className="needplace">
                   <Row className="justify-content-center">
                     <Col lg={6}>
                       <div className="Withdrawal-card">
-                        {/* <Button>Withdrawal Amount</Button> */}
+                        <Button>Withdrawal Amount</Button>
                         <h5>Transactions</h5>
                         <div className="with-table">
                           <div>
@@ -840,7 +842,7 @@ function Petshopdashboard() {
                       </div>
                     </Col>
                   </Row>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -12,6 +12,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import paydone from "../../assets/images/icon/paydone.png";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import { Toaster, toast } from "react-hot-toast";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
@@ -19,8 +20,10 @@ function PetshopOrderviewdetails() {
   const [orderDetails, setorderDetails] = useState([]);
   console.log("AAorderDetails: ", orderDetails);
 
-  const { id } = useParams();
-  console.log("order id ", id);
+  const location = useLocation();
+  // const { paymentStatus } = location.state;
+  // const { id } = useParams();
+  console.log("order id ", location.state);
 
   useEffect(() => {
     orderViewdetails();
@@ -41,10 +44,10 @@ function PetshopOrderviewdetails() {
   let SubTotalData = subTotal + TaxAmount;
   console.log("SubTotalTaxAmount: ", SubTotalTaxAmount);
 
-  // let couponDiscount = orderDetails.reduce(
-  //   (total, order) => total + parseFloat(order.coupon_discount_amount),
-  //   0
-  // );allorder
+  let orderIdData = allorder.reduce(
+    (total, order) => total + parseFloat(order.id),
+    0
+  );
 
   // let couponDiscount = orderDetails.coupon_discount_amount || 200;
 
@@ -191,6 +194,31 @@ function PetshopOrderviewdetails() {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
+  };
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState(null);
+
+  const handleRadioChange = (value) => {
+    setSelectedPaymentMode(value);
+  };
+  const handleRemaningAmount = (event) => {
+    event.preventDefault();
+    const data = {
+      order_id: id,
+      user_id: storedWholesellerId,
+      amount: SubTotalData + deliveryCharge,
+      pay_mode: selectedPaymentMode,
+      seles_man_id: salesmanId,
+    };
+    axios
+      .post(`https://canine.hirectjob.in/api/v1/auth/selesman_pay_amount`, data)
+      .then((response) => {
+        setResponseMessage(response.data.message);
+        toast.success("Remaning Balance Add Successfully");
+        // setShowForm(false);
+      })
+      .catch((error) => {
+        toast.error("Field is required");
+      });
   };
 
   const [rating, setRating] = useState(0);
@@ -572,53 +600,13 @@ function PetshopOrderviewdetails() {
                     <input
                       className="form-check-input"
                       type="radio"
-                      name="exampleRadios"
-                      data-dismiss="modal"
-                      onClick={() => handlePayment()}
-                    />
-                    <p>Online Payment</p>
-                  </div>
-                </div>
-                {/* <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      checked={selectedInput}
-                      onChange={handleRadioChange}
-                    />
-                    <p>Canine Pay Later</p>
-                    <p>₹ 100000 Available</p>
-                  </div>
-                </div> */}
-                {/* <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      // checked={selectedInput}
-                      // onChange={handleRadioChange}
-                    />
-                     <p>Cash On Delivery</p>
-                    <p>Canine Pay Later</p>
-                  </div>
-                </div> */}
-                <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      // checked={selectedInput}
-                      // onChange={handleRadioChange}
+                      name="paymentMode"
+                      value="online"
+                      checked={selectedPaymentMode === "online"}
+                      onChange={() => handleRadioChange("online")}
                     />
                     {/* <p>Cash On Delivery</p> */}
-                    <p>Payment By Cheque </p>
+                    <p>Payment By OnLine </p>
                   </div>
                 </div>
                 <div className="select-card select-card3">
@@ -626,13 +614,13 @@ function PetshopOrderviewdetails() {
                     <input
                       className="form-check-input"
                       type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      // checked={selectedInput}
-                      // onChange={handleRadioChange}
+                      name="paymentMode"
+                      value="offline"
+                      checked={selectedPaymentMode === "offline"}
+                      onChange={() => handleRadioChange("offline")}
                     />
                     {/* <p>Cash On Delivery</p> */}
-                    <p>Payment By Cash</p>
+                    <p>Payment By OffLine</p>
                   </div>
                 </div>
                 <Button
@@ -642,6 +630,7 @@ function PetshopOrderviewdetails() {
                   data-toggle="modal"
                   data-target="#paysubmit"
                   data-dismiss="modal"
+                  onClick={handleRemaningAmount}
                 >
                   <Link>pay</Link>
                 </Button>
@@ -651,7 +640,7 @@ function PetshopOrderviewdetails() {
         </div>
       </div>
       {/* modal pay butto */}
-      <div
+      {/* <div
         className="modal fade"
         id="paysubmit"
         tabIndex={-1}
@@ -684,7 +673,7 @@ function PetshopOrderviewdetails() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

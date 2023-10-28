@@ -129,7 +129,12 @@ function PetshopMyorder() {
                     <Col lg={3} sm={3} className="align-self-center">
                       <div className="myorder-btn">
                         <Button>
-                          <Link to={`/petShop-order-view-details/${item.id}`}>
+                          <Link
+                            to={{
+                              pathname: `/petShop-order-view-details/`,
+                              state: { id: 1, paymentStatus: "name" },
+                            }}
+                          >
                             View
                           </Link>
                         </Button>
