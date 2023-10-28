@@ -1187,11 +1187,11 @@ function PetshopPetcategory() {
       <Container fluid className="p-0">
         <div className="all-bg">
           {banner && <img
-                                  src={
-                                    "https://canine.hirectjob.in//storage/app/public/category/" +
-                                    banner
-                                  }
-                                />}
+            src={
+              "https://canine.hirectjob.in//storage/app/public/category/" +
+              banner
+            }
+          />}
         </div>
       </Container>
 
@@ -1505,29 +1505,29 @@ function PetshopPetcategory() {
           </Col>
           <Col lg={9}>
 
-          <div className="sort-by">
-                  <Row>
-                    <Col lg={2}>
-                      Sort By
-                    </Col>
-                    <Col lg={3}>
-                      <select
-                        className="form-control"
-                        onChange={(e) => setSortOption(e.target.value)}
-                        value={sortOption}
-                      >
-                        <option value="default">Default (API Order)</option>
-                        <option value="A-Z">Alphabetically, A-Z</option>
-                        <option value="Z-A">Alphabetically, Z-A</option>
-                        <option value="PriceLowToHigh">Price, Low to High</option>
-                        <option value="PriceHighToLow">Price, High to Low</option>
-                        <option value="DateOldToNew">Date, Old to New</option>
-                        <option value="DateNewToOld">Date, New to Old</option>
-                      </select>
-                    </Col>
+            <div className="sort-by">
+              <Row>
+                <Col lg={2}>
+                  Sort By
+                </Col>
+                <Col lg={3}>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setSortOption(e.target.value)}
+                    value={sortOption}
+                  >
+                    <option value="default">Default (API Order)</option>
+                    <option value="A-Z">Alphabetically, A-Z</option>
+                    <option value="Z-A">Alphabetically, Z-A</option>
+                    <option value="PriceLowToHigh">Price, Low to High</option>
+                    <option value="PriceHighToLow">Price, High to Low</option>
+                    <option value="DateOldToNew">Date, Old to New</option>
+                    <option value="DateNewToOld">Date, New to Old</option>
+                  </select>
+                </Col>
 
-                  </Row>
-                </div>
+              </Row>
+            </div>
             <section className="section-padding food">
               <Container>
                 {/* <div className="needplace">
@@ -1732,7 +1732,7 @@ function PetshopPetcategory() {
                     ))}
                   </Row>
                 </div> */}
-               
+
 
                 <Row>
                   {(selectedBrand !== null ? dataList : itemsToDisplay).map(
@@ -1927,8 +1927,8 @@ function PetshopPetcategory() {
                                           {item.stock !== 0 ? (
                                             <div
                                               className={`tab-variations ${selectedVariant === item.type
-                                                  ? "active"
-                                                  : ""
+                                                ? "active"
+                                                : ""
                                                 }`}
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
@@ -2410,8 +2410,8 @@ function PetshopPetcategory() {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2517,8 +2517,8 @@ function PetshopPetcategory() {
                                   {item.stock !== 0 ? (
                                     <div
                                       className={`tab-variations ${selectedVariant === item.type
-                                          ? "active"
-                                          : ""
+                                        ? "active"
+                                        : ""
                                         }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);

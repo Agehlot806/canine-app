@@ -54,7 +54,7 @@ function Product(props) {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
-   // without signup add cart end
+  // without signup add cart end
 
   useEffect(() => {
     categoriesProduct();
@@ -87,6 +87,8 @@ function Product(props) {
         console.log(response);
         console.log("Delete Successful");
         setallproduct(response.data.data);
+        setSortOption('default');
+
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -297,7 +299,7 @@ function Product(props) {
     // Add more gradient colors as needed
   ];
 
-  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  // const [paginatedCategories, setPaginatedCategories] = useState([]);
   // const [currentPage, setCurrentPage] = useState(1);
   // const pageSize = 6;
   // useEffect(() => {
@@ -1157,8 +1159,31 @@ function Product(props) {
         toast.error("An error occurred. Please try again.");
       });
   };
-  const [sortOption, setSortOption] = useState('default'); 
 
+
+
+
+  // PAGINATON
+  // const [currentPage, setCurrentPage] = useState(0);
+  // const itemsPerPage = 24;
+
+  // const handlePageChange = (selected) => {
+  //   setCurrentPage(selected.selected);
+  // };
+
+  // const startIndex = currentPage * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+  // const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
+
+
+  const [sortOption, setSortOption] = useState('default');
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+
+  useEffect(() => {
+    pagination(currentPage);
+  }, [allproduct, currentPage, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1185,26 +1210,23 @@ function Product(props) {
         break;
     }
     if (sortOption === 'DateNewToOld') {
-      // If sorting by DateNewToOld, reverse the array
-      sortedItems = sortedItems.reverse();
+      sortedItems.reverse();
     }
     return sortedItems;
   };
-
-
-
-  // PAGINATON
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 24;
-
-  const handlePageChange = (selected) => {
-    setCurrentPage(selected.selected);
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+    setPaginatedCategories(paginated);
   };
-
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
-
+  const goToPage = (page) => {
+    if (page >= 1 && page <= pageCount) {
+      pagination(page);
+    }
+  };
+  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
 
 
@@ -1538,33 +1560,33 @@ function Product(props) {
                 </Carousel>
               </Container>
             </section> */}
-<div className="sort-by">
-<Row>
-  <Col lg={2}>
-    Sort By
-  </Col>
-  <Col lg={3}>
-  <select
-              className="form-control"
-              onChange={(e) => setSortOption(e.target.value)}
-              value={sortOption}
-            >
-              <option value="default">Default (API Order)</option>
-              <option value="A-Z">Alphabetically, A-Z</option>
-              <option value="Z-A">Alphabetically, Z-A</option>
-              <option value="PriceLowToHigh">Price, Low to High</option>
-              <option value="PriceHighToLow">Price, High to Low</option>
-              <option value="DateOldToNew">Date, Old to New</option>
-              <option value="DateNewToOld">Date, New to Old</option>
-            </select>
-  </Col>
-</Row>
-</div>
+            <div className="sort-by">
+              <Row>
+                <Col lg={2}>
+                  <h4>Sort by</h4>
+                </Col>
+                <Col lg={4}>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setSortOption(e.target.value)}
+                    value={sortOption}
+                  >
+                    <option value="default">Default (API Order)</option>
+                    <option value="A-Z">Alphabetically, A-Z</option>
+                    <option value="Z-A">Alphabetically, Z-A</option>
+                    <option value="PriceLowToHigh">Price, Low to High</option>
+                    <option value="PriceHighToLow">Price, High to Low</option>
+                    <option value="DateOldToNew">Date, Old to New</option>
+                    <option value="DateNewToOld">Date, New to Old</option>
+                  </select>
+                </Col>
+              </Row>
+            </div>
 
             <section className="section-padding food">
               <Container>
                 <Row>
-                  {itemsToDisplay.map((item, index) => (
+                  {paginatedCategories.map((item, index) => (
                     <Col lg={4} sm={6} xs={6} className="mb-4">
                       <div
                         className="food-product"
@@ -1604,8 +1626,8 @@ function Product(props) {
                             {/* <p>{item.description}</p> */}
                             <p
                               className={`truncate-text ${!expandedDescription[item.id]
-                                  ? "read-more-link"
-                                  : ""
+                                ? "read-more-link"
+                                : ""
                                 }`}
                             >
                               {item.description}
@@ -1682,7 +1704,7 @@ function Product(props) {
                     </Col>
                   ))}
                 </Row>
-                <ReactPaginate
+                {/* <ReactPaginate
                     previousLabel={"<"}
                     nextLabel={">"}
                     breakLabel={"..."}
@@ -1694,7 +1716,47 @@ function Product(props) {
                     activeClassName={"activebtn"}
                     nextClassName={"nextbtn"}
                     previousClassName={"previousbtn"}
-                  />
+                  /> */}
+
+                {/* ///formattedAmount//// */}
+                <div className="pagination-area">
+                  <ul className="pagination">
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </button>
+                      )}
+                    </li>
+                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage + 1)}
+                          disabled={currentPage === pageCount}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </li>
+                  </ul>
+                </div>
+
+
                 {/* <div className="pagination-area">
                   <ul className="pagination">
                     {pages.map((page) => (
@@ -1874,9 +1936,9 @@ function Product(props) {
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${selectedVariant ===
-                                                      item.type
-                                                      ? "active"
-                                                      : ""
+                                                    item.type
+                                                    ? "active"
+                                                    : ""
                                                     }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
@@ -2513,8 +2575,8 @@ function Product(props) {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2620,8 +2682,8 @@ function Product(props) {
                                   {item.stock !== 0 ? (
                                     <div
                                       className={`tab-variations ${selectedVariant === item.type
-                                          ? "active"
-                                          : ""
+                                        ? "active"
+                                        : ""
                                         }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);

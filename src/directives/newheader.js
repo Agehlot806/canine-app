@@ -3006,14 +3006,14 @@ function Newheader(props) {
                           >
                             <Row>
                               <Col lg={2} className="align-self-center">
-                                <Link to={`/my-orders`} data-dismiss="modal">
+                                <Link to={`/my-orders`} onClick={() => Modaloff()}>       
                                   <i className="fa fa-info-circle" />
                                 </Link>
                               </Col>
                               <Col lg={8}>
                                 <Link
                                   to={`/my-orders`}
-                                  onClick={() => handleLinkClick(ob.id)}
+                                  onClick={() => {handleLinkClick(ob.id),Modaloff()}}
                                 >
                                   <h6
                                     className={

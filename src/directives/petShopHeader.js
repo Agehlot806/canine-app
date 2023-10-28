@@ -2766,7 +2766,7 @@ function Petshopheader(props) {
     axios
       .get(`${BASE_URL}/items/notify_list/${storedWholesellerId}`)
       .then((response) => {
-        setNotify(response.data.data);
+        // setNotify(response.data.data);
         setDataZero(response.data.notification);
         console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         console.log("Data Zero", response.data.notification);
@@ -3719,100 +3719,337 @@ function Petshopheader(props) {
           <div className="modal-content">
             <div className="modal-body">
               <h5>Notification</h5>
-              {notification && notification.length > 0 ? (
-                notification.map((item, index) => (
-                  <div className="notification">
-                    <Row>
-                      <Col lg={2}>
-                        <img src={item.image} />
-                      </Col>
-                      <Col lg={9} className="align-self-center">
-                        <h6>{item.title}</h6>
-                        <p>{item.description}</p>
-                      </Col>
-                    </Row>
-                  </div>
-                ))
-              ) : (
-                <p className="emptyMSG">No Notification</p>
-              )}
-              <div>
-                {notify && notify.length > 0 ? (
-                  notify.map((ob, index) => (
-                    <div className="notification" key={index}>
-                      <Link
-                        onClick={() => DeleteNotification(ob.id)}
-                        to={`/product-details/${ob.item_id}`}
-                      >
-                        <Row>
-                          <Col lg={2} className="align-self-center text-center">
-                            <i className="fa fa-info-circle" />
-                          </Col>
-                          <Col lg={8}>
-                            <h6>Item ID : {ob.item_id}</h6>
-                            <p>Stock : {ob.stock}</p>
-                            <p>Variation : {ob.variation}</p>
-                            <p>Status : {ob.order_status}</p>
-                          </Col>
-                        </Row>
-                      </Link>
-                    </div>
-                  ))
-                ) : (
-                  <p className="emptyMSG">No Notification</p>
-                )}
-
-                {dataZero && dataZero.length > 0 ? (
-                  dataZero.map((ob, index) => (
-                    <div className="notification" key={index}>
-                      <Link
-                        onClick={() => DeleteNotificationone(ob.id)}
-                        to={`/my-orders`}
-                        data-dismiss="modal"
-                      >
-                        <Row>
-                          <Col lg={2} className="align-self-center text-center">
-                            <i className="fa fa-info-circle" />
-                          </Col>
-                          <Col lg={10}>
-                            <h6>Order ID : {ob.order_id}</h6>
-                            <p>Status : {ob.order_status}</p>
-                          </Col>
-                        </Row>
-                      </Link>
-                    </div>
-                  ))
-                ) : (
-                  <p className="emptyMSG">No Data Zero</p>
-                )}
-                {allnotification && allnotification.length > 0 ? (
-                        allnotification.map((ob,index)=>(
+              {/* Tabs Code By Sohel */}
+              <div className="Notifi-tab-area">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      id="pills-home-tab"
+                      data-toggle="pill"
+                      href="#pills-home"
+                      role="tab"
+                      aria-controls="pills-home"
+                      aria-selected="true"
+                    >
+                      All
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="pills-profile-tab"
+                      data-toggle="pill"
+                      href="#pills-profile"
+                      role="tab"
+                      aria-controls="pills-profile"
+                      aria-selected="false"
+                    >
+                      <span>
+                        <BiSolidOffer />
+                      </span>
+                      Offers
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="pills-contact-tab"
+                      data-toggle="pill"
+                      href="#pills-contact"
+                      role="tab"
+                      aria-controls="pills-contact"
+                      aria-selected="false"
+                    >
+                      <span>
+                        <i class="fa fa-gift" aria-hidden="true"></i>
+                      </span>
+                      Order info
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="pills-home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                  >
+                    {/* {notification && notification.length > 0 ? (
+                      notification.map((item, index) => (
+                        <div className="notification">
+                          <Row>
+                            <Col lg={2}>
+                              <img src={`https://canine.hirectjob.in/storage/app/public/notification/${item.image}`} />
+                            </Col>
+                            <Col lg={8} className="align-self-center">
+                              <h6>{item.title}</h6>
+                              <p>{item.description}</p>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Notification</p>
+                    )} */}
+                    <div>
+                      {/* {notify && notify.length > 0 ? (
+                        notify.map((ob, index) => (
                           <div className="notification" key={index}>
+                            <Link to="">
+                              <Row>
+                                <Col lg={2} className="align-self-center">
+                                  <Link
+                                    to={`/product-details/${ob.item_id}`}
+                                    onClick={() => handleLinkClick(ob.item_id)}
+                                  >
+                                    <i className="fa fa-info-circle" />
+                                  </Link>
+                                </Col>
+                                <Col lg={8}>
+                                  <Link
+                                    to={`/product-details/${ob.item_id}`}
+                                    onClick={() => handleLinkClick(ob.item_id)}
+                                  >
+                                    <h6
+                                      className={
+                                        ob.status === "unread"
+                                          ? "unread"
+                                          : "read"
+                                      }
+                                    >
+                                      Item ID : {ob.item_id}
+                                    </h6>
+                                    <p
+                                      className={
+                                        ob.status === "unread"
+                                          ? "unread"
+                                          : "read"
+                                      }
+                                    >
+                                      Stock : {ob.stock}
+                                    </p>
+                                    <p
+                                      className={
+                                        ob.status === "unread"
+                                          ? "unread"
+                                          : "read"
+                                      }
+                                    >
+                                      Variation : {ob.variation}
+                                    </p>
+                                    <p
+                                      className={
+                                        ob.status === "unread"
+                                          ? "unread"
+                                          : "read"
+                                      }
+                                    >
+                                      Status : {ob.order_status}
+                                    </p>
+                                  </Link>
+                                </Col>
+                                <Col lg={2}>
+                                  <a onClick={() => DeleteNotification(ob.id)}>
+                                    {" "}
+                                    <i
+                                      class="fa fa-trash-o"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </a>
+                                </Col>
+                              </Row>
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Notification</p>
+                      )} */}
+                      {dataZero && dataZero.length > 0 ? (
+                        dataZero.map((ob, index) => (
+                          <div
+                            className={`notification ${ob.status === "unread" ? "unread" : "read"
+                              }`}
+                            key={index}
+                          >
                             <Row>
-                              <Col lg={2}>
-                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}/>
+                              <Col lg={2} className="align-self-center">
+                                <Link to={`/my-orders`} onClick={() => Modaloff()}>       
+                                  <i className="fa fa-info-circle" />
+                                </Link>
                               </Col>
                               <Col lg={8}>
-                                <h6>{ob.title}</h6>
+                                <Link
+                                  to={`/my-orders`}
+                                  onClick={() => {handleLinkClick(ob.id),Modaloff()}}
+                                >
+                                  <h6
+                                    className={
+                                      ob.status === "unread" ? "unread" : "read"
+                                    }
+                                  >
+                                    Order ID : {ob.order_id}
+                                  </h6>
+                                  <p
+                                    className={
+                                      ob.status === "unread" ? "unread" : "read"
+                                    }
+                                  >
+                                    Status : {ob.order_status}
+                                  </p>
+                                </Link>
                               </Col>
-                              <Col lg={4}>
-                                <p>{ob.description  }</p>
+                              <Col lg={2}>
+                                <a onClick={() => DeleteNotification(ob.id)}>
+                                  {" "}
+                                  <i
+                                    class="fa fa-trash-o"
+                                    aria-hidden="true"
+                                  ></i>
+                                </a>
                               </Col>
                             </Row>
                           </div>
                         ))
-                      ): (
+                      ) : (
                         <p className="emptyMSG">No Data Zero</p>
                       )}
-              </div>
+                      {allnotification && allnotification.length > 0 ? (
+                        allnotification.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Row>
+                              <Col lg={2}>
+                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                {console.log("emage", ob.image)}
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.title}</h6>
+                                <p>{ob.description}</p>
+                              </Col>
+                              {/* <Col lg={4}>
+                                
+                              </Col> */}
+                            </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
 
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-profile"
+                    role="tabpanel"
+                    aria-labelledby="pills-profile-tab"
+                  >
+                    {/* {notification && notification.length > 0 ? (
+                      notification.map((item, index) => (
+                        <div className="notification">
+                          <Row>
+                            <Col lg={2}>
+                              <img src={`https://canine.hirectjob.in/storage/app/public/notification/${item.image}`} />
+                            </Col>
+                            <Col lg={9} className="align-self-center">
+                              <h6>{item.title}</h6>
+                              <p>{item.description}</p>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Notification</p>
+                    )} */}
+                    {allnotification && allnotification.length > 0 ? (
+                        allnotification.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Row>
+                              <Col lg={2}>
+                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                {console.log("emage", ob.image)}
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.title}</h6>
+                                <p>{ob.description}</p>
+                              </Col>
+                              {/* <Col lg={4}>
+                                
+                              </Col> */}
+                            </Row>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-contact"
+                    role="tabpanel"
+                    aria-labelledby="pills-contact-tab"
+                  >
+                    <div>
+                      {notify && notify.length > 0 ? (
+                        notify.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Link
+                              to={`/product-details/${ob.item_id}`}
+                              onClick={() => Modaloff()}
+                            >
+                              <Row>
+                                <Col
+                                  lg={2}
+                                  className="align-self-center text-center"
+                                >
+                                  <i className="fa fa-info-circle" />
+                                </Col>
+                                <Col lg={8}>
+                                  <h6>Item ID : {ob.item_id}</h6>
+                                  <p>Stock : {ob.stock}</p>
+                                  <p>Variation : {ob.variation}</p>
+                                  <p>Status : {ob.order_status}</p>
+                                </Col>
+                              </Row>
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Notification</p>
+                      )}
+                      {dataZero && dataZero.length > 0 ? (
+                        dataZero.map((ob, index) => (
+                          <div className="notification" key={index}>
+                            <Link to={`/my-orders`} onClick={() => Modaloff()}>
+                              <Row>
+                                <Col
+                                  lg={2}
+                                  className="align-self-center text-center"
+                                >
+                                  <i className="fa fa-info-circle" />
+                                </Col>
+                                <Col lg={10}>
+                                  <h6>Order ID : {ob.order_id}</h6>
+                                  <p>Status : {ob.order_status}</p>
+                                </Col>
+                              </Row>
+                            </Link>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="emptyMSG">No Data Zero</p>
+                      )}
+
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="text-end">
+                <button type="button" className="btn" data-dismiss="modal">
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

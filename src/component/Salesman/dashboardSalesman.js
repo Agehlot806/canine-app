@@ -153,7 +153,7 @@ function DashboadSalesman() {
                   aria-selected="false"
                 >
                   <h3>Transactions</h3>
-                  <h5>₹{totalTransactions}</h5>
+                  <h5>₹{isNaN(totalTransactions) ? 0 : totalTransactions}</h5>
                 </a>
               </li>
               <li className="nav-item">
@@ -430,9 +430,9 @@ function DashboadSalesman() {
                                 <h3>Payment Method: {item.payment_method}</h3>
                                 <h3>
                                   Order Amount: ₹{" "}
-                                  {parseInt(item.order_amount) +
+                                  {isNaN(parseInt(item.order_amount) +
                                     parseInt(item.total_tax_amount) -
-                                    parseInt(item.coupon_discount_amount)}
+                                    parseInt(item.coupon_discount_amount)) ? 0 : parseInt(item.order_amount) + parseInt(item.total_tax_amount) - parseInt(item.coupon_discount_amount)}
                                 </h3>
                               </Col>
 
@@ -537,9 +537,9 @@ function DashboadSalesman() {
                                 <h3>Payment Method: {item.payment_method}</h3>
                                 <h3>
                                   Order Amount: ₹{" "}
-                                  {parseInt(item.order_amount) +
+                                  {isNaN(parseInt(item.order_amount) +
                                     parseInt(item.total_tax_amount) -
-                                    parseInt(item.coupon_discount_amount)}
+                                    parseInt(item.coupon_discount_amount)) ? 0 : parseInt(item.order_amount) + parseInt(item.total_tax_amount) - parseInt(item.coupon_discount_amount)}
                                 </h3>
                               </Col>
 
