@@ -261,7 +261,7 @@ function App() {
             element={<Orderviewdetails />}
           />
           <Route
-            path="/petShop-order-view-details/"
+            path="/petShop-order-view-details/:id"
             element={<PetshopOrderviewdetails />}
           />
 
