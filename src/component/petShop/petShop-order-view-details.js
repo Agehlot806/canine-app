@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -20,10 +20,8 @@ function PetshopOrderviewdetails() {
   const [orderDetails, setorderDetails] = useState([]);
   console.log("AAorderDetails: ", orderDetails);
 
-  const location = useLocation();
-  // const { paymentStatus } = location.state;
-  // const { id } = useParams();
-  console.log("order id ", location.state);
+  const { id } = useParams();
+  console.log("order id ", id);
 
   useEffect(() => {
     orderViewdetails();
@@ -207,7 +205,7 @@ function PetshopOrderviewdetails() {
       user_id: storedWholesellerId,
       amount: SubTotalData + deliveryCharge,
       pay_mode: selectedPaymentMode,
-      seles_man_id: salesmanId,
+      seles_man_id:salesmanId
     };
     axios
       .post(`https://canine.hirectjob.in/api/v1/auth/selesman_pay_amount`, data)
