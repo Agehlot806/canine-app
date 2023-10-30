@@ -137,6 +137,8 @@ function Productpartnershop() {
         console.log(response);
         console.log("Delete Successful");
         setallproduct(response.data.data);
+        setSortOption('default');
+
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -1157,8 +1159,14 @@ function Productpartnershop() {
   };
 
 
-  const [sortOption, setSortOption] = useState('default'); 
+  const [sortOption, setSortOption] = useState('default');
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
 
+  useEffect(() => {
+    pagination(currentPage);
+  }, [allproduct, currentPage, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1185,25 +1193,23 @@ function Productpartnershop() {
         break;
     }
     if (sortOption === 'DateNewToOld') {
-      // If sorting by DateNewToOld, reverse the array
-      sortedItems = sortedItems.reverse();
+      sortedItems.reverse();
     }
     return sortedItems;
   };
-
-
-
-  // PAGINATON
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 24;
-
-  const handlePageChange = (selected) => {
-    setCurrentPage(selected.selected);
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+    setPaginatedCategories(paginated);
   };
-
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
+  const goToPage = (page) => {
+    if (page >= 1 && page <= pageCount) {
+      pagination(page);
+    }
+  };
+  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
 
   const renderProductDescription = (description) => {
@@ -1567,8 +1573,8 @@ function Productpartnershop() {
               <div className="needplace">
                 <Container>
                   <Row>
-                    {itemsToDisplay && itemsToDisplay.length > 0 ? (
-                      itemsToDisplay.map((item, index) => (
+                    {paginatedCategories && paginatedCategories.length > 0 ? (
+                      paginatedCategories.map((item, index) => (
                         <Col lg={4} sm={6} xs={6} className="mb-4">
                           <div
                             className="food-product"
@@ -1667,19 +1673,42 @@ function Productpartnershop() {
                       <p className="emptyMSG">No Product By Partner Data.</p>
                     )}
                   </Row>
-                  <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"activebtn"}
-                    nextClassName={"nextbtn"}
-                    previousClassName={"previousbtn"}
-                  />
+                  <div className="pagination-area">
+                  <ul className="pagination">
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </button>
+                      )}
+                    </li>
+                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage + 1)}
+                          disabled={currentPage === pageCount}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </li>
+                  </ul>
+                </div>
                 </Container>
               </div>
             </section>

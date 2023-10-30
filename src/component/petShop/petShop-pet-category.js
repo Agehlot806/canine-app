@@ -335,6 +335,10 @@ function PetshopPetcategory() {
   const fetchAllProducts = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/items/latest`);
+      const filterData =response.data.data;
+      const filterDatashow = filterData.filter((item)=>item.category_id == id)
+      console.log("responsDataesponsData",filterDatashow);
+      setallproduct(filterDatashow);
       setallproduct(response.data.data);
     } catch (error) {
       console.log(error);
@@ -1116,7 +1120,13 @@ function PetshopPetcategory() {
 
 
   const [sortOption, setSortOption] = useState('default');
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
 
+  useEffect(() => {
+    pagination(currentPage);
+  }, [allproduct, currentPage, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1143,25 +1153,23 @@ function PetshopPetcategory() {
         break;
     }
     if (sortOption === 'DateNewToOld') {
-      // If sorting by DateNewToOld, reverse the array
-      sortedItems = sortedItems.reverse();
+      sortedItems.reverse();
     }
     return sortedItems;
   };
-
-
-
-  // PAGINATON
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 24;
-
-  const handlePageChange = (selected) => {
-    setCurrentPage(selected.selected);
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+    setPaginatedCategories(paginated);
   };
-
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
+  const goToPage = (page) => {
+    if (page >= 1 && page <= pageCount) {
+      pagination(page);
+    }
+  };
+  const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
 
 
@@ -1535,214 +1543,13 @@ function PetshopPetcategory() {
             </div>
             <section className="section-padding food">
               <Container>
-                {/* <div className="needplace">
-                  <div className="dog-categorys-area">
-                    <ul
-                      className="nav nav-pills mb-3"
-                      id="pills-tab"
-                      role="tablist"
-                    >
-                      {subcategories && subcategories.length > 0 ? (
-                        subcategories.map((item, index) => (
-                          <li className="nav-item" key={item.id}>
-                            <a
-                              className={`nav-link ${
-                                item.id == id ? "active" : ""
-                              }`}
-                              id="pills-home-tab"
-                              data-toggle="pill"
-                              onClick={(id) => subcatid(item.id, item.name)}
-                              href="#pills-home"
-                              role="tab"
-                              aria-controls="pills-home"
-                              aria-selected="true"
-                            >
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in///storage/app/public/category/" +
-                                  item.image
-                                }
-                              />
-                              <h6>{item.name}</h6>
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No Sub Categories.</p>
-                      )}
-                    </ul>
-                    <div className="tab-content" id="pills-tabContent">
-                      <div
-                        className="tab-pane fade"
-                        id="pills-home"
-                        role="tabpanel"
-                        aria-labelledby="pills-home-tab"
-                      >
-                        <Row>
-                          {petitemproduct && petitemproduct.length > 0 ? (
-                            petitemproduct.map((item, index) => (
-                              <Col lg={4} sm={6} xs={6} className="mb-4">
-                                <div
-                                  className="food-product"
-                                  onMouseEnter={() => handleMouseEnter(item.id)}
-                                  onMouseLeave={() => handleMouseLeave(item.id)}
-                                  key={item.id}
-                                >
-                                  <i
-                                    class={
-                                      item.isFav
-                                        ? "fa-solid fa-heart"
-                                        : "fa-regular fa-heart"
-                                    }
-                                    onClick={(id) => {
-                                      if (storedWholesellerId == null) {
-                                        toast.error("Please Login first");
-                                      } else {
-                                        addToWishlist(item.id);
-                                      }
-                                    }}
-                                  />
-                                  <Link
-                                    to={`/petshop-productDetails/${item.id}`}
-                                  >
-                                    <div className="text-center">
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in///storage/app/public/product/" +
-                                          item.image
-                                        }
-                                      />
-                                    </div>
-                                    <div>
-                                      <h6>{item.name}</h6>
-                                      <p>{item.description}</p>
-                                    </div>
-                                    <div className="product-bag">
-                                      <Row>
-                                        <Col className="align-self-center">
-                                          <h6>₹{item.whole_price}</h6>
-                                        </Col>
-                                        <Col>
-                                          <Link
-                                            to={`/petshop-add-cart/${item.id}`}
-                                            onClick={handleAddToCart}
-                                          >
-                                            <img src={bag} />
-                                          </Link>
-                                        </Col>
-                                      </Row>
-                                    </div>
-                                  </Link>
-                                  {buttonVisibility[item.id] && (
-                                    <Fade top>
-                                      <div className="button-container">
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".bd-example-modal-lg"
-                                          onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Quick View
-                                        </button>
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".buynow"
-                                          onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Buy Now
-                                        </button>
-                                      </div>
-                                    </Fade>
-                                  )}
-                                </div>
-                              </Col>
-                            ))
-                          ) : (
-                            <p className="emptyMSG">
-                              No Sub Categories Product.
-                            </p>
-                          )}
-                        </Row>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <Row>
-                    {filteredProducts.map((item, index) => (
-                      <Col lg={4} sm={6} xs={6} className="mb-4">
-                        <div
-                          className="food-product"
-                          onMouseEnter={() => handleMouseEnter(item.id)}
-                          onMouseLeave={() => handleMouseLeave(item.id)}
-                          key={index}
-                          style={{
-                            background:
-                              gradientColors[index % gradientColors.length],
-                          }}
-                        >
-                          <i
-                            class={
-                              item.isFav
-                                ? "fa-solid fa-heart"
-                                : "fa-regular fa-heart"
-                            }
-                            onClick={(id) => {
-                              if (storedWholesellerId == null) {
-                                toast.error("Please Login first");
-                              } else {
-                                addToWishlist(item.id);
-                              }
-                            }}
-                          />
-                          <Link to={`/petshop-productDetails/${item.id}`}>
-                          <div className="text-center">
-                            <img
-                                        src={
-                                          "https://canine.hirectjob.in///storage/app/public/product/" +
-                                          item.image
-                                        }
-                                      />
-                          </div>
-                          <div>
-                            <h6>{item.name}</h6>
-                            <p>{item.brand}</p>
-                            <p>{item.veg.toString()}</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col><p>₹{product.price}</p></Col>
-                              <Col>
-                                <h5>₹{item.whole_price}</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h6>{`₹${item.price -
-                                            (item.price * item.discount) / 100
-                                            }`}</h6>
-                              </Col>
-                              <Col>
-                                <Link
-                                  to={`/petshop-add-cart/${item.id}`}
-                                  onClick={handleAddToCart}
-                                >
-                                  <img src={bag} />
-                                </Link>
-                              </Col>
-                            </Row>
-                          </div>
-                          </Link>
-                        </div>
-                      </Col>
-                    ))}
-                  </Row>
-                </div> */}
+
 
 
                 <Row>
-                  {(selectedBrand !== null ? dataList : itemsToDisplay).map(
+                  {(selectedBrand !== null ? dataList : paginatedCategories).map(
                     (item, index) => (
-                      item.category_id == id && (
+                      // item.category_id == id && (
                       <Col lg={4} sm={6} xs={6} className="mb-4" key={item.id}>
                         <div
                           className="food-product"
@@ -1819,7 +1626,7 @@ function PetshopPetcategory() {
                           )}
                         </div>
                       </Col>
-                      )
+                      // )
                     )
                   )}
                   {dataList.length === 0 && selectedBrand !== null && (
@@ -1827,19 +1634,42 @@ function PetshopPetcategory() {
                   )}
                 </Row>
 
-                <ReactPaginate
-                  previousLabel={"<"}
-                  nextLabel={">"}
-                  breakLabel={"..."}
-                  pageCount={Math.ceil(allproduct.length / itemsPerPage)}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={handlePageChange}
-                  containerClassName={"pagination"}
-                  activeClassName={"activebtn"}
-                  nextClassName={"nextbtn"}
-                  previousClassName={"previousbtn"}
-                />
+                <div className="pagination-area">
+                  <ul className="pagination">
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </button>
+                      )}
+                    </li>
+                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage + 1)}
+                          disabled={currentPage === pageCount}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </li>
+                  </ul>
+                </div>
               </Container>
             </section>
           </Col>

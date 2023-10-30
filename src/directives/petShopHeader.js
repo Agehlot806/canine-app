@@ -2557,7 +2557,7 @@ function Petshopheader(props) {
     useNotificationContext();
 
   useEffect(() => {
-    fetchBrands();
+    // fetchBrands();
     allProductdata();
     AllDogsubcategories();
     categoriesProduct();
@@ -2571,17 +2571,6 @@ function Petshopheader(props) {
       setcategories(jsonData.data);
     } catch (error) {
       console.error("Error fetching data:", error);
-    }
-  };
-
-  const fetchBrands = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/customer/notifications?tergat=customer`
-      );
-      setNotification(response.data);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -2839,16 +2828,27 @@ function Petshopheader(props) {
   // const { notificationLength, dataLengthpetnotification} =
   //   useNotificationContext();
   const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
+  // ...
+  // useEffect(() => {
+  // Check if the visibility state is stored in localStorage
+  //   const storedVisibility = localStorage.getItem("totalLengthVisibility");
+  //   if (storedVisibility) {
+  //     setTotalLengthVisible(JSON.parse(storedVisibility));
+  //   }
+  // }, []);
+  // The click handler for the bell icon
   // const handleBellClick = () => {
   //   setTotalLengthVisible(false);
-  //   localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
+  // Store the visibility state in localStorage
+  // localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
+  // Set a timeout to make the span visible again after 30 minutes (30 minutes = 30 * 60 * 1000 milliseconds)
   //   setTimeout(() => {
   //     setTotalLengthVisible(true);
   //     localStorage.setItem("totalLengthVisibility", JSON.stringify(true));
   //   }, 30 * 60 * 1000);
   // };
-
   const [customCount, setCustomCount] = useState(0);
+  console.log("lllll", customCount);
   const prevTotalLength = useRef(totalLength);
 
   const handleBellClick = () => {
@@ -2856,6 +2856,22 @@ function Petshopheader(props) {
     localStorage.setItem("customCount", 0);
     setTotalLengthVisible(false);
   };
+
+  useEffect(() => {
+    const storedVisibility = localStorage.getItem("totalLengthVisibility");
+    if (storedVisibility) {
+      setTotalLengthVisible(JSON.parse(storedVisibility));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (prevTotalLength.current < totalLength) {
+      setTotalLengthVisible(true);
+      setCustomCount(totalLength);
+      localStorage.setItem("customCount", totalLength.toString());
+    }
+    prevTotalLength.current = totalLength;
+  }, [totalLength]);
 
   return (
     <>
@@ -2976,7 +2992,7 @@ function Petshopheader(props) {
                 </li>
                 <li className="webhide">
                   <a
-                    className="profiledes notification-btn"
+                    className="profiledes notification-btn notimob"
                     data-toggle="modal"
                     data-target="#exampleModal"
                     onClick={handleBellClick}
