@@ -1598,7 +1598,7 @@ import { useCartWithoutLogin } from "../component/context/AddToCardWithoutLogin"
 function Newheader(props) {
   // const { dataLength } = props;
   const [notification, setNotification] = useState([]);
-  const [allnotification, setAllnotification] = useState([])
+  const [allnotification, setAllnotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
   const [dogsubcategories, setdogsubcategories] = useState("");
   const [storedUserId, setStoredUserId] = useState(null);
@@ -1857,7 +1857,7 @@ function Newheader(props) {
         // console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         setDataZero(response.data.notification);
         console.log("Data Zero", response.data.notification);
-        setAllnotification(response.data.all_notification)
+        setAllnotification(response.data.all_notification);
         console.log("allnotificationnnnnn", response.data.all_notification);
       })
       .catch((error) => {
@@ -2022,7 +2022,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2037,7 +2037,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2227,7 +2227,8 @@ function Newheader(props) {
                           {dogsubcategories ? (
                             dogsubcategories.map(
                               (item) =>
-                                item.heading == "Beds Cages, Scratcher & Crates" && (
+                                item.heading ==
+                                  "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/sub-categoriesProduct/${item.name}`}
@@ -2498,7 +2499,7 @@ function Newheader(props) {
                             dogsubcategories.map(
                               (item) =>
                                 item.heading ==
-                                "Beds Cages, Scratcher & Crates" && (
+                                  "Beds Cages, Scratcher & Crates" && (
                                   <li>
                                     <Link
                                       to={`/sub-categoriesProduct/${item.name}`}
@@ -3000,20 +3001,26 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${ob.status === "unread" ? "unread" : "read"
-                              }`}
+                            className={`notification ${
+                              ob.status === "unread" ? "unread" : "read"
+                            }`}
                             key={index}
                           >
                             <Row>
                               <Col lg={2} className="align-self-center">
-                                <Link to={`/my-orders`} onClick={() => Modaloff()}>       
+                                <Link
+                                  to={`/my-orders`}
+                                  onClick={() => Modaloff()}
+                                >
                                   <i className="fa fa-info-circle" />
                                 </Link>
                               </Col>
                               <Col lg={8}>
                                 <Link
                                   to={`/my-orders`}
-                                  onClick={() => {handleLinkClick(ob.id),Modaloff()}}
+                                  onClick={() => {
+                                    handleLinkClick(ob.id), Modaloff();
+                                  }}
                                 >
                                   <h6
                                     className={
@@ -3051,7 +3058,9 @@ function Newheader(props) {
                           <div className="notification" key={index}>
                             <Row>
                               <Col lg={2}>
-                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                <img
+                                  src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
+                                />
                                 {console.log("emage", ob.image)}
                               </Col>
                               <Col lg={8}>
@@ -3067,7 +3076,6 @@ function Newheader(props) {
                       ) : (
                         <p className="emptyMSG">No Data Zero</p>
                       )}
-
                     </div>
                   </div>
                   <div
@@ -3094,26 +3102,28 @@ function Newheader(props) {
                       <p className="emptyMSG">No Notification</p>
                     )} */}
                     {allnotification && allnotification.length > 0 ? (
-                        allnotification.map((ob, index) => (
-                          <div className="notification" key={index}>
-                            <Row>
-                              <Col lg={2}>
-                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
-                                {console.log("emage", ob.image)}
-                              </Col>
-                              <Col lg={8}>
-                                <h6>{ob.title}</h6>
-                                <p>{ob.description}</p>
-                              </Col>
-                              {/* <Col lg={4}>
+                      allnotification.map((ob, index) => (
+                        <div className="notification" key={index}>
+                          <Row>
+                            <Col lg={2}>
+                              <img
+                                src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
+                              />
+                              {console.log("emage", ob.image)}
+                            </Col>
+                            <Col lg={8}>
+                              <h6>{ob.title}</h6>
+                              <p>{ob.description}</p>
+                            </Col>
+                            {/* <Col lg={4}>
                                 
                               </Col> */}
-                            </Row>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No Data Zero</p>
-                      )}
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Data Zero</p>
+                    )}
                   </div>
                   <div
                     class="tab-pane fade"
@@ -3171,8 +3181,6 @@ function Newheader(props) {
                       ) : (
                         <p className="emptyMSG">No Data Zero</p>
                       )}
-
-                      
                     </div>
                   </div>
                 </div>
