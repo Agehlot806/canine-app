@@ -287,6 +287,8 @@ function Ourourbrand(props) {
         console.log("data in fetch", data);
         console.log("data1 in fetch", data1);
         setallproductbrand(data1);
+        setSortOption('default');
+
       })
       .catch((error) => {
         console.log(error);
@@ -1245,8 +1247,14 @@ function Ourourbrand(props) {
     }
   };
 
-  const [sortOption, setSortOption] = useState('default'); 
+  const [sortOption, setSortOption] = useState('default');
+  const [paginatedCategories, setPaginatedCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
 
+  useEffect(() => {
+    pagination(currentPage);
+  }, [allproductbrand, currentPage, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproductbrand];
     switch (sortOption) {
@@ -1273,25 +1281,23 @@ function Ourourbrand(props) {
         break;
     }
     if (sortOption === 'DateNewToOld') {
-      // If sorting by DateNewToOld, reverse the array
-      sortedItems = sortedItems.reverse();
+      sortedItems.reverse();
     }
     return sortedItems;
   };
-
-
-
-  // PAGINATON
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 24;
-
-  const handlePageChange = (selected) => {
-    setCurrentPage(selected.selected);
+  const pagination = (pageNo) => {
+    setCurrentPage(pageNo);
+    const startIndex = (pageNo - 1) * pageSize;
+    const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+    setPaginatedCategories(paginated);
   };
-
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const itemsToDisplay = sortedProducts().slice(startIndex, endIndex);
+  const goToPage = (page) => {
+    if (page >= 1 && page <= pageCount) {
+      pagination(page);
+    }
+  };
+  const pageCount = allproductbrand ? Math.ceil(allproductbrand.length / pageSize) : 0;
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
 
   const renderProductDescription = (description) => {
@@ -1326,43 +1332,7 @@ function Ourourbrand(props) {
                 <h3>Filters</h3>
 
                 <hr />
-                {/* <div
-                  onClick={() => handleParentClick("brand")}
-                  className="main-chk"
-                >
-                  Brand
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {brandDropdownVisible && (
-                    <>
-                      <div>
-                        {allbrand
-                          ? allbrand.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) =>
-                                    handleDataListBrand(items.title)
-                                  }
-                                />
-                                <label className="form-check-label">
-                                  {items.title}
-                                </label>
-                              </div>
-                            ))
-                          : ""}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr /> */}
+               
                 <div
                   onClick={() => handleParentClick("productType")}
                   className="main-chk"
@@ -1661,8 +1631,8 @@ function Ourourbrand(props) {
                 {/* <Row> */}
                 {brands.length > 0 ? (
                   <Row>
-                    {itemsToDisplay ? (
-                      itemsToDisplay.map((item, index) => {
+                    {paginatedCategories ? (
+                      paginatedCategories.map((item, index) => {
                         return (
                           <Col lg={4} sm={6} xs={6} className="mb-4">
                             <div
@@ -1776,19 +1746,42 @@ function Ourourbrand(props) {
                 ) : (
                   <p>No Brand Product</p>
                 )}
-                <ReactPaginate
-                  previousLabel={"<"}
-                  nextLabel={">"}
-                  breakLabel={"..."}
-                  pageCount={Math.ceil(allproductbrand.length / itemsPerPage)}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={handlePageChange}
-                  containerClassName={"pagination"}
-                  activeClassName={"activebtn"}
-                  nextClassName={"nextbtn"}
-                  previousClassName={"previousbtn"}
-                />
+               <div className="pagination-area">
+                  <ul className="pagination">
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </button>
+                      )}
+                    </li>
+                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage + 1)}
+                          disabled={currentPage === pageCount}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </li>
+                  </ul>
+                </div>
               </Container>
 
               {/* <Container>

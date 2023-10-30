@@ -208,8 +208,12 @@ function SubcategoriesProduct() {
             .get(`${BASE_URL}/items/latest`)
             .then((response) => {
                 console.log(response);
-                console.log("All Product Successful");
-                setallproduct(response.data.data);
+                const filterData = response.data.data;
+                const filterDatashow = filterData.filter((item) =>item.sub_category == name)
+                console.log("responsDataesponsData", filterDatashow);
+                setallproduct(filterDatashow);
+                setSortOption('default');
+
             })
             .catch((error) => {
                 console.log(error);
@@ -1318,50 +1322,57 @@ function SubcategoriesProduct() {
             });
     };
 
-    const [sortOption, setSortOption] = useState('default'); 
+    const [sortOption, setSortOption] = useState('default');
+    const [paginatedCategories, setPaginatedCategories] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 6;
+  
+    useEffect(() => {
+      pagination(currentPage);
+    }, [allproduct, currentPage, sortOption]);
     const sortedProducts = () => {
-        let sortedItems = [...allproduct];
-        switch (sortOption) {
-          case 'A-Z':
-            sortedItems.sort((a, b) => a.name.localeCompare(b.name));
-            break;
-          case 'Z-A':
-            sortedItems.sort((a, b) => b.name.localeCompare(a.name));
-            break;
-          case 'PriceLowToHigh':
-            sortedItems.sort((a, b) => a.price - b.price);
-            break;
-          case 'PriceHighToLow':
-            sortedItems.sort((a, b) => b.price - a.price);
-            break;
-          case 'DateOldToNew':
-            sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
-            break;
-          case 'DateNewToOld':
-            sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
-            break;
-          default:
-            // Default sorting (as per API response)
-            break;
-        }
-        if (sortOption === 'DateNewToOld') {
-          // If sorting by DateNewToOld, reverse the array
-          sortedItems = sortedItems.reverse();
-        }
-        return sortedItems;
-      };
-    // PAGINATON
-    const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 24;
-
-    const handlePageChange = (selected) => {
-        setCurrentPage(selected.selected);
+      let sortedItems = [...allproduct];
+      switch (sortOption) {
+        case 'A-Z':
+          sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case 'Z-A':
+          sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+        case 'PriceLowToHigh':
+          sortedItems.sort((a, b) => a.price - b.price);
+          break;
+        case 'PriceHighToLow':
+          sortedItems.sort((a, b) => b.price - a.price);
+          break;
+        case 'DateOldToNew':
+          sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
+          break;
+        case 'DateNewToOld':
+          sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+          break;
+        default:
+          // Default sorting (as per API response)
+          break;
+      }
+      if (sortOption === 'DateNewToOld') {
+        sortedItems.reverse();
+      }
+      return sortedItems;
     };
-
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const itemsToDisplay = allproduct.slice(startIndex, endIndex);
-
+    const pagination = (pageNo) => {
+      setCurrentPage(pageNo);
+      const startIndex = (pageNo - 1) * pageSize;
+      const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+      setPaginatedCategories(paginated);
+    };
+    const goToPage = (page) => {
+      if (page >= 1 && page <= pageCount) {
+        pagination(page);
+      }
+    };
+    const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+    const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
     const renderProductDescription = (description) => {
         const maxCharacters = 35; // Number of characters to show initially
@@ -1703,138 +1714,92 @@ function SubcategoriesProduct() {
                         </section>
                     </Col>
                     <Col lg={9}>
-<div className="sort-by">
-                    <Row>
-          <Col lg={2}>
-            <h4>Sort by</h4>
-          </Col>
-          <Col lg={4}>
-            <select
-              className="form-control"
-              onChange={(e) => setSortOption(e.target.value)}
-              value={sortOption}
-            >
-              <option value="default">Choose...</option>
-              <option value="A-Z">Alphabetically, A-Z</option>
-              <option value="Z-A">Alphabetically, Z-A</option>
-              <option value="PriceLowToHigh">Price, Low to High</option>
-              <option value="PriceHighToLow">Price, High to Low</option>
-              <option value="DateOldToNew">Date, Old to New</option>
-              <option value="DateNewToOld">Date, New to Old</option>
-            </select>
-          </Col>
-        </Row>
-        </div>
+                        <div className="sort-by">
+                            <Row>
+                                <Col lg={2}>
+                                    <h4>Sort by</h4>
+                                </Col>
+                                <Col lg={4}>
+                                    <select
+                                        className="form-control"
+                                        onChange={(e) => setSortOption(e.target.value)}
+                                        value={sortOption}
+                                    >
+                                        <option value="default">Choose...</option>
+                                        <option value="A-Z">Alphabetically, A-Z</option>
+                                        <option value="Z-A">Alphabetically, Z-A</option>
+                                        <option value="PriceLowToHigh">Price, Low to High</option>
+                                        <option value="PriceHighToLow">Price, High to Low</option>
+                                        <option value="DateOldToNew">Date, Old to New</option>
+                                        <option value="DateNewToOld">Date, New to Old</option>
+                                    </select>
+                                </Col>
+                            </Row>
+                        </div>
                         <section className="section-padding food">
                             <Container>
-                                {/* <div className="needplace">
-                  <div className="dog-categorys-area">
-                    <ul
-                      className="nav nav-pills mb-3"
-                      id="pills-tab"
-                      role="tablist"
-                    >
-                      {subcategories && subcategories.length > 0 ? (
-                        subcategories.map((item, index) => (
-                          <li className="nav-item" key={item.id}>
-                            <a
-                              className={`nav-link ${item.id == id ? "active" : ""
-                                }`}
-                              id="pills-home-tab"
-                              data-toggle="pill"
-                              onClick={(e) => allsubcateselect(item.name)}
-                              href="#pills-home"
-                              role="tab"
-                              aria-controls="pills-home"
-                              aria-selected="true"
-                            >
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in///storage/app/public/category/" +
-                                  item.image
-                                }
-                              />
-                              <h6>{item.name}</h6>
-                            </a>
-                          </li>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No Sub Categories.</p>
-                      )}
-                    </ul>
-                    <div className="tab-content" id="pills-tabContent">
-                      <div
-                        className="tab-pane fade"
-                        id="pills-home"
-                        role="tabpanel"
-                        aria-labelledby="pills-home-tab"
-                      >
-                        <Row></Row>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
+
                                 <div>
-                                <h1 className="main-head mb-4">All {name} Products</h1>
-                                {console.log("name",name)}
+                                    <h1 className="main-head mb-4">All {name} Products</h1>
+                                    {console.log("name", name)}
                                     <Row>
-                                        {sortedProducts().length > 0 ? (
-                                            sortedProducts().map((item, index) =>
-                                                item.sub_category === name && (
-                                                    <Col lg={4} sm={6} xs={6} className="mb-4">
-                                                        <div
-                                                            className="food-product"
-                                                            onMouseEnter={() => handleMouseEnter(item.id)}
-                                                            onMouseLeave={() => handleMouseLeave(item.id)}
-                                                            key={item.id}
-                                                            style={{
-                                                                background:
-                                                                    gradientColors[index % gradientColors.length],
-                                                            }}
-                                                        >
-                                                            <i
-                                                                class={
-                                                                    item.isFav
-                                                                        ? "fa-solid fa-heart"
-                                                                        : "fa-regular fa-heart"
+                                        {paginatedCategories.length > 0 ? (
+                                            paginatedCategories.map((item, index) =>
+                                                // item.sub_category === name && (
+                                                <Col lg={4} sm={6} xs={6} className="mb-4">
+                                                    <div
+                                                        className="food-product"
+                                                        onMouseEnter={() => handleMouseEnter(item.id)}
+                                                        onMouseLeave={() => handleMouseLeave(item.id)}
+                                                        key={item.id}
+                                                        style={{
+                                                            background:
+                                                                gradientColors[index % gradientColors.length],
+                                                        }}
+                                                    >
+                                                        <i
+                                                            class={
+                                                                item.isFav
+                                                                    ? "fa-solid fa-heart"
+                                                                    : "fa-regular fa-heart"
+                                                            }
+                                                            onClick={(id) => {
+                                                                if (storedUserId == null) {
+                                                                    toast.error("Please Login first");
+                                                                } else {
+                                                                    addToWishlist(item.id);
                                                                 }
-                                                                onClick={(id) => {
-                                                                    if (storedUserId == null) {
-                                                                        toast.error("Please Login first");
-                                                                    } else {
-                                                                        addToWishlist(item.id);
+                                                            }}
+                                                        />
+                                                        <Link to={`/product-details/${item.id}`}>
+                                                            <div className="text-center">
+                                                                <img
+                                                                    src={
+                                                                        "https://canine.hirectjob.in///storage/app/public/product/" +
+                                                                        item.image
                                                                     }
-                                                                }}
-                                                            />
-                                                            <Link to={`/product-details/${item.id}`}>
-                                                                <div className="text-center">
-                                                                    <img
-                                                                        src={
-                                                                            "https://canine.hirectjob.in///storage/app/public/product/" +
-                                                                            item.image
-                                                                        }
-                                                                    />
-                                                                </div>
-                                                                <div>
-                                                                    <h6>{item.name}</h6>
-                                                                    <p>{renderProductDescription(item.description)}</p>
-                                                                </div>
-                                                                <div className="product-bag">
-                                                                    <Row>
-                                                                        <Col>
-                                                                            <p>₹{parseFloat(item.price)}</p>
-                                                                        </Col>
-                                                                        <Col>
-                                                                            <h5>Save {parseInt(item.discount)} %</h5>
-                                                                        </Col>
-                                                                    </Row>
-                                                                    <Row>
-                                                                        <Col className="align-self-center">
-                                                                            <h6>{`₹${item.price -
-                                                                                (item.price * item.discount) / 100
-                                                                                }`}</h6>
-                                                                        </Col>
-                                                                        {/* <Col>
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <h6>{item.name}</h6>
+                                                                <p>{renderProductDescription(item.description)}</p>
+                                                            </div>
+                                                            <div className="product-bag">
+                                                                <Row>
+                                                                    <Col>
+                                                                        <p>₹{parseFloat(item.price)}</p>
+                                                                    </Col>
+                                                                    <Col>
+                                                                        <h5>Save {parseInt(item.discount)} %</h5>
+                                                                    </Col>
+                                                                </Row>
+                                                                <Row>
+                                                                    <Col className="align-self-center">
+                                                                        <h6>{`₹${item.price -
+                                                                            (item.price * item.discount) / 100
+                                                                            }`}</h6>
+                                                                    </Col>
+                                                                    {/* <Col>
                                       <Link
                                         to={`/add-cart/${item.id}`}
                                         onClick={handleAddToCart}
@@ -1842,50 +1807,73 @@ function SubcategoriesProduct() {
                                         <img src={bag} />
                                       </Link>
                                     </Col> */}
-                                                                    </Row>
+                                                                </Row>
+                                                            </div>
+                                                        </Link>
+                                                        {buttonVisibility[item.id] && (
+                                                            <Fade top>
+                                                                <div className="button-container">
+                                                                    <button
+                                                                        data-toggle="modal"
+                                                                        data-target=".bd-example-modal-lg"
+                                                                        onClick={(e) => handeldataId(item.id)}
+                                                                    >
+                                                                        Quick View
+                                                                    </button>
+                                                                    <button
+                                                                        data-toggle="modal"
+                                                                        data-target=".buynow"
+                                                                        onClick={(e) => handeldataId(item.id)}
+                                                                    >
+                                                                        Buy Now
+                                                                    </button>
                                                                 </div>
-                                                            </Link>
-                                                            {buttonVisibility[item.id] && (
-                                                                <Fade top>
-                                                                    <div className="button-container">
-                                                                        <button
-                                                                            data-toggle="modal"
-                                                                            data-target=".bd-example-modal-lg"
-                                                                            onClick={(e) => handeldataId(item.id)}
-                                                                        >
-                                                                            Quick View
-                                                                        </button>
-                                                                        <button
-                                                                            data-toggle="modal"
-                                                                            data-target=".buynow"
-                                                                            onClick={(e) => handeldataId(item.id)}
-                                                                        >
-                                                                            Buy Now
-                                                                        </button>
-                                                                    </div>
-                                                                </Fade>
-                                                            )}
-                                                        </div>
-                                                    </Col>
-                                                )
+                                                            </Fade>
+                                                        )}
+                                                    </div>
+                                                </Col>
+                                                // )
                                             )
                                         ) : (
                                             <p>No data available for {name}.</p>
                                         )}
                                     </Row>
-                                    {/* <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"activebtn"}
-                    nextClassName={"nextbtn"}
-                    previousClassName={"previousbtn"}
-                  /> */}
+                                    <div className="pagination-area">
+                  <ul className="pagination">
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          Previous
+                        </button>
+                      )}
+                    </li>
+                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
+                      </li>
+                    ))}
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage + 1)}
+                          disabled={currentPage === pageCount}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </li>
+                  </ul>
+                </div>
 
                                 </div>
 
@@ -2048,9 +2036,9 @@ function SubcategoriesProduct() {
                                                                                             {item.stock !== 0 ? (
                                                                                                 <div
                                                                                                     className={`tab-variations ${selectedVariant ===
-                                                                                                            item.type
-                                                                                                            ? "active"
-                                                                                                            : ""
+                                                                                                        item.type
+                                                                                                        ? "active"
+                                                                                                        : ""
                                                                                                         }`}
                                                                                                     onClick={() => {
                                                                                                         setSelectedVariant(
@@ -2397,8 +2385,8 @@ function SubcategoriesProduct() {
                                                                 Select Address{" "}
                                                                 <i
                                                                     className={`fa ${addressContentVisible
-                                                                            ? "fa-arrow-up"
-                                                                            : "fa-arrow-down"
+                                                                        ? "fa-arrow-up"
+                                                                        : "fa-arrow-down"
                                                                         }`}
                                                                     aria-hidden="true"
                                                                 ></i>
@@ -2504,8 +2492,8 @@ function SubcategoriesProduct() {
                                                                     {item.stock !== 0 ? (
                                                                         <div
                                                                             className={`tab-variations ${selectedVariant === item.type
-                                                                                    ? "active"
-                                                                                    : ""
+                                                                                ? "active"
+                                                                                : ""
                                                                                 }`}
                                                                             onClick={() => {
                                                                                 setSelectedVariant(item.type);
