@@ -277,10 +277,10 @@ export default function Petshoptrackyourorder() {
                             }`}
                           >
                             {step === "Picked Up" && orderData.picked_up ? (
-                              <span>{orderData.picked_up} - Picked Up</span>
+                              <span>{orderData.picked_up} -<br /> Picked Up</span>
                             ) : (
                               <span>
-                                {orderData[step.toLowerCase()]} - {step}
+                                {orderData[step.toLowerCase()]} -<br /> {step}
                               </span>
                             )}
                           </div>

@@ -1103,7 +1103,7 @@ function PetshopHome(props) {
               containerClass="carousel-container"
               removeArrowOnDeviceType={["tablet", "mobile"]}
               deviceType={props.deviceType}
-              // dotListClass="custom-dot-list-style"
+              dotListClass="custom-dot-list-style"
               itemClass="carousel-item-padding-40-px"
             >
               <div>

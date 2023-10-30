@@ -1091,7 +1091,7 @@ function Productdetail() {
                                 productDetails?.variations.length > 0 &&
                                 productDetails?.variations.map(
                                   (item, index) => (
-                                    <Col lg={3} key={index}>
+                                    <Col lg={3} key={index} className="p-0">
                                       {/* <div
                                         className={`tab-variations ${
                                           selectedVariant === item.type

@@ -893,7 +893,7 @@ function PetshopproductDetails() {
                     {productDetails?.images &&
                     productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
-                        <Col sm={2} className="mb-3" key={index}>
+                        <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
                           <div
                             className="product-item-inner"
                             onClick={() => handleThumbnailClick(index)}
