@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -20,8 +20,14 @@ function PetshopOrderviewdetails() {
   const [orderDetails, setorderDetails] = useState([]);
   console.log("AAorderDetails: ", orderDetails);
 
-  const { id } = useParams();
-  console.log("order id ", id);
+  // const { id } = useParams();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const id = params.get("id");
+  const paymentStatus = params.get("status");
+  console.log("param1 ", id, paymentStatus);
+  const navigate = useNavigate();
 
   useEffect(() => {
     orderViewdetails();
@@ -205,7 +211,7 @@ function PetshopOrderviewdetails() {
       user_id: storedWholesellerId,
       amount: SubTotalData + deliveryCharge,
       pay_mode: selectedPaymentMode,
-      seles_man_id:salesmanId
+      seles_man_id: salesmanId,
     };
     axios
       .post(`https://canine.hirectjob.in/api/v1/auth/selesman_pay_amount`, data)
@@ -213,6 +219,7 @@ function PetshopOrderviewdetails() {
         setResponseMessage(response.data.message);
         toast.success("Remaning Balance Add Successfully");
         // setShowForm(false);
+        navigate("/petShop-my-orders");
       })
       .catch((error) => {
         toast.error("Field is required");
@@ -329,8 +336,7 @@ function PetshopOrderviewdetails() {
                               </div>
                             </Col>
                           </Row>
-                          {salesmanId &&
-                          allorder[0]?.payment_status === "unpaid" ? (
+                          {salesmanId && paymentStatus === "unpaid" ? (
                             <Row>
                               <h6>Total outstanding amount</h6>
                               <h4>₹{SubTotalData + deliveryCharge}</h4>
@@ -509,7 +515,7 @@ function PetshopOrderviewdetails() {
                                         <p>Payment Status:</p>
                                       </th>
                                       <td>
-                                        <p>{allorder[0]?.payment_status}</p>
+                                        <p>{paymentStatus}</p>
                                       </td>
                                     </tr>
                                     <tr>

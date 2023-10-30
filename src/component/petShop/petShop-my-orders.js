@@ -15,11 +15,15 @@ function PetshopMyorder() {
   const [allorder, setallorder] = useState([]);
   useEffect(() => {
     allOrders();
+    storePaymentStatus();
   }, []);
 
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
+
+  // const storedPaymentStatus = Number(localStorage.getItem("paymentStatus"));
+  // console.log("storedPaymentStatus: ", storedPaymentStatus);
   // ----------------------------------------
   // salesmanId
   const salesmanId = localStorage.getItem("salesmanId");
@@ -40,6 +44,11 @@ function PetshopMyorder() {
   const getDateFromCreatedAt = (createdAt) => {
     const dateObject = new Date(createdAt);
     return dateObject.toLocaleDateString();
+  };
+  const storePaymentStatus = (paymentStatus) => {
+    if (paymentStatus) {
+      localStorage.setItem("payment_status", paymentStatus);
+    }
   };
 
   return (
@@ -64,7 +73,7 @@ function PetshopMyorder() {
                       <h3>Payment Status: {item.payment_status}</h3>
                       <h3>
                         Order Amount: ₹
-                        {item.order_amount + item.total_tax_amount}
+                        {parseInt(item.order_amount + item.total_tax_amount)}
                       </h3>
                       <h3>Order Status: {item.order_status}</h3>
                       {item.order_status === "delivered" ? (
@@ -129,7 +138,9 @@ function PetshopMyorder() {
                     <Col lg={3} sm={3} className="align-self-center">
                       <div className="myorder-btn">
                         <Button>
-                          <Link to={`/petShop-order-view-details/${item.id}`}>
+                          <Link
+                            to={`/petShop-order-view-details/?id=${item.id}&status=${item.payment_status}`}
+                          >
                             View
                           </Link>
                         </Button>
@@ -140,7 +151,9 @@ function PetshopMyorder() {
                         </Button>
                         {salesmanId && item.payment_status === "unpaid" ? (
                           <Button>
-                            <Link to={`/petShop-order-view-details/${item.id}`}>
+                            <Link
+                              to={`/petShop-order-view-details/?id=${item.id}&status=${item.payment_status}`}
+                            >
                               Pay
                             </Link>
                           </Button>
