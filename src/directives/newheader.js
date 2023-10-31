@@ -1724,6 +1724,9 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     if (customer_id) {
       try {
+        dispatch({
+          type: "CLEAR_CART",
+        });
         localStorage.removeItem("userInfo");
         localStorage.removeItem("loginType");
         localStorage.removeItem("phone");
@@ -1837,7 +1840,7 @@ function Newheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in//api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -2022,7 +2025,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2037,7 +2040,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2143,7 +2146,7 @@ function Newheader(props) {
                                 dogsubcategories.map(
                                   (item) =>
                                     item.heading ==
-                                    "Beds Cages, Scratcher & Crates" && (
+                                      "Beds Cages, Scratcher & Crates" && (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2262,7 +2265,8 @@ function Newheader(props) {
                               {dogsubcategories ? (
                                 dogsubcategories.map(
                                   (item) =>
-                                    item.heading == "Training & Accessories" && (
+                                    item.heading ==
+                                      "Training & Accessories" && (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2351,7 +2355,6 @@ function Newheader(props) {
                         </Row>
                       </Col>
                     </Row>
-
                   </div>
                 </div>
               </li>
@@ -2423,7 +2426,7 @@ function Newheader(props) {
                                 dogsubcategories.map(
                                   (item) =>
                                     item.heading ==
-                                    "Beds Cages, Scratcher & Crates" && (
+                                      "Beds Cages, Scratcher & Crates" && (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2542,7 +2545,8 @@ function Newheader(props) {
                               {dogsubcategories ? (
                                 dogsubcategories.map(
                                   (item) =>
-                                    item.heading == "Clothing & Accessories" && (
+                                    item.heading ==
+                                      "Clothing & Accessories" && (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2770,10 +2774,13 @@ function Newheader(props) {
                         </Link>
                       </li>
                       <li>
-                      <Link className="dropdown-item" to="/transition-history">
-                        Transition History
-                      </Link>
-                    </li>
+                        <Link
+                          className="dropdown-item"
+                          to="/transition-history"
+                        >
+                          Transition History
+                        </Link>
+                      </li>
                       <li>
                         <Link
                           className="dropdown-item"
@@ -3005,8 +3012,9 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${ob.status === "unread" ? "unread" : "read"
-                              }`}
+                            className={`notification ${
+                              ob.status === "unread" ? "unread" : "read"
+                            }`}
                             key={index}
                           >
                             <Row>

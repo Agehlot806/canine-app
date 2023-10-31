@@ -323,14 +323,14 @@ function Partneroneshop() {
   const [pincode, setpincode] = useState("");
   const [city, setcity] = useState("");
   const [profileData, setProfileData] = useState({});
-   // without signup add cart start
-   const loginType = localStorage.getItem("loginType");
-   const customerLoginId =
-     loginType === "wholeseller"
-       ? Number(localStorage.getItem("UserWholesellerId"))
-       : localStorage.getItem("userInfo");
-   const { cart, dispatch } = useCartWithoutLogin();
-    // without signup add cart end
+  // without signup add cart start
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
+  // without signup add cart end
 
   const [responseMessage, setResponseMessage] = useState("");
   const handleAddAddress = async (event) => {
@@ -929,19 +929,24 @@ function Partneroneshop() {
                         <p>{renderProductDescription(item.description)}</p>
                       </div>
                       <div className="product-bag">
-                        <Row>
-                          <Col>
-                            <p>₹{parseFloat(item.price)}</p>
-                          </Col>
-                          <Col>
-                            <h5>Save {parseInt(item.discount)} %</h5>
-                          </Col>
-                        </Row>
+                        {parseFloat(item.discount) > 0 ? (
+                          <Row>
+                            <Col>
+                              <p>₹{parseFloat(item.price)}</p>
+                            </Col>
+                            <Col>
+                              <h5>Save {parseFloat(item.discount)}%</h5>
+                            </Col>
+                          </Row>
+                        ) : null}
                         <Row>
                           <Col className="align-self-center">
-                            <h6>{`₹${
+                            {/* <h6>{`₹${
                               item.price - (item.price * item.discount) / 100
-                            }`}</h6>
+                            }`}</h6> */}
+                            <h6>{`₹${Math.floor(
+                              item.price - (item.price * item.discount) / 100
+                            )}`}</h6>
                           </Col>
                           {/* <Col>
                             <Link
@@ -970,7 +975,7 @@ function Partneroneshop() {
                             // onClick={(e) => handeldataId(item.id)}
                             onClick={(e) => {
                               if (!storedUserId) {
-                                shippingpage('/login')
+                                shippingpage("/login");
                               } else {
                                 handeldataId(item.id);
                               }
@@ -1214,7 +1219,9 @@ function Partneroneshop() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -1255,37 +1262,41 @@ function Partneroneshop() {
                       </div>
                     </Col>
                   </Row>
-                   {/* without sign in quick view add cart */}
-                   {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {/* without sign in quick view add cart */}
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      {customerLoginId === null ?
+                      {customerLoginId === null ? (
                         <Button data-dismiss="modal">
-                          <Link onClick={() => {
-                            dispatch({
-                              type: 'ADD_TO_CART',
-                              payload: {
-                                item_id: productDetails.id,
-                                variant: selectedVariant,
-                                price: formattedAmount,
-                                quantity: quantity,
-                                name: productDetails.name,
-                                image: productDetails.image
-                              }
-                            })
-
-                          }} >
+                          <Link
+                            onClick={() => {
+                              dispatch({
+                                type: "ADD_TO_CART",
+                                payload: {
+                                  item_id: productDetails.id,
+                                  variant: selectedVariant,
+                                  price: formattedAmount,
+                                  quantity: quantity,
+                                  name: productDetails.name,
+                                  image: productDetails.image,
+                                },
+                              });
+                            }}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
                         </Button>
-                        :
-                        (<Button>
-
-                          <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${id}`}
+                            onClick={handleAddToCart}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
-                        </Button>)}
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">
@@ -1971,7 +1982,9 @@ function Partneroneshop() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>

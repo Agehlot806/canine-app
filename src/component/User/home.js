@@ -83,6 +83,7 @@ function Home(props) {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
+  console.log("cart", cart);
   // without signup add cart end
   const isEmailFormatValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -988,7 +989,6 @@ function Home(props) {
       });
   };
 
-
   const renderProductDescription = (description) => {
     const maxCharacters = 35; // Number of characters to show initially
 
@@ -1281,13 +1281,16 @@ function Home(props) {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>
-                                {/* {`₹${(item.price * item.discount) / 100}`} */}
+                              {/* <h6>
+                                {`₹${(item.price * item.discount) / 100}`}
                                 {`₹${
                                   item.price -
                                   (item.price * item?.discount) / 100
                                 }`}
-                              </h6>
+                              </h6> */}
+                              <h6>{`₹${Math.floor(
+                                item.price - (item.price * item.discount) / 100
+                              )}`}</h6>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1335,7 +1338,7 @@ function Home(props) {
                             >
                               Buy Now
                             </button>
-                            
+
                             {/* <Button>
                         <Link
                           // to={`/add-cart/${productDetails.id}`}
@@ -1424,7 +1427,8 @@ function Home(props) {
                       <Col lg={6} className="mb-4">
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/" + item.image
+                            "https://canine.hirectjob.in/storage/app/" +
+                            item.image
                           }
                         />
                       </Col>
@@ -1712,7 +1716,8 @@ function Home(props) {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" + item.image
+                              "https://canine.hirectjob.in/storage/app/" +
+                              item.image
                             }
                           />
                         </div>
@@ -1721,9 +1726,7 @@ function Home(props) {
                             <div className="new-content">
                               <div className="Newsletter">
                                 <Flip right>
-                                  <h1 className="main-head">
-                                    Newsletter
-                                  </h1>
+                                  <h1 className="main-head">Newsletter</h1>
                                 </Flip>
                                 <Form className="d-flex">
                                   <Form.Control
@@ -1738,10 +1741,10 @@ function Home(props) {
                                     variant="outline-success"
                                     // onClick={handleNewsletter}
                                     onClick={() => {
-                                      if(!storedUserId){
-                                         toast.error("Please Login first") 
-                                      }else{
-                                        handleNewsletter
+                                      if (!storedUserId) {
+                                        toast.error("Please Login first");
+                                      } else {
+                                        handleNewsletter;
                                       }
                                     }}
                                   >
@@ -2029,20 +2032,28 @@ function Home(props) {
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
-                        {/* <Button> */}
+                          {/* <Button> */}
                           <Link
                             onClick={() => {
-                              dispatch({
-                                type: "ADD_TO_CART",
-                                payload: {
-                                  item_id: productDetails.id,
-                                  variant: selectedVariant,
-                                  price: formattedAmount,
-                                  quantity: quantity,
-                                  name: productDetails.name,
-                                  image: productDetails.image,
-                                },
+                              const filterData = cart.filter((el) => {
+                                return el.item_id === productDetails.id;
                               });
+                              console.log("filterData", filterData);
+                              if (filterData?.length > 0) {
+                                toast.error("Already in added");
+                              } else {
+                                dispatch({
+                                  type: "ADD_TO_CART",
+                                  payload: {
+                                    item_id: productDetails.id,
+                                    variant: selectedVariant,
+                                    price: formattedAmount,
+                                    quantity: quantity,
+                                    name: productDetails.name,
+                                    image: productDetails.image,
+                                  },
+                                });
+                              }
                             }}
                           >
                             <i className="fa fa-shopping-bag" /> Add to cart
