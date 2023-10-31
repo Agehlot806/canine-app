@@ -91,6 +91,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 function SubcategoriesProduct() {
   // const { name } = useParams();
@@ -878,78 +879,58 @@ function SubcategoriesProduct() {
       pincode: pincode,
     };
 
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/customer/address/add`,
-        data
-      );
-      setResponseMessage(response.data.message);
-      toast.success("Successfully added!");
+    const [sortOption, setSortOption] = useState('default');
+    const [paginatedCategories, setPaginatedCategories] = useState([]);
+    const { currentPage3, setCurrentPage3 } = usePagination();
 
-      // Call allAddressList to update the address list
-      await allAddressList();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const [first_nameError, setFirst_nameError] = useState("");
-
-  const [last_nameError, setLast_nameError] = useState("");
-
-  const [mobileError, setMobileError] = useState("");
-
-  const [house_noError, setHouse_noError] = useState("");
-
-  const [areaError, setAreaError] = useState("");
-
-  const [landmarkError, setLandmarkError] = useState("");
-
-  const [pincodeError, setPincodeError] = useState("");
-
-  const [stateError, setStateError] = useState("");
-
-  const [cityError, setCityError] = useState("");
-
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  const validateForm = () => {
-    if (
-      first_name.trim() === "" ||
-      last_name.trim() === "" ||
-      mobile.trim() === "" ||
-      house_no.trim() === "" ||
-      area.trim() === "" ||
-      landmark.trim() === "" ||
-      state.trim() === "" ||
-      selectedCity.trim() === "" ||
-      pincode.trim() === ""
-    ) {
-      setIsFormValid(false);
-    } else {
-      setIsFormValid(true);
-    }
-  };
-
-  const [selectedCity, setSelectedCity] = useState("");
-  const GetdataAll = async (e) => {
-    var headers = {
-      Accept: "application/json",
-      "Content-Data": "application/json",
+    const pageSize = 24;
+  
+    useEffect(() => {
+      pagination(currentPage3);
+    }, [allproduct, currentPage3, sortOption]);
+    const sortedProducts = () => {
+      let sortedItems = [...allproduct];
+      switch (sortOption) {
+        case 'A-Z':
+          sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case 'Z-A':
+          sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+        case 'PriceLowToHigh':
+          sortedItems.sort((a, b) => a.price - b.price);
+          break;
+        case 'PriceHighToLow':
+          sortedItems.sort((a, b) => b.price - a.price);
+          break;
+        case 'DateOldToNew':
+          sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
+          break;
+        case 'DateNewToOld':
+          sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+          break;
+        default:
+          // Default sorting (as per API response)
+          break;
+      }
+      if (sortOption === 'DateNewToOld') {
+        sortedItems.reverse();
+      }
+      return sortedItems;
     };
-    await fetch(`${BASE_URL}/auth/state`, {
-      method: "GET",
-      headers: headers,
-    })
-      .then((Response) => Response.json())
-      .then((Response) => {
-        setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
-      })
-      .catch((error) => {
-        console.error("ERROR FOUND---->>>>" + error);
-      });
-  };
+    const pagination = (pageNo) => {
+      setCurrentPage3(pageNo);
+      const startIndex = (pageNo - 1) * pageSize;
+      const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+      setPaginatedCategories(paginated);
+    };
+    const goToPage = (page) => {
+      if (page >= 1 && page <= pageCount) {
+        pagination(page);
+      }
+    };
+    const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
+    const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   const Getdatacity = (state) => {
     axios
@@ -1512,344 +1493,6 @@ function SubcategoriesProduct() {
                 </div>
                 <hr />
 
-<<<<<<< HEAD
-            <Container>
-                <Row>
-                    <Col lg={3}>
-                        <section className="section-padding">
-                            <div className="filter-product">
-                                <h3>Filters</h3>
-
-                                <hr />
-                                <div
-                                    onClick={() => handleParentClick("brand")}
-                                    className="main-chk"
-                                >
-                                    Brand
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {brandDropdownVisible && (
-                                        <>
-                                            <div>
-                                                {allbrand
-                                                    ? allbrand.map((items) => 
-                                                    items.canine == "1" && (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onClick={(e) =>
-                                                                    handleDataListBrand(items.title)
-                                                                }
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.title}
-                                                            </label>
-                                                        </div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-                                <div
-                                    onClick={() => handleParentClick("productType")}
-                                    className="main-chk"
-                                >
-                                    Product Type
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {productTypeDropdownVisible && (
-                                        <>
-                                            <div>
-                                                {subcategories
-                                                    ? subcategories.map((items) => (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onClick={(e) => allsubcateselect(items.name)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.name}
-                                                            </label>
-                                                        </div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-                                <div
-                                    onClick={() => handleParentClick("cate")}
-                                    className="main-chk"
-                                >
-                                    Category
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {cateDropdownVisible && (
-                                        <>
-                                            <div>
-                                                {allsubcate
-                                                    ? allsubcate.map((items) => (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onClick={(e) => allcateselect(items.name)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.name}
-                                                            </label>
-                                                        </div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-
-                                <div
-                                    onClick={() => handleParentClick("price")}
-                                    className="main-chk"
-                                >
-                                    Price
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {priceDropdownVisible && (
-                                        <>
-                                            <div>
-                                                <div
-                                                    className="form-range"
-                                                    onClick={handleCheckboxClick}
-                                                >
-                                                    <span>₹</span>
-                                                    <input
-                                                        type="number"
-                                                        placeholder="From"
-                                                        onChange={minprice}
-                                                    />
-                                                </div>
-                                                <div
-                                                    className="form-range"
-                                                    onClick={handleCheckboxClick}
-                                                >
-                                                    <span>₹</span>
-                                                    <input
-                                                        type="number"
-                                                        placeholder="From"
-                                                        onChange={maxprice}
-                                                    />
-                                                </div>
-                                                <div className="form-range">
-                                                    {/* <span>₹</span> */}
-                                                    <button onClick={applyprice}>Apply</button>
-                                                </div>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-                                <div
-                                    onClick={() => handleParentClick("lifestage")}
-                                    className="main-chk"
-                                >
-                                    Lifestage
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {lifestageDropdownVisible && (
-                                        <>
-                                            <div>
-                                                {alllifesage
-                                                    ? alllifesage.map((items) => (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onChange={(e) =>
-                                                                    Lifesatedataselect(items.name)
-                                                                }
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.name}
-                                                            </label>
-                                                        </div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-                                <div
-                                    onClick={() => handleParentClick("breedType")}
-                                    className="main-chk"
-                                >
-                                    Breed Type
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {breedTypeDropdownVisible && (
-                                        <>
-                                            <div>
-                                                {allbreed
-                                                    ? allbreed.map((items) => (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onChange={(e) => allbreedselect(items.name)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.name}
-                                                            </label>
-                                                        </div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-                                <div
-                                    onClick={() => handleParentClick("health")}
-                                    className="main-chk"
-                                >
-                                    Health Condition
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {healthDropdownVisible && (
-                                        <>
-                                            <div>
-                                                {allhealth
-                                                    ? allhealth.map((items) => (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onClick={(e) => allhealthselect(items.title)}
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.title}
-                                                            </label>
-                                                        </div>
-                                                    ))
-                                                    : ""}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-
-                                <div
-                                    onClick={() => handleParentClick("veg-Non-veg")}
-                                    className="main-chk"
-                                >
-                                    Veg/Nonveg
-                                    <div className="i-con">
-                                        <span>
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </div>
-                                    {vegNonvegDropdownVisible && (
-                                        <>
-                                            <div>
-                                                <div
-                                                    className="form-check"
-                                                    onClick={handleCheckboxClick}
-                                                >
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        onClick={(e) => vegnonveghandler("1")}
-                                                    />
-                                                    <label className="form-check-label">
-                                                        Non-Veg (219)
-                                                    </label>
-                                                </div>
-                                                <div
-                                                    className="form-check"
-                                                    onClick={handleCheckboxClick}
-                                                >
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        onClick={(e) => vegnonveghandler("0")}
-                                                    />
-                                                    <label className="form-check-label">Veg (73)</label>
-                                                </div>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <hr />
-                            </div>
-                        </section>
-                    </Col>
-                    <Col lg={9}>
-                        <div className="sort-by">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4>Sort by</h4>
-                                </Col>
-                                <Col lg={4}>
-                                    <select
-                                        className="form-control"
-                                        onChange={(e) => setSortOption(e.target.value)}
-                                        value={sortOption}
-                                    >
-                                        <option value="default">Choose...</option>
-                                        <option value="A-Z">Alphabetically, A-Z</option>
-                                        <option value="Z-A">Alphabetically, Z-A</option>
-                                        <option value="PriceLowToHigh">Price, Low to High</option>
-                                        <option value="PriceHighToLow">Price, High to Low</option>
-                                        <option value="DateOldToNew">Date, Old to New</option>
-                                        <option value="DateNewToOld">Date, New to Old</option>
-                                    </select>
-                                </Col>
-                            </Row>
-=======
                 <div
                   onClick={() => handleParentClick("price")}
                   className="main-chk"
@@ -1873,7 +1516,6 @@ function SubcategoriesProduct() {
                             placeholder="From"
                             onChange={minprice}
                           />
->>>>>>> origin/suyashupadhyay
                         </div>
                         <div
                           className="form-range"
@@ -2145,83 +1787,72 @@ function SubcategoriesProduct() {
                                         <img src={bag} />
                                       </Link>
                                     </Col> */}
-                                  </Row>
-                                </div>
-                              </Link>
-                              {buttonVisibility[item.id] && (
-                                <Fade top>
-                                  <div className="button-container">
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".bd-example-modal-lg"
-                                      onClick={(e) => handeldataId(item.id)}
-                                    >
-                                      Quick View
-                                    </button>
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".buynow"
-                                      onClick={(e) => handeldataId(item.id)}
-                                    >
-                                      Buy Now
-                                    </button>
-                                  </div>
-                                </Fade>
-                              )}
-                            </div>
-                          </Col>
-                        )
-                        // )
-                      )
-                    ) : (
-                      <p>No data available for {name}.</p>
-                    )}
-                  </Row>
-                  <div className="pagination-area">
-                    <ul className="pagination">
-                      <li className="page-item">
-                        {paginatedCategories?.length > 0 && (
-                          <button
-                            className="page-link"
-                            onClick={() => goToPage(currentPage - 1)}
-                            disabled={currentPage === 1}
-                          >
-                            Previous
-                          </button>
-                        )}
+                                                                </Row>
+                                                            </div>
+                                                        </Link>
+                                                        {buttonVisibility[item.id] && (
+                                                            <Fade top>
+                                                                <div className="button-container">
+                                                                    <button
+                                                                        data-toggle="modal"
+                                                                        data-target=".bd-example-modal-lg"
+                                                                        onClick={(e) => handeldataId(item.id)}
+                                                                    >
+                                                                        Quick View
+                                                                    </button>
+                                                                    <button
+                                                                        data-toggle="modal"
+                                                                        data-target=".buynow"
+                                                                        onClick={(e) => handeldataId(item.id)}
+                                                                    >
+                                                                        Buy Now
+                                                                    </button>
+                                                                </div>
+                                                            </Fade>
+                                                        )}
+                                                    </div>
+                                                </Col>
+                                                // )
+                                            )
+                                        ) : (
+                                            <p>No data available for {name}.</p>
+                                        )}
+                                    </Row>
+                                    <div className="pagination-area">
+                  <ul className="pagination">
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage3 - 1)}
+                          disabled={currentPage3 === 1}
+                        >
+                          Previous
+                        </button>
+                      )}
+                    </li>
+                    {pages.slice(currentPage3 - 1, currentPage3 + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage3 ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
                       </li>
-                      {pages
-                        .slice(currentPage - 1, currentPage + 4)
-                        .map((page) => (
-                          <li
-                            key={page}
-                            className={
-                              page === currentPage
-                                ? "page-item active"
-                                : "page-item"
-                            }
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => goToPage(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        ))}
-                      <li className="page-item">
-                        {paginatedCategories?.length > 0 && (
-                          <button
-                            className="page-link"
-                            onClick={() => goToPage(currentPage + 1)}
-                            disabled={currentPage === pageCount}
-                          >
-                            Next
-                          </button>
-                        )}
-                      </li>
-                    </ul>
-                  </div>
+                    ))}
+                    <li className="page-item">
+                      {paginatedCategories?.length > 0 && (
+                        <button
+                          className="page-link"
+                          onClick={() => goToPage(currentPage3 + 1)}
+                          disabled={currentPage3 === pageCount}
+                        >
+                          Next
+                        </button>
+                      )}
+                    </li>
+                  </ul>
                 </div>
 
                 <Row></Row>

@@ -14,6 +14,7 @@ import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 function Productpartnershop() {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
@@ -1161,12 +1162,13 @@ function Productpartnershop() {
 
   const [sortOption, setSortOption] = useState('default');
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
+  const { currentPage9, setCurrentPage9 } = usePagination();
+
+  const pageSize = 24;
 
   useEffect(() => {
-    pagination(currentPage);
-  }, [allproduct, currentPage, sortOption]);
+    pagination(currentPage9);
+  }, [allproduct, currentPage9, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1198,7 +1200,7 @@ function Productpartnershop() {
     return sortedItems;
   };
   const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
+    setCurrentPage9(pageNo);
     const startIndex = (pageNo - 1) * pageSize;
     const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
     setPaginatedCategories(paginated);
@@ -1679,17 +1681,17 @@ function Productpartnershop() {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage - 1)}
-                          disabled={currentPage === 1}
+                          onClick={() => goToPage(currentPage9 - 1)}
+                          disabled={currentPage9 === 1}
                         >
                           Previous
                         </button>
                       )}
                     </li>
-                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                    {pages.slice(currentPage9 - 1, currentPage9 + 4).map((page) => (
                       <li
                         key={page}
-                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                        className={page === currentPage9 ? 'page-item active' : 'page-item'}
                       >
                         <button className="page-link" onClick={() => goToPage(page)}>
                           {page}
@@ -1700,8 +1702,8 @@ function Productpartnershop() {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage + 1)}
-                          disabled={currentPage === pageCount}
+                          onClick={() => goToPage(currentPage9 + 1)}
+                          disabled={currentPage9 === pageCount}
                         >
                           Next
                         </button>

@@ -102,6 +102,7 @@ import SubcategoriesProduct from "./component/User/sub-categoriesProduct";
 import PetShopSubcategoriesProduct from "./component/petShop/petShop-SubcategoriesProduct";
 import Transitionhistory from "./component/User/transition-history";
 import SubcategoriesHeading from "./component/User/sub-categoriesHeading";
+import { PaginationProvider } from "./Context/PaginationContext";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -120,6 +121,8 @@ function App() {
       className="cursor"
       // className="dog-paw-cursor/"
     >
+      <PaginationProvider>
+
       <BrowserRouter>
         <ScrollToTop /> {/* Add ScrollToTop component here */}
         <Routes>
@@ -334,6 +337,8 @@ function App() {
           <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
+      </PaginationProvider>
+
     </div>
   );
 }

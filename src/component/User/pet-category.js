@@ -20,6 +20,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 function Petcategory() {
   //     const { id } = useParams();
@@ -1250,12 +1251,13 @@ function Petcategory() {
   };
   const [sortOption, setSortOption] = useState("default");
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
+  const { currentPage8, setCurrentPage8 } = usePagination();
+
+  const pageSize = 24;
 
   useEffect(() => {
-    pagination(currentPage);
-  }, [allproduct, currentPage, sortOption]);
+    pagination(currentPage8);
+  }, [allproduct, currentPage8, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1287,7 +1289,7 @@ function Petcategory() {
     return sortedItems;
   };
   const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
+    setCurrentPage8(pageNo);
     const startIndex = (pageNo - 1) * pageSize;
     const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
     setPaginatedCategories(paginated);
@@ -1806,38 +1808,29 @@ function Petcategory() {
                         {paginatedCategories?.length > 0 && (
                           <button
                             className="page-link"
-                            onClick={() => goToPage(currentPage - 1)}
-                            disabled={currentPage === 1}
+                            onClick={() => goToPage(currentPage8 - 1)}
+                            disabled={currentPage8 === 1}
                           >
                             Previous
                           </button>
                         )}
                       </li>
-                      {pages
-                        .slice(currentPage - 1, currentPage + 4)
-                        .map((page) => (
-                          <li
-                            key={page}
-                            className={
-                              page === currentPage
-                                ? "page-item active"
-                                : "page-item"
-                            }
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => goToPage(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        ))}
+                      {pages.slice(currentPage8 - 1, currentPage8 + 4).map((page) => (
+                        <li
+                          key={page}
+                          className={page === currentPage8 ? 'page-item active' : 'page-item'}
+                        >
+                          <button className="page-link" onClick={() => goToPage(page)}>
+                            {page}
+                          </button>
+                        </li>
+                      ))}
                       <li className="page-item">
                         {paginatedCategories?.length > 0 && (
                           <button
                             className="page-link"
-                            onClick={() => goToPage(currentPage + 1)}
-                            disabled={currentPage === pageCount}
+                            onClick={() => goToPage(currentPage8 + 1)}
+                            disabled={currentPage8 === pageCount}
                           >
                             Next
                           </button>

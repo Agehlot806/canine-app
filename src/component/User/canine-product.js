@@ -20,6 +20,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 const clinetreview = {
   desktop: {
@@ -1173,14 +1174,31 @@ function Canineproduct(props) {
     }
   };
 
-  const [sortOption, setSortOption] = useState("default");
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+        return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+        <>
+            <p>{truncatedDescription}.......</p>
+        </>
+    );
+};
+
+  const [sortOption, setSortOption] = useState('default');
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
+  const { currentPage1, setCurrentPage1 } = usePagination();
+
+  const pageSize = 24;
 
   useEffect(() => {
-    pagination(currentPage);
-  }, [allproduct, currentPage, sortOption]);
+    pagination(currentPage1);
+  }, [allproduct, currentPage1, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1212,7 +1230,7 @@ function Canineproduct(props) {
     return sortedItems;
   };
   const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
+    setCurrentPage1(pageNo);
     const startIndex = (pageNo - 1) * pageSize;
     const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
     setPaginatedCategories(paginated);
@@ -1615,7 +1633,7 @@ function Canineproduct(props) {
                               </div>
                               <div>
                                 <h6>{item.name}</h6>
-                                <p>{item.description}</p>
+                                <p>{renderProductDescription(item.description)}</p>
                               </div>
                               <div className="product-bag">
                                 <Row>
@@ -1679,38 +1697,29 @@ function Canineproduct(props) {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage - 1)}
-                          disabled={currentPage === 1}
+                          onClick={() => goToPage(currentPage1 - 1)}
+                          disabled={currentPage1 === 1}
                         >
                           Previous
                         </button>
                       )}
                     </li>
-                    {pages
-                      .slice(currentPage - 1, currentPage + 4)
-                      .map((page) => (
-                        <li
-                          key={page}
-                          className={
-                            page === currentPage
-                              ? "page-item active"
-                              : "page-item"
-                          }
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => goToPage(page)}
-                          >
-                            {page}
-                          </button>
-                        </li>
-                      ))}
+                    {pages.slice(currentPage1 - 1, currentPage1 + 4).map((page) => (
+                      <li
+                        key={page}
+                        className={page === currentPage1 ? 'page-item active' : 'page-item'}
+                      >
+                        <button className="page-link" onClick={() => goToPage(page)}>
+                          {page}
+                        </button>
+                      </li>
+                    ))}
                     <li className="page-item">
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage + 1)}
-                          disabled={currentPage === pageCount}
+                          onClick={() => goToPage(currentPage1 + 1)}
+                          disabled={currentPage1 === pageCount}
                         >
                           Next
                         </button>
