@@ -19,6 +19,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import { loadRazorpay } from "../../utils";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 const clinetreview = {
   desktop: {
@@ -1240,12 +1241,13 @@ function Petshopproduct(props) {
 
   const [sortOption, setSortOption] = useState('default');
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
+  const { currentPage6, setCurrentPage6 } = usePagination();
+
+  const pageSize = 24;
 
   useEffect(() => {
-    pagination(currentPage);
-  }, [allproduct, currentPage, sortOption]);
+    pagination(currentPage6);
+  }, [allproduct, currentPage6, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1277,7 +1279,7 @@ function Petshopproduct(props) {
     return sortedItems;
   };
   const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
+    setCurrentPage6(pageNo);
     const startIndex = (pageNo - 1) * pageSize;
     const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
     setPaginatedCategories(paginated);
@@ -1740,17 +1742,17 @@ function Petshopproduct(props) {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage - 1)}
-                          disabled={currentPage === 1}
+                          onClick={() => goToPage(currentPage6 - 1)}
+                          disabled={currentPage6 === 1}
                         >
                           Previous
                         </button>
                       )}
                     </li>
-                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                    {pages.slice(currentPage6 - 1, currentPage6 + 4).map((page) => (
                       <li
                         key={page}
-                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                        className={page === currentPage6 ? 'page-item active' : 'page-item'}
                       >
                         <button className="page-link" onClick={() => goToPage(page)}>
                           {page}
@@ -1761,8 +1763,8 @@ function Petshopproduct(props) {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage + 1)}
-                          disabled={currentPage === pageCount}
+                          onClick={() => goToPage(currentPage6 + 1)}
+                          disabled={currentPage6 === pageCount}
                         >
                           Next
                         </button>

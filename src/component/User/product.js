@@ -23,6 +23,7 @@ import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 const clinetreview = {
   desktop: {
@@ -1178,12 +1179,14 @@ function Product(props) {
 
   const [sortOption, setSortOption] = useState('default');
   const [paginatedCategories, setPaginatedCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
+  const { currentPage2, setCurrentPage2 } = usePagination();
+
+
+  const pageSize = 24;
 
   useEffect(() => {
-    pagination(currentPage);
-  }, [allproduct, currentPage, sortOption]);
+    pagination(currentPage2);
+  }, [allproduct, currentPage2, sortOption]);
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1215,7 +1218,7 @@ function Product(props) {
     return sortedItems;
   };
   const pagination = (pageNo) => {
-    setCurrentPage(pageNo);
+    setCurrentPage2(pageNo);
     const startIndex = (pageNo - 1) * pageSize;
     const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
     setPaginatedCategories(paginated);
@@ -1725,17 +1728,17 @@ function Product(props) {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage - 1)}
-                          disabled={currentPage === 1}
+                          onClick={() => goToPage(currentPage2 - 1)}
+                          disabled={currentPage2 === 1}
                         >
                           Previous
                         </button>
                       )}
                     </li>
-                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
+                    {pages.slice(currentPage2 - 1, currentPage2 + 4).map((page) => (
                       <li
                         key={page}
-                        className={page === currentPage ? 'page-item active' : 'page-item'}
+                        className={page === currentPage2 ? 'page-item active' : 'page-item'}
                       >
                         <button className="page-link" onClick={() => goToPage(page)}>
                           {page}
@@ -1746,8 +1749,8 @@ function Product(props) {
                       {paginatedCategories?.length > 0 && (
                         <button
                           className="page-link"
-                          onClick={() => goToPage(currentPage + 1)}
-                          disabled={currentPage === pageCount}
+                          onClick={() => goToPage(currentPage2 + 1)}
+                          disabled={currentPage2 === pageCount}
                         >
                           Next
                         </button>
