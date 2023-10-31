@@ -380,7 +380,7 @@ function Petshopdashboard() {
                                       <h6>{callbackItem.variant}</h6>
                                     )
                                   )}
-                                  <a>
+                                  {/* <a>
                                     <i
                                       class="fa fa-star"
                                       aria-hidden="true"
@@ -409,7 +409,7 @@ function Petshopdashboard() {
                                       class="fa fa-star-half-o"
                                       aria-hidden="true"
                                     ></i>
-                                  </a>
+                                  </a> */}
                                   {/* <p>
                                   Lorem Ipsum is simply dummy text of the printing
                                   and typesetting

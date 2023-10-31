@@ -32,14 +32,14 @@ function Blogdetails() {
   const [paymentId, setPaymentId] = useState("");
   const [expandedDescription, setExpandedDescription] = useState({});
   const [productIds, setProductIds] = useState([]);
-   // without signup add cart start
-   const loginType = localStorage.getItem("loginType");
-   const customerLoginId =
-     loginType === "wholeseller"
-       ? Number(localStorage.getItem("UserWholesellerId"))
-       : localStorage.getItem("userInfo");
-   const { cart, dispatch } = useCartWithoutLogin();
-    // without signup add cart end
+  // without signup add cart start
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
+  // without signup add cart end
   console.log("productIds: ", productIds);
   // const relatedProductData = blogdata?.product_id;
   // console.log("relatedProductData: ", relatedProductData);
@@ -990,10 +990,14 @@ function Blogdetails() {
                             xs={6}
                             className="align-self-center"
                           >
-                            <h6>{`₹${
+                            {/* <h6>{`₹${
                               item[0]?.price -
                               (item[0]?.price * item[0]?.discount) / 100
-                            }`}</h6>
+                            }`}</h6> */}
+                            <h6>{`₹${Math.floor(
+                              item[0].price -
+                                (item[0].price * item[0].discount) / 100
+                            )}`}</h6>
                           </Col>
                         </Row>
                       </div>
@@ -1014,7 +1018,7 @@ function Blogdetails() {
                             // onClick={() => handeldataId(item[0].id)}
                             onClick={(e) => {
                               if (!storedUserId) {
-                                shippingpage('/login')
+                                shippingpage("/login");
                               } else {
                                 handeldataId(item.id);
                               }
@@ -1249,7 +1253,9 @@ function Blogdetails() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -1290,36 +1296,41 @@ function Blogdetails() {
                       </div>
                     </Col>
                   </Row>
-                   {/* without sign in quick view add cart */}
-                   {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {/* without sign in quick view add cart */}
+                  {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      {customerLoginId === null ?
+                      {customerLoginId === null ? (
                         <Button data-dismiss="modal">
-                          <Link onClick={() => {
-                            dispatch({
-                              type: 'ADD_TO_CART',
-                              payload: {
-                                item_id: productDetails.id,
-                                variant: selectedVariant,
-                                price: formattedAmount,
-                                quantity: quantity,
-                                name: productDetails.name,
-                                image: productDetails.image
-                              }
-                            })
-
-                          }} >
+                          <Link
+                            onClick={() => {
+                              dispatch({
+                                type: "ADD_TO_CART",
+                                payload: {
+                                  item_id: productDetails.id,
+                                  variant: selectedVariant,
+                                  price: formattedAmount,
+                                  quantity: quantity,
+                                  name: productDetails.name,
+                                  image: productDetails.image,
+                                },
+                              });
+                            }}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
                         </Button>
-                        :
-                        (<Button>
-                          <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${id}`}
+                            onClick={handleAddToCart}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
-                        </Button>)}
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">
@@ -1755,7 +1766,9 @@ function Blogdetails() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>

@@ -287,8 +287,7 @@ function Ourourbrand(props) {
         console.log("data in fetch", data);
         console.log("data1 in fetch", data1);
         setallproductbrand(data1);
-        setSortOption('default');
-
+        setSortOption("default");
       })
       .catch((error) => {
         console.log(error);
@@ -741,7 +740,7 @@ function Ourourbrand(props) {
     if (productDetails?.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails?.image
+          productDetails?.image
       );
     }
   }, [productDetails]);
@@ -749,7 +748,7 @@ function Ourourbrand(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails?.images[index]
+        productDetails?.images[index]
     );
   };
 
@@ -1247,7 +1246,7 @@ function Ourourbrand(props) {
     }
   };
 
-  const [sortOption, setSortOption] = useState('default');
+  const [sortOption, setSortOption] = useState("default");
   const [paginatedCategories, setPaginatedCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
@@ -1258,29 +1257,29 @@ function Ourourbrand(props) {
   const sortedProducts = () => {
     let sortedItems = [...allproductbrand];
     switch (sortOption) {
-      case 'A-Z':
+      case "A-Z":
         sortedItems.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      case 'Z-A':
+      case "Z-A":
         sortedItems.sort((a, b) => b.name.localeCompare(a.name));
         break;
-      case 'PriceLowToHigh':
+      case "PriceLowToHigh":
         sortedItems.sort((a, b) => a.price - b.price);
         break;
-      case 'PriceHighToLow':
+      case "PriceHighToLow":
         sortedItems.sort((a, b) => b.price - a.price);
         break;
-      case 'DateOldToNew':
+      case "DateOldToNew":
         sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
         break;
-      case 'DateNewToOld':
+      case "DateNewToOld":
         sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
         break;
       default:
         // Default sorting (as per API response)
         break;
     }
-    if (sortOption === 'DateNewToOld') {
+    if (sortOption === "DateNewToOld") {
       sortedItems.reverse();
     }
     return sortedItems;
@@ -1296,9 +1295,10 @@ function Ourourbrand(props) {
       pagination(page);
     }
   };
-  const pageCount = allproductbrand ? Math.ceil(allproductbrand.length / pageSize) : 0;
+  const pageCount = allproductbrand
+    ? Math.ceil(allproductbrand.length / pageSize)
+    : 0;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
-
 
   const renderProductDescription = (description) => {
     const maxCharacters = 35; // Number of characters to show initially
@@ -1332,7 +1332,7 @@ function Ourourbrand(props) {
                 <h3>Filters</h3>
 
                 <hr />
-               
+
                 <div
                   onClick={() => handleParentClick("productType")}
                   className="main-chk"
@@ -1348,20 +1348,20 @@ function Ourourbrand(props) {
                       <div>
                         {subcategories
                           ? subcategories.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allsubcateselect(items.name)}
-                              />
-                              <label className="form-check-label">
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allsubcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1383,20 +1383,20 @@ function Ourourbrand(props) {
                       <div>
                         {allsubcate
                           ? allsubcate.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allcateselect(items.name)}
-                              />
-                              <label className="form-check-label">
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allcateselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1463,22 +1463,22 @@ function Ourourbrand(props) {
                       <div>
                         {alllifesage
                           ? alllifesage.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) =>
-                                  Lifesatedataselect(items.name)
-                                }
-                              />
-                              <label className="form-check-label">
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) =>
+                                    Lifesatedataselect(items.name)
+                                  }
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1500,20 +1500,20 @@ function Ourourbrand(props) {
                       <div>
                         {allbreed
                           ? allbreed.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onChange={(e) => allbreedselect(items.name)}
-                              />
-                              <label className="form-check-label">
-                                {items.name}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onChange={(e) => allbreedselect(items.name)}
+                                />
+                                <label className="form-check-label">
+                                  {items.name}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1535,20 +1535,20 @@ function Ourourbrand(props) {
                       <div>
                         {allhealth
                           ? allhealth.map((items) => (
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => allhealthselect(items.title)}
-                              />
-                              <label className="form-check-label">
-                                {items.title}
-                              </label>
-                            </div>
-                          ))
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => allhealthselect(items.title)}
+                                />
+                                <label className="form-check-label">
+                                  {items.title}
+                                </label>
+                              </div>
+                            ))
                           : ""}
                       </div>
                     </>
@@ -1602,29 +1602,26 @@ function Ourourbrand(props) {
             </section>
           </Col>
           <Col lg={9}>
-          <div className="sort-by">
-          <Row>
-  <Col lg={2}>
-    Sort By
-  </Col>
-  <Col lg={3}>
-  <select
-              className="form-control"
-              onChange={(e) => setSortOption(e.target.value)}
-              value={sortOption}
-            >
-              <option value="default">Choose...</option>
-              <option value="A-Z">Alphabetically, A-Z</option>
-              <option value="Z-A">Alphabetically, Z-A</option>
-              <option value="PriceLowToHigh">Price, Low to High</option>
-              <option value="PriceHighToLow">Price, High to Low</option>
-              <option value="DateOldToNew">Date, Old to New</option>
-              <option value="DateNewToOld">Date, New to Old</option>
-            </select>
-  </Col>
-
-</Row>
-</div>
+            <div className="sort-by">
+              <Row>
+                <Col lg={2}>Sort By</Col>
+                <Col lg={3}>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setSortOption(e.target.value)}
+                    value={sortOption}
+                  >
+                    <option value="default">Choose...</option>
+                    <option value="A-Z">Alphabetically, A-Z</option>
+                    <option value="Z-A">Alphabetically, Z-A</option>
+                    <option value="PriceLowToHigh">Price, Low to High</option>
+                    <option value="PriceHighToLow">Price, High to Low</option>
+                    <option value="DateOldToNew">Date, Old to New</option>
+                    <option value="DateNewToOld">Date, New to Old</option>
+                  </select>
+                </Col>
+              </Row>
+            </div>
 
             <section className="section-padding">
               <Container>
@@ -1670,22 +1667,33 @@ function Ourourbrand(props) {
                                 </div>
                                 <div>
                                   <h6>{item.name}</h6>
-                                  <p>{renderProductDescription(item.description)}</p>
+                                  <p>
+                                    {renderProductDescription(item.description)}
+                                  </p>
                                 </div>
                                 <div className="product-bag">
-                                  <Row>
-                                    <Col>
-                                      <p>₹{parseFloat(item.price)}</p>
-                                    </Col>
-                                    <Col>
-                                      <h5>Save {parseInt(item.discount)} %</h5>
-                                    </Col>
-                                  </Row>
+                                  {parseFloat(item.discount) > 0 ? (
+                                    <Row>
+                                      <Col>
+                                        <p>₹{parseFloat(item.price)}</p>
+                                      </Col>
+                                      <Col>
+                                        <h5>
+                                          Save {parseFloat(item.discount)}%
+                                        </h5>
+                                      </Col>
+                                    </Row>
+                                  ) : null}
                                   <Row>
                                     <Col className="align-self-center">
-                                      <h6>{`₹${item.price -
+                                      {/* <h6>{`₹${
+                                        item.price -
                                         (item.price * item.discount) / 100
-                                        }`}</h6>
+                                      }`}</h6> */}
+                                      <h6>{`₹${Math.floor(
+                                        item.price -
+                                          (item.price * item.discount) / 100
+                                      )}`}</h6>
                                     </Col>
                                     {/* <Col>
                                       <Link to="">
@@ -1711,13 +1719,13 @@ function Ourourbrand(props) {
                                       data-target=".buynow"
                                       onClick={(e) => {
                                         if (!storedUserId) {
-                                          // window.location.href = '/login'; 
-                                          shippingpage('/login')
+                                          // window.location.href = '/login';
+                                          shippingpage("/login");
                                         } else {
                                           handeldataId(item.id);
                                         }
                                       }}
-                                    // onClick={(e) => handeldataId(item.id)}
+                                      // onClick={(e) => handeldataId(item.id)}
                                     >
                                       Buy Now
                                     </button>
@@ -1742,11 +1750,10 @@ function Ourourbrand(props) {
                       <p className="emptyMSG">No Brands Product.</p>
                     )}
                   </Row>
-
                 ) : (
                   <p>No Brand Product</p>
                 )}
-               <div className="pagination-area">
+                <div className="pagination-area">
                   <ul className="pagination">
                     <li className="page-item">
                       {paginatedCategories?.length > 0 && (
@@ -1759,16 +1766,25 @@ function Ourourbrand(props) {
                         </button>
                       )}
                     </li>
-                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
-                      <li
-                        key={page}
-                        className={page === currentPage ? 'page-item active' : 'page-item'}
-                      >
-                        <button className="page-link" onClick={() => goToPage(page)}>
-                          {page}
-                        </button>
-                      </li>
-                    ))}
+                    {pages
+                      .slice(currentPage - 1, currentPage + 4)
+                      .map((page) => (
+                        <li
+                          key={page}
+                          className={
+                            page === currentPage
+                              ? "page-item active"
+                              : "page-item"
+                          }
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => goToPage(page)}
+                          >
+                            {page}
+                          </button>
+                        </li>
+                      ))}
                     <li className="page-item">
                       {paginatedCategories?.length > 0 && (
                         <button
@@ -1946,7 +1962,7 @@ function Ourourbrand(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1987,17 +2003,17 @@ function Ourourbrand(props) {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -2006,13 +2022,13 @@ function Ourourbrand(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -2067,11 +2083,12 @@ function Ourourbrand(props) {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
-                                                      item.type
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
                                                       ? "active"
                                                       : ""
-                                                    }`}
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2132,7 +2149,9 @@ function Ourourbrand(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2176,33 +2195,38 @@ function Ourourbrand(props) {
                   {/* without sign in quick view add cart */}
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      {customerLoginId === null ?
+                      {customerLoginId === null ? (
                         <Button data-dismiss="modal">
-                          <Link onClick={() => {
-                            dispatch({
-                              type: 'ADD_TO_CART',
-                              payload: {
-                                item_id: productDetails.id,
-                                variant: selectedVariant,
-                                price: formattedAmount,
-                                quantity: quantity,
-                                name: productDetails.name,
-                                image: productDetails.image
-                              }
-                            })
-
-                          }} >
+                          <Link
+                            onClick={() => {
+                              dispatch({
+                                type: "ADD_TO_CART",
+                                payload: {
+                                  item_id: productDetails.id,
+                                  variant: selectedVariant,
+                                  price: formattedAmount,
+                                  quantity: quantity,
+                                  name: productDetails.name,
+                                  image: productDetails.image,
+                                },
+                              });
+                            }}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
                         </Button>
-                        :
-                        (<Button>
-                          <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${id}`}
+                            onClick={handleAddToCart}
+                          >
                             <i className="fa fa-shopping-bag" /> Add to cart
                           </Link>
                           <p>{addToCartStatus}</p>
-                        </Button>)}
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">
@@ -2706,10 +2730,11 @@ function Ourourbrand(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2813,10 +2838,11 @@ function Ourourbrand(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2887,7 +2913,9 @@ function Ourourbrand(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -3191,11 +3219,11 @@ function Ourourbrand(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

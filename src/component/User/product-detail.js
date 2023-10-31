@@ -50,7 +50,17 @@ function Productdetail() {
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
   const handleIncrementone = () => {
-    setQuantity(quantity + 1);
+    console.log("gggg", productDetails?.stock);
+    productDetails?.variations.forEach((el) => {
+      if (el?.type === selectedVariant) {
+        if (quantity === el?.stock) {
+          toast.error(`${el.type} Stock not avilable`);
+        } else {
+          setQuantity(quantity + 1);
+        }
+      } else {
+      }
+    });
   };
   const handleDecrementone = () => {
     if (quantity > 1) {
@@ -102,10 +112,15 @@ function Productdetail() {
   //   const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
   //   setProductDetails(savedCartItems);
   // }, []);
-
+  {
+    console.log("productDetails?.price ", productDetails?.price);
+  }
   useEffect(() => {
     // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    localStorage.setItem('savedCartItems', JSON.stringify([...addToCartStatus, productDetails]));
+    localStorage.setItem(
+      "savedCartItems",
+      JSON.stringify([...addToCartStatus, productDetails])
+    );
     // setCartItems(savedCartItems);
   }, [productDetails]);
   const handleAddToCart = async () => {
@@ -120,10 +135,13 @@ function Productdetail() {
             "Access-Control-Allow-Headers": "Content-Type",
           },
           item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
+          variant: selectedVariant.length > 0 ? selectedVariant : "", // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price:
+            formattedAmount === "0"
+              ? productDetails?.price.toString()
+              : formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
         }
@@ -334,6 +352,7 @@ function Productdetail() {
   //     (uservariationprice * quantity * productDetails.discount) / 100
   // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
+  console.log("formattedAmount: ", formattedAmount === "0");
   // const savedAmount = (
   //   productDetails.price * quantity -
   //   (productDetails.price * quantity * productDetails.discount) / 100
@@ -342,6 +361,7 @@ function Productdetail() {
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
+  const MrpPrice = Number(savedAmount).toString();
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -389,7 +409,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -397,7 +417,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -948,18 +968,18 @@ function Productdetail() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-            (item, index) =>
-              item.type === "common" && (
-                <Link to={item.default_link}>
-                  <img
-                    className="partner-img"
-                    src={
-                      "https://canine.hirectjob.in//storage/app/" + item.image
-                    }
-                  />
-                </Link>
-              )
-          )
+              (item, index) =>
+                item.type === "common" && (
+                  <Link to={item.default_link}>
+                    <img
+                      className="partner-img"
+                      src={
+                        "https://canine.hirectjob.in//storage/app/" + item.image
+                      }
+                    />
+                  </Link>
+                )
+            )
           : null}
       </div>
 
@@ -979,7 +999,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1018,16 +1038,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex + 1) % productDetails.images.length
+                        (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[
-                      (lightboxImageIndex +
-                        productDetails.images.length -
-                        1) %
-                      productDetails.images.length
+                        (lightboxImageIndex +
+                          productDetails.images.length -
+                          1) %
+                          productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1036,7 +1056,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                        productDetails.images.length
+                          productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1069,7 +1089,7 @@ function Productdetail() {
                   </Col>
                 </Row>
                 <p>
-                  By <span>{productDetails.store_name}</span>
+                  By <span>{productDetails?.brand_id}</span>
                 </p>
 
                 <Wrapper>
@@ -1081,18 +1101,19 @@ function Productdetail() {
 
                 <div className="needplaceProduct">
                   <Row>
-                    <Col sm={6} xs={6}>
-                      <div>
+                    {productDetails?.variations?.length > 0 && (
+                      <Col sm={6} xs={6}>
                         <div>
-                          <div className="tab-container">
-                            <h6>Variations</h6>
-                            <Row>
-                              {productDetails?.variations &&
-                                productDetails?.variations.length > 0 &&
-                                productDetails?.variations.map(
-                                  (item, index) => (
-                                    <Col lg={3} key={index} className="p-0">
-                                      {/* <div
+                          <div>
+                            <div className="tab-container">
+                              <h6>Variations</h6>
+                              <Row>
+                                {productDetails?.variations &&
+                                  productDetails?.variations.length > 0 &&
+                                  productDetails?.variations.map(
+                                    (item, index) => (
+                                      <Col lg={3} key={index} className="p-0">
+                                        {/* <div
                                         className={`tab-variations ${
                                           selectedVariant === item.type
                                             ? "active"
@@ -1105,37 +1126,41 @@ function Productdetail() {
                                       >
                                         {item.type}
                                       </div> */}
-                                      {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${selectedVariant === item.type
-                                            ? "active"
-                                            : ""
+                                        {item.stock !== 0 ? (
+                                          <div
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
+                                                ? "active"
+                                                : ""
                                             }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
-                                    </Col>
-                                  )
-                                )}
-                            </Row>
+                                            onClick={() => {
+                                              setSelectedVariant(item.type);
+                                              setSelectedVariantPrice(
+                                                item.price
+                                              ); // Store the price in state
+                                            }}
+                                          >
+                                            {item.type}
+                                          </div>
+                                        ) : (
+                                          <div
+                                            className="tab-variations disabledvariation"
+                                            title="Stock unavailable"
+                                          >
+                                            {/* <span className="blurred-text"> */}
+                                            {item.type}
+                                            {/* </span> */}
+                                          </div>
+                                        )}
+                                      </Col>
+                                    )
+                                  )}
+                              </Row>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Col>
+                      </Col>
+                    )}
                     <Col sm={6} xs={6}>
                       <div className="quantity-btn">
                         <button onClick={handleDecrementone}>
@@ -1162,23 +1187,32 @@ function Productdetail() {
                 </div>
                 <div className="needplaceProduct">
                   <div className="product-deatils-price">
-                    <Row>
-                      <Col lg={3} sm={3} xs={3}>
-                        <p>{`₹${uservariationprice}`}</p>
-                        {/* {`₹${item.price - (item.price * item.discount / 100)}` */}
-                      </Col>
-                      <Col lg={4} sm={4} xs={3}>
-                        <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
-                      </Col>
-                      <Col lg={5} sm={5} xs={3}>
-                        <h6>
-                          Your save
-                          {formattedSavedAmount >= 0
-                            ? "₹" + formattedSavedAmount
-                            : " No savings"}
-                        </h6>
-                      </Col>
-                    </Row>
+                    {uservariationprice && formattedAmount >= 0 ? (
+                      <Row>
+                        <Col lg={3} sm={3} xs={3}>
+                          <p>{`₹${uservariationprice}`}</p>
+                        </Col>
+                        <Col lg={4} sm={4} xs={3}>
+                          <h5>{`₹${
+                            isNaN(formattedAmount) ? 0 : formattedAmount
+                          }`}</h5>
+                        </Col>
+                        <Col lg={5} sm={5} xs={3}>
+                          <h6>
+                            Your save{" "}
+                            {formattedSavedAmount >= 0
+                              ? `₹${formattedSavedAmount}`
+                              : "No savings"}
+                          </h6>
+                        </Col>
+                      </Row>
+                    ) : (
+                      <Row>
+                        <Col lg={4} sm={4} xs={3}>
+                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                        </Col>
+                      </Row>
+                    )}
                   </div>
                 </div>
                 <h5>About Us</h5>
@@ -1215,32 +1249,36 @@ function Productdetail() {
           </Row>
           {productDetails.stock && productDetails.stock.length !== 0 ? (
             <div className="productBTNaddcard">
-              {customerLoginId === null ?
+              {customerLoginId === null ? (
                 <Button>
-                  <Link to={"/add-cart"} onClick={() => {
-                    dispatch({
-                      type: 'ADD_TO_CART',
-                      payload: {
-                        item_id: productDetails.id,
-                        variant: selectedVariant,
-                        price: formattedAmount,
-                        quantity: quantity,
-                        name:productDetails.name,
-                        image: productDetails.image
-                      }
-                    })
-                  }}>
+                  <Link
+                    to={"/add-cart"}
+                    onClick={() => {
+                      dispatch({
+                        type: "ADD_TO_CART",
+                        payload: {
+                          item_id: productDetails.id,
+                          variant: selectedVariant,
+                          price: formattedAmount,
+                          quantity: quantity,
+                          name: productDetails.name,
+                          image: productDetails.image,
+                        },
+                      });
+                    }}
+                  >
                     <i className="fa fa-shopping-bag" /> Add to cart
                   </Link>
                   <p>{addToCartStatus}</p>
                 </Button>
-                :
-                (<Button>
+              ) : (
+                <Button>
                   <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
                     <i className="fa fa-shopping-bag" /> Add to cart
                   </Link>
                   <p>{addToCartStatus}</p>
-                </Button>)}
+                </Button>
+              )}
             </div>
           ) : (
             <div className="sold-out-btn mt-3">
@@ -1358,8 +1396,6 @@ function Productdetail() {
         </Container>
       </section>
 
-    
-
       <section className="section-padding food">
         <Container>
           <div className="text-left">
@@ -1413,8 +1449,9 @@ function Productdetail() {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>{`₹${item.price - (item.price * item?.discount) / 100
-                                }`}</h6>
+                              <h6>{`₹${Math.floor(
+                                item.price - (item.price * item.discount) / 100
+                              )}`}</h6>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1621,7 +1658,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1661,17 +1698,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1680,13 +1717,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1739,11 +1776,12 @@ function Productdetail() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
                                                     item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1804,7 +1842,9 @@ function Productdetail() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -1947,10 +1987,11 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2054,10 +2095,11 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2128,7 +2170,9 @@ function Productdetail() {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2682,11 +2726,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
