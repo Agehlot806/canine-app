@@ -187,7 +187,7 @@ function App() {
           <Route path="/help-faqs" element={<Helpandfaqs />} />
           <Route path="/my-orders" element={<Myorder />} />
           <Route
-            path="/sub-categoriesHeading"
+            path="/sub-categoriesHeading/:heading"
             element={<SubcategoriesHeading />}
           />
           <Route path="/transition-history" element={<Transitionhistory />} />

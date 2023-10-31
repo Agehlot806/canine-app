@@ -1776,6 +1776,7 @@ function Newheader(props) {
       .then((response) => {
         console.log(response);
         console.log("Delete Successful");
+
         setdogsubcategories(response.data.data);
       })
       .catch((error) => {
@@ -1837,7 +1838,7 @@ function Newheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in//api/v1/items/latest"
+        "https://canine.hirectjob.in/api/v1/items/latest"
       );
       setProducts(response.data.data);
     } catch (error) {
@@ -1867,6 +1868,7 @@ function Newheader(props) {
   console.log("------------->id", dataZero);
 
   const DeleteNotification = (id) => {
+    console.log("Deleting Notification with ID:", id);
     axios
       .delete(`${BASE_URL}/items/notify_delete/${id}`)
       .then((response) => {
@@ -2114,7 +2116,8 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header>Dog Food</header>
+                            
+                            <header><Link to={`/sub-categoriesHeading/${'Food'}`}>Dog Food</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2137,7 +2140,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header>Beds Cages & Carriers</header>
+                            <header><Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">Beds Cages & Carriers</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2161,7 +2164,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header>Collar Leashes & More</header>
+                            <header><Link to="/sub-categoriesHeading/Collar Leashes & More">Collar Leashes & More</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2184,7 +2187,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header>Shampoo & Perfumes</header>
+                            <header><Link to="/sub-categoriesHeading/Shampoo & Perfumes">Shampoo & Perfumes</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2211,7 +2214,7 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Treats & Chews</header>
+                            <header><Link to="/sub-categoriesHeading/Treats">Treats & Chews</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2234,7 +2237,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Toys</header>
+                            <header><Link to="/sub-categoriesHeading/Toys">Toys</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2257,7 +2260,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Training & Accessories</header>
+                            <header><Link to="/sub-categoriesHeading/Training & Accessories">Training & Accessories</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2280,7 +2283,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Bowls & Feeders</header>
+                            <header><Link to="/sub-categoriesHeading/Bowls & Feeders">Bowls & Feeders</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2303,7 +2306,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Grooming</header>
+                            <header><Link to="/sub-categoriesHeading/Grooming">Grooming</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2326,7 +2329,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Health Care</header>
+                            <header><Link to="/sub-categoriesHeading/Health Care">Health Care</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2371,7 +2374,7 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Cat Food</header>
+                            <header><Link to="/sub-categoriesHeading/Food">Cat Food</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2394,7 +2397,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header>Collar Leashes & More</header>
+                            <header><Link to="/sub-categoriesHeading/Collar Leashes & More">Collar Leashes & More</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2417,7 +2420,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header>Beds Cages, Scratcher & Crates</header>
+                            <header><Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">Beds Cages, Scratcher & Crates</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2441,7 +2444,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Cat Litter & Scooper</header>
+                            <header><Link to="/sub-categoriesHeading/Cat Litter & Scooper">Cat Litter & Scooper</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2464,7 +2467,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Toys</header>
+                            <header><Link to="/sub-categoriesHeading/Toys">Toys</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2491,7 +2494,7 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Treats</header>
+                            <header><Link to="/sub-categoriesHeading/Treats">Treats</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2514,7 +2517,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Shampoo & Perfumes</header>
+                            <header><Link to="/sub-categoriesHeading/Shampoo & Perfumes">Shampoo & Perfumes</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2537,7 +2540,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Clothing & Accessories</header>
+                            <header><Link to="/sub-categoriesHeading/Clothing & Accessories">Clothing & Accessories</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2560,7 +2563,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Bowls & Feeders</header>
+                            <header><Link to="/sub-categoriesHeading/Bowls & Feeders">Bowls & Feeders</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2583,7 +2586,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Grooming</header>
+                            <header><Link to="/sub-categoriesHeading/Grooming">Grooming</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(
@@ -2606,7 +2609,7 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header>Health Care</header>
+                            <header><Link to="/sub-categoriesHeading/Health Care">Health Care</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map(

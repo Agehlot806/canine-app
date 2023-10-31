@@ -1422,7 +1422,8 @@ function SubcategoriesProduct() {
                                         <>
                                             <div>
                                                 {allbrand
-                                                    ? allbrand.map((items) => (
+                                                    ? allbrand.map((items) => 
+                                                    items.canine == "1" && (
                                                         <div
                                                             className="form-check"
                                                             onClick={handleCheckboxClick}

@@ -442,3 +442,6 @@ li.webhide {
 .mga-he {
   padding: 0;
 }
+.content .row header a:hover {
+  background: none;
+}
