@@ -131,11 +131,11 @@ function DashboadSalesman() {
               <li className="nav-item">
                 <a
                   className="nav-link active"
-                  id="pills-home-tab"
+                  id="total-wholeseller-tab"
                   data-toggle="pill"
-                  href="#pills-home"
+                  href="#total-wholeseller"
                   role="tab"
-                  aria-controls="pills-home"
+                  aria-controls="total-wholeseller"
                   aria-selected="true"
                 >
                   <h3>Total Wholeseller</h3>
@@ -145,11 +145,11 @@ function DashboadSalesman() {
               <li className="nav-item">
                 <a
                   className="nav-link"
-                  id="pills-profile-tab"
+                  id="transaction-tab"
                   data-toggle="pill"
-                  href="#pills-profile"
+                  href="#transaction"
                   role="tab"
-                  aria-controls="pills-profile"
+                  aria-controls="transaction"
                   aria-selected="false"
                 >
                   <h3>Transactions</h3>
@@ -159,11 +159,11 @@ function DashboadSalesman() {
               <li className="nav-item">
                 <a
                   className="nav-link"
-                  id="pills-contact-tab"
+                  id="total-order-tab"
                   data-toggle="pill"
-                  href="#pills-contact"
+                  href="#total-order"
                   role="tab"
-                  aria-controls="pills-contact"
+                  aria-controls="total-order"
                   aria-selected="false"
                 >
                   <h3>Total order</h3>
@@ -188,9 +188,9 @@ function DashboadSalesman() {
             <div className="tab-content" id="pills-tabContent">
               <div
                 className="tab-pane fade show active"
-                id="pills-home"
+                id="total-wholeseller"
                 role="tabpanel"
-                aria-labelledby="pills-home-tab"
+                aria-labelledby="total-wholeseller-tab"
               >
                 <div className="needplace">
                   <div className="dash-head">
@@ -352,9 +352,9 @@ function DashboadSalesman() {
               </div>
               <div
                 className="tab-pane fade"
-                id="pills-profile"
-                role="tabpanel"
-                aria-labelledby="pills-profile-tab"
+                id="transaction"
+                role="tabpane2"
+                aria-labelledby="transaction-tab"
               >
                 <div className="needplace">
                   <div className="dash-head">
@@ -399,9 +399,9 @@ function DashboadSalesman() {
               </div>
               <div
                 className="tab-pane fade"
-                id="pills-contact"
-                role="tabpanel"
-                aria-labelledby="pills-contact-tab"
+                id="total-order"
+                role="tabpane3"
+                aria-labelledby="total-order-tab"
               >
                 <div className="needplace">
                   <div className="dash-head">
@@ -430,9 +430,15 @@ function DashboadSalesman() {
                                 <h3>Payment Method: {item.payment_method}</h3>
                                 <h3>
                                   Order Amount: ₹{" "}
-                                  {isNaN(parseInt(item.order_amount) +
-                                    parseInt(item.total_tax_amount) -
-                                    parseInt(item.coupon_discount_amount)) ? 0 : parseInt(item.order_amount) + parseInt(item.total_tax_amount) - parseInt(item.coupon_discount_amount)}
+                                  {isNaN(
+                                    parseInt(item.order_amount) +
+                                      parseInt(item.total_tax_amount) -
+                                      parseInt(item.coupon_discount_amount)
+                                  )
+                                    ? 0
+                                    : parseInt(item.order_amount) +
+                                      parseInt(item.total_tax_amount) -
+                                      parseInt(item.coupon_discount_amount)}
                                 </h3>
                               </Col>
 
@@ -507,7 +513,7 @@ function DashboadSalesman() {
               <div
                 className="tab-pane fade"
                 id="Balance"
-                role="tabpanel"
+                role="tabpane3"
                 aria-labelledby="pills-Balance-tab"
               >
                 <div className="needplace">
@@ -537,9 +543,15 @@ function DashboadSalesman() {
                                 <h3>Payment Method: {item.payment_method}</h3>
                                 <h3>
                                   Order Amount: ₹{" "}
-                                  {isNaN(parseInt(item.order_amount) +
-                                    parseInt(item.total_tax_amount) -
-                                    parseInt(item.coupon_discount_amount)) ? 0 : parseInt(item.order_amount) + parseInt(item.total_tax_amount) - parseInt(item.coupon_discount_amount)}
+                                  {isNaN(
+                                    parseInt(item.order_amount) +
+                                      parseInt(item.total_tax_amount) -
+                                      parseInt(item.coupon_discount_amount)
+                                  )
+                                    ? 0
+                                    : parseInt(item.order_amount) +
+                                      parseInt(item.total_tax_amount) -
+                                      parseInt(item.coupon_discount_amount)}
                                 </h3>
                               </Col>
 
