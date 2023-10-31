@@ -205,12 +205,17 @@ function Partners() {
     }
   };
 
+  // const addressValid = (address) => {
+  //   if (address?.length <= 15 && /^[\w\s]+,\s[\w\s]+,\s[\w\s]+$/.test(address)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
   const addressValid = (address) => {
-    if (address?.length <= 15 && /^[a-zA-Z\s]*$/.test(address)) {
-      return true;
-    } else {
-      return false;
-    }
+    // Define the regex pattern for the expected format
+    const expectedPattern = /^[\w\s]+,\s[\w\s]+,\s[\w\s]+$/;
+    return expectedPattern.test(address);
   };
 
   const [errors, setErrors] = useState({});
@@ -263,32 +268,43 @@ function Partners() {
   };
   const [shopNameError, setShopNameError] = useState("");
   const nextStep = () => {
-    // if (isFormValid) {
     let hasErrors = false; // Flag to track whether there are validation errors
-    //   if (emailStored.trim() === "" || !/^\S+@\S+\.\S+$/.test(emailStored)) {
-    //     setEmailError("Email is not valid");
-    //     hasErrors = true;
-    //   } else {
-    //     setEmailError("");
-    //   }
+  
+    // Validate Shop Name
     if (shopNameStored.trim() === "") {
       setShopNameError("Shop Name is required");
+      hasErrors = true;
+    } else if (!nameValid(shopNameStored)) {
+      setShopNameError(
+        "Shop name can only contain alphabetic characters and spaces, up to 15 characters"
+      );
       hasErrors = true;
     } else {
       setShopNameError("");
     }
+  
+    // Validate GST Number
     if (gstNumberStored.trim() === "") {
       setGstError("GST is required");
+      hasErrors = true;
+    } else if (!gstNumberValid(gstNumberStored)) {
+      setGstError("Invalid GST format");
       hasErrors = true;
     } else {
       setGstError("");
     }
+  
+    // Validate Shop Address
     if (address.trim() === "") {
       setAddressError("Shop Address is required");
+      hasErrors = true;
+    } else if (!addressValid(address)) {
+      setAddressError("Invalid Shop Address format");
       hasErrors = true;
     } else {
       setAddressError("");
     }
+  
     // Validate Cover Photo
     if (!coverPhotoStored) {
       setCoverPhotoError("Cover Photo is required");
@@ -296,7 +312,7 @@ function Partners() {
     } else {
       setCoverPhotoError(""); // Clear the error if valid
     }
-
+  
     // Validate Logo Photo
     if (!logoPhotoStored) {
       setLogoPhotoError("Logo Photo is required");
@@ -304,7 +320,7 @@ function Partners() {
     } else {
       setLogoPhotoError(""); // Clear the error if valid
     }
-
+  
     // Validate Zone ID
     if (!zoneIdstored) {
       setZoneError("Zone is required");
@@ -312,54 +328,62 @@ function Partners() {
     } else {
       setZoneError(""); // Clear the error if valid
     }
+  
+    // If there are no errors, move to the next step
     if (!hasErrors) {
       setStep((prevStep) => prevStep + 1);
     }
-    //   ********************************
-    if (firstName.trim() === "") {
-      setFirstNameError("First name is required");
-      hasErrors = true;
-    } else {
-      setFirstNameError("");
-    }
-    if (lastName.trim() === "") {
-      setLastNameError("Last name is required");
-      hasErrors = true;
-    } else {
-      setLastNameError("");
-    }
-    if (phoneNum.trim() === "") {
-      setPhoneNumError("Phone Number is required");
-      hasErrors = true;
-    } else {
-      setPhoneNumError("");
-    }
   };
+  
   const nextStepTwo = () => {
     let hasErrors = false; // Flag to track whether there are validation errors
-
+  
+    // Validate First Name
     if (firstName.trim() === "") {
       setFirstNameError("First name is required");
+      hasErrors = true;
+    } else if (!nameValid(firstName)) {
+      setFirstNameError(
+        "First name can only contain alphabetic characters and spaces, up to 15 characters"
+      );
       hasErrors = true;
     } else {
       setFirstNameError("");
     }
+  
+    // Validate Last Name
     if (lastName.trim() === "") {
       setLastNameError("Last name is required");
+      hasErrors = true;
+    } else if (!nameValid(lastName)) {
+      setLastNameError(
+        "Last name can only contain alphabetic characters and spaces, up to 15 characters"
+      );
       hasErrors = true;
     } else {
       setLastNameError("");
     }
+  
+    // Validate Phone Number
     if (phoneNum.trim() === "") {
       setPhoneNumError("Phone Number is required");
+      hasErrors = true;
+    } else if (!phoneNumberRegex.test(phoneNum)) {
+      setPhoneNumError("Invalid phone number. It should be up to 10 digits.");
       hasErrors = true;
     } else {
       setPhoneNumError("");
     }
+  
+    // Add more fields for validation as needed
+  
     if (!hasErrors) {
       setStep((prevStep) => prevStep + 1);
     }
   };
+  
+  
+  
 
   const prevStep = () => {
     setStep((prevStep) => prevStep - 1);
