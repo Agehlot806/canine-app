@@ -100,6 +100,8 @@ import Latestheader from "./directives/latestheader";
 import Navber from "./directives/navber";
 import SubcategoriesProduct from "./component/User/sub-categoriesProduct";
 import PetShopSubcategoriesProduct from "./component/petShop/petShop-SubcategoriesProduct";
+import Transitionhistory from "./component/User/transition-history";
+import SubcategoriesHeading from "./component/User/sub-categoriesHeading";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -184,6 +186,11 @@ function App() {
 
           <Route path="/help-faqs" element={<Helpandfaqs />} />
           <Route path="/my-orders" element={<Myorder />} />
+          <Route
+            path="/sub-categoriesHeading"
+            element={<SubcategoriesHeading />}
+          />
+          <Route path="/transition-history" element={<Transitionhistory />} />
 
           {/* All Login Users */}
           <Route path="/login" element={<Login />} />
