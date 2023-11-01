@@ -994,10 +994,10 @@ function Blogdetails() {
                               item[0]?.price -
                               (item[0]?.price * item[0]?.discount) / 100
                             }`}</h6> */}
-                            <h6>{`₹${Math.floor(
+                            <h4>{`₹${Math.floor(
                               item[0].price -
                                 (item[0].price * item[0].discount) / 100
-                            )}`}</h6>
+                            )}`}</h4>
                           </Col>
                         </Row>
                       </div>

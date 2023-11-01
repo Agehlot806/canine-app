@@ -11,7 +11,7 @@ body {
 p {
   font-family: "Poppins";
   font-weight: 400;
-  font-size: 17px;
+  font-size: 15px;
   letter-spacing: 0.05em;
 }
 
@@ -25,12 +25,16 @@ a {
 }
 
 .main-head {
-  font-weight: 400;
-  font-size: 28px;
-  /* line-height: 68px; */
-  text-transform: capitalize;
+  font-weight: 600;
+    font-size: 22px;
+    /* line-height: 68px; */
+    text-transform: capitalize;
+    color: #000;
 }
-
+.sort-by h4 {
+  font-size: 20px;
+  margin: 6px 0;
+}
 .menu-mobile {
   background: #fff;
   /* padding: 12px; */
@@ -293,14 +297,14 @@ a {
 }
 
 .Shop-Deals img {
-  width: 150px;
+  width: 117px;
   height: 100%;
 }
 
 .Shop-Deals h1 {
   font-family: "Poppins";
   font-weight: 600;
-  font-size: 27px;
+  font-size: 20px;
   line-height: 68px;
   text-transform: capitalize;
   color: #000;
@@ -336,7 +340,7 @@ a {
 
 .foodMore a {
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   color: #008efd;
   font-family: "Poppins";
 }
@@ -369,7 +373,7 @@ a {
 
 .food-product h6 {
   font-family: Poppins;
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: #000;
@@ -400,7 +404,13 @@ a {
   -moz-transition: 2s ease;
   -webkit-transition: 2s ease;
 }
-
+.food-product h4 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #000;
+}
 .food-product i {
   float: right;
   font-size: 25px;
@@ -447,7 +457,7 @@ a {
 .product-bag h5 {
   color: #f40101;
   font-family: "Poppins";
-  font-size: 17px;
+  font-size: 15px;
   font-weight: bold;
   margin: 0;
   background: #f1c21b;
@@ -501,11 +511,14 @@ a {
 }
 
 .brand-text h5 {
-  font-weight: 300;
-  font-size: 25px;
+  font-weight: 600;
+  font-size: 20px;
   color: #000;
 }
-
+.ProductPartner-card h4 {
+  font-size: 20px;
+  font-weight: 600;
+}
 .brand-1 {
   background: linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%);
 }
@@ -1578,7 +1591,9 @@ a {
 }
 
 .blog-card h3 {
-  font-size: 23px;
+  font-size: 20px;
+  font-weight: 600 !important;
+  color: #000;
 }
 
 .blog-card p {
@@ -1747,7 +1762,7 @@ a {
 }
 
 .video-content {
-  padding: 30px;
+  padding: 10px 8px;
   background: #008efd;
 }
 
@@ -1756,21 +1771,18 @@ a {
 }
 
 .video-content button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
-    #f1c21b;
-  color: #fff;
-  border: none;
-  transform: perspective(500px) rotateY(calc(330deg * var(--_i, -1)));
-  transition: 0.3s;
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  height: 60px;
-  font-weight: 600;
-  font-size: 22.1195px;
-  padding: 0 30px;
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #f1c21b;
+    color: #fff;
+    border: none;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
 }
-
+.video-content h1 {
+  color: #fff;
+  margin: 0;
+}
 .ProductPartner-card {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 20px;
@@ -3663,9 +3675,11 @@ button.Apply-price {
   border: none;
   margin: 0 8px;
   border-radius: 5px;
-  padding: 5px 6px;
+  font-size: 14px;
+  padding: 4px 6px;
   font-weight: 600;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
 }
 
 .eyeicon {

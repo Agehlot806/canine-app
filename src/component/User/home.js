@@ -129,11 +129,13 @@ function Home(props) {
   const fetchBrands = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
-      setBrands(response.data.data);
+      const limitedData = response.data.data.slice(0, 8);
+      setBrands(limitedData);
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   useEffect(() => {
     categoriesProduct();
@@ -1288,9 +1290,9 @@ function Home(props) {
                                   (item.price * item?.discount) / 100
                                 }`}
                               </h6> */}
-                              <h6>{`₹${Math.floor(
+                              <h4>{`₹${Math.floor(
                                 item.price - (item.price * item.discount) / 100
-                              )}`}</h6>
+                              )}`}</h4>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1593,14 +1595,14 @@ function Home(props) {
                   (item, index) =>
                     item.type === "video" && (
                       <Row>
-                        <Col lg={5} className="p-0">
+                        <Col lg={6} className="p-0">
                           <div className="video-content">
                             <h1 className="main-head">{item.title}</h1>
                             <p>{item.description}</p>
                             <Button>Shop Now</Button>
                           </div>
                         </Col>
-                        <Col lg={7} className="p-0">
+                        <Col lg={6} className="p-0">
                           <video loop autoPlay muted>
                             <source
                               src={

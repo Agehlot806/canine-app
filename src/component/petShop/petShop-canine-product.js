@@ -1680,7 +1680,7 @@ function PetShopcanineproduct(props) {
                                 <div className="product-bag">
                                   <Row>
                                     <Col className="align-self-center">
-                                      <h6>₹{item.whole_price}</h6>
+                                      <h4>₹{item.whole_price}</h4>
                                     </Col>
                                     {/* <Col>
                                         <Link
