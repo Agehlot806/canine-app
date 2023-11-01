@@ -4154,7 +4154,7 @@ ul.nav-links.wrappertwo {
   color: #000;
   font-weight: bold;
   font-size: 22px;
-  text-align: right;
+  /* text-align: right; */
 }
 
 .tran-list {
