@@ -1659,10 +1659,10 @@ function Product(props) {
                             ) : null}
                             <Row>
                               <Col className="align-self-center">
-                                <h6>{`₹${Math.floor(
+                                <h4>{`₹${Math.floor(
                                   item.price -
                                     (item.price * item.discount) / 100
-                                )}`}</h6>
+                                )}`}</h4>
                               </Col>
                               {/* <Col>
                                 <Link

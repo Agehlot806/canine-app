@@ -977,7 +977,7 @@ function PetshopBlogdetails() {
                             xs={6}
                             className="align-self-center"
                           >
-                            <h6>₹{item[0]?.whole_price}</h6>
+                            <h4>₹{item[0]?.whole_price}</h4>
                           </Col>
                         </Row>
                       </div>
