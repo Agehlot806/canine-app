@@ -96,6 +96,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
+import { usePagination } from "../../Context/PaginationContext";
 
 function SubcategoriesProduct() {
     // const { name } = useParams();
@@ -209,7 +210,7 @@ function SubcategoriesProduct() {
             .then((response) => {
                 console.log(response);
                 const filterData = response.data.data;
-                const filterDatashow = filterData.filter((item) =>item.sub_category == name)
+                const filterDatashow = filterData.filter((item) => item.sub_category == name)
                 console.log("responsDataesponsData", filterDatashow);
                 setallproduct(filterDatashow);
                 setSortOption('default');
@@ -1324,52 +1325,52 @@ function SubcategoriesProduct() {
 
     const [sortOption, setSortOption] = useState('default');
     const [paginatedCategories, setPaginatedCategories] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 6;
-  
+    const {currentPage3, setCurrentPage3} = usePagination();
+    const pageSize = 24;
+
     useEffect(() => {
-      pagination(currentPage);
-    }, [allproduct, currentPage, sortOption]);
+        pagination(currentPage3);
+    }, [allproduct, currentPage3, sortOption]);
     const sortedProducts = () => {
-      let sortedItems = [...allproduct];
-      switch (sortOption) {
-        case 'A-Z':
-          sortedItems.sort((a, b) => a.name.localeCompare(b.name));
-          break;
-        case 'Z-A':
-          sortedItems.sort((a, b) => b.name.localeCompare(a.name));
-          break;
-        case 'PriceLowToHigh':
-          sortedItems.sort((a, b) => a.price - b.price);
-          break;
-        case 'PriceHighToLow':
-          sortedItems.sort((a, b) => b.price - a.price);
-          break;
-        case 'DateOldToNew':
-          sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
-          break;
-        case 'DateNewToOld':
-          sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
-          break;
-        default:
-          // Default sorting (as per API response)
-          break;
-      }
-      if (sortOption === 'DateNewToOld') {
-        sortedItems.reverse();
-      }
-      return sortedItems;
+        let sortedItems = [...allproduct];
+        switch (sortOption) {
+            case 'A-Z':
+                sortedItems.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'Z-A':
+                sortedItems.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'PriceLowToHigh':
+                sortedItems.sort((a, b) => a.price - b.price);
+                break;
+            case 'PriceHighToLow':
+                sortedItems.sort((a, b) => b.price - a.price);
+                break;
+            case 'DateOldToNew':
+                sortedItems.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'DateNewToOld':
+                sortedItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            default:
+                // Default sorting (as per API response)
+                break;
+        }
+        if (sortOption === 'DateNewToOld') {
+            sortedItems.reverse();
+        }
+        return sortedItems;
     };
     const pagination = (pageNo) => {
-      setCurrentPage(pageNo);
-      const startIndex = (pageNo - 1) * pageSize;
-      const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
-      setPaginatedCategories(paginated);
+        setCurrentPage3(pageNo);
+        const startIndex = (pageNo - 1) * pageSize;
+        const paginated = sortedProducts().slice(startIndex, startIndex + pageSize);
+        setPaginatedCategories(paginated);
     };
     const goToPage = (page) => {
-      if (page >= 1 && page <= pageCount) {
-        pagination(page);
-      }
+        if (page >= 1 && page <= pageCount) {
+            pagination(page);
+        }
     };
     const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
     const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
@@ -1422,24 +1423,24 @@ function SubcategoriesProduct() {
                                         <>
                                             <div>
                                                 {allbrand
-                                                    ? allbrand.map((items) => 
-                                                    items.canine == "1" && (
-                                                        <div
-                                                            className="form-check"
-                                                            onClick={handleCheckboxClick}
-                                                        >
-                                                            <input
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                onClick={(e) =>
-                                                                    handleDataListBrand(items.title)
-                                                                }
-                                                            />
-                                                            <label className="form-check-label">
-                                                                {items.title}
-                                                            </label>
-                                                        </div>
-                                                    ))
+                                                    ? allbrand.map((items) =>
+                                                        items.canine == "1" && (
+                                                            <div
+                                                                className="form-check"
+                                                                onClick={handleCheckboxClick}
+                                                            >
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="checkbox"
+                                                                    onClick={(e) =>
+                                                                        handleDataListBrand(items.title)
+                                                                    }
+                                                                />
+                                                                <label className="form-check-label">
+                                                                    {items.title}
+                                                                </label>
+                                                            </div>
+                                                        ))
                                                     : ""}
                                             </div>
                                         </>
@@ -1840,41 +1841,41 @@ function SubcategoriesProduct() {
                                         )}
                                     </Row>
                                     <div className="pagination-area">
-                  <ul className="pagination">
-                    <li className="page-item">
-                      {paginatedCategories?.length > 0 && (
-                        <button
-                          className="page-link"
-                          onClick={() => goToPage(currentPage - 1)}
-                          disabled={currentPage === 1}
-                        >
-                          Previous
-                        </button>
-                      )}
-                    </li>
-                    {pages.slice(currentPage - 1, currentPage + 4).map((page) => (
-                      <li
-                        key={page}
-                        className={page === currentPage ? 'page-item active' : 'page-item'}
-                      >
-                        <button className="page-link" onClick={() => goToPage(page)}>
-                          {page}
-                        </button>
-                      </li>
-                    ))}
-                    <li className="page-item">
-                      {paginatedCategories?.length > 0 && (
-                        <button
-                          className="page-link"
-                          onClick={() => goToPage(currentPage + 1)}
-                          disabled={currentPage === pageCount}
-                        >
-                          Next
-                        </button>
-                      )}
-                    </li>
-                  </ul>
-                </div>
+                                        <ul className="pagination">
+                                            <li className="page-item">
+                                                {paginatedCategories?.length > 0 && (
+                                                    <button
+                                                        className="page-link"
+                                                        onClick={() => goToPage(currentPage3 - 1)}
+                                                        disabled={currentPage3 === 1}
+                                                    >
+                                                        Previous
+                                                    </button>
+                                                )}
+                                            </li>
+                                            {pages.slice(currentPage3 - 1, currentPage3 + 4).map((page) => (
+                                                <li
+                                                    key={page}
+                                                    className={page === currentPage3 ? 'page-item active' : 'page-item'}
+                                                >
+                                                    <button className="page-link" onClick={() => goToPage(page)}>
+                                                        {page}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                            <li className="page-item">
+                                                {paginatedCategories?.length > 0 && (
+                                                    <button
+                                                        className="page-link"
+                                                        onClick={() => goToPage(currentPage3 + 1)}
+                                                        disabled={currentPage3 === pageCount}
+                                                    >
+                                                        Next
+                                                    </button>
+                                                )}
+                                            </li>
+                                        </ul>
+                                    </div>
 
                                 </div>
 
