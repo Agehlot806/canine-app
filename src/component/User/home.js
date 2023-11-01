@@ -14,6 +14,8 @@ import Footer from "../../directives/footer";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import app1 from "../../assets/images/img/app1.png";
+import loadinggif from "../../assets/images/video/loading.gif";
+
 import app2 from "../../assets/images/img/app2.png";
 import toast, { Toaster } from "react-hot-toast";
 import { styled } from "styled-components";
@@ -89,13 +91,29 @@ function Home(props) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  
+  const [loading,setLoading]=useState(true)
+
   useEffect(() => {
-    fetchBrands();
-    homeAllBanner();
-    allAddressList();
-    couponlistdata();
-    allReview();
-    GetdataAll();
+    Promise.all([fetchBrands(),
+      homeAllBanner(),
+      allAddressList(),
+      couponlistdata(),
+      allReview(),
+      GetdataAll(),
+      categoriesProduct(),
+      allProduct(),
+      thirdBanner(),
+      fetchBlogs(),
+      AllVendorHomePage(),
+      fetchWishlistData(), ])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
@@ -137,14 +155,9 @@ function Home(props) {
   };
   
 
-  useEffect(() => {
-    categoriesProduct();
-    allProduct();
-    thirdBanner();
-    fetchBlogs();
-    AllVendorHomePage();
-    fetchWishlistData();
-  }, []);
+  // useEffect(() => {
+    
+  // }, []);
   // useEffect(() => {
 
   //   fetchWishlistData();
@@ -1011,8 +1024,16 @@ function Home(props) {
     <>
       <Toaster />
       <Newheader />
-      {/* <section className="section-padding"> */}
-      <div className="home-section">
+      {loading ?(
+        <div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>I'm Searching For Your Needs Wait......</h5>
+        </div>
+        
+      ):(
+<>
+{/* <section className="section-padding"> */}
+<div className="home-section">
         <Container fluid className="p-0">
           <Carousel
             swipeable={true}
@@ -1764,6 +1785,10 @@ function Home(props) {
           </div>
         </Container>
       </section>
+</>
+      )}
+    
+      
 
       <Footer />
 
