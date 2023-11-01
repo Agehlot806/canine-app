@@ -1673,7 +1673,7 @@ function PetshopOurourbrand(props) {
           </Col>
           <Col lg={9}>
             <div className="sort-by">
-              <Row>
+              <Row className="justify-content-right">
                 <Col lg={2}>
                   Sort By
                 </Col>

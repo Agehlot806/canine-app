@@ -1717,7 +1717,7 @@ function SubcategoriesProduct() {
                     </Col>
                     <Col lg={9}>
                         <div className="sort-by">
-                            <Row>
+                            <Row className="justify-content-right">
                                 <Col lg={2}>
                                     <h4>Sort by</h4>
                                 </Col>
