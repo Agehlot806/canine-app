@@ -17,11 +17,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifithirdData, setNotifithirdData] = useState();
   const BASE_URL = "https://canine.hirectjob.in/api/v1";
   const loginType = localStorage.getItem("loginType");
-  // const customer_id =
-  //   loginType === "wholeseller"
-  //     ? Number(localStorage.getItem("UserWholesellerId"))
-  //     : localStorage.getItem("userInfo");
-  // const storedUserId = JSON.parse(customer_id);
+  
   const customer_id = loginType === "wholeseller"
   ? Number(localStorage.getItem("UserWholesellerId"))
   : localStorage.getItem("userInfo");
@@ -34,48 +30,28 @@ try {
   // Handle the error here, or provide a default value if needed
   storedUserId = null; // You can choose a suitable default value
 }
-  const fetchNotifications = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/customer/notifications?tergat=customer/${storedUserId}`
-      );
-      setNotificationLength(response.data.state.length);
-      // Set the entire object in state
-      setDataLengthpetnotification(response.data.state[0]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
   const Notifynotification = () => {
     axios
       .get(`${BASE_URL}/items/notify_list/${customer_id}`)
       .then((response) => {
-        setNotifisecondLength(response.data.data.length);
-        setNotifithirdLength(response.data.notification.length);
-        console.log("88888", response.data.data.length);
-        console.log("99999", response.data.notification.length);
-        // setNotifithirdLength(response.data.notification);
-        // console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
-        // console.log("Data Zero", response.data.notification);
+       const responselenght = response.data.notification.length 
+        + response.data.all_notification.length + response.data.data.length
+        console.log("responselenght",responselenght);
+        setNotificationLength(responselenght)
       })
       .catch((error) => {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
       });
   };
   useEffect(() => {
-    fetchNotifications(), Notifynotification();
+     Notifynotification();
   }, []);
-  const totalLength =
-    notificationLength + notifisecondLength + notifithirdLength;
-  console.log("totleeeee", totalLength);
+  
   return (
     <NotificationContext.Provider
       value={{
         notificationLength,
-        dataLengthpetnotification,
-        notifisecondLength,
-        notifithirdLength,
-        totalLength,
       }}
     >
       {children}
