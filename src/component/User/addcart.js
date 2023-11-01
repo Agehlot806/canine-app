@@ -201,6 +201,8 @@ function Addcart() {
   }, []);
 
   const [sendcartdata, setSandCartData] = useState([]);
+  const [variantStockCount, setVariantStockCount] = useState([]);
+  console.log("variantStockCount: ", variantStockCount);
   const [dataLength, setDataLength] = useState(0);
 
   const addToCartData = async () => {
@@ -227,13 +229,22 @@ function Addcart() {
 
         setSandCartData([...newCartsend]);
 
+        const newVariantStockCount = response.data.data.map((stock) => ({
+          total_quantity: stock.total_quantity,
+        }));
+
+        setVariantStockCount(newVariantStockCount);
+
         const newCartItems = response.data.data.map((item) => ({
           id: item.id,
           item_name: item.item_name,
           image: item.image,
           price: item.price,
           variant: item.variant,
-          quantity: item.quantity, // Assuming the response already includes the quantity
+          quantity: item.quantity,
+          return_order: item?.return_order || "no",
+          // total_quantity: item.total_quantity,
+          // Assuming the response already includes the quantity
         }));
 
         // Update the addToCartProduct state by adding the new cart items

@@ -43,6 +43,8 @@ function Productdetail() {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantStock, setSelectedVariantStock] = useState([]);
+  console.log("selectedVariantStock: ", selectedVariantStock);
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
     loginType === "wholeseller"
@@ -138,6 +140,8 @@ function Productdetail() {
           variant: selectedVariant.length > 0 ? selectedVariant : "", // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
+          total_quantity: selectedVariantStock,
+          return_order: productDetails?.returnable || "yes",
           price:
             formattedAmount === "0"
               ? productDetails?.price.toString()
@@ -783,6 +787,9 @@ function Productdetail() {
       quantity: quantity,
       tax_amount: taxamound,
       discount_on_item: disscountvalue?.discount || "",
+      total_quantity: selectedVariantStock,
+      return_order: productDetails?.returnable || "yes",
+      // returnable: "yes",
     };
     // Calculate the order_amount
     const orderAmount =
@@ -1138,6 +1145,9 @@ function Productdetail() {
                                               setSelectedVariantPrice(
                                                 item.price
                                               ); // Store the price in state
+                                              setSelectedVariantStock(
+                                                item.stock
+                                              );
                                             }}
                                           >
                                             {item.type}
