@@ -27,7 +27,7 @@ function Planbuy() {
   }, []);
   const storedPlanData = localStorage.getItem("planData");
   const parsedPlanData = JSON.parse(storedPlanData);
-  console.log('storedPlanData: ', storedPlanData);
+  console.log("storedPlanData: ", storedPlanData);
 
   // Access the "Monthly" and "price" properties
   const monthly = parsedPlanData.plantime;
@@ -104,14 +104,16 @@ function Planbuy() {
       let expirationDate = new Date(initialDate);
 
       if (item.plantime === "Monthly") {
-        expirationDate.setDate(expirationDate.getDate() + 30);
+        expirationDate.setMonth(expirationDate.getMonth() + 12); // Add 12 months (1 year)
       } else if (item.plantime === "Half-Yearly") {
-        expirationDate.setDate(expirationDate.getDate() + 30 * 6);
+        expirationDate.setMonth(expirationDate.getMonth() + 6); // Add 6 months
       } else if (item.plantime === "Annual") {
-        expirationDate.setDate(expirationDate.getDate() + 365);
+        expirationDate.setFullYear(expirationDate.getFullYear() + 1); // Add 1 year
       }
 
-      return moment(expirationDate).format("L");
+      // return moment(expirationDate).format("L");
+      // Format the date using moment
+      return moment(expirationDate).format("MMMM Do YYYY");
     };
 
     const formattedExpirationDate = calculateExpirationDate();

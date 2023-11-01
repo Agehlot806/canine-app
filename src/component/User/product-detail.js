@@ -1197,14 +1197,21 @@ function Productdetail() {
                             isNaN(formattedAmount) ? 0 : formattedAmount
                           }`}</h5>
                         </Col>
+                        {/* {formattedSavedAmount > 0 && ( */}
                         <Col lg={5} sm={5} xs={3}>
-                          <h6>
-                            Your save{" "}
+                          {/* <h6>
+                             Your save{" "}
                             {formattedSavedAmount >= 0
                               ? `₹${formattedSavedAmount}`
-                              : "No savings"}
-                          </h6>
+                              : "No savings"} )}
+                          </h6> */}
+                          {formattedSavedAmount > 0 ? (
+                            <h6>Your save ₹{formattedSavedAmount}</h6>
+                          ) : (
+                            <h6>No savings</h6>
+                          )}
                         </Col>
+                        {/* )} */}
                       </Row>
                     ) : (
                       <Row>
@@ -1449,9 +1456,9 @@ function Productdetail() {
                               xs={6}
                               className="align-self-center"
                             >
-                              <h6>{`₹${Math.floor(
+                              <h4>{`₹${Math.floor(
                                 item.price - (item.price * item.discount) / 100
-                              )}`}</h6>
+                              )}`}</h4>
                             </Col>
                             {/* <Col lg={6} sm={6} xs={6}>
                               <Link
@@ -1508,66 +1515,7 @@ function Productdetail() {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-              {/* <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option value="" disabled selected>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form> */}
               <Form onSubmit={handleNotifymeSubmit}>
-                {/* <Form.Group controlId="formVariations">
-        <Form.Label>Variations</Form.Label>
-        <Form.Control
-          as="select"
-          value={variation}
-          onChange={(e) => setVariation(e.target.value)}
-          required
-          isInvalid={!!variationError}
-        >
-          <option value="" disabled>
-            Choose an option...
-          </option>
-          {productDetails?.variations &&
-            productDetails?.variations.map((item, index) => (
-              <option key={index}>{item.type}</option>
-            ))}
-        </Form.Control>
-        {variationError && (
-          <div className="error-message">{variationError}</div>
-        )}
-      </Form.Group> */}
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control
