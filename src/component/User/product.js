@@ -1561,7 +1561,7 @@ function Product(props) {
               </Container>
             </section> */}
             <div className="sort-by">
-              <Row>
+              <Row className="justify-content-right">
                 <Col lg={2}>Sort By</Col>
                 <Col lg={3}>
                   <select

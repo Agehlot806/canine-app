@@ -110,17 +110,12 @@ function PetshopHome(props) {
   const fetchBrands = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/auth/brand`);
-      setBrands(response.data.data);
-
-      // Handle response as needed
+      const limitedData = response.data.data.slice(0, 8);
+      setBrands(limitedData);
     } catch (error) {
       console.error(error);
-      // Handle error as needed
     }
   };
-  console.log("====================================");
-  console.log(brands);
-  console.log("====================================");
 
   useEffect(() => {
     categoriesProduct();
@@ -1563,14 +1558,14 @@ function PetshopHome(props) {
                   (item, index) =>
                     item.type === "video" && (
                       <Row>
-                        <Col lg={5} className="p-0">
+                        <Col lg={6} className="p-0">
                           <div className="video-content">
                             <h1 className="main-head">{item.title}</h1>
                             <p>{item.description}</p>
                             <Button>Shop Now</Button>
                           </div>
                         </Col>
-                        <Col lg={7} className="p-0">
+                        <Col lg={6} className="p-0">
                           <video loop autoPlay muted>
                             <source
                               src={
