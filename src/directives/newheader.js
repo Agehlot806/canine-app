@@ -1609,8 +1609,8 @@ function Newheader(props) {
   const salesmanId = localStorage.getItem("salesmanId");
   const { cartData, dataLength, dataLengthpetshop, addToCartData } =
     useCartContext();
-  const { totalLength } = useNotificationContext();
-  const { notificationLength, dataLengthpetnotification } =
+  // const { totalLength } = useNotificationContext();
+  const { notificationLength } =
     useNotificationContext();
 
   const { cart, dispatch } = useCartWithoutLogin();
@@ -1620,7 +1620,7 @@ function Newheader(props) {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   console.log("customerLoginId", customerLoginId);
-  const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
+  // const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
   // ...
   // useEffect(() => {
   // Check if the visibility state is stored in localStorage
@@ -1641,31 +1641,31 @@ function Newheader(props) {
   //   }, 30 * 60 * 1000);
   // };
 
-  const [customCount, setCustomCount] = useState(0);
-  console.log("lllll", customCount);
-  const prevTotalLength = useRef(totalLength);
+  // const [customCount, setCustomCount] = useState(0);
+  // console.log("lllll", customCount);
+  // const prevTotalLength = useRef(totalLength);
 
-  const handleBellClick = () => {
-    setCustomCount(0);
-    localStorage.setItem("customCount", 0);
-    setTotalLengthVisible(false);
-  };
+  // const handleBellClick = () => {
+  //   setCustomCount(0);
+  //   localStorage.setItem("customCount", 0);
+  //   setTotalLengthVisible(false);
+  // };
 
-  useEffect(() => {
-    const storedVisibility = localStorage.getItem("totalLengthVisibility");
-    if (storedVisibility) {
-      setTotalLengthVisible(JSON.parse(storedVisibility));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedVisibility = localStorage.getItem("totalLengthVisibility");
+  //   if (storedVisibility) {
+  //     setTotalLengthVisible(JSON.parse(storedVisibility));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (prevTotalLength.current < totalLength) {
-      setTotalLengthVisible(true);
-      setCustomCount(totalLength);
-      localStorage.setItem("customCount", totalLength.toString());
-    }
-    prevTotalLength.current = totalLength;
-  }, [totalLength]);
+  // useEffect(() => {
+  //   if (prevTotalLength.current < totalLength) {
+  //     setTotalLengthVisible(true);
+  //     setCustomCount(totalLength);
+  //     localStorage.setItem("customCount", totalLength.toString());
+  //   }
+  //   prevTotalLength.current = totalLength;
+  // }, [totalLength]);
 
   useEffect(() => {
     // fetchBrands();
@@ -1857,7 +1857,7 @@ function Newheader(props) {
     axios
       .get(`${BASE_URL}/items/notify_list/${customer_id}`)
       .then((response) => {
-        // setNotify(response.data.data);
+        setNotify(response.data.data);
         // console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         setDataZero(response.data.notification);
         console.log("Data Zero", response.data.notification);
@@ -2091,14 +2091,15 @@ function Newheader(props) {
                     className="profiledes notification-btn notimob"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    onClick={handleBellClick}
+                    // onClick={handleBellClick}
                   >
                     <i class="fa fa-bell-o" />
                     {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
-                    {isTotalLengthVisible && (
+                    {/* {isTotalLengthVisible && (
                       <span>{isNaN(customCount) ? 0 : customCount}</span>
                     )}
-                    {console.log("custommmmmm", customCount)}
+                    {console.log("custommmmmm", customCount)} */}
+                    {isNaN(notificationLength) ? 0 : notificationLength}
                   </a>
                 </li>
               </div>
@@ -2716,13 +2717,14 @@ function Newheader(props) {
                       className="profiledes notification-btn"
                       data-toggle="modal"
                       data-target="#exampleModal"
-                      onClick={handleBellClick}
+                      // onClick={handleBellClick}
                     >
                       <i class="fa fa-bell-o" />
                       {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
-                      {isTotalLengthVisible && (
+                      {/* {isTotalLengthVisible && (
                         <span>{isNaN(customCount) ? 0 : customCount}</span>
-                      )}
+                      )} */}
+                      <span>{isNaN(notificationLength) ? 0 : notificationLength}</span>
                     </a>
                   </li>
                   <li className="">
@@ -2922,96 +2924,24 @@ function Newheader(props) {
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
                   >
-                    {/* {notification && notification.length > 0 ? (
-                      notification.map((item, index) => (
-                        <div className="notification">
-                          <Row>
-                            <Col lg={2}>
-                              <img src={`https://canine.hirectjob.in/storage/app/public/notification/${item.image}`} />
-                            </Col>
-                            <Col lg={8} className="align-self-center">
-                              <h6>{item.title}</h6>
-                              <p>{item.description}</p>
-                            </Col>
-                          </Row>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="emptyMSG">No Notification</p>
-                    )} */}
                     <div>
-                      {/* {notify && notify.length > 0 ? (
+                      {notify && notify.length > 0 ? (
                         notify.map((ob, index) => (
                           <div className="notification" key={index}>
-                            <Link to="">
-                              <Row>
-                                <Col lg={2} className="align-self-center">
-                                  <Link
-                                    to={`/product-details/${ob.item_id}`}
-                                    onClick={() => handleLinkClick(ob.item_id)}
-                                  >
-                                    <i className="fa fa-info-circle" />
-                                  </Link>
-                                </Col>
-                                <Col lg={8}>
-                                  <Link
-                                    to={`/product-details/${ob.item_id}`}
-                                    onClick={() => handleLinkClick(ob.item_id)}
-                                  >
-                                    <h6
-                                      className={
-                                        ob.status === "unread"
-                                          ? "unread"
-                                          : "read"
-                                      }
-                                    >
-                                      Item ID : {ob.item_id}
-                                    </h6>
-                                    <p
-                                      className={
-                                        ob.status === "unread"
-                                          ? "unread"
-                                          : "read"
-                                      }
-                                    >
-                                      Stock : {ob.stock}
-                                    </p>
-                                    <p
-                                      className={
-                                        ob.status === "unread"
-                                          ? "unread"
-                                          : "read"
-                                      }
-                                    >
-                                      Variation : {ob.variation}
-                                    </p>
-                                    <p
-                                      className={
-                                        ob.status === "unread"
-                                          ? "unread"
-                                          : "read"
-                                      }
-                                    >
-                                      Status : {ob.order_status}
-                                    </p>
-                                  </Link>
-                                </Col>
-                                <Col lg={2}>
-                                  <a onClick={() => DeleteNotification(ob.id)}>
-                                    {" "}
-                                    <i
-                                      class="fa fa-trash-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                </Col>
-                              </Row>
-                            </Link>
+                            <Row>
+                              <Col lg={2}>
+                                <h6>{ob.item_id}</h6>
+                              </Col>
+                              <Col lg={8}>
+                                <h6>{ob.stock}</h6>
+                                <p>{ob.variation}</p>
+                              </Col>
+                            </Row>
                           </div>
                         ))
                       ) : (
                         <p className="emptyMSG">No Notification</p>
-                      )} */}
+                      )}
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
@@ -3081,9 +3011,6 @@ function Newheader(props) {
                                 <h6>{ob.title}</h6>
                                 <p>{ob.description}</p>
                               </Col>
-                              {/* <Col lg={4}>
-                                
-                              </Col> */}
                             </Row>
                           </div>
                         ))
@@ -3098,23 +3025,6 @@ function Newheader(props) {
                     role="tabpanel"
                     aria-labelledby="pills-profile-tab"
                   >
-                    {/* {notification && notification.length > 0 ? (
-                      notification.map((item, index) => (
-                        <div className="notification">
-                          <Row>
-                            <Col lg={2}>
-                              <img src={`https://canine.hirectjob.in/storage/app/public/notification/${item.image}`} />
-                            </Col>
-                            <Col lg={9} className="align-self-center">
-                              <h6>{item.title}</h6>
-                              <p>{item.description}</p>
-                            </Col>
-                          </Row>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="emptyMSG">No Notification</p>
-                    )} */}
                     {allnotification && allnotification.length > 0 ? (
                       allnotification.map((ob, index) => (
                         <div className="notification" key={index}>
@@ -3129,9 +3039,6 @@ function Newheader(props) {
                               <h6>{ob.title}</h6>
                               <p>{ob.description}</p>
                             </Col>
-                            {/* <Col lg={4}>
-                                
-                              </Col> */}
                           </Row>
                         </div>
                       ))
