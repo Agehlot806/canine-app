@@ -213,7 +213,7 @@ function Home(props) {
   };
 
 
-  const renderhappycus = (description) => {
+  const renderhappycus = (comment) => {
     const maxCharacters = 15; 
 
     if (comment.length <= maxCharacters) {
