@@ -10,16 +10,24 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import Footer from '../../directives/footer';
 import cart from "../../assets/images/icon/cart.png";
 import logo from "../../assets/images/logo.png";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Myorder() {
 
     const [allorder, setallorder] = useState([]);
     const [allreviewdata, setallreviewdata] = useState([]);
 
-    useEffect(() => {
-        allOrders();
-        allStarData();
-    }, []);
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([allOrders(), allStarData()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
     // storedUserId
     const customer_id = localStorage.getItem("userInfo");
@@ -63,6 +71,11 @@ function Myorder() {
     return (
         <>
             <Newheader />
+            {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+            <>
             <section className='section-padding'>
                 <Container>
                     <h1 className='main-head'>My Orders</h1>
@@ -135,6 +148,8 @@ function Myorder() {
                     </div>
                 </Container>
             </section>
+            </>
+        )}
             <Footer />
         </>
     )

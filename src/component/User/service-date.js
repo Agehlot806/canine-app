@@ -14,6 +14,7 @@ import { Toaster, toast } from "react-hot-toast";
 // import { DatePicker } from "react-datepicker";
 // import DatePicker from "react-datepicker/dist/react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const addMonths = (date, months) => {
   const newDate = new Date(date);
@@ -44,10 +45,16 @@ function Servicedate() {
   const [bookedSlotTimes, setBookedSlotTimes] = useState([]);
   console.log("petType: ", petType);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    handleSlotsData();
-    petCategories();
-    GetdataAll();
+    Promise.all([handleSlotsData(), petCategories(), GetdataAll()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const handleSlotsData = async () => {
     try {
@@ -197,7 +204,14 @@ function Servicedate() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={service} />
         </div>
@@ -398,7 +412,8 @@ function Servicedate() {
           </div>
         </Container>
       </section>
-
+        </>
+      )}
       <Footer />
     </>
   );

@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import Footer from '../../directives/footer';
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function SubcategoriesHeading() {
     const [dogsubcategories, setdogsubcategories] = useState("");
@@ -12,9 +13,20 @@ function SubcategoriesHeading() {
     const { heading } = useParams()
     console.log('heading', heading)
     useEffect(() => {
-        AllDogsubcategories();
-        AllBanner();
+        
     }, []);
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([AllDogsubcategories(),
+        AllBanner()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
     const AllBanner = async () => {
         try {
@@ -51,7 +63,14 @@ function SubcategoriesHeading() {
     return (
         <>
             <Newheader />
-            <div className="home-section">
+            {loading ? (
+                <div className="text-center text-black mb-4">
+                <img src={loadinggif} alt=""/>
+                <h5>Please Wait.......</h5>
+              </div>
+            ) : (
+                <>
+                <div className="home-section">
                 {homebanner
                     ? homebanner.map(
                         (item, index) =>
@@ -105,8 +124,8 @@ function SubcategoriesHeading() {
 
                 </Container>
             </section>
-
-
+                </>
+            )}
             <Footer />
         </>
     )

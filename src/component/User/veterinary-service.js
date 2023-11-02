@@ -6,6 +6,7 @@ import Footer from "../../directives/footer";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Veterinaryservice() {
   const [stateall, setStateall] = useState([]);
@@ -27,9 +28,17 @@ function Veterinaryservice() {
   console.log("storedUserId: ", storedUserId);
   console.log("customer_id: ", customer_id);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    GetStateAll();
-    selectPet();
+    Promise.all([GetStateAll(),
+      selectPet()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const selectPet = async () => {
@@ -114,7 +123,14 @@ function Veterinaryservice() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={service} />
         </div>
@@ -210,7 +226,7 @@ function Veterinaryservice() {
                         onInput={(e) => setstate(e.target.value)}
                       >
                         <option>Choose...</option>
-                        {stateall.map((items) => (
+                        {stateall && stateall.map((items) => (
                           <option value={items.id} key={items.id}>
                             {items.state_name}
                           </option>
@@ -294,6 +310,8 @@ function Veterinaryservice() {
           </Row>
         </Container>
       </section>
+        </>
+      )}
       <Footer />
     </>
   );

@@ -11,6 +11,7 @@ import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
 import moment from "moment/moment";
 import axios from "axios";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Serviceaddpet() {
   const { id } = useParams();
@@ -30,9 +31,16 @@ function Serviceaddpet() {
   const [years, setYears] = useState(0);
   const [months, setMonths] = useState(0);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    categoriesProduct();
-    AllselectBreed();
+    Promise.all([categoriesProduct(), AllselectBreed()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const categoriesProduct = async () => {
@@ -119,7 +127,14 @@ function Serviceaddpet() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={banner} />
         </div>
@@ -279,6 +294,9 @@ function Serviceaddpet() {
           </Row>
         </Container>
       </section>
+        </>
+      )}
+      
 
       <Footer />
     </>

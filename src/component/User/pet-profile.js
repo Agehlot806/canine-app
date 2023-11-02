@@ -13,6 +13,7 @@ import moment from "moment/moment";
 import axios from "axios";
 import { stringes } from "../../utils";
 import strings from "../language";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Petprofile() {
   const navigate = useNavigate();
@@ -31,9 +32,16 @@ function Petprofile() {
   const [years, setYears] = useState(0);
   const [months, setMonths] = useState(0);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    categoriesProduct();
-    AllselectBreed();
+    Promise.all([categoriesProduct(), AllselectBreed()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const categoriesProduct = async () => {
@@ -138,7 +146,14 @@ function Petprofile() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={banner} />
         </div>
@@ -298,7 +313,8 @@ function Petprofile() {
           </div>
         </Container>
       </section>
-
+        </>
+      )}
       <Footer />
     </>
   );

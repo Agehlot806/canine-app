@@ -9,13 +9,24 @@ import Footer from "../../directives/footer";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Link } from "react-router-dom";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Service() {
   const [allservice, setallservice] = useState([]);
 
+ 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allService();
+    Promise.all([allService()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
+
 
   const allService = async () => {
     axios
@@ -33,7 +44,12 @@ function Service() {
   return (
     <>
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+          <>
+          <Container fluid className="p-0">
         <div className="all-bg">
           <img src={service} />
         </div>
@@ -115,9 +131,9 @@ function Service() {
             </Col>
           </Row>
         </Container>
-        
       </section>
-
+          </>
+        )}
       <Footer />
     </>
   );

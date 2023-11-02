@@ -97,6 +97,7 @@ import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function SubcategoriesProduct() {
     // const { name } = useParams();
@@ -187,23 +188,32 @@ function SubcategoriesProduct() {
     const [paymentId, setPaymentId] = useState("");
 
     useEffect(() => {
-        allProduct();
-        allBrandshow();
-        allLifesageshow();
-        allBreedshow();
-        allsubcategary();
-        allHealthconditionshow();
-        Allsubcategories();
-        fetchWishlistData();
-        couponlistdata();
-        allReview();
-        // GetdataAll();
-        // allAddressList();
+        
     }, []);
-    useEffect(() => {
-        GetdataAll();
-        allAddressList();
-    }, []);
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([allProduct(),
+        allBrandshow(),
+        allLifesageshow(),
+        allBreedshow(),
+        allsubcategary(),
+        allHealthconditionshow(),
+        Allsubcategories(),
+        fetchWishlistData(),
+        couponlistdata(),
+        allReview(),
+        GetdataAll(),
+        allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
+
+  
     const allProduct = async () => {
         axios
             .get(`${BASE_URL}/items/latest`)
@@ -1395,7 +1405,14 @@ function SubcategoriesProduct() {
         <>
             <Toaster />
             <Newheader />
-            <Container fluid className="p-0">
+            {loading ? (
+                <div className="text-center text-black mb-4">
+                <img src={loadinggif} alt=""/>
+                <h5>Please Wait.......</h5>
+              </div>
+            ) : (
+                <>
+                <Container fluid className="p-0">
                 <div className="all-bg">
                     <img src={product} />
                 </div>
@@ -1885,7 +1902,8 @@ function SubcategoriesProduct() {
                     </Col>
                 </Row>
             </Container>
-
+                </>
+            )}
             <Footer />
 
             {/* Product details Modal */}

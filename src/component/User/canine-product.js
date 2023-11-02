@@ -21,6 +21,7 @@ import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const clinetreview = {
   desktop: {
@@ -114,20 +115,17 @@ function Canineproduct(props) {
     event.stopPropagation();
   };
 
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    categoriesProduct();
-    allProduct();
-    allBrandshow();
-    allLifesageshow();
-    allBreedshow();
-    allsubcategary();
-    allHealthconditionshow();
-    Allsubcategories();
-    fetchWishlistData();
-    couponlistdata();
-    GetdataAll();
-    allReview();
-    allAddressList();
+    Promise.all([categoriesProduct(), allProduct(), allBrandshow(), allLifesageshow(), allBreedshow(), allsubcategary(), allHealthconditionshow(), Allsubcategories(), fetchWishlistData(), couponlistdata(), GetdataAll(), allReview(), allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const categoriesProduct = async () => {
@@ -1199,6 +1197,7 @@ function Canineproduct(props) {
   useEffect(() => {
     pagination(currentPage1);
   }, [allproduct, currentPage1, sortOption]);
+
   const sortedProducts = () => {
     let sortedItems = [...allproduct];
     switch (sortOption) {
@@ -1247,7 +1246,11 @@ function Canineproduct(props) {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (<>
+          <Container fluid className="p-0">
         <div className="all-bg">
           <img src={product} />
         </div>
@@ -1732,7 +1735,7 @@ function Canineproduct(props) {
           </Col>
         </Row>
       </Container>
-
+        </>)}
       <Footer />
 
       {/* Product details Modal */}

@@ -5,6 +5,7 @@ import Footer from "../../directives/footer";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Updateprofile() {
   const navigate = useNavigate();
@@ -96,7 +97,19 @@ function Updateprofile() {
   const [phone, setphone] = useState("");
   const [imgage, setimgage] = useState("");
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    Promise.all([GetProfileData()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
+
+  const GetProfileData = () =>{
     // Fetch profile data from the API
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
@@ -112,7 +125,7 @@ function Updateprofile() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }
   const halderimage = (e) => {
     // setimgage(e.target.files[0])
     const file = e.target.files[0];
@@ -154,7 +167,14 @@ function Updateprofile() {
   return (
     <>
       <Newheader />
-      <section className="section-padding">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <section className="section-padding">
         <Container>
           <Row className="justify-content-center mt-3">
             <Col lg={10}>
@@ -251,6 +271,8 @@ function Updateprofile() {
           </Row>
         </Container>
       </section>
+        </>
+      )}
       <Footer />
     </>
   );

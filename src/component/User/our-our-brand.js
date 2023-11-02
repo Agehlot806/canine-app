@@ -14,6 +14,7 @@ import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Ourourbrand(props) {
   // filter tabs
@@ -100,13 +101,18 @@ function Ourourbrand(props) {
   const { cart, dispatch } = useCartWithoutLogin();
   // without signup add cart end
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Allsubcategories();
-    allProduct();
-    fetchBrands();
-    allReview();
-    GetdataAll();
+    Promise.all([Allsubcategories(), allProduct(), fetchBrands(), allReview(), GetdataAll(), fetchWishlistData(), allBrandshow(), allLifesageshow(), allBreedshow(), allsubcategary(), allHealthconditionshow(), Allsubcategoriessecond(), couponlistdata(), allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
+
 
   const Allsubcategories = async () => {
     axios
@@ -122,15 +128,7 @@ function Ourourbrand(props) {
   };
 
   useEffect(() => {
-    fetchWishlistData();
-    allBrandshow();
-    allLifesageshow();
-    allBreedshow();
-    allsubcategary();
-    allHealthconditionshow();
-    Allsubcategoriessecond();
-    couponlistdata();
-    allAddressList();
+    
   }, []);
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
@@ -1321,7 +1319,12 @@ function Ourourbrand(props) {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+          <>
+          <Container fluid className="p-0">
         <div className="all-bg">
           <img src={ourbrand} />
         </div>
@@ -1925,6 +1928,9 @@ function Ourourbrand(props) {
         </Row>
       </Container>
 
+          </>
+        )}
+      
       <Footer />
 
       {/* Product details Modal */}

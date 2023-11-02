@@ -21,6 +21,7 @@ import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Petcategory() {
   //     const { id } = useParams();
@@ -111,24 +112,18 @@ function Petcategory() {
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allProduct();
-    allBrandshow();
-    allLifesageshow();
-    allBreedshow();
-    allsubcategary();
-    allHealthconditionshow();
-    Allsubcategories();
-    fetchWishlistData();
-    couponlistdata();
-    allReview();
-    // GetdataAll();
-    // allAddressList();
+    Promise.all([allProduct(), allBrandshow(), allLifesageshow(), allBreedshow(), allsubcategary(), allHealthconditionshow(), Allsubcategories(), fetchWishlistData(), couponlistdata(), allReview(), GetdataAll(), allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
-  useEffect(() => {
-    GetdataAll();
-    allAddressList();
-  }, []);
+  
   const allProduct = async () => {
     axios
       .get(`${BASE_URL}/items/latest`)
@@ -1340,7 +1335,12 @@ function Petcategory() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+          <>
+          <Container fluid className="p-0">
         <div className="all-bg">
           {banner && (
             <img
@@ -1846,7 +1846,8 @@ function Petcategory() {
           </Col>
         </Row>
       </Container>
-
+          </>
+        )}
       <Footer />
 
       {/* Product details Modal */}

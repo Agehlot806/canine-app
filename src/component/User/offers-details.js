@@ -5,12 +5,22 @@ import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const Offersdetails = () => {
   const [couponlist, setcouponlist] = useState([]);
 
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    couponlistdata();
+    Promise.all([couponlistdata()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const couponlistdata = async () => {
     axios
@@ -39,6 +49,12 @@ const Offersdetails = () => {
     <>
       {" "}
       <Newheader />
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (<>
       <section className="section-padding">
         <Container>
           {/* <Row> */}
@@ -153,6 +169,8 @@ const Offersdetails = () => {
             </Row>
         </Container>
       </section>
+      </>)}
+      
       <Footer />
     </>
   );

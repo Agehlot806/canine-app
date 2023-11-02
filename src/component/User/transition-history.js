@@ -9,6 +9,7 @@ import moment from "moment";
 import "moment-timezone";
 import Footer from "../../directives/footer";
 import Newheader from "../../directives/newheader";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const Transitionhistory = () => {
   const customer_id = localStorage.getItem("userInfo");
@@ -17,21 +18,26 @@ const Transitionhistory = () => {
   const itemsPerPage = 10;
   const [transactionData, setTransactionData] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          `https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedUserId}`
-        );
-        const data = response.data.data; // Assuming the API response is an array
 
-        setTransactionData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+
+  const Allfetchdata = async () => {
+    try {
+        const response = await axios.get(`https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedUserId}`);
+        setTransactionData(response.data.data);
+    } catch (error) {
+        console.error(error);
     }
-
-    fetchData();
+};
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([Allfetchdata()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   // Calculate the index of the first and last item to display
@@ -65,7 +71,10 @@ const Transitionhistory = () => {
       <section className="section-padding">
         <Container>
           {transactionData.length === 0 ? (
-            <p>Loading data...</p>
+            <div className="text-center text-black mb-4">
+            <img src={loadinggif} alt=""/>
+            <h5>Please Wait.......</h5>
+          </div>
           ) : (
             <>
               {/* Transaction list */}

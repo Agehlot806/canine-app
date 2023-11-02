@@ -5,6 +5,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 import about from "../../assets/images/banner/about.png";
 import { Link } from "react-router-dom";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Blog() {
   const [blog, setblog] = useState([]);
@@ -20,8 +21,17 @@ function Blog() {
       console.error("Error fetching blogs:", error);
     }
   };
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchBlogs();
+    Promise.all([fetchBlogs()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const renderBlogDescription = (description) => {
@@ -43,7 +53,14 @@ function Blog() {
   return (
     <>
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={about} />
         </div>
@@ -89,9 +106,10 @@ function Blog() {
               <p className="emptyMSG">No Blog Data.</p>
             )}
           </Row>
-          
         </Container>
       </section>
+        </>
+      )}
       <Footer />
     </>
   );

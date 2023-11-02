@@ -24,6 +24,7 @@ import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const clinetreview = {
   desktop: {
@@ -58,18 +59,29 @@ function Product(props) {
   // without signup add cart end
 
   useEffect(() => {
-    categoriesProduct();
-    allProduct();
-    itemBanner();
-    allBrandshow();
-    allLifesageshow();
-    allBreedshow();
-    couponlistdata();
-    allHealthconditionshow();
-    allsubcategary();
-    fetchWishlistData();
-    allAddressList();
-    GetdataAll();
+    
+  }, []);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([categoriesProduct(),
+      allProduct(),
+      itemBanner(),
+      allBrandshow(),
+      allLifesageshow(),
+      allBreedshow(),
+      couponlistdata(),
+      allHealthconditionshow(),
+      allsubcategary(),
+      fetchWishlistData(),
+      allAddressList(),
+      GetdataAll()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const categoriesProduct = async () => {
@@ -1231,7 +1243,14 @@ function Product(props) {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt=""/>
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={product} />
         </div>
@@ -1784,6 +1803,9 @@ function Product(props) {
           </Col>
         </Row>
       </Container>
+        </>
+      )}
+      
 
       <Footer />
 

@@ -4,12 +4,22 @@ import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import Footer from "../../directives/footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Allveterinary() {
   const [veterinaryget, setveterinaryget] = useState([]);
 
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchVeterinaryget();
+    Promise.all([fetchVeterinaryget()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const fetchVeterinaryget = async () => {
@@ -24,7 +34,12 @@ function Allveterinary() {
   return (
     <>
       <Newheader />
-      <section className="section-padding">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+          <>
+          <section className="section-padding">
         <Container>
           <h1 className="main-head">All Veterinary</h1>
           <div className="needplace">
@@ -78,6 +93,8 @@ function Allveterinary() {
           </div>
         </Container>
       </section>
+          </>
+        )}
       <Footer />
     </>
   );

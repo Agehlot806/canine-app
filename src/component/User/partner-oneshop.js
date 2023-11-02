@@ -14,6 +14,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Partneroneshop() {
   const { id } = useParams();
@@ -23,13 +24,16 @@ function Partneroneshop() {
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    VendorItems();
-    fetchWishlistData();
-    couponlistdata();
-    allReview();
-    GetdataAll();
-    allAddressList();
+    Promise.all([VendorItems(), fetchWishlistData(), couponlistdata(), allReview(), GetdataAll(), allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   // vendor item
@@ -845,7 +849,12 @@ function Partneroneshop() {
     <>
       <Toaster />
       <Newheader />
-      <Container fluid className="p-0">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+          <>
+          <Container fluid className="p-0">
         <div className="all-bg">
           <img
             src={
@@ -995,13 +1004,16 @@ function Partneroneshop() {
           </Row>
           <div className="allblogbtn">
             <Button key={state?.item.id}>
-              <Link to={`/product-partner-shop/${state?.item.id}`}>
+              <Link to={`/product-partner-shop/${state?.item.vendor_id}`}>
                 View All
               </Link>
             </Button>
           </div>
         </Container>
       </section>
+          </>
+        )}
+      
 
       <Footer />
       {/* Product details Modal */}

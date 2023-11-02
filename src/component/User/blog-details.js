@@ -13,18 +13,23 @@ import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Blogdetails() {
   const { id } = useParams();
   console.log("id", id);
 
+ 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allblogs();
-    allProduct();
-    fetchWishlistData();
-    GetdataAll();
-    couponlistdata();
-    allAddressList();
+    Promise.all([allblogs(), allProduct(), fetchWishlistData(), GetdataAll(), couponlistdata(), allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const [blogdata, setBlogdata] = useState([]);
   console.log("blogdata: ", blogdata);
@@ -859,7 +864,12 @@ function Blogdetails() {
     <>
       <Toaster />
       <Newheader />
-      <section className="section-padding">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (
+          <>
+          <section className="section-padding">
         <Container>
           <Row className="justify-content-center">
             <Col lg={10}>
@@ -1036,6 +1046,9 @@ function Blogdetails() {
           </div>
         </Container>
       </section>
+          </>
+        )}
+      
       <Footer />
 
       {/* Product details Modal */}

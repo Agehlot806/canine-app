@@ -15,6 +15,7 @@ import { useReactToPrint } from "react-to-print";
 import { useBootstrapMinBreakpoint } from "react-bootstrap/esm/ThemeProvider";
 import { Toaster, toast } from "react-hot-toast";
 import StarRating from "../starrating";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Orderviewdetails() {
   // const queryString = window.location.search;
@@ -51,10 +52,18 @@ function Orderviewdetails() {
   const { id } = useParams();
   console.log("order id ", id);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    orderViewdetails();
-    allOrders();
+    Promise.all([orderViewdetails(),  allOrders()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
+
   let subTotal = orderDetails.reduce(
     (total, order) => total + parseFloat(order.total_add_on_price),
     0
@@ -199,7 +208,11 @@ function Orderviewdetails() {
     <>
       <Toaster />
       <Newheader />
-      <section className="section-padding">
+      {loading ? (<div className="text-center text-black mb-4">
+          <img src={loadinggif} alt=""/>
+          <h5>Please Wait.......</h5>
+        </div>) : (<>
+          <section className="section-padding">
         <Container>
           <h1 className="main-head">Orders View</h1>
 
@@ -537,7 +550,7 @@ function Orderviewdetails() {
           </div>
         </Container>
       </section>
-
+        </>)}
       <Footer />
     </>
   );
