@@ -216,11 +216,11 @@ function Home(props) {
   const renderhappycus = (comment) => {
     const maxCharacters = 15; 
 
-    if (comment.length <= maxCharacters) {
+    if (comment?.length <= maxCharacters) {
       return <p>{comment}</p>; 
     }
 
-    const truncatedDescription = comment.slice(0, maxCharacters);
+    const truncatedDescription = comment?.slice(0, maxCharacters);
 
     return (
       <>
