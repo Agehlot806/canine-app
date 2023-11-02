@@ -18,8 +18,6 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 // import { loadRazorpay } from "../../utils";
 import Fade, { Flip } from "react-reveal";
-import { AnimationOnScroll } from "react-animation-on-scroll";
-import "animate.css/animate.min.css";
 import logo from "../../assets/images/logo.png";
 
 const homeslider = {
@@ -1214,12 +1212,7 @@ function PetshopHome(props) {
       <section className="section-padding">
         <Container>
           <Row>
-            <AnimationOnScroll
-              animateIn="animate__fadeInLeftBig"
-              animateOnce={true}
-            >
               <h1 className="main-head">Shop Deals For Your Best Buddy</h1>
-            </AnimationOnScroll>
           </Row>
         </Container>
         <Container fluid>
@@ -1264,9 +1257,9 @@ function PetshopHome(props) {
           <Row>
             <Col lg={6} sm={6}>
               {/* <h5>Dog Nutrients & Food </h5> */}
-              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
+              
                 <h1 className="main-head">Latest all Products</h1>
-              </AnimationOnScroll>
+              
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
@@ -1383,9 +1376,9 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6}>
-              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
+              
                 <h1 className="main-head">Our Brand</h1>
-              </AnimationOnScroll>
+              
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
@@ -1495,9 +1488,9 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6} sm={6}>
-              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
+              
                 <h1 className="main-head">Shop By Brands</h1>
-              </AnimationOnScroll>
+              
             </Col>
             <Col lg={6} sm={6}>
               <div className="foodMore">
@@ -1587,9 +1580,7 @@ function PetshopHome(props) {
       <section className="section-padding">
         <Container>
           <div className="text-left">
-            <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
               <h1 className="main-head">Blog</h1>
-            </AnimationOnScroll>
           </div>
           <div className="needplace">
             <Row>
@@ -1628,9 +1619,7 @@ function PetshopHome(props) {
         <Container>
           <Row>
             <Col lg={6}>
-              <AnimationOnScroll animateIn="animate__tada" animateOnce={true}>
                 <h1 className="main-head">Happy Customer</h1>
-              </AnimationOnScroll>
             </Col>
           </Row>
           <Row>

@@ -661,7 +661,7 @@
 //                     <div className="search-results">
 //                       {filteredProducts.map((product, index, id) => (
 //                         <li key={index}>
-//                           <Link to={`/product-details/${product.id}`}>
+//                           <Link to={`/petshop-productDetails/${product.id}`}>
 //                             {product.name}
 //                           </Link>
 //                         </li>
@@ -770,7 +770,7 @@
 //                               to={
 //                                 loginType === "salesman"
 //                                   ? "/salesman-dashboad/"
-//                                   : "/petshop-my-orders"
+//                                   : "/petshop-petshop-my-orders"
 //                               }
 //                             >
 //                               My Orders
@@ -859,7 +859,7 @@
 //               {notify && notify.length > 0 ? (
 //                 notify.map((ob, index) => (
 //                   <div className="notification" key={index} >
-//                     <Link onClick={() => DeleteNotification(ob.id)} to={`/product-details/${ob.item_id}`}>
+//                     <Link onClick={() => DeleteNotification(ob.id)} to={`/petshop-productDetails/${ob.item_id}`}>
 //                       <Row>
 //                         <Col lg={2} className="align-self-center text-center">
 //                           <i className="fa fa-info-circle" />
@@ -881,7 +881,7 @@
 //               {dataZero && dataZero.length > 0 ? (
 //                 dataZero.map((ob, index) => (
 //                   <div className="notification" key={index}>
-//                     <Link onClick={() => DeleteNotificationone(ob.id)} to={`/my-orders`} data-dismiss="modal">
+//                     <Link onClick={() => DeleteNotificationone(ob.id)} to={`/petshop-my-orders`} data-dismiss="modal">
 //                       <Row>
 //                         <Col lg={2} className="align-self-center text-center">
 //                           <i className="fa fa-info-circle" />
@@ -1352,7 +1352,7 @@
 //                         >
 //                           All Service Booking
 //                         </Link>
-//                         <Link className="dropdown-item" to="/my-orders">
+//                         <Link className="dropdown-item" to="/petshop-my-orders">
 //                           My Orders
 //                         </Link>
 //                         <Link className="dropdown-item" to="/wishlist-products">
@@ -2034,7 +2034,7 @@
 //                     <div className="search-results">
 //                       {filteredProducts.map((product, index, id) => (
 //                         <li key={index}>
-//                           <Link to={`/product-details/${product.id}`}>
+//                           <Link to={`/petshop-productDetails/${product.id}`}>
 //                             {product.name}
 //                           </Link>
 //                         </li>
@@ -2123,7 +2123,7 @@
 //                         >
 //                           All Service Booking
 //                         </Link>
-//                         <Link className="dropdown-item" to="/my-orders">
+//                         <Link className="dropdown-item" to="/petshop-my-orders">
 //                           My Orders
 //                         </Link>
 //                         <Link className="dropdown-item" to="/wishlist-products">
@@ -2164,7 +2164,7 @@
 //                   <div className="search-results">
 //                     {filteredProducts.map((product, index, id) => (
 //                       <li key={index}>
-//                         <Link to={`/product-details/${product.id}`}>
+//                         <Link to={`/petshop-productDetails/${product.id}`}>
 //                           {product.name}
 //                         </Link>
 //                       </li>
@@ -2308,7 +2308,7 @@
 //                                   className="align-self-center text-center"
 //                                 >
 //                                   <Link
-//                                     to={`/product-details/${ob.item_id}`}
+//                                     to={`/petshop-productDetails/${ob.item_id}`}
 //                                     onClick={() => handleLinkClick(ob.item_id)}
 //                                   >
 //                                     <i className="fa fa-info-circle" />
@@ -2316,7 +2316,7 @@
 //                                 </Col>
 //                                 <Col lg={8}>
 //                                   <Link
-//                                     to={`/product-details/${ob.item_id}`}
+//                                     to={`/petshop-productDetails/${ob.item_id}`}
 //                                     onClick={() => handleLinkClick(ob.item_id)}
 //                                   >
 //                                     <h6
@@ -2386,13 +2386,13 @@
 //                                 lg={2}
 //                                 className="align-self-center text-center"
 //                               >
-//                                 <Link to={`/my-orders`} data-dismiss="modal">
+//                                 <Link to={`/petshop-my-orders`} data-dismiss="modal">
 //                                   <i className="fa fa-info-circle" />
 //                                 </Link>
 //                               </Col>
 //                               <Col lg={8}>
 //                                 <Link
-//                                   to={`/my-orders`}
+//                                   to={`/petshop-my-orders`}
 //                                   onClick={() => handleLinkClick(ob.id)}
 //                                 >
 //                                   <h6
@@ -2463,7 +2463,7 @@
 //                         notify.map((ob, index) => (
 //                           <div className="notification" key={index}>
 //                             <Link
-//                               to={`/product-details/${ob.item_id}`}
+//                               to={`/petshop-productDetails/${ob.item_id}`}
 //                               onClick={() => Modaloff()}
 //                             >
 //                               <Row>
@@ -2489,7 +2489,7 @@
 //                       {dataZero && dataZero.length > 0 ? (
 //                         dataZero.map((ob, index) => (
 //                           <div className="notification" key={index}>
-//                             <Link to={`/my-orders`} onClick={() => Modaloff()}>
+//                             <Link to={`/petshop-my-orders`} onClick={() => Modaloff()}>
 //                               <Row>
 //                                 <Col
 //                                   lg={2}
@@ -2974,7 +2974,7 @@ function Petshopheader(props) {
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/my-orders">
+                      <Link className="dropdown-item" to="/petshop-my-orders">
                         My Orders
                       </Link>
                     </li>
@@ -3672,7 +3672,7 @@ function Petshopheader(props) {
                               to={
                                 loginType === "salesman"
                                   ? "/salesman-dashboad/"
-                                  : "/petshop-my-orders"
+                                  : "/petshop-petshop-my-orders"
                               }
                             >
                               My Orders
@@ -3803,13 +3803,13 @@ function Petshopheader(props) {
                           >
                             <Row>
                               <Col lg={2} className="align-self-center">
-                                <Link to={`/my-orders`} onClick={() => Modaloff()}>       
+                                <Link to={`/petshop-my-orders`} onClick={() => Modaloff()}>       
                                   <i className="fa fa-info-circle" />
                                 </Link>
                               </Col>
                               <Col lg={8}>
                                 <Link
-                                  to={`/my-orders`}
+                                  to={`/petshop-my-orders`}
                                   onClick={() => {handleLinkClick(ob.id),Modaloff()}}
                                 >
                                   <h6
@@ -3900,7 +3900,7 @@ function Petshopheader(props) {
                         notify.map((ob, index) => (
                           <div className="notification" key={index}>
                             <Link
-                              to={`/product-details/${ob.item_id}`}
+                              to={`/petshop-productDetails/${ob.item_id}`}
                               onClick={() => Modaloff()}
                             >
                               <Row>
@@ -3926,7 +3926,7 @@ function Petshopheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div className="notification" key={index}>
-                            <Link to={`/my-orders`} onClick={() => Modaloff()}>
+                            <Link to={`/petshop-my-orders`} onClick={() => Modaloff()}>
                               <Row>
                                 <Col
                                   lg={2}

@@ -3,19 +3,19 @@ import LocalizedStrings from "react-localization";
 let strings = new LocalizedStrings({
   en: {
     // useful Links
-    usefulLinks: "Useful Links",
-    deliveryDeatils: "Delivery Details",
+    usefulLinks: "Shipping & Returns",
+    deliveryDeatils: "Shipping / Delivery",
     internationalShipping: "International Shipping",
     paymentOption: "Payment Options",
-    trackYourOrder: "Track Your Order",
+    trackYourOrder: "Cancellation Policy",
     return: "Return",
-    findaStore: "Find a Store",
+    TermsofUse: "Terms of Use",
     //information footer
     information: "Information",
     careers: "Careers",
     aboutUs: "AboutUs",
-    offersDetails: "Offers Details",
-    helpandFAQs: "Help & FAQs",
+    privacypolicy: "Privacy Policy",
+    helpandFAQs: "FAQs",
     ourServices: "Our Services",
     products: "Products",
     blog: "Blog",

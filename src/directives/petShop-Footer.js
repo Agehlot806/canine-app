@@ -11,7 +11,13 @@ import {
   BiLogoInstagramAlt,
 } from "react-icons/bi";
 import WhatsAppWidget from "../chatwhatsapp";
-
+import Paycard1 from '../assets/images/img/paycard1.png';
+import Paycard2 from '../assets/images/img/paycard2.png';
+import Paycard3 from '../assets/images/img/paycard3.png';
+import Paycard4 from '../assets/images/img/paycard4.png';
+import Paycard5 from '../assets/images/img/paycard5.png';
+import Paycard6 from '../assets/images/img/paycard6.png';
+import Paycard7 from '../assets/images/img/paycard7.png';
 function Petshopfooter() {
   return (
     <>
@@ -29,14 +35,6 @@ function Petshopfooter() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/petshopinternationalshipping">
-                        {strings.internationalShipping}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/petshoppaymentoptionfooter">{strings.paymentOption}</Link>
-                    </li>
-                    <li>
                       <Link to="/petshoptrackyourorde">
                         {strings.trackYourOrder}
                       </Link>
@@ -45,7 +43,12 @@ function Petshopfooter() {
                       <Link to="/petshopreturnpolicy">Return Policy</Link>
                     </li>
                     <li>
-                      <Link to="/petshopfindastore">{strings.findaStore}</Link>
+                      <Link to="/petshop-term-of-use">
+                      Terms of Use
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/offers-details">Top Offers</Link>
                     </li>
                   </ul>
                 </div>
@@ -58,14 +61,25 @@ function Petshopfooter() {
                       <Link to="/petshopaboutus">AboutUs</Link>
                     </li>
                     <li>
+                      <Link to="/petshop-contact">Contact Us</Link>
+                    </li>
+                    <li>
+                      <Link to="/petshop-blog">{strings.blog}</Link>
+                    </li>
+                    <li>
                       <Link to="/petshophelpandfaqs">{strings.helpandFAQs}</Link>
                     </li>
                     <li>
-                      <Link to="">Products</Link>
+                      <Link to="/petshop-privacy-policy">Privacy Policy</Link>
+                    </li>
+                   
+                    <li>
+                      <Link to="/petshop-disclaimer">Disclaimer</Link>
                     </li>
                     <li>
-                      <Link to="">{strings.blog}</Link>
+                      <Link to="/petshop-testimonials">Testimonials</Link>
                     </li>
+                   
                   </ul>
                 </div>
               </Col>
@@ -117,6 +131,15 @@ function Petshopfooter() {
                       <Link to="https://www.instagram.com/">
                         <BiLogoInstagramAlt />
                       </Link>
+                    </li>
+                    <li className="cardpay">
+                      <Link><img src={Paycard1}/></Link>
+                      <Link><img src={Paycard2}/></Link>
+                      <Link><img src={Paycard3}/></Link>
+                      <Link><img src={Paycard4}/></Link>
+                      <Link><img src={Paycard5}/></Link>
+                      <Link><img src={Paycard6}/></Link>
+                      <Link><img src={Paycard7}/></Link>
                     </li>
                   </ul>
                 </div>

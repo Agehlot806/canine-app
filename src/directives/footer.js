@@ -11,6 +11,13 @@ import {
   BiLogoInstagramAlt,
 } from "react-icons/bi";
 import WhatsAppWidget from "../chatwhatsapp";
+import Paycard1 from '../assets/images/img/paycard1.png';
+import Paycard2 from '../assets/images/img/paycard2.png';
+import Paycard3 from '../assets/images/img/paycard3.png';
+import Paycard4 from '../assets/images/img/paycard4.png';
+import Paycard5 from '../assets/images/img/paycard5.png';
+import Paycard6 from '../assets/images/img/paycard6.png';
+import Paycard7 from '../assets/images/img/paycard7.png';
 
 function Footer() {
   return (
@@ -29,14 +36,6 @@ function Footer() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/international-shipping">
-                        {strings.internationalShipping}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/payment-option">{strings.paymentOption}</Link>
-                    </li>
-                    <li>
                       <Link to="/track-your-order">
                         {strings.trackYourOrder}
                       </Link>
@@ -45,32 +44,41 @@ function Footer() {
                       <Link to="/return-policy">Return Policy</Link>
                     </li>
                     <li>
-                      <Link to="/find-a-Store">{strings.findaStore}</Link>
+                      <Link to="/terms-of-use">{strings.TermsofUse}</Link>
+                    </li>
+                    <li>
+                      <Link to="/offers-details">Top Offers</Link>
                     </li>
                   </ul>
                 </div>
               </Col>
               <Col lg={3} sm={6}>
                 <div className="footer-list">
-                  <h5>Information</h5>
+                  <h5>Company Info</h5>
                   <ul>
                     <li>
                       <Link to="/about-us">AboutUs</Link>
                     </li>
                     <li>
-                      <Link to="/offers-details">{strings.offersDetails}</Link>
+                      <Link to="/contact">{strings.contactUs}</Link>
                     </li>
                     <li>
-                      <Link to="/help-faqs">{strings.helpandFAQs}</Link>
-                    </li>
-                    <li>
-                      <Link to="/service">Our Services</Link>
-                    </li>
-                    <li>
-                      <Link to="/product">Products</Link>
+                      <Link to="/service">Customer Services</Link>
                     </li>
                     <li>
                       <Link to="/blog">{strings.blog}</Link>
+                    </li>
+                     <li>
+                      <Link to="/help-faqs">{strings.helpandFAQs}</Link>
+                    </li>
+                    <li>
+                      <Link to="/privacy-policy">{strings.privacypolicy}</Link>
+                    </li>
+                    <li>
+                      <Link to="/disclaimer">Disclaimer</Link>
+                    </li>
+                    <li>
+                      <Link to="/testimonials">Testimonials</Link>
                     </li>
                   </ul>
                 </div>
@@ -129,6 +137,15 @@ function Footer() {
                       <Link to="https://www.instagram.com/">
                         <BiLogoInstagramAlt />
                       </Link>
+                    </li>
+                    <li className="cardpay">
+                      <Link><img src={Paycard1}/></Link>
+                      <Link><img src={Paycard2}/></Link>
+                      <Link><img src={Paycard3}/></Link>
+                      <Link><img src={Paycard4}/></Link>
+                      <Link><img src={Paycard5}/></Link>
+                      <Link><img src={Paycard6}/></Link>
+                      <Link><img src={Paycard7}/></Link>
                     </li>
                   </ul>
                 </div>
