@@ -43,7 +43,7 @@ function Productdetail() {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  const [selectedVariantStock, setSelectedVariantStock] = useState([]);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   console.log("selectedVariantStock: ", selectedVariantStock);
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
@@ -53,16 +53,24 @@ function Productdetail() {
   const { cart, dispatch } = useCartWithoutLogin();
   const handleIncrementone = () => {
     console.log("gggg", productDetails?.stock);
-    productDetails?.variations.forEach((el) => {
-      if (el?.type === selectedVariant) {
-        if (quantity === el?.stock) {
-          toast.error(`${el.type} Stock not avilable`);
+    if (productDetails?.variations?.length > 0) {
+      productDetails?.variations.forEach((el) => {
+        if (el?.type === selectedVariant) {
+          if (quantity === el?.stock) {
+            toast.error(`${el.type} Stock not avilable`);
+          } else {
+            setQuantity(quantity + 1);
+          }
         } else {
-          setQuantity(quantity + 1);
         }
+      });
+    } else {
+      if (quantity === productDetails?.stock) {
+        toast.error(`Stock not avilable`);
       } else {
+        setQuantity(quantity + 1);
       }
-    });
+    }
   };
   const handleDecrementone = () => {
     if (quantity > 1) {
@@ -74,6 +82,7 @@ function Productdetail() {
       const defaultVariant = productDetails?.variations[0];
       setSelectedVariant(defaultVariant?.type);
       setSelectedVariantPrice(defaultVariant?.price);
+      setSelectedVariantStock(defaultVariant.stock);
     }
   }, [productDetails]);
 
@@ -140,7 +149,9 @@ function Productdetail() {
           variant: selectedVariant.length > 0 ? selectedVariant : "", // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          total_quantity: selectedVariantStock,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
           return_order: productDetails?.returnable || "yes",
           price:
             formattedAmount === "0"
@@ -150,18 +161,23 @@ function Productdetail() {
           item_id: productDetails?.id,
         }
       );
-
-      if (response.data.success) {
+      console.log("response in Cart", response);
+      if (response) {
         // Store the cart items in local storage
         // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
         // const updatedCart = [...savedCartItems, productDetails];
         // localStorage.setItem('cart', JSON.stringify(updatedCart));
+        if (response.data.status === "200") {
+          toast.success("Added to cart!");
 
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
+          // setAddToCartStatus("Added to cart!");
+          shippingpage(`/add-cart/${id}`);
+        } else {
+          // setAddToCartStatus(response.data.message);
+          toast.error("Already added");
+        }
+        // const updatedCart = [...addToCartStatus, productDetails];
+        // setAddToCartStatus(updatedCart);
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -787,7 +803,10 @@ function Productdetail() {
       quantity: quantity,
       tax_amount: taxamound,
       discount_on_item: disscountvalue?.discount || "",
-      total_quantity: selectedVariantStock,
+      total_quantity:
+        selectedVariantStock.length > 0
+          ? selectedVariantStock
+          : productDetails?.stock,
       return_order: productDetails?.returnable || "yes",
       // returnable: "yes",
     };
@@ -1280,6 +1299,11 @@ function Productdetail() {
                           quantity: quantity,
                           name: productDetails.name,
                           image: productDetails.image,
+                          total_quantity:
+                            selectedVariantStock.length > 0
+                              ? selectedVariantStock
+                              : productDetails?.stock,
+                          return_order: productDetails?.returnable || "yes",
                         },
                       });
                     }}
@@ -1289,10 +1313,10 @@ function Productdetail() {
                   <p>{addToCartStatus}</p>
                 </Button>
               ) : (
-                <Button>
-                  <Link to={`/add-cart/${id}`} onClick={handleAddToCart}>
-                    <i className="fa fa-shopping-bag" /> Add to cart
-                  </Link>
+                <Button onClick={() => handleAddToCart()}>
+                  {/* <Link to={`/add-cart/${id}`} onClick={handleAddToCart}> */}
+                  <i className="fa fa-shopping-bag" /> Add to cart
+                  {/* </Link> */}
                   <p>{addToCartStatus}</p>
                 </Button>
               )}
