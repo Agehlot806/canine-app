@@ -197,10 +197,10 @@ function Home(props) {
   };
 
   const renderBlogDescription = (description) => {
-    const maxCharacters = 50; // Number of characters to show initially
+    const maxCharacters = 50; 
 
     if (description.length <= maxCharacters) {
-      return <p>{description}</p>; // Show the full description if it's short
+      return <p>{description}</p>; 
     }
 
     const truncatedDescription = description.slice(0, maxCharacters);
@@ -212,6 +212,23 @@ function Home(props) {
     );
   };
 
+
+  const renderhappycus = (description) => {
+    const maxCharacters = 15; 
+
+    if (comment.length <= maxCharacters) {
+      return <p>{comment}</p>; 
+    }
+
+    const truncatedDescription = comment.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+  
   const thirdBanner = () => {
     axios
       .get(`${BASE_URL}/banners`)
@@ -873,11 +890,13 @@ function Home(props) {
       const response = await fetch(`${BASE_URL}/items/get_happyreview`);
       const data = await response.json();
       const latestPosts = data.data.slice(0, 3);
-      setreviewlist(latestPosts);
+      const reversedPosts = latestPosts.reverse();
+      setreviewlist(reversedPosts);
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -1710,7 +1729,7 @@ function Home(props) {
                         {order.user_id[0].f_name} {order.user_id[0].l_name}
                       </h5>
                     )}
-                    <p>{order.comment}</p>
+                    <p>{renderhappycus(order.comment)}</p>
                     <div className="icon-style">
                       {Array.from({
                         length: order.rating,
