@@ -177,8 +177,9 @@ function Home(props) {
     try {
       const response = await fetch(`${BASE_URL}/items/latest`);
       const data = await response.json();
-      const latestPosts = data.data.slice(0, 8);
-      setallproduct(latestPosts);
+      const latestPosts = data.data.reverse()
+      const reversedata = latestPosts.slice(0,8)
+      setallproduct(reversedata);
     } catch (error) {
       console.log(error);
     }
@@ -1027,7 +1028,7 @@ function Home(props) {
       {loading ?(
         <div className="text-center text-black mb-4">
           <img src={loadinggif} alt=""/>
-          <h5>I'm Searching For Your Needs Wait......</h5>
+          <h5>Please Wait.....</h5>
         </div>
         
       ):(
@@ -1724,6 +1725,7 @@ function Home(props) {
                 </div>
               </Col>
             ))}
+            
           </Row>
         </Container>
       </section>

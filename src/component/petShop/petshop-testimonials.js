@@ -1,14 +1,14 @@
 import React from "react";
+import Newheader from "../../directives/newheader";
+import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
-import PetShopHeader from "../../directives/petShopHeader";
-import Petshopfooter from "../../directives/petShop-Footer";
 
-const Petshopfindastore = () => {
+const Petshoptestimonials = () => {
   return (
     <>
       {" "}
-      <PetShopHeader />
+      <Newheader />
       <section className="section-padding">
         <div className="Emptycart">
           <div class="d-flex justify-content-around">
@@ -19,9 +19,9 @@ const Petshopfindastore = () => {
           </div>
         </div>
       </section>
-      <Petshopfooter />
+      <Footer />
     </>
   );
 };
 
-export default Petshopfindastore;
+export default Petshoptestimonials;

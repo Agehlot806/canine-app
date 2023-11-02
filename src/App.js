@@ -47,14 +47,11 @@ import Blog from "./component/User/blog";
 import Updateprofile from "./component/User/update-profile";
 import Blogdetails from "./component/User/blog-details";
 import Deliverydetails from "./component/User/delivery-details";
-import Internationalshipping from "./component/User/international-shipping";
 import Trackyourorder from "./component/User/track-your-order";
-import Findastore from "./component/User/find-a-store";
 import Offersdetails from "./component/User/offers-details";
 import Helpandfaqs from "./component/User/help-faqs";
 import Shipping from "./component/User/shipping";
 import Returnpolicy from "./component/User/return-policy";
-import Paymentoption from "./component/User/payment-option";
 import Myorder from "./component/User/my-order";
 import Orderviewdetails from "./component/User/order-view-details";
 import SalesmanLogin from "./component/Salesman/SalesmanLogin";
@@ -62,10 +59,9 @@ import Partneroneshop from "./component/User/partner-oneshop";
 import PetshopOrderviewdetails from "./component/petShop/petShop-order-view-details";
 import Petshopaboutus from "./component/petShop/petShop-about-us";
 import Petshopdeliverydetails from "./component/petShop/petShop-Delivery-details";
-import Petshopfindastore from "./component/petShop/petshop-Find-a-store";
+import Petshopfindastore from "./component/petShop/petshop-disclaimer";
 import Petshophelpandfaqs from "./component/petShop/petShop-Help&Faqs";
-import Petshopinternationalshipping from "./component/petShop/petShop-International-shipping";
-import Petshoppaymentoptionfooter from "./component/petShop/petShop-payment-footer";
+import Petshoppaymentoptionfooter from "./component/petShop/petshop-privacy-policy";
 import Petshopreturnpolicy from "./component/petShop/petShop-return-policy";
 import Petshoptrackyourorder from "./component/petShop/petShop-tractYourOrder";
 import PetshopAddCart from "./component/petShop/petShop-add-cart";
@@ -103,6 +99,14 @@ import PetShopSubcategoriesProduct from "./component/petShop/petShop-Subcategori
 import Transitionhistory from "./component/User/transition-history";
 import SubcategoriesHeading from "./component/User/sub-categoriesHeading";
 import { PaginationProvider } from "./Context/PaginationContext";
+import Termsofuse from "./component/User/terms-of-use";
+import Privacypolicy from "./component/User/privacy-policy";
+import Disclaimer from "./component/User/disclaimer";
+import Testimonials from "./component/User/testimonials";
+import Petshoptermofuse from "./component/petShop/petShop-termsofuse";
+import PetshopPrivacypolicy from "./component/petShop/petshop-privacy-policy";
+import PetshopDisclaimer from "./component/petShop/petshop-disclaimer";
+import Petshoptestimonials from "./component/petShop/petshop-testimonials";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -156,7 +160,7 @@ function App() {
           <Route path="/product-by-partner" element={<Productbypartner />} />
 
           <Route
-            path="/product-partner-shop/:id"
+            path="/product-partner-shop/:vendor_id"
             element={<Productpartnershop />}
           />
           <Route path="/product-partner-Oneshop" element={<Partneroneshop />} />
@@ -175,17 +179,13 @@ function App() {
           {/* useful links footer */}
           <Route path="/delivery-details" element={<Deliverydetails />} />
           <Route path="/return-policy" element={<Returnpolicy />} />
-
-          <Route
-            path="/international-shipping"
-            element={<Internationalshipping />}
-          />
-          <Route path="/payment-options" element={<paymentOptions />} />
+          <Route path="/terms-of-use" element={<Termsofuse />} />
+          <Route path="/privacy-policy" element={<Privacypolicy />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/track-your-order/:id" element={<Trackyourorder />} />
           <Route path="/track-your-order" element={<Trackyourorder />} />
-          <Route path="/find-a-store" element={<Findastore />} />
+          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/offers-details" element={<Offersdetails />} />
-          <Route path="/payment-option" element={<Paymentoption />} />
 
           <Route path="/help-faqs" element={<Helpandfaqs />} />
           <Route path="/my-orders" element={<Myorder />} />
@@ -282,12 +282,12 @@ function App() {
             element={<Petshopdeliverydetails />}
           />
           <Route
-            path="/petshopinternationalshipping"
-            element={<Petshopinternationalshipping />}
+            path="/petshop-term-of-use"
+            element={<Petshoptermofuse />}
           />
           <Route
-            path="/petshoppaymentoptionfooter"
-            element={<Petshoppaymentoptionfooter />}
+            path="/petshop-privacy-policy"
+            element={<PetshopPrivacypolicy />}
           />
           <Route
             path="/petshoptrackyourorde/:id"
@@ -301,9 +301,10 @@ function App() {
             path="/petshopreturnpolicy"
             element={<Petshopreturnpolicy />}
           />
-          <Route path="/petshopfindastore" element={<Petshopfindastore />} />
+          <Route path="/petshop-disclaimer" element={<PetshopDisclaimer />} />
           <Route path="/petshopaboutus" element={<Petshopaboutus />} />
           <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
+          <Route path="/petshop-testimonials" element={<Petshoptestimonials />} />
           <Route
             path="/petshop-canine-product"
             element={<PetShopcanineproduct />}

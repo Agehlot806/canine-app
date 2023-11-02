@@ -1,13 +1,13 @@
 import React from "react";
-import Newheader from "../../directives/newheader";
-import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
+import PetShopHeader from "../../directives/petShopHeader";
+import Petshopfooter from "../../directives/petShop-Footer";
 
-const Internationalshipping = () => {
+const Petshoptermofuse = () => {
   return (
     <>
       {" "}
-      <Newheader />
+      <PetShopHeader />
       <section className="section-padding">
         <div className="Emptycart">
           <div class="d-flex justify-content-around">
@@ -18,9 +18,9 @@ const Internationalshipping = () => {
           </div>
         </div>
       </section>
-      <Footer />
+      <Petshopfooter />
     </>
   );
 };
 
-export default Internationalshipping;
+export default Petshoptermofuse;

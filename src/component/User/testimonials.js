@@ -4,7 +4,7 @@ import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
 
-const Return = () => {
+const Testimonials = () => {
   return (
     <>
       {" "}
@@ -24,4 +24,4 @@ const Return = () => {
   );
 };
 
-export default Return;
+export default Testimonials;

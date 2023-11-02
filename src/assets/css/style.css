@@ -20,8 +20,8 @@ a {
 }
 
 .section-padding {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .main-head {
@@ -116,7 +116,7 @@ a {
 }
 
 .logoBG img {
-  width: 75px;
+  width: 64px;
 }
 
 .longdrop {
@@ -616,10 +616,10 @@ a {
 
 .footer-list h5 {
   font-family: "Poppins";
-  font-weight: 500;
-  font-size: 24px;
-  color: #fff;
-  margin: 0 0 26px;
+  font-weight: 600;
+  font-size: 20px;
+    color: #fff;
+    margin: 0 0 15px;
 }
 
 .footer-list ul {
@@ -628,18 +628,19 @@ a {
 
 .footer-list ul li {
   list-style-type: none;
-  margin: 12px 0;
+  margin: 7px 0;
 }
 
 .footer-list ul li a {
   font-weight: 400;
-  font-size: 17px;
+  font-size: 15px;
   color: #fff;
   font-family: "Poppins";
 }
 
 .footer-list ul li a img {
   margin: 0;
+  width: 115px;
 }
 
 .footer-list ul li span {
@@ -2852,7 +2853,7 @@ a.placDate {
 
 .allblogbtn {
   text-align: center;
-  margin: 50px 0 0;
+  margin: 30px 0 0;
 }
 
 .allblogbtn button {
@@ -4190,4 +4191,18 @@ ul.nav-links.wrappertwo {
   font-size: 22px;
   font-weight: 700;
   color: #000;
+}
+
+li.cardpay a {
+  background: #fff;
+  border: 1px solid gray;
+  padding: 0px 14px;
+  margin: 4px 2px;
+  border-radius: 3px;
+}
+li.cardpay a img {
+  width: 25px !important;
+}
+.home-section video {
+  width: 100%;
 }

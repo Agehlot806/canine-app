@@ -4,7 +4,7 @@ import Footer from "../../directives/footer";
 import cart from "../../assets/images/icon/cart.png";
 import { Col, Container, Row } from "react-bootstrap";
 
-const PaymentOptions = () => {
+const Disclaimer = () => {
   return (
     <>
       {" "}
@@ -24,4 +24,4 @@ const PaymentOptions = () => {
   );
 };
 
-export default PaymentOptions;
+export default Disclaimer;

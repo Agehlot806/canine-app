@@ -58,7 +58,7 @@ const Offersdetails = () => {
       <section className="section-padding">
         <Container>
           {/* <Row> */}
-            {/* {couponlist && couponlist.length > 0 ? (
+          {/* {couponlist && couponlist.length > 0 ? (
               couponlist.map((item, index) => (
                 <Col lg={3}>
                   <div
@@ -115,58 +115,58 @@ const Offersdetails = () => {
             ) : (
               <p className="emptyMSG">No Coupon List.</p>
             )} */}
-            <div className="text-center mb-4">
-              <h1>Top Offers</h1>
-              <h6>You Can't Miss!</h6>
-            </div>
-            <Row>
+          <div className="text-center mb-4">
+            <h1>Top Offers</h1>
+            <h6>You Can't Miss!</h6>
+          </div>
+          <Row>
 
-              {couponlist && couponlist.length > 0 ? (
-                couponlist.map((item, index) => (
-                  <Col lg={3} sm={4} className="mb-4">
-                    <div className="flip-card" >
-                      <div className="flip-card-inner">
-                        <div className="flip-card-front" style={{
-                      background:
-                        gradientColors[index % gradientColors.length],
-                    }}>
-                          <h1 >{item.title}</h1>
-                          <h3><b>Flat</b> <br />{item.discount} % OFF</h3>
-                        </div>
-                        <div className="flip-card-back" style={{
-                      background:
-                        gradientColors[index % gradientColors.length],
-                    }}>
-                      <table>
-                        <tbody>
-                        <tr>
-                            <th>Min Purchase : </th>
-                            <td>{item.min_purchase}</td>
-                          </tr>
-                          <tr>
-                            <th>Max Discount : </th>
-                            <td>{item.max_discount}</td>
-                          </tr>
-                          <tr>
-                            <th>Start Date  : </th>
-                            <td>{item.start_date}</td>
-                          </tr>
-                          <tr>
-                             <th>Expire Date : </th>
-                            <td>{item.expire_date}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                       
-                        </div>
+            {couponlist && couponlist.length > 0 ? (
+              couponlist.map((item, index) => (
+                <Col lg={3} sm={4} className="mb-4">
+                  <div className="flip-card" >
+                    <div className="flip-card-inner">
+                      <div className="flip-card-front" style={{
+                        background:
+                          gradientColors[index % gradientColors.length],
+                      }}>
+                        <h1 >{item.title}</h1>
+                        <h3><b>Flat</b> <br />{item.discount} % OFF</h3>
+                      </div>
+                      <div className="flip-card-back" style={{
+                        background:
+                          gradientColors[index % gradientColors.length],
+                      }}>
+                        <table>
+                          <tbody>
+                            <tr>
+                              <th>Min Purchase : </th>
+                              <td>{item.min_purchase}</td>
+                            </tr>
+                            <tr>
+                              <th>Max Discount : </th>
+                              <td>{item.max_discount}</td>
+                            </tr>
+                            <tr>
+                              <th>Start Date  : </th>
+                              <td>{item.start_date}</td>
+                            </tr>
+                            <tr>
+                              <th>Expire Date : </th>
+                              <td>{item.expire_date}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
                       </div>
                     </div>
-                  </Col>
-                ))
-              ) : (
-                <p className="emptyMSG">No Offer Deatils.</p>
-              )}
-            </Row>
+                  </div>
+                </Col>
+              ))
+            ) : (
+              <p className="emptyMSG">No Offer Deatils.</p>
+            )}
+          </Row>
         </Container>
       </section>
       </>)}
