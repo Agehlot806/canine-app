@@ -1690,6 +1690,10 @@ function Newheader(props) {
     try {
       const response = await fetch(`${BASE_URL}/categories`);
       const jsonData = await response.json();
+      const ids = jsonData.data.map(categories => categories.id);
+
+      // Now you have an array of IDs
+      console.log(ids);
       setcategories(jsonData.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -2027,7 +2031,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                          profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2042,7 +2046,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            profileData.image
+                          profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2091,7 +2095,7 @@ function Newheader(props) {
                     className="profiledes notification-btn notimob"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    // onClick={handleBellClick}
+                  // onClick={handleBellClick}
                   >
                     <i class="fa fa-bell-o" />
                     {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
@@ -2120,37 +2124,32 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={3} sm={12} className="mga-he">
-                            
+
                             <header><Link to={`/sub-categoriesHeading/${'Food'}`}>Dog Food</Link></header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Food" && (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Food" && item.category === "1") {
+                                    return (
                                       <li key={item.id}>
-                                        <Link
-                                          to={`/sub-categoriesProduct/${item.name}`}
-                                        >
-                                          {item.name}
-                                        </Link>
+                                        <Link to={`/sub-categoriesProduct/${item.name}`}>{item.name}</Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
-                                <p className="emptyMSG">
-                                  No Dog Food Sub Categories.
-                                </p>
+                                <p className="emptyMSG">No Dog Food Sub Categories.</p>
                               )}
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">Beds Cages & Carriers</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading ==
-                                      "Beds Cages, Scratcher & Crates" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Beds Cages, Scratcher & Crates" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2158,11 +2157,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Health Care Sub Categories.
+                                  No Beds Cages, Scratcher & Crates Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2170,10 +2171,10 @@ function Newheader(props) {
                           <Col lg={3} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Collar Leashes & More">Collar Leashes & More</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Collar Leashes & More" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Collar Leashes & More" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2181,11 +2182,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Health Care Sub Categories.
+                                  No Collar Leashes & More Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2193,10 +2196,10 @@ function Newheader(props) {
                           <Col lg={3} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Shampoo & Perfumes">Shampoo & Perfumes</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Shampoo & Perfumes" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Shampoo & Perfumes" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2204,11 +2207,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Health Care Sub Categories.
+                                  No Shampoo & Perfumes Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2220,10 +2225,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Treats">Treats & Chews</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Treats" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Treats" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2231,8 +2236,10 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
                                   No Treats Sub Categories.
@@ -2243,10 +2250,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Toys">Toys</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Toys" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Toys" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2254,11 +2261,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Supplies Sub Categories.
+                                  No Toys Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2266,11 +2275,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Training & Accessories">Training & Accessories</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading ==
-                                      "Training & Accessories" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Training & Accessories" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2278,11 +2286,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Accessories Sub Categories.
+                                  No Training & Accessories Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2290,10 +2300,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Bowls & Feeders">Bowls & Feeders</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Bowls & Feeders" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Bowls & Feeders" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2301,11 +2311,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Health Care Sub Categories.
+                                  No Bowls & Feeders Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2313,10 +2325,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Grooming">Grooming</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Grooming" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Grooming" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2324,11 +2336,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Health Care Sub Categories.
+                                  No Grooming Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2336,10 +2350,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Health Care">Health Care</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Health Care" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Health Care" && item.category === "1") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2347,8 +2361,10 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
                                   No Health Care Sub Categories.
@@ -2380,10 +2396,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Food">Cat Food</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Food" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Food" && item.category === "2") {
+                                    return (
                                       <li key={item.id}>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2391,11 +2407,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Dog Food Sub Categories.
+                                  No Cat Food Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2403,10 +2421,10 @@ function Newheader(props) {
                           <Col lg={3} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Collar Leashes & More">Collar Leashes & More</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Collar Leashes & More" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Collar Leashes & More" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2414,11 +2432,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Supplies Sub Categories.
+                                  No Collar Leashes & More Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2426,11 +2446,10 @@ function Newheader(props) {
                           <Col lg={3} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">Beds Cages, Scratcher & Crates</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading ==
-                                      "Beds Cages, Scratcher & Crates" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Beds Cages, Scratcher & Crates" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2438,11 +2457,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Supplies Sub Categories.
+                                  No Beds Cages, Scratcher & Crates Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2450,10 +2471,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Cat Litter & Scooper">Cat Litter & Scooper</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Cat Litter & Scooper" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Cat Litter & Scooper" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2461,11 +2482,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Accessories Sub Categories.
+                                  No Cat Litter & Scooper Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2473,10 +2496,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Toys">Toys</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Toys" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Toys" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2484,11 +2507,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Supplies Sub Categories.
+                                  No Toys Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2500,10 +2525,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Treats">Treats</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Treats" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Treats" && item.category === "2") {
+                                    return (
                                       <li key={item.id}>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2511,11 +2536,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Dog Food Sub Categories.
+                                  No Treats Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2523,10 +2550,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Shampoo & Perfumes">Shampoo & Perfumes</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Shampoo & Perfumes" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Shampoo & Perfumes" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2534,11 +2561,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Supplies Sub Categories.
+                                  No Shampoo & Perfumes Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2546,11 +2575,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Clothing & Accessories">Clothing & Accessories</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading ==
-                                      "Clothing & Accessories" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Clothing & Accessories" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2558,11 +2586,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Accessories Sub Categories.
+                                  No Clothing & Accessories Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2570,10 +2600,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Bowls & Feeders">Bowls & Feeders</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Bowls & Feeders" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Bowls & Feeders" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2581,11 +2611,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Accessories Sub Categories.
+                                  No Bowls & Feeders Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2593,10 +2625,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Grooming">Grooming</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Grooming" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Grooming" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2604,11 +2636,13 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                   );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Accessories Sub Categories.
+                                  No Grooming Sub Categories.
                                 </p>
                               )}
                             </ul>
@@ -2616,10 +2650,10 @@ function Newheader(props) {
                           <Col lg={2} sm={12} className="mga-he">
                             <header><Link to="/sub-categoriesHeading/Health Care">Health Care</Link></header>
                             <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map(
-                                  (item) =>
-                                    item.heading == "Health Care" && (
+                            {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (item.heading === "Health Care" && item.category === "2") {
+                                    return (
                                       <li>
                                         <Link
                                           to={`/sub-categoriesProduct/${item.name}`}
@@ -2627,8 +2661,10 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                    )
-                                )
+                                    );
+                                  }
+                                  return null;
+                                })
                               ) : (
                                 <p className="emptyMSG">
                                   No Health Care Sub Categories.
@@ -2717,7 +2753,7 @@ function Newheader(props) {
                       className="profiledes notification-btn"
                       data-toggle="modal"
                       data-target="#exampleModal"
-                      // onClick={handleBellClick}
+                    // onClick={handleBellClick}
                     >
                       <i class="fa fa-bell-o" />
                       {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
@@ -2945,9 +2981,8 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${
-                              ob.status === "unread" ? "unread" : "read"
-                            }`}
+                            className={`notification ${ob.status === "unread" ? "unread" : "read"
+                              }`}
                             key={index}
                           >
                             <Row>
