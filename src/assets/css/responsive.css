@@ -116,23 +116,23 @@
   }
   .row .mega-links li a {
     position: relative;
-}
-.row .mega-links li a:before {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 30px;
-  height: 2px;
-  content: "";
-  background-color: #000;
-}
+  }
+  .row .mega-links li a:before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    height: 1px;
+    content: "";
+    background-color: #000;
+  }
   .paw-right img {
     padding: 38px 0;
   }
-  
+
   li.webhide {
     display: block !important;
-}
+  }
   .hide-icons {
     position: relative;
     top: 0%;
@@ -297,45 +297,45 @@
   .drop-menu li a {
     font-size: 14px;
     padding: 0;
-}
+  }
   .drop-menu li {
     line-height: 32px;
-}
+  }
   .search-results {
     left: 0;
     width: 220px;
-}
+  }
   .pagination-area ul li button {
     font-size: 15px;
     margin: 0;
     padding: 0 6px;
-}
+  }
   .row .mega-links li a {
     font-size: 13px !important;
-}
+  }
   .pagination li {
     margin: 0 3px;
   }
   .web-icon {
     display: inline-flex;
-}
-a.profiledes {
-  padding: 10px 0 !important;
-}
-a.profiledes.notification-btn.notimob {
-  margin: 0 0 0 -70px;
-}
-.row .mega-links li a {
-  font-size: 15px;
-}
+  }
+  a.profiledes {
+    padding: 10px 0 !important;
+  }
+  a.profiledes.notification-btn.notimob {
+    margin: 0 0 0 -70px;
+  }
+  .row .mega-links li a {
+    font-size: 15px;
+  }
   li.activebtn a {
     padding: 0 10px;
     font-size: 18px;
     border-radius: 6px;
-}
-.all-bg img {
-  height: 100%;
-}
+  }
+  .all-bg img {
+    height: 100%;
+  }
   .partner-img img {
     width: 100%;
     height: 100%;
@@ -343,25 +343,25 @@ a.profiledes.notification-btn.notimob {
   .totelPAYCAR button {
     /* height: 55px; */
     margin: 3px;
-}
+  }
   .dash-addProduct-btn button {
     border-radius: 5px;
     font-size: 16px;
     /* height: 50px; */
     padding: 8px;
-}
-.dash-head h1 {
-  font-size: 30px;
-}
-.dash-logo img {
-  margin: 0 0 10px;
-}
-.order-card button {
-  border-radius: 4px;
-  /* height: 60px; */
-  font-size: 16px;
-  padding: 10px;
-}
+  }
+  .dash-head h1 {
+    font-size: 30px;
+  }
+  .dash-logo img {
+    margin: 0 0 10px;
+  }
+  .order-card button {
+    border-radius: 4px;
+    /* height: 60px; */
+    font-size: 16px;
+    padding: 10px;
+  }
   .partner-area h3 {
     font-size: 20px;
   }
@@ -375,20 +375,20 @@ a.profiledes.notification-btn.notimob {
   a.notification-btn i {
     font-size: 18px;
     margin: 12px 0 0 30px;
-}
+  }
   .logo {
     margin: -12px 0;
-}
+  }
   /* input.homesea {
     width: 258px;
 } */
-.hide-icons {
-  /* position: absolute; */
-  /* top: 0; */
-  /* left: 30px; */
-  /* right: 0; */
-  /* justify-content: center; */
-}
+  .hide-icons {
+    /* position: absolute; */
+    /* top: 0; */
+    /* left: 30px; */
+    /* right: 0; */
+    /* justify-content: center; */
+  }
   nav .wrapper {
     line-height: 0;
   }
@@ -413,7 +413,7 @@ a.profiledes.notification-btn.notimob {
     padding: 2px;
     font-size: 9px;
     border-radius: 2px;
-}
+  }
   .section-padding {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -639,10 +639,10 @@ a.profiledes.notification-btn.notimob {
 @media only screen and (max-width: 414px) {
   .logoBG img {
     width: 50px;
-}
-input.homesea {
-  font-size: 10px;
-}
+  }
+  input.homesea {
+    font-size: 10px;
+  }
 
   p {
     font-size: 20px;
@@ -651,30 +651,30 @@ input.homesea {
     position: relative;
     top: -50px;
     right: 12px;
-}
-a.notification-btn i {
-  font-size: 17px;
-  margin: 0px 10px;
-}
-input.homesea {
-  font-size: 10px;
-}
-a.profiledes.searneee {
-  padding: 0 !important;
-}
-a.profiledes.searneee i {
-  padding: 4.5px !important;
-  margin: 0 4px 0 0 !important;
-  font-size: 15px;
-}
-.wrapper .btn {
-  font-size: 15px !important ;
-  padding: 4px 8px !important;
-}
-.hide-icons {
-  position: absolute;
-  left: 68px;
-}
+  }
+  a.notification-btn i {
+    font-size: 17px;
+    margin: 0px 10px;
+  }
+  input.homesea {
+    font-size: 10px;
+  }
+  a.profiledes.searneee {
+    padding: 0 !important;
+  }
+  a.profiledes.searneee i {
+    padding: 4.5px !important;
+    margin: 0 4px 0 0 !important;
+    font-size: 15px;
+  }
+  .wrapper .btn {
+    font-size: 15px !important ;
+    padding: 4px 8px !important;
+  }
+  .hide-icons {
+    position: absolute;
+    left: 68px;
+  }
   .header-inner-addon input {
     width: 386px;
   }

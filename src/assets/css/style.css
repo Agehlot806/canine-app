@@ -26,10 +26,10 @@ a {
 
 .main-head {
   font-weight: 600;
-    font-size: 22px;
-    /* line-height: 68px; */
-    text-transform: capitalize;
-    color: #000;
+  font-size: 22px;
+  /* line-height: 68px; */
+  text-transform: capitalize;
+  color: #000;
 }
 .sort-by h4 {
   font-size: 20px;
@@ -377,7 +377,6 @@ a {
   font-weight: 600;
   letter-spacing: 0.05em;
   color: #000;
-  
 }
 
 .food-product p {
@@ -405,7 +404,7 @@ a {
   -webkit-transition: 2s ease;
 }
 .food-product h4 {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-size: 25px;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -618,8 +617,8 @@ a {
   font-family: "Poppins";
   font-weight: 600;
   font-size: 20px;
-    color: #fff;
-    margin: 0 0 15px;
+  color: #fff;
+  margin: 0 0 15px;
 }
 
 .footer-list ul {
@@ -1582,6 +1581,7 @@ a {
   padding: 20px;
   height: 100%;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .blog-card img {
@@ -1772,13 +1772,15 @@ a {
 }
 
 .video-content button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #f1c21b;
-    color: #fff;
-    border: none;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 16px;
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
+      var(--_p, 100%) / 300% no-repeat,
+    #f1c21b;
+  color: #fff;
+  border: none;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 16px;
 }
 .video-content h1 {
   color: #fff;
@@ -1790,6 +1792,7 @@ a {
   height: 100%;
   border-radius: 8px;
   text-align: center;
+  cursor: pointer;
 }
 
 .ProductPartner-card a {
@@ -3672,7 +3675,6 @@ button.Apply-price {
   padding: 4px 6px;
   font-weight: 600;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-
 }
 
 .eyeicon {

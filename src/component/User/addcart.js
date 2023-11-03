@@ -132,8 +132,12 @@ function Addcart() {
       originalPrice = allPrice;
     });
   } else {
+    // addToCartProduct.forEach((el) => {
+    //   let allPrice = parseInt(el.price) + parseInt(originalPrice);
+    //   originalPrice = allPrice;
+    // });
     addToCartProduct.forEach((el) => {
-      let allPrice = parseInt(el.price) + parseInt(originalPrice);
+      let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   }
@@ -465,7 +469,7 @@ function Addcart() {
       variation: item.variant,
       price: item.price,
       quantity: item.quantity,
-      tax_amount: taxamound,
+      tax_amount: item.price * 0.05,
       discount_on_item: disscountvalue?.discount || "",
     }));
     const requestData = {
@@ -655,7 +659,11 @@ function Addcart() {
                             className="align-self-center addCARThead"
                           >
                             <h2>{item.name}</h2>
-                            <p>Selected Variant : {item.variant}</p>
+                            {
+                              item.variant ? (
+                                <p>{`Selected Variant: ${item.variant}`}</p>
+                              ) : null // or you can omit this part if you want nothing to be displayed
+                            }
                           </Col>
                         )}
                         <Col
@@ -664,7 +672,7 @@ function Addcart() {
                           xs={6}
                           className="align-self-center addCARThead"
                         >
-                          <h3>₹{item.price}</h3>
+                          <h3>₹{parseInt(item.price * item.quantity)}</h3>
 
                           <div className="quantity-btn">
                             {/* <button onClick={() => handleDecrementone(index)}>
@@ -797,7 +805,11 @@ function Addcart() {
                   </Col>
                   <Col lg={6} sm={5} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
-                    <p>Selected Variant : {item.variant}</p>
+                    {
+                      item.variant ? (
+                        <p>{`Selected Variant: ${item.variant}`}</p>
+                      ) : null // or you can omit this part if you want nothing to be displayed
+                    }
                   </Col>
                   <Col
                     lg={2}
@@ -805,7 +817,7 @@ function Addcart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{item.price}</h3>
+                    <h3>₹{parseInt(item.price * item.quantity)}</h3>
 
                     <div className="quantity-btn">
                       <button onClick={() => handleDecrementone(index)}>
