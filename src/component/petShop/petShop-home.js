@@ -16,9 +16,9 @@ import app1 from "../../assets/images/img/app1.png";
 import app2 from "../../assets/images/img/app2.png";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
-// import { loadRazorpay } from "../../utils";
 import Fade, { Flip } from "react-reveal";
 import logo from "../../assets/images/logo.png";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const homeslider = {
   desktop: {
@@ -71,10 +71,27 @@ function PetshopHome(props) {
   };
 
   useEffect(() => {
-    fetchBrands();
-    homeAllBanner();
-    allAddressList();
-    allReview();
+    
+  }, []);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([fetchBrands(),
+      homeAllBanner(),
+      allAddressList(),
+      allReview(),
+      categoriesProduct(),
+      allProduct(),
+      thirdBanner(),
+      fetchBlogs(),
+      AllVendorHomePage(),
+      fetchWishlistData()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   // const discontedMrp = allproduct.map(el => el.price * el.discount)
   // ((price * discount) / 100)
@@ -114,15 +131,6 @@ function PetshopHome(props) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    categoriesProduct();
-    allProduct();
-    thirdBanner();
-    fetchBlogs();
-    AllVendorHomePage();
-    fetchWishlistData();
-  }, []);
 
   const categoriesProduct = async () => {
     try {
@@ -1078,7 +1086,14 @@ function PetshopHome(props) {
     <>
       <Toaster />
       <PetShopHeader />
-      <div className="">
+      {loading ? ( 
+          <div className="text-center text-black mb-4">
+          <img src={loadinggif} alt="" />
+          <h5>Please Wait.......</h5>
+        </div>
+      ) : (
+        <>
+         <div className="">
         <div className="home-section">
           <Container fluid className="p-0">
             <Carousel
@@ -1723,7 +1738,8 @@ function PetshopHome(props) {
           </div>
         </Container>
       </section>
-
+        </>
+      )}
       <Petshopfooter />
 
       {/* Product details Modal */}

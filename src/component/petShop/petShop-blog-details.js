@@ -11,16 +11,28 @@ import toast, { Toaster } from "react-hot-toast";
 import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopBlogdetails() {
   const { id } = useParams();
   console.log("id", id);
 
   useEffect(() => {
-    allblogs();
-    allProduct();
-    fetchWishlistData();
-    allAddressList();
+    ;
+  }, []);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([allblogs(),
+      allProduct(),
+      fetchWishlistData(),
+      allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const [blogdata, setBlogdata] = useState([]);
   console.log("blogdata: ", blogdata);
@@ -34,7 +46,7 @@ function PetshopBlogdetails() {
     try {
       const response = await fetch(`${BASE_URL}/items/latest`);
       const data = await response.json();
-      const latestPosts = data.data.slice(0, 8);
+      const latestPosts = data.data?.slice(0, 8);
       setallproduct(latestPosts);
     } catch (error) {
       console.log(error);
@@ -57,7 +69,7 @@ function PetshopBlogdetails() {
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [isFavCheck, setisFavCheck] = useState(false);
   useEffect(() => {
-    if (allproduct.length > 0) {
+    if (allproduct?.length > 0) {
       handleWishlist();
     }
 
@@ -129,8 +141,8 @@ function PetshopBlogdetails() {
       });
     });
 
-    if (filterData.length > 0) {
-      for (let index = 0; index < filterData.length; index++) {
+    if (filterData?.length > 0) {
+      for (let index = 0; index < filterData?.length; index++) {
         const element = filterData[index];
         console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
@@ -799,7 +811,7 @@ function PetshopBlogdetails() {
         `${BASE_URL}/customer/order/list?id=${storedWholesellerId}`
       );
       const data = await response.json();
-      const latestPosts = data.data.slice(0, 3);
+      const latestPosts = data.data?.slice(0, 3);
       setreviewlist(latestPosts);
     } catch (error) {
       console.log(error);
@@ -839,11 +851,11 @@ function PetshopBlogdetails() {
   const renderProductDescription = (description) => {
     const maxCharacters = 35; // Number of characters to show initially
 
-    if (description.length <= maxCharacters) {
+    if (description?.length <= maxCharacters) {
       return <p>{description}</p>; // Show the full description if it's short
     }
 
-    const truncatedDescription = description.slice(0, maxCharacters);
+    const truncatedDescription = description?.slice(0, maxCharacters);
 
     return (
       <>
@@ -856,7 +868,14 @@ function PetshopBlogdetails() {
     <>
       <Toaster />
       <PetShopHeader />
-      <section className="section-padding">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <section className="section-padding">
         <Container>
           <Row className="justify-content-center">
             <Col lg={10}>
@@ -1009,7 +1028,8 @@ function PetshopBlogdetails() {
           </div>
         </Container>
       </section>
-
+        </>
+      )}
       <Petshopfooter />
       {/* Modal */}
 

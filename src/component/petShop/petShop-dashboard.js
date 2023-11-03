@@ -16,6 +16,7 @@ import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import toast, { Toaster } from "react-hot-toast";
 import Fade, { Flip } from "react-reveal";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function Petshopdashboard() {
   const navigate = useNavigate();
@@ -27,9 +28,19 @@ function Petshopdashboard() {
   const [email, setEmail] = useState("");
   // const [responseMessagePA, setResponseMessagePA] = useState("");
   // const [responseMessage, setResponseMessage] = useState("");
+ 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    totalOrders();
-    AllBanner();
+    Promise.all([totalOrders(),
+      AllBanner(),
+      WholesellerData()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const handleNewsletter = (event) => {
     event.preventDefault();
@@ -207,8 +218,7 @@ function Petshopdashboard() {
   ];
 
   const [data, setData] = useState([]);
-
-  useEffect(() => {
+  const WholesellerData =()=>{
     fetch(`${BASE_URL}/auth/wholesaler_orders/${storedWholesellerId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -218,13 +228,21 @@ function Petshopdashboard() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }
+
 
   return (
     <>
       <Toaster />
       <PetShopHeader />
-      <div className="home-section">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+         <div className="home-section">
         {homebanner
           ? homebanner.map(
               (item, index) =>
@@ -848,6 +866,9 @@ function Petshopdashboard() {
           </div>
         </Container>
       </section>
+        </>
+      )}
+     
       <Petshopfooter />
       {/* Pay Modal */}
       <div

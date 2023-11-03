@@ -5,6 +5,7 @@ import about from "../../assets/images/banner/about.png";
 import { Link } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopBlog() {
   const [blog, setblog] = useState([]);
@@ -20,9 +21,19 @@ function PetshopBlog() {
       console.error("Error fetching blogs:", error);
     }
   };
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchBlogs();
+    Promise.all([fetchBlogs()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
+
 
   const renderBlogDescription = (description) => {
     const maxCharacters = 350; // Number of characters to show initially
@@ -43,7 +54,14 @@ function PetshopBlog() {
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={about} />
         </div>
@@ -92,6 +110,8 @@ function PetshopBlog() {
           
         </Container>
       </section>
+        </>
+      )}
       <Petshopfooter />
     </>
   );

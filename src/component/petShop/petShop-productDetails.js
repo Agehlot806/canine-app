@@ -18,6 +18,7 @@ import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopproductDetails() {
   const { id } = useParams();
@@ -98,14 +99,22 @@ function PetshopproductDetails() {
     }
   }, [productDetails]);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    productData();
-    itemWiseBanner();
-    fetchrelatedproduct();
-    fetchBreed();
-    AllBanner();
-    AllOrderList();
-    allAddressList();
+    Promise.all([productData(),
+      itemWiseBanner(),
+      fetchrelatedproduct(),
+      fetchBreed(),
+      AllBanner(),
+      AllOrderList(),
+      allAddressList(),])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const productData = async () => {
@@ -858,7 +867,14 @@ function PetshopproductDetails() {
   return (
     <>
       <PetShopHeader />
-      <div className="home-section">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <div className="home-section">
         {homebanner
           ? homebanner.map(
               (item, index) =>
@@ -1290,6 +1306,9 @@ function PetshopproductDetails() {
           </div>
         </Container>
       </section>
+        </>
+      )}
+      
       <Petshopfooter />
       {/* Modal */}
 

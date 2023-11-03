@@ -6,6 +6,7 @@ import axios from "axios";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 
 const Petshopdeliverydetails = () => {
@@ -16,8 +17,17 @@ console.log("=======>>>>>> id", customer_id);
 let storedUserId = JSON.parse(customer_id);
 console.log("customer_id: ", customer_id);
 // ----------------------------------------
+
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allAddressList();
+    Promise.all([allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const allAddressList = async () => {
@@ -37,7 +47,14 @@ console.log("customer_id: ", customer_id);
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
         </div>
@@ -88,6 +105,9 @@ console.log("customer_id: ", customer_id);
           </Row>
         </Container>
       </section>
+        </>
+      )}
+      
       <Petshopfooter />
     </>
   );

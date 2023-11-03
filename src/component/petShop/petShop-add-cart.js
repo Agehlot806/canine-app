@@ -15,6 +15,7 @@ import moment from "moment";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import logo from "../../assets/images/logo.png";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopAddCart() {
   const { id } = useParams();
@@ -252,11 +253,23 @@ function PetshopAddCart() {
   };
   useEffect(() => {
     // getUserInfo()
-    addToCartData();
-    couponlistdata();
-    GetdataAll();
-    allAddressList();
-    AllBanner();
+    ;
+    ;
+    
+  }, []);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([addToCartData(), couponlistdata(), GetdataAll(),
+      allAddressList(),
+      AllBanner(),
+      allOrders()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   // useEffect(() => {
@@ -631,9 +644,7 @@ function PetshopAddCart() {
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
-  useEffect(() => {
-    allOrders();
-  }, []);
+ 
 
   const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
@@ -716,7 +727,14 @@ function PetshopAddCart() {
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
-      <div className="home-section">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <div className="home-section">
         {homebanner
           ? homebanner.map(
               (item, index) =>
@@ -1061,6 +1079,9 @@ function PetshopAddCart() {
           )}
         </div>
       </section>
+        </>
+      )}
+      
 
       <Petshopfooter />
       {/* Modal add address */}
