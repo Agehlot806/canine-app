@@ -89,7 +89,7 @@ function Productdetail() {
   useEffect(() => {
     productData();
     itemWiseBanner();
-    fetchrelatedproduct();
+   
     fetchBreed();
     fetchLifestage();
     AllBanner();
@@ -101,6 +101,7 @@ function Productdetail() {
     // fetchProductData();
   }, []);
 
+  
   const productData = async () => {
     axios
       .get(`${BASE_URL}/items/product_details/${id}`)
@@ -108,12 +109,52 @@ function Productdetail() {
         console.log("=======> ", response);
         console.log("Delete Successful");
         setProductDetails(response.data.data);
+        const cate = response.data.data.category_id
+        const subcate = response.data.data.sub_category
+        fetchrelated(cate,subcate)
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  const [allrelatedproduct, setallrelatedproduct] = useState([]);
+
+  const fetchrelated = async (cate,subcate) => {
+    axios
+      .get(`https://canine.hirectjob.in/api/v1/categories/subcategories`)
+      .then((response) => {
+        console.log(response);
+        console.log("Delete Successful");
+        const allDaTa =response.data.data;
+        const update =allDaTa.find((item)=>item.name == subcate)
+        const updated =update.id;
+       
+        fetchrelatedproduct(cate,updated)
+        console.log("///???///???///11",cate);
+        console.log("///???///???///22",updated);
+
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fetchrelatedproduct = async ( cate,updated) => {
+    axios
+      .get(`${BASE_URL}/items/product/${cate}/${updated}`)
+      .then((response) => {
+        console.log(response);
+        console.log("///???///???///",response.data.data);
+        setallrelatedproduct(response.data.data);
+        // Perform any additional actions after successful deletion
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
   console.log("customer_id: ", customer_id);
@@ -305,21 +346,7 @@ function Productdetail() {
       console.log(error);
     }
   };
-  const [allrelatedproduct, setallrelatedproduct] = useState([]);
 
-  const fetchrelatedproduct = async () => {
-    axios
-      .get(`${BASE_URL}/items/product/2/8`)
-      .then((response) => {
-        console.log(response);
-        console.log("Delete Successful");
-        setallrelatedproduct(response.data.data);
-        // Perform any additional actions after successful deletion
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   const [tragetSpecies, setTragetSpecies] = useState([]);
   const fetchBreed = async () => {
     try {
