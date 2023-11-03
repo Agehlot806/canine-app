@@ -10,6 +10,7 @@ import axios from "axios";
 import Moment from "react-moment";
 import moment from "moment";
 import "moment-timezone";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const PetshopTransitionHistory = () => {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
@@ -17,21 +18,29 @@ const PetshopTransitionHistory = () => {
   const itemsPerPage = 10;
   const [transactionData, setTransactionData] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          `https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedWholesellerId}`
-        );
-        const data = response.data.data; // Assuming the API response is an array
+  const fetchData = async()=>{
+    try {
+      const response = await axios.get(
+        `https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedWholesellerId}`
+      );
+      const data = response.data.data; // Assuming the API response is an array
 
-        setTransactionData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      setTransactionData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-
-    fetchData();
+  }
+  
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([fetchData()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   // Calculate the index of the first and last item to display
@@ -59,8 +68,14 @@ const PetshopTransitionHistory = () => {
   return (
     <>
       <PetShopHeader />
-
-      {/* --------------section-------------------- */}
+        {loading ? (
+          <div className="text-center text-black mb-4">
+          <img src={loadinggif} alt="" />
+          <h5>Please Wait.......</h5>
+        </div>
+        ) : (
+          <>
+          {/* --------------section-------------------- */}
 
       <section className="section-padding">
         <Container>
@@ -134,6 +149,9 @@ const PetshopTransitionHistory = () => {
           )}
         </Container>
       </section>
+          </>
+        )}
+      
       {/* --------------footer-------------------- */}
       <Petshopfooter />
     </>

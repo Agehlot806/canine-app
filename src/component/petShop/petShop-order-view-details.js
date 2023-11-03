@@ -13,6 +13,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Toaster, toast } from "react-hot-toast";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
@@ -29,9 +30,17 @@ function PetshopOrderviewdetails() {
   console.log("param1 ", id, paymentStatus);
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    orderViewdetails();
-    allOrders();
+    Promise.all([orderViewdetails(),
+      allOrders()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   let subTotal = orderDetails.reduce(
     (total, order) => total + parseFloat(order.price * order.quantity),
@@ -265,7 +274,14 @@ function PetshopOrderviewdetails() {
   return (
     <>
       <PetShopHeader />
-      <section className="section-padding">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <section className="section-padding">
         <Container>
           <h1 className="main-head">Orders View</h1>
 
@@ -585,6 +601,8 @@ function PetshopOrderviewdetails() {
           </div>
         </Container>
       </section>
+        </>
+      )}
       <Petshopfooter />
       {/* Modal */}
       <div

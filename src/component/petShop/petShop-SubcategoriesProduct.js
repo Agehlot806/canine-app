@@ -18,6 +18,7 @@ import { styled } from "styled-components";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const clinetreview = {
     desktop: {
@@ -112,17 +113,28 @@ function PetShopSubcategoriesProduct(props) {
     };
 
     useEffect(() => {
-        categoriesProduct();
-        allProduct();
-        allBrandshow();
-        allLifesageshow();
-        allBreedshow();
-        allsubcategary();
-        allHealthconditionshow();
-        Allsubcategories();
-        fetchWishlistData();
-        allAddressList();
+        
     }, []);
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([categoriesProduct(),
+        allProduct(),
+        allBrandshow(),
+        allLifesageshow(),
+        allBreedshow(),
+        allsubcategary(),
+        allHealthconditionshow(),
+        Allsubcategories(),
+        fetchWishlistData(),
+        allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
     const categoriesProduct = async () => {
         try {
@@ -1281,7 +1293,14 @@ function PetShopSubcategoriesProduct(props) {
         <>
             <Toaster />
             <PetShopHeader />
-            <Container fluid className="p-0">
+            {loading ? (
+                <div className="text-center text-black mb-4">
+                <img src={loadinggif} alt="" />
+                <h5>Please Wait.......</h5>
+              </div>
+            ) : (
+                <>
+                <Container fluid className="p-0">
                 <div className="all-bg">
                     <img src={product} />
                 </div>
@@ -1738,7 +1757,8 @@ function PetShopSubcategoriesProduct(props) {
                     </Col>
                 </Row>
             </Container>
-
+                </>
+            )}
             <Petshopfooter />
 
             {/* Product details Modal */}

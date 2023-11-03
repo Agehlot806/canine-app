@@ -10,12 +10,22 @@ import cart from "../../assets/images/icon/cart.png";
 import logo from "../../assets/images/logo.png";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopMyorder() {
   const [allorder, setallorder] = useState([]);
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allOrders();
-    storePaymentStatus();
+    Promise.all([allOrders(),
+      storePaymentStatus()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   // storedWholesellerId
@@ -54,7 +64,14 @@ function PetshopMyorder() {
   return (
     <>
       <PetShopHeader />
-      <section className="section-padding">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <section className="section-padding">
         <Container>
           <h1 className="main-head">My Orders</h1>
           <div className="needplace">
@@ -169,6 +186,9 @@ function PetshopMyorder() {
           </div>
         </Container>
       </section>
+        </>
+      )}
+      
       <Petshopfooter />
     </>
   );

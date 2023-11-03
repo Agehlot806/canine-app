@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import loadinggif from "../../assets/images/video/loading.gif";
 function PetshopSignUp() {
   // const { addToast } = useToaster();
   const { state } = useLocation();
@@ -148,9 +149,18 @@ function PetshopSignUp() {
         console.log("error in zone list", error);
       });
   };
+ 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    GetdataAll();
-    getZoneList();
+    Promise.all([ GetdataAll(),
+      getZoneList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const GetdataAll = async (e) => {
     var headers = {
@@ -198,7 +208,14 @@ function PetshopSignUp() {
   return (
     <>
       <Toaster />
-      <div className="users-bg">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <div className="users-bg">
         <Container>
           <div className="text-center">
             <img src={logo} />
@@ -489,6 +506,8 @@ function PetshopSignUp() {
           </div>
         </Container>
       </div>
+        </>
+      )}
     </>
   );
 }

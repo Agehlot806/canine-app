@@ -20,6 +20,7 @@ import { styled } from "styled-components";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const clinetreview = {
   desktop: {
@@ -117,11 +118,29 @@ function PetshopOurourbrand(props) {
   const [subcategories, setsubcategories] = useState([]);
 
   useEffect(() => {
-    Allsubcategories();
-    allProduct();
-    fetchBrands();
-    GetdataAll();
-    allAddressList();
+    
+  }, []);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([Allsubcategories(),
+      allProduct(),
+      fetchBrands(),
+      GetdataAll(),
+      allAddressList(),
+      fetchWishlistData(),
+      allBrandshow(),
+      allLifesageshow(),
+      allBreedshow(),
+      allsubcategary(),
+      allHealthconditionshow(),
+      Allsubcategoriessecond(),])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const Allsubcategories = async () => {
@@ -137,15 +156,7 @@ function PetshopOurourbrand(props) {
       });
   };
 
-  useEffect(() => {
-    fetchWishlistData();
-    allBrandshow();
-    allLifesageshow();
-    allBreedshow();
-    allsubcategary();
-    allHealthconditionshow();
-    Allsubcategoriessecond();
-  }, []);
+ 
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
   console.log("storedWholesellerId: ", storedWholesellerId);
@@ -1353,7 +1364,14 @@ function PetshopOurourbrand(props) {
     <>
       <Toaster />
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={ourbrand} />
         </div>
@@ -1958,7 +1976,8 @@ function PetshopOurourbrand(props) {
           </Col>
         </Row >
       </Container >
-
+        </>
+      )}
       <Petshopfooter />
 
       {/* Product details Modal */}

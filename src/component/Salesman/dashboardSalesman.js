@@ -14,6 +14,7 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import moment from "moment";
 import PetShopHeader from "../../directives/petShopHeader";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function DashboadSalesman() {
   const navigate = useNavigate();
@@ -25,10 +26,22 @@ function DashboadSalesman() {
   const salesmanId = localStorage.getItem("salesmanId");
   const zoneId = localStorage.getItem("zoneId");
   useEffect(() => {
-    getWholesellerList();
-    getOrders();
-    AllBanner();
+    
   }, []);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([getWholesellerList(),
+      getOrders(),
+      AllBanner()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
+
 
   const handleAddProduct = async (id) => {
     await localStorage.setItem("wholeSellerId", id);
@@ -107,7 +120,14 @@ function DashboadSalesman() {
   return (
     <>
       <PetShopHeader type={"salesman"} />
-      <div className="home-section">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <div className="home-section">
         {homebanner
           ? homebanner.map(
               (item, index) =>
@@ -581,6 +601,8 @@ function DashboadSalesman() {
           </div>
         </Container>
       </section>
+        </>
+      )}
       <Footer />
     </>
   );

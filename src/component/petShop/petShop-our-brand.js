@@ -14,14 +14,23 @@ import bannerPro from "../../assets/images/img/bannerPro.png";
 import { Link } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopOurbrand() {
   const [thirdbanner, setthirdbanner] = useState([]);
   const [brands, setBrands] = useState([]);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    thirdBanner();
-    fetchBrands();
+    Promise.all([thirdBanner(),
+      fetchBrands()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const thirdBanner = () => {
@@ -54,7 +63,14 @@ function PetshopOurbrand() {
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+         <Container fluid className="p-0">
         <div className="all-bg">
           <img src={ourbrand} />
         </div>
@@ -150,6 +166,9 @@ function PetshopOurbrand() {
                     </div>
                 </Container>
             </section> */}
+        </>
+      )}
+     
 
       <Petshopfooter />
     </>

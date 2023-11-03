@@ -7,6 +7,8 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
+import loadinggif from "../../assets/images/video/loading.gif";
+
 export default function Petshoptrackyourorder() {
   const { id } = useParams();
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
@@ -19,9 +21,19 @@ export default function Petshoptrackyourorder() {
     }
   }, [id]);
 
+  
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    orderViewdetails();
+    Promise.all([orderViewdetails()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
+
 
   const handleInputChange = (e) => {
     setTrackingValue(e.target.value);
@@ -165,8 +177,14 @@ export default function Petshoptrackyourorder() {
   return (
     <>
       <PetShopHeader />
-
-      <section className="tracker-bg">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <section className="tracker-bg">
         <div className="section-padding tracker-area">
           <Container>
             <Row className="justify-content-center">
@@ -293,6 +311,8 @@ export default function Petshoptrackyourorder() {
             </Row>
           </Container>
         </section>
+      )}
+        </>
       )}
       <Petshopfooter />
 

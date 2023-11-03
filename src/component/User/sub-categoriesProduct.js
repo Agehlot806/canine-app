@@ -179,7 +179,7 @@ function SubcategoriesProduct() {
     // storedUserId
     const customer_id = localStorage.getItem("userInfo");
     console.log("=======>>>>>> id", customer_id);
-    let storedUserId = JSON.stringify(customer_id);
+    let storedUserId = JSON.parse(customer_id);
     console.log("customer_id: ", customer_id);
     // ----------------------------------------
 
@@ -188,8 +188,8 @@ function SubcategoriesProduct() {
     const [paymentId, setPaymentId] = useState("");
 
     useEffect(() => {
-        
-    }, []);
+        allProduct()
+    }, [name]);
     const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([allProduct(),
@@ -1842,7 +1842,13 @@ function SubcategoriesProduct() {
                                                                     <button
                                                                         data-toggle="modal"
                                                                         data-target=".buynow"
-                                                                        onClick={(e) => handeldataId(item.id)}
+                                                                        onClick={(e) => {
+                                                                            if (!storedUserId) {
+                                                                              shippingpage("/login");
+                                                                            } else {
+                                                                              handeldataId(item.id);
+                                                                            }
+                                                                          }}
                                                                     >
                                                                         Buy Now
                                                                     </button>

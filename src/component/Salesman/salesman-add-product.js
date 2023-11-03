@@ -13,6 +13,7 @@ import bannerone from '../../assets/images/banner/banner.png'
 import { BASE_URL } from '../../Constant/Index';
 import axios from 'axios';
 import bag from '../../assets/images/icon/bag.png'
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const clinetreview = {
     desktop: {
@@ -35,11 +36,18 @@ function SalesmanaddProduct(props) {
     const [categories, setcategories] = useState([]);
     const [allproduct, setallproduct] = useState([]);
 
-
-    useEffect(() => {
-        categoriesProduct();
-        allProduct();
-    }, []);
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Promise.all([categoriesProduct(),
+        allProduct()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, []);
 
     const categoriesProduct = async () => {
         try {
@@ -69,12 +77,18 @@ function SalesmanaddProduct(props) {
     return (
         <>
             <Newheader />
-            <Container fluid className='p-0'>
+            {loading ? (
+                <div className="text-center text-black mb-4">
+                <img src={loadinggif} alt="" />
+                <h5>Please Wait.......</h5>
+              </div>
+            ) : (
+                <>
+                <Container fluid className='p-0'>
                 <div className='all-bg'>
                     <img src={product} />
                 </div>
             </Container>
-
             <Container>
                 <Row>
                     <Col lg={3}>
@@ -349,9 +363,8 @@ function SalesmanaddProduct(props) {
                     </Col>
                 </Row>
             </Container >
-
-
-
+                </>
+            )}
             <Footer />
         </>
     )

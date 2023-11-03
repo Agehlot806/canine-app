@@ -13,6 +13,7 @@ import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopShipping() {
   // storedWholesellerId
@@ -20,9 +21,17 @@ function PetshopShipping() {
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allAddressList();
-    allOrders();
+    Promise.all([allAddressList(),
+      allOrders()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
   const { id } = useParams();
   console.log("id: ", id);
@@ -63,7 +72,14 @@ function PetshopShipping() {
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+         <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
         </div>
@@ -410,6 +426,8 @@ function PetshopShipping() {
           </Row>
         </Container>
       </section>
+        </>
+      )}
       <Petshopfooter />
     </>
   );

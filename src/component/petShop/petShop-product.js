@@ -20,6 +20,7 @@ import { loadRazorpay } from "../../utils";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 const clinetreview = {
   desktop: {
@@ -43,17 +44,25 @@ function Petshopproduct(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    categoriesProduct();
-    allProduct();
-    allBrandshow();
-    allLifesageshow();
-    allBreedshow();
-    allsubcategary();
-    allHealthconditionshow();
-    Allsubcategories();
-    fetchWishlistData();
-    allAddressList();
+    Promise.all([categoriesProduct(),
+      allProduct(),
+      allBrandshow(),
+      allLifesageshow(),
+      allBreedshow(),
+      allsubcategary(),
+      allHealthconditionshow(),
+      Allsubcategories(),
+      fetchWishlistData(),
+      allAddressList()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const categoriesProduct = async () => {
@@ -71,12 +80,12 @@ function Petshopproduct(props) {
       .then((response) => {
         console.log(response);
         console.log("Delete Successful");
-        const filterData =response.data.data;
-        const filterDatashow = filterData.filter((item)=>item.module_id === 1)
-        console.log("responsDataesponsData",filterDatashow);
-        setallproduct(filterDatashow);
+        const filterData = response.data.data;
+        const filterDatashow = filterData.filter((item) => item.module_id === 1);
+        const reversedFilterDatashow = filterDatashow.slice().reverse();
+        console.log("reversedData", reversedFilterDatashow);
+        setallproduct(reversedFilterDatashow);
         setSortOption('default');
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -1296,11 +1305,35 @@ function Petshopproduct(props) {
   const demousercheck = () => {
     toast.error("Profile is not verified");
   };
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; // Number of characters to show initially
+
+    if (description.length <= maxCharacters) {
+      return <p>{description}</p>; // Show the full description if it's short
+    }
+
+    const truncatedDescription = description.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={product} />
         </div>
@@ -1690,7 +1723,7 @@ function Petshopproduct(props) {
                                 </div>
                                 <div>
                                   <h6>{item.name}</h6>
-                                  <p>{item.description}</p>
+                                  <p>{renderProductDescription(item.description)}</p>
                                 </div>
                                 <div className="product-bag">
                                   <Row>
@@ -1777,7 +1810,8 @@ function Petshopproduct(props) {
           </Col>
         </Row>
       </Container>
-
+        </>
+      )}
       <Petshopfooter />
 
       {/* Product details Modal */}

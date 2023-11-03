@@ -85,7 +85,7 @@ const SalesmanLogin = () => {
                   <Form.Group className="mb-3" controlId="formGroupPhone">
                     <Form.Label>Phone</Form.Label>
                     <Form.Control
-                      type="number"
+                      type="tel"
                       name="phone"
                       placeholder="Enter phone"
                       value={phone}

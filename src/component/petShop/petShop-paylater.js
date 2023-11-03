@@ -12,6 +12,7 @@ import { BASE_URL } from "../../Constant/Index";
 import { Link, useParams, useLocation } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopPayLater() {
   const { id } = useParams();
@@ -24,9 +25,17 @@ function PetshopPayLater() {
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allAddressList();
-    allOrders();
+    Promise.all([allAddressList(),
+      allOrders()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   const [addresslist, setAddressList] = useState([]);
@@ -115,7 +124,14 @@ function PetshopPayLater() {
   return (
     <>
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           <img src={productdetail} />
         </div>
@@ -341,6 +357,8 @@ function PetshopPayLater() {
           </div>
         </Container>
       </section>
+        </>
+      )}
       <Petshopfooter />
     </>
   );

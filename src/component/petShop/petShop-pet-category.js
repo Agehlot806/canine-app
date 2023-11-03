@@ -15,6 +15,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopPetcategory() {
   //     const { id } = useParams();
@@ -94,22 +95,28 @@ function PetshopPetcategory() {
   const [petitemproduct, setpetitemproduct] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    allPetitemproduct();
-    Allsubcategories();
-    fetchBrands();
-    fetchBreed();
-    fetchHealthcondition();
-    fetchLifestage();
-    allProduct();
-    fetchWishlistData();
-    // allAddressList();
-    // GetdataAll();
+    Promise.all([allPetitemproduct(),
+      Allsubcategories(),
+      fetchBrands(),
+      fetchBreed(),
+      fetchHealthcondition(),
+      fetchLifestage(),
+      allProduct(),
+      fetchWishlistData(),
+      allAddressList(),
+      GetdataAll(),
+      fetchAllProducts()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
-  useEffect(() => {
-    allAddressList();
-    GetdataAll();
-  }, []);
+ 
 
   useEffect(() => {
     setTimeout(() => {
@@ -345,10 +352,6 @@ function PetshopPetcategory() {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    fetchAllProducts();
-  }, []);
 
   const handleDataListBrand = (brand_id) => {
     const filteredData = allproduct.filter(
@@ -1199,7 +1202,14 @@ function PetshopPetcategory() {
     <>
       <Toaster />
       <PetShopHeader />
-      <Container fluid className="p-0">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <Container fluid className="p-0">
         <div className="all-bg">
           {banner && <img
             src={
@@ -1677,7 +1687,8 @@ function PetshopPetcategory() {
           </Col>
         </Row>
       </Container>
-
+        </>
+      )}
       <Petshopfooter />
 
       {/* Product details Modal */}

@@ -7,13 +7,22 @@ import bag from "../../assets/images/icon/bag.png";
 import { Toaster, toast } from "react-hot-toast";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
+import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopWishlistproduct() {
   const [wishlistData, setWishlistData] = useState([]);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchWishlistData();
-    fetchWishlistDataId();
+    Promise.all([fetchWishlistData(),
+      fetchWishlistDataId()])
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
   // const { id } = useParams();
@@ -76,7 +85,14 @@ function PetshopWishlistproduct() {
     <>
       <Toaster />
       <PetShopHeader />
-      <section className="section-padding">
+      {loading ? (
+        <div className="text-center text-black mb-4">
+        <img src={loadinggif} alt="" />
+        <h5>Please Wait.......</h5>
+      </div>
+      ) : (
+        <>
+        <section className="section-padding">
         <Container>
           <h1 className="main-head">Wishlist Products</h1>
           <div className="needplace">
@@ -140,7 +156,8 @@ function PetshopWishlistproduct() {
           </div>
         </Container>
       </section>
-
+        </>
+      )}
       <Petshopfooter />
     </>
   );
