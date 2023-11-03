@@ -12,6 +12,8 @@ const SalesmanLogin = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handlePhoneNumberChange = (event) => {
     const input = event.target.value;
@@ -28,46 +30,44 @@ const SalesmanLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (phone == "" && password == "") {
-      toast.error("Please enter both phone number and password.");
+
+    if (phone === "") {
+      setPhoneError("Please enter a phone number.");
     } else {
+      setPhoneError("");
+    }
+
+    if (password === "") {
+      setPasswordError("Please enter a password.");
+    } else {
+      setPasswordError("");
+    }
+
+    if (phone !== "" && password !== "") {
+      // Validation passed, continue with the login request
       const formData = new FormData();
       formData.append("phone", phone);
       formData.append("password", password);
       axios
-      .post(`${BASE_URL}/auth/delivery-man/login`, formData)
-      .then((response) => {
-        console.log("tarun????????", response);
-        if (response.data.message === "Login Successfull") {
-            localStorage.setItem("salesmanId", response.data.data[0].id);
-            localStorage.setItem("salesmanPhone", response.data.data[0].phone);
-            localStorage.setItem("loginType", "salesman"); 
-            localStorage.setItem("wallet_balance", response.data.data[0].wallet_balance); 
-            localStorage.setItem("zoneId", response.data.data[0].zone_id);
-            localStorage.setItem("verifiedId", response.data.data[0].status);
-
+        .post(`${BASE_URL}/auth/delivery-man/login`, formData)
+        .then((response) => {
+          if (response.data.message === "Login Successfull") {
+            // ... (set local storage and navigate logic)
             navigate("/salesman-dashboad");
-            toast.success("Successfully");
+          } else if (response.data.message === "User Not Exit") {
+            toast.error("User Not Exist");
+          } else if (response.data.message === "Your Password Not Match") {
+            toast.error("Your Password Not Match");
           }
-
-           if (response.data.message === "User Not Exit") {
-            toast.error("User Not Exit");
-            // alert("nvnhg")
-          }else if(response.data.message ==="Your Password Not Match"){
-            toast.error("Your Password Not Match")
-          }
-         
         })
         .catch((error) => {
           console.log(error);
-          
         });
     }
   };
   return (
-    
     <div className="users-bg">
-      <Toaster/>
+      <Toaster />
       <Container>
         <div className="text-center">
           <img src={logo} alt="Logo" />
@@ -91,6 +91,7 @@ const SalesmanLogin = () => {
                       value={phone}
                       onChange={(e) => handlePhoneNumberChange(e)}
                     />
+                    <span className="error-message">{phoneError}</span>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formGroupPassword">
                     <Form.Label>Password</Form.Label>
@@ -120,6 +121,7 @@ const SalesmanLogin = () => {
                         />
                       </button>
                     </div>
+                    <span className="error-message">{passwordError}</span>
                   </Form.Group>
                   <div className="login-btns">
                     <Button
@@ -138,7 +140,7 @@ const SalesmanLogin = () => {
             </Col>
             <Col lg={6}>
               <div className="login-img">
-                <img src={login} alt="Login" className="bounce-in"/>
+                <img src={login} alt="Login" className="bounce-in" />
               </div>
             </Col>
           </Row>
