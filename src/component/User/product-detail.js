@@ -157,7 +157,8 @@ function Productdetail() {
           //   formattedAmount === "0"
           //     ? productDetails?.price.toString()
           //     : formattedAmount,
-          price: calculatedPrice,
+          price:
+            calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
           user_id: storedUserId,
           item_id: productDetails?.id,
         }
@@ -382,6 +383,7 @@ function Productdetail() {
   //   productDetails.price * quantity -
   //   (productDetails.price * quantity * productDetails.discount) / 100
   // ).toFixed(2);
+  console.log("calculatedPrice", calculatedPrice);
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
@@ -1300,7 +1302,7 @@ function Productdetail() {
                         payload: {
                           item_id: productDetails.id,
                           variant: selectedVariant,
-                          price: formattedAmount,
+                          price: productDetails?.price,
                           quantity: quantity,
                           name: productDetails.name,
                           image: productDetails.image,
