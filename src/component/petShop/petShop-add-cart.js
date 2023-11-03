@@ -77,7 +77,7 @@ function PetshopAddCart() {
     const cartData = sendcartdata.map((item) => ({
       product_id: item.item_id,
       variation: item.variant,
-      price: item.price,
+      price: parseInt(item.price),
       quantity: item.quantity,
       min_order: item.min_order,
       tax_amount: parseInt(item.price * 0.05),
@@ -211,21 +211,52 @@ function PetshopAddCart() {
     }
   };
 
+  // const handleIncrementone = (index) => {
+  //   const updatedCart = [...addToCartProduct];
+  //   updatedCart[index].quantity += 1;
+  //   updatedCart[index].price +=
+  //     updatedCart[index].price / (updatedCart[index].quantity - 1);
+
+  //   const updatedSendCart = [...sendcartdata];
+  //   updatedSendCart[index].quantity += 1;
+
+  //   // Calculate the new price with tax included
+  //   const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+  //   updatedSendCart[index].price = priceWithTax;
+
+  //   setAddToCartProduct(updatedCart);
+  //   setSandCartData(updatedSendCart); // Update sendcartdata
+  // };
+
+
   const handleIncrementone = (index) => {
     const updatedCart = [...addToCartProduct];
-    updatedCart[index].quantity += 1;
-    updatedCart[index].price +=
-      updatedCart[index].price / (updatedCart[index].quantity - 1);
-
     const updatedSendCart = [...sendcartdata];
-    updatedSendCart[index].quantity += 1;
 
-    // Calculate the new price with tax included
-    const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-    updatedSendCart[index].price = priceWithTax;
+    if (
+      updatedCart[index].quantity ===
+      Number(variantStockCount[index].total_quantity)
+    ) {
+      toast.error("Stock not avilable");
+    } else {
+      updatedCart[index].quantity += 1;
+      updatedCart[index].price +=
+        updatedCart[index].price / (updatedCart[index].quantity - 1);
+
+      updatedSendCart[index].quantity += 1;
+
+      // Calculate the new price with tax included
+      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      updatedSendCart[index].price = priceWithTax;
+    }
 
     setAddToCartProduct(updatedCart);
     setSandCartData(updatedSendCart); // Update sendcartdata
+    console.log("IndexupdatedCart: ", updatedCart[index].quantity);
+    console.log(
+      "IndexvariantStockCount: ",
+      Number(variantStockCount[index].total_quantity)
+    );
   };
 
   const handleDecrementone = (index, item) => {
@@ -247,6 +278,8 @@ function PetshopAddCart() {
       setSandCartData(updatedSendCart); // Update sendcartdata
     }
   };
+
+  const [variantStockCount, setVariantStockCount] = useState([]);
 
   const fieldpagerefresh = () => {
     window.location.reload(false);
@@ -314,6 +347,12 @@ function PetshopAddCart() {
 
         setSandCartData([...newCartsend]);
 
+        const newVariantStockCount = response.data.data.map((stock) => ({
+          total_quantity: stock.total_quantity,
+        }));
+
+        setVariantStockCount(newVariantStockCount);
+
         const newCartItems = response.data.data.map((item) => ({
           id: item.id,
           item_name: item.item_name,
@@ -321,6 +360,9 @@ function PetshopAddCart() {
           price: item.price,
           quantity: item.quantity, // Assuming the response already includes the quantity
           min_order: item.min_order,
+          return_order: item?.return_order || "no",
+          total_quantity: item.total_quantity,
+          variant: item.variant,
         }));
 
         const addcartitem = response.data.data[0];
@@ -632,6 +674,7 @@ function PetshopAddCart() {
       console.error(error);
     }
   };
+  
 
   // ===============================================================
   // ===============================================================
@@ -764,10 +807,17 @@ function PetshopAddCart() {
                         item.image
                       }
                     />
+
                   </Col>
                   <Col lg={6} sm={5} className="align-self-center addCARThead">
                     <h2>{item.item_name}</h2>
-                    {/* <p>with paneer or cottage cheese.</p> */}
+                    {/* <p>Selected Variant: {item.variant}</p>
+                    {console.log("item.variant",item.variant)} */}
+                    {
+                              item.variant ? (
+                                <p>{`Selected Variant: ${item.variant}`}</p>
+                              ) : null // or you can omit this part if you want nothing to be displayed
+                            }
                   </Col>
                   <Col
                     lg={2}
