@@ -67,7 +67,7 @@ function Signup() {
             <div className='users-bg'>
                 <Container>
                     <div className="text-center">
-                        <img src={logo} />
+                    <Link to="/"><img src={logo} /></Link>
                     </div>
                     <div>
                         <Row>

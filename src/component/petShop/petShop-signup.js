@@ -209,7 +209,7 @@ function PetshopSignUp() {
     <>
       <Toaster />
       {loading ? (
-        <div className="text-center text-black mb-4">
+        <div className="loaderimg text-center text-black mb-4">
         <img src={loadinggif} alt="" />
         <h5>Please Wait.......</h5>
       </div>
@@ -218,7 +218,7 @@ function PetshopSignUp() {
         <div className="users-bg">
         <Container>
           <div className="text-center">
-            <img src={logo} />
+          <Link to="/"><img src={logo} /></Link>
           </div>
           <div>
             <Row>

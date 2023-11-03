@@ -178,7 +178,7 @@ export default function Petshoptrackyourorder() {
     <>
       <PetShopHeader />
       {loading ? (
-        <div className="text-center text-black mb-4">
+        <div className="loaderimg text-center text-black mb-4">
         <img src={loadinggif} alt="" />
         <h5>Please Wait.......</h5>
       </div>

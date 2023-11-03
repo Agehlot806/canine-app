@@ -31,10 +31,12 @@ a {
   text-transform: capitalize;
   color: #000;
 }
+
 .sort-by h4 {
   font-size: 20px;
   margin: 6px 0;
 }
+
 .menu-mobile {
   background: #fff;
   /* padding: 12px; */
@@ -133,13 +135,11 @@ a {
   width: 170px;
   height: 50px;
   border: none !important;
-  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px rgba(0, 0, 0, 0.05);
 }
 
 .nav-btn input:focus {
-  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px rgba(0, 0, 0, 0.05);
 }
 
 .header-inner-addon {
@@ -166,8 +166,7 @@ a {
 }
 
 .header-inner-addon input:focus {
-  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px rgba(0, 0, 0, 0.05);
 }
 
 .profile-icon {
@@ -217,8 +216,7 @@ a {
 }
 
 .home-content button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #000;
   border: none;
@@ -233,8 +231,7 @@ a {
 }
 
 .home-content button:hover {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b !important;
 }
 
@@ -262,8 +259,7 @@ a {
 /* ============================== About area css =========================== */
 
 .aboutPage-content button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #fff;
   border: none;
@@ -282,8 +278,7 @@ a {
 }
 
 .aboutPage-content button:hover {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
 }
 
@@ -392,6 +387,7 @@ a {
   box-sizing: border-box;
   max-width: 100%;
 }
+
 .food-product:hover img {
   transform: rotateY(25deg);
   -moz-transform: rotateY(25deg);
@@ -403,13 +399,16 @@ a {
   -moz-transition: 2s ease;
   -webkit-transition: 2s ease;
 }
+
 .food-product h4 {
   font-family: "Josefin Sans", sans-serif;
   font-size: 25px;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: #000;
+  margin: 8px 0 0;
 }
+
 .food-product i {
   float: right;
   font-size: 25px;
@@ -514,10 +513,12 @@ a {
   font-size: 20px;
   color: #000;
 }
+
 .ProductPartner-card h4 {
   font-size: 20px;
   font-weight: 600;
 }
+
 .brand-1 {
   background: linear-gradient(180deg, #fecbcd 0%, rgba(254, 203, 205, 0) 100%);
 }
@@ -531,11 +532,9 @@ a {
 }
 
 .brand-4 {
-  background: linear-gradient(
-    180deg,
-    #c7ebff 58.58%,
-    rgba(199, 235, 255, 0) 104.1%
-  );
+  background: linear-gradient(180deg,
+      #c7ebff 58.58%,
+      rgba(199, 235, 255, 0) 104.1%);
 }
 
 .Shop-Deals-inner {
@@ -547,13 +546,13 @@ a {
   width: 100px;
   height: 100px;
 }
+
 .uy {
-  background: linear-gradient(
-    180deg,
-    #c7ebff 58.58%,
-    rgba(199, 235, 255, 0) 104.1%
-  );
+  background: linear-gradient(180deg,
+      #c7ebff 58.58%,
+      rgba(199, 235, 255, 0) 104.1%);
 }
+
 .Shop-Deals-inner h1 {
   font-size: 20px;
   margin: 18px;
@@ -751,13 +750,12 @@ a {
   margin: 30px 0;
 }
 
-.productDetail-content .table > :not(caption) > * > * {
+.productDetail-content .table> :not(caption)>*>* {
   padding: 10px 0 !important;
 }
 
 .productBTNaddcard button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #fff;
   border: none;
@@ -770,9 +768,11 @@ a {
   font-size: 22px;
   padding: 15px;
 }
+
 .productBTNaddcard button p {
   margin: 0;
 }
+
 .productBTNaddcard button a {
   color: #000;
 }
@@ -926,11 +926,9 @@ a {
 }
 
 .contact-form button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) 100%/300%
-      no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) 100%/300% no-repeat,
     #f1c21b;
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #008efd;
   border: none;
   border-radius: 10px;
@@ -956,24 +954,21 @@ a {
 
 .form-area input {
   border-radius: 37.75px;
-  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px rgba(0, 0, 0, 0.05);
   /* height: 55px; */
   border: none;
 }
 
 .form-area select {
   border-radius: 37.75px;
-  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px rgba(0, 0, 0, 0.05);
   /* height: 55px; */
   border: none;
 }
 
 .form-area input:focus {
   box-shadow: none;
-  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px rgba(0, 0, 0, 0.05);
 }
 
 .checkbox-area input {
@@ -986,8 +981,7 @@ a {
 }
 
 .login-btns button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #008efe;
   border: none;
   border-radius: 10px;
@@ -1108,8 +1102,7 @@ a {
 .otp-area {
   border-radius: 42.81px;
   background: #fff;
-  box-shadow: 0px 7.134939670562744px 28.539758682250977px 0px
-    rgba(3, 176, 254, 0.1);
+  box-shadow: 0px 7.134939670562744px 28.539758682250977px 0px rgba(3, 176, 254, 0.1);
   padding: 8px 65px 25px;
   text-transform: capitalize;
   text-align: center;
@@ -1123,8 +1116,7 @@ a {
 .otp-area input {
   border-radius: 25px;
   background: #eee;
-  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px rgba(0, 0, 0, 0.05);
   height: 70px;
   border: none;
   width: 90px !important;
@@ -1193,7 +1185,7 @@ a {
 }
 
 .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show>.nav-link {
   background: #f1c21b !important;
   color: #000 !important;
   padding: 15px !important;
@@ -1243,8 +1235,7 @@ a {
 .dash-logo img {
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px rgba(0, 0, 0, 0.05);
   padding: 4px;
   width: 60px;
   height: 60px;
@@ -1262,8 +1253,7 @@ a {
 .dash-review {
   border-radius: 24.451px;
   background: #fff;
-  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px rgba(0, 0, 0, 0.05);
   padding: 15px;
 }
 
@@ -1314,8 +1304,7 @@ a {
 }
 
 .order-card button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #fff;
   border: none;
@@ -1347,11 +1336,13 @@ a {
   border-radius: 40px;
   font-family: Poppins;
 }
+
 .balance-card .input-group-text {
   background: #ffc934;
   color: #000;
   font-weight: bold;
 }
+
 .balance-card h5 {
   font-size: 25px;
   font-weight: 400;
@@ -1421,8 +1412,7 @@ a {
 }
 
 .mainForm-btn button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #008efd;
   border: none;
   border-radius: 10px;
@@ -1470,7 +1460,7 @@ a {
 .dowload-invioce button {
   border-radius: 60px;
   height: 50px;
-  margin: 0 4px 0 4px;
+  margin: 4px;
   border: none;
   color: #000;
 }
@@ -1480,19 +1470,15 @@ a {
 }
 
 .invoice-1 {
-  background: linear-gradient(
-    180deg,
-    #cee8fc 0%,
-    rgba(206, 232, 252, 0) 100%
-  ) !important;
+  background: linear-gradient(180deg,
+      #cee8fc 0%,
+      rgba(206, 232, 252, 0) 100%) !important;
 }
 
 .invoice-2 {
-  background: linear-gradient(
-    180deg,
-    #fbf1c8 0%,
-    rgba(251, 241, 200, 0) 100%
-  ) !important;
+  background: linear-gradient(180deg,
+      #fbf1c8 0%,
+      rgba(251, 241, 200, 0) 100%) !important;
 }
 
 .order-details h5 {
@@ -1503,8 +1489,7 @@ a {
   display: flex;
   border-radius: 31.534px;
   background: #fff;
-  box-shadow: 0px 1.5016288757324219px 45.048866271972656px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.5016288757324219px 45.048866271972656px 0px rgba(0, 0, 0, 0.05);
   padding: 20px;
 }
 
@@ -1544,8 +1529,7 @@ a {
 }
 
 .dash-addProduct-btn button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f0c11c;
   border: none;
   border-radius: 10px;
@@ -1630,8 +1614,7 @@ a {
 .quantity-btn span {
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0px 2.4020204544067383px 48.040401458740234px 0px
-    rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2.4020204544067383px 48.040401458740234px 0px rgba(0, 0, 0, 0.1);
   padding: 2px 10px;
 }
 
@@ -1678,16 +1661,14 @@ a {
 .totelPAYCAR {
   border-radius: 50px;
   background: #fff;
-  box-shadow: 0px 3.683544397354126px 110.50633239746094px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 3.683544397354126px 110.50633239746094px 0px rgba(0, 0, 0, 0.05);
   padding: 40px;
 }
 
 .totelPAYCAR button {
   border-radius: 110.506px;
   background: #fc0;
-  box-shadow: 0px 14.734177589416504px 73.67089080810547px 0px
-    rgba(11, 21, 77, 0.2);
+  box-shadow: 0px 14.734177589416504px 73.67089080810547px 0px rgba(11, 21, 77, 0.2);
   color: #000;
   border: none;
   height: 55px;
@@ -1772,8 +1753,7 @@ a {
 }
 
 .video-content button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #fff;
   border: none;
@@ -1782,10 +1762,12 @@ a {
   font-weight: 600;
   font-size: 16px;
 }
+
 .video-content h1 {
   color: #fff;
   margin: 0;
 }
+
 .ProductPartner-card {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 20px;
@@ -1828,11 +1810,9 @@ a {
 }
 
 .wholeseller-bg1 {
-  background: linear-gradient(
-    180deg,
-    #c6ecfc 0%,
-    rgba(198, 236, 252, 0.43) 100%
-  );
+  background: linear-gradient(180deg,
+      #c6ecfc 0%,
+      rgba(198, 236, 252, 0.43) 100%);
 }
 
 .wholeseller-bg2 {
@@ -1840,11 +1820,9 @@ a {
 }
 
 .wholeseller-bg3 {
-  background: linear-gradient(
-    180deg,
-    #ffead2 0%,
-    rgba(255, 234, 210, 0.33) 100%
-  );
+  background: linear-gradient(180deg,
+      #ffead2 0%,
+      rgba(255, 234, 210, 0.33) 100%);
 }
 
 .wholeseller-status h6 {
@@ -1905,8 +1883,7 @@ a {
 .wholeseller-logo img {
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px rgba(0, 0, 0, 0.05);
   padding: 4px;
   width: 60px;
   height: 60px;
@@ -1925,8 +1902,7 @@ a {
   margin: 0 10px;
   height: 56px;
   border: none !important;
-  box-shadow: 0px 1.5800000429153442px 47.400001525878906px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.5800000429153442px 47.400001525878906px 0px rgba(0, 0, 0, 0.05);
   border-radius: 16px !important;
 }
 
@@ -1935,7 +1911,7 @@ a {
 }
 
 .wholeseller-tabs .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show>.nav-link {
   background: #008efd !important;
   color: #fff !important;
   box-shadow: 0px 1px 30px 0px rgba(0, 0, 0, 0.05);
@@ -1953,8 +1929,7 @@ a {
 .Transactions-card {
   border-radius: 57.138px;
   background: #fff;
-  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px rgba(0, 0, 0, 0.05);
   padding: 20px;
   margin: 30px 0;
 }
@@ -1978,8 +1953,7 @@ a {
 }
 
 .left-inner-addon input:focus {
-  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2.7208352088928223px 81.62505340576172px 0px rgba(0, 0, 0, 0.05);
 }
 
 /* Partner flow area css */
@@ -2023,8 +1997,7 @@ a {
 
 .Members-card {
   border-radius: 35px;
-  box-shadow: 0px 1.2506202459335327px 37.51860809326172px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.2506202459335327px 37.51860809326172px 0px rgba(0, 0, 0, 0.05);
   padding: 20px 20px 30px;
   text-align: center;
   font-family: Arial;
@@ -2195,19 +2168,15 @@ a.placDate {
 }
 
 .select-card2 {
-  background: linear-gradient(
-    90deg,
-    #fecbcd 0%,
-    rgba(254, 203, 205, 0.26) 100%
-  );
+  background: linear-gradient(90deg,
+      #fecbcd 0%,
+      rgba(254, 203, 205, 0.26) 100%);
 }
 
 .select-card3 {
-  background: linear-gradient(
-    81deg,
-    #ffead2 0%,
-    rgba(255, 234, 210, 0.34) 100%
-  );
+  background: linear-gradient(81deg,
+      #ffead2 0%,
+      rgba(255, 234, 210, 0.34) 100%);
 }
 
 .select-card.select-card2 img {
@@ -2228,8 +2197,7 @@ a.placDate {
 }
 
 .pay-btn button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b !important;
   color: #fff;
   border: none;
@@ -2280,8 +2248,7 @@ a.placDate {
   border-radius: 30px;
   border: 0.348px solid #a74bff75;
   background: #fff;
-  box-shadow: -6.952230930328369px 6.952230930328369px 34.76115417480469px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: -6.952230930328369px 6.952230930328369px 34.76115417480469px 0px rgba(0, 0, 0, 0.05);
   padding: 30px;
 }
 
@@ -2297,8 +2264,7 @@ a.placDate {
   border-radius: 14px;
   border: 0.348px solid #a74bff;
   background: #fff;
-  box-shadow: -6.952230930328369px 6.952230930328369px 34.76115417480469px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: -6.952230930328369px 6.952230930328369px 34.76115417480469px 0px rgba(0, 0, 0, 0.05);
   width: 100px;
   padding: 12px;
   text-align: center;
@@ -2328,8 +2294,7 @@ a.placDate {
   border-radius: 30px;
   border: 0.348px solid #a74bff75;
   background: #fff;
-  box-shadow: -6.952230930328369px 6.952230930328369px 34.76115417480469px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: -6.952230930328369px 6.952230930328369px 34.76115417480469px 0px rgba(0, 0, 0, 0.05);
   padding: 30px 4px 0 30px;
 }
 
@@ -2365,8 +2330,7 @@ a.placDate {
 }
 
 .add-petbtn button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   border: none;
   transform: perspective(500px) rotateY(calc(335deg * var(--_i, -1)));
@@ -2506,8 +2470,7 @@ a.placDate {
 .service-pet-card {
   border-radius: 61.867px;
   background: #fff;
-  box-shadow: 0px 3.0933661460876465px 92.80098724365234px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 3.0933661460876465px 92.80098724365234px 0px rgba(0, 0, 0, 0.05);
   font-family: Poppins;
   margin-bottom: 30px;
 }
@@ -2557,8 +2520,7 @@ a.placDate {
 .pet-icon-ser a {
   border-radius: 20px;
   background: #fc0;
-  box-shadow: 0px 3.0933661460876465px 92.80098724365234px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 3.0933661460876465px 92.80098724365234px 0px rgba(0, 0, 0, 0.05);
   font-size: 30px;
   padding: 10px 20px;
   margin: 0 6px;
@@ -2572,8 +2534,7 @@ a.placDate {
 }
 
 .tacking button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   border: none;
   transform: perspective(500px) rotateY(calc(335deg * var(--_i, -1)));
@@ -2601,6 +2562,7 @@ a.placDate {
 .notification p {
   margin: 0;
 }
+
 .unread {
   color: gray;
 }
@@ -2608,6 +2570,7 @@ a.placDate {
 .read {
   color: blue;
 }
+
 .notification {
   background: rgba(105, 92, 212, 0.1);
   padding: 10px;
@@ -2714,11 +2677,9 @@ a.placDate {
 }
 
 .veterinary-bg1 {
-  background: linear-gradient(
-    180deg,
-    #c6ecfc 0%,
-    rgba(198, 236, 252, 0.43) 100%
-  );
+  background: linear-gradient(180deg,
+      #c6ecfc 0%,
+      rgba(198, 236, 252, 0.43) 100%);
 }
 
 .veterinary-bg2 {
@@ -2726,11 +2687,9 @@ a.placDate {
 }
 
 .veterinary-bg3 {
-  background: linear-gradient(
-    180deg,
-    #ffead2 0%,
-    rgba(255, 234, 210, 0.33) 100%
-  );
+  background: linear-gradient(180deg,
+      #ffead2 0%,
+      rgba(255, 234, 210, 0.33) 100%);
 }
 
 .veterinary-status h6 {
@@ -2795,8 +2754,7 @@ a.placDate {
 .veterinary-logo img {
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px
-    rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1.1643249988555908px 34.929752349853516px 0px rgba(0, 0, 0, 0.05);
   padding: 4px;
   width: 60px;
   height: 60px;
@@ -2860,8 +2818,7 @@ a.placDate {
 }
 
 .allblogbtn button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #fff;
   border: none;
@@ -3064,8 +3021,7 @@ ul.list-unstyled li a {
   color: #000;
 }
 
-.navbar-toggler-icon {
-}
+.navbar-toggler-icon {}
 
 /* tracker area */
 .tracker-bg {
@@ -3075,11 +3031,9 @@ ul.list-unstyled li a {
 }
 
 .tracker-area {
-  background-image: linear-gradient(
-      180deg,
+  background-image: linear-gradient(180deg,
       rgba(37, 27, 17, 0.2),
-      rgba(37, 27, 17, 0.2)
-    ),
+      rgba(37, 27, 17, 0.2)),
     linear-gradient(180deg, rgba(37, 27, 17, 0), rgba(37, 27, 17, 0.5));
 }
 
@@ -3180,8 +3134,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .Re-order button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #f1c21b;
   color: #fff;
   border: none;
@@ -3231,8 +3184,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .Notify-Me button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
-      var(--_p, 100%) / 300% no-repeat,
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat,
     #3b71ca;
   color: #fff;
   border: none;
@@ -3258,11 +3210,9 @@ input[type="number"]::-webkit-inner-spin-button {
 .chk-address {
   padding: 25px;
   display: inline-flex;
-  background: linear-gradient(
-    180deg,
-    #c6ecfc 0%,
-    rgba(198, 236, 252, 0.43) 100%
-  );
+  background: linear-gradient(180deg,
+      #c6ecfc 0%,
+      rgba(198, 236, 252, 0.43) 100%);
   border-radius: 35px;
   width: 100%;
   margin: 0 0 20px;
@@ -3536,9 +3486,11 @@ button.Apply-price {
   color: blue;
   cursor: pointer;
 }
+
 .logout-area {
   text-align: center;
 }
+
 .logout-area button {
   background: #ffc934;
   margin: 0 4px;
@@ -3811,8 +3763,7 @@ li.nav-item.dropdown.new-mega-drop {
   text-indent: -999em;
 } */
 
-.react-datepicker__navigation--previous.react-datepicker__navigation--previous--disabled
-  .react-datepicker__navigation-icon--previous::before {
+.react-datepicker__navigation--previous.react-datepicker__navigation--previous--disabled .react-datepicker__navigation-icon--previous::before {
   content: "\f104";
   /* Unicode for the angle-left icon in Font Awesome */
   font-family: FontAwesome;
@@ -3872,6 +3823,7 @@ li.nav-item.dropdown.new-mega-drop {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
 .flip-card {
   background-color: transparent;
   height: 190px;
@@ -3906,21 +3858,25 @@ li.nav-item.dropdown.new-mega-drop {
   border-radius: 10px;
   text-align: center;
 }
+
 .flip-card-front h1 {
   background: linear-gradient(rgb(203 214 254) 0%, rgba(254, 203, 240, 0) 100%);
   font-size: 30px;
   margin: 16px;
   color: #000;
 }
+
 .flip-card-front h3 b {
   font-size: 48px;
 }
+
 .flip-card-back {
   background-color: #2980b9;
   transform: rotateY(180deg);
   border-radius: 10px;
   padding: 31px;
 }
+
 .coupenCard {
   padding: 20px;
   border-radius: 40px;
@@ -3930,6 +3886,7 @@ li.nav-item.dropdown.new-mega-drop {
 .hide-icons {
   display: none;
 }
+
 li.nav-item.nonhide {
   display: block;
 }
@@ -3950,6 +3907,7 @@ li.nav-item.nonhide {
   width: 130px;
   margin: 10px 0;
 }
+
 .total-count {
   background-color: #f00;
   color: #fff;
@@ -3965,6 +3923,7 @@ li.nav-item.nonhide {
 button.yellow-btn a {
   color: #000;
 }
+
 li.nav-.nonhide {
   align-self: center;
 }
@@ -4033,9 +3992,11 @@ li.nav-.nonhide {
   text-align: center;
   margin: 40px 0 0;
 }
+
 .check-Continue button a {
   color: #000;
 }
+
 .check-Continue button {
   background: #ffc934;
   color: #000;
@@ -4059,6 +4020,7 @@ li.nav-.nonhide {
 .coup-area {
   text-align: right;
 }
+
 /* 23-oct-2023 */
 .RemoveImg-button {
   /* background-color: transparent; */
@@ -4073,13 +4035,15 @@ li.nav-.nonhide {
 }
 
 .RemoveImg-button:hover {
-  background-color: #f1c21b; /* Change the hover background color as needed */
+  background-color: #f1c21b;
+  /* Change the hover background color as needed */
 }
 
 .error {
   color: red;
   margin: 8px;
 }
+
 .form-range button {
   border: none;
   background-color: #ffc934;
@@ -4093,12 +4057,14 @@ li.nav-.nonhide {
   list-style: none;
   padding: 0;
 }
+
 .pagination li {
   margin: 0 24px;
   cursor: pointer;
   font-weight: bold;
   align-self: center;
 }
+
 li.activebtn a {
   background: #ffc934;
   color: #000;
@@ -4106,44 +4072,54 @@ li.activebtn a {
   font-size: 20px;
   border-radius: 10px;
 }
+
 .page-item.active .page-link {
   z-index: 1;
   color: #000;
   background-color: #ffc934 !important;
   border-color: #ffc934 !important;
 }
+
 li.nextbtn a {
   font-size: 25px;
   color: #000 !important;
 }
+
 li.previousbtn a {
   font-size: 25px;
   color: #000 !important;
 }
+
 .bounce-in {
   -webkit-animation: bounce-in 5s ease infinite;
   animation: bounce-in 5s ease infinite;
 }
+
 @keyframes bounce-in {
   0% {
     opacity: 0.9;
     transform: scale(0.9);
   }
+
   50% {
     opacity: 1;
     transform: scale(1);
   }
+
   70% {
     transform: scale(0.9);
   }
+
   100% {
     transform: scale(1);
   }
 }
+
 .selected-image img {
   width: 100px;
   height: 100px;
 }
+
 .selected-image {
   text-align: center;
 }
@@ -4165,9 +4141,11 @@ ul.nav-links.wrappertwo {
   border-radius: 10px;
   padding: 10px 10px 0;
 }
+
 .pagination.pagi-list {
   padding: 15px 0;
 }
+
 .pagination.pagi-list ul li {
   list-style-type: none;
   background: #ffc934;
@@ -4176,19 +4154,24 @@ ul.nav-links.wrappertwo {
   margin: 0 10px;
   border-radius: 5px;
 }
+
 .pagination.pagi-list ul {
   padding: 0;
   margin: 0;
 }
+
 .pagination.pagi-list button {
   padding: 0 10px;
 }
+
 .service-card h3 {
   font-size: 22px;
 }
+
 .contact-card h3 {
   font-size: 24px;
 }
+
 .filter-product h3 {
   font-size: 22px;
   font-weight: 700;
@@ -4202,9 +4185,15 @@ li.cardpay a {
   margin: 4px 2px;
   border-radius: 3px;
 }
+
 li.cardpay a img {
   width: 25px !important;
 }
+
 .home-section video {
   width: 100%;
+}
+
+.loaderimg img {
+  width: 150px;
 }

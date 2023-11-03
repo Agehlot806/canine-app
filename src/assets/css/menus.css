@@ -184,6 +184,7 @@ ul.mega-links p {
 @media screen and (max-width: 970px) {
   nav .wrapper {
     display: contents;
+    height: 68px;
   }
 
   .wrapper .btn {

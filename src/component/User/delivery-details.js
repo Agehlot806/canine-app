@@ -46,7 +46,7 @@ console.log("customer_id: ", customer_id);
   return (
     <>
       <Newheader />
-      {loading ? (<div className="text-center text-black mb-4">
+      {loading ? (<div className="loaderimg text-center text-black mb-4">
           <img src={loadinggif} alt=""/>
           <h5>Please Wait.......</h5>
         </div>) : (<>

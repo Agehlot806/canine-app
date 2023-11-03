@@ -520,7 +520,7 @@ function Partners() {
       <div className="users-bg">
         <Container>
           <div className="text-center">
-            <img src={logo} />
+          <Link to="/"><img src={logo} /></Link>
             <h4 className="mt-3">
               Already a Partner?{" "}
               <Link to={"https://canine.hirectjob.in/store-panel/auth/login"}>

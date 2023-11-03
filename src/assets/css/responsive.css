@@ -320,8 +320,8 @@
     display: inline-flex;
   }
   a.profiledes {
-    padding: 10px 0 !important;
-  }
+    padding: 5px 0 4px !important;
+}
   a.profiledes.notification-btn.notimob {
     margin: 0 0 0 -70px;
   }
@@ -391,6 +391,7 @@
   }
   nav .wrapper {
     line-height: 0;
+    padding: 0 !important;
   }
   .newnavv {
     /* height: 115px; */
@@ -673,7 +674,7 @@
   }
   .hide-icons {
     position: absolute;
-    left: 68px;
+    left: 55px;
   }
   .header-inner-addon input {
     width: 386px;
@@ -721,7 +722,7 @@
   }
 
   .main-head {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .foodMore a {

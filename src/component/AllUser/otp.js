@@ -124,7 +124,7 @@ function Otp() {
             <Row className="justify-content-center">
               <Col lg={6}>
                 <div className="otp-area">
-                  <img src={logo} />
+                <Link to="/"><img src={logo} /></Link>
                   <h4>Verify your mobile number</h4>
                   <p>An OTP has been sent to your mobile number</p>
 
