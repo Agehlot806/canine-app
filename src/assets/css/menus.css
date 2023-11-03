@@ -160,6 +160,7 @@ ul.mega-links p {
   font-size: 13px;
   display: block;
   font-weight: 400 !important;
+  text-transform: capitalize;
 }
 
 .row .mega-links li a:hover {
@@ -219,15 +220,15 @@ ul.mega-links p {
     background: #f1c21b;
   }
 
-  #menu-btn:checked~.nav-links {
+  #menu-btn:checked ~ .nav-links {
     right: 0%;
   }
 
-  #menu-btn:checked~.btn.menu-btn {
+  #menu-btn:checked ~ .btn.menu-btn {
     display: none;
   }
 
-  #close-btn:checked~.btn.menu-btn {
+  #close-btn:checked ~ .btn.menu-btn {
     display: block;
   }
 
@@ -260,13 +261,13 @@ ul.mega-links p {
     margin: 0;
   }
 
-  #showDrop:checked~.drop-menu,
-  #showMega:checked~.mega-box {
+  #showDrop:checked ~ .drop-menu,
+  #showMega:checked ~ .mega-box {
     max-height: 100%;
   }
 
-  #showDropProfile:checked~.drop-menu,
-  #showMegaCat:checked~.mega-box {
+  #showDropProfile:checked ~ .drop-menu,
+  #showMegaCat:checked ~ .mega-box {
     max-height: 100%;
   }
 
@@ -419,7 +420,7 @@ input.homesea:focus-visible {
 
 a.profiledes.searneee {
   border: 1px solid #000;
-  padding: 5px 0 3px;
+  padding: 4.5px 0 3.5px;
   border-radius: 22px;
   margin: 0 0 0 14px;
 }

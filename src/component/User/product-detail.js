@@ -153,10 +153,11 @@ function Productdetail() {
             ? selectedVariantStock
             : productDetails?.stock,
           return_order: productDetails?.returnable || "yes",
-          price:
-            formattedAmount === "0"
-              ? productDetails?.price.toString()
-              : formattedAmount,
+          // price:
+          //   formattedAmount === "0"
+          //     ? productDetails?.price.toString()
+          //     : formattedAmount,
+          price: calculatedPrice,
           user_id: storedUserId,
           item_id: productDetails?.id,
         }
@@ -373,6 +374,10 @@ function Productdetail() {
   // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
   console.log("formattedAmount: ", formattedAmount === "0");
+  const calculatedPrice = selectedVariantPrice
+    ? selectedVariantPrice -
+      (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
   // const savedAmount = (
   //   productDetails.price * quantity -
   //   (productDetails.price * quantity * productDetails.discount) / 100

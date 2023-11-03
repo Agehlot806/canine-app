@@ -13,7 +13,7 @@ import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { BASE_URL } from "../../Constant/Index";
 import { styled } from "styled-components";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 import paydone from "../../assets/images/icon/paydone.png";
@@ -43,11 +43,12 @@ function PetshopproductDetails() {
   console.log("productDetails--- ", productDetails);
   // const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(0);
+  console.log("quantity--->", quantity);
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("selectedVariantPrice: ", selectedVariantPrice);
-
+  console.log("selectedVariant: ", selectedVariant);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   // const handleIncrementone = () => {
   //   if (verifiredIdaccess === 1) {
   //     setQuantity(quantity + 1);
@@ -66,7 +67,25 @@ function PetshopproductDetails() {
   };
 
   const handleIncrementOne = () => {
-    setQuantity(quantity + 1);
+    // setQuantity(quantity + 1);
+    if (productDetails?.variations?.length > 0) {
+      productDetails?.variations.forEach((el) => {
+        if (el?.type === selectedVariant) {
+          if (quantity === el?.stock) {
+            toast.error(`${el.type} Stock not avilable`);
+          } else {
+            setQuantity(quantity + 1);
+          }
+        } else {
+        }
+      });
+    } else {
+      if (quantity === productDetails?.stock) {
+        toast.error(`Stock not avilable`);
+      } else {
+        setQuantity(quantity + 1);
+      }
+    }
   };
 
   const handleDecrementOne = () => {
@@ -96,6 +115,7 @@ function PetshopproductDetails() {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
       setSelectedVariantPrice(defaultVariant.wholeprice);
+      setSelectedVariantStock(defaultVariant.stock);
     }
   }, [productDetails]);
 
@@ -181,10 +201,18 @@ function PetshopproductDetails() {
             "Access-Control-Allow-Headers": "Content-Type",
           },
           item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
+          variant: selectedVariant.length > 0 ? selectedVariant : "", // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: selectedVariantPrice,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+            return_order: productDetails?.returnable || "yes",
+          // price: selectedVariantPrice,
+          price:
+            formattedAmount === "0"
+              ? productDetails?.whole_price.toString()
+              : formattedAmount,
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
@@ -192,12 +220,22 @@ function PetshopproductDetails() {
         }
       );
 
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
+      if (response) {
+        // Store the cart items in local storage
+        // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        // const updatedCart = [...savedCartItems, productDetails];
+        // localStorage.setItem('cart', JSON.stringify(updatedCart));
+        if (response.data.status === "200") {
+          toast.success("Added to cart!");
+
+          // setAddToCartStatus("Added to cart!");
+          shippingpage(`/petshop-add-cart/${id}`);
+        } else {
+          // setAddToCartStatus(response.data.message);
+          toast.error("Already added");
+        }
+        // const updatedCart = [...addToCartStatus, productDetails];
+        // setAddToCartStatus(updatedCart);
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -753,6 +791,11 @@ function PetshopproductDetails() {
       quantity: quantity,
       tax_amount: Math.floor(Amount * 0.05),
       discount_on_item: "",
+      total_quantity:
+        selectedVariantStock.length > 0
+          ? selectedVariantStock
+          : productDetails?.stock,
+      return_order: productDetails?.returnable || "yes",
     };
     // Calculate the order_amount
     const orderAmount = parseInt(Amount) * 0.05 + parseInt(Amount) ?? 0;
@@ -866,6 +909,7 @@ function PetshopproductDetails() {
 
   return (
     <>
+    <Toaster />
       <PetShopHeader />
       {loading ? (
         <div className="text-center text-black mb-4">
@@ -951,6 +995,7 @@ function PetshopproductDetails() {
 
                 <div className="needplaceProduct">
                   <Row>
+                  {productDetails?.variations?.length > 0 && (
                     <Col sm={6}>
                       <div className="tab-container">
                         <h6>Variations</h6>
@@ -968,7 +1013,8 @@ function PetshopproductDetails() {
                                     }`}
                                     onClick={() => {
                                       setSelectedVariant(item.type);
-                                      setSelectedVariantPrice(item.price); // Store the price in state
+                                      setSelectedVariantPrice(item.wholeprice); 
+                                      setSelectedVariantStock(item.stock);
                                     }}
                                   >
                                     {item.type}
@@ -988,6 +1034,7 @@ function PetshopproductDetails() {
                         </Row>
                       </div>
                     </Col>
+                  )}
                     <Col sm={6}>
                       <div className="quantity-btn">
                         <button onClick={handleDecrementOne}>
@@ -1024,9 +1071,10 @@ function PetshopproductDetails() {
                         )} */}
                       {/* </Col> */}
                       <Col lg={4}>
-                        <h5>{`₹${
+                        {/* <h5>{`₹${
                           isNaN(formattedAmount) ? 0 : formattedAmount
-                        }`}</h5>
+                        }`}</h5> */}
+                        <h5>₹{productDetails.whole_price}</h5>
                       </Col>
                       {/* <Col lg={5}>
                         <h6>
@@ -1079,10 +1127,9 @@ function PetshopproductDetails() {
           {productDetails.stock && productDetails.stock.length !== 0 ? (
             <div className="productBTNaddcard">
               {verifiredIdaccess === 1 ? (
-                <Button>
+                <Button onClick={handleAddToCart}>
                   <Link
-                    to={`/petshop-add-cart/${id}`}
-                    onClick={handleAddToCart}
+                    // to={`/petshop-add-cart/${id}`}
                   >
                     <i className="fa fa-shopping-bag" /> Add to cart
                   </Link>
@@ -1386,6 +1433,7 @@ function PetshopproductDetails() {
 
                         <div className="needplaceProduct">
                           <Row>
+                          {productDetails?.variations?.length > 0 && (
                             <Col sm={6}>
                               <div className="tab-container">
                                 <h6>Variations</h6>
@@ -1405,7 +1453,7 @@ function PetshopproductDetails() {
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
                                                 setSelectedVariantPrice(
-                                                  item.price
+                                                  item.wholeprice
                                                 ); // Store the price in state
                                               }}
                                             >
@@ -1427,6 +1475,7 @@ function PetshopproductDetails() {
                                 </Row>
                               </div>
                             </Col>
+                          )}
                             <Col sm={6}>
                               <div className="quantity-btn quickbtn">
                                 <button onClick={handleDecrementOne}>
@@ -1455,17 +1504,18 @@ function PetshopproductDetails() {
                           <div className="product-deatils-price">
                             <Row>
                               {/* <Col lg={3}> */}
-                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
                               {/* <p>{`₹${wholesellervariationprice}`}</p> */}
                               {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
+                                "productDetails?.variations?.price: ",
+                                productDetails?.variations?.price
+                              )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${
+                                {/* <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
+                                 }`}</h5> */}
+                                {/* <p>{`₹${productDetails.whole_price}`}</p> */}
+                                <h5>{productDetails.whole_price}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -1992,7 +2042,7 @@ function PetshopproductDetails() {
                                       }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                        setSelectedVariantPrice(item.wholeprice); // Store the price in state
                                       }}
                                     >
                                       {item.type}
