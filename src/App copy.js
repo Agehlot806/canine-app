@@ -1,7 +1,7 @@
 import React from "react";
 import "./assets/css/style.css";
 import "./assets/css/responsive.css";
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./component/User/home";
 import Aboutus from "./component/User/about-us";
 import Service from "./component/User/service";
@@ -108,8 +108,6 @@ import PetshopPrivacypolicy from "./component/petShop/petshop-privacy-policy";
 import PetshopDisclaimer from "./component/petShop/petshop-disclaimer";
 import Petshoptestimonials from "./component/petShop/petshop-testimonials";
 import { useAuth } from "./component/context/AuthContext";
-import is from "date-fns/esm/locale/is/index";
-import { useEffect } from "react";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -122,215 +120,8 @@ const ScrollToTop = () => {
   return null;
 };
 
-const UsersRoutes = () => {
-  return (
-    <Routes>
-      {/* All Login Users */}
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/other-login" element={<Otherlogin />} />
-      <Route path="/otp" element={<Otp />} />
-      <Route path="/signup" element={<Signup />} />
-      {/* =============== User flow start routing ===================== */}
 
-      <Route path="/" element={<Home />} />
-      <Route path="/latestheader" element={<Latestheader />} />
-      <Route path="/nav" element={<Navber />} />
-      <Route path="/about-us" element={<Aboutus />} />
-      <Route path="/service" element={<Service />} />
-      <Route path="/product" element={<Product />} />
-      <Route
-        path="/sub-categoriesProduct/:name"
-        element={<SubcategoriesProduct />}
-      />
-      <Route path="/product-details/:id" element={<Productdetail />} />
-      <Route path="/quick-view/:id" element={<Quickview />} />
-      <Route path="/canine-product" element={<Canineproduct />} />
-      <Route path="/patners-product" element={<Patnersproduct />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/veterinary-service" element={<Veterinaryservice />} />
-      <Route path="/add-cart/:id" element={<Addcart />} />
-      <Route path="/add-cart" element={<Addcart />} />
-      <Route path="/service-date/:id" element={<Servicedate />} />
-      <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
-      <Route path="/pet-profile/" element={<Petprofile />} />
-      <Route path="/service-pet" element={<Servicepet />} />
-      <Route path="/our-brand" element={<Ourbrand />} />
-
-      <Route path="/our-our-brand/:id" element={<Ourourbrand />} />
-      <Route path="/shop-by-brand" element={<Shopbybrand />} />
-      <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
-      <Route path="/product-by-partner" element={<Productbypartner />} />
-
-      <Route path="/product-partner-shop/:vendor_id" element={<Productpartnershop />} />
-      <Route path="/product-partner-Oneshop" element={<Partneroneshop />} />
-      <Route path="/shipping/:id" element={<Shipping />} />
-
-      <Route path="/user-pay-method" element={<Userpaymethod />} />
-      <Route path="/map" element={<Map />} />
-      <Route path="/pet-category/:name/:id" element={<Petcategory />} />
-      <Route path="/cat-category" element={<Catcategory />} />
-      <Route path="/all-veterinary" element={<Allveterinary />} />
-      <Route path="/all-service-booking" element={<Allservicebooking />} />
-      <Route path="/wishlist-products" element={<Wishlistproduct />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog-details/:id" element={<Blogdetails />} />
-      <Route path="/update-profile" element={<Updateprofile />} />
-      {/* user flow links footer */}
-      <Route path="/delivery-details" element={<Deliverydetails />} />
-      <Route path="/return-policy" element={<Returnpolicy />} />
-      <Route path="/terms-of-use" element={<Termsofuse />} />
-      <Route path="/privacy-policy" element={<Privacypolicy />} />
-      <Route path="/disclaimer" element={<Disclaimer />} />
-      <Route path="/track-your-order/:id" element={<Trackyourorder />} />
-      <Route path="/track-your-order" element={<Trackyourorder />} />
-      <Route path="/testimonials" element={<Testimonials />} />
-      <Route path="/offers-details" element={<Offersdetails />} />
-
-      <Route path="/help-faqs" element={<Helpandfaqs />} />
-      <Route path="/my-orders" element={<Myorder />} />
-      <Route path="/sub-categoriesHeading/:heading" element={<SubcategoriesHeading />} />
-      <Route path="/transition-history" element={<Transitionhistory />} />
-
-
-      {/* =============== User flow end routing ===================== */}
-
-
-
-      {/* Add more routes specific to the wholesaler login type */}
-    </Routes>
-  );
-}
-const WholesalerRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/petshop-login" element={<PetshopLogin />} />
-      <Route path="/petshop-signup" element={<PetshopSignUp />} />
-      {/* Add more routes specific to the wholesaler login type */}
-      <Route path="/petshop-dashboard" element={<Petshopdashboard />} />
-      <Route path="/petshop-pet-category/:name/:id" element={<PetshopPetcategory />} />
-      <Route path="/petshop-my-orders" element={<PetshopMyorder />} />
-      <Route path="/petshop-update-profile" element={<PetshopUpdateprofile />} />
-      <Route path="/petshop-wishlist-product" element={<PetshopWishlistproduct />} />
-      <Route path="/petshop-our-brand" element={<PetshopOurbrand />} />
-      <Route path="/petshop-our-Ourbrand/:id" element={<PetshopOurourbrand />} />
-      <Route path="/petshop-shop-by-brand" element={<PetShopShopbybrand />} />
-      <Route path="/petshop-shop-by-brandList/:id" element={<PetshopShopbybrandlist />} />
-      <Route path="/petshop-productDetails/:id" element={<PetshopproductDetails />} />
-      <Route path="/petShop-subcategoriesProduct/:name" element={<PetShopSubcategoriesProduct />} />
-      <Route path="/petshop-contact" element={<PetshopContact />} />
-      <Route path="/petshop-transition-history" element={<PetshopTransitionHistory />} />
-
-      <Route path="/petshop-product" element={<Petshopproduct />} />
-      <Route path="/petshop-home" element={<PetshopHome />} />
-      <Route path="/petshop-product-by-partner" element={<PetshopProductbypartner />} />
-      <Route path="/petshop-add-cart/:id" element={<PetshopAddCart />} />
-      <Route path="/petshop-add-cart" element={<PetshopAddCart />} />
-      <Route path="/petshop-payment-method" element={<PetshopPaymentMethod />} />
-
-      <Route path="/petshop-pay" element={<Petshoppay />} />
-      <Route path="/petshop-shipping/:id" element={<PetshopShipping />} />
-      <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
-      <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
-      <Route path="/petShop-order-view-details/" element={<PetshopOrderviewdetails />} />
-
-
-
-      {/*======================== Pet shop flow start routing======================*/}
-
-      {/*======================== Pet shop Footer start ========================*/}
-      <Route path="/petshopfooter" element={<Petshopfooter />} />
-      <Route
-        path="/petshopdeliverydetails"
-        element={<Petshopdeliverydetails />}
-      />
-      <Route
-        path="/petshop-term-of-use"
-        element={<Petshoptermofuse />}
-      />
-      <Route
-        path="/petshop-privacy-policy"
-        element={<PetshopPrivacypolicy />}
-      />
-      <Route
-        path="/petshoptrackyourorde/:id"
-        element={<Petshoptrackyourorder />}
-      />
-      <Route
-        path="/petshoptrackyourorde"
-        element={<Petshoptrackyourorder />}
-      />
-      <Route
-        path="/petshopreturnpolicy"
-        element={<Petshopreturnpolicy />}
-      />
-      <Route path="/petshop-disclaimer" element={<PetshopDisclaimer />} />
-      <Route path="/petshopaboutus" element={<Petshopaboutus />} />
-      <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
-      <Route path="/petshop-testimonials" element={<Petshoptestimonials />} />
-      <Route path="/petshop-canine-product" element={<PetShopcanineproduct />} />
-      <Route path="/petshop-blog" element={<PetshopBlog />} />
-      <Route path="/petshop-blog-details/:id" element={<PetshopBlogdetails />} />
-      {/*======================== Pet shop Footer end========================*/}
-
-    </Routes>
-  );
-}
-const partnersRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/partners-login" element={<Partners />} />
-      {/* Add more routes specific to the wholesaler login type */}
-      {/*======================== partners flow start ========================*/}
-      <Route path="/partner-dashboad" element={<Partnerdashboard />} />
-      <Route path="/plan-buy" element={<Planbuy />} />
-      <Route path="/partner-card" element={<Partnercard />} />
-      <Route path="/pay" element={<Pay />} />
-      {/*======================== partners flow end ========================*/}
-    </Routes>
-  );
-}
-
-const SalesmanRoutes = () => {
-  return (
-    <Routes>
-      {/* Add more routes specific to the salesman login type */}
-      {/*======================== Sales Man flow start ========================*/}
-      <Route path="/salesman-signup" element={<Salesman />} />
-      <Route path="/salesman-login" element={<SalesmanLogin />} />
-      <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
-      <Route path="/salesman-add-product" element={<SalesmanaddProduct />} />
-      <Route path="/salesman-product-details" element={<SalesmanProductdetail />} />
-      <Route path="/salesman-add-cart" element={<SalesmanAddcart />} />
-      {/*======================== Sales Man flow end ========================*/}
-
-
-    </Routes>
-  );
-}
-
-export const AuthLoading = () => {
-  const { loginType, isAuthenticated } = useAuth()
-  return (
-    <Routes>
-      {
-        isAuthenticated ? null :
-          <>
-
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-          </>
-      }
-    </Routes>
-  )
-}
-
-const App = () => {
-  useEffect(() => {
-    const type = localStorage.getItem('loginType')
-    console.log('type', type)
-
-  }, [])
+function App() {
   return (
     <div
       className="cursor"
@@ -340,10 +131,9 @@ const App = () => {
 
         <BrowserRouter>
           <ScrollToTop /> {/* Add ScrollToTop component here */}
-          { }
           <Routes>
 
-            {/* =============== User flow start routing ===================== */}
+            {/* =============== User flow start routing ===================== */} 
 
             <Route path="/" element={<Home />} />
             <Route path="/latestheader" element={<Latestheader />} />
@@ -435,7 +225,7 @@ const App = () => {
             <Route path="/petshop-transition-history" element={<PetshopTransitionHistory />} />
 
             <Route path="/petshop-product" element={<Petshopproduct />} />
-            {/* petshop-product-details comment hi rahega  */}
+           {/* petshop-product-details comment hi rahega  */}
             {/* <Route
             path="/petshop-product-details/:id"
             element={<PetshopproductDetails />}

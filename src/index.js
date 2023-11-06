@@ -13,6 +13,7 @@ import "animate.css/animate.min.css";
 import { CartProvider } from './component/context/addToCartContext'
 import { NotificationProvider } from "./component/context/notificationContext";
 import { CartWithoutLoginProvider } from "./component/context/AddToCardWithoutLogin";
+import { AuthProvider } from "./component/context/AuthContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -20,7 +21,9 @@ root.render(
     <CartProvider>
       <NotificationProvider>
         <CartWithoutLoginProvider>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </CartWithoutLoginProvider>
       </NotificationProvider>
     </CartProvider>

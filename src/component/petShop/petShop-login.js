@@ -52,7 +52,7 @@ function PetshopLogin() {
             response.data.data[0].wallet_balance
           );
           localStorage.setItem("loginType", "wholeseller");
-          navigate("/petshop-dashboard");
+          navigate("/petshop-dashboard",{replace:true});
           toast.success("Successfully");
         } else if (response.data.message === "User Not Exit") {
           toast.error("User Not Exit");

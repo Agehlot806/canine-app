@@ -52,7 +52,7 @@ function Otp() {
           );
         }
         console.log("response.data.data: ", response.data.data);
-        navigate("/");
+        navigate("/",{replace: true});
         handleAddToCart(response.data.data[0].id)
       }
     } catch (error) {

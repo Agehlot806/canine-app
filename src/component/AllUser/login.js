@@ -25,7 +25,7 @@ function Login() {
       console.log(response.data);
       if (response.data.status == 200) {
         await localStorage.setItem("phone", phone);
-        navigate("/otp");
+        navigate("/otp",{replace: true});
       }
       // Handle response as needed
     } catch (error) {

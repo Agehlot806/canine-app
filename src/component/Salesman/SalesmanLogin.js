@@ -52,8 +52,10 @@ const SalesmanLogin = () => {
         .post(`${BASE_URL}/auth/delivery-man/login`, formData)
         .then((response) => {
           if (response.data.message === "Login Successfull") {
+            localStorage.setItem("salesmanId", response.data.data[0].id);
+            localStorage.setItem("loginType", "salesman");
             // ... (set local storage and navigate logic)
-            navigate("/salesman-dashboad");
+            navigate("/salesman-dashboad",{replace: true});
           } else if (response.data.message === "User Not Exit") {
             toast.error("User Not Exist");
           } else if (response.data.message === "Your Password Not Match") {
