@@ -15,7 +15,7 @@ function Wishlistproduct() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([fetchWishlistData(),
-      fetchWishlistDataId()])
+    fetchWishlistDataId()])
       .then(() => {
         setLoading(false);
       })
@@ -88,88 +88,90 @@ function Wishlistproduct() {
       <Toaster />
       <Newheader />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt=""/>
-        <h5>Please Wait.......</h5>
-      </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-         <section className="section-padding">
-        <Container>
-          <h1 className="main-head">Wishlist Products</h1>
-          <div className="needplace">
-            <Row>
-              {wishlistData && wishlistData.length > 0 ? (
-                wishlistData.map((item, index) => (
-                  <Col key={item.id} lg={3} sm={6} xs={6} className="mb-4">
-                    <div
-                      className="food-product"
-                      style={{
-                        background:
-                          gradientColors[index % gradientColors.length],
-                      }}
-                    >
-                      <i
-                        className="fa fa-trash"
-                        onClick={() => handleRemoveFromWishlist(item.id)}
-                      />
-                      <Link to="">
-                        <div className="text-center">
-                          {item.store_id &&
-                          item.store_id[0] &&
-                          item.store_id[0].image ? (
-                            <img
-                              src={
-                                "https://canine.hirectjob.in///storage/app/public/product/" +
-                                item.store_id[0].image
-                              }
-                              alt="Product"
-                            />
-                          ) : (
-                            <p>No Image</p>
-                          )}
+          <section className="section-padding">
+            <Container>
+              <h1 className="main-head">Wishlist Products</h1>
+              <div className="needplace">
+                <Row>
+                  {wishlistData && wishlistData.length > 0 ? (
+                    wishlistData.map((item, index) => (
+                      <Col key={item.id} lg={3} sm={6} xs={6} className="mb-4">
+                        <div
+                          className="food-product"
+                          style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}
+                        >
+                          <i
+                            className="fa fa-trash"
+                            onClick={() => handleRemoveFromWishlist(item.id)}
+                          />
+                          <Link to="">
+                            <div className="text-center">
+                              {item.store_id &&
+                                item.store_id[0] &&
+                                item.store_id[0].image ? (
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in///storage/app/public/product/" +
+                                    item.store_id[0].image
+                                  }
+                                  alt="Product"
+                                />
+                              ) : (
+                                <p>No Image</p>
+                              )}
+                            </div>
+                            <div>
+                              {item.store_id && item.store_id[0] ? (
+                                <>
+                                  <h6>{item.store_id[0].name}</h6>
+                                  <p>{item.store_id[0].description}</p>
+                                </>
+                              ) : (
+                                <p>No Product Data</p>
+                              )}
+                            </div>
+                            {item.store_id && item.store_id[0] ? (
+                              <div className="product-bag">
+                                <Row>
+                                  <Col>
+                                    <p>₹800.00</p>
+                                  </Col>
+                                  <Col>
+                                    <h5>Save {item.store_id[0].discount}%</h5>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col className="align-self-center">
+                                    <h4>₹{item.store_id[0].price}</h4>
+                                  </Col>
+                                </Row>
+                              </div>
+                            ) : null}
+                          </Link>
                         </div>
-                        <div>
-                          {item.store_id && item.store_id[0] ? (
-                            <>
-                              <h6>{item.store_id[0].name}</h6>
-                              <p>{item.store_id[0].description}</p>
-                            </>
-                          ) : (
-                            <p>No Product Data</p>
-                          )}
-                        </div>
-                        {item.store_id && item.store_id[0] ? (
-                          <div className="product-bag">
-                            <Row>
-                              <Col>
-                                <p>₹800.00</p>
-                              </Col>
-                              <Col>
-                                <h5>Save {item.store_id[0].discount}%</h5>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col className="align-self-center">
-                                <h4>₹{item.store_id[0].price}</h4>
-                              </Col>
-                            </Row>
-                          </div>
-                        ) : null}
-                      </Link>
-                    </div>
-                  </Col>
-                ))
-              ) : (
-                <p className="emptyMSG">No Wishlist Products</p>
-              )}
-            </Row>
-          </div>
-        </Container>
-      </section>
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="emptyMSG">No Wishlist Products</p>
+                  )}
+                </Row>
+              </div>
+            </Container>
+          </section>
         </>
       )}
-     
+
 
       <Footer />
     </>

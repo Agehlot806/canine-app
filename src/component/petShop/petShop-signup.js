@@ -149,11 +149,11 @@ function PetshopSignUp() {
         console.log("error in zone list", error);
       });
   };
- 
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([ GetdataAll(),
-      getZoneList()])
+    Promise.all([GetdataAll(),
+    getZoneList()])
       .then(() => {
         setLoading(false);
       })
@@ -209,303 +209,304 @@ function PetshopSignUp() {
     <>
       <Toaster />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt="" />
-        <h5>Please Wait.......</h5>
-      </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <div className="users-bg">
-        <Container>
-          <div className="text-center">
-          <Link to="/"><img src={logo} /></Link>
-          </div>
-          <div>
-            <Row>
-              <Col lg={7}>
-                <div className="form-area">
-                  <h1 className="main-head">Lorem Ipsum is simply</h1>
-                  <p>
-                    Enter your mobile number to Sign up/Sign in to your logo
-                    account
-                  </p>
-                  <Form onSubmit={handleFormSubmit}>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>First Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="f_name"
-                        placeholder="First Name"
-                        value={firstName}
-                        onChange={handleFirstNameChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Last Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="l_name"
-                        placeholder="Last Name"
-                        value={lastName}
-                        onChange={handleLastNameChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Date of Registration</Form.Label>
-                      <Form.Control
-                        type="date"
-                        name="dateofbirth"
-                        placeholder="Date of Birth"
-                        value={dateOfBirth}
-                        // onChange={(e) => setDateOfBirth(e.target.value)}
-                        onChange={(e) => {
-                          // Check if the entered value is in the "YYYY-MM-DD" format
-                          const value = e.target.value;
-                          if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-                            setDateOfBirth(value);
-                          }
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Email ID</Form.Label>
-                      <Form.Control
-                        type="email"
-                        name="email"
-                        placeholder="Email ID"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          setIsEmailValid(isEmailFormatValid(e.target.value));
-                        }}
-                        isInvalid={!isEmailValid}
-                      />
-                      {!isEmailValid && (
-                        <Form.Control.Feedback type="invalid">
-                          {/[A-Z]/.test(email) && !email.includes("@")
-                            ? "Email should not contain capital letters and must include '@'."
-                            : "Please enter a valid email address."}
-                        </Form.Control.Feedback>
-                      )}
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Mobile Number</Form.Label>
-                      <Form.Control
-                        type="tel"
-                        name="phone"
-                        placeholder="Mobile Number"
-                        value={mobileNumber}
-                        onChange={(e) => {
-                          const numericValue = e.target.value.replace(
-                            /[^0-9+]/g,
-                            ""
-                          ); // Remove non-numeric characters
-                          if (numericValue.length <= 10) {
-                            setMobileNumber(numericValue);
-                          }
-                        }}
-                      />
-                    </Form.Group>
-                    <div className="row mb-3">
-                      <div className="col">
-                        <div className="form-group">
-                        <Form.Label>State</Form.Label>
-                          <select
-                            className="form-control"
-                            onChange={Subscription}
-                            value={stateData}
-                          >
-                            <option>State Choose...</option>
-                            {stateall.map((items) => (
-                              <option value={items.id} key={items.id}>
-                                {items.state_name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                      <div className="col">
-                        <div className="form-group">
-                        <Form.Label>City</Form.Label>
-                          <select
-                            className="form-control"
-                            onChange={(e) => setSelectedCity(e.target.value)}
-                            value={selectedCity}
-                          >
-                            <option value="">City Choose...</option>
-                            {stateallCity.map((items) => (
-                              <option value={items.id} key={items.id}>
-                                {items.city_name}
-                              </option>
-                            ))}
-                          </select>
-                          {/* {formValid.cityname && (
+          <div className="users-bg">
+            <Container>
+              <div className="text-center">
+                <Link to="/"><img src={logo} /></Link>
+              </div>
+              <div>
+                <Row>
+                  <Col lg={7}>
+                    <div className="form-area">
+                      <h1 className="main-head">Lorem Ipsum is simply</h1>
+                      <p>
+                        Enter your mobile number to Sign up/Sign in to your logo
+                        account
+                      </p>
+                      <Form onSubmit={handleFormSubmit}>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>First Name</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="f_name"
+                            placeholder="First Name"
+                            value={firstName}
+                            onChange={handleFirstNameChange}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Last Name</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="l_name"
+                            placeholder="Last Name"
+                            value={lastName}
+                            onChange={handleLastNameChange}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Date of Registration</Form.Label>
+                          <Form.Control
+                            type="date"
+                            name="dateofbirth"
+                            placeholder="Date of Birth"
+                            value={dateOfBirth}
+                            // onChange={(e) => setDateOfBirth(e.target.value)}
+                            onChange={(e) => {
+                              // Check if the entered value is in the "YYYY-MM-DD" format
+                              const value = e.target.value;
+                              if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                                setDateOfBirth(value);
+                              }
+                            }}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Email ID</Form.Label>
+                          <Form.Control
+                            type="email"
+                            name="email"
+                            placeholder="Email ID"
+                            value={email}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                              setIsEmailValid(isEmailFormatValid(e.target.value));
+                            }}
+                            isInvalid={!isEmailValid}
+                          />
+                          {!isEmailValid && (
+                            <Form.Control.Feedback type="invalid">
+                              {/[A-Z]/.test(email) && !email.includes("@")
+                                ? "Email should not contain capital letters and must include '@'."
+                                : "Please enter a valid email address."}
+                            </Form.Control.Feedback>
+                          )}
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Mobile Number</Form.Label>
+                          <Form.Control
+                            type="tel"
+                            name="phone"
+                            placeholder="Mobile Number"
+                            value={mobileNumber}
+                            onChange={(e) => {
+                              const numericValue = e.target.value.replace(
+                                /[^0-9+]/g,
+                                ""
+                              ); // Remove non-numeric characters
+                              if (numericValue.length <= 10) {
+                                setMobileNumber(numericValue);
+                              }
+                            }}
+                          />
+                        </Form.Group>
+                        <div className="row mb-3">
+                          <div className="col">
+                            <div className="form-group">
+                              <Form.Label>State</Form.Label>
+                              <select
+                                className="form-control"
+                                onChange={Subscription}
+                                value={stateData}
+                              >
+                                <option>State Choose...</option>
+                                {stateall.map((items) => (
+                                  <option value={items.id} key={items.id}>
+                                    {items.state_name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col">
+                            <div className="form-group">
+                              <Form.Label>City</Form.Label>
+                              <select
+                                className="form-control"
+                                onChange={(e) => setSelectedCity(e.target.value)}
+                                value={selectedCity}
+                              >
+                                <option value="">City Choose...</option>
+                                {stateallCity.map((items) => (
+                                  <option value={items.id} key={items.id}>
+                                    {items.city_name}
+                                  </option>
+                                ))}
+                              </select>
+                              {/* {formValid.cityname && (
                         <span style={{ color: "red" }}>City is required</span>
                       )} */}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Business Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="business_name"
-                        placeholder="Business Name"
-                        value={businessName}
-                        onChange={(e) => setBusinessName(e.target.value)}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Aadhar Number</Form.Label>
-                      <Form.Control
-                        type="tel"
-                        name="aadhar_number"
-                        placeholder="Aadhar Number"
-                        value={aadharNumber}
-                        onChange={(e) => {
-                          const numericValue = e.target.value.replace(
-                            /[^0-9+]/g,
-                            ""
-                          ); // Remove non-numeric characters
-                          if (numericValue.length <= 12) {
-                            setAadharNumber(numericValue);
-                          }
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>GST Number</Form.Label>
-                      <Form.Control
-                        type="tel"
-                        name="gst_number"
-                        placeholder="GST Number"
-                        value={gstNumber}
-                        onChange={(e) => {
-                          const numericValue = e.target.value.replace(
-                            /[^a-zA-Z0-9]/g,
-                            ""
-                          ); // Remove non-numeric characters
-                          if (numericValue.length <= 15) {
-                            setGstNumber(numericValue);
-                          }
-                        }}
-                      />
-                    </Form.Group>
-                    <Row className="mb-3">
-                      <Form.Group as={Col}>
-                        <Form.Label>Zone</Form.Label>
-                        <Form.Select
-                          defaultValue="Select Zone"
-                          name="zone"
-                          onChange={(e) => {
-                            setZonedata(e.target.value)
-                          }}
-                        >
-                          <option value={""}>Select Zone</option>
-                          {zoneList.map((zonedata) => (
-                            <option value={zonedata.id}>{zonedata.name}</option>
-                          ))}
-                        </Form.Select>
-                      </Form.Group>
-                    </Row>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Pincode</Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="pincode"
-                        placeholder="Pincode"
-                        onChange={(e) => {
-                          setPincode(e.target.value)
-                        }}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Password</Form.Label>
-                    <div className="form-area eyeicon">
-                      <Form.Control
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                          setIsPasswordValid(e.target.value.length >= 8);
-                          setHasSpecialCharacter(
-                            /[^A-Za-z0-9]/.test(e.target.value)
-                          );
-                        }}
-                        isInvalid={!isPasswordValid || !hasSpecialCharacter}
-                      />
-                      <button
-                          type="button"
-                          // className="btn btn-secondary"
-                          style={{
-                            border: "none",
-                            borderRadius: "37.75px",
-                            height: "55px",
-                          }}
-                          onClick={togglePassword}
-                        >
-                          <i
-                            className={`fa ${
-                              showPassword ? "fa-eye" : "fa-eye-slash"
-                            }`}
-                            aria-hidden="true"
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Business Name</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="business_name"
+                            placeholder="Business Name"
+                            value={businessName}
+                            onChange={(e) => setBusinessName(e.target.value)}
                           />
-                        </button>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Aadhar Number</Form.Label>
+                          <Form.Control
+                            type="tel"
+                            name="aadhar_number"
+                            placeholder="Aadhar Number"
+                            value={aadharNumber}
+                            onChange={(e) => {
+                              const numericValue = e.target.value.replace(
+                                /[^0-9+]/g,
+                                ""
+                              ); // Remove non-numeric characters
+                              if (numericValue.length <= 12) {
+                                setAadharNumber(numericValue);
+                              }
+                            }}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>GST Number</Form.Label>
+                          <Form.Control
+                            type="tel"
+                            name="gst_number"
+                            placeholder="GST Number"
+                            value={gstNumber}
+                            onChange={(e) => {
+                              const numericValue = e.target.value.replace(
+                                /[^a-zA-Z0-9]/g,
+                                ""
+                              ); // Remove non-numeric characters
+                              if (numericValue.length <= 15) {
+                                setGstNumber(numericValue);
+                              }
+                            }}
+                          />
+                        </Form.Group>
+                        <Row className="mb-3">
+                          <Form.Group as={Col}>
+                            <Form.Label>Zone</Form.Label>
+                            <Form.Select
+                              defaultValue="Select Zone"
+                              name="zone"
+                              onChange={(e) => {
+                                setZonedata(e.target.value)
+                              }}
+                            >
+                              <option value={""}>Select Zone</option>
+                              {zoneList.map((zonedata) => (
+                                <option value={zonedata.id}>{zonedata.name}</option>
+                              ))}
+                            </Form.Select>
+                          </Form.Group>
+                        </Row>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Pincode</Form.Label>
+                          <Form.Control
+                            type="number"
+                            name="pincode"
+                            placeholder="Pincode"
+                            onChange={(e) => {
+                              setPincode(e.target.value)
+                            }}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGroupEmail">
+                          <Form.Label>Password</Form.Label>
+                          <div className="form-area eyeicon">
+                            <Form.Control
+                              type={showPassword ? "text" : "password"}
+                              name="password"
+                              placeholder="Password"
+                              value={password}
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                                setIsPasswordValid(e.target.value.length >= 8);
+                                setHasSpecialCharacter(
+                                  /[^A-Za-z0-9]/.test(e.target.value)
+                                );
+                              }}
+                              isInvalid={!isPasswordValid || !hasSpecialCharacter}
+                            />
+                            <button
+                              type="button"
+                              // className="btn btn-secondary"
+                              style={{
+                                border: "none",
+                                borderRadius: "37.75px",
+                                height: "55px",
+                              }}
+                              onClick={togglePassword}
+                            >
+                              <i
+                                className={`fa ${showPassword ? "fa-eye" : "fa-eye-slash"
+                                  }`}
+                                aria-hidden="true"
+                              />
+                            </button>
+                          </div>
+                          {(!isPasswordValid || !hasSpecialCharacter) && (
+                            <Form.Control.Feedback type="invalid">
+                              Your password should be at least 8 characters and
+                              contain at least one special character.
+                            </Form.Control.Feedback>
+                          )}
+                        </Form.Group>
+                        <Row className="mb-3">
+                          <Form.Group as={Col} controlId="formGridState">
+                            <Form.Label>Upload 1</Form.Label>
+                            <Form.Control
+                              type="file"
+                              multiple
+                              onChange={(e) => setUpload1(e.target.files)}
+                            />
+                          </Form.Group>
+                          <Form.Group as={Col} controlId="formGridCity">
+                            <Form.Label>Upload 2</Form.Label>
+                            <Form.Control
+                              type="file"
+                              multiple
+                              onChange={(e) => setUpload2(e.target.files)}
+                            />
+                          </Form.Group>
+                        </Row>
+                        <div className="login-btns">
+                          <Button variant="primary" type="submit">
+                            SignUp
+                          </Button>
                         </div>
-                      {(!isPasswordValid || !hasSpecialCharacter) && (
-                        <Form.Control.Feedback type="invalid">
-                          Your password should be at least 8 characters and
-                          contain at least one special character.
-                        </Form.Control.Feedback>
-                      )}
-                    </Form.Group>
-                    <Row className="mb-3">
-                      <Form.Group as={Col} controlId="formGridState">
-                        <Form.Label>Upload 1</Form.Label>
-                        <Form.Control
-                          type="file"
-                          multiple
-                          onChange={(e) => setUpload1(e.target.files)}
-                        />
-                      </Form.Group>
-                      <Form.Group as={Col} controlId="formGridCity">
-                        <Form.Label>Upload 2</Form.Label>
-                        <Form.Control
-                          type="file"
-                          multiple
-                          onChange={(e) => setUpload2(e.target.files)}
-                        />
-                      </Form.Group>
-                    </Row>
-                    <div className="login-btns">
-                      <Button variant="primary" type="submit">
-                        SignUp
-                      </Button>
-                    </div>
-                    {/* {error && (
+                        {/* {error && (
                       <div className="error-message">
                         Please fill in all required fields.
                       </div>
                     )} */}
-                    {/* <ToastContainer
+                        {/* <ToastContainer
                       position="top-right"
                       autoClose={5000}
                       containerId="form-toast"
                     /> */}
-                  </Form>
-                </div>
-              </Col>
-              <Col lg={5}>
-                <div className="login-img">
-                  <img src={login} className="bounce-in"/>
-                </div>
-              </Col>
-            </Row>
+                      </Form>
+                    </div>
+                  </Col>
+                  <Col lg={5}>
+                    <div className="login-img">
+                      <img src={login} className="bounce-in" />
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Container>
           </div>
-        </Container>
-      </div>
         </>
       )}
     </>

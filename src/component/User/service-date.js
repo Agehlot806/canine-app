@@ -71,13 +71,13 @@ function Servicedate() {
 
   useEffect(() => {
     fetchBookedSlotTimes();
-  }, [id]); 
+  }, [id]);
 
   const fetchBookedSlotTimes = async () => {
     try {
       const response = await fetch(`${BASE_URL}/banners/get_allservicebooking`);
       const jsonData = await response.json();
-      const bookedTimes = jsonData.data.map((booking) => booking.slot); 
+      const bookedTimes = jsonData.data.map((booking) => booking.slot);
       setBookedSlotTimes(bookedTimes);
     } catch (error) {
       console.error("Error fetching booked slot times:", error);
@@ -205,22 +205,24 @@ function Servicedate() {
       <Toaster />
       <Newheader />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt=""/>
-        <h5>Please Wait.......</h5>
-      </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={service} />
-        </div>
-      </Container>
+          <Container fluid className="p-0">
+            <div className="all-bg">
+              <img src={service} />
+            </div>
+          </Container>
 
-      <section className="section-padding">
-        <Container>
-          <div>
-            {/* <DatePicker
+          <section className="section-padding">
+            <Container>
+              <div>
+                {/* <DatePicker
               selected={startDate}
               onChange={onChange}
               minDate={new Date()}
@@ -231,19 +233,19 @@ function Servicedate() {
               inline
               showDisabledMonthNavigation
             /> */}
-          </div>
-          <div className="service-dateCart">
-            <div className="month-name">
-              {slotday?.length > 1 ? (
-                <h4>
-                  {moment(slotday[1].slot_date).format("MMMM Do YYYY").split("", 3)}
-                </h4>
-              ) : (
-                <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
-              )} 
-            </div>
-            <div className="sevice-select-date">
-              {/* <DatePicker
+              </div>
+              <div className="service-dateCart">
+                <div className="month-name">
+                  {slotday?.length > 1 ? (
+                    <h4>
+                      {moment(slotday[1].slot_date).format("MMMM Do YYYY").split("", 3)}
+                    </h4>
+                  ) : (
+                    <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
+                  )}
+                </div>
+                <div className="sevice-select-date">
+                  {/* <DatePicker
                 selected={startDate}
                 onChange={onChange}
                 minDate={new Date()}
@@ -259,159 +261,159 @@ function Servicedate() {
                 //   setTimingSlot(item.slot_timing);
                 // }}
               /> */}
-              <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                {slotday?.length > 0 ? (
-                  slotday.map((item, index) => (
-                    <li className="nav-item" key={index}>
-                      <a
-                        className="nav-link"
-                        id="Set-tab"
-                        data-toggle="pill"
-                        href="#Set"
-                        role="tab"
-                        aria-controls="Set"
-                        aria-selected="true"
-                        onClick={() => {
-                          setTimingSlot(item.slot_timing);
-                        }}
-                      >
-                        {moment(item.slot_date).format("dddd").split("", 3)} <br />
-                        <span>
-                          {moment(item.slot_date).format("D")}
-                        </span>
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <p className="emptyMSG">{stringes.invalidDate}</p>
-                )}
-              </ul>
-            </div>
-          </div>
-          <div className="needplace">
-            <div className="tab-content" id="pills-tabContent">
-              <div
-                className="tab-pane fade show"
-                id="Set"
-                role="tabpanel"
-                aria-labelledby="Set-tab"
-              >
-                <div className="selectService-date">
-                  <h2>{stringes.time}</h2>
-                  <ul className="nav nav-pills mb-3" role="tablist">
-                    {timingSlot && timingSlot.length > 0 ? (
-                      timingSlot.map((item, index) => (
+                  <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    {slotday?.length > 0 ? (
+                      slotday.map((item, index) => (
                         <li className="nav-item" key={index}>
                           <a
-                            className={`nav-link ${bookedSlotTimes.includes(item) ? 'disabled' : ''}`}
+                            className="nav-link"
+                            id="Set-tab"
                             data-toggle="pill"
+                            href="#Set"
                             role="tab"
+                            aria-controls="Set"
                             aria-selected="true"
                             onClick={() => {
-                              setBookingSlot(item);
+                              setTimingSlot(item.slot_timing);
                             }}
                           >
-                            {item}
+                            {moment(item.slot_date).format("dddd").split("", 3)} <br />
+                            <span>
+                              {moment(item.slot_date).format("D")}
+                            </span>
                           </a>
                         </li>
                       ))
                     ) : (
-                      <p className="emptyMSG">{stringes.noSlot}</p>
+                      <p className="emptyMSG">{stringes.invalidDate}</p>
                     )}
                   </ul>
                 </div>
               </div>
-            </div>
-
-            {!petType.length > 0 ? null : (
-              <div className="add-petbtn">
-                <Button>
-                  <Link to={`/service-add-pet/${id}`}>{stringes.addPet}</Link>
-                </Button>
-              </div>
-            )}
-
-            <div className="form-pet mt-4">
-              <form>
-                <div className="form-group">
-                  <select
-                    className="form-control"
-                    onChange={(e) => setPetData(e.target.value)}
-                    value={petData}
+              <div className="needplace">
+                <div className="tab-content" id="pills-tabContent">
+                  <div
+                    className="tab-pane fade show"
+                    id="Set"
+                    role="tabpanel"
+                    aria-labelledby="Set-tab"
                   >
-                    <option>Choose</option>
-                    {petType &&
-                      petType.map((item) => (
-                        <option key={item.id}>{item.name}</option>
-                      ))}
-                  </select>
-                  {/* {formValid.petName && (
+                    <div className="selectService-date">
+                      <h2>{stringes.time}</h2>
+                      <ul className="nav nav-pills mb-3" role="tablist">
+                        {timingSlot && timingSlot.length > 0 ? (
+                          timingSlot.map((item, index) => (
+                            <li className="nav-item" key={index}>
+                              <a
+                                className={`nav-link ${bookedSlotTimes.includes(item) ? 'disabled' : ''}`}
+                                data-toggle="pill"
+                                role="tab"
+                                aria-selected="true"
+                                onClick={() => {
+                                  setBookingSlot(item);
+                                }}
+                              >
+                                {item}
+                              </a>
+                            </li>
+                          ))
+                        ) : (
+                          <p className="emptyMSG">{stringes.noSlot}</p>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {!petType.length > 0 ? null : (
+                  <div className="add-petbtn">
+                    <Button>
+                      <Link to={`/service-add-pet/${id}`}>{stringes.addPet}</Link>
+                    </Button>
+                  </div>
+                )}
+
+                <div className="form-pet mt-4">
+                  <form>
+                    <div className="form-group">
+                      <select
+                        className="form-control"
+                        onChange={(e) => setPetData(e.target.value)}
+                        value={petData}
+                      >
+                        <option>Choose</option>
+                        {petType &&
+                          petType.map((item) => (
+                            <option key={item.id}>{item.name}</option>
+                          ))}
+                      </select>
+                      {/* {formValid.petName && (
                     <span style={{ color: "red" }}>Pet is required</span>
                   )} */}
-                </div>
-
-                <div className="row">
-                  <div className="col">
-                    <div className="form-group">
-                      <select
-                        className="form-control"
-                        onChange={Subscription}
-                        value={state}
-                      >
-                        <option>State Choose...</option>
-                        {stateall.map((items) => (
-                          <option value={items.id} key={items.id}>
-                            {items.state_name}
-                          </option>
-                        ))}
-                      </select>
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="form-group">
-                      <select
-                        className="form-control"
-                        onChange={(e) => setSelectedCity(e.target.value)}
-                        value={selectedCity}
-                      >
-                        <option>City Choose...</option>
-                        {stateallCity.map((items) => (
-                          <option>{items.city_name}</option>
-                        ))}
-                      </select>
-                      {/* {formValid.cityname && (
+
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-group">
+                          <select
+                            className="form-control"
+                            onChange={Subscription}
+                            value={state}
+                          >
+                            <option>State Choose...</option>
+                            {stateall.map((items) => (
+                              <option value={items.id} key={items.id}>
+                                {items.state_name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <select
+                            className="form-control"
+                            onChange={(e) => setSelectedCity(e.target.value)}
+                            value={selectedCity}
+                          >
+                            <option>City Choose...</option>
+                            {stateallCity.map((items) => (
+                              <option>{items.city_name}</option>
+                            ))}
+                          </select>
+                          {/* {formValid.cityname && (
                         <span style={{ color: "red" }}>City is required</span>
                       )} */}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <input
-                    type="tel"
-                    maxLength={10}
-                    className="form-control"
-                    placeholder="+91 00000000"
-                    onChange={(e) =>
-                      setMobile(e.target.value.replace(/[^0-9+]/g, ""))
-                    }
-                    value={mobile}
-                  />
-                  {/* {formValid.mobile && (
+                    <div className="form-group">
+                      <input
+                        type="tel"
+                        maxLength={10}
+                        className="form-control"
+                        placeholder="+91 00000000"
+                        onChange={(e) =>
+                          setMobile(e.target.value.replace(/[^0-9+]/g, ""))
+                        }
+                        value={mobile}
+                      />
+                      {/* {formValid.mobile && (
                     <span style={{ color: "red" }}>
                       Mobile Number is required
                     </span>
                   )} */}
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-            <div className="add-petbtn">
-              <Button onClick={(e) => handleSubmit(e)}>
-                <Link>{stringes.submit}</Link>
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+                <div className="add-petbtn">
+                  <Button onClick={(e) => handleSubmit(e)}>
+                    <Link>{stringes.submit}</Link>
+                  </Button>
+                </div>
+              </div>
+            </Container>
+          </section>
         </>
       )}
       <Footer />

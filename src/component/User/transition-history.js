@@ -22,12 +22,12 @@ const Transitionhistory = () => {
 
   const Allfetchdata = async () => {
     try {
-        const response = await axios.get(`https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedUserId}`);
-        setTransactionData(response.data.data);
+      const response = await axios.get(`https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedUserId}`);
+      setTransactionData(response.data.data);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([Allfetchdata()])
@@ -71,10 +71,12 @@ const Transitionhistory = () => {
       <section className="section-padding">
         <Container>
           {transactionData.length === 0 ? (
-            <div className="loaderimg text-center text-black mb-4">
-            <img src={loadinggif} alt=""/>
-            <h5>Please Wait.......</h5>
-          </div>
+            <section className="section-padding mt-3 mb-3">
+              <div className="loaderimg text-center text-black mb-4">
+                <img src={loadinggif} alt="" />
+                <h5>Please Wait.......</h5>
+              </div>
+            </section>
           ) : (
             <>
               {/* Transaction list */}

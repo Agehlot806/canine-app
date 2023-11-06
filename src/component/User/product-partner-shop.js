@@ -1247,10 +1247,13 @@ function Productpartnershop() {
     <>
       <Toaster />
       <Newheader />
-      {loading ? (<div className="loaderimg text-center text-black mb-4">
+      {loading ? (
+      <section className="section-padding mt-3 mb-3">
+      <div className="loaderimg text-center text-black mb-4">
         <img src={loadinggif} alt="" />
         <h5>Please Wait.......</h5>
-      </div>) : (
+      </div>
+      </section>) : (
         <>
           <Container fluid className="p-0">
             <div className="home-section">

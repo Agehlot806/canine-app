@@ -147,22 +147,24 @@ function Petprofile() {
       <Toaster />
       <Newheader />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt=""/>
-        <h5>Please Wait.......</h5>
-      </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={banner} />
-        </div>
-      </Container>
-      <section className="section-padding">
-        <Container>
-          <div className="add-upload-area">
-            <form>
-              {/* <div className="form-group add-upload">
+          <Container fluid className="p-0">
+            <div className="all-bg">
+              <img src={banner} />
+            </div>
+          </Container>
+          <section className="section-padding">
+            <Container>
+              <div className="add-upload-area">
+                <form>
+                  {/* <div className="form-group add-upload">
                 <label htmlFor="exampleFormControlFile1">
                   {strings.uploadImage}
                   <i class="fa fa-upload" />
@@ -174,145 +176,145 @@ function Petprofile() {
                   onChange={(e) => setimage(e.target.files[0])}
                 />
               </div> */}
-              <div className="form-group add-upload">
-                <label htmlFor="exampleFormControlFile1">
-                  {imagedata ? imagedata.name : 'Choose File'}
-                  <i className="fa fa-upload" />
-                </label>
-                <input
-                  type="file"
-                  className="form-control-file"
-                  id="exampleFormControlFile1"
-                  onChange={handleFileChange}
-                  onInput={(e) => setimage(e.target.files[0])}
-                />
-              </div>
-              <div className="needplace">
-                <Row>
-                  {selectedCategory && (
-                    <div className="selectedCategory">
-                      <h2>Avatar</h2>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in//storage/app/public/category/" +
-                          selectedCategory.image
-                        }
-                        alt={selectedCategory.name}
-                      />
-                    </div>
-                  )}
-                </Row>
-                <Row>
-                  <Col lg={10}>
-                    <div className="form-group">
-                      <label>{strings.petType}</label>
-                      <ul className="nav nav-pills mb-3" role="tablist">
-                        {categories &&
-                          categories.map((item) => (
-                            <li className="nav-item" key={item.id}>
+                  <div className="form-group add-upload">
+                    <label htmlFor="exampleFormControlFile1">
+                      {imagedata ? imagedata.name : 'Choose File'}
+                      <i className="fa fa-upload" />
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control-file"
+                      id="exampleFormControlFile1"
+                      onChange={handleFileChange}
+                      onInput={(e) => setimage(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="needplace">
+                    <Row>
+                      {selectedCategory && (
+                        <div className="selectedCategory">
+                          <h2>Avatar</h2>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/public/category/" +
+                              selectedCategory.image
+                            }
+                            alt={selectedCategory.name}
+                          />
+                        </div>
+                      )}
+                    </Row>
+                    <Row>
+                      <Col lg={10}>
+                        <div className="form-group">
+                          <label>{strings.petType}</label>
+                          <ul className="nav nav-pills mb-3" role="tablist">
+                            {categories &&
+                              categories.map((item) => (
+                                <li className="nav-item" key={item.id}>
+                                  <a
+                                    className="nav-link"
+                                    data-toggle="pill"
+                                    role="tab"
+                                    aria-selected="true"
+                                    onClick={() => setSelectedCategory(item)}
+                                    onInput={(e) => setpets_type(e.target.value)}
+                                  >
+                                    {item.name}
+                                  </a>
+                                </li>
+                              ))}
+                          </ul>
+                        </div>
+                        <div className="form-group">
+                          <label>{strings.gender}</label>
+                          <ul className="nav nav-pills mb-3" role="tablist">
+                            <li className="nav-item">
                               <a
-                                className="nav-link"
+                                className={`nav-link ${gender === "Male" ? "active" : "inactive"
+                                  }`}
+                                onClick={() => handleGenderChange("Male")}
+                              >
+                                {strings.male}
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                className={`nav-link ${gender === "Female" ? "active" : "inactive  "
+                                  }`}
+                                onClick={() => handleGenderChange("Female")}
+                              >
+                                {strings.female}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="form-group">
+                          <label>{strings.breed}</label>
+                          <select
+                            className="form-control"
+                            value={breeds}
+                            onChange={(e) => setbreeds(e.target.value)}
+                          >
+                            {/* <option>{strings.choose}</option> */}
+                            <option value="" disabled selected>{strings.choose}</option>
+                            {selectbreed &&
+                              selectbreed.map((item) => (
+                                <option key={item.id}>{item.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                        <div className="form-group">
+                          <label>{strings.dob}</label>
+                          <input
+                            className="form-control"
+                            placeholder="DOB"
+                            type="date"
+                            onChange={handleDateChange}
+                            value={selectedDate.toISOString().slice(0, 10)}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>{strings.age}</label>
+                          <ul className="nav nav-pills mb-3" role="tablist">
+                            <li className="nav-item">
+                              <a
+                                className="nav-link active"
                                 data-toggle="pill"
                                 role="tab"
                                 aria-selected="true"
-                                onClick={() => setSelectedCategory(item)}
-                                onInput={(e) => setpets_type(e.target.value)}
                               >
-                                {item.name}
+                                {strings.year} {years} {strings.month} {months}
                               </a>
                             </li>
-                          ))}
-                      </ul>
-                    </div>
-                    <div className="form-group">
-                      <label>{strings.gender}</label>
-                      <ul className="nav nav-pills mb-3" role="tablist">
-                        <li className="nav-item">
-                          <a
-                            className={`nav-link ${gender === "Male" ? "active" : "inactive"
-                              }`}
-                            onClick={() => handleGenderChange("Male")}
-                          >
-                            {strings.male}
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            className={`nav-link ${gender === "Female" ? "active" : "inactive  "
-                              }`}
-                            onClick={() => handleGenderChange("Female")}
-                          >
-                            {strings.female}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="form-group">
-                      <label>{strings.breed}</label>
-                      <select
-                        className="form-control"
-                        value={breeds}
-                        onChange={(e) => setbreeds(e.target.value)}
-                      >
-                        {/* <option>{strings.choose}</option> */}
-                        <option value="" disabled selected>{strings.choose}</option>
-                        {selectbreed &&
-                          selectbreed.map((item) => (
-                            <option key={item.id}>{item.name}</option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label>{strings.dob}</label>
-                      <input
-                        className="form-control"
-                        placeholder="DOB"
-                        type="date"
-                        onChange={handleDateChange}
-                        value={selectedDate.toISOString().slice(0, 10)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>{strings.age}</label>
-                      <ul className="nav nav-pills mb-3" role="tablist">
-                        <li className="nav-item">
-                          <a
-                            className="nav-link active"
-                            data-toggle="pill"
-                            role="tab"
-                            aria-selected="true"
-                          >
-                            {strings.year} {years} {strings.month} {months}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="form-group">
-                      <label>{strings.petName}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Pet Name"
-                        value={pet_name}
-                        onChange={(e) => setpet_name(e.target.value)}
-                        onKeyPress={(e) => {
-                          // Check if the pressed key is a character (letter)
-                          if (!/^[a-zA-Z ]+$/.test(e.key)) {
-                            e.preventDefault(); // Prevent input of non-character values
-                          }
-                        }}
-                      />
-                    </div>
-                    <div className="add-petbtn">
-                      <Button onClick={handlePetsadd}>{stringes.addPet}</Button>
-                    </div>
-                  </Col>
-                </Row>
+                          </ul>
+                        </div>
+                        <div className="form-group">
+                          <label>{strings.petName}</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Pet Name"
+                            value={pet_name}
+                            onChange={(e) => setpet_name(e.target.value)}
+                            onKeyPress={(e) => {
+                              // Check if the pressed key is a character (letter)
+                              if (!/^[a-zA-Z ]+$/.test(e.key)) {
+                                e.preventDefault(); // Prevent input of non-character values
+                              }
+                            }}
+                          />
+                        </div>
+                        <div className="add-petbtn">
+                          <Button onClick={handlePetsadd}>{stringes.addPet}</Button>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-        </Container>
-      </section>
+            </Container>
+          </section>
         </>
       )}
       <Footer />

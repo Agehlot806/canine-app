@@ -912,10 +912,12 @@ function PetshopproductDetails() {
     <Toaster />
       <PetShopHeader />
       {loading ? (
+      <section className="section-padding mt-3 mb-3">
         <div className="loaderimg text-center text-black mb-4">
         <img src={loadinggif} alt="" />
         <h5>Please Wait.......</h5>
       </div>
+      </section>
       ) : (
         <>
         <div className="home-section">

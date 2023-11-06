@@ -698,7 +698,7 @@ function Canineproduct(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -706,7 +706,7 @@ function Canineproduct(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -1260,10 +1260,12 @@ function Canineproduct(props) {
       <Toaster />
       <Newheader />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt="" />
-          <h5>Please Wait.......</h5>
-        </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
           <Container fluid className="p-0">
@@ -1295,25 +1297,25 @@ function Canineproduct(props) {
                           <div>
                             {allbrand
                               ? allbrand.map(
-                                  (items) =>
-                                    items.canine === 1 && (
-                                      <div
-                                        className="form-check"
-                                        onClick={handleCheckboxClick}
-                                      >
-                                        <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          onClick={(e) =>
-                                            handleDataListBrand(items.title)
-                                          }
-                                        />
-                                        <label className="form-check-label">
-                                          {items.title}
-                                        </label>
-                                      </div>
-                                    )
-                                )
+                                (items) =>
+                                  items.canine === 1 && (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={(e) =>
+                                          handleDataListBrand(items.title)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items.title}
+                                      </label>
+                                    </div>
+                                  )
+                              )
                               : ""}
                           </div>
                         </>
@@ -1335,22 +1337,22 @@ function Canineproduct(props) {
                           <div>
                             {subcategories
                               ? subcategories.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allsubcateselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      allsubcateselect(items?.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items?.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1372,22 +1374,22 @@ function Canineproduct(props) {
                           <div>
                             {allsubcate
                               ? allsubcate.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allcateselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      allcateselect(items?.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items?.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1454,22 +1456,22 @@ function Canineproduct(props) {
                           <div>
                             {alllifesage
                               ? alllifesage.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        Lifesatedataselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      Lifesatedataselect(items?.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items?.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1491,22 +1493,22 @@ function Canineproduct(props) {
                           <div>
                             {allbreed
                               ? allbreed.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        allbreedselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      allbreedselect(items?.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items?.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1528,22 +1530,22 @@ function Canineproduct(props) {
                           <div>
                             {allhealth
                               ? allhealth.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allhealthselect(items.title)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.title}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      allhealthselect(items.title)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.title}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1630,73 +1632,73 @@ function Canineproduct(props) {
                       {/* ///tarungurjar// */}
                       {paginatedCategories
                         ? paginatedCategories.map((item, index) => (
-                            <Col lg={4} sm={6} xs={6} className="mb-4">
-                              <div
-                                className="food-product"
-                                onMouseEnter={() => handleMouseEnter(item.id)}
-                                onMouseLeave={() => handleMouseLeave(item.id)}
-                                key={item.id}
-                                style={{
-                                  background:
-                                    gradientColors[
-                                      index % gradientColors.length
-                                    ],
-                                }}
-                              >
-                                <i
-                                  class={
-                                    item.isFav
-                                      ? "fa-solid fa-heart"
-                                      : "fa-regular fa-heart"
+                          <Col lg={4} sm={6} xs={6} className="mb-4">
+                            <div
+                              className="food-product"
+                              onMouseEnter={() => handleMouseEnter(item.id)}
+                              onMouseLeave={() => handleMouseLeave(item.id)}
+                              key={item.id}
+                              style={{
+                                background:
+                                  gradientColors[
+                                  index % gradientColors.length
+                                  ],
+                              }}
+                            >
+                              <i
+                                class={
+                                  item.isFav
+                                    ? "fa-solid fa-heart"
+                                    : "fa-regular fa-heart"
+                                }
+                                onClick={(id) => {
+                                  if (storedUserId == null) {
+                                    toast.error("Please Login first");
+                                  } else {
+                                    addToWishlist(item.id);
                                   }
-                                  onClick={(id) => {
-                                    if (storedUserId == null) {
-                                      toast.error("Please Login first");
-                                    } else {
-                                      addToWishlist(item.id);
+                                }}
+                              />
+                              <Link to={`/product-details/${item.id}`}>
+                                <div className="text-center">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in///storage/app/public/product/" +
+                                      item.image
                                     }
-                                  }}
-                                />
-                                <Link to={`/product-details/${item.id}`}>
-                                  <div className="text-center">
-                                    <img
-                                      src={
-                                        "https://canine.hirectjob.in///storage/app/public/product/" +
-                                        item.image
-                                      }
-                                    />
-                                  </div>
-                                  <div>
-                                    <h6>{item.name}</h6>
-                                    <p>
-                                      {renderProductDescription(
-                                        item.description
-                                      )}
-                                    </p>
-                                  </div>
-                                  <div className="product-bag">
-                                    <Row>
-                                      <Col>
-                                        <p>₹{parseFloat(item.price)}</p>
-                                      </Col>
-                                      <Col>
-                                        <h5>
-                                          Save {parseFloat(item.discount)}%
-                                        </h5>
-                                      </Col>
-                                    </Row>
-                                    <Row>
-                                      <Col className="align-self-center">
-                                        {/* <h6>{`₹${item.price -
+                                  />
+                                </div>
+                                <div>
+                                  <h6>{item.name}</h6>
+                                  <p>
+                                    {renderProductDescription(
+                                      item.description
+                                    )}
+                                  </p>
+                                </div>
+                                <div className="product-bag">
+                                  <Row>
+                                    <Col>
+                                      <p>₹{parseFloat(item.price)}</p>
+                                    </Col>
+                                    <Col>
+                                      <h5>
+                                        Save {parseFloat(item.discount)}%
+                                      </h5>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col className="align-self-center">
+                                      {/* <h6>{`₹${item.price -
                                       (item.price * item.discount) / 100
                                       }`}</h6> */}
 
-                                        <h4>{`₹${Math.floor(
-                                          item.price -
-                                            (item.price * item.discount) / 100
-                                        )}`}</h4>
-                                      </Col>
-                                      {/* <Col>
+                                      <h4>{`₹${Math.floor(
+                                        item.price -
+                                        (item.price * item.discount) / 100
+                                      )}`}</h4>
+                                    </Col>
+                                    {/* <Col>
                                       <Link
                                         to={`/add-cart/${item.id}`}
                                         onClick={handleAddToCart}
@@ -1704,32 +1706,32 @@ function Canineproduct(props) {
                                         <img src={bag} />
                                       </Link>
                                     </Col> */}
-                                    </Row>
+                                  </Row>
+                                </div>
+                              </Link>
+                              {buttonVisibility[item.id] && (
+                                <Fade top>
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lg"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Buy Now
+                                    </button>
                                   </div>
-                                </Link>
-                                {buttonVisibility[item.id] && (
-                                  <Fade top>
-                                    <div className="button-container">
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".bd-example-modal-lg"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Quick View
-                                      </button>
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".buynow"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Buy Now
-                                      </button>
-                                    </div>
-                                  </Fade>
-                                )}
-                              </div>
-                            </Col>
-                          ))
+                                </Fade>
+                              )}
+                            </div>
+                          </Col>
+                        ))
                         : null}
                     </Row>
                     <div className="pagination-area">
@@ -1815,7 +1817,7 @@ function Canineproduct(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1856,17 +1858,17 @@ function Canineproduct(props) {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1875,13 +1877,13 @@ function Canineproduct(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1936,12 +1938,11 @@ function Canineproduct(props) {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
+                                                  className={`tab-variations ${selectedVariant ===
+                                                      item.type
                                                       ? "active"
                                                       : ""
-                                                  }`}
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2002,9 +2003,8 @@ function Canineproduct(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2148,11 +2148,10 @@ function Canineproduct(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2256,11 +2255,10 @@ function Canineproduct(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item?.price); // Store the price in state
@@ -2331,9 +2329,8 @@ function Canineproduct(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
+                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2887,11 +2884,11 @@ function Canineproduct(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

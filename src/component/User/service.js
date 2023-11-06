@@ -14,7 +14,7 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function Service() {
   const [allservice, setallservice] = useState([]);
 
- 
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([allService()])
@@ -44,96 +44,99 @@ function Service() {
   return (
     <>
       <Newheader />
-      {loading ? (<div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt=""/>
-          <h5>Please Wait.......</h5>
-        </div>) : (
-          <>
-          <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={service} />
-        </div>
-      </Container>
-      <section className="section-padding">
-        <Container>
-          <div className="text-left">
-            <h1 className="main-head">All you need, all in one place.</h1>
-            <p>Tristique nulla aliquet enim tortor at auctor urna nunc.</p>
+      {loading ? (
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
           </div>
-          <div className="needplace">
-            <Row>
-              {allservice.map((item) => (
-                <Col lg={4} sm={6} className="mb-4">
-                  <div className="service-card" key={item.id}>
-                    <Link to={`/service-date/${item.id}`}>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in//storage/app/public/service/" +
-                          item.image
-                        }
-                      />
-                      <h3>{item.name}</h3>
-                      <p>
-                        Ut tortor pretium viverra suspendisse potenti nullam ac
-                        tortor vitae eget dolor morbi
-                      </p>
-                    </Link>
+        </section>) : (
+        <>
+          <Container fluid className="p-0">
+            <div className="all-bg">
+              <img src={service} />
+            </div>
+          </Container>
+          <section className="section-padding">
+            <Container>
+              <div className="text-left">
+                <h1 className="main-head">All you need, all in one place.</h1>
+                <p>Tristique nulla aliquet enim tortor at auctor urna nunc.</p>
+              </div>
+              <div className="needplace">
+                <Row>
+                  {allservice.map((item) => (
+                    <Col lg={4} sm={6} className="mb-4">
+                      <div className="service-card" key={item.id}>
+                        <Link to={`/service-date/${item.id}`}>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/public/service/" +
+                              item.image
+                            }
+                          />
+                          <h3>{item.name}</h3>
+                          <p>
+                            Ut tortor pretium viverra suspendisse potenti nullam ac
+                            tortor vitae eget dolor morbi
+                          </p>
+                        </Link>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container fluid className="p-0">
+              <div className="banner-bgmain">
+                <img src={banner} />
+              </div>
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={7} sm={7} className="align-self-center">
+                  <div className="service-Visit">
+                    <h1 className="main-head">Each Visit Also Includes</h1>
+                    <p>
+                      Justo eget magna fermentum iaculis eu non diam phasellus. Eu
+                      lobortis elementum nibh tellus molestie nunc. Ullamcorper eget
+                      nulla facilisi etiam dignissim diam. Eget felis eget nunc
+                      lobortis mattis
+                    </p>
+                    <ul>
+                      <li>
+                        <i className="fa fa-check-circle" /> Clean pet cages and
+                        tanks
+                      </li>
+                      <li>
+                        <i className="fa fa-check-circle" /> Scoop Litter Boxes
+                      </li>
+                      <li>
+                        <i className="fa fa-check-circle" /> Bringing in mail and
+                        packages
+                      </li>
+                      <li>
+                        <i className="fa fa-check-circle" /> Watering Plants
+                      </li>
+                    </ul>
                   </div>
                 </Col>
-              ))}
-            </Row>
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container fluid className="p-0">
-          <div className="banner-bgmain">
-            <img src={banner} />
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={7} sm={7} className="align-self-center">
-              <div className="service-Visit">
-                <h1 className="main-head">Each Visit Also Includes</h1>
-                <p>
-                  Justo eget magna fermentum iaculis eu non diam phasellus. Eu
-                  lobortis elementum nibh tellus molestie nunc. Ullamcorper eget
-                  nulla facilisi etiam dignissim diam. Eget felis eget nunc
-                  lobortis mattis
-                </p>
-                <ul>
-                  <li>
-                    <i className="fa fa-check-circle" /> Clean pet cages and
-                    tanks
-                  </li>
-                  <li>
-                    <i className="fa fa-check-circle" /> Scoop Litter Boxes
-                  </li>
-                  <li>
-                    <i className="fa fa-check-circle" /> Bringing in mail and
-                    packages
-                  </li>
-                  <li>
-                    <i className="fa fa-check-circle" /> Watering Plants
-                  </li>
-                </ul>
-              </div>
-            </Col>
-            <Col lg={5} sm={5}>
-              <div className="aboutpage-img">
-                <img src={servicepage} />
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-          </>
-        )}
+                <Col lg={5} sm={5}>
+                  <div className="aboutpage-img">
+                    <img src={servicepage} />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        </>
+      )}
       <Footer />
     </>
   );

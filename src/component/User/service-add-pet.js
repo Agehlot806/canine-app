@@ -128,47 +128,49 @@ function Serviceaddpet() {
       <Toaster />
       <Newheader />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt=""/>
-        <h5>Please Wait.......</h5>
-      </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={banner} />
-        </div>
-      </Container>
-      <section className="section-padding">
-        <Container>
-          <Row className="justify-content-center">
-            <Col lg={8}>
-              <div className="add-upload-area">
-                <form>
-                  <div className="form-group add-upload">
-                    <label htmlFor="exampleFormControlFile1">
-                      Upload image
-                      <i class="fa fa-upload" />
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      id="exampleFormControlFile1"
-                      onChange={(e) => setimage(e.target.files[0])}
-                    />
-                  </div>
-                  <div className="selected-image">
-                    {image && (
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt="Selected Image"
-                        // style={{ maxWidth: '100%', height: 'auto' }}
-                      />
-                    )}
-                  </div>
-                  <div className="needplace">
+          <Container fluid className="p-0">
+            <div className="all-bg">
+              <img src={banner} />
+            </div>
+          </Container>
+          <section className="section-padding">
+            <Container>
+              <Row className="justify-content-center">
+                <Col lg={8}>
+                  <div className="add-upload-area">
+                    <form>
+                      <div className="form-group add-upload">
+                        <label htmlFor="exampleFormControlFile1">
+                          Upload image
+                          <i class="fa fa-upload" />
+                        </label>
+                        <input
+                          type="file"
+                          className="form-control-file"
+                          id="exampleFormControlFile1"
+                          onChange={(e) => setimage(e.target.files[0])}
+                        />
+                      </div>
+                      <div className="selected-image">
+                        {image && (
+                          <img
+                            src={URL.createObjectURL(image)}
+                            alt="Selected Image"
+                          // style={{ maxWidth: '100%', height: 'auto' }}
+                          />
+                        )}
+                      </div>
+                      <div className="needplace">
 
-                    {/* {selectedCategory && (
+                        {/* {selectedCategory && (
                     <div className="selectedCategory">
                       <h2>Avatar</h2>
                       <img
@@ -181,122 +183,122 @@ function Serviceaddpet() {
                     </div>
                   )} */}
 
-                    <div className="form-group">
-                      <label>Pet type</label>
-                      <ul className="nav nav-pills mb-3" role="tablist">
-                        {categories &&
-                          categories.map((item) => (
-                            <li className="nav-item" key={item.id}>
+                        <div className="form-group">
+                          <label>Pet type</label>
+                          <ul className="nav nav-pills mb-3" role="tablist">
+                            {categories &&
+                              categories.map((item) => (
+                                <li className="nav-item" key={item.id}>
+                                  <a
+                                    className="nav-link"
+                                    data-toggle="pill"
+                                    role="tab"
+                                    aria-selected="true"
+                                    onClick={() => setSelectedCategory(item)}
+                                    onInput={(e) => setpets_type(e.target.value)}
+                                  >
+                                    {item.name}
+                                  </a>
+                                </li>
+                              ))}
+                          </ul>
+                        </div>
+                        <div className="form-group">
+                          <label>Gender</label>
+                          <ul className="nav nav-pills mb-3" role="tablist">
+                            <li className="nav-item">
                               <a
-                                className="nav-link"
+                                className={`nav-link ${gender === "Male" ? "active" : "inactive"
+                                  }`}
+                                onClick={() => handleGenderChange("Male")}
+                              >
+                                Male
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                className={`nav-link ${gender === "Female" ? "active" : "inactive  "
+                                  }`}
+                                onClick={() => handleGenderChange("Female")}
+                              >
+                                Female
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="form-group">
+                          <label>Breed</label>
+                          <select
+                            className="form-control"
+                            value={breeds}
+                            onChange={(e) => setbreeds(e.target.value)}
+                          >
+                            <option>Choose....</option>
+                            {selectbreed &&
+                              selectbreed.map((item) => (
+                                <option key={item.id}>{item.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                        <div className="form-group">
+                          <label>DOB</label>
+                          <input
+                            className="form-control"
+                            placeholder="DOB"
+                            type="date"
+                            onChange={handleDateChange}
+                            value={selectedDate.toISOString().slice(0, 10)}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>Age</label>
+                          <ul className="nav nav-pills mb-3" role="tablist">
+                            <li className="nav-item">
+                              <a
+                                className="nav-link active"
                                 data-toggle="pill"
                                 role="tab"
                                 aria-selected="true"
-                                onClick={() => setSelectedCategory(item)}
-                                onInput={(e) => setpets_type(e.target.value)}
                               >
-                                {item.name}
+                                Year {years}
                               </a>
                             </li>
-                          ))}
-                      </ul>
-                    </div>
-                    <div className="form-group">
-                      <label>Gender</label>
-                      <ul className="nav nav-pills mb-3" role="tablist">
-                        <li className="nav-item">
-                          <a
-                            className={`nav-link ${gender === "Male" ? "active" : "inactive"
-                              }`}
-                            onClick={() => handleGenderChange("Male")}
-                          >
-                            Male
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            className={`nav-link ${gender === "Female" ? "active" : "inactive  "
-                              }`}
-                            onClick={() => handleGenderChange("Female")}
-                          >
-                            Female
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="form-group">
-                      <label>Breed</label>
-                      <select
-                        className="form-control"
-                        value={breeds}
-                        onChange={(e) => setbreeds(e.target.value)}
-                      >
-                        <option>Choose....</option>
-                        {selectbreed &&
-                          selectbreed.map((item) => (
-                            <option key={item.id}>{item.name}</option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label>DOB</label>
-                      <input
-                        className="form-control"
-                        placeholder="DOB"
-                        type="date"
-                        onChange={handleDateChange}
-                        value={selectedDate.toISOString().slice(0, 10)}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Age</label>
-                      <ul className="nav nav-pills mb-3" role="tablist">
-                        <li className="nav-item">
-                          <a
-                            className="nav-link active"
-                            data-toggle="pill"
-                            role="tab"
-                            aria-selected="true"
-                          >
-                            Year {years}
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            className="nav-link active"
-                            data-toggle="pill"
-                            role="tab"
-                            aria-selected="true"
-                          >
-                            Month {months}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="form-group">
-                      <label>Pet Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Pet Name"
-                        value={pet_name}
-                        onChange={(e) => setpet_name(e.target.value)}
-                      />
-                    </div>
-                    <div className="add-petbtn">
-                      <Button onClick={handlePetsadd}>Add Pet</Button>
-                    </div>
+                            <li className="nav-item">
+                              <a
+                                className="nav-link active"
+                                data-toggle="pill"
+                                role="tab"
+                                aria-selected="true"
+                              >
+                                Month {months}
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="form-group">
+                          <label>Pet Name</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Pet Name"
+                            value={pet_name}
+                            onChange={(e) => setpet_name(e.target.value)}
+                          />
+                        </div>
+                        <div className="add-petbtn">
+                          <Button onClick={handlePetsadd}>Add Pet</Button>
+                        </div>
 
+                      </div>
+                    </form>
                   </div>
-                </form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+                </Col>
+              </Row>
+            </Container>
+          </section>
         </>
       )}
-      
+
 
       <Footer />
     </>

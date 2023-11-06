@@ -21,7 +21,7 @@ function PetshopBlog() {
       console.error("Error fetching blogs:", error);
     }
   };
-  
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([fetchBlogs()])
@@ -55,61 +55,63 @@ function PetshopBlog() {
     <>
       <PetShopHeader />
       {loading ? (
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt="" />
-        <h5>Please Wait.......</h5>
-      </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={about} />
-        </div>
-      </Container>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            {blog && blog.length > 0 ? (
-              blog.map((item, index) => (
-                <Col lg={12} className="mb-4">
-                  <div className="blog-card-are" key={item.id}>
-                    <Row>
-                      <Col sm={5}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/public/blog/" +
-                            item.image
-                          }
-                        />
-                      </Col>
-                      <Col sm={7} className="align-self-center">
-                        <div className="blog-cardContent">
-                          <h4>{item.title}</h4>
-                          <p>{renderBlogDescription(item.description)}</p>
-                          <Link to={`/petshop-blog-details/${item.id}`}>Read More</Link>
-                          <hr />
-                          <Row>
-                            <Col lg={8}>
-                              <div className="blog-comment">
-                                <Link>
-                                  <i className="fa fa-user" /> {item.author}
-                                </Link>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Col>
-              ))
-            ) : (
-              <p className="emptyMSG">No Blog Data.</p>
-            )}
-          </Row>
-          
-        </Container>
-      </section>
+          <Container fluid className="p-0">
+            <div className="all-bg">
+              <img src={about} />
+            </div>
+          </Container>
+          <section className="section-padding">
+            <Container>
+              <Row>
+                {blog && blog.length > 0 ? (
+                  blog.map((item, index) => (
+                    <Col lg={12} className="mb-4">
+                      <div className="blog-card-are" key={item.id}>
+                        <Row>
+                          <Col sm={5}>
+                            <img
+                              src={
+                                "https://canine.hirectjob.in//storage/app/public/blog/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                          <Col sm={7} className="align-self-center">
+                            <div className="blog-cardContent">
+                              <h4>{item.title}</h4>
+                              <p>{renderBlogDescription(item.description)}</p>
+                              <Link to={`/petshop-blog-details/${item.id}`}>Read More</Link>
+                              <hr />
+                              <Row>
+                                <Col lg={8}>
+                                  <div className="blog-comment">
+                                    <Link>
+                                      <i className="fa fa-user" /> {item.author}
+                                    </Link>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Blog Data.</p>
+                )}
+              </Row>
+
+            </Container>
+          </section>
         </>
       )}
       <Petshopfooter />

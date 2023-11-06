@@ -22,17 +22,17 @@ function Shopbybrand() {
     const [brands, setBrands] = useState([]);
 
     const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    Promise.all([thirdBanner(),
+    useEffect(() => {
+        Promise.all([thirdBanner(),
         fetchBrands()])
-      .then(() => {
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
+            .then(() => {
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    }, []);
 
 
 
@@ -68,89 +68,91 @@ function Shopbybrand() {
         "linear-gradient(180deg, #FFF0BA 0%, rgba(251.81, 233.11, 165.78, 0) 100%)",
         "linear-gradient(180deg, #C7EBFF 0%, rgba(199, 235, 255, 0) 100%)",
         "linear-gradient(180deg, #FECBCD 0%, rgba(253.94, 203.15, 204.70, 0) 100%)",
-      ];
+    ];
     return (
         <>
             <Newheader />
             {loading ? (
-                <div className="loaderimg text-center text-black mb-4">
-                <img src={loadinggif} alt=""/>
-                <h5>Please Wait.......</h5>
-              </div>
+                <section className="section-padding mt-3 mb-3">
+                    <div className="loaderimg text-center text-black mb-4">
+                        <img src={loadinggif} alt="" />
+                        <h5>Please Wait.......</h5>
+                    </div>
+                </section>
             ) : (
                 <>
-                 <Container fluid className='p-0'>
-                <div className='all-bg'>
-                    <img src={shopbybrand} />
-                </div>
-            </Container>
+                    <Container fluid className='p-0'>
+                        <div className='all-bg'>
+                            <img src={shopbybrand} />
+                        </div>
+                    </Container>
 
-            <section className="section-padding">
-                <Container>
-                    <h1 className="main-head">Shop By Brands</h1>
-                    <div className="needplace">
-                        <Row>
-                            {brands ? (
-                                brands.map((brand,index) => (
-                                    brand.canine == '0' && (
-                                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                                            <div key={brand.id} className="Brand-card" style={{
-                          background:
-                            ourBrand[index % ourBrand.length],
-                        }}>
-                                                <Link to={`/shop-by-brand-list/${brand.id}`}>
-                                                    <div className="brandLOGO">
-                                                        <img
-                                                            src={
-                                                                "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
-                                                                brand.logo
-                                                            }
-                                                        />
+                    <section className="section-padding">
+                        <Container>
+                            <h1 className="main-head">Shop By Brands</h1>
+                            <div className="needplace">
+                                <Row>
+                                    {brands ? (
+                                        brands.map((brand, index) => (
+                                            brand.canine == '0' && (
+                                                <Col lg={3} sm={6} xs={6} className="mb-5">
+                                                    <div key={brand.id} className="Brand-card" style={{
+                                                        background:
+                                                            ourBrand[index % ourBrand.length],
+                                                    }}>
+                                                        <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                                            <div className="brandLOGO">
+                                                                <img
+                                                                    src={
+                                                                        "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
+                                                                        brand.logo
+                                                                    }
+                                                                />
+                                                            </div>
+                                                            <div className="brand-main">
+                                                                <img
+                                                                    src={
+                                                                        "https://canine.hirectjob.in//storage/app/public/brand/" +
+                                                                        brand.image
+                                                                    }
+                                                                />
+                                                            </div>
+                                                            <div className="brand-text">
+                                                                <h5>{brand.title}</h5>
+                                                            </div>
+                                                        </Link>
                                                     </div>
-                                                    <div className="brand-main">
-                                                        <img
-                                                            src={
-                                                                "https://canine.hirectjob.in//storage/app/public/brand/" +
-                                                                brand.image
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <div className="brand-text">
-                                                        <h5>{brand.title}</h5>
-                                                    </div>
-                                                </Link>
+                                                </Col>
+                                            )
+                                        ))
+                                    ) : null}
+
+                                </Row>
+                            </div>
+                        </Container>
+                    </section>
+
+                    <section className="section-padding">
+                        <Container>
+                            {thirdbanner
+                                ? thirdbanner.map(
+                                    (item, index) =>
+                                        item.title === "new" && (
+                                            <div className="banner-bgmain" key={item.id}>
+                                                <img
+                                                    src={
+                                                        "https://canine.hirectjob.in//storage/app/" +
+                                                        item.image
+                                                    }
+                                                />
                                             </div>
-                                        </Col>
-                                    )
-                                ))
-                            ) : null}
-
-                        </Row>
-                    </div>
-                </Container>
-            </section>
-
-            <section className="section-padding">
-                <Container>
-                    {thirdbanner
-                        ? thirdbanner.map(
-                            (item, index) =>
-                                item.title === "new" && (
-                                    <div className="banner-bgmain" key={item.id}>
-                                        <img
-                                            src={
-                                                "https://canine.hirectjob.in//storage/app/" +
-                                                item.image
-                                            }
-                                        />
-                                    </div>
+                                        )
                                 )
-                        )
-                        : null}
-                </Container>
-            </section>
+                                : null}
+                        </Container>
+                    </section>
 
-            {/* <section className="section-padding">
+                    {/* <section className="section-padding">
                 <Container>
                     <div className=" Newsletter-bg">
                         <Row>
@@ -183,7 +185,7 @@ function Shopbybrand() {
             <Footer />
         </>
     )
-    
+
 }
 
 export default Shopbybrand
