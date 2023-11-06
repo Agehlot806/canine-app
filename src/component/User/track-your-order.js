@@ -8,12 +8,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import loadinggif from "../../assets/images/video/loading.gif";
+import moment from "moment";
 
 export default function Trackyourorder() {
   const { id } = useParams();
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-
+  const [canReturnOrder, setCanReturnOrder] = useState(true);
   const [trackingValue, setTrackingValue] = useState([]);
   const [cancelValue, setCancelValue] = useState("");
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function Trackyourorder() {
       setTrackingValue(id);
     }
   }, [id]);
+  console.log("canReturnOrder", canReturnOrder);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -39,14 +41,13 @@ export default function Trackyourorder() {
   };
   const [orderDetails, setorderDetails] = useState([]);
   const [trankershowData, settrankershowData] = useState(false);
-  const [steps, setSteps] = useState([
+  const steps = [
     "Pending",
     "Confirmed",
     "Processing",
-    "Handover",
     "Picked Up",
     "Delivered",
-  ]);
+  ];
   const [orderData, setOrderData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const trackingtargetvaluenumber = () => {
@@ -82,29 +83,15 @@ export default function Trackyourorder() {
   };
 
   const getCurrentStepIndex = () => {
-    if (orderData.picked_up && new Date(orderData.delivered) <= new Date()) {
-      return 6;
-    } else if (
-      orderData.picked_up &&
-      new Date(orderData.picked_up) <= new Date()
-    ) {
+    if (orderData.delivered) {
       return 5; // Delivered
-    } else if (
-      orderData.handover &&
-      new Date(orderData.handover) <= new Date()
-    ) {
+    } else if (orderData.picked_up) {
       return 4; // Picked Up
-    } else if (
-      orderData.processing &&
-      new Date(orderData.processing) <= new Date()
-    ) {
-      return 3; // Handover
-    } else if (
-      orderData.confirmed &&
-      new Date(orderData.confirmed) <= new Date()
-    ) {
-      return 2; // Processing
-    } else if (orderData.pending && new Date(orderData.pending) <= new Date()) {
+    } else if (orderData.processing) {
+      return 3; // Processing
+    } else if (orderData.confirmed) {
+      return 2; // Confirmed
+    } else if (orderData.pending) {
       return 1; // Confirmed
     } else {
       return 0; // Pending
@@ -177,87 +164,125 @@ export default function Trackyourorder() {
         }
       });
   };
+
+  useEffect(() => {
+    if (orderData.delivered) {
+      const deliveredTime = moment(orderData.delivered);
+      const returnTime = deliveredTime.add(2, "days");
+      const currentTime = moment();
+
+      if (currentTime.isSameOrAfter(returnTime)) {
+        setCanReturnOrder(false);
+      }
+    }
+  }, [orderData.delivered]);
   return (
     <>
       <Newheader />
-        {loading ? (
-          <div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt=""/>
+      {loading ? (
+        <div className="loaderimg text-center text-black mb-4">
+          <img src={loadinggif} alt="" />
           <h5>Please Wait.......</h5>
         </div>
-        ) : (
-          <>
+      ) : (
+        <>
           <section className="tracker-bg">
-        <div className="section-padding tracker-area">
-          <Container>
-            <Row className="justify-content-center">
-              <Col lg={6}>
-                <div className="tranker-search">
-                  <h4>Track Your Shipment</h4>
-                  <form className="d-flex">
-                    <input
-                      placeholder="Please Enter your tracking number"
-                      type="text"
-                      className="me-2 form-control"
-                      value={trackingValue}
-                      onChange={handleInputChange}
-                    />
-                    <button
-                      type="button"
-                      className="btn"
-                      onClick={trackingtargetvaluenumber}
-                    >
-                      Track
-                    </button>
-                    {/* <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button> */}
-                  </form>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      </section>
-      {trankershowData && (
-        <section className="" style={{ backgroundColor: "#eee" }}>
-          <Container className="py-5 h-100">
-            <Row className="justify-content-center align-items-center h-100">
-              <Col>
-                <Card className="card-stepper" style={{ borderRadius: "10px" }}>
-                  <Card.Body className="p-4">
-                    <div className="d-flex justify-content-between align-items-center tranker-head">
-                      <div className="d-flex flex-column">
-                        <span className="lead fw-normal">
-                          Your order has been delivered
-                        </span>
-                        <span className="text-muted small">
-                          by DHFL on 21 Jan, 2020
-                        </span>
-                      </div>
-                      <div>
-                        {getCurrentStepIndex() >= 1 &&
-                        getCurrentStepIndex() <= 5 ? (
-                          <Button
-                            className="cancel-btn"
-                            data-toggle="modal"
-                            data-target="#cancle-order-Modal"
-                          >
-                            Cancel Order
-                          </Button>
-                        ) : (
-                          <Button
-                            className="cancel-btn"
-                            data-toggle="modal"
-                            data-target="#returnModal"
-                          >
-                            Return Order
-                          </Button>
-                        )}
-                      </div>
+            <div className="section-padding tracker-area">
+              <Container>
+                <Row className="justify-content-center">
+                  <Col lg={6}>
+                    <div className="tranker-search">
+                      <h4>Track Your Shipment</h4>
+                      <form className="d-flex">
+                        <input
+                          placeholder="Please Enter your tracking number"
+                          type="text"
+                          className="me-2 form-control"
+                          value={trackingValue}
+                          onChange={handleInputChange}
+                        />
+                        <button
+                          type="button"
+                          className="btn"
+                          onClick={trackingtargetvaluenumber}
+                        >
+                          Track
+                        </button>
+                        {/* <button type="button" className="btn" onClick={handleButtonClick}>{trankershowData ? "Hide Track" : "Show Track"}</button> */}
+                      </form>
                     </div>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          </section>
+          {trankershowData && (
+            <section className="" style={{ backgroundColor: "#eee" }}>
+              <Container className="py-5 h-100">
+                <Row className="justify-content-center align-items-center h-100">
+                  <Col>
+                    <Card
+                      className="card-stepper"
+                      style={{ borderRadius: "10px" }}
+                    >
+                      <Card.Body className="p-4">
+                        <div className="d-flex justify-content-between align-items-center tranker-head">
+                          <div className="d-flex flex-column">
+                            <span className="lead fw-normal">
+                              Your order has been delivered
+                            </span>
+                            <span className="text-muted small">
+                              by DHFL on 21 Jan, 2020
+                            </span>
+                          </div>
+                          <div>
+                            {getCurrentStepIndex() >= 1 &&
+                            getCurrentStepIndex() <= 4 ? (
+                              <Button
+                                className="cancel-btn"
+                                data-toggle="modal"
+                                data-target="#cancle-order-Modal"
+                              >
+                                Cancel Order
+                              </Button>
+                            ) : canReturnOrder ? (
+                              <Button
+                                className="cancel-btn"
+                                data-toggle="modal"
+                                data-target="#returnModal"
+                              >
+                                Return Order
+                              </Button>
+                            ) : null}
+                            {/* )} */}
+                          </div>
+                          {/* <div>
+                            {canReturnOrder ? (
+                              getCurrentStepIndex() >= 1 &&
+                              getCurrentStepIndex() <= 4 ? (
+                                <Button
+                                  className="cancel-btn"
+                                  data-toggle="modal"
+                                  data-target="#cancle-order-Modal"
+                                >
+                                  Cancel Order
+                                </Button>
+                              ) : null
+                            ) : (
+                              <Button
+                                className="cancel-btn"
+                                data-toggle="modal"
+                                data-target="#returnModal"
+                              >
+                                Return Order
+                              </Button>
+                            )}
+                          </div> */}
+                        </div>
 
-                    <hr className="my-4" />
+                        <hr className="my-4" />
 
-                    {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
+                        {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
                                         <span className="dot"></span>
                                         <hr className="flex-fill track-line" />
                                         <span className="dot"></span>
@@ -270,68 +295,71 @@ export default function Trackyourorder() {
                                             <MDBIcon icon="check text-white" />
                                         </span>
                                     </div> */}
-                    <div id="progress">
-                      <div
-                        id="progress-bar"
-                        style={{
-                          width:
-                            ((getCurrentStepIndex() - 1) / (steps.length - 1)) *
-                              100 +
-                            "%",
-                          backgroundColor: "blue",
-                        }}
-                      ></div>
-                      <ul id="progress-num">
-                        {steps.map((step, index) => (
-                          <li
-                            key={index}
-                            className={`step ${index === 0 ? "active" : ""} ${
-                              index < getCurrentStepIndex() ? "active" : ""
-                            }`}
-                          >
-                            {/* {step} */}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="d-flex flex-row justify-content-between align-items-center tracker-content">
-                      {isLoading ? (
-                        <p>Loading...</p>
-                      ) : (
-                        steps.map((step, index) => (
+                        <div id="progress">
                           <div
-                            key={index}
-                            className={`d-flex flex-column ${
-                              index === getCurrentStepIndex() - 1
-                                ? "align-items-center"
-                                : "align-items-" +
-                                  (index < getCurrentStepIndex() - 1
-                                    ? "start"
-                                    : "end")
-                            }`}
-                          >
-                            {step === "Picked Up" && orderData.picked_up ? (
-                              <span>{orderData.picked_up} -<br /> Picked Up</span>
-                            ) : (
-                              <span>
-                                {orderData[step.toLowerCase()]} -<br />
-                                 {step}
-                              </span>
-                            )}
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        </section>
+                            id="progress-bar"
+                            style={{
+                              width:
+                                ((getCurrentStepIndex() - 1) /
+                                  (steps.length - 1)) *
+                                  100 +
+                                "%",
+                              backgroundColor: "blue",
+                            }}
+                          ></div>
+                          <ul id="progress-num">
+                            {steps.map((step, index) => (
+                              <li
+                                key={index}
+                                className={`step ${
+                                  index === 0 ? "active" : ""
+                                } ${
+                                  index < getCurrentStepIndex() ? "active" : ""
+                                }`}
+                              ></li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="d-flex flex-row justify-content-between align-items-center tracker-content">
+                          {isLoading ? (
+                            <p>Loading...</p>
+                          ) : (
+                            steps.map((step, index) => (
+                              <div
+                                key={index}
+                                className={`d-flex flex-column ${
+                                  index === getCurrentStepIndex() - 1
+                                    ? "align-items-center"
+                                    : "align-items-" +
+                                      (index < getCurrentStepIndex() - 1
+                                        ? "start"
+                                        : "end")
+                                }`}
+                              >
+                                {step === "Picked Up" && orderData.picked_up ? (
+                                  <span>
+                                    {orderData.picked_up} -<br /> Picked Up
+                                  </span>
+                                ) : (
+                                  <span>
+                                    {orderData[step.toLowerCase()]} -<br />
+                                    {step}
+                                  </span>
+                                )}
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
+              </Container>
+            </section>
+          )}
+        </>
       )}
-          </>
-        )}
-      
+
       <Footer />
 
       {/* Modal */}
@@ -349,7 +377,9 @@ export default function Trackyourorder() {
             <div className="modal-body">
               <h3>Cancel Order</h3>
               <p>Are you sure you want to cancel this order?</p>
-              <Button className="bordercancle" data-dismiss="modal">Cancel</Button>
+              <Button className="bordercancle" data-dismiss="modal">
+                Cancel
+              </Button>
               <Button
                 data-toggle="modal"
                 data-dismiss="modal"
@@ -436,7 +466,9 @@ export default function Trackyourorder() {
                   </label>
                 </div>
               </div>
-              <Button className="bordercancle" data-dismiss="modal">Cancel</Button>
+              <Button className="bordercancle" data-dismiss="modal">
+                Cancel
+              </Button>
               <Button
                 data-toggle="modal"
                 data-dismiss="modal"
@@ -516,7 +548,7 @@ export default function Trackyourorder() {
                 <div key={index}>
                   <Row>
                     <img
-                      src={`https://canine.hirectjob.in///storage/app/public/product/${ob.item_details[0].image}`}
+                      src={`https://canine.hirectjob.in///storage/app/public/product/${ob.item_details[0]?.image}`}
                       alt="Item Image"
                     />
                     <h6>Order ID: {ob.order_id}</h6>
