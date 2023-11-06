@@ -1581,7 +1581,7 @@
 // export default Newheader;
 
 import React, { useEffect, useState, useRef } from "react";
-import { Link, Navigate, history } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
 import { BASE_URL } from "../Constant/Index";
@@ -1596,6 +1596,7 @@ import "../assets/css/menus.css";
 import { useCartWithoutLogin } from "../component/context/AddToCardWithoutLogin";
 
 function Newheader(props) {
+  const navigate = useNavigate();
   // const { dataLength } = props;
   const [notification, setNotification] = useState([]);
   const [allnotification, setAllnotification] = useState([]);
@@ -1610,8 +1611,7 @@ function Newheader(props) {
   const { cartData, dataLength, dataLengthpetshop, addToCartData } =
     useCartContext();
   // const { totalLength } = useNotificationContext();
-  const { notificationLength } =
-    useNotificationContext();
+  const { notificationLength } = useNotificationContext();
 
   const { cart, dispatch } = useCartWithoutLogin();
   const loginType = localStorage.getItem("loginType");
@@ -1690,7 +1690,7 @@ function Newheader(props) {
     try {
       const response = await fetch(`${BASE_URL}/categories`);
       const jsonData = await response.json();
-      const ids = jsonData.data.map(categories => categories.id);
+      const ids = jsonData.data.map((categories) => categories.id);
 
       // Now you have an array of IDs
       console.log(ids);
@@ -1731,6 +1731,7 @@ function Newheader(props) {
         dispatch({
           type: "CLEAR_CART",
         });
+        navigate("/", { replace: true });
         localStorage.removeItem("userInfo");
         localStorage.removeItem("loginType");
         localStorage.removeItem("phone");
@@ -1738,7 +1739,7 @@ function Newheader(props) {
         console.log("Logged out user with ID: ", customer_id);
         setStoredUserId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
-        window.location.reload(false);
+        // window.location.reload(false);
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
       }
@@ -1879,15 +1880,19 @@ function Newheader(props) {
     axios
       .delete(`${BASE_URL}/items/notify_delete/${id}`)
       .then((response) => {
-        if (response.status === 200 || response.status === 204) {
-          toast.success("Notification deleted successfully");
-          setNotify((prevNotify) => {
-            const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
-            return updatedNotify;
-          });
-        } else {
-          console.error("Unexpected response status:", response.status);
-        }
+        toast.success("Notification deleted successfully");
+
+        const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
+        setNotify(updatedNotify);
+        // if (response.status === 200 || response.status === 204) {
+        //   toast.success("Notification deleted successfully");
+
+        //     const updatedNotify = prevNotify?.filter((ob) => ob.id !== id);
+        //     setNotify(updatedNotify);
+
+        // } else {
+        //   console.error("Unexpected response status:", response.status);
+        // }
       })
       .catch((error) => {
         console.error("Error deleting Notification:", error);
@@ -2031,7 +2036,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2046,7 +2051,7 @@ function Newheader(props) {
                       src={
                         profileData?.image
                           ? "https://canine.hirectjob.in/storage/app/public/profile/" +
-                          profileData.image
+                            profileData.image
                           : loicon1
                       }
                       alt="Profile Image"
@@ -2095,7 +2100,7 @@ function Newheader(props) {
                     className="profiledes notification-btn notimob"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                  // onClick={handleBellClick}
+                    // onClick={handleBellClick}
                   >
                     <i class="fa fa-bell-o" />
                     {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
@@ -2124,31 +2129,51 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={3} sm={12} className="mga-he">
-
-                            <header><Link to={`/sub-categoriesHeading/${'Food'}`}>Dog Food</Link></header>
+                            <header>
+                              <Link to={`/sub-categoriesHeading/${"Food"}`}>
+                                Dog Food
+                              </Link>
+                            </header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Food" && item.category === "1") {
+                                  if (
+                                    item.heading === "Food" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li key={item.id}>
-                                        <Link to={`/sub-categoriesProduct/${item.name}`}>{item.name}</Link>
+                                        <Link
+                                          to={`/sub-categoriesProduct/${item.name}`}
+                                        >
+                                          {item.name}
+                                        </Link>
                                       </li>
                                     );
                                   }
                                   return null;
                                 })
                               ) : (
-                                <p className="emptyMSG">No Dog Food Sub Categories.</p>
+                                <p className="emptyMSG">
+                                  No Dog Food Sub Categories.
+                                </p>
                               )}
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">Beds Cages & Carriers</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">
+                                Beds Cages & Carriers
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Beds Cages, Scratcher & Crates" && item.category === "1") {
+                                  if (
+                                    item.heading ===
+                                      "Beds Cages, Scratcher & Crates" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2163,17 +2188,25 @@ function Newheader(props) {
                                 })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Beds Cages, Scratcher & Crates Sub Categories.
+                                  No Beds Cages, Scratcher & Crates Sub
+                                  Categories.
                                 </p>
                               )}
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Collar Leashes & More">Collar Leashes & More</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Collar Leashes & More">
+                                Collar Leashes & More
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Collar Leashes & More" && item.category === "1") {
+                                  if (
+                                    item.heading === "Collar Leashes & More" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2182,7 +2215,7 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                   );
+                                    );
                                   }
                                   return null;
                                 })
@@ -2194,11 +2227,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Shampoo & Perfumes">Shampoo & Perfumes</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Shampoo & Perfumes">
+                                Shampoo & Perfumes
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Shampoo & Perfumes" && item.category === "1") {
+                                  if (
+                                    item.heading === "Shampoo & Perfumes" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2207,7 +2247,7 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                   );
+                                    );
                                   }
                                   return null;
                                 })
@@ -2223,11 +2263,18 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Treats">Treats & Chews</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Treats">
+                                Treats & Chews
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Treats" && item.category === "1") {
+                                  if (
+                                    item.heading === "Treats" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2248,11 +2295,16 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Toys">Toys</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Toys">Toys</Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Toys" && item.category === "1") {
+                                  if (
+                                    item.heading === "Toys" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2273,11 +2325,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Training & Accessories">Training & Accessories</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Training & Accessories">
+                                Training & Accessories
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Training & Accessories" && item.category === "1") {
+                                  if (
+                                    item.heading === "Training & Accessories" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2286,7 +2345,7 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                   );
+                                    );
                                   }
                                   return null;
                                 })
@@ -2298,11 +2357,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Bowls & Feeders">Bowls & Feeders</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Bowls & Feeders">
+                                Bowls & Feeders
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Bowls & Feeders" && item.category === "1") {
+                                  if (
+                                    item.heading === "Bowls & Feeders" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2323,11 +2389,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Grooming">Grooming</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Grooming">
+                                Grooming
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Grooming" && item.category === "1") {
+                                  if (
+                                    item.heading === "Grooming" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2348,11 +2421,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Health Care">Health Care</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Health Care">
+                                Health Care
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Health Care" && item.category === "1") {
+                                  if (
+                                    item.heading === "Health Care" &&
+                                    item.category === "1"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2394,11 +2474,18 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Food">Cat Food</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Food">
+                                Cat Food
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Food" && item.category === "2") {
+                                  if (
+                                    item.heading === "Food" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li key={item.id}>
                                         <Link
@@ -2407,7 +2494,7 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                   );
+                                    );
                                   }
                                   return null;
                                 })
@@ -2419,36 +2506,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={3} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Collar Leashes & More">Collar Leashes & More</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Collar Leashes & More">
+                                Collar Leashes & More
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Collar Leashes & More" && item.category === "2") {
-                                    return (
-                                      <li>
-                                        <Link
-                                          to={`/sub-categoriesProduct/${item.name}`}
-                                        >
-                                          {item.name}
-                                        </Link>
-                                      </li>
-                                   );
-                                  }
-                                  return null;
-                                })
-                              ) : (
-                                <p className="emptyMSG">
-                                  No Collar Leashes & More Sub Categories.
-                                </p>
-                              )}
-                            </ul>
-                          </Col>
-                          <Col lg={3} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">Beds Cages, Scratcher & Crates</Link></header>
-                            <ul className="mega-links">
-                            {dogsubcategories ? (
-                                dogsubcategories.map((item) => {
-                                  if (item.heading === "Beds Cages, Scratcher & Crates" && item.category === "2") {
+                                  if (
+                                    item.heading === "Collar Leashes & More" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2463,17 +2532,58 @@ function Newheader(props) {
                                 })
                               ) : (
                                 <p className="emptyMSG">
-                                  No Beds Cages, Scratcher & Crates Sub Categories.
+                                  No Collar Leashes & More Sub Categories.
+                                </p>
+                              )}
+                            </ul>
+                          </Col>
+                          <Col lg={3} sm={12} className="mga-he">
+                            <header>
+                              <Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">
+                                Beds Cages, Scratcher & Crates
+                              </Link>
+                            </header>
+                            <ul className="mega-links">
+                              {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (
+                                    item.heading ===
+                                      "Beds Cages, Scratcher & Crates" &&
+                                    item.category === "2"
+                                  ) {
+                                    return (
+                                      <li>
+                                        <Link
+                                          to={`/sub-categoriesProduct/${item.name}`}
+                                        >
+                                          {item.name}
+                                        </Link>
+                                      </li>
+                                    );
+                                  }
+                                  return null;
+                                })
+                              ) : (
+                                <p className="emptyMSG">
+                                  No Beds Cages, Scratcher & Crates Sub
+                                  Categories.
                                 </p>
                               )}
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Cat Litter & Scooper">Cat Litter & Scooper</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Cat Litter & Scooper">
+                                Cat Litter & Scooper
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Cat Litter & Scooper" && item.category === "2") {
+                                  if (
+                                    item.heading === "Cat Litter & Scooper" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2494,11 +2604,16 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Toys">Toys</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Toys">Toys</Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Toys" && item.category === "2") {
+                                  if (
+                                    item.heading === "Toys" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2523,11 +2638,18 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Treats">Treats</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Treats">
+                                Treats
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Treats" && item.category === "2") {
+                                  if (
+                                    item.heading === "Treats" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li key={item.id}>
                                         <Link
@@ -2548,11 +2670,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Shampoo & Perfumes">Shampoo & Perfumes</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Shampoo & Perfumes">
+                                Shampoo & Perfumes
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Shampoo & Perfumes" && item.category === "2") {
+                                  if (
+                                    item.heading === "Shampoo & Perfumes" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2573,11 +2702,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Clothing & Accessories">Clothing & Accessories</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Clothing & Accessories">
+                                Clothing & Accessories
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Clothing & Accessories" && item.category === "2") {
+                                  if (
+                                    item.heading === "Clothing & Accessories" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2598,11 +2734,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Bowls & Feeders">Bowls & Feeders</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Bowls & Feeders">
+                                Bowls & Feeders
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Bowls & Feeders" && item.category === "2") {
+                                  if (
+                                    item.heading === "Bowls & Feeders" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2611,7 +2754,7 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                   );
+                                    );
                                   }
                                   return null;
                                 })
@@ -2623,11 +2766,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Grooming">Grooming</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Grooming">
+                                Grooming
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Grooming" && item.category === "2") {
+                                  if (
+                                    item.heading === "Grooming" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2636,7 +2786,7 @@ function Newheader(props) {
                                           {item.name}
                                         </Link>
                                       </li>
-                                   );
+                                    );
                                   }
                                   return null;
                                 })
@@ -2648,11 +2798,18 @@ function Newheader(props) {
                             </ul>
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
-                            <header><Link to="/sub-categoriesHeading/Health Care">Health Care</Link></header>
+                            <header>
+                              <Link to="/sub-categoriesHeading/Health Care">
+                                Health Care
+                              </Link>
+                            </header>
                             <ul className="mega-links">
-                            {dogsubcategories ? (
+                              {dogsubcategories ? (
                                 dogsubcategories.map((item) => {
-                                  if (item.heading === "Health Care" && item.category === "2") {
+                                  if (
+                                    item.heading === "Health Care" &&
+                                    item.category === "2"
+                                  ) {
                                     return (
                                       <li>
                                         <Link
@@ -2753,14 +2910,16 @@ function Newheader(props) {
                       className="profiledes notification-btn"
                       data-toggle="modal"
                       data-target="#exampleModal"
-                    // onClick={handleBellClick}
+                      // onClick={handleBellClick}
                     >
                       <i class="fa fa-bell-o" />
                       {/* {isTotalLengthVisible && <span>{isNaN(totalLength) ? 0 : totalLength}</span>} */}
                       {/* {isTotalLengthVisible && (
                         <span>{isNaN(customCount) ? 0 : customCount}</span>
                       )} */}
-                      <span>{isNaN(notificationLength) ? 0 : notificationLength}</span>
+                      <span>
+                        {isNaN(notificationLength) ? 0 : notificationLength}
+                      </span>
                     </a>
                   </li>
                   <li className="">
@@ -2981,8 +3140,9 @@ function Newheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${ob.status === "unread" ? "unread" : "read"
-                              }`}
+                            className={`notification ${
+                              ob.status === "unread" ? "unread" : "read"
+                            }`}
                             key={index}
                           >
                             <Row>

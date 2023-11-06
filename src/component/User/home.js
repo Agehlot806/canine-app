@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Fade, { Flip } from "react-reveal";
 import bag from "../../assets/images/icon/bag.png";
 import cus1 from "../../assets/images/img/cus1.png";
@@ -91,11 +96,12 @@ function Home(props) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  
-  const [loading,setLoading]=useState(true)
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([fetchBrands(),
+    Promise.all([
+      fetchBrands(),
       homeAllBanner(),
       allAddressList(),
       couponlistdata(),
@@ -106,7 +112,8 @@ function Home(props) {
       thirdBanner(),
       fetchBlogs(),
       AllVendorHomePage(),
-      fetchWishlistData(), ])
+      fetchWishlistData(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -144,19 +151,29 @@ function Home(props) {
       });
   };
 
+  const [shopbybrand, setShopbybrand] = useState([]);
   const fetchBrands = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/auth/brand`);
-      const limitedData = response.data.data.slice(0, 8);
-      setBrands(limitedData);
+      const response = await fetch(`${BASE_URL}/auth/brand`);
+      const data = await response.json();
+      const latestPosts = data.data;
+      const updatecode = latestPosts.filter((items) => items.canine === 1);
+      const latestPostcanine = updatecode.slice(0, 4);
+      const updatecodecanine = latestPosts.filter(
+        (items) => items.canine === 0
+      );
+      const latestPostcanineshop = updatecodecanine.slice(0, 4);
+      setBrands(latestPostcanine);
+      setShopbybrand(latestPostcanineshop);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
-  
 
+  console.log("latestPosts", brands);
+  console.log("latestPosts22", shopbybrand);
   // useEffect(() => {
-    
+
   // }, []);
   // useEffect(() => {
 
@@ -177,8 +194,8 @@ function Home(props) {
     try {
       const response = await fetch(`${BASE_URL}/items/latest`);
       const data = await response.json();
-      const latestPosts = data.data.reverse()
-      const reversedata = latestPosts.slice(0,8)
+      const latestPosts = data.data.reverse();
+      const reversedata = latestPosts.slice(0, 8);
       setallproduct(reversedata);
     } catch (error) {
       console.log(error);
@@ -197,10 +214,10 @@ function Home(props) {
   };
 
   const renderBlogDescription = (description) => {
-    const maxCharacters = 50; 
+    const maxCharacters = 50;
 
     if (description.length <= maxCharacters) {
-      return <p>{description}</p>; 
+      return <p>{description}</p>;
     }
 
     const truncatedDescription = description.slice(0, maxCharacters);
@@ -212,12 +229,11 @@ function Home(props) {
     );
   };
 
-
   const renderhappycus = (comment) => {
-    const maxCharacters = 15; 
+    const maxCharacters = 15;
 
     if (comment?.length <= maxCharacters) {
-      return <p>{comment}</p>; 
+      return <p>{comment}</p>;
     }
 
     const truncatedDescription = comment?.slice(0, maxCharacters);
@@ -228,7 +244,7 @@ function Home(props) {
       </>
     );
   };
-  
+
   const thirdBanner = () => {
     axios
       .get(`${BASE_URL}/banners`)
@@ -896,7 +912,6 @@ function Home(props) {
       console.log(error);
     }
   };
-  
 
   const handleResetClick = () => {
     setfirst_name(null);
@@ -1044,247 +1059,250 @@ function Home(props) {
     <>
       <Toaster />
       <Newheader />
-      {loading ?(
-        <div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt=""/>
-          <h5>Please Wait.....</h5>
-        </div>
-        
-      ):(
-<>
-{/* <section className="section-padding"> */}
-<div className="home-section">
-        <Container fluid className="p-0">
-          <Carousel
-            swipeable={true}
-            draggable={true}
-            showDots={true}
-            responsive={homeslider}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlay={props.deviceType !== "mobile" ? true : false}
-            autoPlaySpeed={2000}
-            keyBoardControl={true}
-            customTransition="all 1s"
-            transitionDuration={1000}
-            containerClass="carousel-container"
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            deviceType={props.deviceType}
-            dotListClass="custom-dot-list-style"
-            itemClass="carousel-item-padding-40-px"
-          >
-            <div>
-              {homebanner
-                ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_1" && (
-                        <div className="home-img">
-                          <Link to={item.default_link}>
-                            <div className="">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in/storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <Row>
-                              <Col lg={7}>
-                                <div className="home-content">
-                                  <h1>{item.title}</h1>
-                                  <p>{item.description}</p>
-                                  <Button>
-                                    Explore More{" "}
-                                    <i className="fa fa-angle-right" />
-                                  </Button>
+      {loading ? (
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.....</h5>
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* <section className="section-padding"> */}
+          <div className="home-section">
+            <Container fluid className="p-0">
+              <Carousel
+                swipeable={true}
+                draggable={true}
+                showDots={true}
+                responsive={homeslider}
+                ssr={true} // means to render carousel on server-side.
+                infinite={true}
+                autoPlay={props.deviceType !== "mobile" ? true : false}
+                autoPlaySpeed={2000}
+                keyBoardControl={true}
+                customTransition="all 1s"
+                transitionDuration={1000}
+                containerClass="carousel-container"
+                removeArrowOnDeviceType={["tablet", "mobile"]}
+                deviceType={props.deviceType}
+                dotListClass="custom-dot-list-style"
+                itemClass="carousel-item-padding-40-px"
+              >
+                <div>
+                  {homebanner
+                    ? homebanner.map(
+                        (item, index) =>
+                          item.type === "home_banner_1" && (
+                            <div className="home-img">
+                              <Link to={item.default_link}>
+                                <div className="">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/" +
+                                      item.image
+                                    }
+                                  />
                                 </div>
-                              </Col>
-                            </Row>
-                          </Link>
-                        </div>
-                      )
-                  )
-                : null}
-            </div>
-            <div>
-              {homebanner
-                ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_2" && (
-                        <div className="home-img">
-                          <Link to={item.default_link}>
-                            <div className="">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in/storage/app/" +
-                                  item.image
-                                }
-                              />
+                                <Row>
+                                  <Col lg={7}>
+                                    <div className="home-content">
+                                      <h1>{item.title}</h1>
+                                      <p>{item.description}</p>
+                                      <Button>
+                                        Explore More{" "}
+                                        <i className="fa fa-angle-right" />
+                                      </Button>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </Link>
                             </div>
-                            <Row>
-                              <Col lg={7}>
-                                <div className="home-content">
-                                  <h1>{item.title}</h1>
-                                  <p>{item.description}</p>
-
-                                  <div className="app-home">
-                                    <Link>
-                                      <img src={app1} />
-                                    </Link>
-
-                                    <Link>
-                                      <img src={app2} />
-                                    </Link>
-                                  </div>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Link>
-                        </div>
+                          )
                       )
-                  )
-                : null}
-            </div>
-            <div>
-              {homebanner
-                ? homebanner.map(
-                    (item, index) =>
-                      item.type === "home_banner_3" && (
-                        <div className="home-img">
-                          <Link to={item.default_link}>
-                            <div className="">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in/storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </div>
-                            <Row>
-                              <Col lg={7}>
-                                <div className="home-content">
-                                  <h1>{item.title}</h1>
-                                  <p>{item.description}</p>
-                                  <Button>
-                                    Explore More{" "}
-                                    <i className="fa fa-angle-right" />
-                                  </Button>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Link>
-                        </div>
-                      )
-                  )
-                : null}
-            </div>
-          </Carousel>
-        </Container>
-      </div>
-      {/* </section> */}
-
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <h1 className="main-head ">Shop Deals For Your Best Buddy</h1>
-          </Row>
-        </Container>
-        <Container fluid>
-          <Carousel
-            swipeable={true}
-            draggable={true}
-            showDots={true}
-            responsive={clinetreview}
-            ssr={true} // means to render carousel on server-side.
-            infinite={true}
-            autoPlay={props.deviceType !== "mobile" ? true : false}
-            autoPlaySpeed={7000}
-            keyBoardControl={true}
-            customTransition="all 1s"
-            transitionDuration={1000}
-            containerClass="carousel-container"
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            deviceType={props.deviceType}
-            dotListClass="custom-dot-list-style"
-            itemClass="carousel-item-padding-40-px"
-          >
-            {categories &&
-              categories.map((item) => (
-                <div className="Shop-Deals" key={item.id}>
-                  <Link
-                    className="dog-paw-cursor"
-                    to={`/pet-category/${item.name}/${item.id}`}
-                  >
-                    <img
-                      src={
-                        "https://canine.hirectjob.in/storage/app/public/category/" +
-                        item.image
-                      }
-                    />
-                    <h1>{item.name}</h1>
-                  </Link>
+                    : null}
                 </div>
-              ))}
-          </Carousel>
-        </Container>
-      </section>
+                <div>
+                  {homebanner
+                    ? homebanner.map(
+                        (item, index) =>
+                          item.type === "home_banner_2" && (
+                            <div className="home-img">
+                              <Link to={item.default_link}>
+                                <div className="">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/" +
+                                      item.image
+                                    }
+                                  />
+                                </div>
+                                <Row>
+                                  <Col lg={7}>
+                                    <div className="home-content">
+                                      <h1>{item.title}</h1>
+                                      <p>{item.description}</p>
 
-      <section className="section-padding food">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Latest all Products</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/product">
-                  View More <i className="fa fa-angle-right" />
-                </Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {allproduct &&
-                allproduct.map((item, index) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-4">
-                    <div
-                      className="food-product"
-                      onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
-                      key={item.id}
-                      style={{
-                        background:
-                          gradientColors[index % gradientColors.length],
-                      }}
-                    >
-                      <i
-                        class={
-                          item.isFav
-                            ? "fa-solid fa-heart"
-                            : "fa-regular fa-heart"
-                        }
-                        onClick={(id) => {
-                          if (storedUserId == null) {
-                            toast.error("Please Login first");
-                          } else {
-                            addToWishlist(item.id);
+                                      <div className="app-home">
+                                        <Link>
+                                          <img src={app1} />
+                                        </Link>
+
+                                        <Link>
+                                          <img src={app2} />
+                                        </Link>
+                                      </div>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </Link>
+                            </div>
+                          )
+                      )
+                    : null}
+                </div>
+                <div>
+                  {homebanner
+                    ? homebanner.map(
+                        (item, index) =>
+                          item.type === "home_banner_3" && (
+                            <div className="home-img">
+                              <Link to={item.default_link}>
+                                <div className="">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/" +
+                                      item.image
+                                    }
+                                  />
+                                </div>
+                                <Row>
+                                  <Col lg={7}>
+                                    <div className="home-content">
+                                      <h1>{item.title}</h1>
+                                      <p>{item.description}</p>
+                                      <Button>
+                                        Explore More{" "}
+                                        <i className="fa fa-angle-right" />
+                                      </Button>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </Link>
+                            </div>
+                          )
+                      )
+                    : null}
+                </div>
+              </Carousel>
+            </Container>
+          </div>
+          {/* </section> */}
+
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <h1 className="main-head ">Shop Deals For Your Best Buddy</h1>
+              </Row>
+            </Container>
+            <Container fluid>
+              <Carousel
+                swipeable={true}
+                draggable={true}
+                showDots={true}
+                responsive={clinetreview}
+                ssr={true} // means to render carousel on server-side.
+                infinite={true}
+                autoPlay={props.deviceType !== "mobile" ? true : false}
+                autoPlaySpeed={7000}
+                keyBoardControl={true}
+                customTransition="all 1s"
+                transitionDuration={1000}
+                containerClass="carousel-container"
+                removeArrowOnDeviceType={["tablet", "mobile"]}
+                deviceType={props.deviceType}
+                dotListClass="custom-dot-list-style"
+                itemClass="carousel-item-padding-40-px"
+              >
+                {categories &&
+                  categories.map((item) => (
+                    <div className="Shop-Deals" key={item.id}>
+                      <Link
+                        className="dog-paw-cursor"
+                        to={`/pet-category/${item.name}/${item.id}`}
+                      >
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                            item.image
                           }
-                        }}
-                      />
-                      <Link to={`/product-details/${item.id}`}>
-                        <div className="text-center">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              item.image
+                        />
+                        <h1>{item.name}</h1>
+                      </Link>
+                    </div>
+                  ))}
+              </Carousel>
+            </Container>
+          </section>
+
+          <section className="section-padding food">
+            <Container>
+              <Row>
+                <Col lg={6} sm={6} xs={6}>
+                  <h1 className="main-head">Latest all Products</h1>
+                </Col>
+                <Col lg={6} sm={6} xs={6}>
+                  <div className="foodMore">
+                    <Link to="/product">
+                      View More <i className="fa fa-angle-right" />
+                    </Link>
+                  </div>
+                </Col>
+              </Row>
+              <div className="needplace">
+                <Row>
+                  {allproduct &&
+                    allproduct.map((item, index) => (
+                      <Col lg={3} sm={6} xs={6} className="mb-4">
+                        <div
+                          className="food-product"
+                          onMouseEnter={() => handleMouseEnter(item.id)}
+                          onMouseLeave={() => handleMouseLeave(item.id)}
+                          key={item.id}
+                          style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}
+                        >
+                          <i
+                            class={
+                              item.isFav
+                                ? "fa-solid fa-heart"
+                                : "fa-regular fa-heart"
                             }
+                            onClick={(id) => {
+                              if (storedUserId == null) {
+                                toast.error("Please Login first");
+                              } else {
+                                addToWishlist(item.id);
+                              }
+                            }}
                           />
-                        </div>
-                        <div>
-                          <h6>{item.name}</h6>
-                          <p>{renderProductDescription(item.description)}</p>
-                          {/* <p
+                          <Link to={`/product-details/${item.id}`}>
+                            <div className="text-center">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in//storage/app/public/product/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <div>
+                              <h6>{item.name}</h6>
+                              <p>
+                                {renderProductDescription(item.description)}
+                              </p>
+                              {/* <p
                             className={`truncate-text ${
                               !expandedDescription[item.id]
                                 ? "read-more-link"
@@ -1307,35 +1325,36 @@ function Home(props) {
                                 </span>
                               )}
                           </p> */}
-                        </div>
-                        <div className="product-bag">
-                          <Row>
-                            <Col lg={6} sm={6} xs={6}>
-                              <p>₹{parseFloat(item.price)}</p>
-                            </Col>
-                            <Col lg={6} sm={6} xs={6}>
-                              <h5>Save {parseFloat(item.discount)}%</h5>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col
-                              lg={6}
-                              sm={6}
-                              xs={6}
-                              className="align-self-center"
-                            >
-                              {/* <h6>
+                            </div>
+                            <div className="product-bag">
+                              <Row>
+                                <Col lg={6} sm={6} xs={6}>
+                                  <p>₹{parseFloat(item.price)}</p>
+                                </Col>
+                                <Col lg={6} sm={6} xs={6}>
+                                  <h5>Save {parseFloat(item.discount)}%</h5>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col
+                                  lg={6}
+                                  sm={6}
+                                  xs={6}
+                                  className="align-self-center"
+                                >
+                                  {/* <h6>
                                 {`₹${(item.price * item.discount) / 100}`}
                                 {`₹${
                                   item.price -
                                   (item.price * item?.discount) / 100
                                 }`}
                               </h6> */}
-                              <h4>{`₹${Math.floor(
-                                item.price - (item.price * item.discount) / 100
-                              )}`}</h4>
-                            </Col>
-                            {/* <Col lg={6} sm={6} xs={6}>
+                                  <h4>{`₹${Math.floor(
+                                    item.price -
+                                      (item.price * item.discount) / 100
+                                  )}`}</h4>
+                                </Col>
+                                {/* <Col lg={6} sm={6} xs={6}>
                               <Link
                                 to={`/add-cart/${item.id}`}
                                 onClick={handleAddToCart}
@@ -1343,46 +1362,46 @@ function Home(props) {
                                 <img src={bag} />
                               </Link>
                             </Col> */}
-                          </Row>
-                        </div>
-                      </Link>
-                      {buttonVisibility[item.id] && (
-                        <Fade top>
-                          <div className="button-container">
-                            <button
-                              data-toggle="modal"
-                              data-target=".bd-example-modal-lg"
-                              // onClick={(e) => {
-                              //   if (!storedUserId) {
-                              //     // window.location.href = '/login';
-                              //     shippingpage('/login')
-                              //   } else {
-                              //     handeldataId(item.id);
-                              //   }
-                              // }}
-                              onClick={(e) => {
-                                handeldataId(item.id);
-                              }}
-                            >
-                              Quick View
-                            </button>
-                            <button
-                              data-toggle="modal"
-                              data-target=".buynow"
-                              onClick={(e) => {
-                                if (!storedUserId) {
-                                  // window.location.href = '/login';
-                                  shippingpage("/login");
-                                } else {
-                                  handeldataId(item.id);
-                                }
-                              }}
-                              // onClick={(e) => handeldataId(item.id)}
-                            >
-                              Buy Now
-                            </button>
+                              </Row>
+                            </div>
+                          </Link>
+                          {buttonVisibility[item.id] && (
+                            <Fade top>
+                              <div className="button-container">
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".bd-example-modal-lg"
+                                  // onClick={(e) => {
+                                  //   if (!storedUserId) {
+                                  //     // window.location.href = '/login';
+                                  //     shippingpage('/login')
+                                  //   } else {
+                                  //     handeldataId(item.id);
+                                  //   }
+                                  // }}
+                                  onClick={(e) => {
+                                    handeldataId(item.id);
+                                  }}
+                                >
+                                  Quick View
+                                </button>
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".buynow"
+                                  onClick={(e) => {
+                                    if (!storedUserId) {
+                                      // window.location.href = '/login';
+                                      shippingpage("/login");
+                                    } else {
+                                      handeldataId(item.id);
+                                    }
+                                  }}
+                                  // onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Buy Now
+                                </button>
 
-                            {/* <Button>
+                                {/* <Button>
                         <Link
                           // to={`/add-cart/${productDetails.id}`}
                           to={`/add-cart/${productDetails.id}?gowithbuynow=true`}
@@ -1392,35 +1411,33 @@ function Home(props) {
                         </Link>
                         <p>{addToCartStatus}</p>
                       </Button> */}
-                          </div>
-                        </Fade>
-                      )}
-                    </div>
-                  </Col>
-                ))}
-            </Row>
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Our Brand</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/our-brand">See all</Link>
+                              </div>
+                            </Fade>
+                          )}
+                        </div>
+                      </Col>
+                    ))}
+                </Row>
               </div>
-            </Col>
-          </Row>
-          <Fade left>
-            <Row className="mt-4">
-              {brands
-                ? brands.map(
-                    (brand, index) =>
-                      brand.canine == "1" && (
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={6} sm={6} xs={6}>
+                  <h1 className="main-head">Our Brand</h1>
+                </Col>
+                <Col lg={6} sm={6} xs={6}>
+                  <div className="foodMore">
+                    <Link to="/our-brand">See all</Link>
+                  </div>
+                </Col>
+              </Row>
+              <Fade left>
+                <Row className="mt-4">
+                  {brands
+                    ? brands.map((brand, index) => (
                         <Col lg={3} sm={6} xs={6} className="mb-5">
                           <div
                             key={brand.id}
@@ -1452,39 +1469,21 @@ function Home(props) {
                             </Link>
                           </div>
                         </Col>
-                      )
-                  )
-                : null}
-            </Row>
-          </Fade>
-        </Container>
-      </section>
+                      ))
+                    : null}
+                </Row>
+              </Fade>
+            </Container>
+          </section>
 
-      <section className="section-padding thirdbnner-area">
-        <Container>
-          <Row>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "default" && (
-                      <Col lg={6} className="mb-4">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/" +
-                            item.image
-                          }
-                        />
-                      </Col>
-                    )
-                )
-              : null}
-            <Col lg={6} className="align-self-center">
+          <section className="section-padding thirdbnner-area">
+            <Container>
               <Row>
                 {homebanner
                   ? homebanner.map(
                       (item, index) =>
-                        item.type === "store_wise" && (
-                          <Col sm={12} className="mb-4">
+                        item.type === "default" && (
+                          <Col lg={6} className="mb-4">
                             <img
                               src={
                                 "https://canine.hirectjob.in/storage/app/" +
@@ -1495,321 +1494,338 @@ function Home(props) {
                         )
                     )
                   : null}
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "item_wise" && (
-                          <Col sm={12} className="mb-4">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
-                          </Col>
+                <Col lg={6} className="align-self-center">
+                  <Row>
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "store_wise" && (
+                              <Col sm={12} className="mb-4">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </Col>
+                            )
                         )
-                    )
-                  : null}
+                      : null}
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "item_wise" && (
+                              <Col sm={12} className="mb-4">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </Col>
+                            )
+                        )
+                      : null}
+                  </Row>
+                </Col>
               </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Shop By Brands</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/shop-by-brand">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Fade right>
+            </Container>
+          </section>
+          <section className="section-padding">
+            <Container>
               <Row>
-                {brands
-                  ? brands.map(
-                      (brand, index) =>
-                        brand.canine == "0" && (
-                          <Col lg={3} sm={6} xs={6} className="mb-5">
-                            <div
-                              key={brand.id}
-                              className="Brand-card"
-                              style={{
-                                background: ourBrand[index % ourBrand.length],
-                              }}
-                            >
-                              <Link to={`/shop-by-brand-list/${brand.id}`}>
-                                <div className="brandLOGO">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                      brand.logo
-                                    }
-                                  />
-                                </div>
-                                <div className="brand-main">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                      brand.image
-                                    }
-                                  />
-                                </div>
-                                <div className="brand-text">
-                                  <h5>{brand.title}</h5>
-                                </div>
-                              </Link>
-                            </div>
-                          </Col>
-                        )
-                    )
-                  : null}
-              </Row>
-            </Fade>
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Product By Partner</h1>
-            </Col>
-            <Col lg={6} sm={6} xs={6}>
-              <div className="foodMore">
-                <Link to="/product-by-partner">See all</Link>
-              </div>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {allVendorShop && allVendorShop.length > 0 ? (
-                allVendorShop.map((item, index) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-5" key={item.id}>
-                    {/* <Link to={`/product-partner-Oneshop/${item.id}`}> */}
-                    <a
-                      onClick={() => {
-                        navigate("/product-partner-Oneshop", {
-                          state: {
-                            item: item,
-                          },
-                        });
-                      }}
-                    >
-                      <div
-                        className="ProductPartner-card"
-                        style={{
-                          background:
-                            gradientColors[index % gradientColors.length],
-                        }}
-                      >
-                        {/* <img src={item.logo} /> */}
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/store/" +
-                            item.logo
-                          }
-                        />
-                        <h4 className="text-dark">{item.name}</h4>
-                      </div>
-                    </a>
-                  </Col>
-                ))
-              ) : (
-                <p className="emptyMSG">No Product By Partner Data.</p>
-              )}
-            </Row>
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <div className="banner-video">
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "video" && (
-                      <Row>
-                        <Col lg={6} className="p-0">
-                          <div className="video-content">
-                            <h1 className="main-head">{item.title}</h1>
-                            <p>{item.description}</p>
-                            <Button>Shop Now</Button>
-                          </div>
-                        </Col>
-                        <Col lg={6} className="p-0">
-                          <video loop autoPlay muted>
-                            <source
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                              type="video/mp4"
-                            />
-                          </video>
-                        </Col>
-                      </Row>
-                    )
-                )
-              : null}
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <div className="text-left">
-            <h1 className="main-head">Blog</h1>
-          </div>
-          <div className="needplace">
-            <Row>
-              {blog && blog.length > 0 ? (
-                blog.map((item, index) => (
-                  <Col lg={4} sm={6} className="mb-4">
-                    <div className="blog-card">
-                      <img
-                        src={
-                          "https://canine.hirectjob.in/storage/app/public/blog/" +
-                          item.image
-                        }
-                      />
-                      <h3>{item.title}</h3>
-                      <p>{renderBlogDescription(item.description)}</p>
-                      <Link to={`/blog-details/${item.id}`}>Read More</Link>
-                    </div>
-                  </Col>
-                ))
-              ) : (
-                <p className="emptyMSG">No Blog Data.</p>
-              )}
-            </Row>
-          </div>
-          <div className="allblogbtn">
-            <Button>
-              <Link to="/blog">All Blogs</Link>
-            </Button>
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6}>
-              <h1 className="main-head">Happy Customer</h1>
-            </Col>
-          </Row>
-          <Row>
-            {reviewlist.map((order, index) => (
-              <Col lg={4} sm={6} key={order.id} className="mb-3">
-                <div
-                  className="Brand-cus"
-                  style={{
-                    background: happyCus[index % happyCus.length],
-                  }}
-                >
-                  <>
-                    <img
-                      src={
-                        "https://canine.hirectjob.in/storage/app/public/profile/" +
-                        order.user_id[0].image
-                      }
-                      alt={order.user_id[0].f_name}
-                    />
-                  </>
-                  <div className="brand-bg">
-                    {order.user_id && order.user_id.length > 0 && (
-                      <h5>
-                        {order.user_id[0].f_name} {order.user_id[0].l_name}
-                      </h5>
-                    )}
-                    <p>{renderhappycus(order.comment)}</p>
-                    <div className="icon-style">
-                      {Array.from({
-                        length: order.rating,
-                      }).map((_, index) => (
-                        <Link>
-                          <i className="fa fa-star" />
-                        </Link>
-                      ))}
-                    </div>
-                    {/* <Link>4.2/5</Link> */}
+                <Col lg={6} sm={6} xs={6}>
+                  <h1 className="main-head">Shop By Brands</h1>
+                </Col>
+                <Col lg={6} sm={6} xs={6}>
+                  <div className="foodMore">
+                    <Link to="/shop-by-brand">See all</Link>
                   </div>
-                </div>
-              </Col>
-            ))}
-            
-          </Row>
-        </Container>
-      </section>
+                </Col>
+              </Row>
+              <div className="needplace">
+                <Fade right>
+                  <Row>
+                    {shopbybrand
+                      ? shopbybrand.map(
+                          (brand, index) =>
+                            brand.canine == "0" && (
+                              <Col lg={3} sm={6} xs={6} className="mb-5">
+                                <div
+                                  key={brand.id}
+                                  className="Brand-card"
+                                  style={{
+                                    background:
+                                      ourBrand[index % ourBrand.length],
+                                  }}
+                                >
+                                  <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                    <div className="brandLOGO">
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                          brand.logo
+                                        }
+                                      />
+                                    </div>
+                                    <div className="brand-main">
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                          brand.image
+                                        }
+                                      />
+                                    </div>
+                                    <div className="brand-text">
+                                      <h5>{brand.title}</h5>
+                                    </div>
+                                  </Link>
+                                </div>
+                              </Col>
+                            )
+                        )
+                      : null}
+                  </Row>
+                </Fade>
+              </div>
+            </Container>
+          </section>
 
-      <section className="section-padding">
-        <Container>
-          <div>
-            {homebanner
-              ? homebanner.map(
-                  (item, index) =>
-                    item.type === "news_letter" && (
-                      <div className="home-img">
-                        <div className="">
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={6} sm={6} xs={6}>
+                  <h1 className="main-head">Product By Partner</h1>
+                </Col>
+                <Col lg={6} sm={6} xs={6}>
+                  <div className="foodMore">
+                    <Link to="/product-by-partner">See all</Link>
+                  </div>
+                </Col>
+              </Row>
+              <div className="needplace">
+                <Row>
+                  {allVendorShop && allVendorShop.length > 0 ? (
+                    allVendorShop.map((item, index) => (
+                      <Col lg={3} sm={6} xs={6} className="mb-5" key={item.id}>
+                        {/* <Link to={`/product-partner-Oneshop/${item.id}`}> */}
+                        <a
+                          onClick={() => {
+                            navigate("/product-partner-Oneshop", {
+                              state: {
+                                item: item,
+                              },
+                            });
+                          }}
+                        >
+                          <div
+                            className="ProductPartner-card"
+                            style={{
+                              background:
+                                gradientColors[index % gradientColors.length],
+                            }}
+                          >
+                            {/* <img src={item.logo} /> */}
+                            <img
+                              src={
+                                "https://canine.hirectjob.in/storage/app/public/store/" +
+                                item.logo
+                              }
+                            />
+                            <h4 className="text-dark">{item.name}</h4>
+                          </div>
+                        </a>
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="emptyMSG">No Product By Partner Data.</p>
+                  )}
+                </Row>
+              </div>
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container>
+              <div className="banner-video">
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "video" && (
+                          <Row>
+                            <Col lg={6} className="p-0">
+                              <div className="video-content">
+                                <h1 className="main-head">{item.title}</h1>
+                                <p>{item.description}</p>
+                                <Button>Shop Now</Button>
+                              </div>
+                            </Col>
+                            <Col lg={6} className="p-0">
+                              <video loop autoPlay muted>
+                                <source
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/" +
+                                    item.image
+                                  }
+                                  type="video/mp4"
+                                />
+                              </video>
+                            </Col>
+                          </Row>
+                        )
+                    )
+                  : null}
+              </div>
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container>
+              <div className="text-left">
+                <h1 className="main-head">Blog</h1>
+              </div>
+              <div className="needplace">
+                <Row>
+                  {blog && blog.length > 0 ? (
+                    blog.map((item, index) => (
+                      <Col lg={4} sm={6} className="mb-4">
+                        <div className="blog-card">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/" +
+                              "https://canine.hirectjob.in/storage/app/public/blog/" +
                               item.image
                             }
                           />
+                          <h3>{item.title}</h3>
+                          <p>{renderBlogDescription(item.description)}</p>
+                          <Link to={`/blog-details/${item.id}`}>Read More</Link>
                         </div>
-                        <Row className="justify-content-center">
-                          <Col lg={7}>
-                            <div className="new-content">
-                              <div className="Newsletter">
-                                <Flip right>
-                                  <h1 className="main-head">Newsletter</h1>
-                                </Flip>
-                                <Form className="d-flex">
-                                  <Form.Control
-                                    type="search"
-                                    placeholder="Enter your email"
-                                    className="me-2"
-                                    aria-label="Search"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                  />
-                                  <Button
-                                    variant="outline-success"
-                                    // onClick={handleNewsletter}
-                                    onClick={() => {
-                                      if (!storedUserId) {
-                                        toast.error("Please Login first");
-                                      } else {
-                                        handleNewsletter;
-                                      }
-                                    }}
-                                  >
-                                    Subscribe
-                                  </Button>
-                                </Form>
-                              </div>
-                            </div>
-                          </Col>
-                        </Row>
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="emptyMSG">No Blog Data.</p>
+                  )}
+                </Row>
+              </div>
+              <div className="allblogbtn">
+                <Button>
+                  <Link to="/blog">All Blogs</Link>
+                </Button>
+              </div>
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={6}>
+                  <h1 className="main-head">Happy Customer</h1>
+                </Col>
+              </Row>
+              <Row>
+                {reviewlist.map((order, index) => (
+                  <Col lg={4} sm={6} key={order.id} className="mb-3">
+                    <div
+                      className="Brand-cus"
+                      style={{
+                        background: happyCus[index % happyCus.length],
+                      }}
+                    >
+                      <>
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/profile/" +
+                            order.user_id[0].image
+                          }
+                          alt={order.user_id[0].f_name}
+                        />
+                      </>
+                      <div className="brand-bg">
+                        {order.user_id && order.user_id.length > 0 && (
+                          <h5>
+                            {order.user_id[0].f_name} {order.user_id[0].l_name}
+                          </h5>
+                        )}
+                        <p>{renderhappycus(order.comment)}</p>
+                        <div className="icon-style">
+                          {Array.from({
+                            length: order.rating,
+                          }).map((_, index) => (
+                            <Link>
+                              <i className="fa fa-star" />
+                            </Link>
+                          ))}
+                        </div>
+                        {/* <Link>4.2/5</Link> */}
                       </div>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            </Container>
+          </section>
+
+          <section className="section-padding">
+            <Container>
+              <div>
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "news_letter" && (
+                          <div className="home-img">
+                            <div className="">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <Row className="justify-content-center">
+                              <Col lg={7}>
+                                <div className="new-content">
+                                  <div className="Newsletter">
+                                    <Flip right>
+                                      <h1 className="main-head">Newsletter</h1>
+                                    </Flip>
+                                    <Form className="d-flex">
+                                      <Form.Control
+                                        type="search"
+                                        placeholder="Enter your email"
+                                        className="me-2"
+                                        aria-label="Search"
+                                        value={email}
+                                        onChange={(e) =>
+                                          setEmail(e.target.value)
+                                        }
+                                      />
+                                      <Button
+                                        variant="outline-success"
+                                        // onClick={handleNewsletter}
+                                        onClick={() => {
+                                          if (!storedUserId) {
+                                            toast.error("Please Login first");
+                                          } else {
+                                            handleNewsletter;
+                                          }
+                                        }}
+                                      >
+                                        Subscribe
+                                      </Button>
+                                    </Form>
+                                  </div>
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        )
                     )
-                )
-              : null}
-          </div>
-        </Container>
-      </section>
-</>
+                  : null}
+              </div>
+            </Container>
+          </section>
+        </>
       )}
-    
-      
 
       <Footer />
 
