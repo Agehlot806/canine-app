@@ -4197,3 +4197,8 @@ li.cardpay a img {
 .loaderimg img {
   width: 150px;
 }
+
+.error-message {
+    color: red;
+    margin: 15px 7px 0 !important;
+}
