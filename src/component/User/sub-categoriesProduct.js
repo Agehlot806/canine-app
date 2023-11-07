@@ -174,7 +174,7 @@ function SubcategoriesProduct() {
 
     const { id, name } = useParams();
     console.log("name: ", name);
-    console.log("id", id);
+    console.log("iddhsdgjhsdh", id);
 
     // storedUserId
     const customer_id = localStorage.getItem("userInfo");
@@ -185,11 +185,13 @@ function SubcategoriesProduct() {
 
     // filter code ==========================
     const [allproduct, setallproduct] = useState([]);
+    const [categoryIds, setCategoryIds] = useState([]);
+    console.log("categoryIds",categoryIds);
     const [paymentId, setPaymentId] = useState("");
 
     useEffect(() => {
         allProduct()
-    }, [name]);
+    }, [name ,id]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         Promise.all([allProduct(),
@@ -220,9 +222,14 @@ function SubcategoriesProduct() {
             .then((response) => {
                 console.log(response);
                 const filterData = response.data.data;
-                const filterDatashow = filterData.filter((item) => item.sub_category == name)
+
+const filterDatashow = filterData.filter((item) => item.sub_category === name);
+const filteredData = filterDatashow.filter((item) => item.category_id == id);
+
+console.log("filteredData111", filteredData);
+                setCategoryIds(filteredData);
                 console.log("responsDataesponsData", filterDatashow);
-                setallproduct(filterDatashow);
+                setallproduct(filteredData);
                 setSortOption('default');
 
             })

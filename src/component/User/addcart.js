@@ -387,10 +387,11 @@ function Addcart() {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -1168,6 +1169,7 @@ function Addcart() {
                             <Button
                               data-toggle="modal"
                               data-target="#cod"
+                              disabled={!isAddressSelected}
                               // onClick={handleAddToCart}
                             >
                               {/* <Link
@@ -1176,9 +1178,15 @@ function Addcart() {
                               Checkout
                               {/* </Link> */}
                             </Button>
+                           
                             <Button>
                               <Link to="/product">Continue Shopping</Link>
                             </Button>
+                             {isAddressSelected ? null : (
+                          <div className="error-message">
+                            Please Select Shipping Address.
+                          </div>
+                        )}
                           </Col>
                         </Row>
                       </div>

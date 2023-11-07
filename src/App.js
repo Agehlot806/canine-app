@@ -140,7 +140,7 @@ const UsersRoutes = () => {
       <Route path="/service" element={<Service />} />
       <Route path="/product" element={<Product />} />
       <Route
-        path="/sub-categoriesProduct/:name"
+        path="/sub-categoriesProduct/:name/:id"
         element={<SubcategoriesProduct />}
       />
       <Route path="/product-details/:id" element={<Productdetail />} />
@@ -352,7 +352,7 @@ const App = () => {
             <Route path="/service" element={<Service />} />
             <Route path="/product" element={<Product />} />
             <Route
-              path="/sub-categoriesProduct/:name"
+              path="/sub-categoriesProduct/:name/:id"
               element={<SubcategoriesProduct />}
             />
             <Route path="/product-details/:id" element={<Productdetail />} />
