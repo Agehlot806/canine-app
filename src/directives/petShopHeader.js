@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import pro from "../assets/images/icon/pro.png";
@@ -14,17 +14,16 @@ import { BiSolidOffer } from "react-icons/bi";
 import "../assets/css/menus.css";
 import { useCartWithoutLogin } from "../component/context/AddToCardWithoutLogin";
 
-
 function Petshopheader(props) {
   const navigate = useNavigate();
   const [notification, setNotification] = useState([]);
   const [allproduct, setAllProduct] = useState([]);
   const [dogsubcategories, setdogsubcategories] = useState("");
   const [storedWholesellerId, setStoredWholesellerId] = useState(null);
-  console.log("storedWholesellerId",storedWholesellerId);
+  console.log("storedWholesellerId", storedWholesellerId);
   const [categories, setcategories] = useState([]);
   const { cartData, dataLengthpetshop, addToCartData } = useCartContext();
-  const [loginTypee, setLoginTypee] = useState(""); 
+  const [loginTypee, setLoginTypee] = useState("");
   const loginType = localStorage.getItem("loginType");
   const { notificationLength, dataLengthpetnotification } =
     useNotificationContext();
@@ -81,7 +80,10 @@ function Petshopheader(props) {
         console.log("Logged out Wholeseller with ID: ", storedWholesellerId);
         setStoredWholesellerId(null); // Reset the storedWholesellerId state
         toast.success("Your user ID logout has been successful.");
-        navigate(loginType === "salesman" ? "/salesman-login": "/petshop-login",{replace: true});
+        navigate(
+          loginType === "salesman" ? "/salesman-login" : "/petshop-login",
+          { replace: true }
+        );
       } catch (error) {
         console.error("Error parsing stored user ID: ", error);
       }
@@ -162,7 +164,7 @@ function Petshopheader(props) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [notify, setNotify] = useState([]);
   const [dataZero, setDataZero] = useState([]);
-  const [allnotification,setAllnotification] = useState([])
+  const [allnotification, setAllnotification] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -232,8 +234,8 @@ function Petshopheader(props) {
         setDataZero(response.data.notification);
         console.log("Notify-Notificationnnnnnnnnnnnn", response.data.data);
         console.log("Data Zero", response.data.notification);
-        setAllnotification(response.data.all_notification)
-        console.log("allenSolly",response.data.all_notification);
+        setAllnotification(response.data.all_notification);
+        console.log("allenSolly", response.data.all_notification);
       })
       .catch((error) => {
         console.log("EEEEEEEEEErrrrorrrrrrr", error);
@@ -366,7 +368,7 @@ function Petshopheader(props) {
 
             <div className="hide-icons">
               <li>
-              <Link className="profiledes searneee">
+                <Link className="profiledes searneee">
                   <i className="fa fa-search" />
                   <input
                     type="text"
@@ -387,7 +389,7 @@ function Petshopheader(props) {
                 </Link>
               </li>
               <li>
-              <Link
+                <Link
                   to="/petShop-add-cart"
                   className="profiledes notification-btn"
                 >
@@ -475,7 +477,9 @@ function Petshopheader(props) {
                     {/* {isTotalLengthVisible && (
                       <span>{isNaN(customCount) ? 0 : customCount}</span>
                     )} */}
-                    <span>{isNaN(notificationLength) ? 0 : notificationLength}</span>
+                    <span>
+                      {isNaN(notificationLength) ? 0 : notificationLength}
+                    </span>
                   </a>
                 </li>
               </div>
@@ -1048,7 +1052,10 @@ function Petshopheader(props) {
               </li>
 
               <li className="nonhide">
-                <Link to="/petShop-add-cart" className="profiledes notification-btn">
+                <Link
+                  to="/petShop-add-cart"
+                  className="profiledes notification-btn"
+                >
                   <i class="fa fa-shopping-cart" />{" "}
                   <span className="cart-countpetshop">{dataLengthpetshop}</span>{" "}
                 </Link>
@@ -1067,7 +1074,9 @@ function Petshopheader(props) {
                       {/* {isTotalLengthVisible && (
                         <span>{isNaN(customCount) ? 0 : customCount}</span>
                       )} */}
-                      <span>{isNaN(notificationLength) ? 0 : notificationLength}</span>
+                      <span>
+                        {isNaN(notificationLength) ? 0 : notificationLength}
+                      </span>
                     </a>
                   </li>
                   <li className="">
@@ -1081,8 +1090,11 @@ function Petshopheader(props) {
                   </li>
 
                   <li className="nonhide">
-                    <Link  to={loginType == "salesman" ? "/salesman-dashboad" : ""} className="profiledes desktop-item">
-                    <img
+                    <Link
+                      to={loginType == "salesman" ? "/salesman-dashboad" : ""}
+                      className="profiledes desktop-item"
+                    >
+                      <img
                         src={
                           loginType == "salesman"
                             ? salesmanProfile?.image
@@ -1098,7 +1110,7 @@ function Petshopheader(props) {
                     </Link>
                     <input type="checkbox" id="showDropProfile" />
                     <label htmlFor="showDropProfile" className="mobile-item">
-                    <img
+                      <img
                         src={
                           loginType == "salesman"
                             ? salesmanProfile?.image
@@ -1113,7 +1125,7 @@ function Petshopheader(props) {
                       />
                     </label>
                     <ul className="drop-menu">
-                    <li>
+                      <li>
                         <Link
                           className="dropdown-item"
                           to={
@@ -1145,7 +1157,7 @@ function Petshopheader(props) {
                               to={
                                 loginType === "salesman"
                                   ? "/salesman-dashboad/"
-                                  : "/petshop-petshop-my-orders"
+                                  : "/petshop-my-orders"
                               }
                             >
                               My Orders
@@ -1182,11 +1194,15 @@ function Petshopheader(props) {
                 </>
               ) : (
                 <li className="">
-                  <Link to={
+                  <Link
+                    to={
                       loginType === "salesman"
                         ? "/salesman-login"
                         : "/petshop-login"
-                    }>Login/Sign Up</Link>
+                    }
+                  >
+                    Login/Sign Up
+                  </Link>
                 </li>
               )}
             </ul>
@@ -1270,20 +1286,26 @@ function Petshopheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div
-                            className={`notification ${ob.status === "unread" ? "unread" : "read"
-                              }`}
+                            className={`notification ${
+                              ob.status === "unread" ? "unread" : "read"
+                            }`}
                             key={index}
                           >
                             <Row>
                               <Col lg={2} className="align-self-center">
-                                <Link to={`/petshop-my-orders`} onClick={() => Modaloff()}>       
+                                <Link
+                                  to={`/petshop-my-orders`}
+                                  onClick={() => Modaloff()}
+                                >
                                   <i className="fa fa-info-circle" />
                                 </Link>
                               </Col>
                               <Col lg={8}>
                                 <Link
                                   to={`/petshop-my-orders`}
-                                  onClick={() => {handleLinkClick(ob.id),Modaloff()}}
+                                  onClick={() => {
+                                    handleLinkClick(ob.id), Modaloff();
+                                  }}
                                 >
                                   <h6
                                     className={
@@ -1321,7 +1343,9 @@ function Petshopheader(props) {
                           <div className="notification" key={index}>
                             <Row>
                               <Col lg={2}>
-                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
+                                <img
+                                  src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
+                                />
                                 {console.log("emage", ob.image)}
                               </Col>
                               <Col lg={8}>
@@ -1334,7 +1358,6 @@ function Petshopheader(props) {
                       ) : (
                         <p className="emptyMSG">No Data Zero</p>
                       )}
-
                     </div>
                   </div>
                   <div
@@ -1344,23 +1367,25 @@ function Petshopheader(props) {
                     aria-labelledby="pills-profile-tab"
                   >
                     {allnotification && allnotification.length > 0 ? (
-                        allnotification.map((ob, index) => (
-                          <div className="notification" key={index}>
-                            <Row>
-                              <Col lg={2}>
-                                <img src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`} />
-                                {console.log("emage", ob.image)}
-                              </Col>
-                              <Col lg={8}>
-                                <h6>{ob.title}</h6>
-                                <p>{ob.description}</p>
-                              </Col>
-                            </Row>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="emptyMSG">No Data Zero</p>
-                      )}
+                      allnotification.map((ob, index) => (
+                        <div className="notification" key={index}>
+                          <Row>
+                            <Col lg={2}>
+                              <img
+                                src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
+                              />
+                              {console.log("emage", ob.image)}
+                            </Col>
+                            <Col lg={8}>
+                              <h6>{ob.title}</h6>
+                              <p>{ob.description}</p>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Data Zero</p>
+                    )}
                   </div>
                   <div
                     class="tab-pane fade"
@@ -1399,7 +1424,10 @@ function Petshopheader(props) {
                       {dataZero && dataZero.length > 0 ? (
                         dataZero.map((ob, index) => (
                           <div className="notification" key={index}>
-                            <Link to={`/petshop-my-orders`} onClick={() => Modaloff()}>
+                            <Link
+                              to={`/petshop-my-orders`}
+                              onClick={() => Modaloff()}
+                            >
                               <Row>
                                 <Col
                                   lg={2}
@@ -1465,4 +1493,3 @@ function Petshopheader(props) {
 }
 
 export default Petshopheader;
-

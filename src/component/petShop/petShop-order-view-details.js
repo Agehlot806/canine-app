@@ -32,8 +32,7 @@ function PetshopOrderviewdetails() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([orderViewdetails(),
-      allOrders()])
+    Promise.all([orderViewdetails(), allOrders()])
       .then(() => {
         setLoading(false);
       })
@@ -181,27 +180,47 @@ function PetshopOrderviewdetails() {
       });
   };
   const [addToCartStatus, setAddToCartStatus] = useState("");
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (order) => {
+    console.log("itemmmm: ", order);
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
-          image: productDetails?.image,
-          quantity: quantity,
-          price: formattedAmount,
-          user_id: storedUserId,
-          item_id: productDetails?.id,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Set appropriate content type
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+          item_name: order?.variant,
+          variant: order?.variation, // You may need to update this based on your data
+          // image: productDetails?.image,
+          image:
+            // "https://canine.hirectjob.in///storage/app/public/product/" +
+            order?.item_details?.image,
+          quantity: order?.quantity,
+          total_quantity: 5,
+          return_order: "yes",
+
+          price: order?.price.toString(),
+          // calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
+          user_id: storedWholesellerId,
+          item_id: order?.item_id,
         }
       );
+      console.log("response in Cart", response);
+      if (response) {
+        if (response.data.status === "200") {
+          toast.success("Added to cart!");
 
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
+          // setAddToCartStatus("Added to cart!");
+          navigate(`/petshop-add-cart/${order?.item_id}`);
+        } else {
+          // setAddToCartStatus(response.data.message);
+          toast.error("Already added");
+        }
+        // const updatedCart = [...addToCartStatus, productDetails];
+        // setAddToCartStatus(updatedCart);
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -276,333 +295,333 @@ function PetshopOrderviewdetails() {
       <PetShopHeader />
       {loading ? (
         <section className="section-padding mt-3 mb-3">
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt="" />
-        <h5>Please Wait.......</h5>
-      </div>
-      </section>
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <section className="section-padding">
-        <Container>
-          <h1 className="main-head">Orders View</h1>
+          <section className="section-padding">
+            <Container>
+              <h1 className="main-head">Orders View</h1>
 
-          <div className="oder-detail-card">
-            <Row>
-              <Col lg={5}>
-                <div className="product-details">
-                  <div>
-                    <img src={logo} />
-                  </div>
-                  <div>
-                    <h5>Canine Products</h5>
-                    <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={7}>
-                <div className="dowload-invioce">
-                  <Button className="invoice-1" onClick={handlePrint}>
-                    <img src={invoice} /> download invoice
-                  </Button>
-                  <Button className="invoice-2" onClick={summaryPrint}>
-                    <img src={invoice} /> download summary
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={5} className="align-self-center">
-                <div className="order-minicard">
-                  {orderDetails && orderDetails.length > 0 ? (
-                    orderDetails.map((order) => {
-                      return (
-                        <div key={order.id}>
-                          <Row>
-                            <h6>Order ID: {order.order_id}</h6>
-                            <Col sm={9}>
-                              <div className="order-ids">
-                                <p>
-                                  Product name: <span>{order.variant}</span>
-                                </p>
-                                <p>
-                                  Price:{" "}
-                                  <span>
-                                    ₹
-                                    {parseFloat(
-                                      order.price * order.quantity,
-                                      0
-                                    )}
-                                  </span>
-                                </p>
-                                <p>
-                                  quantity: <span>{order.quantity}</span>
-                                </p>
-                              </div>
-                            </Col>
-
-                            <Col sm={3}>
-                              <div className="order-ids">
-                                <Button>
-                                  <Link
-                                    to={`/petshop-add-cart/${id}`}
-                                    onClick={handleAddToCart}
-                                  >
-                                    Buy it again
-                                  </Link>
-                                </Button>
-                              </div>
-                            </Col>
-                          </Row>
-                          {salesmanId && paymentStatus === "unpaid" ? (
-                            <Row>
-                              <h6>Total outstanding amount</h6>
-                              <h4>₹{SubTotalData + deliveryCharge}</h4>
-                              <Col sm={3}>
-                                <div className="order-ids">
-                                  <Button
-                                    data-toggle="modal"
-                                    data-target="#cod"
-                                  >
-                                    {/* <Link
-                                      to={`/add-cart/${order.item_id}`}
-                                      onClick={handleAddToCart}
-                                    > */}
-                                    Proceed to Pay
-                                    {/* </Link> */}
-                                  </Button>
-                                </div>
-                              </Col>
-                            </Row>
-                          ) : null}
-                          <div>
-                            {allorder.order_status === "delivered" ? (
-                              <div>
-                                <p>Product Rating: {rating}</p>
-                                <div className="star-rating">
-                                  {[1, 2, 3, 4, 5].map((index) => (
-                                    <div
-                                      key={index}
-                                      className={`star ${
-                                        index <= rating ? "filled" : ""
-                                      }`}
-                                      onClick={() => handleStarClick(index)}
-                                    ></div>
-                                  ))}
-                                </div>
-                                {showForm && (
-                                  <form>
-                                    <div className="form-group">
-                                      <label>Write a Review</label>
-                                      <textarea
-                                        className="form-control mb-3"
-                                        rows={3}
-                                        value={comment}
-                                        onChange={(e) =>
-                                          setcomment(e.target.value)
-                                        }
-                                      />
-                                    </div>
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={handleReview}
-                                    >
-                                      Submit
-                                    </button>
-                                  </form>
-                                )}
-                                {!showForm && (
-                                  <p>Review submitted. Thank you!</p>
-                                )}
-                              </div>
-                            ) : null}
-                          </div>
-                          <hr />
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <p>No orders available</p>
-                  )}
-                </div>
-              </Col>
-              <Col lg={7} className="align-self-center">
+              <div className="oder-detail-card">
                 <Row>
-                  <Col sm={12} className="mb-4">
-                    <div className="order-table" ref={tableRef}>
-                      {allorder && allorder.length > 0 ? (
-                        allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
-
-                          if (item.id == id) {
-                            console.log("Match found for ID:", id);
-                            return (
-                              <div className="dow-summy">
-                                <h5>Order Invoice</h5>
-                                <table responsive key={index}>
-                                  <>
-                                    <tbody>
-                                      <tr>
-                                        <th>
-                                          <p>Total</p>
-                                        </th>
-                                        <td>
-                                          <p>₹{subTotal}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>
-                                          <p>Tax:</p>
-                                        </th>
-                                        <td>
-                                          <p>₹{TaxAmount}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>
-                                          <p>Sub Total</p>
-                                        </th>
-                                        <td>
-                                          <p>₹{SubTotalData}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>
-                                          <p>Delivery Charge</p>
-                                        </th>
-                                        <td>
-                                          <p>₹{deliveryCharge}</p>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th>Total</th>
-                                        <td>
-                                          ₹{SubTotalData + deliveryCharge}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </>
-                                </table>
-                              </div>
-                            );
-                          } else {
-                            console.log("No match for ID:", id);
-                            return null; // If no match, return null or an empty fragment
-                          }
-                        })
-                      ) : (
-                        <p className="emptyMSG">No Order list</p>
-                      )}
+                  <Col lg={5}>
+                    <div className="product-details">
+                      <div>
+                        <img src={logo} />
+                      </div>
+                      <div>
+                        <h5>Canine Products</h5>
+                        <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                      </div>
                     </div>
                   </Col>
-                  <Col sm={12}>
-                    <div ref={summaryTableRef}>
-                      {allorder && allorder.length > 0 ? (
-                        allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
-
-                          if (item.id == id) {
-                            console.log("Match found for ID:", id);
-                            return (
-                              <div className="dow-summy">
-                                <h5>Order Summary</h5>
-                                <table>
-                                  <tbody>
-                                    <tr>
-                                      <th>
-                                        <p>Order ID :</p>
-                                      </th>
-                                      <td>
-                                        <p>{item.id}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Item Name :</p>
-                                      </th>
-                                      <td>
-                                        {item.callback[0] && (
-                                          <p>{item.callback[0].variant}</p>
-                                        )}
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Payment Status:</p>
-                                      </th>
-                                      <td>
-                                        <p>{paymentStatus}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Total Before Tax:</p>
-                                      </th>
-                                      <td>
-                                        <p>
-                                          ₹
-                                          {parseInt(
-                                            orderDetails.reduce(
-                                              (total, order) =>
-                                                total +
-                                                parseFloat(
-                                                  order.price * order.quantity
-                                                ),
-                                              0
-                                            )
-                                          )}
-                                        </p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <p>Sub Total:</p>
-                                      </th>
-                                      <td>
-                                        <p>₹{SubTotalData}</p>
-                                      </td>
-                                    </tr>
-
-                                    <tr>
-                                      <th>
-                                        <p>Delivery Fee:</p>
-                                      </th>
-                                      <td>
-                                        <p>₹{deliveryCharge}</p>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th>
-                                        <h4>Total:</h4>
-                                      </th>
-                                      <td>
-                                        <h4>
-                                          ₹{SubTotalData + deliveryCharge}
-                                        </h4>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            );
-                          } else {
-                            console.log("No match for ID:", id);
-                            return null;
-                          }
-                        })
-                      ) : (
-                        <p className="emptyMSG">No Order list</p>
-                      )}
+                  <Col lg={7}>
+                    <div className="dowload-invioce">
+                      <Button className="invoice-1" onClick={handlePrint}>
+                        <img src={invoice} /> download invoice
+                      </Button>
+                      <Button className="invoice-2" onClick={summaryPrint}>
+                        <img src={invoice} /> download summary
+                      </Button>
                     </div>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </section>
+                <Row>
+                  <Col lg={5} className="align-self-center">
+                    <div className="order-minicard">
+                      {orderDetails && orderDetails.length > 0 ? (
+                        orderDetails.map((order) => {
+                          return (
+                            <div key={order.id}>
+                              <Row>
+                                <h6>Order ID: {order.order_id}</h6>
+                                <Col sm={9}>
+                                  <div className="order-ids">
+                                    <p>
+                                      Product name: <span>{order.variant}</span>
+                                    </p>
+                                    <p>
+                                      Price:{" "}
+                                      <span>
+                                        ₹
+                                        {parseFloat(
+                                          order.price * order.quantity,
+                                          0
+                                        )}
+                                      </span>
+                                    </p>
+                                    <p>
+                                      quantity: <span>{order.quantity}</span>
+                                    </p>
+                                  </div>
+                                </Col>
+
+                                <Col sm={3}>
+                                  <div className="order-ids">
+                                    <Button
+                                      onClick={() => {
+                                        handleAddToCart(order);
+                                      }}
+                                    >
+                                      Buy it again
+                                    </Button>
+                                  </div>
+                                </Col>
+                              </Row>
+                              {salesmanId && paymentStatus === "unpaid" ? (
+                                <Row>
+                                  <h6>Total outstanding amount</h6>
+                                  <h4>₹{SubTotalData + deliveryCharge}</h4>
+                                  <Col sm={3}>
+                                    <div className="order-ids">
+                                      <Button
+                                        data-toggle="modal"
+                                        data-target="#cod"
+                                      >
+                                        {/* <Link
+                                      to={`/add-cart/${order.item_id}`}
+                                      onClick={handleAddToCart}
+                                    > */}
+                                        Proceed to Pay
+                                        {/* </Link> */}
+                                      </Button>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              ) : null}
+                              <div>
+                                {allorder.order_status === "delivered" ? (
+                                  <div>
+                                    <p>Product Rating: {rating}</p>
+                                    <div className="star-rating">
+                                      {[1, 2, 3, 4, 5].map((index) => (
+                                        <div
+                                          key={index}
+                                          className={`star ${
+                                            index <= rating ? "filled" : ""
+                                          }`}
+                                          onClick={() => handleStarClick(index)}
+                                        ></div>
+                                      ))}
+                                    </div>
+                                    {showForm && (
+                                      <form>
+                                        <div className="form-group">
+                                          <label>Write a Review</label>
+                                          <textarea
+                                            className="form-control mb-3"
+                                            rows={3}
+                                            value={comment}
+                                            onChange={(e) =>
+                                              setcomment(e.target.value)
+                                            }
+                                          />
+                                        </div>
+                                        <button
+                                          className="btn btn-primary"
+                                          onClick={handleReview}
+                                        >
+                                          Submit
+                                        </button>
+                                      </form>
+                                    )}
+                                    {!showForm && (
+                                      <p>Review submitted. Thank you!</p>
+                                    )}
+                                  </div>
+                                ) : null}
+                              </div>
+                              <hr />
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <p>No orders available</p>
+                      )}
+                    </div>
+                  </Col>
+                  <Col lg={7} className="align-self-center">
+                    <Row>
+                      <Col sm={12} className="mb-4">
+                        <div className="order-table" ref={tableRef}>
+                          {allorder && allorder.length > 0 ? (
+                            allorder.map((item, index) => {
+                              console.log("Desired ID:", id);
+                              console.log("Item ID:", item.id);
+
+                              if (item.id == id) {
+                                console.log("Match found for ID:", id);
+                                return (
+                                  <div className="dow-summy">
+                                    <h5>Order Invoice</h5>
+                                    <table responsive key={index}>
+                                      <>
+                                        <tbody>
+                                          <tr>
+                                            <th>
+                                              <p>Total</p>
+                                            </th>
+                                            <td>
+                                              <p>₹{subTotal}</p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <th>
+                                              <p>Tax:</p>
+                                            </th>
+                                            <td>
+                                              <p>₹{TaxAmount}</p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <th>
+                                              <p>Sub Total</p>
+                                            </th>
+                                            <td>
+                                              <p>₹{SubTotalData}</p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <th>
+                                              <p>Delivery Charge</p>
+                                            </th>
+                                            <td>
+                                              <p>₹{deliveryCharge}</p>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <th>Total</th>
+                                            <td>
+                                              ₹{SubTotalData + deliveryCharge}
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </>
+                                    </table>
+                                  </div>
+                                );
+                              } else {
+                                console.log("No match for ID:", id);
+                                return null; // If no match, return null or an empty fragment
+                              }
+                            })
+                          ) : (
+                            <p className="emptyMSG">No Order list</p>
+                          )}
+                        </div>
+                      </Col>
+                      <Col sm={12}>
+                        <div ref={summaryTableRef}>
+                          {allorder && allorder.length > 0 ? (
+                            allorder.map((item, index) => {
+                              console.log("Desired ID:", id);
+                              console.log("Item ID:", item.id);
+
+                              if (item.id == id) {
+                                console.log("Match found for ID:", id);
+                                return (
+                                  <div className="dow-summy">
+                                    <h5>Order Summary</h5>
+                                    <table>
+                                      <tbody>
+                                        <tr>
+                                          <th>
+                                            <p>Order ID :</p>
+                                          </th>
+                                          <td>
+                                            <p>{item.id}</p>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <th>
+                                            <p>Item Name :</p>
+                                          </th>
+                                          <td>
+                                            {item.callback[0] && (
+                                              <p>{item.callback[0].variant}</p>
+                                            )}
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <th>
+                                            <p>Payment Status:</p>
+                                          </th>
+                                          <td>
+                                            <p>{paymentStatus}</p>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <th>
+                                            <p>Total Before Tax:</p>
+                                          </th>
+                                          <td>
+                                            <p>
+                                              ₹
+                                              {parseInt(
+                                                orderDetails.reduce(
+                                                  (total, order) =>
+                                                    total +
+                                                    parseFloat(
+                                                      order.price *
+                                                        order.quantity
+                                                    ),
+                                                  0
+                                                )
+                                              )}
+                                            </p>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <th>
+                                            <p>Sub Total:</p>
+                                          </th>
+                                          <td>
+                                            <p>₹{SubTotalData}</p>
+                                          </td>
+                                        </tr>
+
+                                        <tr>
+                                          <th>
+                                            <p>Delivery Fee:</p>
+                                          </th>
+                                          <td>
+                                            <p>₹{deliveryCharge}</p>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <th>
+                                            <h4>Total:</h4>
+                                          </th>
+                                          <td>
+                                            <h4>
+                                              ₹{SubTotalData + deliveryCharge}
+                                            </h4>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                );
+                              } else {
+                                console.log("No match for ID:", id);
+                                return null;
+                              }
+                            })
+                          ) : (
+                            <p className="emptyMSG">No Order list</p>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </div>
+            </Container>
+          </section>
         </>
       )}
       <Petshopfooter />

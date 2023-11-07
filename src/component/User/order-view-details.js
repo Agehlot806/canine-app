@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png";
 import invoice from "../../assets/images/icon/invoice.png";
 import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -35,7 +35,7 @@ function Orderviewdetails() {
   // } else {
 
   //   }
-
+  const navigate = useNavigate();
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
 
@@ -47,10 +47,23 @@ function Orderviewdetails() {
   });
 
   const [allorder, setallorder] = useState([]);
+  console.log("allorderId: ", allorder[0]?.callback[0]?.item_id);
   const [orderDetails, setorderDetails] = useState([]);
+  console.log("orderDetails---", orderDetails);
 
   const { id } = useParams();
   console.log("order id ", id);
+  const [orderItemId, setOrderItemId] = useState(null); // Initialize as null
+  console.log("orderItemId: ", orderItemId);
+
+  useEffect(() => {
+    // Make sure orderDetails is available before accessing item_id
+    if (orderDetails && orderDetails.length > 0) {
+      const firstOrder = orderDetails[0];
+      const itemId = firstOrder.item_id;
+      setOrderItemId(itemId); // Store item_id in the state variable
+    }
+  }, [orderDetails]);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -63,11 +76,27 @@ function Orderviewdetails() {
         setLoading(false);
       });
   }, []);
+  let originalPrice = 0;
+  console.log("originalPrice: ", originalPrice);
+  orderDetails.forEach((el) => {
+    let allPrice = parseInt(el.price) + parseInt(originalPrice);
+    originalPrice = allPrice;
+  });
 
   let subTotal = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.total_add_on_price),
+    (total, order) => total + parseFloat(order.price),
     0
   );
+  console.log("nnn: ", subTotal);
+  let taxAmount = orderDetails.reduce(
+    (total, order) => total + parseFloat(order.tax_amount),
+    0
+  );
+  let promoDiscount = orderDetails.reduce(
+    (total, order) => total + parseFloat(order.discount_on_item),
+    0
+  );
+  console.log("promoDiscount: ", promoDiscount);
 
   // let couponDiscount = orderDetails.reduce(
   //   (total, order) => total + parseFloat(order.coupon_discount_amount),
@@ -77,7 +106,7 @@ function Orderviewdetails() {
   let couponDiscount = parseFloat(orderDetails[0]?.discount_on_item);
 
   let deliveryCharge = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.delivery_charge == 0 ? 60 : 60),
+    (total, order) => total + parseFloat(order.delivery_charge == 0 ? 30 : 30),
     0
   );
 
@@ -89,7 +118,10 @@ function Orderviewdetails() {
   const GrandTotal = formatted.endsWith(".0")
     ? formatted.slice(0, -2)
     : formatted;
-
+  let TotalDataPrice =
+    promoDiscount === 0
+      ? subTotal + taxAmount + deliveryCharge
+      : subTotal + taxAmount + deliveryCharge - couponDiscount;
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   const loginType = localStorage.getItem("loginType");
@@ -128,42 +160,66 @@ function Orderviewdetails() {
 
   const [addToCartStatus, setAddToCartStatus] = useState("");
   console.log("addToCartStatusaddToCartStatus", addToCartStatus);
+  // but it again add to cart
+  // const [quantity, setQuantity] = useState(1);
+  // const [selectedVariant, setSelectedVariant] = useState([]);
+  // const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  // const [selectedVariantStock, setSelectedVariantStock] = useState("");
 
-  const handleAddToCart = async () => {
+  // useEffect(() => {
+  //   if (productDetails?.variations && productDetails?.variations.length > 0) {
+  //     const defaultVariant = productDetails?.variations[0];
+  //     setSelectedVariant(defaultVariant?.type);
+  //     setSelectedVariantPrice(defaultVariant?.price);
+  //     setSelectedVariantStock(defaultVariant.stock);
+  //   }
+  // }, [productDetails]);
+
+  const handleAddToCart = async (order) => {
+    console.log("itemmmm: ", order);
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
         {
-          item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
-          image: productDetails?.image,
-          quantity: quantity,
-          price: formattedAmount,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Set appropriate content type
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+          item_name: order?.variant,
+          variant: order?.variation, // You may need to update this based on your data
+          // image: productDetails?.image,
+          image:
+            // "https://canine.hirectjob.in///storage/app/public/product/" +
+            order?.item_details?.image,
+          quantity: order?.quantity,
+          total_quantity: 5,
+          return_order: "yes",
+
+          price: order?.price.toString(),
+          // calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
           user_id: storedUserId,
-          item_id: productDetails?.id,
+          item_id: order?.item_id,
         }
       );
+      console.log("response in Cart", response);
+      if (response) {
+        if (response.data.status === "200") {
+          toast.success("Added to cart!");
 
-      if (response.data.success) {
-        const updatedCart = [...addToCartStatus, productDetails];
-        setAddToCartStatus(updatedCart);
-        // setAddToCartStatus("Added to cart!");
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
+          // setAddToCartStatus("Added to cart!");
+          navigate(`/add-cart/${order?.item_id}`);
+        } else {
+          // setAddToCartStatus(response.data.message);
+          toast.error("Already added");
+        }
+        // const updatedCart = [...addToCartStatus, productDetails];
+        // setAddToCartStatus(updatedCart);
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
-    }
-    const modal = document.querySelector(".modal");
-    if (modal) {
-      modal.classList.remove("show");
-      modal.style.display = "none";
-      document.body.classList.remove("modal-open");
-      const modalBackdrop = document.querySelector(".modal-backdrop");
-      if (modalBackdrop) {
-        modalBackdrop.remove();
-      }
     }
   };
 
@@ -211,11 +267,11 @@ function Orderviewdetails() {
       <Toaster />
       <Newheader />
       {loading ? (
-      <section className="section-padding mt-3 mb-3">
-        <div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt="" />
-          <h5>Please Wait.......</h5>
-        </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
         </section>
       ) : (
         <>
@@ -267,13 +323,7 @@ function Orderviewdetails() {
                                     </p>
                                     <p>
                                       Price:{" "}
-                                      <span>
-                                        ₹
-                                        {parseFloat(
-                                          order.total_add_on_price,
-                                          0
-                                        )}
-                                      </span>
+                                      <span>₹{parseFloat(order.price, 0)}</span>
                                     </p>
                                     <p>
                                       quantity: <span>{order.quantity}</span>
@@ -283,14 +333,22 @@ function Orderviewdetails() {
 
                                 <Col sm={3}>
                                   <div className="order-ids">
-                                    <Button>
-                                      <Link
-                                        to={`/add-cart/${order.item_id}`}
-                                        onClick={handleAddToCart}
-                                      >
-                                        Buy it again
-                                      </Link>
+                                    <Button
+                                      onClick={() => {
+                                        handleAddToCart(order);
+                                      }}
+                                    >
+                                      {/* <Link
+                                      // to={`/add-cart/${order.item_id}`}
+                                      // onClick={handleAddToCart}
+                                      > */}
+                                      Buy it again
+                                      {/* </Link> */}
                                     </Button>
+                                    {console.log(
+                                      "order.item_id: ",
+                                      order.item_id
+                                    )}
                                     {/* {butitAgainHide ? null : ( // Render nothing if butitAgainHide is true (button is hidden)
                                   // Render the "Buy it again" button if butitAgainHide is false (button is shown)
                                   <Button>
@@ -430,10 +488,17 @@ function Orderviewdetails() {
                                       </tr>
                                       <tr>
                                         <th>
-                                          <p>Sub Total</p>
+                                          <p>Sub Total:</p>
                                         </th>
                                         <td>
-                                          <p>₹{subTotal}</p>
+                                          <p>
+                                            ₹
+                                            {promoDiscount === 0
+                                              ? subTotal + taxAmount
+                                              : subTotal +
+                                                taxAmount -
+                                                couponDiscount}
+                                          </p>
                                         </td>
                                       </tr>
 
@@ -451,7 +516,7 @@ function Orderviewdetails() {
                                         </th>
                                         <td>
                                           <h4 style={{ color: "#3b71ca" }}>
-                                            ₹{GrandTotal}
+                                            ₹{TotalDataPrice}
                                           </h4>
                                         </td>
                                       </tr>
@@ -508,14 +573,20 @@ function Orderviewdetails() {
                                       </th>
                                       <td>
                                         <p>
-                                          ₹
+                                          <p>
+                                            ₹
+                                            {promoDiscount === 0
+                                              ? subTotal
+                                              : subTotal - couponDiscount}
+                                          </p>
+                                          {/* ₹
                                           {parseInt(
                                             orderDetails.reduce(
                                               (total, order) =>
                                                 total + parseFloat(order.price),
                                               0
                                             )
-                                          )}
+                                          )} */}
                                         </p>
                                       </td>
                                     </tr>
@@ -524,7 +595,15 @@ function Orderviewdetails() {
                                         <p>Sub Total:</p>
                                       </th>
                                       <td>
-                                        <p>₹{subTotal}</p>
+                                        <p>
+                                          {" "}
+                                          ₹
+                                          {promoDiscount === 0
+                                            ? subTotal + taxAmount
+                                            : subTotal +
+                                              taxAmount -
+                                              couponDiscount}
+                                        </p>
                                       </td>
                                     </tr>
                                     <tr>
@@ -532,7 +611,12 @@ function Orderviewdetails() {
                                         <p>Coupon Discount:</p>
                                       </th>
                                       <td>
-                                        <p>₹{item.coupon_discount_amount}</p>
+                                        <p>
+                                          ₹
+                                          {parseInt(
+                                            item.coupon_discount_amount
+                                          )}
+                                        </p>
                                       </td>
                                     </tr>
                                     <tr>
@@ -549,7 +633,7 @@ function Orderviewdetails() {
                                       </th>
                                       <td>
                                         <h4 style={{ color: "#3b71ca" }}>
-                                          ₹{GrandTotal}
+                                          ₹{TotalDataPrice}
                                         </h4>
                                       </td>
                                     </tr>
