@@ -1395,11 +1395,11 @@ console.log("filteredData111", filteredData);
     const renderProductDescription = (description) => {
         const maxCharacters = 35; // Number of characters to show initially
 
-        if (description.length <= maxCharacters) {
+        if (description?.length <= maxCharacters) {
             return <p>{description}</p>; // Show the full description if it's short
         }
 
-        const truncatedDescription = description.slice(0, maxCharacters);
+        const truncatedDescription = description?.slice(0, maxCharacters);
 
         return (
             <>

@@ -4202,3 +4202,7 @@ li.cardpay a img {
     color: red;
     margin: 15px 7px 0 !important;
 }
+
+.mga-he header {
+    padding: 6px 0;
+}

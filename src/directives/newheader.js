@@ -548,9 +548,9 @@ function Newheader(props) {
                 <div className="mega-box">
                   <div className="content">
                     <Row>
-                      <Col lg={6} className="p-0">
-                        <Row>
-                          <Col lg={3} sm={12} className="mga-he">
+                      {/* <Col lg={6} className="p-0">
+                        <Row> */}
+                          <Col lg={2} sm={12} className="mga-he">
                             <header>
                               <Link to={`/sub-categoriesHeading/${"Food"}`}>
                                 Dog Food
@@ -582,7 +582,7 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                          <Col lg={3} sm={12} className="mga-he">
+                          <Col lg={2} sm={12} className="mga-he">
                             <header>
                               <Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">
                                 Beds Cages & Carriers
@@ -616,7 +616,7 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                          <Col lg={3} sm={12} className="mga-he">
+                          <Col lg={2} sm={12} className="mga-he">
                             <header>
                               <Link to="/sub-categoriesHeading/Collar Leashes & More">
                                 Collar Leashes & More
@@ -648,7 +648,7 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                          <Col lg={3} sm={12} className="mga-he">
+                          <Col lg={2} sm={12} className="mga-he">
                             <header>
                               <Link to="/sub-categoriesHeading/Shampoo & Perfumes">
                                 Shampoo & Perfumes
@@ -680,10 +680,6 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                        </Row>
-                      </Col>
-                      <Col lg={6} className="p-0">
-                        <Row>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
                               <Link to="/sub-categoriesHeading/Treats">
@@ -746,6 +742,11 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
+                        {/* </Row>
+                      </Col> */}
+                      {/* <Col lg={6} className="p-0">
+                        <Row> */}
+                          
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
                               <Link to="/sub-categoriesHeading/Training & Accessories">
@@ -874,8 +875,8 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                        </Row>
-                      </Col>
+                        {/* </Row>
+                      </Col> */}
                     </Row>
                   </div>
                 </div>
