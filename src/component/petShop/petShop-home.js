@@ -70,21 +70,21 @@ function PetshopHome(props) {
     toast.error("Profile is not verified");
   };
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([fetchBrands(),
-    homeAllBanner(),
-    allAddressList(),
-    allReview(),
-    categoriesProduct(),
-    allProduct(),
-    thirdBanner(),
-    fetchBlogs(),
-    AllVendorHomePage(),
-    fetchWishlistData()])
+    Promise.all([
+      fetchBrands(),
+      homeAllBanner(),
+      allAddressList(),
+      allReview(),
+      categoriesProduct(),
+      allProduct(),
+      thirdBanner(),
+      fetchBlogs(),
+      AllVendorHomePage(),
+      fetchWishlistData(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -438,7 +438,7 @@ function PetshopHome(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -446,7 +446,7 @@ function PetshopHome(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -1082,6 +1082,23 @@ function PetshopHome(props) {
       </>
     );
   };
+
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+
+    const truncatedDescription = name?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -1119,106 +1136,106 @@ function PetshopHome(props) {
                   <div>
                     {homebanner
                       ? homebanner.map(
-                        (item, index) =>
-                          item.type === "home_banner_1" && (
-                            <div className="home-img">
-                              <Link to={item.default_link}>
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in//storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row>
-                                  <Col lg={7}>
-                                    <div className="home-content">
-                                      <h1>{item.title}</h1>
-                                      <p>{item.description}</p>
-                                      <Button>
-                                        Explore More{" "}
-                                        <i className="fa fa-angle-right" />
-                                      </Button>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </Link>
-                            </div>
-                          )
-                      )
-                      : null}
-                  </div>
-                  <div>
-                    {homebanner
-                      ? homebanner.map(
-                        (item, index) =>
-                          item.type === "home_banner_2" && (
-                            <div className="home-img">
-                              <Link to={item.default_link}>
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in//storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row>
-                                  <Col lg={7}>
-                                    <div className="home-content">
-                                      <h1>{item.title}</h1>
-                                      <p>{item.description}</p>
-
-                                      <div className="app-home">
-                                        <Link>
-                                          <img src={app1} />
-                                        </Link>
-
-                                        <Link>
-                                          <img src={app2} />
-                                        </Link>
+                          (item, index) =>
+                            item.type === "home_banner_1" && (
+                              <div className="home-img">
+                                <Link to={item.default_link}>
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in//storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row>
+                                    <Col lg={7}>
+                                      <div className="home-content">
+                                        <h1>{item.title}</h1>
+                                        <p>{item.description}</p>
+                                        <Button>
+                                          Explore More{" "}
+                                          <i className="fa fa-angle-right" />
+                                        </Button>
                                       </div>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </Link>
-                            </div>
-                          )
-                      )
+                                    </Col>
+                                  </Row>
+                                </Link>
+                              </div>
+                            )
+                        )
                       : null}
                   </div>
                   <div>
                     {homebanner
                       ? homebanner.map(
-                        (item, index) =>
-                          item.type === "home_banner_3" && (
-                            <div className="home-img">
-                              <Link to={item.default_link}>
-                                <div>
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in//storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row>
-                                  <Col lg={7}>
-                                    <div className="home-content">
-                                      <h1>{item.title}</h1>
-                                      <p>{item.description}</p>
-                                      <Button>
-                                        Explore More{" "}
-                                        <i className="fa fa-angle-right" />
-                                      </Button>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </Link>
-                            </div>
-                          )
-                      )
+                          (item, index) =>
+                            item.type === "home_banner_2" && (
+                              <div className="home-img">
+                                <Link to={item.default_link}>
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in//storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row>
+                                    <Col lg={7}>
+                                      <div className="home-content">
+                                        <h1>{item.title}</h1>
+                                        <p>{item.description}</p>
+
+                                        <div className="app-home">
+                                          <Link>
+                                            <img src={app1} />
+                                          </Link>
+
+                                          <Link>
+                                            <img src={app2} />
+                                          </Link>
+                                        </div>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Link>
+                              </div>
+                            )
+                        )
+                      : null}
+                  </div>
+                  <div>
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "home_banner_3" && (
+                              <div className="home-img">
+                                <Link to={item.default_link}>
+                                  <div>
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in//storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row>
+                                    <Col lg={7}>
+                                      <div className="home-content">
+                                        <h1>{item.title}</h1>
+                                        <p>{item.description}</p>
+                                        <Button>
+                                          Explore More{" "}
+                                          <i className="fa fa-angle-right" />
+                                        </Button>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Link>
+                              </div>
+                            )
+                        )
                       : null}
                   </div>
                 </Carousel>
@@ -1254,7 +1271,9 @@ function PetshopHome(props) {
                 {categories &&
                   categories.map((item) => (
                     <div className="Shop-Deals" key={item.id}>
-                      <Link to={`/petshop-pet-category/${item.name}/${item.id}`}>
+                      <Link
+                        to={`/petshop-pet-category/${item.name}/${item.id}`}
+                      >
                         <img
                           src={
                             "https://canine.hirectjob.in//storage/app/public/category/" +
@@ -1276,7 +1295,6 @@ function PetshopHome(props) {
                   {/* <h5>Dog Nutrients & Food </h5> */}
 
                   <h1 className="main-head">Latest all Products</h1>
-
                 </Col>
                 <Col lg={6} sm={6}>
                   <div className="foodMore">
@@ -1326,8 +1344,10 @@ function PetshopHome(props) {
                               />
                             </div>
                             <div>
-                              <h6>{item.name}</h6>
-                              <p>{renderProductDescription(item.description)}</p>
+                              <h6>{renderProducthead(item.name)}</h6>
+                              <p>
+                                {renderProductDescription(item.description)}
+                              </p>
                             </div>
                             <div className="product-bag">
                               {/* <Row>
@@ -1393,9 +1413,7 @@ function PetshopHome(props) {
             <Container>
               <Row>
                 <Col lg={6} sm={6}>
-
                   <h1 className="main-head">Our Brand</h1>
-
                 </Col>
                 <Col lg={6} sm={6}>
                   <div className="foodMore">
@@ -1406,121 +1424,8 @@ function PetshopHome(props) {
               <Row className="mt-4">
                 {brands
                   ? brands.map(
-                    (brand, index) =>
-                      brand.canine == "1" && (
-                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div
-                            key={brand.id}
-                            className="Brand-card"
-                            style={{
-                              background: ourBrand[index % ourBrand.length],
-                            }}
-                          >
-                            <Link to={`/petshop-our-Ourbrand/${brand.title}`}>
-                              <div className="brandLOGO">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
-                                    brand.logo
-                                  }
-                                />
-                              </div>
-                              <div className="brand-main">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in//storage/app/public/brand/" +
-                                    brand.image
-                                  }
-                                />
-                              </div>
-                              <div className="brand-text">
-                                <h5>{brand.title}</h5>
-                              </div>
-                            </Link>
-                          </div>
-                        </Col>
-                      )
-                  )
-                  : null}
-              </Row>
-            </Container>
-          </section>
-
-          <section className="section-padding thirdbnner-area">
-            <Container>
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                    (item, index) =>
-                      item.type === "default" && (
-                        <Col lg={6} className="mb-4">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in//storage/app/" +
-                              item.image
-                            }
-                          />
-                        </Col>
-                      )
-                  )
-                  : null}
-                <Col lg={6} className="align-self-center">
-                  <Row>
-                    {homebanner
-                      ? homebanner.map(
-                        (item, index) =>
-                          item.type === "store_wise" && (
-                            <Col sm={12} className="mb-4">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </Col>
-                          )
-                      )
-                      : null}
-                    {homebanner
-                      ? homebanner.map(
-                        (item, index) =>
-                          item.type === "item_wise" && (
-                            <Col sm={12} className="mb-4">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/" +
-                                  item.image
-                                }
-                              />
-                            </Col>
-                          )
-                      )
-                      : null}
-                  </Row>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-          <section className="section-padding">
-            <Container>
-              <Row>
-                <Col lg={6} sm={6}>
-
-                  <h1 className="main-head">Shop By Brands</h1>
-
-                </Col>
-                <Col lg={6} sm={6}>
-                  <div className="foodMore">
-                    <Link to="/petshop-shop-by-brand">See all</Link>
-                  </div>
-                </Col>
-              </Row>
-              <div className="needplace">
-                <Row>
-                  {brands
-                    ? brands.map(
                       (brand, index) =>
-                        brand.canine == "0" && (
+                        brand.canine == "1" && (
                           <Col lg={3} sm={6} xs={6} className="mb-5">
                             <div
                               key={brand.id}
@@ -1529,7 +1434,7 @@ function PetshopHome(props) {
                                 background: ourBrand[index % ourBrand.length],
                               }}
                             >
-                              <Link to={`/petshop-shop-by-brandList/${brand.id}`}>
+                              <Link to={`/petshop-our-Ourbrand/${brand.title}`}>
                                 <div className="brandLOGO">
                                   <img
                                     src={
@@ -1554,6 +1459,119 @@ function PetshopHome(props) {
                           </Col>
                         )
                     )
+                  : null}
+              </Row>
+            </Container>
+          </section>
+
+          <section className="section-padding thirdbnner-area">
+            <Container>
+              <Row>
+                {homebanner
+                  ? homebanner.map(
+                      (item, index) =>
+                        item.type === "default" && (
+                          <Col lg={6} className="mb-4">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in//storage/app/" +
+                                item.image
+                              }
+                            />
+                          </Col>
+                        )
+                    )
+                  : null}
+                <Col lg={6} className="align-self-center">
+                  <Row>
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "store_wise" && (
+                              <Col sm={12} className="mb-4">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </Col>
+                            )
+                        )
+                      : null}
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "item_wise" && (
+                              <Col sm={12} className="mb-4">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </Col>
+                            )
+                        )
+                      : null}
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={6} sm={6}>
+                  <h1 className="main-head">Shop By Brands</h1>
+                </Col>
+                <Col lg={6} sm={6}>
+                  <div className="foodMore">
+                    <Link to="/petshop-shop-by-brand">See all</Link>
+                  </div>
+                </Col>
+              </Row>
+              <div className="needplace">
+                <Row>
+                  {brands
+                    ? brands.map(
+                        (brand, index) =>
+                          brand.canine == "0" && (
+                            <Col lg={3} sm={6} xs={6} className="mb-5">
+                              <div
+                                key={brand.id}
+                                className="Brand-card"
+                                style={{
+                                  background: ourBrand[index % ourBrand.length],
+                                }}
+                              >
+                                <Link
+                                  to={`/petshop-shop-by-brandList/${brand.id}`}
+                                >
+                                  <div className="brandLOGO">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
+                                        brand.logo
+                                      }
+                                    />
+                                  </div>
+                                  <div className="brand-main">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in//storage/app/public/brand/" +
+                                        brand.image
+                                      }
+                                    />
+                                  </div>
+                                  <div className="brand-text">
+                                    <h5>{brand.title}</h5>
+                                  </div>
+                                </Link>
+                              </div>
+                            </Col>
+                          )
+                      )
                     : null}
                 </Row>
               </div>
@@ -1565,30 +1583,30 @@ function PetshopHome(props) {
               <div className="banner-video">
                 {homebanner
                   ? homebanner.map(
-                    (item, index) =>
-                      item.type === "video" && (
-                        <Row>
-                          <Col lg={6} className="p-0">
-                            <div className="video-content">
-                              <h1 className="main-head">{item.title}</h1>
-                              <p>{item.description}</p>
-                              <Button>Shop Now</Button>
-                            </div>
-                          </Col>
-                          <Col lg={6} className="p-0">
-                            <video loop autoPlay muted>
-                              <source
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/" +
-                                  item.image
-                                }
-                                type="video/mp4"
-                              />
-                            </video>
-                          </Col>
-                        </Row>
-                      )
-                  )
+                      (item, index) =>
+                        item.type === "video" && (
+                          <Row>
+                            <Col lg={6} className="p-0">
+                              <div className="video-content">
+                                <h1 className="main-head">{item.title}</h1>
+                                <p>{item.description}</p>
+                                <Button>Shop Now</Button>
+                              </div>
+                            </Col>
+                            <Col lg={6} className="p-0">
+                              <video loop autoPlay muted>
+                                <source
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/" +
+                                    item.image
+                                  }
+                                  type="video/mp4"
+                                />
+                              </video>
+                            </Col>
+                          </Row>
+                        )
+                    )
                   : null}
               </div>
             </Container>
@@ -1692,50 +1710,52 @@ function PetshopHome(props) {
               <div>
                 {homebanner
                   ? homebanner.map(
-                    (item, index) =>
-                      item.type === "news_letter" && (
-                        <div className="home-img">
-                          <div className="">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in//storage/app/" +
-                                item.image
-                              }
-                            />
-                          </div>
-                          <Row className="justify-content-center">
-                            <Col lg={7}>
-                              <div className="new-content">
-                                <div className="Newsletter">
-                                  <Flip right>
-                                    <h1 className="main-head">
-                                      Get Or Promo Code by Subscribing To our
-                                      Newsletter
-                                    </h1>
-                                  </Flip>
-                                  <Form className="d-flex">
-                                    <Form.Control
-                                      type="search"
-                                      placeholder="Enter your email"
-                                      className="me-2"
-                                      aria-label="Search"
-                                      value={email}
-                                      onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                    <Button
-                                      variant="outline-success"
-                                      onClick={handleNewsletter}
-                                    >
-                                      Subscribe
-                                    </Button>
-                                  </Form>
+                      (item, index) =>
+                        item.type === "news_letter" && (
+                          <div className="home-img">
+                            <div className="">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in//storage/app/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <Row className="justify-content-center">
+                              <Col lg={7}>
+                                <div className="new-content">
+                                  <div className="Newsletter">
+                                    <Flip right>
+                                      <h1 className="main-head">
+                                        Get Or Promo Code by Subscribing To our
+                                        Newsletter
+                                      </h1>
+                                    </Flip>
+                                    <Form className="d-flex">
+                                      <Form.Control
+                                        type="search"
+                                        placeholder="Enter your email"
+                                        className="me-2"
+                                        aria-label="Search"
+                                        value={email}
+                                        onChange={(e) =>
+                                          setEmail(e.target.value)
+                                        }
+                                      />
+                                      <Button
+                                        variant="outline-success"
+                                        onClick={handleNewsletter}
+                                      >
+                                        Subscribe
+                                      </Button>
+                                    </Form>
+                                  </div>
                                 </div>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      )
-                  )
+                              </Col>
+                            </Row>
+                          </div>
+                        )
+                    )
                   : null}
               </div>
             </Container>
@@ -1772,7 +1792,7 @@ function PetshopHome(props) {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                            productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1829,10 +1849,11 @@ function PetshopHome(props) {
                                         <Col lg={4} sm={4} xs={3} key={index}>
                                           {item.stock !== 0 ? (
                                             <div
-                                              className={`tab-variations ${selectedVariant === item.type
+                                              className={`tab-variations ${
+                                                selectedVariant === item.type
                                                   ? "active"
                                                   : ""
-                                                }`}
+                                              }`}
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
                                                 setSelectedVariantPrice(
@@ -1894,8 +1915,9 @@ function PetshopHome(props) {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -2059,10 +2081,11 @@ function PetshopHome(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2166,10 +2189,11 @@ function PetshopHome(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2240,8 +2264,9 @@ function PetshopHome(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col> */}
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2336,7 +2361,7 @@ function PetshopHome(props) {
                 </Container>
                 <div className="homecheckout">
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 10 ? (
+                  productDetails?.stock?.length !== 10 ? (
                     <button data-toggle="modal" data-target="#cod">
                       Checkout
                     </button>
@@ -2464,8 +2489,9 @@ function PetshopHome(props) {
                             {selectedOption}
                           </button>
                           <div
-                            className={`dropdown-menu ${isDropdownOpen ? "show" : ""
-                              }`}
+                            className={`dropdown-menu ${
+                              isDropdownOpen ? "show" : ""
+                            }`}
                             aria-labelledby="dropdownMenuButton"
                           >
                             <div
@@ -2533,8 +2559,9 @@ function PetshopHome(props) {
                               {selectedOptiontwo}
                             </button>
                             <div
-                              className={`dropdown-menu ${isDropdownOpentwo ? "show" : ""
-                                }`}
+                              className={`dropdown-menu ${
+                                isDropdownOpentwo ? "show" : ""
+                              }`}
                               aria-labelledby="paymentModeDropdownButton"
                             >
                               <div
@@ -2617,11 +2644,11 @@ function PetshopHome(props) {
                                   id="withGST"
                                   value={1}
                                   onChange={handleRadioButton}
-                                // checked={
-                                //   selectedPaymentMode == "GST"
-                                //     ? selectedOptiontwo == "Cheque"
-                                //     : selectedOptiontwo == "UPI"
-                                // }
+                                  // checked={
+                                  //   selectedPaymentMode == "GST"
+                                  //     ? selectedOptiontwo == "Cheque"
+                                  //     : selectedOptiontwo == "UPI"
+                                  // }
                                 />
                                 <label
                                   className="form-check-label"
@@ -3034,10 +3061,11 @@ function PetshopHome(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -3141,10 +3169,11 @@ function PetshopHome(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -3215,8 +3244,9 @@ function PetshopHome(props) {
                                 <p>{`₹${uservariationprice}`}</p>
                               </Col>
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -3378,7 +3408,7 @@ function PetshopHome(props) {
                 </Container>
                 <div className="homecheckout">
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 10 ? (
+                  productDetails?.stock?.length !== 10 ? (
                     <button data-toggle="modal" data-target="#cod">
                       Checkout
                     </button>
@@ -3536,11 +3566,11 @@ function PetshopHome(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

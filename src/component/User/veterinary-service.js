@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import service from "../../assets/images/banner/service.png";
 import Footer from "../../directives/footer";
@@ -30,8 +30,7 @@ function Veterinaryservice() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([GetStateAll(),
-      selectPet()])
+    Promise.all([GetdataAll(), selectPet()])
       .then(() => {
         setLoading(false);
       })
@@ -43,18 +42,67 @@ function Veterinaryservice() {
 
   const selectPet = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/auth/get_pet/1`);
-      const jsonData = await response.json();
-      setselectgetpet(jsonData.state);
+      const response = await axios.get(
+        `${BASE_URL}/auth/get_pet/${storedUserId}`
+      );
+      console.log(response);
+      setselectgetpet(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+  console.log("selectgetpet", selectgetpet);
 
-  const GetStateAll = async (e) => {
+  // const GetStateAll = async (e) => {
+  //   var headers = {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   };
+  //   await fetch(`${BASE_URL}/auth/state`, {
+  //     method: "GET",
+  //     headers: headers,
+  //   })
+  //     .then((Response) => Response.json())
+  //     .then((Response) => {
+  //       setStateall(Response.state);
+  //       // console.log("99999999999999999999", Response);
+  //     })
+  //     .catch((error) => {
+  //       console.error("ERROR FOUND---->>>>" + error);
+  //     });
+  // };
+
+  // const GetdCityAll = (state) => {
+  //   axios
+  //     .post(`${BASE_URL}/auth/city?state=${state}`, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     })
+  //     .then((response) => {
+  //       console.log("responseresponse", response);
+  //       setStateallCity(response.data.state);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // const Subscription = (event) => {
+  //   if (event.target.value) {
+  //     setstate(event.target.value);
+
+  //     GetdCityAll(event.target.value);
+  //   }
+  // };
+
+  // const [stateall, setStateall] = useState([]);
+  const [stateData, setstateData] = useState("");
+  // const [stateallCity, setStateallCity] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  // const [city, setcity] = useState("");
+  const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Data": "application/json",
     };
     await fetch(`${BASE_URL}/auth/state`, {
       method: "GET",
@@ -62,40 +110,37 @@ function Veterinaryservice() {
     })
       .then((Response) => Response.json())
       .then((Response) => {
-        setStateall(Response.state);
-        // console.log("99999999999999999999", Response);
+        setStateall(Response?.data ? Response?.data : []);
+        console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
       });
   };
-
-  const GetdCityAll = (state) => {
+  const Getdatacity = (state) => {
     axios
       .post(`${BASE_URL}/auth/city?state=${state}`, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
         console.log("responseresponse", response);
-        setStateallCity(response.data.state);
+        setStateallCity(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   const Subscription = (event) => {
     if (event.target.value) {
-      setstate(event.target.value);
-
-      GetdCityAll(event.target.value);
+      setstateData(event.target.value);
+      Getdatacity(event.target.value);
     }
   };
 
   const handleVeterinary = (event) => {
     event.preventDefault();
     const data = {
-      user_id: storedUserId[0].id,
+      user_id: storedUserId,
       name: user_name,
       email: email,
       phone: phone,
@@ -125,193 +170,233 @@ function Veterinaryservice() {
       <Newheader />
       {loading ? (
         <section className="section-padding mt-3 mb-3">
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt=""/>
-        <h5>Please Wait.......</h5>
-      </div>
-      </section>
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={service} />
-        </div>
-      </Container>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6}>
-              <div className="veter-area">
-                <div className="veter-timing">
-                  <div>
-                    {" "}
-                    <i className="fa fa-clock-o" />
+          <Container fluid className="p-0">
+            <div className="all-bg">
+              <img src={service} />
+            </div>
+          </Container>
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={6}>
+                  <div className="veter-area">
+                    <div className="veter-timing">
+                      <div>
+                        {" "}
+                        <i className="fa fa-clock-o" />
+                      </div>
+                      <div>
+                        <h3>Open Hours</h3>
+                        <p>Mon-Fri:7am-6pm</p>
+                        <p>Sat-Sun:9ap-4pm</p>
+                      </div>
+                    </div>
+                    <div className="veter-timing">
+                      <div>
+                        <i className="fa fa-phone " />
+                      </div>
+                      <div>
+                        <h3>Phone</h3>
+                        <p>(+91)0000000000</p>
+                        <p>(+91)0000000000</p>
+                      </div>
+                    </div>
+                    <div className="veter-timing">
+                      <div>
+                        {" "}
+                        <i className="fa fa-map-marker" />
+                      </div>
+                      <div>
+                        <h3>Address</h3>
+                        <p>Canine Products Borvali (Mumbai)</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3>Open Hours</h3>
-                    <p>Mon-Fri:7am-6pm</p>
-                    <p>Sat-Sun:9ap-4pm</p>
-                  </div>
-                </div>
-                <div className="veter-timing">
-                  <div>
-                    <i className="fa fa-phone " />
-                  </div>
-                  <div>
-                    <h3>Phone</h3>
-                    <p>(+91)0000000000</p>
-                    <p>(+91)0000000000</p>
-                  </div>
-                </div>
-                <div className="veter-timing">
-                  <div>
-                    {" "}
-                    <i className="fa fa-map-marker" />
-                  </div>
-                  <div>
-                    <h3>Address</h3>
-                    <p>Canine Products Borvali (Mumbai)</p>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col lg={6}>
-              <div className="contact-form">
-                <h1>Pet Grooming Service</h1>
-                <Form>
-                  <Form.Group className="mb-3" controlId="formGridAddress1">
-                    <Form.Label>
-                      Name<span style={{ color: "#008efd" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      placeholder="Enter name"
-                      type="text"
-                      value={user_name}
-                      onChange={(e) => setuser_name(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Row className="mb-3">
-                    <Col>
-                      <Form.Label>
-                        Email<span style={{ color: "#008efd" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        placeholder="Enter email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </Col>
-                    <Col>
-                      <Form.Label>
-                        Phone no<span style={{ color: "#008efd" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        input
-                        placeholder="Enter phone"
-                        maxLength={10}
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setphone(e.target.value)}
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="mb-3">
-                    <Form.Group as={Col}>
-                      <Form.Label>
-                        State<span style={{ color: "#008efd" }}>*</span>
-                      </Form.Label>
-                      <Form.Select
-                        aria-label="Default select example"
-                        onChange={Subscription}
-                        value={state}
-                        onInput={(e) => setstate(e.target.value)}
-                      >
-                        <option>Choose...</option>
-                        {stateall && stateall.map((items) => (
-                          <option value={items.id} key={items.id}>
-                            {items.state_name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                      <Form.Label>
-                        City<span style={{ color: "#008efd" }}>*</span>
-                      </Form.Label>
-                      <Form.Select
-                        aria-label="Default select example"
-                        value={city}
-                        onChange={(e) => setcity(e.target.value)}
-                      >
-                        <option>Choose...</option>
-                        {stateallCity.map((items) => (
-                          <option>{items.city_name}</option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                  </Row>
-                  <Form.Group className="mb-3" controlId="formGridAddress1">
-                    <Form.Label>
-                      Address<span style={{ color: "#008efd" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      placeholder="Enter address"
-                      type="text"
-                      value={address}
-                      onChange={(e) => setaddress(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formGridAddress1">
-                    <Form.Label>
-                      Booking Date<span style={{ color: "#008efd" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      value={dates}
-                      onChange={(e) => setdates(e.target.value)}
-                      type="date"
-                    />
-                  </Form.Group>
+                </Col>
+                <Col lg={6}>
+                  <div className="contact-form">
+                    <h1>Pet Grooming Service</h1>
+                    <Form>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>
+                          Name<span style={{ color: "#008efd" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          placeholder="Enter name"
+                          type="text"
+                          value={user_name}
+                          onChange={(e) => setuser_name(e.target.value)}
+                        />
+                      </Form.Group>
+                      <Row className="mb-3">
+                        <Col>
+                          <Form.Label>
+                            Email<span style={{ color: "#008efd" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            placeholder="Enter email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </Col>
+                        <Col>
+                          <Form.Label>
+                            Phone no<span style={{ color: "#008efd" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            input
+                            placeholder="Enter phone"
+                            maxLength={10}
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setphone(e.target.value)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row className="mb-3">
+                        <Form.Group as={Col}>
+                          <Form.Label>
+                            State<span style={{ color: "#008efd" }}>*</span>
+                          </Form.Label>
+                          <Form.Select
+                            aria-label="Default select example"
+                            onChange={Subscription}
+                            value={state}
+                            onInput={(e) => setstate(e.target.value)}
+                          >
+                            <option>Choose...</option>
+                            {stateall &&
+                              stateall.map((items) => (
+                                <option value={items.id} key={items.id}>
+                                  {items.state_name}
+                                </option>
+                              ))}
+                          </Form.Select>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                          <Form.Label>
+                            City<span style={{ color: "#008efd" }}>*</span>
+                          </Form.Label>
+                          <Form.Select
+                            aria-label="Default select example"
+                            value={city}
+                            onChange={(e) => setcity(e.target.value)}
+                          >
+                            <option>Choose...</option>
+                            {stateallCity.map((items) => (
+                              <option>{items.city_name}</option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                      </Row>
 
-                  <Form.Group className="mb-3" controlId="formGridAddress1">
-                    <Form.Label>
-                      Select Pet<span style={{ color: "#008efd" }}>*</span>
-                    </Form.Label>
-                    <select
-                      className="form-control"
-                      value={pet_id}
-                      onChange={(e) => setpet_id(e.target.value)}
-                    >
-                      <option>Choose....</option>
-                      {selectgetpet &&
-                        selectgetpet.map((item) => (
-                          // <a onClick={(e) => setpet_id(item)}>
-                          <option value={item.id}>{item.pet_name}</option>
-                        ))}
-                    </select>
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formGridAddress1">
-                    <Form.Label>
-                      Pet Problems<span style={{ color: "#008efd" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      placeholder="Leave a comment here"
-                      as="textarea"
-                      type="text"
-                      value={pet_problem}
-                      onChange={(e) => setpet_problem(e.target.value)}
-                    />
-                  </Form.Group>
+                      {/* <div className="row mb-3">
+                        <div className="col">
+                          <div className="form-group">
+                            <Form.Label>State</Form.Label>
+                            <select
+                              className="form-control"
+                              onChange={Subscription}
+                              value={stateData}
+                            >
+                              <option>State Choose...</option>
+                              {stateall.map((items) => (
+                                <option value={items.id} key={items.id}>
+                                  {items.state_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="form-group">
+                            <Form.Label>City</Form.Label>
+                            <select
+                              className="form-control"
+                              onChange={(e) => setSelectedCity(e.target.value)}
+                              value={selectedCity}
+                            >
+                              <option value="">City Choose...</option>
+                              {stateallCity.map((items) => (
+                                <option value={items.id} key={items.id}>
+                                  {items.city_name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </div> */}
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>
+                          Address<span style={{ color: "#008efd" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          placeholder="Enter address"
+                          type="text"
+                          value={address}
+                          onChange={(e) => setaddress(e.target.value)}
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>
+                          Booking Date
+                          <span style={{ color: "#008efd" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          value={dates}
+                          onChange={(e) => setdates(e.target.value)}
+                          type="date"
+                        />
+                      </Form.Group>
 
-                  <Button className="mt-4" onClick={handleVeterinary}>
-                    Submit
-                  </Button>
-                </Form>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>
+                          Select Pet<span style={{ color: "#008efd" }}>*</span>
+                        </Form.Label>
+                        <select
+                          className="form-control"
+                          value={pet_id}
+                          onChange={(e) => setpet_id(e.target.value)}
+                        >
+                          <option>Choose....</option>
+                          {selectgetpet &&
+                            selectgetpet.map((item) => (
+                              // <a onClick={(e) => setpet_id(item)}>
+                              <option value={item.id}>{item.pet_name}</option>
+                            ))}
+                        </select>
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>
+                          Pet Problems
+                          <span style={{ color: "#008efd" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          placeholder="Leave a comment here"
+                          as="textarea"
+                          type="text"
+                          value={pet_problem}
+                          onChange={(e) => setpet_problem(e.target.value)}
+                        />
+                      </Form.Group>
+
+                      <Button className="mt-4" onClick={handleVeterinary}>
+                        Submit
+                      </Button>
+                    </Form>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
         </>
       )}
       <Footer />

@@ -22,7 +22,6 @@ function PetshopProductbypartner() {
   const [responseMessage, setResponseMessage] = useState("");
   const [email, setEmail] = useState("");
 
-  
   useEffect(() => {
     thirdBanner();
     AllVendorHomePage();
@@ -30,12 +29,13 @@ function PetshopProductbypartner() {
     homeAllBanner();
   }, []);
 
-   const homeAllBanner = async () => {
+  const homeAllBanner = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/banners/`);
       sethomebanner(response.data.data);
-      response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE'; // Allow specified methods
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'; // Allow specified headers
+      response.headers["Access-Control-Allow-Methods"] =
+        "GET, POST, PUT, DELETE"; // Allow specified methods
+      response.headers["Access-Control-Allow-Headers"] = "Content-Type"; // Allow specified headers
     } catch (error) {
       console.error(error);
     }
@@ -100,6 +100,22 @@ function PetshopProductbypartner() {
     "linear-gradient(180deg, #C8FFBA 0%, rgba(200, 255, 186, 0) 100%)",
     // Add more gradient colors as needed
   ];
+
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+
+    const truncatedDescription = name?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
 
   return (
     <>
@@ -171,7 +187,7 @@ function PetshopProductbypartner() {
                           />
                         </div>
                         <div>
-                          <h6>{item.name}</h6>
+                          <h6>{renderProducthead(item.name)}</h6>
                           <p>{item.description}</p>
                         </div>
                         <div className="product-bag">
@@ -258,47 +274,48 @@ function PetshopProductbypartner() {
           <div>
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "news_letter" && (
-                    <div className="home-img">
-                      <div className="">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/" +
-                            item.image
-                          }
-                        />
-                      </div>
-                      <Row className="justify-content-center">
-                        <Col lg={7}>
-                          <div className="home-content">
-                            <div className="Newsletter">
-                              <h1 className="main-head">
-                                Get Or Promo Code by Subscribing To our Newsletter
-                              </h1>
-                              <Form className="d-flex">
-                                <Form.Control
-                                  type="search"
-                                  placeholder="Enter your email"
-                                  className="me-2"
-                                  aria-label="Search"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <Button
-                                  variant="outline-success"
-                                  onClick={handleNewsletter}
-                                >
-                                  Subscribe
-                                </Button>
-                              </Form>
+                  (item, index) =>
+                    item.type === "news_letter" && (
+                      <div className="home-img">
+                        <div className="">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/" +
+                              item.image
+                            }
+                          />
+                        </div>
+                        <Row className="justify-content-center">
+                          <Col lg={7}>
+                            <div className="home-content">
+                              <div className="Newsletter">
+                                <h1 className="main-head">
+                                  Get Or Promo Code by Subscribing To our
+                                  Newsletter
+                                </h1>
+                                <Form className="d-flex">
+                                  <Form.Control
+                                    type="search"
+                                    placeholder="Enter your email"
+                                    className="me-2"
+                                    aria-label="Search"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                  />
+                                  <Button
+                                    variant="outline-success"
+                                    onClick={handleNewsletter}
+                                  >
+                                    Subscribe
+                                  </Button>
+                                </Form>
+                              </div>
                             </div>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  )
-              )
+                          </Col>
+                        </Row>
+                      </div>
+                    )
+                )
               : null}
           </div>
         </Container>
@@ -307,6 +324,5 @@ function PetshopProductbypartner() {
     </>
   );
 }
-
 
 export default PetshopProductbypartner;

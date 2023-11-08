@@ -17,15 +17,15 @@ function PetshopBlogdetails() {
   const { id } = useParams();
   console.log("id", id);
 
-  useEffect(() => {
-    ;
-  }, []);
+  useEffect(() => {}, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([allblogs(),
+    Promise.all([
+      allblogs(),
       allProduct(),
       fetchWishlistData(),
-      allAddressList()])
+      allAddressList(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -847,7 +847,6 @@ function PetshopBlogdetails() {
     setQuantity(1);
   };
 
-
   const renderProductDescription = (description) => {
     const maxCharacters = 35; // Number of characters to show initially
 
@@ -864,31 +863,47 @@ function PetshopBlogdetails() {
     );
   };
 
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+
+    const truncatedDescription = name?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
       <PetShopHeader />
       {loading ? (
-      <section className="section-padding mt-3 mb-3">
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt="" />
-        <h5>Please Wait.......</h5>
-      </div>
-      </section>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <section className="section-padding">
-        <Container>
-          <Row className="justify-content-center">
-            <Col lg={10}>
-              <div className="blogDetails">
-                {blogdata && blogdata?.length > 0 ? (
-                  blogdata.map((item, index) => (
-                    <Col lg={12} className="mb-4" key={item.id}>
-                      <div className="blog-card-are">
-                        <Row>
-                          <Col sm={5}>
-                            {/* <img
+          <section className="section-padding">
+            <Container>
+              <Row className="justify-content-center">
+                <Col lg={10}>
+                  <div className="blogDetails">
+                    {blogdata && blogdata?.length > 0 ? (
+                      blogdata.map((item, index) => (
+                        <Col lg={12} className="mb-4" key={item.id}>
+                          <div className="blog-card-are">
+                            <Row>
+                              <Col sm={5}>
+                                {/* <img
                               src={
                                 item.image
                                   ? `https://veejayjewels.com/storage/app/public/banner/${item.image}`
@@ -896,76 +911,84 @@ function PetshopBlogdetails() {
                               }
                               alt=""
                             /> */}
-                            <img
-                              src={
-                                "https://canine.hirectjob.in//storage/app/public/blog/" +
-                                item.image
-                              }
-                            />
-                          </Col>
-                          <Col sm={7} className="align-self-center">
-                            <div className="blog-cardContent">
-                              <h4>{item.title}</h4>
-                              <p>{item?.description}</p>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Col>
-                  ))
-                ) : (
-                  <p className="emptyMSG">No Blog Data.</p>
-                )}
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/public/blog/" +
+                                    item.image
+                                  }
+                                />
+                              </Col>
+                              <Col sm={7} className="align-self-center">
+                                <div className="blog-cardContent">
+                                  <h4>{item.title}</h4>
+                                  <p>{item?.description}</p>
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Blog Data.</p>
+                    )}
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
 
-      <section className="section-padding food">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Related products</h1>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {productIds.map((item, index) => (
-                <Col lg={3} sm={6} xs={6} className="mb-4" key={item[0]?.id}>
-                  {console.log("itemmmhksdkn: ", item)}
-                  <div
-                    className="food-product"
-                    onMouseEnter={() => handleMouseEnter(item[0]?.id)}
-                    onMouseLeave={() => handleMouseLeave(item[0]?.id)}
-                    style={{
-                      background:
-                        gradientColors[index % gradientColors?.length],
-                    }}
-                  >
-                    <i
-                      className={
-                        item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                      }
-                      onClick={() => {
-                        if (storedWholesellerId == null) {
-                          toast.error("Please Login first");
-                        } else {
-                          addToWishlist(item[0]?.id);
-                        }
-                      }}
-                    />
-
-                    <Link to={`/petshop-productDetails/${item[0]?.id}`}>
-                      <div className="text-center">
-                        <img
-                          src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
-                          alt={item[0]?.name}
+          <section className="section-padding food">
+            <Container>
+              <Row>
+                <Col lg={6} sm={6} xs={6}>
+                  <h1 className="main-head">Related products</h1>
+                </Col>
+              </Row>
+              <div className="needplace">
+                <Row>
+                  {productIds.map((item, index) => (
+                    <Col
+                      lg={3}
+                      sm={6}
+                      xs={6}
+                      className="mb-4"
+                      key={item[0]?.id}
+                    >
+                      {console.log("itemmmhksdkn: ", item)}
+                      <div
+                        className="food-product"
+                        onMouseEnter={() => handleMouseEnter(item[0]?.id)}
+                        onMouseLeave={() => handleMouseLeave(item[0]?.id)}
+                        style={{
+                          background:
+                            gradientColors[index % gradientColors?.length],
+                        }}
+                      >
+                        <i
+                          className={
+                            item.isFav
+                              ? "fa-solid fa-heart"
+                              : "fa-regular fa-heart"
+                          }
+                          onClick={() => {
+                            if (storedWholesellerId == null) {
+                              toast.error("Please Login first");
+                            } else {
+                              addToWishlist(item[0]?.id);
+                            }
+                          }}
                         />
-                      </div>
-                      <div>
-                        <h6>{item[0]?.name}</h6>
-                        {/* <p
+
+                        <Link to={`/petshop-productDetails/${item[0]?.id}`}>
+                          <div className="text-center">
+                            <img
+                              src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
+                              alt={item[0]?.name}
+                            />
+                          </div>
+                          <div>
+                            <h6>{renderProducthead(item[0]?.name)}</h6>
+                            {/* <p
                           className={`truncate-text ${
                             !expandedDescription[item[0]?.id]
                               ? "read-more-link"
@@ -988,48 +1011,48 @@ function PetshopBlogdetails() {
                               </span>
                             )}
                         </p> */}
-                        <p>{renderProductDescription(item?.description)}</p>
+                            <p>{renderProductDescription(item?.description)}</p>
+                          </div>
+                          <div className="product-bag">
+                            <Row>
+                              <Col
+                                lg={6}
+                                sm={6}
+                                xs={6}
+                                className="align-self-center"
+                              >
+                                <h4>₹{item[0]?.whole_price}</h4>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Link>
+                        {buttonVisibility[item[0].id] && (
+                          <Fade top>
+                            <div className="button-container">
+                              <button
+                                data-toggle="modal"
+                                data-target=".bd-example-modal-lg"
+                                onClick={() => handeldataId(item[0].id)}
+                              >
+                                Quick View
+                              </button>
+                              <button
+                                data-toggle="modal"
+                                data-target=".buynow"
+                                onClick={() => handeldataId(item[0].id)}
+                              >
+                                Buy Now
+                              </button>
+                            </div>
+                          </Fade>
+                        )}
                       </div>
-                      <div className="product-bag">
-                        <Row>
-                          <Col
-                            lg={6}
-                            sm={6}
-                            xs={6}
-                            className="align-self-center"
-                          >
-                            <h4>₹{item[0]?.whole_price}</h4>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Link>
-                    {buttonVisibility[item[0].id] && (
-                      <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={() => handeldataId(item[0].id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            onClick={() => handeldataId(item[0].id)}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
-                      </Fade>
-                    )}
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </Container>
-      </section>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+            </Container>
+          </section>
         </>
       )}
       <Petshopfooter />
@@ -1186,7 +1209,9 @@ function PetshopBlogdetails() {
                         )} */}
                               {/* </Col> */}
                               <Col lg={4}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
@@ -1787,7 +1812,9 @@ function PetshopBlogdetails() {
                                 <p>{`₹${wholesellervariationprice}`}</p>
                               </Col> */}
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount}`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>

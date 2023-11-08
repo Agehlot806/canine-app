@@ -260,7 +260,7 @@ function Serviceaddpet() {
                                 role="tab"
                                 aria-selected="true"
                               >
-                                Year {years}
+                                 {years} Year
                               </a>
                             </li>
                             <li className="nav-item">
@@ -270,7 +270,7 @@ function Serviceaddpet() {
                                 role="tab"
                                 aria-selected="true"
                               >
-                                Month {months}
+                                 {months} Month
                               </a>
                             </li>
                           </ul>

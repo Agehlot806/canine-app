@@ -1,7 +1,13 @@
 import React from "react";
 import "./assets/css/style.css";
 import "./assets/css/responsive.css";
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Home from "./component/User/home";
 import Aboutus from "./component/User/about-us";
 import Service from "./component/User/service";
@@ -31,7 +37,6 @@ import Planbuy from "./component/Partner/planbuy";
 import Partnercard from "./component/Partner/partner-card";
 import Pay from "./component/Partner/pay";
 import Serviceaddpet from "./component/User/service-add-pet";
-import Servicepet from "./component/User/service-pet";
 import Userpaymethod from "./component/User/user-pay-method";
 import Map from "./component/User/track-your-order";
 import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
@@ -110,6 +115,7 @@ import Petshoptestimonials from "./component/petShop/petshop-testimonials";
 import { useAuth } from "./component/context/AuthContext";
 import is from "date-fns/esm/locale/is/index";
 import { useEffect } from "react";
+import Mypetprofile from "./component/User/my-pet-profile";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -148,13 +154,16 @@ const UsersRoutes = () => {
       <Route path="/canine-product" element={<Canineproduct />} />
       <Route path="/patners-product" element={<Patnersproduct />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/veterinary-service" element={<Veterinaryservice />} />
+      <Route
+        path="/service/veterinary-service"
+        element={<Veterinaryservice />}
+      />
       <Route path="/add-cart/:id" element={<Addcart />} />
       <Route path="/add-cart" element={<Addcart />} />
       <Route path="/service-date/:id" element={<Servicedate />} />
       <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
       <Route path="/pet-profile/" element={<Petprofile />} />
-      <Route path="/service-pet" element={<Servicepet />} />
+      <Route path="/my-pet-profile" element={<Mypetprofile />} />
       <Route path="/our-brand" element={<Ourbrand />} />
 
       <Route path="/our-our-brand/:id" element={<Ourourbrand />} />
@@ -162,7 +171,10 @@ const UsersRoutes = () => {
       <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
       <Route path="/product-by-partner" element={<Productbypartner />} />
 
-      <Route path="/product-partner-shop/:vendor_id" element={<Productpartnershop />} />
+      <Route
+        path="/product-partner-shop/:vendor_id"
+        element={<Productpartnershop />}
+      />
       <Route path="/product-partner-Oneshop" element={<Partneroneshop />} />
       <Route path="/shipping/:id" element={<Shipping />} />
 
@@ -189,18 +201,18 @@ const UsersRoutes = () => {
 
       <Route path="/help-faqs" element={<Helpandfaqs />} />
       <Route path="/my-orders" element={<Myorder />} />
-      <Route path="/sub-categoriesHeading/:heading/:id" element={<SubcategoriesHeading />} />
+      <Route
+        path="/sub-categoriesHeading/:heading/:id"
+        element={<SubcategoriesHeading />}
+      />
       <Route path="/transition-history" element={<Transitionhistory />} />
 
-
       {/* =============== User flow end routing ===================== */}
-
-
 
       {/* Add more routes specific to the wholesaler login type */}
     </Routes>
   );
-}
+};
 const WholesalerRoutes = () => {
   return (
     <Routes>
@@ -208,33 +220,64 @@ const WholesalerRoutes = () => {
       <Route path="/petshop-signup" element={<PetshopSignUp />} />
       {/* Add more routes specific to the wholesaler login type */}
       <Route path="/petshop-dashboard" element={<Petshopdashboard />} />
-      <Route path="/petshop-pet-category/:name/:id" element={<PetshopPetcategory />} />
+      <Route
+        path="/petshop-pet-category/:name/:id"
+        element={<PetshopPetcategory />}
+      />
       <Route path="/petshop-my-orders" element={<PetshopMyorder />} />
-      <Route path="/petshop-update-profile" element={<PetshopUpdateprofile />} />
-      <Route path="/petshop-wishlist-product" element={<PetshopWishlistproduct />} />
+      <Route
+        path="/petshop-update-profile"
+        element={<PetshopUpdateprofile />}
+      />
+      <Route
+        path="/petshop-wishlist-product"
+        element={<PetshopWishlistproduct />}
+      />
       <Route path="/petshop-our-brand" element={<PetshopOurbrand />} />
-      <Route path="/petshop-our-Ourbrand/:id" element={<PetshopOurourbrand />} />
+      <Route
+        path="/petshop-our-Ourbrand/:id"
+        element={<PetshopOurourbrand />}
+      />
       <Route path="/petshop-shop-by-brand" element={<PetShopShopbybrand />} />
-      <Route path="/petshop-shop-by-brandList/:id" element={<PetshopShopbybrandlist />} />
-      <Route path="/petshop-productDetails/:id" element={<PetshopproductDetails />} />
-      <Route path="/petShop-subcategoriesProduct/:name" element={<PetShopSubcategoriesProduct />} />
+      <Route
+        path="/petshop-shop-by-brandList/:id"
+        element={<PetshopShopbybrandlist />}
+      />
+      <Route
+        path="/petshop-productDetails/:id"
+        element={<PetshopproductDetails />}
+      />
+      <Route
+        path="/petShop-subcategoriesProduct/:name"
+        element={<PetShopSubcategoriesProduct />}
+      />
       <Route path="/petshop-contact" element={<PetshopContact />} />
-      <Route path="/petshop-transition-history" element={<PetshopTransitionHistory />} />
+      <Route
+        path="/petshop-transition-history"
+        element={<PetshopTransitionHistory />}
+      />
 
       <Route path="/petshop-product" element={<Petshopproduct />} />
       <Route path="/petshop-home" element={<PetshopHome />} />
-      <Route path="/petshop-product-by-partner" element={<PetshopProductbypartner />} />
+      <Route
+        path="/petshop-product-by-partner"
+        element={<PetshopProductbypartner />}
+      />
       <Route path="/petshop-add-cart/:id" element={<PetshopAddCart />} />
       <Route path="/petshop-add-cart" element={<PetshopAddCart />} />
-      <Route path="/petshop-payment-method" element={<PetshopPaymentMethod />} />
+      <Route
+        path="/petshop-payment-method"
+        element={<PetshopPaymentMethod />}
+      />
 
       <Route path="/petshop-pay" element={<Petshoppay />} />
       <Route path="/petshop-shipping/:id" element={<PetshopShipping />} />
       <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
       <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
-      <Route path="/petShop-order-view-details/" element={<PetshopOrderviewdetails />} />
-
-
+      <Route
+        path="/petShop-order-view-details/"
+        element={<PetshopOrderviewdetails />}
+      />
 
       {/*======================== Pet shop flow start routing======================*/}
 
@@ -244,10 +287,7 @@ const WholesalerRoutes = () => {
         path="/petshopdeliverydetails"
         element={<Petshopdeliverydetails />}
       />
-      <Route
-        path="/petshop-term-of-use"
-        element={<Petshoptermofuse />}
-      />
+      <Route path="/petshop-term-of-use" element={<Petshoptermofuse />} />
       <Route
         path="/petshop-privacy-policy"
         element={<PetshopPrivacypolicy />}
@@ -256,26 +296,25 @@ const WholesalerRoutes = () => {
         path="/petshoptrackyourorde/:id"
         element={<Petshoptrackyourorder />}
       />
-      <Route
-        path="/petshoptrackyourorde"
-        element={<Petshoptrackyourorder />}
-      />
-      <Route
-        path="/petshopreturnpolicy"
-        element={<Petshopreturnpolicy />}
-      />
+      <Route path="/petshoptrackyourorde" element={<Petshoptrackyourorder />} />
+      <Route path="/petshopreturnpolicy" element={<Petshopreturnpolicy />} />
       <Route path="/petshop-disclaimer" element={<PetshopDisclaimer />} />
       <Route path="/petshopaboutus" element={<Petshopaboutus />} />
       <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
       <Route path="/petshop-testimonials" element={<Petshoptestimonials />} />
-      <Route path="/petshop-canine-product" element={<PetShopcanineproduct />} />
+      <Route
+        path="/petshop-canine-product"
+        element={<PetShopcanineproduct />}
+      />
       <Route path="/petshop-blog" element={<PetshopBlog />} />
-      <Route path="/petshop-blog-details/:id" element={<PetshopBlogdetails />} />
+      <Route
+        path="/petshop-blog-details/:id"
+        element={<PetshopBlogdetails />}
+      />
       {/*======================== Pet shop Footer end========================*/}
-
     </Routes>
   );
-}
+};
 const partnersRoutes = () => {
   return (
     <Routes>
@@ -289,7 +328,7 @@ const partnersRoutes = () => {
       {/*======================== partners flow end ========================*/}
     </Routes>
   );
-}
+};
 
 const SalesmanRoutes = () => {
   return (
@@ -300,49 +339,45 @@ const SalesmanRoutes = () => {
       <Route path="/salesman-login" element={<SalesmanLogin />} />
       <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
       <Route path="/salesman-add-product" element={<SalesmanaddProduct />} />
-      <Route path="/salesman-product-details" element={<SalesmanProductdetail />} />
+      <Route
+        path="/salesman-product-details"
+        element={<SalesmanProductdetail />}
+      />
       <Route path="/salesman-add-cart" element={<SalesmanAddcart />} />
       {/*======================== Sales Man flow end ========================*/}
-
-
     </Routes>
   );
-}
+};
 
 export const AuthLoading = () => {
-  const { loginType, isAuthenticated } = useAuth()
+  const { loginType, isAuthenticated } = useAuth();
   return (
     <Routes>
-      {
-        isAuthenticated ? null :
-          <>
-
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-          </>
-      }
+      {isAuthenticated ? null : (
+        <>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </>
+      )}
     </Routes>
-  )
-}
+  );
+};
 
 const App = () => {
   useEffect(() => {
-    const type = localStorage.getItem('loginType')
-    console.log('type', type)
-
-  }, [])
+    const type = localStorage.getItem("loginType");
+    console.log("type", type);
+  }, []);
   return (
     <div
       className="cursor"
-    // className="dog-paw-cursor/"
+      // className="dog-paw-cursor/"
     >
       <PaginationProvider>
-
         <BrowserRouter>
           <ScrollToTop /> {/* Add ScrollToTop component here */}
-          { }
+          {}
           <Routes>
-
             {/* =============== User flow start routing ===================== */}
 
             <Route path="/" element={<Home />} />
@@ -360,22 +395,34 @@ const App = () => {
             <Route path="/canine-product" element={<Canineproduct />} />
             <Route path="/patners-product" element={<Patnersproduct />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/veterinary-service" element={<Veterinaryservice />} />
+            <Route
+              path="/service/veterinary-service"
+              element={<Veterinaryservice />}
+            />
             <Route path="/add-cart/:id" element={<Addcart />} />
             <Route path="/add-cart" element={<Addcart />} />
             <Route path="/service-date/:id" element={<Servicedate />} />
             <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
             <Route path="/pet-profile/" element={<Petprofile />} />
-            <Route path="/service-pet" element={<Servicepet />} />
+            <Route path="/my-pet-profile" element={<Mypetprofile />} />
             <Route path="/our-brand" element={<Ourbrand />} />
 
             <Route path="/our-our-brand/:id" element={<Ourourbrand />} />
             <Route path="/shop-by-brand" element={<Shopbybrand />} />
-            <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
+            <Route
+              path="/shop-by-brand-list/:id"
+              element={<Shopbybrandlist />}
+            />
             <Route path="/product-by-partner" element={<Productbypartner />} />
 
-            <Route path="/product-partner-shop/:vendor_id" element={<Productpartnershop />} />
-            <Route path="/product-partner-Oneshop" element={<Partneroneshop />} />
+            <Route
+              path="/product-partner-shop/:id"
+              element={<Productpartnershop />}
+            />
+            <Route
+              path="/product-partner-Oneshop"
+              element={<Partneroneshop />}
+            />
             <Route path="/shipping/:id" element={<Shipping />} />
 
             <Route path="/user-pay-method" element={<Userpaymethod />} />
@@ -383,7 +430,10 @@ const App = () => {
             <Route path="/pet-category/:name/:id" element={<Petcategory />} />
             <Route path="/cat-category" element={<Catcategory />} />
             <Route path="/all-veterinary" element={<Allveterinary />} />
-            <Route path="/all-service-booking" element={<Allservicebooking />} />
+            <Route
+              path="/all-service-booking"
+              element={<Allservicebooking />}
+            />
             <Route path="/wishlist-products" element={<Wishlistproduct />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog-details/:id" element={<Blogdetails />} />
@@ -401,12 +451,13 @@ const App = () => {
 
             <Route path="/help-faqs" element={<Helpandfaqs />} />
             <Route path="/my-orders" element={<Myorder />} />
-            <Route path="/sub-categoriesHeading/:heading/:id" element={<SubcategoriesHeading />} />
+            <Route
+              path="/sub-categoriesHeading/:heading/:id"
+              element={<SubcategoriesHeading />}
+            />
             <Route path="/transition-history" element={<Transitionhistory />} />
 
-
             {/*  =============== User flow end routing ===================== */}
-
 
             {/* All Login Users */}
             <Route path="/login" element={<Login />} />
@@ -421,18 +472,45 @@ const App = () => {
             {/*======================== Pet shop flow start routing======================*/}
 
             <Route path="/petshop-dashboard" element={<Petshopdashboard />} />
-            <Route path="/petshop-pet-category/:name/:id" element={<PetshopPetcategory />} />
+            <Route
+              path="/petshop-pet-category/:name/:id"
+              element={<PetshopPetcategory />}
+            />
             <Route path="/petshop-my-orders" element={<PetshopMyorder />} />
-            <Route path="/petshop-update-profile" element={<PetshopUpdateprofile />} />
-            <Route path="/petshop-wishlist-product" element={<PetshopWishlistproduct />} />
+            <Route
+              path="/petshop-update-profile"
+              element={<PetshopUpdateprofile />}
+            />
+            <Route
+              path="/petshop-wishlist-product"
+              element={<PetshopWishlistproduct />}
+            />
             <Route path="/petshop-our-brand" element={<PetshopOurbrand />} />
-            <Route path="/petshop-our-Ourbrand/:id" element={<PetshopOurourbrand />} />
-            <Route path="/petshop-shop-by-brand" element={<PetShopShopbybrand />} />
-            <Route path="/petshop-shop-by-brandList/:id" element={<PetshopShopbybrandlist />} />
-            <Route path="/petshop-productDetails/:id" element={<PetshopproductDetails />} />
-            <Route path="/petShop-subcategoriesProduct/:name" element={<PetShopSubcategoriesProduct />} />
+            <Route
+              path="/petshop-our-Ourbrand/:id"
+              element={<PetshopOurourbrand />}
+            />
+            <Route
+              path="/petshop-shop-by-brand"
+              element={<PetShopShopbybrand />}
+            />
+            <Route
+              path="/petshop-shop-by-brandList/:id"
+              element={<PetshopShopbybrandlist />}
+            />
+            <Route
+              path="/petshop-productDetails/:id"
+              element={<PetshopproductDetails />}
+            />
+            <Route
+              path="/petShop-subcategoriesProduct/:name"
+              element={<PetShopSubcategoriesProduct />}
+            />
             <Route path="/petshop-contact" element={<PetshopContact />} />
-            <Route path="/petshop-transition-history" element={<PetshopTransitionHistory />} />
+            <Route
+              path="/petshop-transition-history"
+              element={<PetshopTransitionHistory />}
+            />
 
             <Route path="/petshop-product" element={<Petshopproduct />} />
             {/* petshop-product-details comment hi rahega  */}
@@ -441,18 +519,28 @@ const App = () => {
             element={<PetshopproductDetails />}
           /> */}
             <Route path="/petshop-home" element={<PetshopHome />} />
-            <Route path="/petshop-product-by-partner" element={<PetshopProductbypartner />} />
+            <Route
+              path="/petshop-product-by-partner"
+              element={<PetshopProductbypartner />}
+            />
             <Route path="/petshop-add-cart/:id" element={<PetshopAddCart />} />
             <Route path="/petshop-add-cart" element={<PetshopAddCart />} />
-            <Route path="/petshop-payment-method" element={<PetshopPaymentMethod />} />
+            <Route
+              path="/petshop-payment-method"
+              element={<PetshopPaymentMethod />}
+            />
 
             <Route path="/petshop-pay" element={<Petshoppay />} />
             <Route path="/petshop-shipping/:id" element={<PetshopShipping />} />
             <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
-            <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
-            <Route path="/petShop-order-view-details/" element={<PetshopOrderviewdetails />} />
-
-
+            <Route
+              path="/order-view-details/:id"
+              element={<Orderviewdetails />}
+            />
+            <Route
+              path="/petShop-order-view-details/"
+              element={<PetshopOrderviewdetails />}
+            />
 
             {/*======================== Pet shop flow start routing======================*/}
 
@@ -462,10 +550,7 @@ const App = () => {
               path="/petshopdeliverydetails"
               element={<Petshopdeliverydetails />}
             />
-            <Route
-              path="/petshop-term-of-use"
-              element={<Petshoptermofuse />}
-            />
+            <Route path="/petshop-term-of-use" element={<Petshoptermofuse />} />
             <Route
               path="/petshop-privacy-policy"
               element={<PetshopPrivacypolicy />}
@@ -484,19 +569,37 @@ const App = () => {
             />
             <Route path="/petshop-disclaimer" element={<PetshopDisclaimer />} />
             <Route path="/petshopaboutus" element={<Petshopaboutus />} />
-            <Route path="/petshophelpandfaqs" element={<Petshophelpandfaqs />} />
-            <Route path="/petshop-testimonials" element={<Petshoptestimonials />} />
-            <Route path="/petshop-canine-product" element={<PetShopcanineproduct />} />
+            <Route
+              path="/petshophelpandfaqs"
+              element={<Petshophelpandfaqs />}
+            />
+            <Route
+              path="/petshop-testimonials"
+              element={<Petshoptestimonials />}
+            />
+            <Route
+              path="/petshop-canine-product"
+              element={<PetShopcanineproduct />}
+            />
             <Route path="/petshop-blog" element={<PetshopBlog />} />
-            <Route path="/petshop-blog-details/:id" element={<PetshopBlogdetails />} />
+            <Route
+              path="/petshop-blog-details/:id"
+              element={<PetshopBlogdetails />}
+            />
             {/*======================== Pet shop Footer end========================*/}
 
             {/*======================== Sales Man flow start ========================*/}
             <Route path="/salesman-signup" element={<Salesman />} />
             <Route path="/salesman-login" element={<SalesmanLogin />} />
             <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
-            <Route path="/salesman-add-product" element={<SalesmanaddProduct />} />
-            <Route path="/salesman-product-details" element={<SalesmanProductdetail />} />
+            <Route
+              path="/salesman-add-product"
+              element={<SalesmanaddProduct />}
+            />
+            <Route
+              path="/salesman-product-details"
+              element={<SalesmanProductdetail />}
+            />
             <Route path="/salesman-add-cart" element={<SalesmanAddcart />} />
             {/*======================== Sales Man flow end ========================*/}
 
@@ -509,13 +612,11 @@ const App = () => {
 
             {/* page Not Found flow  */}
             <Route path="*" element={<Notfound />} />
-
           </Routes>
         </BrowserRouter>
       </PaginationProvider>
-
     </div>
   );
-}
+};
 
 export default App;

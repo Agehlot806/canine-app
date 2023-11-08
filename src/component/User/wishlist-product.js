@@ -14,8 +14,7 @@ function Wishlistproduct() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([fetchWishlistData(),
-    fetchWishlistDataId()])
+    Promise.all([fetchWishlistData(), fetchWishlistDataId()])
       .then(() => {
         setLoading(false);
       })
@@ -83,6 +82,22 @@ function Wishlistproduct() {
     // Add more gradient colors as needed
   ];
 
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+
+    const truncatedDescription = name?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -118,8 +133,8 @@ function Wishlistproduct() {
                           <Link to="">
                             <div className="text-center">
                               {item.store_id &&
-                                item.store_id[0] &&
-                                item.store_id[0].image ? (
+                              item.store_id[0] &&
+                              item.store_id[0].image ? (
                                 <img
                                   src={
                                     "https://canine.hirectjob.in///storage/app/public/product/" +
@@ -134,7 +149,9 @@ function Wishlistproduct() {
                             <div>
                               {item.store_id && item.store_id[0] ? (
                                 <>
-                                  <h6>{item.store_id[0].name}</h6>
+                                  <h6>
+                                    {renderProducthead(item.store_id[0].name)}
+                                  </h6>
                                   <p>{item.store_id[0].description}</p>
                                 </>
                               ) : (
@@ -171,7 +188,6 @@ function Wishlistproduct() {
           </section>
         </>
       )}
-
 
       <Footer />
     </>

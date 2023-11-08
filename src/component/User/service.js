@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import service from "../../assets/images/banner/service.png";
 import banner from "../../assets/images/banner/banner.png";
 import { Container, Row, Col } from "react-bootstrap";
@@ -14,7 +14,6 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function Service() {
   const [allservice, setallservice] = useState([]);
 
-
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([allService()])
@@ -27,7 +26,6 @@ function Service() {
       });
   }, []);
 
-
   const allService = async () => {
     axios
       .get(`${BASE_URL}/banners/service_category`)
@@ -35,7 +33,6 @@ function Service() {
         console.log(response);
         console.log("Delete Successful");
         setallservice(response.data.data);
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -50,7 +47,8 @@ function Service() {
             <img src={loadinggif} alt="" />
             <h5>Please Wait.......</h5>
           </div>
-        </section>) : (
+        </section>
+      ) : (
         <>
           <Container fluid className="p-0">
             <div className="all-bg">
@@ -65,7 +63,7 @@ function Service() {
               </div>
               <div className="needplace">
                 <Row>
-                  {allservice.map((item) => (
+                  {/* {allservice.map((item) => (
                     <Col lg={4} sm={6} className="mb-4">
                       <div className="service-card" key={item.id}>
                         <Link to={`/service-date/${item.id}`}>
@@ -82,6 +80,29 @@ function Service() {
                           </p>
                         </Link>
                       </div>
+                    </Col>
+                  ))} */}
+
+                  {allservice.map((item) => (
+                    <Col lg={4} sm={6} className="mb-4" key={item.id}>
+                      <Link
+                        to={
+                          item.name === "Health & Wellness"
+                            ? "veterinary-service"
+                            : `/service-date/${item.id}`
+                        }
+                      >
+                        <div className="service-card">
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/public/service/" +
+                              item.image
+                            }
+                          />
+                          <h3>{item.name}</h3>
+                          <p>{item.description}</p>
+                        </div>
+                      </Link>
                     </Col>
                   ))}
                 </Row>
@@ -104,10 +125,10 @@ function Service() {
                   <div className="service-Visit">
                     <h1 className="main-head">Each Visit Also Includes</h1>
                     <p>
-                      Justo eget magna fermentum iaculis eu non diam phasellus. Eu
-                      lobortis elementum nibh tellus molestie nunc. Ullamcorper eget
-                      nulla facilisi etiam dignissim diam. Eget felis eget nunc
-                      lobortis mattis
+                      Justo eget magna fermentum iaculis eu non diam phasellus.
+                      Eu lobortis elementum nibh tellus molestie nunc.
+                      Ullamcorper eget nulla facilisi etiam dignissim diam. Eget
+                      felis eget nunc lobortis mattis
                     </p>
                     <ul>
                       <li>
@@ -118,8 +139,8 @@ function Service() {
                         <i className="fa fa-check-circle" /> Scoop Litter Boxes
                       </li>
                       <li>
-                        <i className="fa fa-check-circle" /> Bringing in mail and
-                        packages
+                        <i className="fa fa-check-circle" /> Bringing in mail
+                        and packages
                       </li>
                       <li>
                         <i className="fa fa-check-circle" /> Watering Plants

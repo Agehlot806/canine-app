@@ -298,6 +298,16 @@
     font-size: 14px;
     padding: 0;
   }
+  .pet-text-ser {
+    padding: 65px 20px 18px;
+  }
+  .pet-text-ser h4 {
+    font-size: 16px;
+  }
+  .pet-status h6 {
+    width: 230px;
+    font-size: 16px;
+  }
   .drop-menu li {
     line-height: 32px;
   }
@@ -321,7 +331,7 @@
   }
   a.profiledes {
     padding: 5px 0 4px !important;
-}
+  }
   a.profiledes.notification-btn.notimob {
     margin: 0 0 0 -70px;
   }

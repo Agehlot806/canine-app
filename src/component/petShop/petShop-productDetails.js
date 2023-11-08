@@ -121,13 +121,15 @@ function PetshopproductDetails() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([productData(),
+    Promise.all([
+      productData(),
       itemWiseBanner(),
       fetchrelatedproduct(),
       fetchBreed(),
       AllBanner(),
       AllOrderList(),
-      allAddressList(),])
+      allAddressList(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -207,7 +209,7 @@ function PetshopproductDetails() {
           total_quantity: selectedVariantStock
             ? selectedVariantStock
             : productDetails?.stock,
-            return_order: productDetails?.returnable || "yes",
+          return_order: productDetails?.returnable || "yes",
           // price: selectedVariantPrice,
           price:
             formattedAmount === "0"
@@ -907,178 +909,207 @@ function PetshopproductDetails() {
     setShowData(!showData);
   };
 
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+
+    const truncatedDescription = name?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
+
   return (
     <>
-    <Toaster />
+      <Toaster />
       <PetShopHeader />
       {loading ? (
-      <section className="section-padding mt-3 mb-3">
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt="" />
-        <h5>Please Wait.......</h5>
-      </div>
-      </section>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <div className="home-section">
-        {homebanner
-          ? homebanner.map(
-              (item, index) =>
-                item.type === "common" && (
-                  <Link to={item.default_link}>
-                    <img
-                      className="partner-img"
-                      src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
-                      }
-                    />
-                  </Link>
+          <div className="home-section">
+            {homebanner
+              ? homebanner.map(
+                  (item, index) =>
+                    item.type === "common" && (
+                      <Link to={item.default_link}>
+                        <img
+                          className="partner-img"
+                          src={
+                            "https://canine.hirectjob.in//storage/app/" +
+                            item.image
+                          }
+                        />
+                      </Link>
+                    )
                 )
-            )
-          : null}
-      </div>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            <Col lg={6}>
-              <div>
-                <div className="product-item">
-                  <img src={mainImage} alt="Product Image" />
-                </div>
-                <div className="needplace">
-                  <Row>
-                    {/* <Col sm={2} className="mb-3">
+              : null}
+          </div>
+          <section className="section-padding">
+            <Container>
+              <Row>
+                <Col lg={6}>
+                  <div>
+                    <div className="product-item">
+                      <img src={mainImage} alt="Product Image" />
+                    </div>
+                    <div className="needplace">
+                      <Row>
+                        {/* <Col sm={2} className="mb-3">
                       <div
                         className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
                         <img src={singleImage} />
                       </div></Col> */}
-                    {productDetails?.images &&
-                    productDetails?.images.length > 0 ? (
-                      productDetails?.images.map((item, index) => (
-                        <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
-                          <div
-                            className="product-item-inner"
-                            onClick={() => handleThumbnailClick(index)}
-                          >
-                            <img
-                              src={
-                                "https://canine.hirectjob.in//storage/app/public/product/" +
-                                item
-                              }
-                              alt={`Image ${index}`}
-                            />
+                        {productDetails?.images &&
+                        productDetails?.images.length > 0 ? (
+                          productDetails?.images.map((item, index) => (
+                            <Col
+                              lg={2}
+                              sm={3}
+                              xs={3}
+                              className="mb-3"
+                              key={index}
+                            >
+                              <div
+                                className="product-item-inner"
+                                onClick={() => handleThumbnailClick(index)}
+                              >
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/public/product/" +
+                                    item
+                                  }
+                                  alt={`Image ${index}`}
+                                />
+                              </div>
+                            </Col>
+                          ))
+                        ) : (
+                          <p className="emptyMSG">No Related Image.</p>
+                        )}
+                      </Row>
+                    </div>
+                  </div>
+                </Col>
+                <Col lg={6}>
+                  <div className="productDetail-content">
+                    <Row>
+                      <Col lg={10}>
+                        <h4>{productDetails.name}</h4>
+                      </Col>
+                    </Row>
+                    <p>
+                      By <span>{productDetails?.brand_id}</span>
+                    </p>
+
+                    <Wrapper>
+                      <div className="icon-style">
+                        {ratingStar}
+                        <p>({productDetails.rating_count} customer reviews)</p>
+                      </div>
+                    </Wrapper>
+
+                    <div className="needplaceProduct">
+                      <Row>
+                        {productDetails?.variations?.length > 0 && (
+                          <Col sm={6}>
+                            <div className="tab-container">
+                              <h6>Variations</h6>
+                              <Row>
+                                {productDetails?.variations &&
+                                  productDetails?.variations.length > 0 &&
+                                  productDetails.variations.map(
+                                    (item, index) => (
+                                      <Col lg={3} sm={3} xs={3} key={index}>
+                                        {item.stock !== 0 ? (
+                                          <div
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
+                                                ? "active"
+                                                : ""
+                                            }`}
+                                            onClick={() => {
+                                              setSelectedVariant(item.type);
+                                              setSelectedVariantPrice(
+                                                item.wholeprice
+                                              );
+                                              setSelectedVariantStock(
+                                                item.stock
+                                              );
+                                            }}
+                                          >
+                                            {item.type}
+                                          </div>
+                                        ) : (
+                                          <div
+                                            className="tab-variations disabledvariation"
+                                            title="Stock unavailable"
+                                          >
+                                            {/* <span className="blurred-text"> */}
+                                            {item.type}
+                                            {/* </span> */}
+                                          </div>
+                                        )}
+                                      </Col>
+                                    )
+                                  )}
+                              </Row>
+                            </div>
+                          </Col>
+                        )}
+                        <Col sm={6}>
+                          <div className="quantity-btn">
+                            <button onClick={handleDecrementOne}>
+                              <i className="fa fa-minus" />
+                            </button>
+                            <form>
+                              <div className="form-group">
+                                <input
+                                  type="tel"
+                                  className="form-control"
+                                  placeholder="Quantity"
+                                  value={quantity}
+                                  onChange={handleQuantityChange}
+                                  autoComplete="new-number"
+                                />
+                              </div>
+                            </form>
+                            <button onClick={handleIncrementOne}>
+                              <i className="fa fa-plus" />
+                            </button>
                           </div>
                         </Col>
-                      ))
-                    ) : (
-                      <p className="emptyMSG">No Related Image.</p>
-                    )}
-                  </Row>
-                </div>
-              </div>
-            </Col>
-            <Col lg={6}>
-              <div className="productDetail-content">
-                <Row>
-                  <Col lg={10}>
-                    <h4>{productDetails.name}</h4>
-                  </Col>
-                </Row>
-                <p>
-                  By <span>{productDetails?.brand_id}</span>
-                </p>
-
-                <Wrapper>
-                  <div className="icon-style">
-                    {ratingStar}
-                    <p>({productDetails.rating_count} customer reviews)</p>
-                  </div>
-                </Wrapper>
-
-                <div className="needplaceProduct">
-                  <Row>
-                  {productDetails?.variations?.length > 0 && (
-                    <Col sm={6}>
-                      <div className="tab-container">
-                        <h6>Variations</h6>
+                      </Row>
+                    </div>
+                    <div className="needplaceProduct">
+                      <div className="product-deatils-price">
                         <Row>
-                          {productDetails?.variations &&
-                            productDetails?.variations.length > 0 &&
-                            productDetails.variations.map((item, index) => (
-                              <Col lg={3} sm={3} xs={3} key={index}>
-                                {item.stock !== 0 ? (
-                                  <div
-                                    className={`tab-variations ${
-                                      selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      setSelectedVariant(item.type);
-                                      setSelectedVariantPrice(item.wholeprice); 
-                                      setSelectedVariantStock(item.stock);
-                                    }}
-                                  >
-                                    {item.type}
-                                  </div>
-                                ) : (
-                                  <div
-                                    className="tab-variations disabledvariation"
-                                    title="Stock unavailable"
-                                  >
-                                    {/* <span className="blurred-text"> */}
-                                    {item.type}
-                                    {/* </span> */}
-                                  </div>
-                                )}
-                              </Col>
-                            ))}
-                        </Row>
-                      </div>
-                    </Col>
-                  )}
-                    <Col sm={6}>
-                      <div className="quantity-btn">
-                        <button onClick={handleDecrementOne}>
-                          <i className="fa fa-minus" />
-                        </button>
-                        <form>
-                          <div className="form-group">
-                            <input
-                              type="tel"
-                              className="form-control"
-                              placeholder="Quantity"
-                              value={quantity}
-                              onChange={handleQuantityChange}
-                              autoComplete="new-number"
-                            />
-                          </div>
-                        </form>
-                        <button onClick={handleIncrementOne}>
-                          <i className="fa fa-plus" />
-                        </button>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="needplaceProduct">
-                  <div className="product-deatils-price">
-                    <Row>
-                      {/* <Col lg={3}> */}
-                      {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                      {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                      {/* {console.log(
+                          {/* <Col lg={3}> */}
+                          {/* <p>{`₹${productDetails.whole_price}`}</p> */}
+                          {/* <p>{`₹${wholesellervariationprice}`}</p> */}
+                          {/* {console.log(
                           "productDetails?.variations?.price: ",
                           productDetails?.variations?.price
                         )} */}
-                      {/* </Col> */}
-                      <Col lg={4}>
-                        {/* <h5>{`₹${
+                          {/* </Col> */}
+                          <Col lg={4}>
+                            {/* <h5>{`₹${
                           isNaN(formattedAmount) ? 0 : formattedAmount
                         }`}</h5> */}
-                        <h5>₹{productDetails.whole_price}</h5>
-                      </Col>
-                      {/* <Col lg={5}>
+                            <h5>₹{productDetails.whole_price}</h5>
+                          </Col>
+                          {/* <Col lg={5}>
                         <h6>
                           Your save
                           {formattedSavedAmount >= 0
@@ -1086,237 +1117,239 @@ function PetshopproductDetails() {
                             : "No savings"}
                         </h6>
                       </Col> */}
-                    </Row>
-                  </div>
-                </div>
-                <h5>About Us</h5>
-                {console.log(
-                  "productDetails.brand_id: ",
-                  productDetails.brand_id
-                )}
+                        </Row>
+                      </div>
+                    </div>
+                    <h5>About Us</h5>
+                    {console.log(
+                      "productDetails.brand_id: ",
+                      productDetails.brand_id
+                    )}
 
-                {productDetails ? (
-                  <Table responsive>
-                    <tbody>
-                      <tr>
-                        <th>Brand</th>
-                        <td>{productDetails?.brand_id}</td>
-                      </tr>
-                      <tr>
-                        <th>Age Range</th>
-                        <td>{productDetails?.lifeStage_id}</td>
-                      </tr>
-                      <tr>
-                        <th>Health Condition</th>
-                        <td>{productDetails?.helthCondition_id}</td>
-                      </tr>
-                      <tr>
-                        <th>Target Species</th>
-                        <td>{productDetails?.Petsbreeds_id}</td>
-                      </tr>
-                      {/* <tr>
+                    {productDetails ? (
+                      <Table responsive>
+                        <tbody>
+                          <tr>
+                            <th>Brand</th>
+                            <td>{productDetails?.brand_id}</td>
+                          </tr>
+                          <tr>
+                            <th>Age Range</th>
+                            <td>{productDetails?.lifeStage_id}</td>
+                          </tr>
+                          <tr>
+                            <th>Health Condition</th>
+                            <td>{productDetails?.helthCondition_id}</td>
+                          </tr>
+                          <tr>
+                            <th>Target Species</th>
+                            <td>{productDetails?.Petsbreeds_id}</td>
+                          </tr>
+                          {/* <tr>
                           <th>Item From</th>
                           <td>Pellet</td>
                         </tr> */}
-                    </tbody>
-                  </Table>
-                ) : (
-                  <p>No data available for this product.</p>
-                )}
-              </div>
-            </Col>
-          </Row>
-          {productDetails.stock && productDetails.stock.length !== 0 ? (
-            <div className="productBTNaddcard">
-              {verifiredIdaccess === 1 ? (
-                <Button onClick={handleAddToCart}>
-                  <Link
-                    // to={`/petshop-add-cart/${id}`}
-                  >
-                    <i className="fa fa-shopping-bag" /> Add to cart
-                  </Link>
-                </Button>
+                        </tbody>
+                      </Table>
+                    ) : (
+                      <p>No data available for this product.</p>
+                    )}
+                  </div>
+                </Col>
+              </Row>
+              {productDetails.stock && productDetails.stock.length !== 0 ? (
+                <div className="productBTNaddcard">
+                  {verifiredIdaccess === 1 ? (
+                    <Button onClick={handleAddToCart}>
+                      <Link
+                      // to={`/petshop-add-cart/${id}`}
+                      >
+                        <i className="fa fa-shopping-bag" /> Add to cart
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button onClick={demousercheck}>
+                      <Link>
+                        <i className="fa fa-shopping-bag" /> Add to cart
+                      </Link>
+                    </Button>
+                  )}
+                  <p>{addToCartStatus}</p>
+                </div>
               ) : (
-                <Button onClick={demousercheck}>
-                  <Link>
-                    <i className="fa fa-shopping-bag" /> Add to cart
-                  </Link>
-                </Button>
+                <div className="sold-out-btn mt-3">
+                  <Link>Sold Out</Link>
+                  <br />
+                  <Button data-toggle="modal" data-target="#soldoutModel">
+                    Notify Me When Available
+                  </Button>
+                </div>
               )}
-              <p>{addToCartStatus}</p>
-            </div>
-          ) : (
-            <div className="sold-out-btn mt-3">
-              <Link>Sold Out</Link>
-              <br />
-              <Button data-toggle="modal" data-target="#soldoutModel">
-                Notify Me When Available
-              </Button>
-            </div>
-          )}
-          {/* </Row> */}
-          <div className="productBTNaddcard">
-            {/* <Button>
+              {/* </Row> */}
+              <div className="productBTNaddcard">
+                {/* <Button>
               <Link to="/petshop-add-cart">
                 <i className="fa fa-shopping-bag" /> Add to cart
               </Link>
             </Button> */}
-          </div>
-          <h1 className="main-head mt-4">Product details</h1>
-          <p>{productDetails.description}</p>
-
-          <>
-            <div className="Product-Review">
-              <h1 className="main-head mt-4">Product Review</h1>
-              {getreviewlist && getreviewlist.length > 1 ? (
-                getreviewlist.map(
-                  (order, index) =>
-                    index === 0 && (
-                      <div key={order.id}>
-                        <div className="linereview">
-                          <p>{order.comment}</p>
-                          <div className="row">
-                            <div className="col-sm-3 col">
-                              <Wrapper>
-                                <div className="icon-style">
-                                  {Array.from({
-                                    length: order.rating,
-                                  }).map((_, index) => (
-                                    <i
-                                      className="fa-solid fa-star"
-                                      key={index}
-                                    />
-                                  ))}
-                                </div>
-                              </Wrapper>
-                            </div>
-                            <div className="col-sm-5 col">
-                              {order.user_id && order.user_id.length > 0 && (
-                                <div className="Product-img">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in//storage/app/public/profile/" +
-                                      order.user_id[0].image
-                                    }
-                                    alt={order.user_id[0].f_name}
-                                  />
-                                  <span>
-                                    {order.user_id[0].f_name}{" "}
-                                    {order.user_id[0].l_name}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                )
-              ) : (
-                <p>No Review data</p>
-              )}
-
-              <div>
-                {showData ? (
-                  <>
-                    {getreviewlist.map((order) => (
-                      <div key={order.id}>
-                        <div className="linereview">
-                          <p>{order.comment}</p>
-                          <div className="row">
-                            <div className="col-sm-3 col">
-                              <Wrapper>
-                                <div className="icon-style">
-                                  {Array.from({
-                                    length: order.rating,
-                                  }).map((_, index) => (
-                                    <i
-                                      className="fa-solid fa-star"
-                                      key={index}
-                                    />
-                                  ))}
-                                </div>
-                              </Wrapper>
-                            </div>
-                            <div className="col-sm-5 col">
-                              {order.user_id && order.user_id.length > 0 && (
-                                <div className="Product-img">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in//storage/app/public/profile/" +
-                                      order.user_id[0].image
-                                    }
-                                    alt={order.user_id[0].f_name}
-                                  />
-                                  <span>
-                                    {order.user_id[0].f_name}{" "}
-                                    {order.user_id[0].l_name}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    <a href="#" onClick={toggleData}>
-                      Read less
-                    </a>
-                  </>
-                ) : (
-                  <a href="#" onClick={toggleData}>
-                    Read more
-                  </a>
-                )}
               </div>
-            </div>
-          </>
-        </Container>
-      </section>
+              <h1 className="main-head mt-4">Product details</h1>
+              <p>{productDetails.description}</p>
 
-      <section className="section-padding food">
-        <Container>
-          <div className="text-left">
-            <h1 className="main-head">Related products</h1>
-          </div>
-          <div className="needplace">
-            <Row>
-              {allrelatedproduct &&
-                allrelatedproduct.map((item, index) => (
-                  <Col lg={3} sm={6} xs={6} className="mb-4">
-                    <div
-                      className="food-product"
-                      onMouseEnter={() => handleMouseEnter(item.id)}
-                      onMouseLeave={() => handleMouseLeave(item.id)}
-                      key={item.id}
-                      style={{
-                        background:
-                          gradientColors[index % gradientColors.length],
-                      }}
-                    >
-                      <i
-                        class="fa fa-heart-o"
-                        onClick={() => addToWishlist(item.id)}
-                      />
-                      <Link to={`/petshop-productDetails/${item.id}`}>
-                        <div className="text-center">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in///storage/app/public/product/" +
-                              item.image
-                            }
+              <>
+                <div className="Product-Review">
+                  <h1 className="main-head mt-4">Product Review</h1>
+                  {getreviewlist && getreviewlist.length > 1 ? (
+                    getreviewlist.map(
+                      (order, index) =>
+                        index === 0 && (
+                          <div key={order.id}>
+                            <div className="linereview">
+                              <p>{order.comment}</p>
+                              <div className="row">
+                                <div className="col-sm-3 col">
+                                  <Wrapper>
+                                    <div className="icon-style">
+                                      {Array.from({
+                                        length: order.rating,
+                                      }).map((_, index) => (
+                                        <i
+                                          className="fa-solid fa-star"
+                                          key={index}
+                                        />
+                                      ))}
+                                    </div>
+                                  </Wrapper>
+                                </div>
+                                <div className="col-sm-5 col">
+                                  {order.user_id &&
+                                    order.user_id.length > 0 && (
+                                      <div className="Product-img">
+                                        <img
+                                          src={
+                                            "https://canine.hirectjob.in//storage/app/public/profile/" +
+                                            order.user_id[0].image
+                                          }
+                                          alt={order.user_id[0].f_name}
+                                        />
+                                        <span>
+                                          {order.user_id[0].f_name}{" "}
+                                          {order.user_id[0].l_name}
+                                        </span>
+                                      </div>
+                                    )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                    )
+                  ) : (
+                    <p>No Review data</p>
+                  )}
+
+                  <div>
+                    {showData ? (
+                      <>
+                        {getreviewlist.map((order) => (
+                          <div key={order.id}>
+                            <div className="linereview">
+                              <p>{order.comment}</p>
+                              <div className="row">
+                                <div className="col-sm-3 col">
+                                  <Wrapper>
+                                    <div className="icon-style">
+                                      {Array.from({
+                                        length: order.rating,
+                                      }).map((_, index) => (
+                                        <i
+                                          className="fa-solid fa-star"
+                                          key={index}
+                                        />
+                                      ))}
+                                    </div>
+                                  </Wrapper>
+                                </div>
+                                <div className="col-sm-5 col">
+                                  {order.user_id &&
+                                    order.user_id.length > 0 && (
+                                      <div className="Product-img">
+                                        <img
+                                          src={
+                                            "https://canine.hirectjob.in//storage/app/public/profile/" +
+                                            order.user_id[0].image
+                                          }
+                                          alt={order.user_id[0].f_name}
+                                        />
+                                        <span>
+                                          {order.user_id[0].f_name}{" "}
+                                          {order.user_id[0].l_name}
+                                        </span>
+                                      </div>
+                                    )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        <a href="#" onClick={toggleData}>
+                          Read less
+                        </a>
+                      </>
+                    ) : (
+                      <a href="#" onClick={toggleData}>
+                        Read more
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </>
+            </Container>
+          </section>
+
+          <section className="section-padding food">
+            <Container>
+              <div className="text-left">
+                <h1 className="main-head">Related products</h1>
+              </div>
+              <div className="needplace">
+                <Row>
+                  {allrelatedproduct &&
+                    allrelatedproduct.map((item, index) => (
+                      <Col lg={3} sm={6} xs={6} className="mb-4">
+                        <div
+                          className="food-product"
+                          onMouseEnter={() => handleMouseEnter(item.id)}
+                          onMouseLeave={() => handleMouseLeave(item.id)}
+                          key={item.id}
+                          style={{
+                            background:
+                              gradientColors[index % gradientColors.length],
+                          }}
+                        >
+                          <i
+                            class="fa fa-heart-o"
+                            onClick={() => addToWishlist(item.id)}
                           />
-                        </div>
-                        <div>
-                          <h6>{item.name}</h6>
-                          <p>{item.description}</p>
-                        </div>
-                        <div className="product-bag">
-                          <Row>
-                            <Col className="align-self-center">
-                              <h4>₹{item.whole_price}</h4>
-                            </Col>
-                            {/* <Col>
+                          <Link to={`/petshop-productDetails/${item.id}`}>
+                            <div className="text-center">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in///storage/app/public/product/" +
+                                  item.image
+                                }
+                              />
+                            </div>
+                            <div>
+                              <h6>{renderProducthead(item.name)}</h6>
+                              <p>{item.description}</p>
+                            </div>
+                            <div className="product-bag">
+                              <Row>
+                                <Col className="align-self-center">
+                                  <h4>₹{item.whole_price}</h4>
+                                </Col>
+                                {/* <Col>
                               <Link
                                 to={`/petshop-add-cart/${item.id}`}
                                 onClick={handleAddToCart}
@@ -1324,40 +1357,40 @@ function PetshopproductDetails() {
                                 <img src={bag} />
                               </Link>
                             </Col> */}
-                          </Row>
-                        </div>
-                      </Link>
+                              </Row>
+                            </div>
+                          </Link>
 
-                      {buttonVisibility[item.id] && (
-                        <Fade top>
-                          <div className="button-container">
-                            <button
-                              data-toggle="modal"
-                              data-target=".bd-example-modal-lg"
-                              onClick={(e) => handeldataId(item.id)}
-                            >
-                              Quick View
-                            </button>
-                            <button
-                              data-toggle="modal"
-                              data-target=".buynow"
-                              onClick={(e) => handeldataId(item.id)}
-                            >
-                              Buy Now
-                            </button>
-                          </div>
-                        </Fade>
-                      )}
-                    </div>
-                  </Col>
-                ))}
-            </Row>
-          </div>
-        </Container>
-      </section>
+                          {buttonVisibility[item.id] && (
+                            <Fade top>
+                              <div className="button-container">
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".bd-example-modal-lg"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Quick View
+                                </button>
+                                <button
+                                  data-toggle="modal"
+                                  data-target=".buynow"
+                                  onClick={(e) => handeldataId(item.id)}
+                                >
+                                  Buy Now
+                                </button>
+                              </div>
+                            </Fade>
+                          )}
+                        </div>
+                      </Col>
+                    ))}
+                </Row>
+              </div>
+            </Container>
+          </section>
         </>
       )}
-      
+
       <Petshopfooter />
       {/* Modal */}
 
@@ -1435,49 +1468,49 @@ function PetshopproductDetails() {
 
                         <div className="needplaceProduct">
                           <Row>
-                          {productDetails?.variations?.length > 0 && (
-                            <Col sm={6}>
-                              <div className="tab-container">
-                                <h6>Variations</h6>
-                                <Row>
-                                  {productDetails?.variations &&
-                                    productDetails?.variations.length > 0 &&
-                                    productDetails.variations.map(
-                                      (item, index) => (
-                                        <Col lg={4} sm={4} xs={3} key={index}>
-                                          {item.stock !== 0 ? (
-                                            <div
-                                              className={`tab-variations ${
-                                                selectedVariant === item.type
-                                                  ? "active"
-                                                  : ""
-                                              }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(
-                                                  item.wholeprice
-                                                ); // Store the price in state
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          ) : (
-                                            <div
-                                              className="tab-variations disabledvariation"
-                                              title="Stock unavailable"
-                                            >
-                                              {/* <span className="blurred-text"> */}
-                                              {item.type}
-                                              {/* </span> */}
-                                            </div>
-                                          )}
-                                        </Col>
-                                      )
-                                    )}
-                                </Row>
-                              </div>
-                            </Col>
-                          )}
+                            {productDetails?.variations?.length > 0 && (
+                              <Col sm={6}>
+                                <div className="tab-container">
+                                  <h6>Variations</h6>
+                                  <Row>
+                                    {productDetails?.variations &&
+                                      productDetails?.variations.length > 0 &&
+                                      productDetails.variations.map(
+                                        (item, index) => (
+                                          <Col lg={4} sm={4} xs={3} key={index}>
+                                            {item.stock !== 0 ? (
+                                              <div
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
+                                                }`}
+                                                onClick={() => {
+                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariantPrice(
+                                                    item.wholeprice
+                                                  ); // Store the price in state
+                                                }}
+                                              >
+                                                {item.type}
+                                              </div>
+                                            ) : (
+                                              <div
+                                                className="tab-variations disabledvariation"
+                                                title="Stock unavailable"
+                                              >
+                                                {/* <span className="blurred-text"> */}
+                                                {item.type}
+                                                {/* </span> */}
+                                              </div>
+                                            )}
+                                          </Col>
+                                        )
+                                      )}
+                                  </Row>
+                                </div>
+                              </Col>
+                            )}
                             <Col sm={6}>
                               <div className="quantity-btn quickbtn">
                                 <button onClick={handleDecrementOne}>
@@ -2044,7 +2077,9 @@ function PetshopproductDetails() {
                                       }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.wholeprice); // Store the price in state
+                                        setSelectedVariantPrice(
+                                          item.wholeprice
+                                        ); // Store the price in state
                                       }}
                                     >
                                       {item.type}
