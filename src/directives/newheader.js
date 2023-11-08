@@ -552,7 +552,7 @@ function Newheader(props) {
                         <Row> */}
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to={`/sub-categoriesHeading/${"Food"}`}>
+                              <Link to={`/sub-categoriesHeading/${`Food`}/${1}`}>
                                 Dog Food
                               </Link>
                             </header>
@@ -584,7 +584,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">
+                              <Link to={`/sub-categoriesHeading/${`Beds Cages, Scratcher & Crates`}/${1}`}>
                                 Beds Cages & Carriers
                               </Link>
                             </header>
@@ -618,7 +618,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Collar Leashes & More">
+                              <Link to={`/sub-categoriesHeading/${`Collar Leashes & More`}/${1}`}>
                                 Collar Leashes & More
                               </Link>
                             </header>
@@ -650,7 +650,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Shampoo & Perfumes">
+                              <Link to={`/sub-categoriesHeading/${`Shampoo & Perfumes`}/${1}`}>
                                 Shampoo & Perfumes
                               </Link>
                             </header>
@@ -682,7 +682,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Treats">
+                              <Link to={`/sub-categoriesHeading/${`Treats`}/${1}`}>
                                 Treats & Chews
                               </Link>
                             </header>
@@ -714,7 +714,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Toys">Toys</Link>
+                              <Link to={`/sub-categoriesHeading/${`Toys`}/${1}`}>Toys</Link>
                             </header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
@@ -749,7 +749,7 @@ function Newheader(props) {
                           
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Training & Accessories">
+                              <Link to={`/sub-categoriesHeading/${`Training & Accessories`}/${1}`}>
                                 Training & Accessories
                               </Link>
                             </header>
@@ -781,7 +781,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Bowls & Feeders">
+                              <Link to={`/sub-categoriesHeading/${`Bowls & Feeders`}/${1}`}>
                                 Bowls & Feeders
                               </Link>
                             </header>
@@ -813,7 +813,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Grooming">
+                              <Link to={`/sub-categoriesHeading/${`Grooming`}/${1}`}>
                                 Grooming
                               </Link>
                             </header>
@@ -845,7 +845,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Health Care">
+                              <Link to={`/sub-categoriesHeading/${`Health Care`}/${1}`}>
                                 Health Care
                               </Link>
                             </header>
@@ -894,11 +894,11 @@ function Newheader(props) {
                 <div className="mega-box">
                   <div className="content">
                     <Row>
-                      <Col lg={6} className="p-0">
-                        <Row>
+                      {/* <Col lg={6} className="p-0">
+                        <Row> */}
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Food">
+                              <Link to={`/sub-categoriesHeading/${`Food`}/${2}`}>
                                 Cat Food
                               </Link>
                             </header>
@@ -928,9 +928,9 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                          <Col lg={3} sm={12} className="mga-he">
+                          <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Collar Leashes & More">
+                              <Link to={`/sub-categoriesHeading/${`Collar Leashes & More`}/${2}`}>
                                 Collar Leashes & More
                               </Link>
                             </header>
@@ -960,43 +960,10 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                          <Col lg={3} sm={12} className="mga-he">
-                            <header>
-                              <Link to="/sub-categoriesHeading/Beds Cages, Scratcher & Crates">
-                                Beds Cages, Scratcher & Crates
-                              </Link>
-                            </header>
-                            <ul className="mega-links">
-                              {dogsubcategories ? (
-                                dogsubcategories.map((item) => {
-                                  if (
-                                    item.heading ===
-                                      "Beds Cages, Scratcher & Crates" &&
-                                    item.category === "2"
-                                  ) {
-                                    return (
-                                      <li>
-                                        <Link
-                                          to={`/sub-categoriesProduct/${item.name}/${item.category}`}
-                                        >
-                                          {item.name}
-                                        </Link>
-                                      </li>
-                                    );
-                                  }
-                                  return null;
-                                })
-                              ) : (
-                                <p className="emptyMSG">
-                                  No Beds Cages, Scratcher & Crates Sub
-                                  Categories.
-                                </p>
-                              )}
-                            </ul>
-                          </Col>
+                         
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Cat Litter & Scooper">
+                              <Link to={`/sub-categoriesHeading/${`Cat Litter & Scooper`}/${2}`}>
                                 Cat Litter & Scooper
                               </Link>
                             </header>
@@ -1028,7 +995,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Toys">Toys</Link>
+                              <Link to={`/sub-categoriesHeading/${`Toys`}/${2}`}>Toys</Link>
                             </header>
                             <ul className="mega-links">
                               {dogsubcategories ? (
@@ -1056,13 +1023,13 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                        </Row>
+                        {/* </Row>
                       </Col>
                       <Col lg={6} className="p-0">
-                        <Row>
+                        <Row> */}
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Treats">
+                              <Link to={`/sub-categoriesHeading/${`Treats`}/${2}`}>
                                 Treats
                               </Link>
                             </header>
@@ -1094,7 +1061,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Shampoo & Perfumes">
+                              <Link to={`/sub-categoriesHeading/${`Shampoo & Perfumes`}/${2}`}>
                                 Shampoo & Perfumes
                               </Link>
                             </header>
@@ -1126,7 +1093,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Clothing & Accessories">
+                              <Link to={`/sub-categoriesHeading/${`Clothing & Accessories`}/${2}`}>
                                 Clothing & Accessories
                               </Link>
                             </header>
@@ -1158,7 +1125,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Bowls & Feeders">
+                              <Link to={`/sub-categoriesHeading/${`Bowls & Feeders`}/${2}`}>
                                 Bowls & Feeders
                               </Link>
                             </header>
@@ -1190,7 +1157,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Grooming">
+                              <Link to={`/sub-categoriesHeading/${`Grooming`}/${2}`}>
                                 Grooming
                               </Link>
                             </header>
@@ -1222,7 +1189,7 @@ function Newheader(props) {
                           </Col>
                           <Col lg={2} sm={12} className="mga-he">
                             <header>
-                              <Link to="/sub-categoriesHeading/Health Care">
+                              <Link to={`/sub-categoriesHeading/${`Health Care`}/${2}`}>
                                 Health Care
                               </Link>
                             </header>
@@ -1252,8 +1219,42 @@ function Newheader(props) {
                               )}
                             </ul>
                           </Col>
-                        </Row>
-                      </Col>
+                          <Col lg={3} sm={12} className="mga-he">
+                            <header>
+                              <Link to={`/sub-categoriesHeading/${`Beds Cages, Scratcher & Crates`}/${2}`}>
+                                Beds Cages, Scratcher & Crates
+                              </Link>
+                            </header>
+                            <ul className="mega-links">
+                              {dogsubcategories ? (
+                                dogsubcategories.map((item) => {
+                                  if (
+                                    item.heading ===
+                                      "Beds Cages, Scratcher & Crates" &&
+                                    item.category === "2"
+                                  ) {
+                                    return (
+                                      <li>
+                                        <Link
+                                          to={`/sub-categoriesProduct/${item.name}/${item.category}`}
+                                        >
+                                          {item.name}
+                                        </Link>
+                                      </li>
+                                    );
+                                  }
+                                  return null;
+                                })
+                              ) : (
+                                <p className="emptyMSG">
+                                  No Beds Cages, Scratcher & Crates Sub
+                                  Categories.
+                                </p>
+                              )}
+                            </ul>
+                          </Col>
+                        {/* </Row>
+                      </Col> */}
                     </Row>
                   </div>
                 </div>

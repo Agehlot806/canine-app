@@ -214,18 +214,33 @@ function Petcategory() {
       });
   };
 
+  // const Allsubcategories = async () => {
+  //   axios
+  //     .get(`${BASE_URL}/categories/subcategories`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       console.log("Delete Successful");
+  //       setsubcategories(response.data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
   const Allsubcategories = async () => {
     axios
       .get(`${BASE_URL}/categories/subcategories`)
       .then((response) => {
         console.log(response);
-        console.log("Delete Successful");
-        setsubcategories(response.data.data);
+        console.log("subcategories Successful");
+        const filteredSubcategories = response.data.data.filter(subcategory => subcategory.category === id);
+        setsubcategories(filteredSubcategories);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
 
   const [selectedBrandIds, setSelectedBrandIds] = useState([]);
   const [selectedlifeIds, setSelectedLifeIds] = useState([]);

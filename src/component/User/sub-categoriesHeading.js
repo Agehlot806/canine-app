@@ -10,11 +10,11 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function SubcategoriesHeading() {
     const [dogsubcategories, setdogsubcategories] = useState("");
     const [homebanner, sethomebanner] = useState([]);
-    const { heading } = useParams()
+    const { heading ,id} = useParams()
     console.log('heading', heading)
     useEffect(() => {
-        
-    }, []);
+        AllDogsubcategories()
+    }, [heading,id]);
     const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([AllDogsubcategories(),
@@ -44,7 +44,8 @@ function SubcategoriesHeading() {
                 console.log(response);
                 console.log("Delete Successful");
                 const responseData = response.data.data
-                const filterData = responseData.filter(el => {
+                const demouser = responseData.filter(le=>le.category=== id);
+                const filterData = demouser.filter(el => {
                     return el.heading === heading
                 })
                 setdogsubcategories(filterData);
@@ -104,7 +105,7 @@ function SubcategoriesHeading() {
                                                     background:
                                                         ourBrand[index % ourBrand.length],
                                                 }} key={item.id}>
-                                                <Link to={`/sub-categoriesProduct/${item.name}`}>
+                                                <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
                                                             "https://canine.hirectjob.in//storage/app/public/category/" +
