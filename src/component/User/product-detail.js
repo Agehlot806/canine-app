@@ -32,7 +32,6 @@ import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function Productdetail() {
   const { id } = useParams();
-  console.log("id: ", id);
   const [paymentId, setPaymentId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
   console.log("productDetails ", productDetails);
@@ -42,9 +41,8 @@ function Productdetail() {
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
-  console.log("selectedVariantStock: ", selectedVariantStock);
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
     loginType === "wholeseller"
@@ -52,7 +50,6 @@ function Productdetail() {
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
   const handleIncrementone = () => {
-    console.log("gggg", productDetails?.stock);
     if (productDetails?.variations?.length > 0) {
       productDetails?.variations.forEach((el) => {
         if (el?.type === selectedVariant) {
@@ -89,7 +86,7 @@ function Productdetail() {
   useEffect(() => {
     productData();
     itemWiseBanner();
-   
+
     fetchBreed();
     fetchLifestage();
     AllBanner();
@@ -101,17 +98,15 @@ function Productdetail() {
     // fetchProductData();
   }, []);
 
-  
+
   const productData = async () => {
     axios
       .get(`${BASE_URL}/items/product_details/${id}`)
       .then((response) => {
-        console.log("=======> ", response);
-        console.log("Delete Successful");
         setProductDetails(response.data.data);
         const cate = response.data.data.category_id
         const subcate = response.data.data.sub_category
-        fetchrelated(cate,subcate)
+        fetchrelated(cate, subcate)
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -120,19 +115,15 @@ function Productdetail() {
   };
   const [allrelatedproduct, setallrelatedproduct] = useState([]);
 
-  const fetchrelated = async (cate,subcate) => {
+  const fetchrelated = async (cate, subcate) => {
     axios
       .get(`https://canine.hirectjob.in/api/v1/categories/subcategories`)
       .then((response) => {
-        console.log(response);
-        console.log("Delete Successful");
-        const allDaTa =response.data.data;
-        const update =allDaTa.find((item)=>item.name == subcate)
-        const updated =update.id;
-       
-        fetchrelatedproduct(cate,updated)
-        console.log("///???///???///11",cate);
-        console.log("///???///???///22",updated);
+        const allDaTa = response.data.data;
+        const update = allDaTa.find((item) => item.name == subcate)
+        const updated = update.id;
+
+        fetchrelatedproduct(cate, updated)
 
         // Perform any additional actions after successful deletion
       })
@@ -141,12 +132,10 @@ function Productdetail() {
       });
   };
 
-  const fetchrelatedproduct = async ( cate,updated) => {
+  const fetchrelatedproduct = async (cate, updated) => {
     axios
       .get(`${BASE_URL}/items/product/${cate}/${updated}`)
       .then((response) => {
-        console.log(response);
-        console.log("///???///???///",response.data.data);
         setallrelatedproduct(response.data.data);
         // Perform any additional actions after successful deletion
       })
@@ -157,23 +146,11 @@ function Productdetail() {
 
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
-
-  // ************************Save Cart
-  // useEffect(() => {
-  //   const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-  //   setProductDetails(savedCartItems);
-  // }, []);
-  {
-    console.log("productDetails?.price ", productDetails?.price);
-  }
   useEffect(() => {
-    // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
     localStorage.setItem(
       "savedCartItems",
       JSON.stringify([...addToCartStatus, productDetails])
     );
-    // setCartItems(savedCartItems);
   }, [productDetails]);
   const handleAddToCart = async () => {
     try {
@@ -194,22 +171,13 @@ function Productdetail() {
             ? selectedVariantStock
             : productDetails?.stock,
           return_order: productDetails?.returnable || "yes",
-          // price:
-          //   formattedAmount === "0"
-          //     ? productDetails?.price.toString()
-          //     : formattedAmount,
           price:
             calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
           user_id: storedUserId,
           item_id: productDetails?.id,
         }
       );
-      console.log("response in Cart", response);
       if (response) {
-        // Store the cart items in local storage
-        // const savedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        // const updatedCart = [...savedCartItems, productDetails];
-        // localStorage.setItem('cart', JSON.stringify(updatedCart));
         if (response.data.status === "200") {
           toast.success("Added to cart!");
 
@@ -255,26 +223,7 @@ function Productdetail() {
     setIsEmailValid(isEmailFormatValid(emailValue));
   };
   const handleNotifymeSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-
-    // if (!variation) {
-    //   setVariationError('Please select a variation');
-    // } else {
-    //   setVariationError('');
-    // }
-
-    // Validate email
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //   toast.error("Please enter a valid email address");
-    //   return;
-    // }
-
-    // Validate variation
-    // if (!variation) {
-    //   toast.error("Please select a variation");
-    //   return;
-    // }
+    e.preventDefault();
 
     // Prepare form data
     const notifymeData = new FormData();
@@ -304,22 +253,6 @@ function Productdetail() {
       setQuantity(newQuantity);
     }
   };
-  // const ratingStar = Array.from({ length: 5 }, (item, index) => {
-  //   let number = index + 0.5;
-  //   return (
-  //     <span key={index}>
-  //       {productDetails?.rating_count ||
-  //       productDetails?.status + 0.5 >= index + 1 ? (
-  //         <FaStar className="icon" />
-  //       ) : productDetails?.rating_count ||
-  //         productDetails?.status + 0.5 >= number ? (
-  //         <FaStarHalfAlt className="icon" />
-  //       ) : (
-  //         <AiOutlineStar className="icon" />
-  //       )}
-  //     </span>
-  //   );
-  // });
 
   const ratingStar = Array.from({ length: 5 }, (item, index) => {
     let number = index + 0.5;
@@ -383,12 +316,11 @@ function Productdetail() {
   ];
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== '') {
     uservariationprice = selectedVariantPrice;
+  }else {
+    uservariationprice = productDetails.price
   }
-  // const Amount = (wholesellervariationprice * quantity).toFixed(2);
-  // const formattedAmount = Number(Amount).toString();
-  // console.log("formattedAmount: ", formattedAmount);
 
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -401,21 +333,21 @@ function Productdetail() {
   //     (uservariationprice * quantity * productDetails.discount) / 100
   // ).toFixed(2);
   const formattedAmount = Number(Amount).toString();
-  console.log("formattedAmount: ", formattedAmount === "0");
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
-      (selectedVariantPrice * productDetails.discount) / 100
+    (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
   // const savedAmount = (
   //   productDetails.price * quantity -
   //   (productDetails.price * quantity * productDetails.discount) / 100
   // ).toFixed(2);
-  console.log("calculatedPrice", calculatedPrice);
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
+
+console.log('selectedVariantPrice',selectedVariantPrice);
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -436,24 +368,6 @@ function Productdetail() {
       });
   };
 
-  // Lightbox product =====
-  // const [mainImage, setMainImage] = useState("");
-  // useEffect(() => {
-  //   if (productDetails.image) {
-  //     setMainImage(
-  //       "https://canine.hirectjob.in//storage/app/public/product/" +
-  //       productDetails.image
-  //     );
-  //   }
-  // }, [productDetails]);
-  // console.log("Main Image URL:", mainImage);
-
-  // const handleThumbnailClick = (index) => {
-  //   const clickedImage = productDetails.images[index];
-  //   setMainImage(
-  //     "https://canine.hirectjob.in//storage/app/public/product/" + clickedImage
-  //   );
-  // };
 
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -463,7 +377,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -471,7 +385,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -530,8 +444,6 @@ function Productdetail() {
     axios
       .get(`${BASE_URL}/items/product_details/${selctId}`)
       .then((response) => {
-        console.log("=======>", response);
-        console.log("product details Successful");
         setProductDetails(response.data.data);
       })
       .catch((error) => {
@@ -539,21 +451,7 @@ function Productdetail() {
       });
   };
 
-  // ===============================================================
-  // =================================================================
-  // Buy Now ------------------------
-  // ==================================================================
-  // ===============================================================
   const shippingpage = useNavigate("");
-  const [quantitybuynow, setQuantitybuynow] = useState(1);
-  // const handleIncrementbuynow = () => {
-  //   setQuantitybuynow(quantitybuynow + 1);
-  // };
-  // const handleDecrementbuynow = () => {
-  //   if (quantitybuynow > 1) {
-  //     setQuantitybuynow(quantitybuynow - 1);
-  //   }
-  // };
   const taxamound = Math.floor(Amount * 0.05);
   const handleQuantityChangebuynow = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -567,15 +465,12 @@ function Productdetail() {
     axios
       .get(`${BASE_URL}/customer/address/list/${storedUserId}`)
       .then((response) => {
-        console.log(response);
-        console.log("address list Successful");
         setAddressList(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
 
@@ -685,7 +580,7 @@ function Productdetail() {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
+
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -698,7 +593,6 @@ function Productdetail() {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
-        // console.log("responseresponse", response);
         setStateallCity(response.data.data);
       })
       .catch((error) => {
@@ -719,17 +613,8 @@ function Productdetail() {
       const response = await axios
         .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
         .then((response) => {
-          console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -742,7 +627,6 @@ function Productdetail() {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -759,9 +643,7 @@ function Productdetail() {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
-        console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -776,7 +658,6 @@ function Productdetail() {
     axios
       .get(`${BASE_URL}/coupon/list`)
       .then((response) => {
-        console.log(response);
         setcouponlist(response.data.data);
       })
       .catch((error) => {
@@ -787,23 +668,10 @@ function Productdetail() {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
-  // const finalPrice = parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount - disscountvalue.discount
-  //     : Amount + taxamound
-  // );
-  // {`${parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount -
-  //         disscountvalue.discount +
-  //         taxamound
-  //     : Amount + taxamound
-  // )}`}
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
-    setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
+    setAppliedCoupon(true);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -955,6 +823,11 @@ function Productdetail() {
     setQuantity(1);
   };
 
+   const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+}
+
   // loadRazorpayScript
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -969,15 +842,6 @@ function Productdetail() {
 
   const handlePayment = async () => {
     try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
       await loadRazorpayScript();
 
       const options = {
@@ -1020,6 +884,19 @@ function Productdetail() {
     setShowData(!showData);
   };
 
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -1028,18 +905,18 @@ function Productdetail() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-              (item, index) =>
-                item.type === "common" && (
-                  <Link to={item.default_link}>
-                    <img
-                      className="partner-img"
-                      src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
-                      }
-                    />
-                  </Link>
-                )
-            )
+            (item, index) =>
+              item.type === "common" && (
+                <Link to={item.default_link}>
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in//storage/app/" + item.image
+                    }
+                  />
+                </Link>
+              )
+          )
           : null}
       </div>
 
@@ -1059,7 +936,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1098,16 +975,16 @@ function Productdetail() {
                     nextSrc={
                       "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex + 1) % productDetails.images.length
+                      (lightboxImageIndex + 1) % productDetails.images.length
                       ]
                     }
                     prevSrc={
                       "https://canine.hirectjob.in//storage/app/public/product/" +
                       productDetails.images[
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                          productDetails.images.length
+                      (lightboxImageIndex +
+                        productDetails.images.length -
+                        1) %
+                      productDetails.images.length
                       ]
                     }
                     onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1116,7 +993,7 @@ function Productdetail() {
                         (lightboxImageIndex +
                           productDetails.images.length -
                           1) %
-                          productDetails.images.length
+                        productDetails.images.length
                       )
                     }
                     onMoveNextRequest={() =>
@@ -1188,11 +1065,10 @@ function Productdetail() {
                                       </div> */}
                                         {item.stock !== 0 ? (
                                           <div
-                                            className={`tab-variations ${
-                                              selectedVariant === item.type
-                                                ? "active"
-                                                : ""
-                                            }`}
+                                            className={`tab-variations ${selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                              }`}
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
@@ -1256,18 +1132,11 @@ function Productdetail() {
                           <p>{`₹${uservariationprice}`}</p>
                         </Col>
                         <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${
-                            isNaN(formattedAmount) ? 0 : formattedAmount
-                          }`}</h5>
+                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                            }`}</h5>
                         </Col>
                         {/* {formattedSavedAmount > 0 && ( */}
                         <Col lg={5} sm={5} xs={3}>
-                          {/* <h6>
-                             Your save{" "}
-                            {formattedSavedAmount >= 0
-                              ? `₹${formattedSavedAmount}`
-                              : "No savings"} )}
-                          </h6> */}
                           {formattedSavedAmount > 0 ? (
                             <h6>Your save ₹{formattedSavedAmount}</h6>
                           ) : (
@@ -1505,7 +1374,7 @@ function Productdetail() {
                           />
                         </div>
                         <div>
-                          <h6>{item.name}</h6>
+                          <h6>{renderProducthead(item.name)}</h6>
                           <p>{item.description}</p>
                         </div>
                         <div className="product-bag">
@@ -1657,7 +1526,7 @@ function Productdetail() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1674,7 +1543,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1714,17 +1583,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1733,13 +1602,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1792,12 +1661,11 @@ function Productdetail() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
+                                                  className={`tab-variations ${selectedVariant ===
                                                     item.type
-                                                      ? "active"
-                                                      : ""
-                                                  }`}
+                                                    ? "active"
+                                                    : ""
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1853,24 +1721,32 @@ function Productdetail() {
                         </div>
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                         <h5>About Us</h5>
@@ -2003,11 +1879,10 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
+                                  className={`fa ${addressContentVisible
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2111,11 +1986,10 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`tab-variations ${selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2181,24 +2055,32 @@ function Productdetail() {
 
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                       </Col>
@@ -2742,11 +2624,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

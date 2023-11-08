@@ -845,6 +845,26 @@ function Partneroneshop() {
       </>
     );
   };
+
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+}
+
+const renderProducthead = (name) => {
+  const maxCharacters = 20;
+  if (name?.length <= maxCharacters) {
+    return <h6>{name}</h6>;
+  }
+  const truncatedDescription = name?.slice(0, maxCharacters);
+  return (
+    <>
+      <h6>{truncatedDescription}..</h6>
+    </>
+  );
+};
+
+
   return (
     <>
       <Toaster />
@@ -937,7 +957,7 @@ function Partneroneshop() {
                         />
                       </div>
                       <div>
-                        <h6>{item.name}</h6>
+                        <h6>{renderProducthead(item.name)}</h6>
                         <p>{renderProductDescription(item.description)}</p>
                       </div>
                       <div className="product-bag">
@@ -1007,7 +1027,7 @@ function Partneroneshop() {
           </Row>
           <div className="allblogbtn">
             <Button key={state?.item.id}>
-              <Link to={`/product-partner-shop/${state?.item.vendor_id}`}>
+              <Link to={`/product-partner-shop/${state?.item.id}`}>
                 View All
               </Link>
             </Button>
@@ -1030,7 +1050,7 @@ function Partneroneshop() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
               <section className="section-padding">
                 <Container>
                   <Row>

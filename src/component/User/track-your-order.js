@@ -17,6 +17,7 @@ export default function Trackyourorder() {
   const [canReturnOrder, setCanReturnOrder] = useState(true);
   const [trackingValue, setTrackingValue] = useState([]);
   const [cancelValue, setCancelValue] = useState("");
+  
   useEffect(() => {
     if (id) {
       setTrackingValue(id);
@@ -50,6 +51,7 @@ export default function Trackyourorder() {
   ];
   const [orderData, setOrderData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isCancelButtonDisabled, setIsCancelButtonDisabled] = useState(false);
   const trackingtargetvaluenumber = () => {
     // Fetch order data from an API endpoint
     fetch(
@@ -115,6 +117,10 @@ export default function Trackyourorder() {
     })
       .then((response) => {
         console.log("respo", response);
+        if (response.status === 200) {
+          setIsCancelButtonDisabled(true); // Disable the button
+          localStorage.setItem(`orderCancelled_${id}`, "true");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -123,7 +129,23 @@ export default function Trackyourorder() {
   const Canceldata = (e) => {
     setCancelValue(e.target.value);
   };
+  useEffect(() => {
+    const isOrderCancelled = localStorage.getItem(`orderCancelled_${id}`);
+    if (isOrderCancelled === "true") {
+      setIsCancelButtonDisabled(true);
+    }
+  }, []);
+  useEffect(() => {
+    // Clear the flag on page refresh
+    window.addEventListener('beforeunload', () => {
+      localStorage.removeItem('orderCancelled_');
+    });
 
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener('beforeunload', () => {});
+    };
+  }, []);
   const [customerReason, setCustomerReason] = useState("");
   const [customerNote, setCustomerNote] = useState("");
   const [refundMethod, setRefundMethod] = useState("");
@@ -244,6 +266,7 @@ export default function Trackyourorder() {
                                 className="cancel-btn"
                                 data-toggle="modal"
                                 data-target="#cancle-order-Modal"
+                                disabled={isCancelButtonDisabled}
                               >
                                 Cancel Order
                               </Button>
@@ -414,7 +437,7 @@ export default function Trackyourorder() {
                 value={cancelValue}
                 onChange={Canceldata}
               >
-                <div className="form-check">
+                {/* <div className="form-check">
                   <input
                     className="form-check-input"
                     type="radio"
@@ -424,7 +447,7 @@ export default function Trackyourorder() {
                   <label className="form-check-label" htmlFor="exampleRadios1">
                     Damaged Product
                   </label>
-                </div>
+                </div> */}
                 <div className="form-check">
                   <input
                     className="form-check-input"

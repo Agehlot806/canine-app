@@ -19,7 +19,7 @@ function Blogdetails() {
   const { id } = useParams();
   console.log("id", id);
 
- 
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([allblogs(), allProduct(), fetchWishlistData(), GetdataAll(), couponlistdata(), allAddressList()])
@@ -233,7 +233,7 @@ function Blogdetails() {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -291,8 +291,10 @@ function Blogdetails() {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== '') {
     uservariationprice = selectedVariantPrice;
+  } else {
+    uservariationprice = productDetails.price
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -306,6 +308,7 @@ function Blogdetails() {
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
+  const MrpPrice = Number(savedAmount).toString();
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -316,7 +319,7 @@ function Blogdetails() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -324,7 +327,7 @@ function Blogdetails() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -860,28 +863,46 @@ function Blogdetails() {
       </>
     );
   };
+
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+  }
+
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
   return (
     <>
       <Toaster />
       <Newheader />
       {loading ? (
-      <section className="section-padding mt-3 mb-3">
-      <div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt=""/>
-          <h5>Please Wait.......</h5>
-        </div>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
         </section>) : (
-          <>
+        <>
           <section className="section-padding">
-        <Container>
-          <Row className="justify-content-center">
-            <Col lg={10}>
-              <div className="blogDetails">
-                {blogdata && blogdata.length > 0 ? (
-                  blogdata.map((item, index) => (
-                    <Col lg={12} className="mb-4" key={item.id}>
-                      <div className="blog-card-are">
-                        {/* <Row>
+            <Container>
+              <Row className="justify-content-center">
+                <Col lg={10}>
+                  <div className="blogDetails">
+                    {blogdata && blogdata.length > 0 ? (
+                      blogdata.map((item, index) => (
+                        <Col lg={12} className="mb-4" key={item.id}>
+                          <div className="blog-card-are">
+                            {/* <Row>
                           <Col sm={5}> */}
                             {/* <img
                               src={
@@ -891,79 +912,79 @@ function Blogdetails() {
                               }
                               alt=""
                             /> */}
-                            
-                          {/* </Col>
+
+                            {/* </Col>
                           <Col sm={7} className="align-self-center"> */}
                             <div className="blog-cardContent">
                               <h4>{item.title}</h4>
                               <img
-                              src={
-                                "https://canine.hirectjob.in//storage/app/public/blog/" +
-                                item.image
-                              }
-                            />
+                                src={
+                                  "https://canine.hirectjob.in//storage/app/public/blog/" +
+                                  item.image
+                                }
+                              />
                               <p>{item.description}</p>
                             </div>
-                          {/* </Col>
+                            {/* </Col>
                         </Row> */}
-                      </div>
-                    </Col>
-                  ))
-                ) : (
-                  <p className="emptyMSG">No Blog Data.</p>
-                )}
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+                          </div>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Blog Data.</p>
+                    )}
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
 
-      <section className="section-padding food">
-        <Container>
-          <Row>
-            <Col lg={6} sm={6} xs={6}>
-              <h1 className="main-head">Related products</h1>
-            </Col>
-          </Row>
-          <div className="needplace">
-            <Row>
-              {/* {allproduct &&
+          <section className="section-padding food">
+            <Container>
+              <Row>
+                <Col lg={6} sm={6} xs={6}>
+                  <h1 className="main-head">Related products</h1>
+                </Col>
+              </Row>
+              <div className="needplace">
+                <Row>
+                  {/* {allproduct &&
                 allproduct.map((item, index) => ( */}
-              {productIds.map((item, index) => (
-                <Col lg={3} sm={6} xs={6} className="mb-4" key={item[0]?.id}>
-                  {console.log("itemmmhksdkn: ", item)}
-                  <div
-                    className="food-product"
-                    onMouseEnter={() => handleMouseEnter(item[0]?.id)}
-                    onMouseLeave={() => handleMouseLeave(item[0]?.id)}
-                    style={{
-                      background:
-                        gradientColors[index % gradientColors?.length],
-                    }}
-                  >
-                    <i
-                      className={
-                        item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                      }
-                      onClick={() => {
-                        if (storedUserId == null) {
-                          toast.error("Please Login first");
-                        } else {
-                          addToWishlist(item[0]?.id);
-                        }
-                      }}
-                    />
-
-                    <Link to={`/product-details/${item[0]?.id}`}>
-                      <div className="text-center">
-                        <img
-                          src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
-                          alt={item[0]?.name}
+                  {productIds.map((item, index) => (
+                    <Col lg={3} sm={6} xs={6} className="mb-4" key={item[0]?.id}>
+                      {console.log("itemmmhksdkn: ", item)}
+                      <div
+                        className="food-product"
+                        onMouseEnter={() => handleMouseEnter(item[0]?.id)}
+                        onMouseLeave={() => handleMouseLeave(item[0]?.id)}
+                        style={{
+                          background:
+                            gradientColors[index % gradientColors?.length],
+                        }}
+                      >
+                        <i
+                          className={
+                            item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                          }
+                          onClick={() => {
+                            if (storedUserId == null) {
+                              toast.error("Please Login first");
+                            } else {
+                              addToWishlist(item[0]?.id);
+                            }
+                          }}
                         />
-                      </div>
-                      <div>
-                        <h6>{item[0]?.name}</h6>
-                        {/* <p
+
+                        <Link to={`/product-details/${item[0]?.id}`}>
+                          <div className="text-center">
+                            <img
+                              src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
+                              alt={item[0]?.name}
+                            />
+                          </div>
+                          <div>
+                            <h6>{renderProducthead(item[0]?.name)}</h6>
+                            {/* <p
                           className={`truncate-text ${
                             !expandedDescription[item[0]?.id]
                               ? "read-more-link"
@@ -986,73 +1007,73 @@ function Blogdetails() {
                               </span>
                             )}
                         </p> */}
-                        <p>{renderProductDescription(item[0]?.description)}</p>
-                      </div>
-                      <div className="product-bag">
-                        <Row>
-                          <Col lg={6} sm={6} xs={6}>
-                            <p>₹{item[0]?.price}</p>
-                          </Col>
-                          <Col lg={6} sm={6} xs={6}>
-                            <h5>Save {parseFloat(item[0]?.discount)}%</h5>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col
-                            lg={6}
-                            sm={6}
-                            xs={6}
-                            className="align-self-center"
-                          >
-                            {/* <h6>{`₹${
+                            <p>{renderProductDescription(item[0]?.description)}</p>
+                          </div>
+                          <div className="product-bag">
+                            <Row>
+                              <Col lg={6} sm={6} xs={6}>
+                                <p>₹{item[0]?.price}</p>
+                              </Col>
+                              <Col lg={6} sm={6} xs={6}>
+                                <h5>Save {parseFloat(item[0]?.discount)}%</h5>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col
+                                lg={6}
+                                sm={6}
+                                xs={6}
+                                className="align-self-center"
+                              >
+                                {/* <h6>{`₹${
                               item[0]?.price -
                               (item[0]?.price * item[0]?.discount) / 100
                             }`}</h6> */}
-                            <h4>{`₹${Math.floor(
-                              item[0]?.price -
-                                (item[0]?.price * item[0]?.discount) / 100
-                            )}`}</h4>
-                          </Col>
-                        </Row>
+                                <h4>{`₹${Math.floor(
+                                  item[0]?.price -
+                                  (item[0]?.price * item[0]?.discount) / 100
+                                )}`}</h4>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Link>
+                        {buttonVisibility[item[0]?.id] && (
+                          <Fade top>
+                            <div className="button-container">
+                              <button
+                                data-toggle="modal"
+                                data-target=".bd-example-modal-lg"
+                                onClick={() => handeldataId(item[0].id)}
+                              >
+                                Quick View
+                              </button>
+                              <button
+                                data-toggle="modal"
+                                data-target=".buynow"
+                                // onClick={() => handeldataId(item[0].id)}
+                                onClick={(e) => {
+                                  if (!storedUserId) {
+                                    shippingpage("/login");
+                                  } else {
+                                    handeldataId(item.id);
+                                  }
+                                }}
+                              >
+                                Buy Now
+                              </button>
+                            </div>
+                          </Fade>
+                        )}
                       </div>
-                    </Link>
-                    {buttonVisibility[item[0]?.id] && (
-                      <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={() => handeldataId(item[0].id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            // onClick={() => handeldataId(item[0].id)}
-                            onClick={(e) => {
-                              if (!storedUserId) {
-                                shippingpage("/login");
-                              } else {
-                                handeldataId(item.id);
-                              }
-                            }}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
-                      </Fade>
-                    )}
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </Container>
-      </section>
-          </>
-        )}
-      
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+            </Container>
+          </section>
+        </>
+      )}
+
       <Footer />
 
       {/* Product details Modal */}
@@ -1066,7 +1087,7 @@ function Blogdetails() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear} />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1083,7 +1104,7 @@ function Blogdetails() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images?.length > 0 ? (
+                                productDetails?.images?.length > 0 ? (
                                 productDetails?.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1124,17 +1145,17 @@ function Blogdetails() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails?.images?.length
+                              (lightboxImageIndex + 1) %
+                              productDetails?.images?.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails?.images?.length -
-                                  1) %
-                                  productDetails?.images?.length
+                              (lightboxImageIndex +
+                                productDetails?.images?.length -
+                                1) %
+                              productDetails?.images?.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1143,13 +1164,13 @@ function Blogdetails() {
                                 (lightboxImageIndex +
                                   productDetails?.images.length -
                                   1) %
-                                  productDetails?.images?.length
+                                productDetails?.images?.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails?.images?.length
+                                productDetails?.images?.length
                               )
                             }
                           />
@@ -1204,12 +1225,11 @@ function Blogdetails() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
+                                                  className={`tab-variations ${selectedVariant ===
+                                                      item.type
                                                       ? "active"
                                                       : ""
-                                                  }`}
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1265,24 +1285,32 @@ function Blogdetails() {
                         </div>
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                         <h5>About Us</h5>
@@ -1600,11 +1628,10 @@ function Blogdetails() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1708,11 +1735,10 @@ function Blogdetails() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item?.price); // Store the price in state
@@ -1778,24 +1804,32 @@ function Blogdetails() {
 
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                       </Col>
@@ -2339,11 +2373,11 @@ function Blogdetails() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

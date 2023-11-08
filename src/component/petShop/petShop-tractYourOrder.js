@@ -367,7 +367,7 @@ export default function Petshoptrackyourorder() {
                 value={cancelValue}
                 onChange={Canceldata}
               >
-                <div className="form-check">
+                {/* <div className="form-check">
                   <input
                     className="form-check-input"
                     type="radio"
@@ -377,7 +377,7 @@ export default function Petshoptrackyourorder() {
                   <label className="form-check-label" htmlFor="exampleRadios1">
                     Damaged Product
                   </label>
-                </div>
+                </div> */}
                 <div className="form-check">
                   <input
                     className="form-check-input"
