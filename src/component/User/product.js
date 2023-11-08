@@ -58,7 +58,7 @@ function Product(props) {
   const { cart, dispatch } = useCartWithoutLogin();
   // without signup add cart end
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([
@@ -353,7 +353,7 @@ function Product(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -366,7 +366,7 @@ function Product(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -390,7 +390,7 @@ function Product(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -470,6 +470,19 @@ function Product(props) {
       );
       return updatedhealthIds;
     });
+  };
+
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
   };
 
   const vegnonveghandler = (value) => {
@@ -610,7 +623,7 @@ function Product(props) {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -668,22 +681,37 @@ function Product(props) {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== '') {
     uservariationprice = selectedVariantPrice;
+  } else {
+    uservariationprice = productDetails.price
   }
+  const Amount = Math.floor(
+    uservariationprice - (uservariationprice * productDetails.discount) / 100
+  ).toFixed(2);
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
-  const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails?.discount) / 100
-  ).toFixed(2);
 
   const formattedAmount = Number(Amount).toString();
+  console.log("priceformattedAmount", formattedAmount);
+  console.log("priceuservariationprice", uservariationprice);
 
+  const calculatedPrice = selectedVariantPrice
+    ? selectedVariantPrice -
+    (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
+  // const savedAmount = (
+  //   productDetails.price * quantity -
+  //   (productDetails.price * quantity * productDetails.discount) / 100
+  // ).toFixed(2);
+  console.log("calculatedPrice", calculatedPrice);
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
-
+  console.log("priceformattedSavedAmount", formattedSavedAmount);
+  const MrpPrice = Number(savedAmount).toString();
+  console.log("MrpPrice", MrpPrice);
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -693,7 +721,7 @@ function Product(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -701,7 +729,7 @@ function Product(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -1238,6 +1266,11 @@ function Product(props) {
   const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+}
+
   return (
     <>
       <Toaster />
@@ -1280,25 +1313,25 @@ function Product(props) {
                           <div>
                             {allbrand
                               ? allbrand.map(
-                                  (items) =>
-                                    items.canine == "1" && (
-                                      <div
-                                        className="form-check"
-                                        onClick={handleCheckboxClick}
-                                      >
-                                        <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          onClick={(e) =>
-                                            handleDataListBrand(items.title)
-                                          }
-                                        />
-                                        <label className="form-check-label">
-                                          {items.title}
-                                        </label>
-                                      </div>
-                                    )
-                                )
+                                (items) =>
+                                  items.canine == "1" && (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={(e) =>
+                                          handleDataListBrand(items.title)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items.title}
+                                      </label>
+                                    </div>
+                                  )
+                              )
                               : ""}
                           </div>
                         </>
@@ -1320,20 +1353,20 @@ function Product(props) {
                           <div>
                             {allsubcate
                               ? allsubcate.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) => allcateselect(items.name)}
-                                    />
-                                    <label className="form-check-label">
-                                      {items.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) => allcateselect(items.name)}
+                                  />
+                                  <label className="form-check-label">
+                                    {items.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1405,22 +1438,22 @@ function Product(props) {
                           <div>
                             {alllifesage
                               ? alllifesage.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        Lifesatedataselect(items.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      Lifesatedataselect(items.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1442,22 +1475,22 @@ function Product(props) {
                           <div>
                             {allbreed
                               ? allbreed.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        allbreedselect(items.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      allbreedselect(items.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1479,22 +1512,22 @@ function Product(props) {
                           <div>
                             {allhealth
                               ? allhealth.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allhealthselect(items.title)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.title}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      allhealthselect(items.title)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.title}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1653,14 +1686,13 @@ function Product(props) {
                                 />
                               </div>
                               <div>
-                                <h6>{item.name}</h6>
+                                <h6>{renderProducthead(item.name)}</h6>
                                 {/* <p>{item.description}</p> */}
                                 <p
-                                  className={`truncate-text ${
-                                    !expandedDescription[item.id]
-                                      ? "read-more-link"
-                                      : ""
-                                  }`}
+                                  className={`truncate-text ${!expandedDescription[item.id]
+                                    ? "read-more-link"
+                                    : ""
+                                    }`}
                                 >
                                   {item.description}
                                   {item.description?.length > 100 &&
@@ -1694,7 +1726,7 @@ function Product(props) {
                                   <Col className="align-self-center">
                                     <h4>{`₹${Math.floor(
                                       item.price -
-                                        (item.price * item.discount) / 100
+                                      (item.price * item.discount) / 100
                                     )}`}</h4>
                                   </Col>
                                   {/* <Col>
@@ -1842,7 +1874,7 @@ function Product(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1859,7 +1891,7 @@ function Product(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1900,17 +1932,17 @@ function Product(props) {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1919,13 +1951,13 @@ function Product(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1967,56 +1999,58 @@ function Product(props) {
 
                         <div className="needplaceProduct">
                           <Row>
-                            <Col sm={6} xs={6}>
-                              <div>
+                            {productDetails?.variations?.length > 0 && (
+                              <Col sm={6} xs={6}>
                                 <div>
-                                  <div className="tab-container">
-                                    <h6>Variations</h6>
-                                    <Row>
-                                      {productDetails?.variations &&
-                                        productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map(
-                                          (item, index) => (
-                                            <Col lg={4} key={index}>
-                                              {item.stock !== 0 ? (
-                                                <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
+                                  <div>
+                                    <div className="tab-container">
+                                      <h6>Variations</h6>
+                                      <Row>
+                                        {productDetails?.variations &&
+                                          productDetails?.variations.length > 0 &&
+                                          productDetails?.variations.map(
+                                            (item, index) => (
+                                              <Col lg={3} key={index} className="p-0">
+
+                                                {item.stock !== 0 ? (
+                                                  <div
+                                                    className={`tab-variations ${selectedVariant === item.type
                                                       ? "active"
                                                       : ""
-                                                  }`}
-                                                  onClick={() => {
-                                                    setSelectedVariant(
-                                                      item.type
-                                                    );
-                                                    setSelectedVariantPrice(
-                                                      item.price
-                                                    ); // Store the price in state
-                                                  }}
-                                                >
-                                                  {item.type}
-                                                </div>
-                                              ) : (
-                                                <div
-                                                  className="tab-variations disabledvariation"
-                                                  title="Stock unavailable"
-                                                >
-                                                  {/* <span className="blurred-text"> */}
-                                                  {item.type}
-                                                  {/* </span> */}
-                                                </div>
-                                              )}
-                                            </Col>
-                                          )
-                                        )}
-                                    </Row>
+                                                      }`}
+                                                    onClick={() => {
+                                                      setSelectedVariant(item.type);
+                                                      setSelectedVariantPrice(
+                                                        item.price
+                                                      ); // Store the price in state
+                                                      setSelectedVariantStock(
+                                                        item.stock
+                                                      );
+                                                    }}
+                                                  >
+                                                    {item.type}
+                                                  </div>
+                                                ) : (
+                                                  <div
+                                                    className="tab-variations disabledvariation"
+                                                    title="Stock unavailable"
+                                                  >
+                                                    {/* <span className="blurred-text"> */}
+                                                    {item.type}
+                                                    {/* </span> */}
+                                                  </div>
+                                                )}
+                                              </Col>
+                                            )
+                                          )}
+                                      </Row>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </Col>
+                              </Col>
+                            )}
                             <Col sm={6} xs={6}>
-                              <div className="quantity-btn quickbtn">
+                              <div className="quantity-btn">
                                 <button onClick={handleDecrementone}>
                                   <i className="fa fa-minus" />
                                 </button>
@@ -2041,24 +2075,32 @@ function Product(props) {
                         </div>
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                         <h5>About Us</h5>
@@ -2627,11 +2669,10 @@ function Product(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
+                                  className={`fa ${addressContentVisible
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2735,11 +2776,10 @@ function Product(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
+                                      className={`tab-variations ${selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2761,27 +2801,6 @@ function Product(props) {
                               ))}
                           </Row>
                         </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementone}>
                             <i className="fa fa-minus" />
@@ -2805,24 +2824,32 @@ function Product(props) {
 
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                       </Col>
@@ -3117,11 +3144,11 @@ function Product(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

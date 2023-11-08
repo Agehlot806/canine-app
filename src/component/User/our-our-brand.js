@@ -339,7 +339,7 @@ function Ourourbrand(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -352,7 +352,7 @@ function Ourourbrand(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -376,7 +376,7 @@ function Ourourbrand(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition/`)
+      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -636,7 +636,7 @@ function Ourourbrand(props) {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -695,8 +695,10 @@ function Ourourbrand(props) {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== '') {
     uservariationprice = selectedVariantPrice;
+  }else {
+    uservariationprice = productDetails.price
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
   // Amount use in Quick
@@ -712,6 +714,7 @@ function Ourourbrand(props) {
     productDetails?.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
+  const MrpPrice = Number(savedAmount).toString();
   // buy now price
   let buynowprice = 0;
 
@@ -1315,6 +1318,24 @@ function Ourourbrand(props) {
       </>
     );
   };
+
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+}
+
+const renderProducthead = (name) => {
+  const maxCharacters = 20;
+  if (name?.length <= maxCharacters) {
+    return <h6>{name}</h6>;
+  }
+  const truncatedDescription = name?.slice(0, maxCharacters);
+  return (
+    <>
+      <h6>{truncatedDescription}..</h6>
+    </>
+  );
+};
   return (
     <>
       <Toaster />
@@ -1675,7 +1696,7 @@ function Ourourbrand(props) {
                                       />
                                     </div>
                                     <div>
-                                      <h6>{item.name}</h6>
+                                      <h6>{renderProducthead(item.name)}</h6>
                                       <p>
                                         {renderProductDescription(item.description)}
                                       </p>
@@ -1948,7 +1969,7 @@ function Ourourbrand(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -2145,25 +2166,34 @@ function Ourourbrand(props) {
                           </Row>
                         </div>
                         <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
-                          </div>
+                        <div className="product-deatils-price">
+                    {uservariationprice && formattedAmount >= 0 ? (
+                      <Row>
+                        <Col lg={3} sm={3} xs={3}>
+                          <p>{`₹${uservariationprice}`}</p>
+                        </Col>
+                        <Col lg={4} sm={4} xs={3}>
+                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                            }`}</h5>
+                        </Col>
+                        {/* {formattedSavedAmount > 0 && ( */}
+                        <Col lg={5} sm={5} xs={3}>
+                          {formattedSavedAmount > 0 ? (
+                            <h6>Your save ₹{formattedSavedAmount}</h6>
+                          ) : (
+                            <h6>No savings</h6>
+                          )}
+                        </Col>
+                        {/* )} */}
+                      </Row>
+                    ) : (
+                      <Row>
+                        <Col lg={4} sm={4} xs={3}>
+                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                        </Col>
+                      </Row>
+                    )}
+                  </div>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2906,25 +2936,34 @@ function Ourourbrand(props) {
                         </div>
 
                         <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
-                          </div>
+                        <div className="product-deatils-price">
+                    {uservariationprice && formattedAmount >= 0 ? (
+                      <Row>
+                        <Col lg={3} sm={3} xs={3}>
+                          <p>{`₹${uservariationprice}`}</p>
+                        </Col>
+                        <Col lg={4} sm={4} xs={3}>
+                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                            }`}</h5>
+                        </Col>
+                        {/* {formattedSavedAmount > 0 && ( */}
+                        <Col lg={5} sm={5} xs={3}>
+                          {formattedSavedAmount > 0 ? (
+                            <h6>Your save ₹{formattedSavedAmount}</h6>
+                          ) : (
+                            <h6>No savings</h6>
+                          )}
+                        </Col>
+                        {/* )} */}
+                      </Row>
+                    ) : (
+                      <Row>
+                        <Col lg={4} sm={4} xs={3}>
+                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                        </Col>
+                      </Row>
+                    )}
+                  </div>
                         </div>
                       </Col>
                       <Col lg={2} sm={2} xs={6} className="align-self-end">

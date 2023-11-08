@@ -38,7 +38,11 @@ function Orderviewdetails() {
   const navigate = useNavigate();
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
+// Retrieve the formatted address from localStorage
+const storedFormattedAddress = localStorage.getItem('formattedAddress');
 
+// Use the stored formatted address
+console.log('Stored Address:', storedFormattedAddress);
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
   });
@@ -288,7 +292,7 @@ function Orderviewdetails() {
                       </div>
                       <div>
                         <h5>Canine Products</h5>
-                        <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                        <p>{storedFormattedAddress}</p>
                       </div>
                     </div>
                   </Col>
