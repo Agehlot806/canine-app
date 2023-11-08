@@ -848,11 +848,11 @@ function Blogdetails() {
   const renderProductDescription = (description) => {
     const maxCharacters = 35; // Number of characters to show initially
 
-    if (description.length <= maxCharacters) {
+    if (description?.length <= maxCharacters) {
       return <p>{description}</p>; // Show the full description if it's short
     }
 
-    const truncatedDescription = description.slice(0, maxCharacters);
+    const truncatedDescription = description?.slice(0, maxCharacters);
 
     return (
       <>
@@ -881,8 +881,8 @@ function Blogdetails() {
                   blogdata.map((item, index) => (
                     <Col lg={12} className="mb-4" key={item.id}>
                       <div className="blog-card-are">
-                        <Row>
-                          <Col sm={5}>
+                        {/* <Row>
+                          <Col sm={5}> */}
                             {/* <img
                               src={
                                 item.image
@@ -891,20 +891,21 @@ function Blogdetails() {
                               }
                               alt=""
                             /> */}
-                            <img
+                            
+                          {/* </Col>
+                          <Col sm={7} className="align-self-center"> */}
+                            <div className="blog-cardContent">
+                              <h4>{item.title}</h4>
+                              <img
                               src={
                                 "https://canine.hirectjob.in//storage/app/public/blog/" +
                                 item.image
                               }
                             />
-                          </Col>
-                          <Col sm={7} className="align-self-center">
-                            <div className="blog-cardContent">
-                              <h4>{item.title}</h4>
                               <p>{item.description}</p>
                             </div>
-                          </Col>
-                        </Row>
+                          {/* </Col>
+                        </Row> */}
                       </div>
                     </Col>
                   ))
@@ -985,7 +986,7 @@ function Blogdetails() {
                               </span>
                             )}
                         </p> */}
-                        <p>{renderProductDescription(item[0].description)}</p>
+                        <p>{renderProductDescription(item[0]?.description)}</p>
                       </div>
                       <div className="product-bag">
                         <Row>
@@ -1008,14 +1009,14 @@ function Blogdetails() {
                               (item[0]?.price * item[0]?.discount) / 100
                             }`}</h6> */}
                             <h4>{`₹${Math.floor(
-                              item[0].price -
-                                (item[0].price * item[0].discount) / 100
+                              item[0]?.price -
+                                (item[0]?.price * item[0]?.discount) / 100
                             )}`}</h4>
                           </Col>
                         </Row>
                       </div>
                     </Link>
-                    {buttonVisibility[item[0].id] && (
+                    {buttonVisibility[item[0]?.id] && (
                       <Fade top>
                         <div className="button-container">
                           <button
@@ -1214,7 +1215,7 @@ function Blogdetails() {
                                                       item.type
                                                     );
                                                     setSelectedVariantPrice(
-                                                      item.price
+                                                      item?.price
                                                     ); // Store the price in state
                                                   }}
                                                 >
@@ -1714,7 +1715,7 @@ function Blogdetails() {
                                       }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                        setSelectedVariantPrice(item?.price); // Store the price in state
                                       }}
                                     >
                                       {item.type}

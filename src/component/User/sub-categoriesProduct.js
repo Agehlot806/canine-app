@@ -1408,6 +1408,22 @@ console.log("filteredData111", filteredData);
         );
     };
 
+    const renderProducthead = (name) => {
+        const maxCharacters = 30; // Number of characters to show initially
+
+        if (name?.length <= maxCharacters) {
+            return <h6>{name}</h6>; // Show the full description if it's short
+        }
+
+        const truncatedDescription = name?.slice(0, maxCharacters);
+
+        return (
+            <>
+                <h6>{truncatedDescription}..</h6>
+            </>
+        );
+    };
+
     return (
         <>
             <Toaster />
@@ -1809,7 +1825,7 @@ console.log("filteredData111", filteredData);
                                                                         />
                                                                     </div>
                                                                     <div>
-                                                                        <h6>{item.name}</h6>
+                                                                        <h6>{renderProducthead(item.name)}</h6>
                                                                         <p>{renderProductDescription(item.description)}</p>
                                                                     </div>
                                                                     <div className="product-bag">

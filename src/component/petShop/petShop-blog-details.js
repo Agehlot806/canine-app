@@ -906,7 +906,7 @@ function PetshopBlogdetails() {
                           <Col sm={7} className="align-self-center">
                             <div className="blog-cardContent">
                               <h4>{item.title}</h4>
-                              <p>{item.description}</p>
+                              <p>{item?.description}</p>
                             </div>
                           </Col>
                         </Row>
@@ -988,7 +988,7 @@ function PetshopBlogdetails() {
                               </span>
                             )}
                         </p> */}
-                        <p>{renderProductDescription(item.description)}</p>
+                        <p>{renderProductDescription(item?.description)}</p>
                       </div>
                       <div className="product-bag">
                         <Row>
@@ -1922,7 +1922,7 @@ function PetshopBlogdetails() {
           <div className="modal-content">
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
-              <p>{productDetails.description}</p>
+              <p>{productDetails?.description}</p>
               {/* <form>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Variations</label>
