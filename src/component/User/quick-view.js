@@ -151,7 +151,7 @@ function Quickview() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -162,7 +162,7 @@ function Quickview() {
     if (productDetails.image) {
       setsingleImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -281,8 +281,7 @@ function Quickview() {
         toast.success("Added to cart!");
         // Navigate("/addcart")
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Error adding to cart:", error);
       setAddToCartStatus("Error adding to cart");
     }
@@ -295,7 +294,7 @@ function Quickview() {
           console.log("response in whisList", response);
           setWishlistData(response.data.data);
           setisFavCheck(true);
-          localStorage.setItem(`wishlist_${productDetails.id}`, 'true');
+          localStorage.setItem(`wishlist_${productDetails.id}`, "true");
         });
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
@@ -357,7 +356,9 @@ function Quickview() {
   const [orderlist, setorderlist] = useState([]);
   const AllOrderList = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`);
+      const response = await axios.get(
+        `${BASE_URL}/customer/order/list?id=${storedWholesellerId}`
+      );
       setorderlist(response.data.data);
     } catch (error) {
       console.error(error);
@@ -388,7 +389,7 @@ function Quickview() {
                         <img src={singleImage} />
                       </div></Col> */}
                     {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                    productDetails?.images.length > 0 ? (
                       productDetails?.images.map((item, index) => (
                         <Col sm={2} className="mb-3" key={index}>
                           <div
@@ -441,29 +442,29 @@ function Quickview() {
                             productDetails.variations.map((item, index) => (
                               <Col lg={3} sm={3} xs={3} key={index}>
                                 {item.stock !== 0 ? (
-                                        <div
-                                          className={`tab-variations ${
-                                            selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            setSelectedVariant(item.type);
-                                            setSelectedVariantPrice(item.price); // Store the price in state
-                                          }}
-                                        >
-                                          {item.type}
-                                        </div>
-                                      ) : (
-                                        <div
-                                          className="tab-variations disabledvariation"
-                                          title="Stock unavailable"
-                                        >
-                                          {/* <span className="blurred-text"> */}
-                                          {item.type}
-                                          {/* </span> */}
-                                        </div>
-                                      )}
+                                  <div
+                                    className={`tab-variations ${
+                                      selectedVariant === item.type
+                                        ? "active"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      setSelectedVariant(item.type);
+                                      setSelectedVariantPrice(item.price); // Store the price in state
+                                    }}
+                                  >
+                                    {item.type}
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="tab-variations disabledvariation"
+                                    title="Stock unavailable"
+                                  >
+                                    {/* <span className="blurred-text"> */}
+                                    {item.type}
+                                    {/* </span> */}
+                                  </div>
+                                )}
                               </Col>
                             ))}
                         </Row>
@@ -535,10 +536,10 @@ function Quickview() {
                         <th>Age Range</th>
                         <td>{productDetails?.lifeStage_id}</td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <th>Health Condition</th>
                         <td>{productDetails?.helthCondition_id}</td>
-                      </tr>
+                      </tr> */}
                       <tr>
                         <th>Target Species</th>
                         <td>{productDetails?.Petsbreeds_id}</td>
@@ -585,10 +586,8 @@ function Quickview() {
             </div>
           )}
           {/* </Row> */}
-
         </Container>
       </section>
-
     </>
   );
 }

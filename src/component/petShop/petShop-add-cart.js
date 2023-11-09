@@ -53,11 +53,12 @@ function PetshopAddCart() {
     setGetQuantityValue();
   };
   let originalPrice = 0;
+  console.log("originalPrice: ", originalPrice);
 
   const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
-    let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
+    let allPrice = parseInt(el.price) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
   const taxamound = Math.floor(originalPrice * 0.05);
@@ -228,7 +229,6 @@ function PetshopAddCart() {
   //   setSandCartData(updatedSendCart); // Update sendcartdata
   // };
 
-
   const handleIncrementone = (index) => {
     const updatedCart = [...addToCartProduct];
     const updatedSendCart = [...sendcartdata];
@@ -286,16 +286,17 @@ function PetshopAddCart() {
   };
   useEffect(() => {
     // getUserInfo()
-    ;
-    ;
-    
   }, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([addToCartData(), couponlistdata(), GetdataAll(),
+    Promise.all([
+      addToCartData(),
+      couponlistdata(),
+      GetdataAll(),
       allAddressList(),
       AllBanner(),
-      allOrders()])
+      allOrders(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -675,7 +676,6 @@ function PetshopAddCart() {
       console.error(error);
     }
   };
-  
 
   // ===============================================================
   // ===============================================================
@@ -687,8 +687,6 @@ function PetshopAddCart() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
-
- 
 
   const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
@@ -773,63 +771,67 @@ function PetshopAddCart() {
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
       {loading ? (
         <section className="section-padding mt-3 mb-3">
-        <div className="loaderimg text-center text-black mb-4">
-        <img src={loadinggif} alt="" />
-        <h5>Please Wait.......</h5>
-      </div>
-      </section>
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
       ) : (
         <>
-        <div className="home-section">
-        {homebanner
-          ? homebanner.map(
-              (item, index) =>
-                item.type === "common" && (
-                  <Link to={item.default_link}>
-                    <img
-                      className="partner-img"
-                      src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
-                      }
-                    />
-                  </Link>
+          <div className="home-section">
+            {homebanner
+              ? homebanner.map(
+                  (item, index) =>
+                    item.type === "common" && (
+                      <Link to={item.default_link}>
+                        <img
+                          className="partner-img"
+                          src={
+                            "https://canine.hirectjob.in//storage/app/" +
+                            item.image
+                          }
+                        />
+                      </Link>
+                    )
                 )
-            )
-          : null}
-      </div>
-      <section className="section-padding">
-        <div className="add-cart">
-          {addToCartProduct && addToCartProduct.length > 0 ? (
-            addToCartProduct.map((item, index) => (
-              <Container>
-                <Row>
-                  <Col lg={2} sm={2}>
-                    <img
-                      src={
-                        "https://canine.hirectjob.in///storage/app/public/product/" +
-                        item.image
-                      }
-                    />
-
-                  </Col>
-                  <Col lg={6} sm={5} className="align-self-center addCARThead">
-                    <h2>{item.item_name}</h2>
-                    {/* <p>Selected Variant: {item.variant}</p>
+              : null}
+          </div>
+          <section className="section-padding">
+            <div className="add-cart">
+              {addToCartProduct && addToCartProduct.length > 0 ? (
+                addToCartProduct.map((item, index) => (
+                  <Container>
+                    <Row>
+                      <Col lg={2} sm={2}>
+                        <img
+                          src={
+                            "https://canine.hirectjob.in///storage/app/public/product/" +
+                            item.image
+                          }
+                        />
+                      </Col>
+                      <Col
+                        lg={6}
+                        sm={5}
+                        className="align-self-center addCARThead"
+                      >
+                        <h2>{item.item_name}</h2>
+                        {/* <p>Selected Variant: {item.variant}</p>
                     {console.log("item.variant",item.variant)} */}
-                    {
-                              item.variant ? (
-                                <p>{`Selected Variant: ${item.variant}`}</p>
-                              ) : null // or you can omit this part if you want nothing to be displayed
-                            }
-                  </Col>
-                  <Col
-                    lg={2}
-                    sm={3}
-                    xs={6}
-                    className="align-self-center addCARThead"
-                  >
-                    <h3>₹{parseInt(item.price * item.quantity)}</h3>
-                    {/* <div className="quantity-btn">
+                        {
+                          item.variant ? (
+                            <p>{`Selected Variant: ${item.variant}`}</p>
+                          ) : null // or you can omit this part if you want nothing to be displayed
+                        }
+                      </Col>
+                      <Col
+                        lg={2}
+                        sm={3}
+                        xs={6}
+                        className="align-self-center addCARThead"
+                      >
+                        <h3>₹{parseInt(item.price)}</h3>
+                        {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />
                       </button>
@@ -839,307 +841,313 @@ function PetshopAddCart() {
                         <i className="fa fa-plus" />
                       </button>
                     </div> */}
-                    <div className="quantity-btn">
-                      <button onClick={() => handleDecrementone(index, item)}>
-                        <i className="fa fa-minus" />
-                      </button>
-                      <form>
-                        <div className="form-group">
-                          <input
-                            type="tel"
-                            className="form-control"
-                            placeholder="Quantity"
-                            // value={itemQuantities[item.id] || 1}
-                            value={item.quantity}
-                            onChange={handleQuantityChange}
-                            autoComplete="new-number"
-                          />
-                        </div>
-                      </form>
-                      <button onClick={() => handleIncrementone(index)}>
-                        <i className="fa fa-plus" />
-                      </button>
-                    </div>
-                  </Col>
-                  <Col lg={2} sm={2} xs={6} className="align-self-center">
-                    <div
-                      className="delete-addcard"
-                      // onClick={() => removeFromCart(item.id)}
-                    >
-                      <Link onClick={() => removeFromCart(item.id)}>
-                        <i class="fa fa-trash-o" />
-                      </Link>
-                    </div>
-                  </Col>
-                  <hr />
-                </Row>
-              </Container>
-            ))
-          ) : (
-            <div className="Emptycart">
-              <img src={Cartone} />
-              <p className="emptyMSG">Cart is Empty</p>
-            </div>
-          )}
-
-          {addToCartProduct && addToCartProduct.length > 0 ? (
-            <Container>
-              <div className="needplace">
-                <Row className="justify-content-center">
-                  <Col lg={8}>
-                    <div className="add-cart-total">
-                      <Row>
-                        <Col>
-                          <h5>Sub Total</h5>
-                        </Col>
-                        <Col>
-                          {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                          <h5>
-                            ₹
-                            {
-                              originalPrice
-                              // * itemQty
-                            }
-                          </h5>
-                        </Col>
-                      </Row>
-                      <hr />
-                      <Row>
-                        <Col>
-                          <h5>GST(5%)</h5>
-                        </Col>
-                        <Col>
-                          <h5>
-                            ₹
-                            {Math.floor(
-                              // itemQty * (
-                              originalPrice * 0.05
-                              // )
-                            )}
-                          </h5>
-                        </Col>
-                      </Row>
-                      <hr />
-                      <Row>
-                        <Col>
-                          <h5>Rounding Adjust</h5>
-                        </Col>
-                        <Col>
-                          <h5>
-                            ₹
-                            {`${parseInt(
-                              // itemQty * (
-                              originalPrice * 0.05 + originalPrice
-                              // )
-                            )}`}
-                            {/* Calculate and display the Rounding Adjust */}
-                          </h5>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            </Container>
-          ) : null}
-          {addToCartProduct && addToCartProduct.length > 0 ? (
-            <Container>
-              <div className="needplace">
-                <div className="address">
-                  <h3>Address</h3>
-                  <div className="address-card">
-                    {addresslist && addresslist.length > 0 ? (
-                      addresslist.map(
-                        (item, index) =>
-                          index === 0 && (
-                            <p key={item.id}>
-                              {item.house_no} {item.area} {item.landmark}{" "}
-                              {item.city} {item.state} {item.pincode}
-                            </p>
-                          )
-                      )
-                    ) : (
-                      <p>No data to display</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Container>
-          ) : null}
-          {addToCartProduct && addToCartProduct.length > 0 ? (
-            <Container>
-              <div className="needplace">
-                <div className="address">
-                  <h3>Shipping Address</h3>
-                  <div className="address-card">
-                    <Row>
-                      <Col lg={10}>
-                        {selectedAddress ? (
-                          <div className="selectedAddress-area">
-                            <p>
-                              {selectedAddress.first_name}{" "}
-                              {selectedAddress.last_name}
-                            </p>
-                            <p>
-                              {selectedAddress.house_no} {selectedAddress.area}{" "}
-                              {selectedAddress.landmark} {selectedAddress.city}{" "}
-                              {selectedAddress.state} {selectedAddress.pincode}
-                            </p>
-                            <p>Mobile: {selectedAddress.mobile}</p>
-                          </div>
-                        ) : (
-                          <p>No address selected</p>
-                        )}
-                      </Col>
-                      <Col lg={2}>
-                        <Button
-                          data-toggle="modal"
-                          data-target="#changeadress-model"
-                        >
-                          Add +
-                        </Button>
-                      </Col>
-                      <Col lg={12}>
-                        <div className="address-arrow">
-                          <button onClick={toggleAddressContent}>
-                            Select Address{" "}
-                            <i
-                              className={`fa ${
-                                addressContentVisible
-                                  ? "fa-arrow-up"
-                                  : "fa-arrow-down"
-                              }`}
-                              aria-hidden="true"
-                            ></i>
+                        <div className="quantity-btn">
+                          <button
+                            onClick={() => handleDecrementone(index, item)}
+                          >
+                            <i className="fa fa-minus" />
+                          </button>
+                          <form>
+                            <div className="form-group">
+                              <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="Quantity"
+                                // value={itemQuantities[item.id] || 1}
+                                value={item.quantity}
+                                onChange={handleQuantityChange}
+                                autoComplete="new-number"
+                              />
+                            </div>
+                          </form>
+                          <button onClick={() => handleIncrementone(index)}>
+                            <i className="fa fa-plus" />
                           </button>
                         </div>
-                        <br />
-                        <Row>
-                          {addressContentVisible && (
-                            <Col lg={12}>
-                              <div className="address-Content">
-                                {addresslist && addresslist.length > 0 ? (
-                                  addresslist.map((item, index) => (
-                                    <div className="chk-address" key={item.id}>
-                                      <div className="chk-center">
-                                        <input
-                                          className="form-check-input"
-                                          type="radio"
-                                          name="exampleRadios"
-                                          onClick={() =>
-                                            handleAddressClick(index)
-                                          }
-                                        />
-                                      </div>
-                                      <div className="Daynamic-address">
-                                        <table>
-                                          <tr>
-                                            <th>Name:&nbsp;</th>
-                                            <td>
-                                              {item.first_name}&nbsp;
-                                              {item.last_name}
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <th>Address:&nbsp;</th>
-                                            <td>
-                                              {item.house_no} {item.area}{" "}
-                                              {item.landmark} {item.city}{" "}
-                                              {item.state} {item.pincode}
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <th>Mobile:&nbsp;</th>
-                                            <td>{item.mobile}</td>
-                                          </tr>
-                                        </table>
-                                        <div className="address-delete">
-                                          <i
-                                            className="fa fa-trash"
-                                            onClick={() =>
-                                              handleDeleteAddress(item.id)
-                                            }
-                                          />
-                                          &nbsp; &nbsp;
-                                          <i
-                                            className="fa fa-edit"
-                                            data-toggle="modal"
-                                            onClick={() => {
-                                              setProfileData(item);
-                                            }}
-                                            data-target="#update-model"
-                                          />
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ))
-                                ) : (
-                                  <p>No Addresses Available</p>
-                                )}
-                              </div>
+                      </Col>
+                      <Col lg={2} sm={2} xs={6} className="align-self-center">
+                        <div
+                          className="delete-addcard"
+                          // onClick={() => removeFromCart(item.id)}
+                        >
+                          <Link onClick={() => removeFromCart(item.id)}>
+                            <i class="fa fa-trash-o" />
+                          </Link>
+                        </div>
+                      </Col>
+                      <hr />
+                    </Row>
+                  </Container>
+                ))
+              ) : (
+                <div className="Emptycart">
+                  <img src={Cartone} />
+                  <p className="emptyMSG">Cart is Empty</p>
+                </div>
+              )}
+
+              {addToCartProduct && addToCartProduct.length > 0 ? (
+                <Container>
+                  <div className="needplace">
+                    <Row className="justify-content-center">
+                      <Col lg={8}>
+                        <div className="add-cart-total">
+                          <Row>
+                            <Col>
+                              <h5>Sub Total</h5>
                             </Col>
-                          )}
-                        </Row>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{originalPrice}</h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>GST(5%)</h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                ₹
+                                {Math.floor(
+                                  // itemQty * (
+                                  originalPrice * 0.05
+                                  // )
+                                )}
+                              </h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Rounding Adjust</h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                ₹
+                                {`${parseInt(
+                                  // itemQty * (
+                                  originalPrice * 0.05 + originalPrice
+                                  // )
+                                )}`}
+                                {/* Calculate and display the Rounding Adjust */}
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
                       </Col>
                     </Row>
                   </div>
-                </div>
-              </div>
-            </Container>
-          ) : null}
-          {addToCartProduct && addToCartProduct.length > 0 && (
-            <Container>
-              <div className="needplace">
-                <div className="totalPAY">
-                  <Row className="justify-content-center">
-                    <Col lg={10}>
-                      <div className="totelPAYCAR">
-                        <Row>
-                          <Col sm={6}>
-                            <h4>Total</h4>
-                            <h2>
-                              ₹{" "}
-                              {`${parseInt(
-                                // itemQty * (
-                                originalPrice * 0.05 + originalPrice
-                                // )
-                              )}`}
-                            </h2>
-                          </Col>
-                          <Col sm={6}>
-                            {/* <Button onClick={() => handlePayment()}>
-                              Checkout
-                            </Button> */}
-                            <Button data-toggle="modal" data-target="#cod" disabled={!isAddressSelected}>
-                              {/* <Link
-
-                                // to="/user-pay-method"
-                              > */}
-                              Checkout
-                              {/* </Link> */}
-                            </Button>
-                            <Button>
-                              <Link to="/product">Continue Shopping</Link>
-                            </Button>
-                             {isAddressSelected ? null : (
-                          <div className="error-message">
-                            Please Select Shipping Address.
-                          </div>
+                </Container>
+              ) : null}
+              {addToCartProduct && addToCartProduct.length > 0 ? (
+                <Container>
+                  <div className="needplace">
+                    <div className="address">
+                      <h3>Address</h3>
+                      <div className="address-card">
+                        {addresslist && addresslist.length > 0 ? (
+                          addresslist.map(
+                            (item, index) =>
+                              index === 0 && (
+                                <p key={item.id}>
+                                  {item.house_no} {item.area} {item.landmark}{" "}
+                                  {item.city} {item.state} {item.pincode}
+                                </p>
+                              )
+                          )
+                        ) : (
+                          <p>No data to display</p>
                         )}
+                      </div>
+                    </div>
+                  </div>
+                </Container>
+              ) : null}
+              {addToCartProduct && addToCartProduct.length > 0 ? (
+                <Container>
+                  <div className="needplace">
+                    <div className="address">
+                      <h3>Shipping Address</h3>
+                      <div className="address-card">
+                        <Row>
+                          <Col lg={10}>
+                            {selectedAddress ? (
+                              <div className="selectedAddress-area">
+                                <p>
+                                  {selectedAddress.first_name}{" "}
+                                  {selectedAddress.last_name}
+                                </p>
+                                <p>
+                                  {selectedAddress.house_no}{" "}
+                                  {selectedAddress.area}{" "}
+                                  {selectedAddress.landmark}{" "}
+                                  {selectedAddress.city} {selectedAddress.state}{" "}
+                                  {selectedAddress.pincode}
+                                </p>
+                                <p>Mobile: {selectedAddress.mobile}</p>
+                              </div>
+                            ) : (
+                              <p>No address selected</p>
+                            )}
+                          </Col>
+                          <Col lg={2}>
+                            <Button
+                              data-toggle="modal"
+                              data-target="#changeadress-model"
+                            >
+                              Add +
+                            </Button>
+                          </Col>
+                          <Col lg={12}>
+                            <div className="address-arrow">
+                              <button onClick={toggleAddressContent}>
+                                Select Address{" "}
+                                <i
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
+                            <br />
+                            <Row>
+                              {addressContentVisible && (
+                                <Col lg={12}>
+                                  <div className="address-Content">
+                                    {addresslist && addresslist.length > 0 ? (
+                                      addresslist.map((item, index) => (
+                                        <div
+                                          className="chk-address"
+                                          key={item.id}
+                                        >
+                                          <div className="chk-center">
+                                            <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name="exampleRadios"
+                                              onClick={() =>
+                                                handleAddressClick(index)
+                                              }
+                                            />
+                                          </div>
+                                          <div className="Daynamic-address">
+                                            <table>
+                                              <tr>
+                                                <th>Name:&nbsp;</th>
+                                                <td>
+                                                  {item.first_name}&nbsp;
+                                                  {item.last_name}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <th>Address:&nbsp;</th>
+                                                <td>
+                                                  {item.house_no} {item.area}{" "}
+                                                  {item.landmark} {item.city}{" "}
+                                                  {item.state} {item.pincode}
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <th>Mobile:&nbsp;</th>
+                                                <td>{item.mobile}</td>
+                                              </tr>
+                                            </table>
+                                            <div className="address-delete">
+                                              <i
+                                                className="fa fa-trash"
+                                                onClick={() =>
+                                                  handleDeleteAddress(item.id)
+                                                }
+                                              />
+                                              &nbsp; &nbsp;
+                                              <i
+                                                className="fa fa-edit"
+                                                data-toggle="modal"
+                                                onClick={() => {
+                                                  setProfileData(item);
+                                                }}
+                                                data-target="#update-model"
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ))
+                                    ) : (
+                                      <p>No Addresses Available</p>
+                                    )}
+                                  </div>
+                                </Col>
+                              )}
+                            </Row>
                           </Col>
                         </Row>
                       </div>
-                    </Col>
-                  </Row>
-                </div>
-              </div>
-            </Container>
-          )}
-        </div>
-      </section>
+                    </div>
+                  </div>
+                </Container>
+              ) : null}
+              {addToCartProduct && addToCartProduct.length > 0 && (
+                <Container>
+                  <div className="needplace">
+                    <div className="totalPAY">
+                      <Row className="justify-content-center">
+                        <Col lg={10}>
+                          <div className="totelPAYCAR">
+                            <Row>
+                              <Col sm={6}>
+                                <h4>Total</h4>
+                                <h2>
+                                  ₹{" "}
+                                  {`${parseInt(
+                                    // itemQty * (
+                                    originalPrice * 0.05 + originalPrice
+                                    // )
+                                  )}`}
+                                </h2>
+                              </Col>
+                              <Col sm={6}>
+                                {/* <Button onClick={() => handlePayment()}>
+                              Checkout
+                            </Button> */}
+                                <Button
+                                  data-toggle="modal"
+                                  data-target="#cod"
+                                  disabled={!isAddressSelected}
+                                >
+                                  {/* <Link
+
+                                // to="/user-pay-method"
+                              > */}
+                                  Checkout
+                                  {/* </Link> */}
+                                </Button>
+                                <Button>
+                                  <Link to="/petShop-product">
+                                    Continue Shopping
+                                  </Link>
+                                </Button>
+                                {isAddressSelected ? null : (
+                                  <div className="error-message">
+                                    Please Select Shipping Address.
+                                  </div>
+                                )}
+                              </Col>
+                            </Row>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  </div>
+                </Container>
+              )}
+            </div>
+          </section>
         </>
       )}
-      
 
       <Petshopfooter />
       {/* Modal add address */}

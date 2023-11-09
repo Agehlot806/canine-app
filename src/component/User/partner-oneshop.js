@@ -26,7 +26,14 @@ function Partneroneshop() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([VendorItems(), fetchWishlistData(), couponlistdata(), allReview(), GetdataAll(), allAddressList()])
+    Promise.all([
+      VendorItems(),
+      fetchWishlistData(),
+      couponlistdata(),
+      allReview(),
+      GetdataAll(),
+      allAddressList(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -849,138 +856,142 @@ function Partneroneshop() {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-}
+  };
 
-const renderProducthead = (name) => {
-  const maxCharacters = 20;
-  if (name?.length <= maxCharacters) {
-    return <h6>{name}</h6>;
-  }
-  const truncatedDescription = name?.slice(0, maxCharacters);
-  return (
-    <>
-      <h6>{truncatedDescription}..</h6>
-    </>
-  );
-};
-
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
 
   return (
     <>
       <Toaster />
       <Newheader />
       {loading ? (
-      <section className="section-padding mt-3 mb-3">
-      <div className="loaderimg text-center text-black mb-4">
-          <img src={loadinggif} alt=""/>
-          <h5>Please Wait.......</h5>
-        </div>
-        </section>) : (
-          <>
+        <section className="section-padding mt-3 mb-3">
+          <div className="loaderimg text-center text-black mb-4">
+            <img src={loadinggif} alt="" />
+            <h5>Please Wait.......</h5>
+          </div>
+        </section>
+      ) : (
+        <>
           <Container fluid className="p-0">
-        <div className="all-bg">
-          <img
-            src={
-              "https://canine.hirectjob.in//storage/app/public/store/cover/" +
-              state?.item.cover_photo
-            }
-          />
-        </div>
-        {console.log(
-          "coverPhoto",
-          "https://canine.hirectjob.in//storage/app/public/store/cover/" +
-            state?.item.cover_photo
-        )}
-      </Container>
-
-      <section className="section-padding">
-        <div className="uy">
-          <Container>
-            <div className="partner-oneshop">
-              <Table responsive>
-                <tbody>
-                  <tr>
-                    <th>Partner Name :</th>
-                    <td>{state?.item.name}</td>
-                  </tr>
-                  <tr>
-                    <th>Address :</th>
-                    <td>{state?.item.address}</td>
-                  </tr>
-                  <tr>
-                    <th>Mobile :</th>
-                    <td>{state?.item.phone}</td>
-                  </tr>
-                  <tr>
-                    <th>Email ID :</th>
-                    <td>{state?.item.email}</td>
-                  </tr>
-                </tbody>
-              </Table>
+            <div className="all-bg">
+              <img
+                src={
+                  "https://canine.hirectjob.in//storage/app/public/store/cover/" +
+                  state?.item.cover_photo
+                }
+              />
             </div>
+            {console.log(
+              "coverPhoto",
+              "https://canine.hirectjob.in//storage/app/public/store/cover/" +
+                state?.item.cover_photo
+            )}
           </Container>
-        </div>
-      </section>
-      <section className="section-padding">
-        <Container>
-          <Row>
-            {vendorItemList && vendorItemList.length > 0 ? (
-              vendorItemList.map((item, index) => (
-                <Col lg={3} sm={6} xs={6} className="mb-4">
-                  <div
-                    className="food-product"
-                    onMouseEnter={() => handleMouseEnter(item.id)}
-                    onMouseLeave={() => handleMouseLeave(item.id)}
-                    style={{
-                      background: gradientColors[index % gradientColors.length],
-                    }}
-                  >
-                    <i
-                      class={
-                        item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                      }
-                      onClick={(id) => {
-                        if (storedUserId == null) {
-                          toast.error("Please Login first");
-                        } else {
-                          addToWishlist(item.id);
-                        }
-                      }}
-                    />
-                    <Link to={`/product-details/${item.id}`}>
-                      <div className="text-center">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in///storage/app/public/product/" +
-                            item.image
+
+          <section className="section-padding">
+            <div className="uy">
+              <Container>
+                <div className="partner-oneshop">
+                  <Table responsive>
+                    <tbody>
+                      <tr>
+                        <th>Partner Name :</th>
+                        <td>{state?.item.name}</td>
+                      </tr>
+                      <tr>
+                        <th>Address :</th>
+                        <td>{state?.item.address}</td>
+                      </tr>
+                      <tr>
+                        <th>Mobile :</th>
+                        <td>{state?.item.phone}</td>
+                      </tr>
+                      <tr>
+                        <th>Email ID :</th>
+                        <td>{state?.item.email}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
+              </Container>
+            </div>
+          </section>
+          <section className="section-padding">
+            <Container>
+              <Row>
+                {vendorItemList && vendorItemList.length > 0 ? (
+                  vendorItemList.map((item, index) => (
+                    <Col lg={3} sm={6} xs={6} className="mb-4">
+                      <div
+                        className="food-product"
+                        onMouseEnter={() => handleMouseEnter(item.id)}
+                        onMouseLeave={() => handleMouseLeave(item.id)}
+                        style={{
+                          background:
+                            gradientColors[index % gradientColors.length],
+                        }}
+                      >
+                        <i
+                          class={
+                            item.isFav
+                              ? "fa-solid fa-heart"
+                              : "fa-regular fa-heart"
                           }
+                          onClick={(id) => {
+                            if (storedUserId == null) {
+                              toast.error("Please Login first");
+                            } else {
+                              addToWishlist(item.id);
+                            }
+                          }}
                         />
-                      </div>
-                      <div>
-                        <h6>{renderProducthead(item.name)}</h6>
-                        <p>{renderProductDescription(item.description)}</p>
-                      </div>
-                      <div className="product-bag">
-                        {parseFloat(item.discount) > 0 ? (
-                          <Row>
-                            <Col>
-                              <p>₹{parseFloat(item.price)}</p>
-                            </Col>
-                            <Col>
-                              <h5>Save {parseFloat(item.discount)}%</h5>
-                            </Col>
-                          </Row>
-                        ) : null}
-                        <Row>
-                          <Col className="align-self-center">
-                            {/* <h6>{`₹${
+                        <Link to={`/product-details/${item.id}`}>
+                          <div className="text-center">
+                            <img
+                              src={
+                                "https://canine.hirectjob.in///storage/app/public/product/" +
+                                item.image
+                              }
+                            />
+                          </div>
+                          <div>
+                            <h6>{renderProducthead(item.name)}</h6>
+                            <p>{renderProductDescription(item.description)}</p>
+                          </div>
+                          <div className="product-bag">
+                            {parseFloat(item.discount) > 0 ? (
+                              <Row>
+                                <Col>
+                                  <p>₹{parseFloat(item.price)}</p>
+                                </Col>
+                                <Col>
+                                  <h5>Save {parseFloat(item.discount)}%</h5>
+                                </Col>
+                              </Row>
+                            ) : null}
+                            <Row>
+                              <Col className="align-self-center">
+                                {/* <h6>{`₹${
                               item.price - (item.price * item.discount) / 100
                             }`}</h6> */}
-                            <h4>{`₹${Math.floor(
-                              item.price - (item.price * item.discount) / 100
-                            )}`}</h4>
-                          </Col>
-                          {/* <Col>
+                                <h4>{`₹${Math.floor(
+                                  item.price -
+                                    (item.price * item.discount) / 100
+                                )}`}</h4>
+                              </Col>
+                              {/* <Col>
                             <Link
                               to={`/add-cart/${item.id}`}
                               onClick={handleAddToCart}
@@ -988,55 +999,54 @@ const renderProducthead = (name) => {
                               <img src={bag} />
                             </Link>
                           </Col> */}
-                        </Row>
+                            </Row>
+                          </div>
+                        </Link>
+                        {buttonVisibility[item.id] && (
+                          <Fade top>
+                            <div className="button-container">
+                              <button
+                                data-toggle="modal"
+                                data-target=".bd-example-modal-lg"
+                                onClick={(e) => handeldataId(item.id)}
+                              >
+                                Quick View
+                              </button>
+                              <button
+                                data-toggle="modal"
+                                data-target=".buynow"
+                                // onClick={(e) => handeldataId(item.id)}
+                                onClick={(e) => {
+                                  if (!storedUserId) {
+                                    shippingpage("/login");
+                                  } else {
+                                    handeldataId(item.id);
+                                  }
+                                }}
+                              >
+                                Buy Now
+                              </button>
+                            </div>
+                          </Fade>
+                        )}
                       </div>
-                    </Link>
-                    {buttonVisibility[item.id] && (
-                      <Fade top>
-                        <div className="button-container">
-                          <button
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lg"
-                            onClick={(e) => handeldataId(item.id)}
-                          >
-                            Quick View
-                          </button>
-                          <button
-                            data-toggle="modal"
-                            data-target=".buynow"
-                            // onClick={(e) => handeldataId(item.id)}
-                            onClick={(e) => {
-                              if (!storedUserId) {
-                                shippingpage("/login");
-                              } else {
-                                handeldataId(item.id);
-                              }
-                            }}
-                          >
-                            Buy Now
-                          </button>
-                        </div>
-                      </Fade>
-                    )}
-                  </div>
-                </Col>
-              ))
-            ) : (
-              <p className="emptyMSG">No Product By Partner Data.</p>
-            )}
-          </Row>
-          <div className="allblogbtn">
-            <Button key={state?.item.id}>
-              <Link to={`/product-partner-shop/${state?.item.id}`}>
-                View All
-              </Link>
-            </Button>
-          </div>
-        </Container>
-      </section>
-          </>
-        )}
-      
+                    </Col>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Product By Partner Data.</p>
+                )}
+              </Row>
+              <div className="allblogbtn">
+                <Button key={state?.item.id}>
+                  <Link to={`/product-partner-shop/${state?.item.id}`}>
+                    View All
+                  </Link>
+                </Button>
+              </div>
+            </Container>
+          </section>
+        </>
+      )}
 
       <Footer />
       {/* Product details Modal */}
@@ -1050,7 +1060,11 @@ const renderProducthead = (name) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1281,10 +1295,10 @@ const renderProducthead = (name) => {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              <tr>
+                              {/* <tr>
                                 <th>Health Condition</th>
                                 <td>{productDetails?.helthCondition_id}</td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
