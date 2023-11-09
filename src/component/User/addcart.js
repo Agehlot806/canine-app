@@ -555,28 +555,28 @@ function Addcart() {
     ? formatAddress(selectedAddress)
     : "No address selected";
 
-    // Get the selected address from wherever you have it
-    const selectedAddressLocal = {
-      first_name: selectedAddress?.first_name,
-      last_name: selectedAddress?.last_name,
-      house_no: selectedAddress?.house_no,
-      area: selectedAddress?.area,
-      landmark: selectedAddress?.landmark,
-      city: selectedAddress?.city,
-      state: selectedAddress?.state,
-      pincode: selectedAddress?.pincode,
-      mobile: selectedAddress?.mobile,
-    };
-    
-// Store the formatted address in localStorage
-const formattedAddress = formatAddress(selectedAddressLocal);
-localStorage.setItem('formattedAddress', formattedAddress);
+  // Get the selected address from wherever you have it
+  const selectedAddressLocal = {
+    first_name: selectedAddress?.first_name,
+    last_name: selectedAddress?.last_name,
+    house_no: selectedAddress?.house_no,
+    area: selectedAddress?.area,
+    landmark: selectedAddress?.landmark,
+    city: selectedAddress?.city,
+    state: selectedAddress?.state,
+    pincode: selectedAddress?.pincode,
+    mobile: selectedAddress?.mobile,
+  };
 
-// Retrieve the formatted address from localStorage
-const storedFormattedAddress = localStorage.getItem('formattedAddress');
+  // Store the formatted address in localStorage
+  const formattedAddress = formatAddress(selectedAddressLocal);
+  localStorage.setItem("formattedAddress", formattedAddress);
 
-// // Use the stored formatted address
-console.log('Stored Address:', storedFormattedAddress);
+  // Retrieve the formatted address from localStorage
+  const storedFormattedAddress = localStorage.getItem("formattedAddress");
+
+  // // Use the stored formatted address
+  console.log("Stored Address:", storedFormattedAddress);
 
   console.log("disscountvalue", disscountvalue);
   const coupendisscount = (dis) => {
@@ -1201,15 +1201,15 @@ console.log('Stored Address:', storedFormattedAddress);
                               Checkout
                               {/* </Link> */}
                             </Button>
-                           
+
                             <Button>
                               <Link to="/product">Continue Shopping</Link>
                             </Button>
-                             {isAddressSelected ? null : (
-                          <div className="error-message">
-                            Please Select Shipping Address.
-                          </div>
-                        )}
+                            {isAddressSelected ? null : (
+                              <div className="error-message">
+                                Please Select Shipping Address.
+                              </div>
+                            )}
                           </Col>
                         </Row>
                       </div>
@@ -1289,8 +1289,10 @@ console.log('Stored Address:', storedFormattedAddress);
             <div className="modal-body">
               <div className="payment-done">
                 <img src={paydone} />
-                <p>Congratulation <br />
-                  Your Order is Placed.</p>
+                <p>
+                  Congratulation <br />
+                  Your Order is Placed.
+                </p>
                 <Button
                   data-dismiss="modal"
                   aria-label="Close"

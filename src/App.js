@@ -275,7 +275,7 @@ const WholesalerRoutes = () => {
       <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
       <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
       <Route
-        path="/petShop-order-view-details/:id"
+        path="/petShop-order-view-details"
         element={<PetshopOrderviewdetails />}
       />
 
@@ -538,7 +538,7 @@ const App = () => {
               element={<Orderviewdetails />}
             />
             <Route
-              path="/petShop-order-view-details/:id"
+              path="/petShop-order-view-details"
               element={<PetshopOrderviewdetails />}
             />
 

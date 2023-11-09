@@ -817,7 +817,11 @@ function PetshopBlogdetails() {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -1065,11 +1069,16 @@ function PetshopBlogdetails() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body sold-modalbtn">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1140,7 +1149,13 @@ function PetshopBlogdetails() {
                                     productDetails?.variations?.length > 0 &&
                                     productDetails?.variations.map(
                                       (item, index) => (
-                                        <Col lg={5} sm={5} xs={3} className="p-0" key={index}>
+                                        <Col
+                                          lg={5}
+                                          sm={5}
+                                          xs={3}
+                                          className="p-0"
+                                          key={index}
+                                        >
                                           {item.stock !== 0 ? (
                                             <div
                                               className={`tab-variations ${
@@ -1562,6 +1577,7 @@ function PetshopBlogdetails() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

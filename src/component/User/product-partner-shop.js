@@ -1056,7 +1056,11 @@ function Productpartnershop() {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -1273,11 +1277,6 @@ function Productpartnershop() {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const quickViewClear = () => {
-    setSelectedVariantPrice(null);
-    setSelectedVariant(null);
   };
 
   return (
@@ -1851,6 +1850,7 @@ function Productpartnershop() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
@@ -2596,6 +2596,7 @@ function Productpartnershop() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

@@ -1129,7 +1129,11 @@ function Product(props) {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -1274,12 +1278,6 @@ function Product(props) {
   };
   const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
-
-  const quickViewClear = () => {
-    setSelectedVariantPrice(null);
-    setSelectedVariant(null);
-    setSelectedVariantStock(null);
-  };
 
   return (
     <>
@@ -1881,6 +1879,7 @@ function Product(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
@@ -2633,6 +2632,7 @@ function Product(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

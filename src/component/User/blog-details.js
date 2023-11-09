@@ -721,7 +721,11 @@ function Blogdetails() {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -874,11 +878,6 @@ function Blogdetails() {
         <p>{truncatedDescription}.......</p>
       </>
     );
-  };
-
-  const quickViewClear = () => {
-    setSelectedVariantPrice(null);
-    setSelectedVariant(null);
   };
 
   const renderProducthead = (name) => {
@@ -1083,6 +1082,7 @@ function Blogdetails() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
@@ -1579,6 +1579,7 @@ function Blogdetails() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

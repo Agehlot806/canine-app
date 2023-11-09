@@ -295,7 +295,6 @@ function SubcategoriesProduct() {
       });
   };
 
-
   const allsubcategary = async () => {
     axios
       .get(`https://canine.hirectjob.in/api/v1/categories`)
@@ -1433,11 +1432,6 @@ function SubcategoriesProduct() {
 
     const truncatedDescription = description?.slice(0, maxCharacters);
 
-    const quickViewClear = () => {
-      setSelectedVariantPrice(null);
-      setSelectedVariant(null);
-      setSelectedVariantStock(null);
-    };
     return (
       <>
         <p>{truncatedDescription}.......</p>
@@ -2013,6 +2007,7 @@ function SubcategoriesProduct() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
@@ -2493,6 +2488,7 @@ function SubcategoriesProduct() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

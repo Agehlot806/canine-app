@@ -41,6 +41,9 @@ function PetshopOrderviewdetails() {
         setLoading(false);
       });
   }, []);
+
+  const storedFormattedAddress = localStorage.getItem("formattedAddress");
+
   let subTotal = orderDetails.reduce(
     (total, order) => total + parseFloat(order.price * order.quantity),
     0
@@ -315,7 +318,7 @@ function PetshopOrderviewdetails() {
                       </div>
                       <div>
                         <h5>Canine Products</h5>
-                        <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                        <p>{storedFormattedAddress}</p>
                       </div>
                     </div>
                   </Col>

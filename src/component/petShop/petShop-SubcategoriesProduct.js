@@ -1154,7 +1154,11 @@ function PetShopSubcategoriesProduct(props) {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -1803,11 +1807,16 @@ function PetShopSubcategoriesProduct(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1878,7 +1887,13 @@ function PetShopSubcategoriesProduct(props) {
                                     productDetails?.variations.length > 0 &&
                                     productDetails.variations.map(
                                       (item, index) => (
-                                        <Col lg={5} sm={4} xs={3} key={index} className="p-0">
+                                        <Col
+                                          lg={5}
+                                          sm={4}
+                                          xs={3}
+                                          key={index}
+                                          className="p-0"
+                                        >
                                           {item.stock !== 0 ? (
                                             <div
                                               className={`tab-variations ${
@@ -2295,6 +2310,7 @@ function PetShopSubcategoriesProduct(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

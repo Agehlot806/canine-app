@@ -843,7 +843,11 @@ function PetshopproductDetails() {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -980,32 +984,33 @@ function PetshopproductDetails() {
                         <h4>{productDetails.name}</h4>
                       </Col>
                       <Col lg={3} sm={3} xs={3}>
-                    <p>
-                      {productDetails.veg == 0 ? (
-                        <span>
-                          <span className="non-vegetarian">●</span>
-                        </span>
-                      ) : (
-                        <span>
-                          <span className="vegetarian">●</span>
-                        </span>
-                      )}
+                        <p>
+                          {productDetails.veg == 0 ? (
+                            <span>
+                              <span className="non-vegetarian">●</span>
+                            </span>
+                          ) : (
+                            <span>
+                              <span className="vegetarian">●</span>
+                            </span>
+                          )}
 
-                      <RWebShare
-                        data={{
-                          text: `Check out this amazing product: ${productDetails.name}`,
-                          url: window.location.href,
-                          title: productDetails.name,
-                        }}
-                        onClick={() => console.log("Product shared successfully!")}
-                      >
-                        <div className="share-btn">
-                          <i class="fa fa-share-alt" />
-                        </div>
-                      </RWebShare>
-                    </p>
-
-                  </Col>
+                          <RWebShare
+                            data={{
+                              text: `Check out this amazing product: ${productDetails.name}`,
+                              url: window.location.href,
+                              title: productDetails.name,
+                            }}
+                            onClick={() =>
+                              console.log("Product shared successfully!")
+                            }
+                          >
+                            <div className="share-btn">
+                              <i class="fa fa-share-alt" />
+                            </div>
+                          </RWebShare>
+                        </p>
+                      </Col>
                     </Row>
                     <p>
                       By <span>{productDetails?.brand_id}</span>
@@ -1029,7 +1034,13 @@ function PetshopproductDetails() {
                                   productDetails?.variations.length > 0 &&
                                   productDetails.variations.map(
                                     (item, index) => (
-                                      <Col lg={3} sm={3} xs={3} key={index} className="p-0">
+                                      <Col
+                                        lg={3}
+                                        sm={3}
+                                        xs={3}
+                                        key={index}
+                                        className="p-0"
+                                      >
                                         {item.stock !== 0 ? (
                                           <div
                                             className={`tab-variations ${
@@ -1399,11 +1410,16 @@ function PetshopproductDetails() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" />
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1450,7 +1466,6 @@ function PetshopproductDetails() {
                           <Col lg={10}>
                             <h4>{productDetails.name}</h4>
                           </Col>
-                        
                         </Row>
                         <p>
                           By <span>{productDetails.store_name}</span>
@@ -1894,6 +1909,7 @@ function PetshopproductDetails() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

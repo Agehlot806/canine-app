@@ -565,6 +565,29 @@ function PetshopAddCart() {
 
   // ...
 
+  // Get the selected address from wherever you have it
+  const selectedAddressLocal = {
+    first_name: selectedAddress?.first_name,
+    last_name: selectedAddress?.last_name,
+    house_no: selectedAddress?.house_no,
+    area: selectedAddress?.area,
+    landmark: selectedAddress?.landmark,
+    city: selectedAddress?.city,
+    state: selectedAddress?.state,
+    pincode: selectedAddress?.pincode,
+    mobile: selectedAddress?.mobile,
+  };
+
+  // Store the formatted address in localStorage
+  const formattedAddress = formatAddress(selectedAddressLocal);
+  localStorage.setItem("formattedAddress", formattedAddress);
+
+  // Retrieve the formatted address from localStorage
+  const storedFormattedAddress = localStorage.getItem("formattedAddress");
+
+  // // Use the stored formatted address
+  console.log("Stored Address:", storedFormattedAddress);
+
   // Use the formatAddress function to get the selected address as a single string
   const deliveryAddress = selectedAddress
     ? formatAddress(selectedAddress)
@@ -1416,6 +1439,7 @@ function PetshopAddCart() {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

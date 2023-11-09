@@ -1105,7 +1105,11 @@ function Canineproduct(props) {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -1263,11 +1267,6 @@ function Canineproduct(props) {
   };
   const pageCount = allproduct ? Math.ceil(allproduct.length / pageSize) : 0;
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
-
-  const quickViewClear = () => {
-    setSelectedVariantPrice(null);
-    setSelectedVariant(null);
-  };
 
   const renderProducthead = (name) => {
     const maxCharacters = 20;
@@ -1822,6 +1821,7 @@ function Canineproduct(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
@@ -2129,6 +2129,7 @@ function Canineproduct(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">

@@ -921,7 +921,11 @@ function Home(props) {
       console.log(error);
     }
   };
-
+  const quickViewClear = () => {
+    setSelectedVariantPrice(null);
+    setSelectedVariant(null);
+    setSelectedVariantStock(null);
+  };
   const handleResetClick = () => {
     setfirst_name(null);
     setlast_name(null);
@@ -1062,11 +1066,6 @@ function Home(props) {
         <p>{truncatedDescription}.......</p>
       </>
     );
-  };
-
-  const quickViewClear = () => {
-    setSelectedVariantPrice(null);
-    setSelectedVariant(null);
   };
 
   const renderProducthead = (name) => {
@@ -1863,6 +1862,7 @@ function Home(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
@@ -2137,7 +2137,8 @@ function Home(props) {
                     </Col>
                   </Row>
                   {/* without sign in quick view add cart */}
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
@@ -2224,8 +2225,8 @@ function Home(props) {
                     <div className="modal-dialog" role="document">
                       <div className="modal-content">
                         <div className="modal-body">
-                          <h4>{productDetails.name}</h4>
-                          <p>{productDetails.description}</p>
+                          <h4>{productDetails?.name}</h4>
+                          <p>{productDetails?.description}</p>
                           {/* <form>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Variations</label>
@@ -2616,6 +2617,7 @@ function Home(props) {
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
