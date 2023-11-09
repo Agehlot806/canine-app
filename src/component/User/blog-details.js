@@ -43,6 +43,7 @@ function Blogdetails() {
   const [paymentId, setPaymentId] = useState("");
   const [expandedDescription, setExpandedDescription] = useState({});
   const [productIds, setProductIds] = useState([]);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   // without signup add cart start
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
@@ -122,6 +123,10 @@ function Blogdetails() {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -1000,7 +1005,9 @@ function Blogdetails() {
                           </div>
                           <div>
                             <h6>{renderProducthead(item[0]?.name)}</h6>
-                            <p>{renderProductDescription(item[0]?.description)}</p>
+                            <p>
+                              {renderProductDescription(item[0]?.description)}
+                            </p>
                           </div>
                           <div className="product-bag">
                             <Row>
@@ -1219,7 +1226,11 @@ function Blogdetails() {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} className="p-0" key={index}>
+                                            <Col
+                                              lg={5}
+                                              className="p-0"
+                                              key={index}
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${
@@ -1358,6 +1369,11 @@ function Blogdetails() {
                                   quantity: quantity,
                                   name: productDetails.name,
                                   image: productDetails.image,
+                                  total_quantity: selectedVariantStock
+                                    ? selectedVariantStock
+                                    : productDetails?.stock,
+                                  return_order:
+                                    productDetails?.returnable || "yes",
                                 },
                               });
                             }}

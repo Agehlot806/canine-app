@@ -93,6 +93,7 @@ import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
 import loadinggif from "../../assets/images/video/loading.gif";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 function SubcategoriesProduct() {
   // const { name } = useParams();
@@ -120,6 +121,7 @@ function SubcategoriesProduct() {
     useState(false);
   const [accessoryTypeDropdownVisible, setAccessoryTypeDropdownVisible] =
     useState(false);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
 
   const handleParentClick = (dropdownName) => {
     switch (dropdownName) {
@@ -168,20 +170,25 @@ function SubcategoriesProduct() {
   };
 
   const { id, name } = useParams();
+
+  const { cart, dispatch } = useCartWithoutLogin();
   console.log("name: ", name);
   console.log("iddhsdgjhsdh", id);
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
+  // without signup add cart start
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
   // filter code ==========================
   const [allproduct, setallproduct] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
-  console.log("categoryIds", categoryIds);
   const [paymentId, setPaymentId] = useState("");
 
   useEffect(() => {
@@ -263,8 +270,10 @@ function SubcategoriesProduct() {
       .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage`)
       .then((response) => {
         console.log("responseresponse?????", response);
-        setAlllifesage(response.data.data);
-        // Perform any additional actions after successful deletion
+        const filteredData = response.data.data.filter(
+          (item) => item.category_id == id
+        );
+        setAlllifesage(filteredData);
       })
       .catch((error) => {
         console.log(error);
@@ -275,13 +284,17 @@ function SubcategoriesProduct() {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed`)
       .then((response) => {
-        console.log("responseresponse?????", response);
-        setAllBreed(response.data.data);
+        const filteredData = response.data.data.filter(
+          (item) => item.category_id == id
+        );
+        console.log("Filtered Data: ", filteredData);
+        setAllBreed(filteredData);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
 
   const allsubcategary = async () => {
     axios
@@ -314,7 +327,9 @@ function SubcategoriesProduct() {
       .then((response) => {
         console.log(response);
         console.log("subcategories Successful");
-        const filteredSubcategories = response.data.data.filter(subcategory => subcategory.category === id);
+        const filteredSubcategories = response.data.data.filter(
+          (subcategory) => subcategory.category === id
+        );
         setsubcategories(filteredSubcategories);
       })
       .catch((error) => {
@@ -446,7 +461,7 @@ function SubcategoriesProduct() {
         "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
-      const cateidproduct =products.filter(items=>items.category_id == id)
+      const cateidproduct = products.filter((items) => items.category_id == id);
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -603,6 +618,10 @@ function SubcategoriesProduct() {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -734,6 +753,7 @@ function SubcategoriesProduct() {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
       setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantStock(defaultVariant.stock);
     }
   }, [productDetails]);
 
@@ -866,7 +886,6 @@ function SubcategoriesProduct() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
-
 
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
@@ -1211,6 +1230,7 @@ function SubcategoriesProduct() {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
+    setSelectedVariantStock(null);
   };
 
   const handleResetClick = () => {
@@ -1413,6 +1433,11 @@ function SubcategoriesProduct() {
 
     const truncatedDescription = description?.slice(0, maxCharacters);
 
+    const quickViewClear = () => {
+      setSelectedVariantPrice(null);
+      setSelectedVariant(null);
+      setSelectedVariantStock(null);
+    };
     return (
       <>
         <p>{truncatedDescription}.......</p>
@@ -1903,7 +1928,7 @@ function SubcategoriesProduct() {
                                           data-toggle="modal"
                                           data-target=".buynow"
                                           onClick={(e) => {
-                                            if (!storedUserId) {
+                                            if (storedUserId == null) {
                                               shippingpage("/login");
                                             } else {
                                               handeldataId(item.id);
@@ -2131,7 +2156,11 @@ function SubcategoriesProduct() {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} key={index} className="p-0">
+                                            <Col
+                                              lg={5}
+                                              key={index}
+                                              className="p-0"
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${
@@ -2146,6 +2175,9 @@ function SubcategoriesProduct() {
                                                     );
                                                     setSelectedVariantPrice(
                                                       item.price
+                                                    ); // Store the price in state
+                                                    setSelectedVariantStock(
+                                                      item.stock
                                                     ); // Store the price in state
                                                   }}
                                                 >
@@ -2259,15 +2291,43 @@ function SubcategoriesProduct() {
                   </Row>
                   {productDetails.stock && productDetails.stock.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      <Button>
-                        <Link
-                          to={`/add-cart/${productDetails.id}`}
-                          onClick={handleAddToCart}
-                        >
-                          <i className="fa fa-shopping-bag" /> Add to cart
-                        </Link>
-                        <p>{addToCartStatus}</p>
-                      </Button>
+                      {customerLoginId === null ? (
+                        <Button data-dismiss="modal">
+                          <Link
+                            onClick={() => {
+                              dispatch({
+                                type: "ADD_TO_CART",
+                                payload: {
+                                  item_id: productDetails.id,
+                                  variant: selectedVariant,
+                                  price: formattedAmount,
+                                  quantity: quantity,
+                                  name: productDetails.name,
+                                  image: productDetails.image,
+                                  total_quantity: selectedVariantStock
+                                    ? selectedVariantStock
+                                    : productDetails?.stock,
+                                  return_order:
+                                    productDetails?.returnable || "yes",
+                                },
+                              });
+                            }}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${id}`}
+                            onClick={handleAddToCart}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">
@@ -2615,6 +2675,7 @@ function SubcategoriesProduct() {
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
+                                        setSelectedVariantStock(item.stock); // Store the price in state
                                       }}
                                     >
                                       {item.type}
@@ -2860,7 +2921,11 @@ function SubcategoriesProduct() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod" disabled={!isAddressSelected}>
+                  <button
+                    data-toggle="modal"
+                    data-target="#cod"
+                    disabled={!isAddressSelected}
+                  >
                     Checkout
                   </button>
                   <button data-dismiss="modal" onClick={handleResetClick}>

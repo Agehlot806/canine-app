@@ -23,6 +23,7 @@ function Partneroneshop() {
   const [vendorItemList, setVendorItemList] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -96,7 +97,7 @@ function Partneroneshop() {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -110,6 +111,7 @@ function Partneroneshop() {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
       setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantStock(defaultVariant.stock);
     }
   }, [productDetails]);
 
@@ -230,8 +232,10 @@ function Partneroneshop() {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
+  } else {
+    uservariationprice = productDetails.price;
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -245,6 +249,9 @@ function Partneroneshop() {
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
+  console.log("priceformattedSavedAmount", formattedSavedAmount);
+  const MrpPrice = Number(savedAmount).toString();
+  console.log("MrpPrice", MrpPrice);
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -702,6 +709,10 @@ function Partneroneshop() {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -857,6 +868,7 @@ function Partneroneshop() {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
+    setSelectedVariantStock(null);
   };
 
   const renderProducthead = (name) => {
@@ -1190,54 +1202,64 @@ function Partneroneshop() {
 
                         <div className="needplaceProduct">
                           <Row>
-                            <Col sm={6} xs={6}>
-                              <div>
+                            {productDetails?.variations?.length > 0 && (
+                              <Col sm={6} xs={6}>
                                 <div>
-                                  <div className="tab-container">
-                                    <h6>Variations</h6>
-                                    <Row>
-                                      {productDetails?.variations &&
-                                        productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map(
-                                          (item, index) => (
-                                            <Col lg={5} key={index} className="p-0">
-                                              {item.stock !== 0 ? (
-                                                <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
-                                                      ? "active"
-                                                      : ""
-                                                  }`}
-                                                  onClick={() => {
-                                                    setSelectedVariant(
+                                  <div>
+                                    <div className="tab-container">
+                                      <h6>Variations</h6>
+                                      <Row>
+                                        {productDetails?.variations &&
+                                          productDetails?.variations.length >
+                                            0 &&
+                                          productDetails?.variations.map(
+                                            (item, index) => (
+                                              <Col
+                                                lg={5}
+                                                key={index}
+                                                className="p-0"
+                                              >
+                                                {item.stock !== 0 ? (
+                                                  <div
+                                                    className={`tab-variations ${
+                                                      selectedVariant ===
                                                       item.type
-                                                    );
-                                                    setSelectedVariantPrice(
-                                                      item.price
-                                                    ); // Store the price in state
-                                                  }}
-                                                >
-                                                  {item.type}
-                                                </div>
-                                              ) : (
-                                                <div
-                                                  className="tab-variations disabledvariation"
-                                                  title="Stock unavailable"
-                                                >
-                                                  {/* <span className="blurred-text"> */}
-                                                  {item.type}
-                                                  {/* </span> */}
-                                                </div>
-                                              )}
-                                            </Col>
-                                          )
-                                        )}
-                                    </Row>
+                                                        ? "active"
+                                                        : ""
+                                                    }`}
+                                                    onClick={() => {
+                                                      setSelectedVariant(
+                                                        item.type
+                                                      );
+                                                      setSelectedVariantPrice(
+                                                        item.price
+                                                      ); // Store the price in state
+                                                      setSelectedVariantStock(
+                                                        item.stock
+                                                      );
+                                                    }}
+                                                  >
+                                                    {item.type}
+                                                  </div>
+                                                ) : (
+                                                  <div
+                                                    className="tab-variations disabledvariation"
+                                                    title="Stock unavailable"
+                                                  >
+                                                    {/* <span className="blurred-text"> */}
+                                                    {item.type}
+                                                    {/* </span> */}
+                                                  </div>
+                                                )}
+                                              </Col>
+                                            )
+                                          )}
+                                      </Row>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </Col>
+                              </Col>
+                            )}
                             <Col sm={6} xs={6}>
                               <div className="quantity-btn quickbtn">
                                 <button onClick={handleDecrementone}>
@@ -1264,24 +1286,35 @@ function Partneroneshop() {
                         </div>
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                         <h5>About Us</h5>
@@ -1328,6 +1361,11 @@ function Partneroneshop() {
                                   quantity: quantity,
                                   name: productDetails.name,
                                   image: productDetails.image,
+                                  total_quantity: selectedVariantStock
+                                    ? selectedVariantStock
+                                    : productDetails?.stock,
+                                  return_order:
+                                    productDetails?.returnable || "yes",
                                 },
                               });
                             }}
@@ -1948,62 +1986,46 @@ function Partneroneshop() {
                       </Col>
                       <Col lg={7} sm={10}>
                         <h2>{productDetails?.name}</h2>
-                        <div className="tab-container">
-                          <h6>Variations</h6>
-                          <Row>
-                            {productDetails?.variations &&
-                              productDetails?.variations.length > 0 &&
-                              productDetails?.variations.map((item, index) => (
-                                <Col lg={3} key={index}>
-                                  {item.stock !== 0 ? (
-                                    <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                      onClick={() => {
-                                        setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
-                                      }}
-                                    >
-                                      {item.type}
-                                    </div>
-                                  ) : (
-                                    <div
-                                      className="tab-variations disabledvariation"
-                                      title="Stock unavailable"
-                                    >
-                                      {/* <span className="blurred-text"> */}
-                                      {item.type}
-                                      {/* </span> */}
-                                    </div>
-                                  )}
-                                </Col>
-                              ))}
-                          </Row>
-                        </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
+                        {productDetails?.variations?.length > 0 && (
+                          <div className="tab-container">
+                            <h6>Variations</h6>
+                            <Row>
+                              {productDetails?.variations &&
+                                productDetails?.variations.length > 0 &&
+                                productDetails?.variations.map(
+                                  (item, index) => (
+                                    <Col lg={5} key={index} className="p-0">
+                                      {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                            setSelectedVariantStock(item.stock);
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
+                                    </Col>
+                                  )
+                                )}
+                            </Row>
+                          </div>
+                        )}
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementone}>
                             <i className="fa fa-minus" />
@@ -2027,24 +2049,35 @@ function Partneroneshop() {
 
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
-                            <Row>
-                              <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col>
-                              <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${
-                                  isNaN(formattedAmount) ? 0 : formattedAmount
-                                }`}</h5>
-                              </Col>
-                              <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col>
-                            </Row>
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
+                                </Col>
+                              </Row>
+                            )}
                           </div>
                         </div>
                       </Col>
@@ -2184,7 +2217,7 @@ function Partneroneshop() {
                             <Col>
                               <h5>
                                 ₹
-                                {parseInt(Amount) * 0.05 +
+                                {parseInt(Amount * 0.05) +
                                   parseInt(Amount) -
                                   (disscountvalue?.discount ?? 0)}
                               </h5>

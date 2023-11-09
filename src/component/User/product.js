@@ -50,6 +50,8 @@ function Product(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [itembannerdata, setitembannerdata] = useState([]);
+
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   // without signup add cart start
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
@@ -214,6 +216,10 @@ function Product(props) {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -639,6 +645,7 @@ function Product(props) {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
       setSelectedVariantPrice(defaultVariant.price);
+      setSelectedVariantStock(defaultVariant.stock);
     }
   }, [productDetails]);
 
@@ -1271,6 +1278,7 @@ function Product(props) {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
+    setSelectedVariantStock(null);
   };
 
   return (
@@ -2018,7 +2026,11 @@ function Product(props) {
                                             0 &&
                                           productDetails?.variations.map(
                                             (item, index) => (
-                                              <Col lg={5} key={index} className="p-0">
+                                              <Col
+                                                lg={5}
+                                                key={index}
+                                                className="p-0"
+                                              >
                                                 {item.stock !== 0 ? (
                                                   <div
                                                     className={`tab-variations ${
@@ -2161,6 +2173,11 @@ function Product(props) {
                                   quantity: quantity,
                                   name: productDetails.name,
                                   image: productDetails.image,
+                                  total_quantity: selectedVariantStock
+                                    ? selectedVariantStock
+                                    : productDetails?.stock,
+                                  return_order:
+                                    productDetails?.returnable || "yes",
                                 },
                               });
                             }}
@@ -2799,6 +2816,7 @@ function Product(props) {
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
+                                        setSelectedVariantStock(item.stock); // Store the price in state
                                       }}
                                     >
                                       {item.type}

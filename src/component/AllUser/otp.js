@@ -52,8 +52,8 @@ function Otp() {
           );
         }
         console.log("response.data.data: ", response.data.data);
-        navigate("/",{replace: true});
-        handleAddToCart(response.data.data[0].id)
+        navigate("/", { replace: true });
+        handleAddToCart(response.data.data[0].id);
       }
     } catch (error) {
       console.error(error);
@@ -87,24 +87,21 @@ function Otp() {
     };
   }, [seconds]);
 
-
   const handleAddToCart = async (id) => {
     try {
-      const response = cart.forEach(element => {
-        const res = axios.post(
-          `${BASE_URL}/customer/wish-list/add_product`,
-          {
-           
-            item_name: element?.name,
-            variant: element.variant, // You may need to update this based on your data
-            image: element?.image,
-            quantity: element.quantity,
-            price: element.price,
-            user_id: id,
-            item_id: element?.item_id,
-          }
-        );
-        return res
+      const response = cart.forEach((element) => {
+        const res = axios.post(`${BASE_URL}/customer/wish-list/add_product`, {
+          item_name: element?.name,
+          variant: element.variant, // You may need to update this based on your data
+          image: element?.image,
+          quantity: element.quantity,
+          price: element.price,
+          user_id: id,
+          item_id: element?.item_id,
+          total_quantity: element?.total_quantity,
+          return_order: element?.return_order,
+        });
+        return res;
       });
 
       if (response.data.success) {
@@ -124,7 +121,9 @@ function Otp() {
             <Row className="justify-content-center">
               <Col lg={6}>
                 <div className="otp-area">
-                <Link to="/"><img src={logo} /></Link>
+                  <Link to="/">
+                    <img src={logo} />
+                  </Link>
                   <h4>Verify your mobile number</h4>
                   <p>An OTP has been sent to your mobile number</p>
 

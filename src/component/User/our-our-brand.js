@@ -21,6 +21,7 @@ function Ourourbrand(props) {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -171,6 +172,10 @@ function Ourourbrand(props) {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -2145,7 +2150,11 @@ function Ourourbrand(props) {
                                         productDetails?.variations.length > 0 &&
                                         productDetails?.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} className="p-0" key={index}>
+                                            <Col
+                                              lg={5}
+                                              className="p-0"
+                                              key={index}
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${
@@ -2284,6 +2293,11 @@ function Ourourbrand(props) {
                                   quantity: quantity,
                                   name: productDetails.name,
                                   image: productDetails.image,
+                                  total_quantity: selectedVariantStock
+                                    ? selectedVariantStock
+                                    : productDetails?.stock,
+                                  return_order:
+                                    productDetails?.returnable || "yes",
                                 },
                               });
                             }}

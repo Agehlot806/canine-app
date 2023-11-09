@@ -45,6 +45,7 @@ function Canineproduct(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
@@ -198,6 +199,10 @@ function Canineproduct(props) {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -1960,7 +1965,11 @@ function Canineproduct(props) {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} className="p-0" key={index}>
+                                            <Col
+                                              lg={5}
+                                              className="p-0"
+                                              key={index}
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${

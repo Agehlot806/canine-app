@@ -43,7 +43,7 @@ function Petshopproduct(props) {
   const { id } = useParams();
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
-
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([
@@ -337,6 +337,10 @@ function Petshopproduct(props) {
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
           seller_id: salesmanId ? Number(salesmanId) : "",
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -641,6 +645,7 @@ function Petshopproduct(props) {
       const defaultVariant = productDetails.variations[0];
       setSelectedVariant(defaultVariant.type);
       setSelectedVariantPrice(defaultVariant.wholeprice);
+      setSelectedVariantStock(defaultVariant?.stock);
     }
   }, [productDetails]);
 
@@ -1968,6 +1973,9 @@ function Petshopproduct(props) {
                                                 setSelectedVariantPrice(
                                                   item.wholeprice
                                                 ); // Store the price in state
+                                                setSelectedVariantStock(
+                                                  item.stock
+                                                );
                                               }}
                                             >
                                               {item.type}
