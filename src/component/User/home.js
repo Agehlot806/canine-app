@@ -439,7 +439,7 @@ function Home(props) {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -498,10 +498,10 @@ function Home(props) {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== '') {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
-  }else {
-    uservariationprice = productDetails.price
+  } else {
+    uservariationprice = productDetails.price;
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
   // Amount use in Quick
@@ -1061,21 +1061,20 @@ function Home(props) {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-}
+  };
 
-
-const renderProducthead = (name) => {
-  const maxCharacters = 20;
-  if (name?.length <= maxCharacters) {
-    return <h6>{name}</h6>;
-  }
-  const truncatedDescription = name?.slice(0, maxCharacters);
-  return (
-    <>
-      <h6>{truncatedDescription}..</h6>
-    </>
-  );
-};
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
 
   return (
     <>
@@ -2067,34 +2066,37 @@ const renderProducthead = (name) => {
                           </Row>
                         </div>
                         <div className="needplaceProduct">
-                        <div className="product-deatils-price">
-                    {uservariationprice && formattedAmount >= 0 ? (
-                      <Row>
-                        <Col lg={3} sm={3} xs={3}>
-                          <p>{`₹${uservariationprice}`}</p>
-                        </Col>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                            }`}</h5>
-                        </Col>
-                        {/* {formattedSavedAmount > 0 && ( */}
-                        <Col lg={5} sm={5} xs={3}>
-                          {formattedSavedAmount > 0 ? (
-                            <h6>Your save ₹{formattedSavedAmount}</h6>
-                          ) : (
-                            <h6>No savings</h6>
-                          )}
-                        </Col>
-                        {/* )} */}
-                      </Row>
-                    ) : (
-                      <Row>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
-                        </Col>
-                      </Row>
-                    )}
-                  </div>
+                          <div className="product-deatils-price">
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
+                                </Col>
+                              </Row>
+                            )}
+                          </div>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2108,10 +2110,10 @@ const renderProducthead = (name) => {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              <tr>
+                              {/* <tr>
                                 <th>Health Condition</th>
                                 <td>{productDetails?.helthCondition_id}</td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
@@ -2848,34 +2850,37 @@ const renderProducthead = (name) => {
                         </div>
 
                         <div className="needplaceProduct">
-                        <div className="product-deatils-price">
-                    {uservariationprice && formattedAmount >= 0 ? (
-                      <Row>
-                        <Col lg={3} sm={3} xs={3}>
-                          <p>{`₹${uservariationprice}`}</p>
-                        </Col>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                            }`}</h5>
-                        </Col>
-                        {/* {formattedSavedAmount > 0 && ( */}
-                        <Col lg={5} sm={5} xs={3}>
-                          {formattedSavedAmount > 0 ? (
-                            <h6>Your save ₹{formattedSavedAmount}</h6>
-                          ) : (
-                            <h6>No savings</h6>
-                          )}
-                        </Col>
-                        {/* )} */}
-                      </Row>
-                    ) : (
-                      <Row>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
-                        </Col>
-                      </Row>
-                    )}
-                  </div>
+                          <div className="product-deatils-price">
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
+                                </Col>
+                              </Row>
+                            )}
+                          </div>
                         </div>
                       </Col>
                       <Col lg={2} sm={2} xs={6} className="align-self-end">

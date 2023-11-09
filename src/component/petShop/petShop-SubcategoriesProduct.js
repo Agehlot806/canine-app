@@ -1977,10 +1977,10 @@ function PetShopSubcategoriesProduct(props) {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              <tr>
+                              {/* <tr>
                                 <th>Health Condition</th>
                                 <td>{productDetails?.helthCondition_id}</td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>

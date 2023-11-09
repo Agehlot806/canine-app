@@ -58,7 +58,7 @@ function Product(props) {
   const { cart, dispatch } = useCartWithoutLogin();
   // without signup add cart end
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([
@@ -623,7 +623,7 @@ function Product(props) {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -681,16 +681,15 @@ function Product(props) {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== '') {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
   } else {
-    uservariationprice = productDetails.price
+    uservariationprice = productDetails.price;
   }
   const Amount = Math.floor(
     uservariationprice - (uservariationprice * productDetails.discount) / 100
   ).toFixed(2);
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
-
 
   const formattedAmount = Number(Amount).toString();
   console.log("priceformattedAmount", formattedAmount);
@@ -698,7 +697,7 @@ function Product(props) {
 
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
+      (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
   // const savedAmount = (
   //   productDetails.price * quantity -
@@ -721,7 +720,7 @@ function Product(props) {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -729,7 +728,7 @@ function Product(props) {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -1269,7 +1268,7 @@ function Product(props) {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-}
+  };
 
   return (
     <>
@@ -1313,25 +1312,25 @@ function Product(props) {
                           <div>
                             {allbrand
                               ? allbrand.map(
-                                (items) =>
-                                  items.canine == "1" && (
-                                    <div
-                                      className="form-check"
-                                      onClick={handleCheckboxClick}
-                                    >
-                                      <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        onClick={(e) =>
-                                          handleDataListBrand(items.title)
-                                        }
-                                      />
-                                      <label className="form-check-label">
-                                        {items.title}
-                                      </label>
-                                    </div>
-                                  )
-                              )
+                                  (items) =>
+                                    items.canine == "1" && (
+                                      <div
+                                        className="form-check"
+                                        onClick={handleCheckboxClick}
+                                      >
+                                        <input
+                                          className="form-check-input"
+                                          type="checkbox"
+                                          onClick={(e) =>
+                                            handleDataListBrand(items.title)
+                                          }
+                                        />
+                                        <label className="form-check-label">
+                                          {items.title}
+                                        </label>
+                                      </div>
+                                    )
+                                )
                               : ""}
                           </div>
                         </>
@@ -1353,20 +1352,20 @@ function Product(props) {
                           <div>
                             {allsubcate
                               ? allsubcate.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onClick={(e) => allcateselect(items.name)}
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) => allcateselect(items.name)}
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1438,22 +1437,22 @@ function Product(props) {
                           <div>
                             {alllifesage
                               ? alllifesage.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onChange={(e) =>
-                                      Lifesatedataselect(items.name)
-                                    }
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onChange={(e) =>
+                                        Lifesatedataselect(items.name)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1475,22 +1474,22 @@ function Product(props) {
                           <div>
                             {allbreed
                               ? allbreed.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onChange={(e) =>
-                                      allbreedselect(items.name)
-                                    }
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onChange={(e) =>
+                                        allbreedselect(items.name)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1512,22 +1511,22 @@ function Product(props) {
                           <div>
                             {allhealth
                               ? allhealth.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onClick={(e) =>
-                                      allhealthselect(items.title)
-                                    }
-                                  />
-                                  <label className="form-check-label">
-                                    {items.title}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) =>
+                                        allhealthselect(items.title)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.title}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1689,10 +1688,11 @@ function Product(props) {
                                 <h6>{renderProducthead(item.name)}</h6>
                                 {/* <p>{item.description}</p> */}
                                 <p
-                                  className={`truncate-text ${!expandedDescription[item.id]
-                                    ? "read-more-link"
-                                    : ""
-                                    }`}
+                                  className={`truncate-text ${
+                                    !expandedDescription[item.id]
+                                      ? "read-more-link"
+                                      : ""
+                                  }`}
                                 >
                                   {item.description}
                                   {item.description?.length > 100 &&
@@ -1726,7 +1726,7 @@ function Product(props) {
                                   <Col className="align-self-center">
                                     <h4>{`₹${Math.floor(
                                       item.price -
-                                      (item.price * item.discount) / 100
+                                        (item.price * item.discount) / 100
                                     )}`}</h4>
                                   </Col>
                                   {/* <Col>
@@ -1874,7 +1874,11 @@ function Product(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1891,7 +1895,7 @@ function Product(props) {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1932,17 +1936,17 @@ function Product(props) {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1951,13 +1955,13 @@ function Product(props) {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -2007,19 +2011,27 @@ function Product(props) {
                                       <h6>Variations</h6>
                                       <Row>
                                         {productDetails?.variations &&
-                                          productDetails?.variations.length > 0 &&
+                                          productDetails?.variations.length >
+                                            0 &&
                                           productDetails?.variations.map(
                                             (item, index) => (
-                                              <Col lg={3} key={index} className="p-0">
-
+                                              <Col
+                                                lg={3}
+                                                key={index}
+                                                className="p-0"
+                                              >
                                                 {item.stock !== 0 ? (
                                                   <div
-                                                    className={`tab-variations ${selectedVariant === item.type
-                                                      ? "active"
-                                                      : ""
-                                                      }`}
+                                                    className={`tab-variations ${
+                                                      selectedVariant ===
+                                                      item.type
+                                                        ? "active"
+                                                        : ""
+                                                    }`}
                                                     onClick={() => {
-                                                      setSelectedVariant(item.type);
+                                                      setSelectedVariant(
+                                                        item.type
+                                                      );
                                                       setSelectedVariantPrice(
                                                         item.price
                                                       ); // Store the price in state
@@ -2081,8 +2093,9 @@ function Product(props) {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2097,7 +2110,9 @@ function Product(props) {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -2115,10 +2130,10 @@ function Product(props) {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              <tr>
+                              {/* <tr>
                                 <th>Health Condition</th>
                                 <td>{productDetails?.helthCondition_id}</td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
@@ -2669,10 +2684,11 @@ function Product(props) {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2776,10 +2792,11 @@ function Product(props) {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2830,8 +2847,9 @@ function Product(props) {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2846,7 +2864,9 @@ function Product(props) {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -3144,11 +3164,11 @@ function Product(props) {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
