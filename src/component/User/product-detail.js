@@ -22,8 +22,10 @@ import pro from "../../assets/images/icon/pro.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import { styled } from "styled-components";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // Import the CSS for the lightbox styles
+// import Lightbox from "react-image-lightbox";
+// import "react-image-lightbox/style.css"; 
+import Lightbox from "react-awesome-lightbox";
+import "react-awesome-lightbox/build/style.css";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
@@ -369,6 +371,32 @@ console.log('selectedVariantPrice',selectedVariantPrice);
   };
 
 
+  // const [mainImage, setMainImage] = useState("");
+  // const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
+  // const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
+
+  // useEffect(() => {
+  //   if (productDetails.image) {
+  //     setMainImage(
+  //       "https://canine.hirectjob.in//storage/app/public/product/" +
+  //       productDetails.image
+  //     );
+  //   }
+  // }, [productDetails]);
+
+  // const handleThumbnailClick = (index) => {
+  //   setMainImage(
+  //     "https://canine.hirectjob.in//storage/app/public/product/" +
+  //     productDetails.images[index]
+  //   );
+  // };
+
+  // const handleMainImageClick = () => {
+  //   setLightboxIsOpen(true);
+  //   setLightboxImageIndex(productDetails.images.indexOf(mainImage));
+  // };
+
+
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
@@ -377,7 +405,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -385,7 +413,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -897,6 +925,22 @@ console.log('selectedVariantPrice',selectedVariantPrice);
     );
   };
 
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; 
+
+    if (description?.length <= maxCharacters) {
+      return <p>{description}</p>; 
+    }
+
+    const truncatedDescription = description?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -923,7 +967,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
       <section className="section-padding">
         <Container>
           <Row>
-            <Col lg={6} sm={6}>
+            {/* <Col lg={6} sm={6}>
               <>
                 <div>
                   <div className="product-item">
@@ -1004,7 +1048,60 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                   />
                 )}
               </>
-            </Col>
+            </Col> */}
+
+<Col lg={6} sm={6}>
+      <>
+        <div>
+          <div className="product-item">
+            <img
+              src={mainImage}
+              alt="Product Image"
+              onClick={handleMainImageClick}
+            />
+          </div>
+          <div className="needplace">
+            <Row>
+              {productDetails?.images && productDetails?.images.length > 0 ? (
+                productDetails.images.map((item, index) => (
+                  <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
+                    <div
+                      className="product-item-inner"
+                      onClick={() => handleThumbnailClick(index)}
+                    >
+                      <img
+                        src={
+                          "https://canine.hirectjob.in//storage/app/public/product/" +
+                          item
+                        }
+                        alt={`Image ${index}`}
+                      />
+                    </div>
+                  </Col>
+                ))
+              ) : (
+                <p className="emptyMSG">No Related Image.</p>
+              )}
+            </Row>
+          </div>
+        </div>
+
+        {lightboxIsOpen && (
+          <Lightbox
+            images={productDetails.images.map((item) => ({
+              url:
+                "https://canine.hirectjob.in//storage/app/public/product/" +
+                item,
+              title: productDetails.name,
+            }))}
+            currentIndex={lightboxImageIndex}
+            onClose={() => setLightboxIsOpen(false)}
+          />
+        )}
+      </>
+    </Col>
+
+
             <Col lg={6} sm={6}>
               <div className="productDetail-content">
                 <Row>
@@ -1375,7 +1472,9 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                         </div>
                         <div>
                           <h6>{renderProducthead(item.name)}</h6>
-                          <p>{item.description}</p>
+                          <p>
+                                {renderProductDescription(item.description)}
+                              </p>
                         </div>
                         <div className="product-bag">
                           <Row>

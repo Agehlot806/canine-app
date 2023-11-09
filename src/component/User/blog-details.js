@@ -984,29 +984,6 @@ function Blogdetails() {
                           </div>
                           <div>
                             <h6>{renderProducthead(item[0]?.name)}</h6>
-                            {/* <p
-                          className={`truncate-text ${
-                            !expandedDescription[item[0]?.id]
-                              ? "read-more-link"
-                              : ""
-                          }`}
-                        >
-                          {item[0]?.description}
-                          {item[0]?.description?.length > 100 &&
-                            !expandedDescription[item[0]?.id] && (
-                              <span
-                                className="read-more-link"
-                                onClick={() =>
-                                  setExpandedDescription({
-                                    ...expandedDescription,
-                                    [item[0]?.id]: true,
-                                  })
-                                }
-                              >
-                                Read More
-                              </span>
-                            )}
-                        </p> */}
                             <p>{renderProductDescription(item[0]?.description)}</p>
                           </div>
                           <div className="product-bag">
@@ -1325,10 +1302,10 @@ function Blogdetails() {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              <tr>
+                              {/* <tr>
                                 <th>Health Condition</th>
                                 <td>{productDetails?.helthCondition_id}</td>
-                              </tr>
+                              </tr> */}
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>

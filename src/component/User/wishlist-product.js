@@ -98,6 +98,23 @@ function Wishlistproduct() {
     );
   };
 
+
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; 
+
+    if (description?.length <= maxCharacters) {
+      return <p>{description}</p>; 
+    }
+
+    const truncatedDescription = description?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
   return (
     <>
       <Toaster />
@@ -152,7 +169,7 @@ function Wishlistproduct() {
                                   <h6>
                                     {renderProducthead(item.store_id[0].name)}
                                   </h6>
-                                  <p>{item.store_id[0].description}</p>
+                                  <p>{renderProductDescription(item.store_id[0].description)}</p>
                                 </>
                               ) : (
                                 <p>No Product Data</p>
