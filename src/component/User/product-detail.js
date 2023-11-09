@@ -28,6 +28,7 @@ import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
 import { useContext } from "react";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import { RWebShare } from "react-web-share";
 
 function Productdetail() {
   const { id } = useParams();
@@ -333,7 +334,7 @@ function Productdetail() {
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
-      (selectedVariantPrice * productDetails.discount) / 100
+    (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
   // const savedAmount = (
   //   productDetails.price * quantity -
@@ -374,7 +375,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -382,7 +383,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -918,18 +919,18 @@ function Productdetail() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-              (item, index) =>
-                item.type === "common" && (
-                  <Link to={item.default_link}>
-                    <img
-                      className="partner-img"
-                      src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
-                      }
-                    />
-                  </Link>
-                )
-            )
+            (item, index) =>
+              item.type === "common" && (
+                <Link to={item.default_link}>
+                  <img
+                    className="partner-img"
+                    src={
+                      "https://canine.hirectjob.in//storage/app/" + item.image
+                    }
+                  />
+                </Link>
+              )
+          )
           : null}
       </div>
 
@@ -949,7 +950,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                      productDetails?.images.length > 0 ? (
+                        productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1011,7 +1012,21 @@ function Productdetail() {
                           <span className="vegetarian">●</span>
                         </span>
                       )}
+
+                      <RWebShare
+                        data={{
+                          text: `Check out this amazing product: ${productDetails.name}`,
+                          url: window.location.href,
+                          title: productDetails.name,
+                        }}
+                        onClick={() => console.log("Product shared successfully!")}
+                      >
+                        <div className="share-btn">
+                          <i class="fa fa-share-alt" />
+                        </div>
+                      </RWebShare>
                     </p>
+
                   </Col>
                 </Row>
                 <p>
@@ -1054,11 +1069,10 @@ function Productdetail() {
                                       </div> */}
                                         {item.stock !== 0 ? (
                                           <div
-                                            className={`tab-variations ${
-                                              selectedVariant === item.type
+                                            className={`tab-variations ${selectedVariant === item.type
                                                 ? "active"
                                                 : ""
-                                            }`}
+                                              }`}
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
@@ -1122,9 +1136,8 @@ function Productdetail() {
                           <p>{`₹${uservariationprice}`}</p>
                         </Col>
                         <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${
-                            isNaN(formattedAmount) ? 0 : formattedAmount
-                          }`}</h5>
+                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                            }`}</h5>
                         </Col>
                         {/* {formattedSavedAmount > 0 && ( */}
                         <Col lg={5} sm={5} xs={3}>
@@ -1528,13 +1541,13 @@ function Productdetail() {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              // onClick={handleMainImageClick}
+                            // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1574,17 +1587,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1593,13 +1606,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -1656,12 +1669,11 @@ function Productdetail() {
                                             >
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
+                                                  className={`tab-variations ${selectedVariant ===
+                                                      item.type
                                                       ? "active"
                                                       : ""
-                                                  }`}
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1723,9 +1735,8 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -1740,9 +1751,8 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -1874,11 +1884,10 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1982,11 +1991,10 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2058,9 +2066,8 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2075,9 +2082,8 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -2633,11 +2639,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

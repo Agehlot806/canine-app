@@ -117,9 +117,12 @@ const PetshopTransitionHistory = () => {
                         </Col>
                         {console.log("transaction: ", transaction)}
                       </Row>
+                     
                     ))}
                   </div>
+                  
                 </Col>
+                
               </Row>
 
               {/* Pagination */}

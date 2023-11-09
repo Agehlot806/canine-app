@@ -19,6 +19,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import paydone from "../../assets/images/icon/paydone.png";
 import { Fade } from "react-reveal";
 import loadinggif from "../../assets/images/video/loading.gif";
+import { RWebShare } from "react-web-share";
 
 function PetshopproductDetails() {
   const { id } = useParams();
@@ -975,9 +976,36 @@ function PetshopproductDetails() {
                 <Col lg={6}>
                   <div className="productDetail-content">
                     <Row>
-                      <Col lg={10}>
+                      <Col lg={9} sm={9} xs={9}>
                         <h4>{productDetails.name}</h4>
                       </Col>
+                      <Col lg={3} sm={3} xs={3}>
+                    <p>
+                      {productDetails.veg == 0 ? (
+                        <span>
+                          <span className="non-vegetarian">●</span>
+                        </span>
+                      ) : (
+                        <span>
+                          <span className="vegetarian">●</span>
+                        </span>
+                      )}
+
+                      <RWebShare
+                        data={{
+                          text: `Check out this amazing product: ${productDetails.name}`,
+                          url: window.location.href,
+                          title: productDetails.name,
+                        }}
+                        onClick={() => console.log("Product shared successfully!")}
+                      >
+                        <div className="share-btn">
+                          <i class="fa fa-share-alt" />
+                        </div>
+                      </RWebShare>
+                    </p>
+
+                  </Col>
                     </Row>
                     <p>
                       By <span>{productDetails?.brand_id}</span>
@@ -1001,7 +1029,7 @@ function PetshopproductDetails() {
                                   productDetails?.variations.length > 0 &&
                                   productDetails.variations.map(
                                     (item, index) => (
-                                      <Col lg={3} sm={3} xs={3} key={index}>
+                                      <Col lg={3} sm={3} xs={3} key={index} className="p-0">
                                         {item.stock !== 0 ? (
                                           <div
                                             className={`tab-variations ${
@@ -1422,6 +1450,7 @@ function PetshopproductDetails() {
                           <Col lg={10}>
                             <h4>{productDetails.name}</h4>
                           </Col>
+                        
                         </Row>
                         <p>
                           By <span>{productDetails.store_name}</span>
