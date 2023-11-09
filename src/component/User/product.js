@@ -519,6 +519,7 @@ function Product(props) {
         "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
+      const cateidproduct = products.filter((item) => item.module_id === 1);
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -531,7 +532,7 @@ function Product(props) {
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
         // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
-        products: products,
+        products: cateidproduct,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
@@ -779,10 +780,11 @@ function Product(props) {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -3018,12 +3020,21 @@ function Product(props) {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
+                  <button
+                    data-toggle="modal"
+                    data-target="#cod"
+                    disabled={!isAddressSelected}
+                  >
                     Checkout
                   </button>
                   <button data-dismiss="modal" onClick={handleResetClick}>
                     Close
                   </button>
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>

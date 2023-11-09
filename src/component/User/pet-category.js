@@ -114,7 +114,20 @@ function Petcategory() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([allProduct(), allBrandshow(), allLifesageshow(), allBreedshow(), allsubcategary(), allHealthconditionshow(), Allsubcategories(), fetchWishlistData(), couponlistdata(), allReview(), GetdataAll(), allAddressList()])
+    Promise.all([
+      allProduct(),
+      allBrandshow(),
+      allLifesageshow(),
+      allBreedshow(),
+      allsubcategary(),
+      allHealthconditionshow(),
+      Allsubcategories(),
+      fetchWishlistData(),
+      couponlistdata(),
+      allReview(),
+      GetdataAll(),
+      allAddressList(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -173,7 +186,9 @@ function Petcategory() {
       .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage`)
       .then((response) => {
         console.log("responseresponse?????", response);
-        const filteredData = response.data.data.filter(item => item.category_id == id);
+        const filteredData = response.data.data.filter(
+          (item) => item.category_id == id
+        );
         setAlllifesage(filteredData);
       })
       .catch((error) => {
@@ -185,7 +200,9 @@ function Petcategory() {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed`)
       .then((response) => {
-        const filteredData = response.data.data.filter(item => item.category_id == id);
+        const filteredData = response.data.data.filter(
+          (item) => item.category_id == id
+        );
         console.log("Filtered Data: ", filteredData);
         setAllBreed(filteredData);
       })
@@ -237,14 +254,15 @@ function Petcategory() {
       .then((response) => {
         console.log(response);
         console.log("subcategories Successful");
-        const filteredSubcategories = response.data.data.filter(subcategory => subcategory.category === id);
+        const filteredSubcategories = response.data.data.filter(
+          (subcategory) => subcategory.category === id
+        );
         setsubcategories(filteredSubcategories);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
 
   const [selectedBrandIds, setSelectedBrandIds] = useState([]);
   const [selectedlifeIds, setSelectedLifeIds] = useState([]);
@@ -645,7 +663,7 @@ function Petcategory() {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -703,10 +721,10 @@ function Petcategory() {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== '') {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
-  }else {
-    uservariationprice = productDetails.price
+  } else {
+    uservariationprice = productDetails.price;
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -731,7 +749,7 @@ function Petcategory() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -739,7 +757,7 @@ function Petcategory() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -790,10 +808,12 @@ function Petcategory() {
   console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
 
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -1358,21 +1378,20 @@ function Petcategory() {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-}
+  };
 
-const renderProducthead = (name) => {
-  const maxCharacters = 20;
-  if (name?.length <= maxCharacters) {
-    return <h6>{name}</h6>;
-  }
-  const truncatedDescription = name?.slice(0, maxCharacters);
-  return (
-    <>
-      <h6>{truncatedDescription}..</h6>
-    </>
-  );
-};
-
+  const renderProducthead = (name) => {
+    const maxCharacters = 20;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}..</h6>
+      </>
+    );
+  };
 
   return (
     <>
@@ -1384,7 +1403,8 @@ const renderProducthead = (name) => {
             <img src={loadinggif} alt="" />
             <h5>Please Wait.......</h5>
           </div>
-        </section>) : (
+        </section>
+      ) : (
         <>
           <Container fluid className="p-0">
             <div className="all-bg">
@@ -1422,25 +1442,25 @@ const renderProducthead = (name) => {
                           <div>
                             {allbrand
                               ? allbrand.map(
-                                (items) =>
-                                  items.canine == "1" && (
-                                    <div
-                                      className="form-check"
-                                      onClick={handleCheckboxClick}
-                                    >
-                                      <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        onClick={(e) =>
-                                          handleDataListBrand(items.title)
-                                        }
-                                      />
-                                      <label className="form-check-label">
-                                        {items.title}
-                                      </label>
-                                    </div>
-                                  )
-                              )
+                                  (items) =>
+                                    items.canine == "1" && (
+                                      <div
+                                        className="form-check"
+                                        onClick={handleCheckboxClick}
+                                      >
+                                        <input
+                                          className="form-check-input"
+                                          type="checkbox"
+                                          onClick={(e) =>
+                                            handleDataListBrand(items.title)
+                                          }
+                                        />
+                                        <label className="form-check-label">
+                                          {items.title}
+                                        </label>
+                                      </div>
+                                    )
+                                )
                               : ""}
                           </div>
                         </>
@@ -1462,20 +1482,22 @@ const renderProducthead = (name) => {
                           <div>
                             {subcategories
                               ? subcategories.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onClick={(e) => allsubcateselect(items.name)}
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) =>
+                                        allsubcateselect(items.name)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1497,20 +1519,20 @@ const renderProducthead = (name) => {
                           <div>
                             {allsubcate
                               ? allsubcate.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onClick={(e) => allcateselect(items.name)}
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) => allcateselect(items.name)}
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1577,22 +1599,22 @@ const renderProducthead = (name) => {
                           <div>
                             {alllifesage
                               ? alllifesage.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onChange={(e) =>
-                                      Lifesatedataselect(items.name)
-                                    }
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onChange={(e) =>
+                                        Lifesatedataselect(items.name)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1614,20 +1636,22 @@ const renderProducthead = (name) => {
                           <div>
                             {allbreed
                               ? allbreed.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onChange={(e) => allbreedselect(items.name)}
-                                  />
-                                  <label className="form-check-label">
-                                    {items.name}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onChange={(e) =>
+                                        allbreedselect(items.name)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.name}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1649,20 +1673,22 @@ const renderProducthead = (name) => {
                           <div>
                             {allhealth
                               ? allhealth.map((items) => (
-                                <div
-                                  className="form-check"
-                                  onClick={handleCheckboxClick}
-                                >
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    onClick={(e) => allhealthselect(items.title)}
-                                  />
-                                  <label className="form-check-label">
-                                    {items.title}
-                                  </label>
-                                </div>
-                              ))
+                                  <div
+                                    className="form-check"
+                                    onClick={handleCheckboxClick}
+                                  >
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      onClick={(e) =>
+                                        allhealthselect(items.title)
+                                      }
+                                    />
+                                    <label className="form-check-label">
+                                      {items.title}
+                                    </label>
+                                  </div>
+                                ))
                               : ""}
                           </div>
                         </>
@@ -1705,7 +1731,9 @@ const renderProducthead = (name) => {
                                 type="checkbox"
                                 onClick={(e) => vegnonveghandler("0")}
                               />
-                              <label className="form-check-label">Veg (73)</label>
+                              <label className="form-check-label">
+                                Veg (73)
+                              </label>
                             </div>
                           </div>
                         </>
@@ -1728,8 +1756,12 @@ const renderProducthead = (name) => {
                         <option value="default">Choose...</option>
                         <option value="A-Z">Alphabetically, A-Z</option>
                         <option value="Z-A">Alphabetically, Z-A</option>
-                        <option value="PriceLowToHigh">Price, Low to High</option>
-                        <option value="PriceHighToLow">Price, High to Low</option>
+                        <option value="PriceLowToHigh">
+                          Price, Low to High
+                        </option>
+                        <option value="PriceHighToLow">
+                          Price, High to Low
+                        </option>
                         <option value="DateOldToNew">Date, Old to New</option>
                         <option value="DateNewToOld">Date, New to Old</option>
                       </select>
@@ -1752,7 +1784,9 @@ const renderProducthead = (name) => {
                                   key={item.id}
                                   style={{
                                     background:
-                                      gradientColors[index % gradientColors.length],
+                                      gradientColors[
+                                        index % gradientColors.length
+                                      ],
                                   }}
                                 >
                                   <i
@@ -1781,7 +1815,9 @@ const renderProducthead = (name) => {
                                     <div>
                                       <h6>{renderProducthead(item.name)}</h6>
                                       <p>
-                                        {renderProductDescription(item.description)}
+                                        {renderProductDescription(
+                                          item.description
+                                        )}
                                       </p>
                                     </div>
                                     <div className="product-bag">
@@ -1802,7 +1838,7 @@ const renderProducthead = (name) => {
                                         <Col className="align-self-center">
                                           <h4>{`₹${Math.floor(
                                             item.price -
-                                            (item.price * item.discount) / 100
+                                              (item.price * item.discount) / 100
                                           )}`}</h4>
                                         </Col>
                                         {/* <Col>
@@ -1861,16 +1897,25 @@ const renderProducthead = (name) => {
                               </button>
                             )}
                           </li>
-                          {pages.slice(currentPage8 - 1, currentPage8 + 4).map((page) => (
-                            <li
-                              key={page}
-                              className={page === currentPage8 ? 'page-item active' : 'page-item'}
-                            >
-                              <button className="page-link" onClick={() => goToPage(page)}>
-                                {page}
-                              </button>
-                            </li>
-                          ))}
+                          {pages
+                            .slice(currentPage8 - 1, currentPage8 + 4)
+                            .map((page) => (
+                              <li
+                                key={page}
+                                className={
+                                  page === currentPage8
+                                    ? "page-item active"
+                                    : "page-item"
+                                }
+                              >
+                                <button
+                                  className="page-link"
+                                  onClick={() => goToPage(page)}
+                                >
+                                  {page}
+                                </button>
+                              </li>
+                            ))}
                           <li className="page-item">
                             {paginatedCategories?.length > 0 && (
                               <button
@@ -1907,7 +1952,11 @@ const renderProducthead = (name) => {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1924,7 +1973,7 @@ const renderProducthead = (name) => {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1965,17 +2014,17 @@ const renderProducthead = (name) => {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1984,13 +2033,13 @@ const renderProducthead = (name) => {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -2045,11 +2094,12 @@ const renderProducthead = (name) => {
                                             <Col lg={5} className="p-0" key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
                                                     item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2104,34 +2154,37 @@ const renderProducthead = (name) => {
                           </Row>
                         </div>
                         <div className="needplaceProduct">
-                        <div className="product-deatils-price">
-                    {uservariationprice && formattedAmount >= 0 ? (
-                      <Row>
-                        <Col lg={3} sm={3} xs={3}>
-                          <p>{`₹${uservariationprice}`}</p>
-                        </Col>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                            }`}</h5>
-                        </Col>
-                        {/* {formattedSavedAmount > 0 && ( */}
-                        <Col lg={5} sm={5} xs={3}>
-                          {formattedSavedAmount > 0 ? (
-                            <h6>Your save ₹{formattedSavedAmount}</h6>
-                          ) : (
-                            <h6>No savings</h6>
-                          )}
-                        </Col>
-                        {/* )} */}
-                      </Row>
-                    ) : (
-                      <Row>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
-                        </Col>
-                      </Row>
-                    )}
-                  </div>
+                          <div className="product-deatils-price">
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
+                                </Col>
+                              </Row>
+                            )}
+                          </div>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2403,10 +2456,11 @@ const renderProducthead = (name) => {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2510,10 +2564,11 @@ const renderProducthead = (name) => {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2578,34 +2633,37 @@ const renderProducthead = (name) => {
                         </div>
 
                         <div className="needplaceProduct">
-                        <div className="product-deatils-price">
-                    {uservariationprice && formattedAmount >= 0 ? (
-                      <Row>
-                        <Col lg={3} sm={3} xs={3}>
-                          <p>{`₹${uservariationprice}`}</p>
-                        </Col>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                            }`}</h5>
-                        </Col>
-                        {/* {formattedSavedAmount > 0 && ( */}
-                        <Col lg={5} sm={5} xs={3}>
-                          {formattedSavedAmount > 0 ? (
-                            <h6>Your save ₹{formattedSavedAmount}</h6>
-                          ) : (
-                            <h6>No savings</h6>
-                          )}
-                        </Col>
-                        {/* )} */}
-                      </Row>
-                    ) : (
-                      <Row>
-                        <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
-                        </Col>
-                      </Row>
-                    )}
-                  </div>
+                          <div className="product-deatils-price">
+                            {uservariationprice && formattedAmount >= 0 ? (
+                              <Row>
+                                <Col lg={3} sm={3} xs={3}>
+                                  <p>{`₹${uservariationprice}`}</p>
+                                </Col>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
+                                </Col>
+                                {/* {formattedSavedAmount > 0 && ( */}
+                                <Col lg={5} sm={5} xs={3}>
+                                  {formattedSavedAmount > 0 ? (
+                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                  ) : (
+                                    <h6>No savings</h6>
+                                  )}
+                                </Col>
+                                {/* )} */}
+                              </Row>
+                            ) : (
+                              <Row>
+                                <Col lg={4} sm={4} xs={3}>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
+                                </Col>
+                              </Row>
+                            )}
+                          </div>
                         </div>
                       </Col>
                       <Col lg={2} sm={2} xs={6} className="align-self-end">
@@ -2756,12 +2814,21 @@ const renderProducthead = (name) => {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
+                  <button
+                    data-toggle="modal"
+                    data-target="#cod"
+                    disabled={!isAddressSelected}
+                  >
                     Checkout
                   </button>
                   <button data-dismiss="modal" onClick={handleResetClick}>
                     Close
                   </button>
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>
@@ -3148,11 +3215,11 @@ const renderProducthead = (name) => {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

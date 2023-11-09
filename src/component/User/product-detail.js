@@ -40,7 +40,7 @@ function Productdetail() {
   const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
@@ -97,15 +97,14 @@ function Productdetail() {
     // fetchProductData();
   }, []);
 
-
   const productData = async () => {
     axios
       .get(`${BASE_URL}/items/product_details/${id}`)
       .then((response) => {
         setProductDetails(response.data.data);
-        const cate = response.data.data.category_id
-        const subcate = response.data.data.sub_category
-        fetchrelated(cate, subcate)
+        const cate = response.data.data.category_id;
+        const subcate = response.data.data.sub_category;
+        fetchrelated(cate, subcate);
         // Perform any additional actions after successful deletion
       })
       .catch((error) => {
@@ -119,10 +118,10 @@ function Productdetail() {
       .get(`https://canine.hirectjob.in/api/v1/categories/subcategories`)
       .then((response) => {
         const allDaTa = response.data.data;
-        const update = allDaTa.find((item) => item.name == subcate)
+        const update = allDaTa.find((item) => item.name == subcate);
         const updated = update.id;
 
-        fetchrelatedproduct(cate, updated)
+        fetchrelatedproduct(cate, updated);
 
         // Perform any additional actions after successful deletion
       })
@@ -315,10 +314,10 @@ function Productdetail() {
   ];
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== '') {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
   } else {
-    uservariationprice = productDetails.price
+    uservariationprice = productDetails.price;
   }
 
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
@@ -334,7 +333,7 @@ function Productdetail() {
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
+      (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
   // const savedAmount = (
   //   productDetails.price * quantity -
@@ -346,7 +345,7 @@ function Productdetail() {
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
 
-  console.log('selectedVariantPrice', selectedVariantPrice);
+  console.log("selectedVariantPrice", selectedVariantPrice);
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -375,7 +374,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -383,7 +382,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -471,10 +470,11 @@ function Productdetail() {
   };
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -578,7 +578,6 @@ function Productdetail() {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -824,7 +823,7 @@ function Productdetail() {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-  }
+  };
 
   // loadRazorpayScript
   const loadRazorpayScript = () => {
@@ -919,18 +918,18 @@ function Productdetail() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-            (item, index) =>
-              item.type === "common" && (
-                <Link to={item.default_link}>
-                  <img
-                    className="partner-img"
-                    src={
-                      "https://canine.hirectjob.in//storage/app/" + item.image
-                    }
-                  />
-                </Link>
-              )
-          )
+              (item, index) =>
+                item.type === "common" && (
+                  <Link to={item.default_link}>
+                    <img
+                      className="partner-img"
+                      src={
+                        "https://canine.hirectjob.in//storage/app/" + item.image
+                      }
+                    />
+                  </Link>
+                )
+            )
           : null}
       </div>
 
@@ -949,9 +948,16 @@ function Productdetail() {
                   </div>
                   <div className="needplace">
                     <Row>
-                      {productDetails?.images && productDetails?.images.length > 0 ? (
+                      {productDetails?.images &&
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
-                          <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
+                          <Col
+                            lg={2}
+                            sm={3}
+                            xs={3}
+                            className="mb-3"
+                            key={index}
+                          >
                             <div
                               className="product-item-inner"
                               onClick={() => handleThumbnailClick(index)}
@@ -987,7 +993,6 @@ function Productdetail() {
                 )}
               </>
             </Col>
-
 
             <Col lg={6} sm={6}>
               <div className="productDetail-content">
@@ -1049,10 +1054,11 @@ function Productdetail() {
                                       </div> */}
                                         {item.stock !== 0 ? (
                                           <div
-                                            className={`tab-variations ${selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                              }`}
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
+                                                ? "active"
+                                                : ""
+                                            }`}
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
@@ -1116,8 +1122,9 @@ function Productdetail() {
                           <p>{`₹${uservariationprice}`}</p>
                         </Col>
                         <Col lg={4} sm={4} xs={3}>
-                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                            }`}</h5>
+                          <h5>{`₹${
+                            isNaN(formattedAmount) ? 0 : formattedAmount
+                          }`}</h5>
                         </Col>
                         {/* {formattedSavedAmount > 0 && ( */}
                         <Col lg={5} sm={5} xs={3}>
@@ -1355,9 +1362,7 @@ function Productdetail() {
                         </div>
                         <div>
                           <h6>{renderProducthead(item.name)}</h6>
-                          <p>
-                            {renderProductDescription(item.description)}
-                          </p>
+                          <p>{renderProductDescription(item.description)}</p>
                         </div>
                         <div className="product-bag">
                           <Row>
@@ -1508,7 +1513,11 @@ function Productdetail() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear} />
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1525,7 +1534,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1565,17 +1574,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1584,13 +1593,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1640,14 +1649,19 @@ function Productdetail() {
                                         productDetails?.variations.length > 0 &&
                                         productDetails?.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} key={index} className="p-0">
+                                            <Col
+                                              lg={5}
+                                              key={index}
+                                              className="p-0"
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
                                                     item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1709,8 +1723,9 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -1725,7 +1740,9 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -1857,10 +1874,11 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1964,10 +1982,11 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2039,8 +2058,9 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2055,7 +2075,9 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -2210,12 +2232,21 @@ function Productdetail() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
+                  <button
+                    data-toggle="modal"
+                    data-target="#cod"
+                    disabled={!isAddressSelected}
+                  >
                     Checkout
                   </button>
                   <button data-dismiss="modal" onClick={handleResetClick}>
                     Close
                   </button>
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>
@@ -2602,11 +2633,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
