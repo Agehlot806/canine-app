@@ -19,10 +19,16 @@ function Blogdetails() {
   const { id } = useParams();
   console.log("id", id);
 
-
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([allblogs(), allProduct(), fetchWishlistData(), GetdataAll(), couponlistdata(), allAddressList()])
+    Promise.all([
+      allblogs(),
+      allProduct(),
+      fetchWishlistData(),
+      GetdataAll(),
+      couponlistdata(),
+      allAddressList(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -233,7 +239,7 @@ function Blogdetails() {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState('');
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
   };
@@ -291,10 +297,10 @@ function Blogdetails() {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== '') {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
   } else {
-    uservariationprice = productDetails.price
+    uservariationprice = productDetails.price;
   }
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -319,7 +325,7 @@ function Blogdetails() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -327,7 +333,7 @@ function Blogdetails() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -382,10 +388,11 @@ function Blogdetails() {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -867,7 +874,7 @@ function Blogdetails() {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-  }
+  };
 
   const renderProducthead = (name) => {
     const maxCharacters = 20;
@@ -891,7 +898,8 @@ function Blogdetails() {
             <img src={loadinggif} alt="" />
             <h5>Please Wait.......</h5>
           </div>
-        </section>) : (
+        </section>
+      ) : (
         <>
           <section className="section-padding">
             <Container>
@@ -951,7 +959,13 @@ function Blogdetails() {
                   {/* {allproduct &&
                 allproduct.map((item, index) => ( */}
                   {productIds.map((item, index) => (
-                    <Col lg={3} sm={6} xs={6} className="mb-4" key={item[0]?.id}>
+                    <Col
+                      lg={3}
+                      sm={6}
+                      xs={6}
+                      className="mb-4"
+                      key={item[0]?.id}
+                    >
                       {console.log("itemmmhksdkn: ", item)}
                       <div
                         className="food-product"
@@ -964,7 +978,9 @@ function Blogdetails() {
                       >
                         <i
                           className={
-                            item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
+                            item.isFav
+                              ? "fa-solid fa-heart"
+                              : "fa-regular fa-heart"
                           }
                           onClick={() => {
                             if (storedUserId == null) {
@@ -1007,7 +1023,9 @@ function Blogdetails() {
                               </span>
                             )}
                         </p> */}
-                            <p>{renderProductDescription(item[0]?.description)}</p>
+                            <p>
+                              {renderProductDescription(item[0]?.description)}
+                            </p>
                           </div>
                           <div className="product-bag">
                             <Row>
@@ -1031,7 +1049,7 @@ function Blogdetails() {
                             }`}</h6> */}
                                 <h4>{`₹${Math.floor(
                                   item[0]?.price -
-                                  (item[0]?.price * item[0]?.discount) / 100
+                                    (item[0]?.price * item[0]?.discount) / 100
                                 )}`}</h4>
                               </Col>
                             </Row>
@@ -1087,7 +1105,11 @@ function Blogdetails() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear} />
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1104,7 +1126,7 @@ function Blogdetails() {
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images?.length > 0 ? (
+                              productDetails?.images?.length > 0 ? (
                                 productDetails?.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1145,17 +1167,17 @@ function Blogdetails() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails?.images?.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails?.images?.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails?.images?.length -
-                                1) %
-                              productDetails?.images?.length
+                                (lightboxImageIndex +
+                                  productDetails?.images?.length -
+                                  1) %
+                                  productDetails?.images?.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1164,13 +1186,13 @@ function Blogdetails() {
                                 (lightboxImageIndex +
                                   productDetails?.images.length -
                                   1) %
-                                productDetails?.images?.length
+                                  productDetails?.images?.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails?.images?.length
+                                  productDetails?.images?.length
                               )
                             }
                           />
@@ -1225,11 +1247,12 @@ function Blogdetails() {
                                             <Col lg={4} key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
-                                                      item.type
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
+                                                    item.type
                                                       ? "active"
                                                       : ""
-                                                    }`}
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -1291,8 +1314,9 @@ function Blogdetails() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -1307,7 +1331,9 @@ function Blogdetails() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -1628,10 +1654,11 @@ function Blogdetails() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -1735,10 +1762,11 @@ function Blogdetails() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item?.price); // Store the price in state
@@ -1810,8 +1838,9 @@ function Blogdetails() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -1826,7 +1855,9 @@ function Blogdetails() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -1981,12 +2012,21 @@ function Blogdetails() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
+                  <button
+                    data-toggle="modal"
+                    data-target="#cod"
+                    disabled={!isAddressSelected}
+                  >
                     Checkout
                   </button>
                   <button data-dismiss="modal" onClick={handleResetClick}>
                     Close
                   </button>
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>
@@ -2373,11 +2413,11 @@ function Blogdetails() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

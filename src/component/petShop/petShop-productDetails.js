@@ -485,10 +485,11 @@ function PetshopproductDetails() {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -2245,7 +2246,11 @@ function PetshopproductDetails() {
                 <div className="homecheckout">
                   {productDetails?.stock &&
                   productDetails?.stock?.length !== 10 ? (
-                    <button data-toggle="modal" data-target="#cod">
+                    <button
+                      data-toggle="modal"
+                      data-target="#cod"
+                      disabled={!isAddressSelected}
+                    >
                       Checkout
                     </button>
                   ) : (
@@ -2265,6 +2270,11 @@ function PetshopproductDetails() {
                   >
                     Close
                   </button>
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>

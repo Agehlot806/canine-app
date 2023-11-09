@@ -497,6 +497,7 @@ function Petshopproduct(props) {
         "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
+      const cateidproduct = products.filter((item) => item.module_id === 1);
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -510,7 +511,7 @@ function Petshopproduct(props) {
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
         // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
-        products: products,
+        products: cateidproduct,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
@@ -633,7 +634,7 @@ function Petshopproduct(props) {
   const [quantity, setQuantity] = useState(0);
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
 
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
@@ -692,8 +693,10 @@ function Petshopproduct(props) {
 
   let wholesellervariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== "") {
     wholesellervariationprice = selectedVariantPrice;
+  } else {
+    wholesellervariationprice = productDetails.whole_price;
   }
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
 
@@ -714,8 +717,10 @@ function Petshopproduct(props) {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
+  } else {
+    uservariationprice = productDetails.whole_price;
   }
   // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -798,10 +803,11 @@ function Petshopproduct(props) {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
-
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -1935,47 +1941,49 @@ function Petshopproduct(props) {
 
                         <div className="needplaceProduct">
                           <Row>
-                            <Col sm={6}>
-                              <div className="tab-container">
-                                <h6>Variations</h6>
-                                <Row>
-                                  {productDetails?.variations &&
-                                    productDetails?.variations.length > 0 &&
-                                    productDetails.variations.map(
-                                      (item, index) => (
-                                        <Col lg={4} sm={4} xs={3} key={index}>
-                                          {item.stock !== 0 ? (
-                                            <div
-                                              className={`tab-variations ${
-                                                selectedVariant === item.type
-                                                  ? "active"
-                                                  : ""
-                                              }`}
-                                              onClick={() => {
-                                                setSelectedVariant(item.type);
-                                                setSelectedVariantPrice(
-                                                  item.price
-                                                ); // Store the price in state
-                                              }}
-                                            >
-                                              {item.type}
-                                            </div>
-                                          ) : (
-                                            <div
-                                              className="tab-variations disabledvariation"
-                                              title="Stock unavailable"
-                                            >
-                                              {/* <span className="blurred-text"> */}
-                                              {item.type}
-                                              {/* </span> */}
-                                            </div>
-                                          )}
-                                        </Col>
-                                      )
-                                    )}
-                                </Row>
-                              </div>
-                            </Col>
+                            {productDetails?.variations?.length > 0 && (
+                              <Col sm={6}>
+                                <div className="tab-container">
+                                  <h6>Variations</h6>
+                                  <Row>
+                                    {productDetails?.variations &&
+                                      productDetails?.variations.length > 0 &&
+                                      productDetails.variations.map(
+                                        (item, index) => (
+                                          <Col lg={4} sm={4} xs={3} key={index}>
+                                            {item.stock !== 0 ? (
+                                              <div
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
+                                                    ? "active"
+                                                    : ""
+                                                }`}
+                                                onClick={() => {
+                                                  setSelectedVariant(item.type);
+                                                  setSelectedVariantPrice(
+                                                    item.wholeprice
+                                                  ); // Store the price in state
+                                                }}
+                                              >
+                                                {item.type}
+                                              </div>
+                                            ) : (
+                                              <div
+                                                className="tab-variations disabledvariation"
+                                                title="Stock unavailable"
+                                              >
+                                                {/* <span className="blurred-text"> */}
+                                                {item.type}
+                                                {/* </span> */}
+                                              </div>
+                                            )}
+                                          </Col>
+                                        )
+                                      )}
+                                  </Row>
+                                </div>
+                              </Col>
+                            )}
                             <Col sm={6}>
                               <div className="quantity-btn quickbtn">
                                 <button onClick={handleDecrementOne}>
@@ -2003,27 +2011,11 @@ function Petshopproduct(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3}> */}
-                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                              {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
-                              {/* </Col> */}
                               <Col lg={4}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5}>
-                        <h6>
-                          Your save
-                          {formattedSavedAmount >= 0
-                            ? "₹" + formattedSavedAmount
-                            : "No savings"}
-                        </h6>
-                      </Col> */}
                             </Row>
                           </div>
                         </div>
@@ -2529,62 +2521,45 @@ function Petshopproduct(props) {
                       </Col>
                       <Col lg={7} sm={10}>
                         <h2>{productDetails?.name}</h2>
-                        <div className="tab-container">
-                          <h6>Variations</h6>
-                          <Row>
-                            {productDetails?.variations &&
-                              productDetails?.variations.length > 0 &&
-                              productDetails?.variations.map((item, index) => (
-                                <Col lg={3} key={index}>
-                                  {item.stock !== 0 ? (
-                                    <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                      onClick={() => {
-                                        setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
-                                      }}
-                                    >
-                                      {item.type}
-                                    </div>
-                                  ) : (
-                                    <div
-                                      className="tab-variations disabledvariation"
-                                      title="Stock unavailable"
-                                    >
-                                      {/* <span className="blurred-text"> */}
-                                      {item.type}
-                                      {/* </span> */}
-                                    </div>
-                                  )}
-                                </Col>
-                              ))}
-                          </Row>
-                        </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
+                        {productDetails?.variations?.length > 0 && (
+                          <div className="tab-container">
+                            <h6>Variations</h6>
+                            <Row>
+                              {productDetails?.variations &&
+                                productDetails?.variations.length > 0 &&
+                                productDetails.variations.map((item, index) => (
+                                  <Col lg={4} sm={4} xs={3} key={index}>
+                                    {item.stock !== 0 ? (
+                                      <div
+                                        className={`tab-variations ${
+                                          selectedVariant === item.type
+                                            ? "active"
+                                            : ""
+                                        }`}
+                                        onClick={() => {
+                                          setSelectedVariant(item.type);
+                                          setSelectedVariantPrice(
+                                            item.wholeprice
+                                          ); // Store the price in state
+                                        }}
+                                      >
+                                        {item.type}
+                                      </div>
+                                    ) : (
+                                      <div
+                                        className="tab-variations disabledvariation"
+                                        title="Stock unavailable"
+                                      >
+                                        {/* <span className="blurred-text"> */}
+                                        {item.type}
+                                        {/* </span> */}
+                                      </div>
+                                    )}
+                                  </Col>
+                                ))}
+                            </Row>
+                          </div>
+                        )}
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -2609,33 +2584,15 @@ function Petshopproduct(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col> */}
                               <Col lg={4} sm={4} xs={3}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col> */}
                             </Row>
                           </div>
                         </div>
                       </Col>
-                      {/* <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col> */}
                     </Row>
                     <hr />
                   </Container>
@@ -2698,7 +2655,7 @@ function Petshopproduct(props) {
                             <Col>
                               <h5>
                                 ₹
-                                {parseInt(Amount) * 0.05 + parseInt(Amount) ??
+                                {parseInt(Amount * 0.05) + parseInt(Amount) ??
                                   0}
                               </h5>
                             </Col>
@@ -2711,7 +2668,11 @@ function Petshopproduct(props) {
                 <div className="homecheckout">
                   {productDetails?.stock &&
                   productDetails?.stock?.length !== 10 ? (
-                    <button data-toggle="modal" data-target="#cod">
+                    <button
+                      data-toggle="modal"
+                      data-target="#cod"
+                      disabled={!isAddressSelected}
+                    >
                       Checkout
                     </button>
                   ) : (
@@ -2731,6 +2692,12 @@ function Petshopproduct(props) {
                   >
                     Close
                   </button>
+
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>
