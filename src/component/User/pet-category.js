@@ -133,8 +133,12 @@ function Petcategory() {
         const filterDatashow = filterData.filter(
           (item) => item.category_id == id
         );
-        console.log("responsDataesponsData", filterDatashow);
-        setallproduct(filterDatashow);
+        const filterDaName = filterDatashow.filter(
+          (item) => item.category_ids == name
+        );
+        console.log("responsDataesponsData11", filterDatashow);
+        console.log("responsDataesponsData22", filterDaName);
+        setallproduct(filterDaName);
         setSortOption("default");
         // Perform any additional actions after successful deletion
       })
@@ -366,6 +370,8 @@ function Petcategory() {
         "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
+      const cateidproduct =products.filter(items=>items.category_id == id)
+      
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -379,7 +385,7 @@ function Petcategory() {
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
         // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
-        products: products,
+        products: cateidproduct,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
@@ -1737,7 +1743,7 @@ const renderProducthead = (name) => {
                       <Row>
                         {paginatedCategories.map(
                           (item, index) =>
-                            item.category_id == id && (
+                            // item.category_id == id && (
                               <Col lg={4} sm={6} xs={6} className="mb-4">
                                 <div
                                   className="food-product"
@@ -1839,7 +1845,7 @@ const renderProducthead = (name) => {
                                   )}
                                 </div>
                               </Col>
-                            )
+                            // )
                         )}
                       </Row>
                       <div className="pagination-area">
@@ -2036,7 +2042,7 @@ const renderProducthead = (name) => {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} key={index} className="p-0">
+                                            <Col lg={5} className="p-0" key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${selectedVariant ===
