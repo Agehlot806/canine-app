@@ -313,8 +313,9 @@ function SubcategoriesProduct() {
       .get(`${BASE_URL}/categories/subcategories`)
       .then((response) => {
         console.log(response);
-        console.log("Delete Successful");
-        setsubcategories(response.data.data);
+        console.log("subcategories Successful");
+        const filteredSubcategories = response.data.data.filter(subcategory => subcategory.category === id);
+        setsubcategories(filteredSubcategories);
       })
       .catch((error) => {
         console.log(error);
@@ -445,6 +446,7 @@ function SubcategoriesProduct() {
         "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
+      const cateidproduct =products.filter(items=>items.category_id == id)
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -458,7 +460,7 @@ function SubcategoriesProduct() {
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
         // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
-        products: products,
+        products: cateidproduct,
       });
       console.log("/////", filteredProducts);
       console.log("======", products);
@@ -863,10 +865,13 @@ function SubcategoriesProduct() {
   console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
+  const [isAddressSelected, setIsAddressSelected] = useState(false);
+
 
   const handleAddressClick = (index) => {
     setSelectedAddress(addresslist[index]);
     setAddressContentVisible(false); // Hide the address content after selecting an address
+    setIsAddressSelected(true);
   };
 
   const toggleAddressContent = () => {
@@ -1535,7 +1540,7 @@ function SubcategoriesProduct() {
                       )}
                     </div>
                     <hr />
-                    <div
+                    {/* <div
                       onClick={() => handleParentClick("cate")}
                       className="main-chk"
                     >
@@ -1569,7 +1574,7 @@ function SubcategoriesProduct() {
                         </>
                       )}
                     </div>
-                    <hr />
+                    <hr /> */}
 
                     <div
                       onClick={() => handleParentClick("price")}
@@ -2855,12 +2860,18 @@ function SubcategoriesProduct() {
                   </div>
                 </Container>
                 <div className="homecheckout">
-                  <button data-toggle="modal" data-target="#cod">
+                  <button data-toggle="modal" data-target="#cod" disabled={!isAddressSelected}>
                     Checkout
                   </button>
                   <button data-dismiss="modal" onClick={handleResetClick}>
                     Close
                   </button>
+
+                  {isAddressSelected ? null : (
+                    <div className="error-message">
+                      Please Select Shipping Address.
+                    </div>
+                  )}
                 </div>
               </>
             </div>
