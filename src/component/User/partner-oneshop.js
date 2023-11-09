@@ -1075,7 +1075,7 @@ function Partneroneshop() {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              onClick={handleMainImageClick}
+                              // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
@@ -1199,7 +1199,7 @@ function Partneroneshop() {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={4} key={index}>
+                                            <Col lg={5} key={index} className="p-0">
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${

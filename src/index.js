@@ -9,6 +9,7 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-step-progress-bar/styles.css";
 import "react-image-lightbox/style.css";
+import "react-awesome-lightbox/build/style.css";
 import "animate.css/animate.min.css";
 import { CartProvider } from './component/context/addToCartContext'
 import { NotificationProvider } from "./component/context/notificationContext";

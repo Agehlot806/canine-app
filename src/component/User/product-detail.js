@@ -22,10 +22,7 @@ import pro from "../../assets/images/icon/pro.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import { styled } from "styled-components";
-// import Lightbox from "react-image-lightbox";
-// import "react-image-lightbox/style.css"; 
 import Lightbox from "react-awesome-lightbox";
-import "react-awesome-lightbox/build/style.css";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
@@ -320,7 +317,7 @@ function Productdetail() {
 
   if (selectedVariantPrice !== '') {
     uservariationprice = selectedVariantPrice;
-  }else {
+  } else {
     uservariationprice = productDetails.price
   }
 
@@ -349,7 +346,7 @@ function Productdetail() {
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
 
-console.log('selectedVariantPrice',selectedVariantPrice);
+  console.log('selectedVariantPrice', selectedVariantPrice);
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -370,33 +367,6 @@ console.log('selectedVariantPrice',selectedVariantPrice);
       });
   };
 
-
-  // const [mainImage, setMainImage] = useState("");
-  // const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
-  // const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
-
-  // useEffect(() => {
-  //   if (productDetails.image) {
-  //     setMainImage(
-  //       "https://canine.hirectjob.in//storage/app/public/product/" +
-  //       productDetails.image
-  //     );
-  //   }
-  // }, [productDetails]);
-
-  // const handleThumbnailClick = (index) => {
-  //   setMainImage(
-  //     "https://canine.hirectjob.in//storage/app/public/product/" +
-  //     productDetails.images[index]
-  //   );
-  // };
-
-  // const handleMainImageClick = () => {
-  //   setLightboxIsOpen(true);
-  //   setLightboxImageIndex(productDetails.images.indexOf(mainImage));
-  // };
-
-
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
@@ -405,7 +375,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -413,7 +383,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -851,10 +821,10 @@ console.log('selectedVariantPrice',selectedVariantPrice);
     setQuantity(1);
   };
 
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
-}
+  }
 
   // loadRazorpayScript
   const loadRazorpayScript = () => {
@@ -926,10 +896,10 @@ console.log('selectedVariantPrice',selectedVariantPrice);
   };
 
   const renderProductDescription = (description) => {
-    const maxCharacters = 35; 
+    const maxCharacters = 35;
 
     if (description?.length <= maxCharacters) {
-      return <p>{description}</p>; 
+      return <p>{description}</p>;
     }
 
     const truncatedDescription = description?.slice(0, maxCharacters);
@@ -967,7 +937,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
       <section className="section-padding">
         <Container>
           <Row>
-            {/* <Col lg={6} sm={6}>
+            <Col lg={6} sm={6}>
               <>
                 <div>
                   <div className="product-item">
@@ -979,16 +949,9 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                   </div>
                   <div className="needplace">
                     <Row>
-                      {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      {productDetails?.images && productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
-                          <Col
-                            lg={2}
-                            sm={3}
-                            xs={3}
-                            className="mb-3"
-                            key={index}
-                          >
+                          <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
                             <div
                               className="product-item-inner"
                               onClick={() => handleThumbnailClick(index)}
@@ -1012,94 +975,18 @@ console.log('selectedVariantPrice',selectedVariantPrice);
 
                 {lightboxIsOpen && (
                   <Lightbox
-                    mainSrc={
-                      "https://canine.hirectjob.in//storage/app/public/product/" +
-                      productDetails.images[lightboxImageIndex]
-                    }
-                    nextSrc={
-                      "https://canine.hirectjob.in//storage/app/public/product/" +
-                      productDetails.images[
-                      (lightboxImageIndex + 1) % productDetails.images.length
-                      ]
-                    }
-                    prevSrc={
-                      "https://canine.hirectjob.in//storage/app/public/product/" +
-                      productDetails.images[
-                      (lightboxImageIndex +
-                        productDetails.images.length -
-                        1) %
-                      productDetails.images.length
-                      ]
-                    }
-                    onCloseRequest={() => setLightboxIsOpen(false)}
-                    onMovePrevRequest={() =>
-                      setLightboxImageIndex(
-                        (lightboxImageIndex +
-                          productDetails.images.length -
-                          1) %
-                        productDetails.images.length
-                      )
-                    }
-                    onMoveNextRequest={() =>
-                      setLightboxImageIndex(
-                        (lightboxImageIndex + 1) % productDetails.images.length
-                      )
-                    }
+                    images={productDetails.images.map((item) => ({
+                      url:
+                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                        item,
+                      title: productDetails.name,
+                    }))}
+                    currentIndex={lightboxImageIndex}
+                    onClose={() => setLightboxIsOpen(false)}
                   />
                 )}
               </>
-            </Col> */}
-
-<Col lg={6} sm={6}>
-      <>
-        <div>
-          <div className="product-item">
-            <img
-              src={mainImage}
-              alt="Product Image"
-              onClick={handleMainImageClick}
-            />
-          </div>
-          <div className="needplace">
-            <Row>
-              {productDetails?.images && productDetails?.images.length > 0 ? (
-                productDetails.images.map((item, index) => (
-                  <Col lg={2} sm={3} xs={3} className="mb-3" key={index}>
-                    <div
-                      className="product-item-inner"
-                      onClick={() => handleThumbnailClick(index)}
-                    >
-                      <img
-                        src={
-                          "https://canine.hirectjob.in//storage/app/public/product/" +
-                          item
-                        }
-                        alt={`Image ${index}`}
-                      />
-                    </div>
-                  </Col>
-                ))
-              ) : (
-                <p className="emptyMSG">No Related Image.</p>
-              )}
-            </Row>
-          </div>
-        </div>
-
-        {lightboxIsOpen && (
-          <Lightbox
-            images={productDetails.images.map((item) => ({
-              url:
-                "https://canine.hirectjob.in//storage/app/public/product/" +
-                item,
-              title: productDetails.name,
-            }))}
-            currentIndex={lightboxImageIndex}
-            onClose={() => setLightboxIsOpen(false)}
-          />
-        )}
-      </>
-    </Col>
+            </Col>
 
 
             <Col lg={6} sm={6}>
@@ -1263,10 +1150,6 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                         <th>Age Range</th>
                         <td>{productDetails?.lifeStage_id}</td>
                       </tr>
-                      {/* <tr>
-                        <th>Health Condition</th>
-                        <td>{productDetails?.helthCondition_id}</td>
-                      </tr> */}
                       <tr>
                         <th>Target Species</th>
                         <td>{productDetails?.Petsbreeds_id}</td>
@@ -1473,8 +1356,8 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                         <div>
                           <h6>{renderProducthead(item.name)}</h6>
                           <p>
-                                {renderProductDescription(item.description)}
-                              </p>
+                            {renderProductDescription(item.description)}
+                          </p>
                         </div>
                         <div className="product-bag">
                           <Row>
@@ -1625,7 +1508,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear}/>
+              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear} />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1636,7 +1519,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              onClick={handleMainImageClick}
+                              // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
@@ -1757,7 +1640,7 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                                         productDetails?.variations.length > 0 &&
                                         productDetails?.variations.map(
                                           (item, index) => (
-                                            <Col lg={4} key={index}>
+                                            <Col lg={5} key={index} className="p-0">
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${selectedVariant ===
@@ -1859,10 +1742,6 @@ console.log('selectedVariantPrice',selectedVariantPrice);
                               <tr>
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
-                              </tr>
-                              <tr>
-                                <th>Health Condition</th>
-                                <td>{productDetails?.helthCondition_id}</td>
                               </tr>
                               <tr>
                                 <th>Target Species</th>

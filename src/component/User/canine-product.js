@@ -1832,7 +1832,7 @@ const renderProducthead = (name) => {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              onClick={handleMainImageClick}
+                              // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
@@ -1956,7 +1956,7 @@ const renderProducthead = (name) => {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={4} key={index}>
+                                            <Col lg={5} className="p-0" key={index}>
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${selectedVariant ===

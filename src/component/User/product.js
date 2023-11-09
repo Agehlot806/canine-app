@@ -25,6 +25,7 @@ import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
 import loadinggif from "../../assets/images/video/loading.gif";
+// import Lightbox from "react-image-lightbox";
 
 const clinetreview = {
   desktop: {
@@ -1889,7 +1890,7 @@ function Product(props) {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              onClick={handleMainImageClick}
+                              // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
@@ -2015,11 +2016,7 @@ function Product(props) {
                                             0 &&
                                           productDetails?.variations.map(
                                             (item, index) => (
-                                              <Col
-                                                lg={3}
-                                                key={index}
-                                                className="p-0"
-                                              >
+                                              <Col lg={5} key={index} className="p-0">
                                                 {item.stock !== 0 ? (
                                                   <div
                                                     className={`tab-variations ${

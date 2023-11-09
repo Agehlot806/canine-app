@@ -1140,7 +1140,7 @@ function PetshopBlogdetails() {
                                     productDetails?.variations?.length > 0 &&
                                     productDetails?.variations.map(
                                       (item, index) => (
-                                        <Col lg={4} sm={4} xs={3} key={index}>
+                                        <Col lg={5} sm={5} xs={3} className="p-0" key={index}>
                                           {item.stock !== 0 ? (
                                             <div
                                               className={`tab-variations ${
