@@ -83,6 +83,7 @@ function Home(props) {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [responseMessage, setResponseMessage] = useState("");
   const [wishlistData, setWishlistData] = useState([]);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   // without signup add cart start
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
@@ -321,6 +322,10 @@ function Home(props) {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -2004,7 +2009,11 @@ function Home(props) {
                                         productDetails?.variations.length > 0 &&
                                         productDetails?.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} key={index} className="p-0">
+                                            <Col
+                                              lg={5}
+                                              key={index}
+                                              className="p-0"
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${

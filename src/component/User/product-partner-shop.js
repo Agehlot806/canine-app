@@ -89,6 +89,7 @@ function Productpartnershop() {
   const { vendor_id } = useParams();
   console.log("vendor_id", vendor_id);
   console.log("vendorlistid: ", id);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [paymentId, setPaymentId] = useState("");
   const [thirdbanner, setthirdbanner] = useState([]);
   const [vendorItemList, setVendorItemList] = useState([]);
@@ -217,6 +218,10 @@ function Productpartnershop() {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -1989,7 +1994,11 @@ function Productpartnershop() {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} key={index} className="p-0">
+                                            <Col
+                                              lg={5}
+                                              key={index}
+                                              className="p-0"
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${
@@ -2128,6 +2137,11 @@ function Productpartnershop() {
                                   quantity: quantity,
                                   name: productDetails.name,
                                   image: productDetails.image,
+                                  total_quantity: selectedVariantStock
+                                    ? selectedVariantStock
+                                    : productDetails?.stock,
+                                  return_order:
+                                    productDetails?.returnable || "yes",
                                 },
                               });
                             }}

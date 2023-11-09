@@ -29,6 +29,7 @@ function Petcategory() {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
+  const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -388,8 +389,8 @@ function Petcategory() {
         "https://canine.hirectjob.in/api/v1/items/latest"
       );
       const products = response.data.data;
-      const cateidproduct =products.filter(items=>items.category_id == id)
-      
+      const cateidproduct = products.filter((items) => items.category_id == id);
+
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -546,6 +547,10 @@ function Petcategory() {
           price: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
+          total_quantity: selectedVariantStock
+            ? selectedVariantStock
+            : productDetails?.stock,
+          return_order: productDetails?.returnable || "yes",
         }
       );
 
@@ -1774,74 +1779,74 @@ function Petcategory() {
                     <div>
                       <Row>
                         {paginatedCategories.map(
-                          (item, index) =>
+                          (item, index) => (
                             // item.category_id == id && (
-                              <Col lg={4} sm={6} xs={6} className="mb-4">
-                                <div
-                                  className="food-product"
-                                  onMouseEnter={() => handleMouseEnter(item.id)}
-                                  onMouseLeave={() => handleMouseLeave(item.id)}
-                                  key={item.id}
-                                  style={{
-                                    background:
-                                      gradientColors[
-                                        index % gradientColors.length
-                                      ],
-                                  }}
-                                >
-                                  <i
-                                    class={
-                                      item.isFav
-                                        ? "fa-solid fa-heart"
-                                        : "fa-regular fa-heart"
+                            <Col lg={4} sm={6} xs={6} className="mb-4">
+                              <div
+                                className="food-product"
+                                onMouseEnter={() => handleMouseEnter(item.id)}
+                                onMouseLeave={() => handleMouseLeave(item.id)}
+                                key={item.id}
+                                style={{
+                                  background:
+                                    gradientColors[
+                                      index % gradientColors.length
+                                    ],
+                                }}
+                              >
+                                <i
+                                  class={
+                                    item.isFav
+                                      ? "fa-solid fa-heart"
+                                      : "fa-regular fa-heart"
+                                  }
+                                  onClick={(id) => {
+                                    if (storedUserId == null) {
+                                      toast.error("Please Login first");
+                                    } else {
+                                      addToWishlist(item.id);
                                     }
-                                    onClick={(id) => {
-                                      if (storedUserId == null) {
-                                        toast.error("Please Login first");
-                                      } else {
-                                        addToWishlist(item.id);
+                                  }}
+                                />
+                                <Link to={`/product-details/${item.id}`}>
+                                  <div className="text-center">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in///storage/app/public/product/" +
+                                        item.image
                                       }
-                                    }}
-                                  />
-                                  <Link to={`/product-details/${item.id}`}>
-                                    <div className="text-center">
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in///storage/app/public/product/" +
-                                          item.image
-                                        }
-                                      />
-                                    </div>
-                                    <div>
-                                      <h6>{renderProducthead(item.name)}</h6>
-                                      <p>
-                                        {renderProductDescription(
-                                          item.description
-                                        )}
-                                      </p>
-                                    </div>
-                                    <div className="product-bag">
-                                      {parseFloat(item.discount) > 0 ? (
-                                        <Row>
-                                          <Col>
-                                            <p>₹{parseFloat(item.price)}</p>
-                                          </Col>
-                                          <Col>
-                                            <h5>
-                                              Save {parseFloat(item.discount)}%
-                                            </h5>
-                                          </Col>
-                                        </Row>
-                                      ) : null}
-
+                                    />
+                                  </div>
+                                  <div>
+                                    <h6>{renderProducthead(item.name)}</h6>
+                                    <p>
+                                      {renderProductDescription(
+                                        item.description
+                                      )}
+                                    </p>
+                                  </div>
+                                  <div className="product-bag">
+                                    {parseFloat(item.discount) > 0 ? (
                                       <Row>
-                                        <Col className="align-self-center">
-                                          <h4>{`₹${Math.floor(
-                                            item.price -
-                                              (item.price * item.discount) / 100
-                                          )}`}</h4>
+                                        <Col>
+                                          <p>₹{parseFloat(item.price)}</p>
                                         </Col>
-                                        {/* <Col>
+                                        <Col>
+                                          <h5>
+                                            Save {parseFloat(item.discount)}%
+                                          </h5>
+                                        </Col>
+                                      </Row>
+                                    ) : null}
+
+                                    <Row>
+                                      <Col className="align-self-center">
+                                        <h4>{`₹${Math.floor(
+                                          item.price -
+                                            (item.price * item.discount) / 100
+                                        )}`}</h4>
+                                      </Col>
+                                      {/* <Col>
                                       <Link
                                         to={`/add-cart/${item.id}`}
                                         onClick={handleAddToCart}
@@ -1849,39 +1854,40 @@ function Petcategory() {
                                         <img src={bag} />
                                       </Link>
                                     </Col> */}
-                                      </Row>
+                                    </Row>
+                                  </div>
+                                </Link>
+                                {buttonVisibility[item.id] && (
+                                  <Fade top>
+                                    <div className="button-container">
+                                      <button
+                                        data-toggle="modal"
+                                        data-target=".bd-example-modal-lg"
+                                        onClick={(e) => handeldataId(item.id)}
+                                      >
+                                        Quick View
+                                      </button>
+                                      <button
+                                        data-toggle="modal"
+                                        data-target=".buynow"
+                                        onClick={(e) => {
+                                          if (!storedUserId) {
+                                            // window.location.href = '/login';
+                                            shippingpage("/login");
+                                          } else {
+                                            handeldataId(item.id);
+                                          }
+                                        }}
+                                      >
+                                        Buy Now
+                                      </button>
                                     </div>
-                                  </Link>
-                                  {buttonVisibility[item.id] && (
-                                    <Fade top>
-                                      <div className="button-container">
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".bd-example-modal-lg"
-                                          onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Quick View
-                                        </button>
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".buynow"
-                                          onClick={(e) => {
-                                            if (!storedUserId) {
-                                              // window.location.href = '/login';
-                                              shippingpage("/login");
-                                            } else {
-                                              handeldataId(item.id);
-                                            }
-                                          }}
-                                        >
-                                          Buy Now
-                                        </button>
-                                      </div>
-                                    </Fade>
-                                  )}
-                                </div>
-                              </Col>
-                            // )
+                                  </Fade>
+                                )}
+                              </div>
+                            </Col>
+                          )
+                          // )
                         )}
                       </Row>
                       <div className="pagination-area">
@@ -2091,7 +2097,11 @@ function Petcategory() {
                                         productDetails?.variations.length > 0 &&
                                         productDetails.variations.map(
                                           (item, index) => (
-                                            <Col lg={5} className="p-0" key={index}>
+                                            <Col
+                                              lg={5}
+                                              className="p-0"
+                                              key={index}
+                                            >
                                               {item.stock !== 0 ? (
                                                 <div
                                                   className={`tab-variations ${
