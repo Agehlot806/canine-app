@@ -46,19 +46,10 @@ function PetshopproductDetails() {
   console.log("quantity--->", quantity);
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   console.log("selectedVariant: ", selectedVariant);
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
-  // const handleIncrementone = () => {
-  //   if (verifiredIdaccess === 1) {
-  //     setQuantity(quantity + 1);
-  //   }
-  // };
-  // const handleDecrementone = () => {
-  //   if (quantity > 1) {
-  //     setQuantity(quantity - 1);
-  //   }
-  // };
+
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
     if (!isNaN(newQuantity) && newQuantity >= minOrder) {
@@ -255,30 +246,6 @@ function PetshopproductDetails() {
     }
   };
 
-  // const handleQuantityChange = (event) => {
-  //   const newQuantity = parseInt(event.target.value, 10);
-  //   if (!isNaN(newQuantity)) {
-  //     setQuantity(newQuantity);
-  //   }
-  // };
-
-  // const ratingStar = Array.from({ length: 5 }, (item, index) => {
-  //   let number = index + 0.5;
-  //   return (
-  //     <span key={index}>
-  //       {productDetails?.rating_count ||
-  //       productDetails?.status + 0.5 >= index + 1 ? (
-  //         <FaStar className="icon" />
-  //       ) : productDetails?.rating_count ||
-  //         productDetails?.status + 0.5 >= number ? (
-  //         <FaStarHalfAlt className="icon" />
-  //       ) : (
-  //         <AiOutlineStar className="icon" />
-  //       )}
-  //     </span>
-  //   );
-  // });
-
   const ratingStar = Array.from({ length: 5 }, (item, index) => {
     let number = index + 0.5;
     return (
@@ -388,8 +355,10 @@ function PetshopproductDetails() {
   let wholesellervariationprice = 0;
   console.log("wholesellervariationpriceeee: ", wholesellervariationprice);
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== "") {
     wholesellervariationprice = selectedVariantPrice;
+  } else {
+    wholesellervariationprice = productDetails.whole_price;
   }
   const Amount = (
     wholesellervariationprice * (quantity > 1 ? quantity : 1)
@@ -1477,7 +1446,7 @@ function PetshopproductDetails() {
                                       productDetails?.variations.length > 0 &&
                                       productDetails.variations.map(
                                         (item, index) => (
-                                          <Col lg={4} sm={4} xs={3} key={index}>
+                                          <Col lg={5} sm={5} xs={3} key={index}>
                                             {item.stock !== 0 ? (
                                               <div
                                                 className={`tab-variations ${

@@ -633,7 +633,8 @@ function Petshopproduct(props) {
   const [quantity, setQuantity] = useState(0);
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
-  const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
+  console.log("selectedVariantPrice: ", selectedVariantPrice);
 
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
@@ -692,8 +693,10 @@ function Petshopproduct(props) {
 
   let wholesellervariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== "") {
     wholesellervariationprice = selectedVariantPrice;
+  } else {
+    wholesellervariationprice = productDetails.whole_price;
   }
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
 
@@ -714,8 +717,10 @@ function Petshopproduct(props) {
 
   let uservariationprice = 0;
 
-  if (selectedVariantPrice !== null) {
+  if (selectedVariantPrice !== "") {
     uservariationprice = selectedVariantPrice;
+  } else {
+    uservariationprice = productDetails.whole_price;
   }
   // uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
@@ -725,7 +730,7 @@ function Petshopproduct(props) {
   const formattedAmount = Number(Amount).toString();
 
   const savedAmount = Math.floor(
-    productDetails.price * quantity - Amount
+    productDetails.whole_price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
 
@@ -1943,7 +1948,7 @@ function Petshopproduct(props) {
                                     productDetails?.variations.length > 0 &&
                                     productDetails.variations.map(
                                       (item, index) => (
-                                        <Col lg={4} sm={4} xs={3} key={index}>
+                                        <Col lg={5} sm={5} xs={3} key={index}>
                                           {item.stock !== 0 ? (
                                             <div
                                               className={`tab-variations ${
@@ -1954,7 +1959,7 @@ function Petshopproduct(props) {
                                               onClick={() => {
                                                 setSelectedVariant(item.type);
                                                 setSelectedVariantPrice(
-                                                  item.price
+                                                  item.wholeprice
                                                 ); // Store the price in state
                                               }}
                                             >
@@ -2545,7 +2550,9 @@ function Petshopproduct(props) {
                                       }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
+                                        setSelectedVariantPrice(
+                                          item.wholeprice
+                                        ); // Store the price in state
                                       }}
                                     >
                                       {item.type}
