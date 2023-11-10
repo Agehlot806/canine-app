@@ -1376,7 +1376,7 @@ function Partneroneshop() {
                       ) : (
                         <Button>
                           <Link
-                            to={`/add-cart/${id}`}
+                            to={`/add-cart/${productDetails.id}`}
                             onClick={handleAddToCart}
                           >
                             <i className="fa fa-shopping-bag" /> Add to cart

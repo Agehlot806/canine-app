@@ -178,8 +178,9 @@ console.log('Stored Address:', storedFormattedAddress);
   //     setSelectedVariantStock(defaultVariant.stock);
   //   }
   // }, [productDetails]);
-
-  const handleAddToCart = async (order) => {
+ 
+  const [isBuyitagainButtonDisabled, setIsBuyitagainButtonDisabled] = useState(false);
+ const handleAddToCart = async (order) => {
     console.log("itemmmm: ", order);
     try {
       const response = await axios.post(
@@ -211,7 +212,10 @@ console.log('Stored Address:', storedFormattedAddress);
       if (response) {
         if (response.data.status === "200") {
           toast.success("Added to cart!");
-
+          // buy it again start
+            setIsBuyitagainButtonDisabled(true); // Disable the button
+            localStorage.setItem(`orderBuyitagain_${order?.item_id}`, "true");
+            // buy it again end
           // setAddToCartStatus("Added to cart!");
           navigate(`/add-cart/${order?.item_id}`);
         } else {
@@ -226,6 +230,25 @@ console.log('Stored Address:', storedFormattedAddress);
       setAddToCartStatus("Error adding to cart");
     }
   };
+  useEffect(() => {
+    const isOrderBuyitagain = localStorage.getItem(`orderBuyitagain_${id}`);
+    console.log("isOrderBuyitagain",isOrderBuyitagain);
+    if (isOrderBuyitagain === "true") {
+      setIsBuyitagainButtonDisabled(true);
+    }
+  }, []);
+  useEffect(() => {
+    // Clear the flag on page refresh
+    window.addEventListener('beforeunload', () => {
+      localStorage.removeItem('orderBuyitagain_');
+    });
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener('beforeunload', () => {});
+    };
+  }, []);
+  
 
   const [rating, setRating] = useState(0);
 
@@ -316,6 +339,7 @@ console.log('Stored Address:', storedFormattedAddress);
                     <div className="order-minicard">
                       {orderDetails && orderDetails.length > 0 ? (
                         orderDetails.map((order) => {
+                          console.log("order",order);
                           return (
                             <div key={order.id}>
                               <Row>
@@ -341,29 +365,14 @@ console.log('Stored Address:', storedFormattedAddress);
                                       onClick={() => {
                                         handleAddToCart(order);
                                       }}
+                                      disabled={isBuyitagainButtonDisabled}
                                     >
-                                      {/* <Link
-                                      // to={`/add-cart/${order.item_id}`}
-                                      // onClick={handleAddToCart}
-                                      > */}
                                       Buy it again
-                                      {/* </Link> */}
                                     </Button>
                                     {console.log(
                                       "order.item_id: ",
                                       order.item_id
                                     )}
-                                    {/* {butitAgainHide ? null : ( // Render nothing if butitAgainHide is true (button is hidden)
-                                  // Render the "Buy it again" button if butitAgainHide is false (button is shown)
-                                  <Button>
-                                    <Link
-                                      to={`/add-cart/${id}`}
-                                      onClick={handleAddToCart}
-                                    >
-                                      Buy it again
-                                    </Link>
-                                  </Button>
-                                )} */}
                                   </div>
                                 </Col>
                               </Row>
