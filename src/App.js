@@ -190,7 +190,7 @@ const UsersRoutes = () => {
       {/* user flow links footer */}
       <Route path="/delivery-details" element={<Deliverydetails />} />
       <Route path="/return-policy" element={<Returnpolicy />} />
-      <Route path="/terms-of-use" element={<Termsofuse />} />
+      {/* <Route path="/terms-of-use" element={<Termsofuse />} /> */}
       <Route path="/privacy-policy" element={<Privacypolicy />} />
       <Route path="/disclaimer" element={<Disclaimer />} />
       <Route path="/track-your-order/:id" element={<Trackyourorder />} />
