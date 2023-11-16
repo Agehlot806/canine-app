@@ -172,7 +172,7 @@ function Productdetail() {
           return_order: productDetails?.returnable || "yes",
           price:
             calculatedPrice === 0
-              ? parseInt(productDetails?.price)
+              ? parseInt(productDetails?.price) * quantity
               : parseInt(calculatedPrice),
           user_id: storedUserId,
           item_id: productDetails?.id,
