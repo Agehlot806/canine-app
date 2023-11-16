@@ -1717,10 +1717,10 @@ function Productpartnershop() {
                                     </Row>
                                     <Row>
                                       <Col className="align-self-center">
-                                        <h4>{`₹${
-                                          item.price -
-                                          (item.price * item.discount) / 100
-                                        }`}</h4>
+                                      <h4>{`₹${Math.floor(
+                                    item.price -
+                                      (item.price * item.discount) / 100
+                                  )}`}</h4>
                                       </Col>
                                       {/* <Col>
                                     <Link

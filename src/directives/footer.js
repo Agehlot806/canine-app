@@ -36,7 +36,7 @@ function Footer() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/track-your-order">
+                      <Link to="/cancellation-policy">
                         {strings.trackYourOrder}
                       </Link>
                     </li>
