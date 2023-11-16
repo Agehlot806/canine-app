@@ -54,8 +54,9 @@ const SalesmanLogin = () => {
           if (response.data.message === "Login Successfull") {
             localStorage.setItem("salesmanId", response.data.data[0].id);
             localStorage.setItem("loginType", "salesman");
+            localStorage.setItem("zoneId", response.data.data[0].zone_id);
             // ... (set local storage and navigate logic)
-            navigate("/salesman-dashboad",{replace: true});
+            navigate("/salesman-dashboad", { replace: true });
           } else if (response.data.message === "User Not Exit") {
             toast.error("User Not Exist");
           } else if (response.data.message === "Your Password Not Match") {
@@ -72,7 +73,9 @@ const SalesmanLogin = () => {
       <Toaster />
       <Container>
         <div className="text-center">
-        <Link to="/"><img src={logo} /></Link>
+          <Link to="/">
+            <img src={logo} />
+          </Link>
         </div>
         <div>
           <Row>

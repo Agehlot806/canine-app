@@ -493,7 +493,7 @@ function Newheader(props) {
                             className="dropdown-item"
                             to="/transition-history"
                           >
-                            Transition History
+                            Transaction History
                           </Link>
                         </li>
                         <li>
@@ -1443,7 +1443,7 @@ function Newheader(props) {
                           className="dropdown-item"
                           to="/transition-history"
                         >
-                          Transition History
+                          Transaction History
                         </Link>
                       </li>
                       <li>

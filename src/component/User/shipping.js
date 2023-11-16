@@ -35,7 +35,6 @@ function Shipping() {
       });
   }, []);
 
-
   const { id } = useParams();
   console.log("id: ", id);
 
@@ -83,7 +82,18 @@ function Shipping() {
   //         console.log("error", error);
   //       })
   //   }
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = parseInt(price);
 
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
   return (
     <>
       <Newheader />
@@ -93,7 +103,8 @@ function Shipping() {
             <img src={loadinggif} alt="" />
             <h5>Please Wait.......</h5>
           </div>
-        </section>) : (
+        </section>
+      ) : (
         <>
           <Container fluid className="p-0">
             <div className="all-bg">
@@ -115,17 +126,20 @@ function Shipping() {
                           <h3>Order Id: {item.id}</h3>
                           <h3>Date: {getDateFromCreatedAt(item.created_at)}</h3>
                           <h3>Payment Method: {item.payment_method}</h3>
-                          <h3>Order Amount: ₹{item.order_amount}</h3>
+                          <h3>
+                            Order Amount: ₹{formatPrice(item.order_amount)}
+                          </h3>
                           <h3>Order Status: {item.order_status}</h3>
                           {item.order_status === "delivered" ? (
                             <div>
                               {item.callback.map((callbackItem) => (
                                 <div key={callbackItem.id}>
                                   {callbackItem.user_details &&
-                                    callbackItem.user_details.rating > 0 ? (
+                                  callbackItem.user_details.rating > 0 ? (
                                     <div className="solidFA-icon">
                                       {Array.from({
-                                        length: callbackItem.user_details.rating,
+                                        length:
+                                          callbackItem.user_details.rating,
                                       }).map((_, index) => (
                                         <i
                                           className="fa-solid fa-star"
@@ -185,7 +199,9 @@ function Shipping() {
                               </Link>
                             </Button>
                             <Button>
-                              <Link to={`/track-your-order/${item.id}`}>Track</Link>
+                              <Link to={`/track-your-order/${item.id}`}>
+                                Track
+                              </Link>
                             </Button>
                           </div>
                         </Col>
@@ -228,10 +244,10 @@ function Shipping() {
                                   <p>{item.payment_method}</p>
                                   <h6>Date</h6>
                                   <p>
-                                    {moment(item.created_at).format("YYYY-MM-DD")}
+                                    {moment(item.created_at).format(
+                                      "YYYY-MM-DD"
+                                    )}
                                   </p>
-                                  <h6>Phone Number</h6>
-                                  <p>{item.phone || "number not available"}</p>
                                   <h6>Deliver To</h6>
                                   <p>{seventhDayDate.toDateString()}</p>
                                 </>

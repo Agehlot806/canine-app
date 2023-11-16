@@ -43,7 +43,8 @@ function PetshopOrderviewdetails() {
   }, []);
 
   const storedFormattedAddress = localStorage.getItem("formattedAddress");
-
+  console.log("storedFormattedAddress: ", storedFormattedAddress);
+  // const { mobile } = storedFormattedAddress || {};
   let subTotal = orderDetails.reduce(
     (total, order) => total + parseFloat(order.price * order.quantity),
     0
@@ -200,12 +201,12 @@ function PetshopOrderviewdetails() {
           // image: productDetails?.image,
           image:
             // "https://canine.hirectjob.in///storage/app/public/product/" +
-            order?.item_details?.image,
+            order?.item_details[0]?.image,
           quantity: order?.quantity,
           total_quantity: 5,
           return_order: "yes",
-
-          price: order?.price.toString(),
+          min_order: order?.quantity,
+          price: order?.price.toString() * order?.quantity,
           // calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
           user_id: storedWholesellerId,
           item_id: order?.item_id,
@@ -215,9 +216,12 @@ function PetshopOrderviewdetails() {
       if (response) {
         if (response.data.status === "200") {
           toast.success("Added to cart!");
-
+          // buy it again start
+          setIsBuyitagainButtonDisabled(true); // Disable the button
+          localStorage.setItem(`orderBuyitagain_${order?.item_id}`, "true");
+          // buy it again end
           // setAddToCartStatus("Added to cart!");
-          navigate(`/petshop-add-cart/${order?.item_id}`);
+          navigate(`/add-cart/${order?.item_id}`);
         } else {
           // setAddToCartStatus(response.data.message);
           toast.error("Already added");
@@ -231,7 +235,8 @@ function PetshopOrderviewdetails() {
     }
   };
   const [selectedPaymentMode, setSelectedPaymentMode] = useState(null);
-
+  const [isBuyitagainButtonDisabled, setIsBuyitagainButtonDisabled] =
+    useState(false);
   const handleRadioChange = (value) => {
     setSelectedPaymentMode(value);
   };
@@ -256,6 +261,25 @@ function PetshopOrderviewdetails() {
         toast.error("Field is required");
       });
   };
+
+  useEffect(() => {
+    const isOrderBuyitagain = localStorage.getItem(`orderBuyitagain_${id}`);
+    console.log("isOrderBuyitagain", isOrderBuyitagain);
+    if (isOrderBuyitagain === "true") {
+      setIsBuyitagainButtonDisabled(true);
+    }
+  }, []);
+  useEffect(() => {
+    // Clear the flag on page refresh
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("orderBuyitagain_");
+    });
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("beforeunload", () => {});
+    };
+  }, []);
 
   const [rating, setRating] = useState(0);
   const [responseMessage, setResponseMessage] = useState("");
@@ -293,6 +317,32 @@ function PetshopOrderviewdetails() {
       });
   };
 
+  const renderProducthead = (name) => {
+    const maxCharacters = 30;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}</h6>
+      </>
+    );
+  };
+
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = Number(price);
+
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
+
   return (
     <>
       <PetShopHeader />
@@ -318,6 +368,7 @@ function PetshopOrderviewdetails() {
                       </div>
                       <div>
                         <h5>Canine Products</h5>
+
                         <p>{storedFormattedAddress}</p>
                       </div>
                     </div>
@@ -469,7 +520,7 @@ function PetshopOrderviewdetails() {
                                               <p>Total</p>
                                             </th>
                                             <td>
-                                              <p>₹{subTotal}</p>
+                                              <p>₹{formatPrice(subTotal)}</p>
                                             </td>
                                           </tr>
                                           <tr>
@@ -477,7 +528,7 @@ function PetshopOrderviewdetails() {
                                               <p>Tax:</p>
                                             </th>
                                             <td>
-                                              <p>₹{TaxAmount}</p>
+                                              <p>₹{formatPrice(TaxAmount)}</p>
                                             </td>
                                           </tr>
                                           <tr>
@@ -485,7 +536,9 @@ function PetshopOrderviewdetails() {
                                               <p>Sub Total</p>
                                             </th>
                                             <td>
-                                              <p>₹{SubTotalData}</p>
+                                              <p>
+                                                ₹{formatPrice(SubTotalData)}
+                                              </p>
                                             </td>
                                           </tr>
                                           <tr>
@@ -499,7 +552,10 @@ function PetshopOrderviewdetails() {
                                           <tr>
                                             <th>Total</th>
                                             <td>
-                                              ₹{SubTotalData + deliveryCharge}
+                                              ₹
+                                              {formatPrice(
+                                                SubTotalData + deliveryCharge
+                                              )}
                                             </td>
                                           </tr>
                                         </tbody>
@@ -521,8 +577,8 @@ function PetshopOrderviewdetails() {
                         <div ref={summaryTableRef}>
                           {allorder && allorder.length > 0 ? (
                             allorder.map((item, index) => {
-                              console.log("Desired ID:", id);
-                              console.log("Item ID:", item.id);
+                              console.log("IDD:", typeof id);
+                              console.log("IDI:", typeof item.id);
 
                               if (item.id == id) {
                                 console.log("Match found for ID:", id);
@@ -545,7 +601,11 @@ function PetshopOrderviewdetails() {
                                           </th>
                                           <td>
                                             {item.callback[0] && (
-                                              <p>{item.callback[0].variant}</p>
+                                              <h5>
+                                                {renderProducthead(
+                                                  item.callback[0].variant
+                                                )}
+                                              </h5>
                                             )}
                                           </td>
                                         </tr>
@@ -564,7 +624,7 @@ function PetshopOrderviewdetails() {
                                           <td>
                                             <p>
                                               ₹
-                                              {parseInt(
+                                              {formatPrice(
                                                 orderDetails.reduce(
                                                   (total, order) =>
                                                     total +
@@ -583,7 +643,7 @@ function PetshopOrderviewdetails() {
                                             <p>Sub Total:</p>
                                           </th>
                                           <td>
-                                            <p>₹{SubTotalData}</p>
+                                            <p>₹{formatPrice(SubTotalData)}</p>
                                           </td>
                                         </tr>
 
@@ -601,7 +661,10 @@ function PetshopOrderviewdetails() {
                                           </th>
                                           <td>
                                             <h4>
-                                              ₹{SubTotalData + deliveryCharge}
+                                              ₹
+                                              {formatPrice(
+                                                SubTotalData + deliveryCharge
+                                              )}
                                             </h4>
                                           </td>
                                         </tr>

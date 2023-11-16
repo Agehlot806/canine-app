@@ -58,6 +58,7 @@ function PetshopAddCart() {
   const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
+    console.log("elll: ", el);
     let allPrice = parseInt(el.price) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
@@ -106,7 +107,7 @@ function PetshopAddCart() {
       store_id: 1,
       zone_id: 2,
       delivered_status: "undelivered",
-      delivery_address: "hgsdjhgdhg",
+      delivery_address: deliveryAddress,
       item_campaign_id: "",
       // order_amount: parseInt(originalPrice * 0.05 + originalPrice),
       order_amount: parseInt(
@@ -789,6 +790,18 @@ function PetshopAddCart() {
     return dateObject.toLocaleDateString();
   };
 
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = parseInt(price);
+
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
@@ -824,6 +837,7 @@ function PetshopAddCart() {
               {addToCartProduct && addToCartProduct.length > 0 ? (
                 addToCartProduct.map((item, index) => (
                   <Container>
+                    {console.log("item.variant: ", item.variant)}
                     <Row>
                       <Col lg={2} sm={2}>
                         <img
@@ -843,7 +857,9 @@ function PetshopAddCart() {
                     {console.log("item.variant",item.variant)} */}
                         {
                           item.variant ? (
-                            <p>{`Selected Variant: ${item.variant}`}</p>
+                            <p>{`Selected Variant: ${item.variant
+                              .replace(/\\/g, "")
+                              .replace(/"/g, "")}`}</p>
                           ) : null // or you can omit this part if you want nothing to be displayed
                         }
                       </Col>
@@ -853,7 +869,7 @@ function PetshopAddCart() {
                         xs={6}
                         className="align-self-center addCARThead"
                       >
-                        <h3>₹{parseInt(item.price)}</h3>
+                        <h3>₹{formatPrice(item.price)}</h3>
                         {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />
@@ -921,18 +937,18 @@ function PetshopAddCart() {
                             </Col>
                             <Col>
                               {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{originalPrice}</h5>
+                              <h5>₹{formatPrice(originalPrice)}</h5>
                             </Col>
                           </Row>
                           <hr />
                           <Row>
                             <Col>
-                              <h5>GST(5%)</h5>
+                              <h5>GST</h5>
                             </Col>
                             <Col>
                               <h5>
                                 ₹
-                                {Math.floor(
+                                {formatPrice(
                                   // itemQty * (
                                   originalPrice * 0.05
                                   // )
@@ -948,7 +964,7 @@ function PetshopAddCart() {
                             <Col>
                               <h5>
                                 ₹
-                                {`${parseInt(
+                                {`${formatPrice(
                                   // itemQty * (
                                   originalPrice * 0.05 + originalPrice
                                   // )
@@ -1125,7 +1141,7 @@ function PetshopAddCart() {
                                 <h4>Total</h4>
                                 <h2>
                                   ₹{" "}
-                                  {`${parseInt(
+                                  {`${formatPrice(
                                     // itemQty * (
                                     originalPrice * 0.05 + originalPrice
                                     // )

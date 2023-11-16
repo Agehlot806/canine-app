@@ -137,13 +137,20 @@ function Addcart() {
     //   originalPrice = allPrice;
     // });
     addToCartProduct.forEach((el) => {
-      let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
+      console.log("ell: ", el);
+      let allPrice = parseInt(el.price) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   }
   const taxamound = Math.floor(originalPrice * 0.05);
   console.log("allPrice: ", originalPrice);
   console.log("taxamound: ", taxamound);
+  // let totalPrice = parseInt(originalPrice + originalPrice * 0.05);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setTotalPrice(originalPrice + originalPrice * 0.05);
+  }, [originalPrice]);
+  console.log("totalPrice: ", totalPrice);
   // let itemQuantity = item.quantity;
   // console.log("itemQuantity: ", itemQuantity);
 
@@ -441,6 +448,7 @@ function Addcart() {
   const [profileData, setProfileData] = useState({});
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
+  console.log("couponPrice: ", disscountvalue);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -579,15 +587,60 @@ function Addcart() {
   console.log("Stored Address:", storedFormattedAddress);
 
   console.log("disscountvalue", disscountvalue);
+  // const coupendisscount = (dis) => {
+  //   setcoupenCode(!coupencode);
+  //   localStorage.setItem("disconut", JSON.stringify(dis));
+  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+  //   console.log("disccount?????", dis);
+  // };
+  // const clearCoupon = () => {
+  //   setcoupenCode(!coupencode);
+  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+  // };
+  // new applied code 11/13/2023
+  // if (appliedCoupon) {
+  //   totalPrice -= disscountvalue;
+  // }
+  useEffect(() => {
+    // Function to be called on page refresh
+    const clearCoupon = () => {
+      setcoupenCode(!coupencode);
+      setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+      setTotalPrice(originalPrice + originalPrice * 0.05);
+      localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+    };
+
+    // Attach the event listener when the component mounts
+    window.addEventListener("beforeunload", clearCoupon);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", clearCoupon);
+    };
+  }, []);
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+    // setTotalPrice(
+    //   parseInt(originalPrice + originalPrice * 0.05 - disscountvalue)
+    // );
+    const discountAmount = dis?.discount || 0;
+    let newTotalPrice = originalPrice + originalPrice * 0.05 - discountAmount;
+
+    // Update totalPrice only if the newTotalPrice is a valid number
+    if (!isNaN(newTotalPrice)) {
+      setTotalPrice(newTotalPrice);
+    } else {
+      console.error("Invalid totalPrice calculation. Check your values.");
+    }
     console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
     setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    setTotalPrice(originalPrice + originalPrice * 0.05);
     localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [first_nameError, setFirst_nameError] = useState("");
@@ -637,6 +690,19 @@ function Addcart() {
       console.error(error);
     }
   };
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = parseInt(price);
+
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
+
   return (
     <>
       <Toaster />
@@ -685,7 +751,9 @@ function Addcart() {
                             <h2>{item.name}</h2>
                             {
                               item.variant ? (
-                                <p>{`Selected Variant: ${item.variant}`}</p>
+                                <p>{`Selected Variant: ${item.variant
+                                  .replace(/\\/g, "")
+                                  .replace(/"/g, "")}`}</p>
                               ) : null // or you can omit this part if you want nothing to be displayed
                             }
                           </Col>
@@ -696,7 +764,7 @@ function Addcart() {
                           xs={6}
                           className="align-self-center addCARThead"
                         >
-                          <h3>₹{parseInt(item.price * item.quantity)}</h3>
+                          <h3>₹{formatPrice(item.price)}</h3>
 
                           <div className="quantity-btn">
                             {/* <button onClick={() => handleDecrementone(index)}>
@@ -769,7 +837,7 @@ function Addcart() {
                           <hr />
                           <Row>
                             <Col>
-                              <h5>GST(5%)</h5>
+                              <h5>GST</h5>
                             </Col>
                             <Col>
                               <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
@@ -831,7 +899,9 @@ function Addcart() {
                     <h2>{item.item_name}</h2>
                     {
                       item.variant ? (
-                        <p>{`Selected Variant: ${item.variant}`}</p>
+                        <p>{`Selected Variant: ${item.variant
+                          .replace(/\\/g, "")
+                          .replace(/"/g, "")}`}</p>
                       ) : null // or you can omit this part if you want nothing to be displayed
                     }
                   </Col>
@@ -841,7 +911,7 @@ function Addcart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{parseInt(item.price * item.quantity)}</h3>
+                    <h3>₹{formatPrice(item.price)}</h3>
 
                     <div className="quantity-btn">
                       <button onClick={() => handleDecrementone(index)}>
@@ -932,7 +1002,7 @@ function Addcart() {
                             <h5>{disscountvalue?.title}</h5>
                           </Col>
                           <Col className="align-self-center">
-                            <h6>₹{disscountvalue?.discount}</h6>
+                            <h6>₹{parseInt(disscountvalue?.discount)}</h6>
                           </Col>
                           <Col className="align-self-center">
                             <button
@@ -966,7 +1036,7 @@ function Addcart() {
                         </Col>
                         <Col>
                           {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                          <h5>₹{originalPrice}</h5>
+                          <h5>₹{formatPrice(originalPrice)}</h5>
                         </Col>
                       </Row>
                       <hr />
@@ -978,7 +1048,7 @@ function Addcart() {
                           <h5>
                             ₹
                             {appliedCoupon
-                              ? parseInt(disscountvalue?.discount)
+                              ? formatPrice(disscountvalue?.discount)
                               : 0}
                           </h5>
                         </Col>
@@ -986,10 +1056,10 @@ function Addcart() {
                       <hr />
                       <Row>
                         <Col>
-                          <h5>GST(5%)</h5>
+                          <h5>GST</h5>
                         </Col>
                         <Col>
-                          <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
+                          <h5>₹{formatPrice(originalPrice * 0.05)}</h5>
                         </Col>
                       </Row>
                       <hr />
@@ -1001,12 +1071,13 @@ function Addcart() {
                         <Col>
                           <h5>
                             ₹
-                            {`${parseInt(
+                            {/* {`${parseInt(
                               originalPrice * 0.05 +
                                 originalPrice -
                                 disscountvalue?.discount ||
                                 originalPrice + taxamound
-                            )}`}
+                            )}`} */}
+                            {`${formatPrice(totalPrice)}`}
                             {/* Calculate  and display the Rounding Adjust */}
                           </h5>
                         </Col>
@@ -1172,18 +1243,7 @@ function Addcart() {
                         <Row>
                           <Col sm={6}>
                             <h4>Total</h4>
-                            <h2>
-                              ₹{" "}
-                              {/* {`${parseInt(
-                                originalPrice * 0.05 + originalPrice
-                              )}`} */}
-                              {`${parseInt(
-                                originalPrice * 0.05 +
-                                  originalPrice -
-                                  disscountvalue?.discount ||
-                                  originalPrice + taxamound
-                              )}`}
-                            </h2>
+                            <h2>₹{`${formatPrice(totalPrice)}`}</h2>
                           </Col>
                           <Col sm={6}>
                             {/* <Button onClick={() => handlePayment()}>

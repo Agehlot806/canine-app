@@ -9,7 +9,7 @@ import orders from "../../assets/images/img/orders.png";
 import cart from "../../assets/images/icon/cart.png";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
@@ -19,12 +19,14 @@ function PetshopShipping() {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   console.log("storedWholesellerId: ", storedWholesellerId);
+  const storedFormattedAddress = localStorage.getItem("formattedAddress");
+  console.log("storedFormattedAddress: ", storedFormattedAddress);
+  const { mobile } = storedFormattedAddress || {};
   // ----------------------------------------
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([allAddressList(),
-    allOrders()])
+    Promise.all([allAddressList(), allOrders()])
       .then(() => {
         setLoading(false);
       })
@@ -34,7 +36,7 @@ function PetshopShipping() {
       });
   }, []);
   const { id } = useParams();
-  console.log("id: ", id);
+  console.log("idd: ", typeof id);
   const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
 
@@ -108,10 +110,11 @@ function PetshopShipping() {
                               {item.callback.map((callbackItem) => (
                                 <div key={callbackItem.id}>
                                   {callbackItem.user_details &&
-                                    callbackItem.user_details.rating > 0 ? (
+                                  callbackItem.user_details.rating > 0 ? (
                                     <div className="solidFA-icon">
                                       {Array.from({
-                                        length: callbackItem.user_details.rating,
+                                        length:
+                                          callbackItem.user_details.rating,
                                       }).map((_, index) => (
                                         <i
                                           className="fa-solid fa-star"
@@ -165,12 +168,16 @@ function PetshopShipping() {
                         <Col lg={3} sm={3} className="align-self-center">
                           <div className="myorder-btn">
                             <Button>
-                              <Link to={`/petShop-order-view-details/${item.id}`}>
+                              <Link
+                                to={`/petShop-order-view-details/${item.id}`}
+                              >
                                 View
                               </Link>
                             </Button>
                             <Button>
-                              <Link to={`/track-your-order/${item.id}`}>Track</Link>
+                              <Link to={`/petShop-track-your-order/${item.id}`}>
+                                Track
+                              </Link>
                             </Button>
                           </div>
                         </Col>
@@ -183,149 +190,6 @@ function PetshopShipping() {
               </div>
             </Container>
           </section>
-
-          {/* <section className="section-padding">
-        <Container>
-          <div className="oder-detail-card">
-            <Row>
-              <Col lg={5}>
-                <div className="product-details">
-                  <div>
-                    <img src={logo} />
-                  </div>
-                  <div>
-                    <h5>Canine Products</h5>
-                    <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
-                  </div>
-                </div>
-              </Col>
-              <Col lg={7}>
-                <div className="dowload-invioce">
-                  <Button className="invoice-1">
-                    <img src={invoice} /> download invoice
-                  </Button>
-                  <Button className="invoice-2">
-                    <img src={invoice} /> download summary
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={5}>
-                <div className="order-minicard">
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <h6>Order ID : 125683</h6>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <div className="order-ids">
-                        <p>1 X Food bowl</p>
-                      </div>
-                    </Col>
-                    <Col>
-                      <div className="order-ids">
-                        <p>$138.00</p>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col lg={7} className="align-self-center">
-                <div className="order-table">
-                  <Table responsive>
-                    <tbody>
-                      <tr>
-                        <th>Sub Total</th>
-                        <td>$50</td>
-                      </tr>
-                      <tr>
-                        <th>
-                          Moving Cart <br />
-                          <p>Additional Services</p>
-                        </th>
-                        <td>$10</td>
-                      </tr>
-                      <tr>
-                        <th>
-                          Discount <br />
-                          <p>Promo Code: 554dffd</p>
-                        </th>
-                        <td>$20</td>
-                      </tr>
-                      <tr>
-                        <th>Total</th>
-                        <td>$138.00</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </section> */}
           <section className="section-padding">
             <Container>
               <h1 className="main-head text-center mb-3">Order Details</h1>
@@ -344,7 +208,7 @@ function PetshopShipping() {
                           const seventhDayDate = new Date(createdDate);
                           seventhDayDate.setDate(createdDate.getDate() + 7);
 
-                          if (item.id == id) {
+                          if (parseInt(item.id) == parseInt(id)) {
                             console.log("Match found for ID:", id);
                             return (
                               <div key={index}>
@@ -352,13 +216,15 @@ function PetshopShipping() {
                                   <h6>ORDER NUMBER</h6>
                                   <p>{item.id}</p>
                                   <h6>PAYMENT</h6>
-                                  <p>Paid: Using Upi</p>
+                                  <p>Paid: {item.payment_method}</p>
                                   <h6>Date</h6>
                                   <p>
-                                    {moment(item.created_at).format("YYYY-MM-DD")}
+                                    {moment(item.created_at).format(
+                                      "YYYY-MM-DD"
+                                    )}
                                   </p>
-                                  <h6>Phone Number</h6>
-                                  <p>{item.phone || "number not available"}</p>
+                                  {/* <h6>Phone Number</h6>
+                                  <p>{mobile || "number not available"}</p> */}
                                   <h6>Deliver To</h6>
                                   <p>{seventhDayDate.toDateString()}</p>
                                 </>

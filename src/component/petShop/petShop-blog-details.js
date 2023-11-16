@@ -1898,7 +1898,7 @@ function PetshopBlogdetails() {
                           <hr />*/}
                           <Row>
                             <Col>
-                              <h5>GST(5%)</h5>
+                              <h5>GST</h5>
                             </Col>
                             <Col>
                               <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>

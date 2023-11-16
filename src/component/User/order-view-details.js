@@ -38,11 +38,11 @@ function Orderviewdetails() {
   const navigate = useNavigate();
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
-// Retrieve the formatted address from localStorage
-const storedFormattedAddress = localStorage.getItem('formattedAddress');
+  // Retrieve the formatted address from localStorage
+  const storedFormattedAddress = localStorage.getItem("formattedAddress");
 
-// Use the stored formatted address
-console.log('Stored Address:', storedFormattedAddress);
+  // Use the stored formatted address
+  console.log("Stored Address:", storedFormattedAddress);
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
   });
@@ -97,7 +97,7 @@ console.log('Stored Address:', storedFormattedAddress);
     0
   );
   let promoDiscount = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.discount_on_item),
+    (total, order) => total + parseFloat(order.discount_on_item ?? 0),
     0
   );
   console.log("promoDiscount: ", promoDiscount);
@@ -107,7 +107,7 @@ console.log('Stored Address:', storedFormattedAddress);
   //   0
   // );allorder
 
-  let couponDiscount = parseFloat(orderDetails[0]?.discount_on_item);
+  let couponDiscount = parseFloat(orderDetails[0]?.discount_on_item ?? 0);
 
   let deliveryCharge = orderDetails.reduce(
     (total, order) => total + parseFloat(order.delivery_charge == 0 ? 30 : 30),
@@ -178,9 +178,10 @@ console.log('Stored Address:', storedFormattedAddress);
   //     setSelectedVariantStock(defaultVariant.stock);
   //   }
   // }, [productDetails]);
- 
-  const [isBuyitagainButtonDisabled, setIsBuyitagainButtonDisabled] = useState(false);
- const handleAddToCart = async (order) => {
+
+  const [isBuyitagainButtonDisabled, setIsBuyitagainButtonDisabled] =
+    useState(false);
+  const handleAddToCart = async (order) => {
     console.log("itemmmm: ", order);
     try {
       const response = await axios.post(
@@ -197,11 +198,13 @@ console.log('Stored Address:', storedFormattedAddress);
           // image: productDetails?.image,
           image:
             // "https://canine.hirectjob.in///storage/app/public/product/" +
-            order?.item_details?.image,
+            order?.item_details[0]?.image,
           quantity: order?.quantity,
           total_quantity: 5,
           return_order: "yes",
-
+          coupon_discount_amount: 0,
+          coupon_discount_title: "",
+          coupon_code: "",
           price: order?.price.toString(),
           // calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
           user_id: storedUserId,
@@ -213,9 +216,9 @@ console.log('Stored Address:', storedFormattedAddress);
         if (response.data.status === "200") {
           toast.success("Added to cart!");
           // buy it again start
-            setIsBuyitagainButtonDisabled(true); // Disable the button
-            localStorage.setItem(`orderBuyitagain_${order?.item_id}`, "true");
-            // buy it again end
+          setIsBuyitagainButtonDisabled(true); // Disable the button
+          localStorage.setItem(`orderBuyitagain_${order?.item_id}`, "true");
+          // buy it again end
           // setAddToCartStatus("Added to cart!");
           navigate(`/add-cart/${order?.item_id}`);
         } else {
@@ -232,23 +235,22 @@ console.log('Stored Address:', storedFormattedAddress);
   };
   useEffect(() => {
     const isOrderBuyitagain = localStorage.getItem(`orderBuyitagain_${id}`);
-    console.log("isOrderBuyitagain",isOrderBuyitagain);
+    console.log("isOrderBuyitagain", isOrderBuyitagain);
     if (isOrderBuyitagain === "true") {
       setIsBuyitagainButtonDisabled(true);
     }
   }, []);
   useEffect(() => {
     // Clear the flag on page refresh
-    window.addEventListener('beforeunload', () => {
-      localStorage.removeItem('orderBuyitagain_');
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("orderBuyitagain_");
     });
 
     return () => {
       // Remove the event listener when the component unmounts
-      window.removeEventListener('beforeunload', () => {});
+      window.removeEventListener("beforeunload", () => {});
     };
   }, []);
-  
 
   const [rating, setRating] = useState(0);
 
@@ -289,6 +291,32 @@ console.log('Stored Address:', storedFormattedAddress);
   const orderWithstatus = allorder.find(
     (order) => order.order_status === "delivered"
   );
+  const renderProducthead = (name) => {
+    const maxCharacters = 14;
+    if (name?.length <= maxCharacters) {
+      return <h6>{name}</h6>;
+    }
+    const truncatedDescription = name?.slice(0, maxCharacters);
+    return (
+      <>
+        <h6>{truncatedDescription}</h6>
+      </>
+    );
+  };
+
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = parseInt(price);
+
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
+
   return (
     <>
       <Toaster />
@@ -339,7 +367,7 @@ console.log('Stored Address:', storedFormattedAddress);
                     <div className="order-minicard">
                       {orderDetails && orderDetails.length > 0 ? (
                         orderDetails.map((order) => {
-                          console.log("order",order);
+                          console.log("order", order);
                           return (
                             <div key={order.id}>
                               <Row>
@@ -351,7 +379,9 @@ console.log('Stored Address:', storedFormattedAddress);
                                     </p>
                                     <p>
                                       Price:{" "}
-                                      <span>₹{parseFloat(order.price, 0)}</span>
+                                      <span>
+                                        ₹{formatPrice(order.price, 0)}
+                                      </span>
                                     </p>
                                     <p>
                                       quantity: <span>{order.quantity}</span>
@@ -456,14 +486,16 @@ console.log('Stored Address:', storedFormattedAddress);
                                         <td>
                                           <p>
                                             ₹
-                                            {parseInt(
+                                            {formatPrice(
                                               orderDetails.reduce(
                                                 (total, order) =>
-                                                  total +
-                                                  parseFloat(order.price),
+                                                  total + order.price,
                                                 0
                                               )
-                                            )}
+                                            )}{" "}
+                                            {item && !isNaN(item.coupon_code)
+                                              ? item.coupon_code
+                                              : "0"}
                                           </p>
                                         </td>
                                         {/* <td>₹{subTotal}</td> */}
@@ -495,7 +527,7 @@ console.log('Stored Address:', storedFormattedAddress);
                                             <span style={{ fontSize: 20 }}>
                                               {"-"}
                                             </span>{" "}
-                                            ₹{couponDiscount}
+                                            ₹{formatPrice(couponDiscount)}
                                           </p>
                                         </td>
                                       </tr>
@@ -506,11 +538,13 @@ console.log('Stored Address:', storedFormattedAddress);
                                         <td>
                                           <p>
                                             ₹
-                                            {promoDiscount === 0
-                                              ? subTotal + taxAmount
-                                              : subTotal +
-                                                taxAmount -
-                                                couponDiscount}
+                                            {formatPrice(
+                                              promoDiscount === 0
+                                                ? subTotal + taxAmount
+                                                : subTotal +
+                                                    taxAmount -
+                                                    couponDiscount
+                                            )}
                                           </p>
                                         </td>
                                       </tr>
@@ -529,7 +563,7 @@ console.log('Stored Address:', storedFormattedAddress);
                                         </th>
                                         <td>
                                           <h4 style={{ color: "#3b71ca" }}>
-                                            ₹{TotalDataPrice}
+                                            ₹{formatPrice(TotalDataPrice)}
                                           </h4>
                                         </td>
                                       </tr>
@@ -576,7 +610,11 @@ console.log('Stored Address:', storedFormattedAddress);
                                       </th>
                                       <td>
                                         {item.callback[0] && (
-                                          <p>{item.callback[0].variant}</p>
+                                          <p style={{ fontSize: "small" }}>
+                                            {renderProducthead(
+                                              item.callback[0].variant
+                                            )}
+                                          </p>
                                         )}
                                       </td>
                                     </tr>
@@ -588,18 +626,12 @@ console.log('Stored Address:', storedFormattedAddress);
                                         <p>
                                           <p>
                                             ₹
-                                            {promoDiscount === 0
-                                              ? subTotal
-                                              : subTotal - couponDiscount}
+                                            {formatPrice(
+                                              promoDiscount === 0
+                                                ? subTotal
+                                                : subTotal - couponDiscount
+                                            )}
                                           </p>
-                                          {/* ₹
-                                          {parseInt(
-                                            orderDetails.reduce(
-                                              (total, order) =>
-                                                total + parseFloat(order.price),
-                                              0
-                                            )
-                                          )} */}
                                         </p>
                                       </td>
                                     </tr>
@@ -611,11 +643,13 @@ console.log('Stored Address:', storedFormattedAddress);
                                         <p>
                                           {" "}
                                           ₹
-                                          {promoDiscount === 0
-                                            ? subTotal + taxAmount
-                                            : subTotal +
-                                              taxAmount -
-                                              couponDiscount}
+                                          {formatPrice(
+                                            promoDiscount === 0
+                                              ? subTotal + taxAmount
+                                              : subTotal +
+                                                  taxAmount -
+                                                  couponDiscount
+                                          )}
                                         </p>
                                       </td>
                                     </tr>
@@ -626,8 +660,8 @@ console.log('Stored Address:', storedFormattedAddress);
                                       <td>
                                         <p>
                                           ₹
-                                          {parseInt(
-                                            item.coupon_discount_amount
+                                          {formatPrice(
+                                            item.coupon_discount_amount ?? 0
                                           )}
                                         </p>
                                       </td>
@@ -646,7 +680,7 @@ console.log('Stored Address:', storedFormattedAddress);
                                       </th>
                                       <td>
                                         <h4 style={{ color: "#3b71ca" }}>
-                                          ₹{TotalDataPrice}
+                                          ₹{formatPrice(TotalDataPrice)}
                                         </h4>
                                       </td>
                                     </tr>

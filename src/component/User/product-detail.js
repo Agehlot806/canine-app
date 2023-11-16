@@ -171,7 +171,9 @@ function Productdetail() {
             : productDetails?.stock,
           return_order: productDetails?.returnable || "yes",
           price:
-            calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
+            calculatedPrice === 0
+              ? parseInt(productDetails?.price)
+              : parseInt(calculatedPrice),
           user_id: storedUserId,
           item_id: productDetails?.id,
         }

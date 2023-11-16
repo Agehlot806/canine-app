@@ -116,6 +116,7 @@ import { useAuth } from "./component/context/AuthContext";
 import is from "date-fns/esm/locale/is/index";
 import { useEffect } from "react";
 import Mypetprofile from "./component/User/my-pet-profile";
+import Trackyourorderps from "./component/petShop/petShop-track-your-order";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -196,6 +197,11 @@ const UsersRoutes = () => {
       <Route path="/disclaimer" element={<Disclaimer />} />
       <Route path="/track-your-order/:id" element={<Trackyourorder />} />
       <Route path="/track-your-order" element={<Trackyourorder />} />
+      <Route
+        path="/petShop-track-your-order/:id"
+        element={<Trackyourorderps />}
+      />
+      <Route path="/petShop-track-your-order" element={<Trackyourorderps />} />
       <Route path="/testimonials" element={<Testimonials />} />
       <Route path="/offers-details" element={<Offersdetails />} />
 
@@ -275,7 +281,7 @@ const WholesalerRoutes = () => {
       <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
       <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
       <Route
-        path="/petShop-order-view-details"
+        path="/petShop-order-view-details/"
         element={<PetshopOrderviewdetails />}
       />
 
@@ -538,7 +544,7 @@ const App = () => {
               element={<Orderviewdetails />}
             />
             <Route
-              path="/petShop-order-view-details"
+              path="/petShop-order-view-details/"
               element={<PetshopOrderviewdetails />}
             />
 
