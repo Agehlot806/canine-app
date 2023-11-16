@@ -43,8 +43,8 @@ function Petshopfooter() {
                       <Link to="/petshopreturnpolicy">Return Policy</Link>
                     </li>
                     <li>
-                      <Link to="/petshop-term-of-use">
-                      Terms of Use
+                      <Link to="/petshop-terms-and-conditions">
+                      Terms & Conditions
                       </Link>
                     </li>
                     <li>

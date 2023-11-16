@@ -89,7 +89,6 @@ function Ourourbrand(props) {
   };
 
   const { id } = useParams();
-  console.log("brand id", id);
 
   const [petitemproduct, setpetitemproduct] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
@@ -225,16 +224,12 @@ function Ourourbrand(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -270,7 +265,6 @@ function Ourourbrand(props) {
 
   const [subid, setsubid] = useState("");
   const subcatid = () => {
-    // console.log("categories id ", id);
     setsubid(id);
     axios
       .get(`${BASE_URL}/banners/brand_product_filter/${id}/${subid}`)
@@ -284,12 +278,9 @@ function Ourourbrand(props) {
   };
 
   const [allproductbrand, setallproductbrand] = useState([]);
-  // const [brands, setBrands] = useState([]);
   const [brandIdsToFilter, setBrandIdsToFilter] = useState([]);
   const [brandCanineToFilter, setBrandCanineToFilter] = useState([]);
 
-  console.log("brandIdsToFilter", brandIdsToFilter);
-  console.log("brandCanineToFilter", brandCanineToFilter);
 
   const allProduct = async () => {
     axios
@@ -809,8 +800,6 @@ function Ourourbrand(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -977,7 +966,6 @@ function Ourourbrand(props) {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -1014,14 +1002,6 @@ function Ourourbrand(props) {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -1034,7 +1014,6 @@ function Ourourbrand(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );

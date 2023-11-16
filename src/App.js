@@ -15,7 +15,6 @@ import Product from "./component/User/product";
 import Productdetail from "./component/User/product-detail";
 import Contact from "./component/User/contact";
 import Canineproduct from "./component/User/canine-product";
-import Patnersproduct from "./component/User/patners-product";
 import Veterinaryservice from "./component/User/veterinary-service";
 import Addcart from "./component/User/addcart";
 import Servicedate from "./component/User/service-date";
@@ -42,7 +41,6 @@ import Map from "./component/User/track-your-order";
 import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
 import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
 import SalesmanAddcart from "./component/Salesman/salesman-add-cart";
-import Catcategory from "./component/User/cat-category";
 import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
 import Petprofile from "./component/User/pet-profile";
@@ -104,11 +102,9 @@ import PetShopSubcategoriesProduct from "./component/petShop/petShop-Subcategori
 import Transitionhistory from "./component/User/transition-history";
 import SubcategoriesHeading from "./component/User/sub-categoriesHeading";
 import { PaginationProvider } from "./Context/PaginationContext";
-import Termsofuse from "./component/User/terms-of-use";
 import Privacypolicy from "./component/User/privacy-policy";
 import Disclaimer from "./component/User/disclaimer";
 import Testimonials from "./component/User/testimonials";
-import Petshoptermofuse from "./component/petShop/petShop-termsofuse";
 import PetshopPrivacypolicy from "./component/petShop/petshop-privacy-policy";
 import PetshopDisclaimer from "./component/petShop/petshop-disclaimer";
 import Petshoptestimonials from "./component/petShop/petshop-testimonials";
@@ -119,6 +115,8 @@ import Mypetprofile from "./component/User/my-pet-profile";
 import Trackyourorderps from "./component/petShop/petShop-track-your-order";
 import Cancellationpolicy from "./component/User/cancellation-policy";
 import Petshopcancellationpolicy from "./component/petShop/petshop-cancellationpolicy";
+import TermsAndConditions from "./component/User/terms&conditions";
+import PetshopTermsAndConditions from "./component/petShop/petShop-TermsAndConditions";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -155,7 +153,6 @@ const UsersRoutes = () => {
       <Route path="/product-details/:id" element={<Productdetail />} />
       <Route path="/quick-view/:id" element={<Quickview />} />
       <Route path="/canine-product" element={<Canineproduct />} />
-      <Route path="/patners-product" element={<Patnersproduct />} />
       <Route path="/contact" element={<Contact />} />
       <Route
         path="/service/veterinary-service"
@@ -184,7 +181,6 @@ const UsersRoutes = () => {
       <Route path="/user-pay-method" element={<Userpaymethod />} />
       <Route path="/map" element={<Map />} />
       <Route path="/pet-category/:name/:id" element={<Petcategory />} />
-      <Route path="/cat-category" element={<Catcategory />} />
       <Route path="/all-veterinary" element={<Allveterinary />} />
       <Route path="/all-service-booking" element={<Allservicebooking />} />
       <Route path="/wishlist-products" element={<Wishlistproduct />} />
@@ -296,7 +292,7 @@ const WholesalerRoutes = () => {
         path="/petshopdeliverydetails"
         element={<Petshopdeliverydetails />}
       />
-      <Route path="/petshop-term-of-use" element={<Petshoptermofuse />} />
+      <Route path="/petshop-terms-and-conditions" element={<PetshopTermsAndConditions />} />
       <Route
         path="/petshop-privacy-policy"
         element={<PetshopPrivacypolicy />}
@@ -403,7 +399,6 @@ const App = () => {
             <Route path="/product-details/:id" element={<Productdetail />} />
             <Route path="/quick-view/:id" element={<Quickview />} />
             <Route path="/canine-product" element={<Canineproduct />} />
-            <Route path="/patners-product" element={<Patnersproduct />} />
             <Route path="/contact" element={<Contact />} />
             <Route
               path="/service/veterinary-service"
@@ -438,7 +433,6 @@ const App = () => {
             <Route path="/user-pay-method" element={<Userpaymethod />} />
             <Route path="/map" element={<Map />} />
             <Route path="/pet-category/:name/:id" element={<Petcategory />} />
-            <Route path="/cat-category" element={<Catcategory />} />
             <Route path="/all-veterinary" element={<Allveterinary />} />
             <Route
               path="/all-service-booking"
@@ -451,7 +445,7 @@ const App = () => {
             {/* user flow links footer */}
             <Route path="/delivery-details" element={<Deliverydetails />} />
             <Route path="/return-policy" element={<Returnpolicy />} />
-            <Route path="/terms-of-use" element={<Termsofuse />} />
+            <Route path="/terms-&-conditions" element={<TermsAndConditions />} />
             <Route path="/privacy-policy" element={<Privacypolicy />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="/track-your-order/:id" element={<Trackyourorder />} />
@@ -561,7 +555,7 @@ const App = () => {
               path="/petshopdeliverydetails"
               element={<Petshopdeliverydetails />}
             />
-            <Route path="/petshop-term-of-use" element={<Petshoptermofuse />} />
+           <Route path="/petshop-terms-and-conditions" element={<PetshopTermsAndConditions />} />
             <Route
               path="/petshop-privacy-policy"
               element={<PetshopPrivacypolicy />}

@@ -66,13 +66,10 @@ function Serviceaddpet() {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
   const handleGenderChange = (selectedGender) => {
     setGender(selectedGender);
   };
-  console.log("image", image);
   const handlePetsadd = (event) => {
     event.preventDefault();
 
@@ -88,7 +85,6 @@ function Serviceaddpet() {
     petData.append("age", `${years} years ${months} months`);
     petData.append("pet_name", pet_name);
     petData.append("image", image);
-    console.log("petData", petData);
     axios
       .post(`${BASE_URL}/auth/pets_add`, petData)
       .then((response) => {
@@ -170,18 +166,7 @@ function Serviceaddpet() {
                       </div>
                       <div className="needplace">
 
-                        {/* {selectedCategory && (
-                    <div className="selectedCategory">
-                      <h2>Avatar</h2>
-                      <img
-                        src={
-                          "https://canine.hirectjob.in//storage/app/public/category/" +
-                          selectedCategory.image
-                        }
-                        alt={selectedCategory.name}
-                      />
-                    </div>
-                  )} */}
+                    
 
                         <div className="form-group">
                           <label>Pet type</label>

@@ -44,7 +44,7 @@ function Footer() {
                       <Link to="/return-policy">Return Policy</Link>
                     </li>
                     <li>
-                      <Link to="/terms-of-use">{strings.TermsofUse}</Link>
+                      <Link to="/terms-&-conditions">{strings.termsConditions}</Link>
                     </li>
                     <li>
                       <Link to="/offers-details">Top Offers</Link>

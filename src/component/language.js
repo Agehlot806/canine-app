@@ -9,7 +9,7 @@ let strings = new LocalizedStrings({
     paymentOption: "Payment Options",
     trackYourOrder: "Cancellation Policy",
     return: "Return",
-    TermsofUse: "Terms of Use",
+    termsConditions: "Terms & Conditions",
     //information footer
     information: "Information",
     careers: "Careers",

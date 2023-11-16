@@ -25,7 +25,6 @@ import loadinggif from "../../assets/images/video/loading.gif";
 
 function Petcategory() {
   //     const { id } = useParams();
-  //   console.log("id", id);
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
@@ -99,14 +98,10 @@ function Petcategory() {
   };
 
   const { id, name } = useParams();
-  console.log("name: ", name);
-  console.log("id", id);
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   // filter code ==========================
@@ -160,7 +155,6 @@ function Petcategory() {
         console.log(error);
       });
   };
-  // console.log("allproductallproduct",allproduct);
   ////filter tarun//
   const [allbrand, setAllBrand] = useState("");
   const [alllifesage, setAlllifesage] = useState("");
@@ -236,18 +230,6 @@ function Petcategory() {
       });
   };
 
-  // const Allsubcategories = async () => {
-  //   axios
-  //     .get(`${BASE_URL}/categories/subcategories`)
-  //     .then((response) => {
-  //       console.log(response);
-  //       console.log("Delete Successful");
-  //       setsubcategories(response.data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   const Allsubcategories = async () => {
     axios
@@ -374,7 +356,6 @@ function Petcategory() {
     filterProducts();
   };
 
-  console.log("/////", selectedsubcateIds);
   const filterProducts = async (
     updatedBrandIds,
     updatedLifeIds,
@@ -406,8 +387,6 @@ function Petcategory() {
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: cateidproduct,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproduct(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -510,7 +489,6 @@ function Petcategory() {
 
   const subcatid = async (id) => {
     setsubid(id);
-    console.log("subcategoriesID", subid);
     await axios
       .get(`${BASE_URL}/items/product/${id}/${subid}`)
       .then((response) => {
@@ -599,16 +577,12 @@ function Petcategory() {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -810,7 +784,6 @@ function Petcategory() {
         console.log(error);
       });
   };
-  console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
   const [isAddressSelected, setIsAddressSelected] = useState(false);

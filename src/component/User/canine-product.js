@@ -161,10 +161,8 @@ function Canineproduct(props) {
         const filterDatashow = filterData.filter(
           (item) => item.module_id === 1
         );
-        console.log("responsDataesponsData", filterDatashow);
         setallproduct(filterDatashow);
         setSortOption("default");
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -251,16 +249,12 @@ function Canineproduct(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -306,9 +300,7 @@ function Canineproduct(props) {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
-        // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -517,8 +509,6 @@ function Canineproduct(props) {
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproduct(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -871,7 +861,6 @@ function Canineproduct(props) {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -884,7 +873,6 @@ function Canineproduct(props) {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
-        // console.log("responseresponse", response);
         setStateallCity(response.data.data);
       })
       .catch((error) => {
@@ -908,14 +896,7 @@ function Canineproduct(props) {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
+      
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -928,7 +909,6 @@ function Canineproduct(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -943,15 +923,14 @@ function Canineproduct(props) {
     try {
       const response = await axios.post(
         "https://canine.hirectjob.in/api/v1/customer/address/update",
-        profileData // Send the updated profileData in the request body
+        profileData 
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
-        fieldpagerefresh(); // Call fieldpagerefresh here
+        fieldpagerefresh(); 
       }
     } catch (error) {
       console.error(error);
@@ -989,7 +968,6 @@ function Canineproduct(props) {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -1153,15 +1131,6 @@ function Canineproduct(props) {
 
   const handlePayment = async () => {
     try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
       await loadRazorpayScript();
 
       const options = {

@@ -67,27 +67,13 @@ function Petprofile() {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
   // =----------------------------
 
   const handleGenderChange = (selectedGender) => {
     setGender(selectedGender);
   };
-  console.log("image", image);
   const handlePetsadd = (event) => {
     event.preventDefault();
-    // const pet_data = {
-    //     user_id: "1",
-    //     pets_type: selectedCategory?.name ? selectedCategory?.name : '',
-    //     gender: gender,
-    //     breeds: breeds,
-    //     dob: moment(dob).format('DD-MM-YY'),
-    //     age: `${years} years ${months} months`,
-    //     pet_name: pet_name,
-    //     image: image.name,
-    // };
-
     const petData = new FormData();
     petData.append("user_id", storedUserId);
     petData.append(
@@ -100,13 +86,10 @@ function Petprofile() {
     petData.append("age", `${years} years ${months} months`);
     petData.append("pet_name", pet_name);
     petData.append("image", image);
-    console.log("petData", petData);
     axios
       .post(`${BASE_URL}/auth/pets_add`, petData)
       .then((response) => {
         setResponseMessage(response.data.message);
-        console.log("pet add....", petData);
-        // navigate(`/service-date/${id}`);
         toast.success("Your Pet Successfully Add");
       })
       .catch((error) => {

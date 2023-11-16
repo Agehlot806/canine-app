@@ -87,8 +87,6 @@ function Productpartnershop() {
   let storedUserId = JSON.parse(customer_id);
   const { id } = useParams();
   const { vendor_id } = useParams();
-  console.log("vendor_id", vendor_id);
-  console.log("vendorlistid: ", id);
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [paymentId, setPaymentId] = useState("");
   const [thirdbanner, setthirdbanner] = useState([]);
@@ -173,7 +171,6 @@ function Productpartnershop() {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
-        // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
         // Perform any additional actions after successful deletion
       })
@@ -270,16 +267,12 @@ function Productpartnershop() {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -387,7 +380,6 @@ function Productpartnershop() {
       return updatedBrandIds;
     });
   };
-  // console.log("/////",selectedBrandIds);
 
   const Lifesatedataselect = (name) => {
     setSelectedLifeIds((prevSelectedLifeIds) => {
@@ -481,8 +473,6 @@ function Productpartnershop() {
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproduct(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -1186,8 +1176,6 @@ function Productpartnershop() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios

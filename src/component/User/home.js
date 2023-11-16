@@ -91,7 +91,6 @@ function Home(props) {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
-  console.log("cart", cart);
   // without signup add cart end
   const isEmailFormatValid = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -170,16 +169,6 @@ function Home(props) {
       console.log(error);
     }
   };
-
-  console.log("latestPosts", brands);
-  console.log("latestPosts22", shopbybrand);
-  // useEffect(() => {
-
-  // }, []);
-  // useEffect(() => {
-
-  //   fetchWishlistData();
-  // }, []);
 
   const categoriesProduct = async () => {
     try {
@@ -273,8 +262,6 @@ function Home(props) {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   const gradientColors = [
@@ -378,11 +365,8 @@ function Home(props) {
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -710,7 +694,6 @@ function Home(props) {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -723,7 +706,6 @@ function Home(props) {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
-        // console.log("responseresponse", response);
         setStateallCity(response.data.data);
       })
       .catch((error) => {
@@ -767,7 +749,6 @@ function Home(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -784,7 +765,6 @@ function Home(props) {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
@@ -817,7 +797,6 @@ function Home(props) {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -1037,8 +1016,6 @@ function Home(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -1426,16 +1403,7 @@ function Home(props) {
                                   Buy Now
                                 </button>
 
-                                {/* <Button>
-                        <Link
-                          // to={`/add-cart/${productDetails.id}`}
-                          to={`/add-cart/${productDetails.id}?gowithbuynow=true`}
-                          onClick={handleAddToCart}
-                        >
-                           Buy Now
-                        </Link>
-                        <p>{addToCartStatus}</p>
-                      </Button> */}
+
                               </div>
                             </Fade>
                           )}
@@ -2147,7 +2115,6 @@ function Home(props) {
                               const filterData = cart.filter((el) => {
                                 return el.item_id === productDetails.id;
                               });
-                              console.log("filterData", filterData);
                               if (filterData?.length > 0) {
                                 toast.error("Already in added");
                               } else {
@@ -2191,28 +2158,7 @@ function Home(props) {
                     </div>
                   )}
 
-                  {/* {productDetails?.stock &&
-                  productDetails?.stock?.length !== 0 ? (
-                    <div className="productBTNaddcard">
-                      <Button>
-                        <Link
-                          to={`/add-cart/${productDetails.id}`}
-                          onClick={handleAddToCart}
-                        >
-                          <i className="fa fa-shopping-bag" /> Add to cart
-                        </Link>
-                        <p>{addToCartStatus}</p>
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="sold-out-btn mt-3">
-                      <Link>Sold Out</Link>
-                      <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel">
-                        Notify Me When Available
-                      </Button>
-                    </div>
-                  )} */}
+                 
                   <div
                     className="modal fade"
                     id="soldoutModel"
@@ -2226,66 +2172,9 @@ function Home(props) {
                         <div className="modal-body">
                           <h4>{productDetails?.name}</h4>
                           <p>{productDetails?.description}</p>
-                          {/* <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option value="" disabled selected>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form> */}
+                          
                           <Form onSubmit={handleNotifymeSubmit}>
-                            {/* <Form.Group controlId="formVariations">
-        <Form.Label>Variations</Form.Label>
-        <Form.Control
-          as="select"
-          value={variation}
-          onChange={(e) => setVariation(e.target.value)}
-          required
-          isInvalid={!!variationError}
-        >
-          <option value="" disabled>
-            Choose an option...
-          </option>
-          {productDetails?.variations &&
-            productDetails?.variations.map((item, index) => (
-              <option key={index}>{item.type}</option>
-            ))}
-        </Form.Control>
-        {variationError && (
-          <div className="error-message">{variationError}</div>
-        )}
-      </Form.Group> */}
+                           
                             <Form.Group
                               controlId="formVariations"
                               className="mb-3"
@@ -2818,27 +2707,7 @@ function Home(props) {
                               ))}
                           </Row>
                         </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
+                        
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementone}>
                             <i className="fa fa-minus" />
@@ -3346,10 +3215,6 @@ function Home(props) {
                 Close
               </button>
             </div>
-            {/* <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div> */}
           </div>
         </div>
       </div>

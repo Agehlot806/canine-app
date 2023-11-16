@@ -18,23 +18,7 @@ import StarRating from "../starrating";
 import loadinggif from "../../assets/images/video/loading.gif";
 
 function Orderviewdetails() {
-  // const queryString = window.location.search;
-  // const urlParams = new URLSearchParams(queryString);
-
-  // const gowithbuynow = urlParams.get("gowithbuynow");
-  // const [butitAgainHide, setbutitAgainHide] = useState(gowithbuynow === "true");
-
-  // useEffect(() => {
-  //   // You can use this useEffect if you want to update the butitAgainHide state
-  //   // based on changes in gowithbuynow (e.g., if it changes dynamically)
-  //   setbutitAgainHide(gowithbuynow === "true");
-  // }, [gowithbuynow]); // Run this effect whenever gowithbuynow changes
-
-  // if (gowithbuynow === 'true') {
-  //   setbutitAgainHide(false)
-  // } else {
-
-  //   }
+ 
   const navigate = useNavigate();
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
@@ -42,7 +26,6 @@ function Orderviewdetails() {
   const storedFormattedAddress = localStorage.getItem("formattedAddress");
 
   // Use the stored formatted address
-  console.log("Stored Address:", storedFormattedAddress);
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
   });
@@ -51,14 +34,10 @@ function Orderviewdetails() {
   });
 
   const [allorder, setallorder] = useState([]);
-  console.log("allorderId: ", allorder[0]?.callback[0]?.item_id);
   const [orderDetails, setorderDetails] = useState([]);
-  console.log("orderDetails---", orderDetails);
 
   const { id } = useParams();
-  console.log("order id ", id);
   const [orderItemId, setOrderItemId] = useState(null); // Initialize as null
-  console.log("orderItemId: ", orderItemId);
 
   useEffect(() => {
     // Make sure orderDetails is available before accessing item_id
@@ -81,7 +60,6 @@ function Orderviewdetails() {
       });
   }, []);
   let originalPrice = 0;
-  console.log("originalPrice: ", originalPrice);
   orderDetails.forEach((el) => {
     let allPrice = parseInt(el.price) + parseInt(originalPrice);
     originalPrice = allPrice;
@@ -91,7 +69,6 @@ function Orderviewdetails() {
     (total, order) => total + parseFloat(order.price),
     0
   );
-  console.log("nnn: ", subTotal);
   let taxAmount = orderDetails.reduce(
     (total, order) => total + parseFloat(order.tax_amount),
     0
@@ -100,12 +77,7 @@ function Orderviewdetails() {
     (total, order) => total + parseFloat(order.discount_on_item ?? 0),
     0
   );
-  console.log("promoDiscount: ", promoDiscount);
 
-  // let couponDiscount = orderDetails.reduce(
-  //   (total, order) => total + parseFloat(order.coupon_discount_amount),
-  //   0
-  // );allorder
 
   let couponDiscount = parseFloat(orderDetails[0]?.discount_on_item ?? 0);
 
@@ -163,26 +135,10 @@ function Orderviewdetails() {
   };
 
   const [addToCartStatus, setAddToCartStatus] = useState("");
-  console.log("addToCartStatusaddToCartStatus", addToCartStatus);
-  // but it again add to cart
-  // const [quantity, setQuantity] = useState(1);
-  // const [selectedVariant, setSelectedVariant] = useState([]);
-  // const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  // const [selectedVariantStock, setSelectedVariantStock] = useState("");
-
-  // useEffect(() => {
-  //   if (productDetails?.variations && productDetails?.variations.length > 0) {
-  //     const defaultVariant = productDetails?.variations[0];
-  //     setSelectedVariant(defaultVariant?.type);
-  //     setSelectedVariantPrice(defaultVariant?.price);
-  //     setSelectedVariantStock(defaultVariant.stock);
-  //   }
-  // }, [productDetails]);
 
   const [isBuyitagainButtonDisabled, setIsBuyitagainButtonDisabled] =
     useState(false);
   const handleAddToCart = async (order) => {
-    console.log("itemmmm: ", order);
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
@@ -235,7 +191,6 @@ function Orderviewdetails() {
   };
   useEffect(() => {
     const isOrderBuyitagain = localStorage.getItem(`orderBuyitagain_${id}`);
-    console.log("isOrderBuyitagain", isOrderBuyitagain);
     if (isOrderBuyitagain === "true") {
       setIsBuyitagainButtonDisabled(true);
     }
@@ -367,7 +322,6 @@ function Orderviewdetails() {
                     <div className="order-minicard">
                       {orderDetails && orderDetails.length > 0 ? (
                         orderDetails.map((order) => {
-                          console.log("order", order);
                           return (
                             <div key={order.id}>
                               <Row>
@@ -399,15 +353,11 @@ function Orderviewdetails() {
                                     >
                                       Buy it again
                                     </Button>
-                                    {console.log(
-                                      "order.item_id: ",
-                                      order.item_id
-                                    )}
+
                                   </div>
                                 </Col>
                               </Row>
                               <div>
-                                {console.log("Order Status:", allorder)}
 
                                 {orderWithstatus &&
                                 orderWithstatus.order_status === "delivered" ? (
@@ -468,11 +418,8 @@ function Orderviewdetails() {
                     <div className="order-table" ref={tableRef}>
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
 
                           if (item.id == id) {
-                            console.log("Match found for ID:", id);
                             return (
                               <div className="dow-summy">
                                 <h5>Order Invoice</h5>
@@ -498,15 +445,8 @@ function Orderviewdetails() {
                                               : "0"}
                                           </p>
                                         </td>
-                                        {/* <td>₹{subTotal}</td> */}
                                       </tr>
-                                      {/* <tr>
-                                  <th>
-                                    Moving Cart <br />
-                                    <p>Additional Services</p>
-                                  </th>
-                                            <td>{ item.}</td>
-                                </tr> */}
+
                                       <tr>
                                         <th>
                                           <p>
@@ -516,9 +456,6 @@ function Orderviewdetails() {
                                             {item && !isNaN(item.coupon_code)
                                               ? item.coupon_code
                                               : "0"}
-                                            {/* {isNaN(item.coupon_code)
-                                              ? 0
-                                              : item.coupon_code} */}
                                           </p>
                                         </th>
 
@@ -573,7 +510,6 @@ function Orderviewdetails() {
                               </div>
                             );
                           } else {
-                            console.log("No match for ID:", id);
                             return null; // If no match, return null or an empty fragment
                           }
                         })
@@ -586,11 +522,8 @@ function Orderviewdetails() {
                     <div ref={summaryTableRef}>
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
 
                           if (item.id == id) {
-                            console.log("Match found for ID:", id);
                             return (
                               <div className="dow-summy leftsummy">
                                 <h5>Order Summary</h5>
@@ -689,7 +622,6 @@ function Orderviewdetails() {
                               </div>
                             );
                           } else {
-                            console.log("No match for ID:", id);
                             return null;
                           }
                         })

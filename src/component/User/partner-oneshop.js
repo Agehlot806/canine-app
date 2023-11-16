@@ -19,7 +19,6 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function Partneroneshop() {
   const { id } = useParams();
   const { state } = useLocation();
-  // console.log('state', state)
   const [vendorItemList, setVendorItemList] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
@@ -152,16 +151,12 @@ function Partneroneshop() {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -249,9 +244,7 @@ function Partneroneshop() {
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
-  console.log("priceformattedSavedAmount", formattedSavedAmount);
   const MrpPrice = Number(savedAmount).toString();
-  console.log("MrpPrice", MrpPrice);
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -470,14 +463,6 @@ function Partneroneshop() {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -812,24 +797,7 @@ function Partneroneshop() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-    // if (!variation) {
-    //   setVariationError('Please select a variation');
-    // } else {
-    //   setVariationError('');
-    // }
-
-    // Validate email
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //   toast.error("Please enter a valid email address");
-    //   return;
-    // }
-
-    // Validate variation
-    // if (!variation) {
-    //   toast.error("Please select a variation");
-    //   return;
-    // }
+    
 
     // Prepare form data
     const notifymeData = new FormData();
@@ -839,8 +807,6 @@ function Partneroneshop() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -904,11 +870,7 @@ function Partneroneshop() {
                 }
               />
             </div>
-            {console.log(
-              "coverPhoto",
-              "https://canine.hirectjob.in//storage/app/public/store/cover/" +
-                state?.item.cover_photo
-            )}
+           
           </Container>
 
           <section className="section-padding">

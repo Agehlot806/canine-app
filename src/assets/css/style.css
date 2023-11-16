@@ -4304,3 +4304,6 @@ li.cardpay a img {
   font-size: 24px;
   margin: 4px 15px 0 0;
 }
+.dash-tabs .nav {
+  justify-content: center;
+}

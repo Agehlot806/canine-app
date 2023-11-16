@@ -188,8 +188,6 @@ function Product(props) {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   const [addToCartStatus, setAddToCartStatus] = useState("");
@@ -268,16 +266,12 @@ function Product(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -701,25 +695,16 @@ function Product(props) {
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
 
   const formattedAmount = Number(Amount).toString();
-  console.log("priceformattedAmount", formattedAmount);
-  console.log("priceuservariationprice", uservariationprice);
 
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
       (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
-  // const savedAmount = (
-  //   productDetails.price * quantity -
-  //   (productDetails.price * quantity * productDetails.discount) / 100
-  // ).toFixed(2);
-  console.log("calculatedPrice", calculatedPrice);
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
-  console.log("priceformattedSavedAmount", formattedSavedAmount);
   const MrpPrice = Number(savedAmount).toString();
-  console.log("MrpPrice", MrpPrice);
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -1200,8 +1185,6 @@ function Product(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
