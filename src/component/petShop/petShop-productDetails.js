@@ -85,23 +85,7 @@ function PetshopproductDetails() {
       setQuantity(quantity - 1);
     }
   };
-  // useEffect(() => {
-  //   const fetchedProductDetails = {
-  //     // Your fetched product details here
-  //     min_order: 105, // Simulated min_order for example
-  //     categoryid: productDetails.category_id,
-  //   };
 
-  //   setProductDetails(fetchedProductDetails);
-
-  //   if (
-  //     fetchedProductDetails?.min_order !== null &&
-  //     fetchedProductDetails?.min_order > 0
-  //   ) {
-  //     setMinOrder(fetchedProductDetails.min_order);
-  //     setQuantity(fetchedProductDetails.min_order);
-  //   }
-  // }, []);
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
       const defaultVariant = productDetails.variations[0];
@@ -364,8 +348,15 @@ function PetshopproductDetails() {
   const Amount = (
     wholesellervariationprice * (quantity > 1 ? quantity : 1)
   ).toFixed(2);
-  const formattedAmount = Number(Amount).toString();
-
+  const formattedAmount = Number(productDetails.whole_price).toString();
+  // const calculatedPrice = selectedVariantPrice
+  // ? selectedVariantPrice -
+  //   (selectedVariantPrice * productDetails.discount) / 100
+  //   : productDetails?.price;
+  // price:
+  // calculatedPrice === 0
+  //   ? parseInt(productDetails?.price)
+  //   : parseInt(calculatedPrice),
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
     formData.append("user_id", storedWholesellerId);
@@ -1104,19 +1095,16 @@ function PetshopproductDetails() {
                     <div className="needplaceProduct">
                       <div className="product-deatils-price">
                         <Row>
-                          {/* <Col lg={3}> */}
-                          {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                          {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                          {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
-                          {/* </Col> */}
                           <Col lg={4}>
                             {/* <h5>{`₹${
                           isNaN(formattedAmount) ? 0 : formattedAmount
                         }`}</h5> */}
-                            <h5>₹{productDetails.whole_price}</h5>
+                            <h5>
+                              ₹
+                              {isNaN(productDetails.whole_price * quantity)
+                                ? 0
+                                : productDetails.whole_price * quantity}
+                            </h5>
                           </Col>
                           {/* <Col lg={5}>
                         <h6>

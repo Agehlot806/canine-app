@@ -169,13 +169,15 @@ function PetshopShipping() {
                           <div className="myorder-btn">
                             <Button>
                               <Link
-                                to={`/petShop-order-view-details/${item.id}`}
+                                to={`/petShop-order-view-details/?id=${
+                                  item.id
+                                }&status=${item.payment_status ?? "not found"}`}
                               >
                                 View
                               </Link>
                             </Button>
                             <Button>
-                              <Link to={`/petShop-track-your-order/${item.id}`}>
+                              <Link to={`/petshoptrackyourorde/${item.id}`}>
                                 Track
                               </Link>
                             </Button>

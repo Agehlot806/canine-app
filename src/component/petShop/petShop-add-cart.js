@@ -59,7 +59,7 @@ function PetshopAddCart() {
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
     console.log("elll: ", el);
-    let allPrice = parseInt(el.price) + parseInt(originalPrice);
+    let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
   const taxamound = Math.floor(originalPrice * 0.05);
@@ -213,23 +213,6 @@ function PetshopAddCart() {
     }
   };
 
-  // const handleIncrementone = (index) => {
-  //   const updatedCart = [...addToCartProduct];
-  //   updatedCart[index].quantity += 1;
-  //   updatedCart[index].price +=
-  //     updatedCart[index].price / (updatedCart[index].quantity - 1);
-
-  //   const updatedSendCart = [...sendcartdata];
-  //   updatedSendCart[index].quantity += 1;
-
-  //   // Calculate the new price with tax included
-  //   const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-  //   updatedSendCart[index].price = priceWithTax;
-
-  //   setAddToCartProduct(updatedCart);
-  //   setSandCartData(updatedSendCart); // Update sendcartdata
-  // };
-
   const handleIncrementone = (index) => {
     const updatedCart = [...addToCartProduct];
     const updatedSendCart = [...sendcartdata];
@@ -241,14 +224,14 @@ function PetshopAddCart() {
       toast.error("Stock not avilable");
     } else {
       updatedCart[index].quantity += 1;
-      updatedCart[index].price +=
-        updatedCart[index].price / (updatedCart[index].quantity - 1);
+      // updatedCart[index].price +=
+      //   updatedCart[index].price * (updatedCart[index].quantity - 1);
 
       updatedSendCart[index].quantity += 1;
 
       // Calculate the new price with tax included
-      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-      updatedSendCart[index].price = priceWithTax;
+      // const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      // updatedSendCart[index].price = priceWithTax;
     }
 
     setAddToCartProduct(updatedCart);
@@ -264,16 +247,16 @@ function PetshopAddCart() {
     const updatedCart = [...addToCartProduct];
     if (updatedCart[index].quantity > item.min_order) {
       updatedCart[index].quantity -= 1;
-      updatedCart[index].price =
-        updatedCart[index].price *
-        (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
+      // updatedCart[index].price =
+      //   updatedCart[index].price *
+      //   (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
 
       const updatedSendCart = [...sendcartdata];
       updatedSendCart[index].quantity -= 1;
 
       // Calculate the new price with tax included
-      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-      updatedSendCart[index].price = priceWithTax;
+      // const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      // updatedSendCart[index].price = priceWithTax;
 
       setAddToCartProduct(updatedCart);
       setSandCartData(updatedSendCart); // Update sendcartdata
@@ -869,7 +852,7 @@ function PetshopAddCart() {
                         xs={6}
                         className="align-self-center addCARThead"
                       >
-                        <h3>₹{formatPrice(item.price)}</h3>
+                        <h3>₹{formatPrice(item.price) * item.quantity}</h3>
                         {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />
