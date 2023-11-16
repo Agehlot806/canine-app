@@ -117,6 +117,8 @@ import is from "date-fns/esm/locale/is/index";
 import { useEffect } from "react";
 import Mypetprofile from "./component/User/my-pet-profile";
 import Trackyourorderps from "./component/petShop/petShop-track-your-order";
+import Cancellationpolicy from "./component/User/cancellation-policy";
+import Petshopcancellationpolicy from "./component/petShop/petshop-cancellationpolicy";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -197,6 +199,7 @@ const UsersRoutes = () => {
       <Route path="/disclaimer" element={<Disclaimer />} />
       <Route path="/track-your-order/:id" element={<Trackyourorder />} />
       <Route path="/track-your-order" element={<Trackyourorder />} />
+      <Route path="/cancellation-policy" element={<Cancellationpolicy />} />
       <Route
         path="/petShop-track-your-order/:id"
         element={<Trackyourorderps />}
@@ -313,6 +316,7 @@ const WholesalerRoutes = () => {
         element={<PetShopcanineproduct />}
       />
       <Route path="/petshop-blog" element={<PetshopBlog />} />
+      <Route path="/petshop-cancellation-policy" element={<Petshopcancellationpolicy />} />
       <Route
         path="/petshop-blog-details/:id"
         element={<PetshopBlogdetails />}
@@ -454,6 +458,7 @@ const App = () => {
             <Route path="/track-your-order" element={<Trackyourorder />} />
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/offers-details" element={<Offersdetails />} />
+            <Route path="/cancellation-policy" element={<Cancellationpolicy />} />
 
             <Route path="/help-faqs" element={<Helpandfaqs />} />
             <Route path="/my-orders" element={<Myorder />} />
@@ -569,6 +574,7 @@ const App = () => {
               path="/petshoptrackyourorde"
               element={<Petshoptrackyourorder />}
             />
+            <Route path="/petshop-cancellation-policy" element={<Petshopcancellationpolicy />} />
             <Route
               path="/petshopreturnpolicy"
               element={<Petshopreturnpolicy />}

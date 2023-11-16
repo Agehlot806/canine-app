@@ -5,7 +5,11 @@
     }
 
 } */
-
+@media only screen and (max-width: 1199px) {
+  .video-content {
+    padding: 10px;
+  }
+}
 @media only screen and (max-width: 1024px) {
   .navbar-area a {
     margin-left: 0;
@@ -14,6 +18,9 @@
   input.homesea {
     display: contents !important;
   }
+  .video-content {
+    padding: 10px;
+}
   .Newsletter {
     padding: 0;
   }

@@ -35,7 +35,7 @@ function Petshopfooter() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/petshoptrackyourorde">
+                      <Link to="/petshop-cancellation-policy">
                         {strings.trackYourOrder}
                       </Link>
                     </li>
