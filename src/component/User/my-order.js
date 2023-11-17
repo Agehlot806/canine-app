@@ -87,7 +87,7 @@ function Myorder() {
                                     allorder.map((item, index) => (
                                         <div className='myorder-list'>
                                             <Row className='justify-content-center'>
-                                                <Col lg={2} sm={2}>
+                                                <Col lg={2} sm={2} className="align-self-center">
                                                     <img src={logo} />
                                                 </Col>
                                                 <Col lg={5} sm={5}>

@@ -4320,3 +4320,7 @@ li.cardpay a img {
   text-transform: capitalize;
   font-weight: 600;
 }
+
+.logoBG img:focus-visible {
+  outline: none !important;
+}
