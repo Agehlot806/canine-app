@@ -56,7 +56,7 @@ function PetshopUpdateprofile() {
 
     axios({
       method: "post",
-      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+      url: `${BASE_URL}/auth/update-profile`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })

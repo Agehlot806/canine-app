@@ -21,7 +21,7 @@ const PetshopTransitionHistory = () => {
   const fetchData = async()=>{
     try {
       const response = await axios.get(
-        `https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedWholesellerId}`
+        `${BASE_URL}/auth/phistory_customer/${storedWholesellerId}`
       );
       const data = response.data.data; // Assuming the API response is an array
 

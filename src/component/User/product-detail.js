@@ -95,7 +95,7 @@ function Productdetail() {
     allReview();
     allAddressList();
     // fetchProductData();
-  }, []);
+  }, [id]);
 
   const productData = async () => {
     axios
@@ -115,7 +115,7 @@ function Productdetail() {
 
   const fetchrelated = async (cate, subcate) => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/categories/subcategories`)
+      .get(`${BASE_URL}/categories/subcategories`)
       .then((response) => {
         const allDaTa = response.data.data;
         const update = allDaTa.find((item) => item.name == subcate);
@@ -235,7 +235,7 @@ function Productdetail() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`${BASE_URL}/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -618,7 +618,7 @@ function Productdetail() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `${BASE_URL}/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -635,7 +635,7 @@ function Productdetail() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        `${BASE_URL}/customer/address/update`,
         profileData // Send the updated profileData in the request body
       );
       if (response.data.status === 200) {
@@ -742,7 +742,7 @@ function Productdetail() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`${BASE_URL}/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -994,10 +994,10 @@ function Productdetail() {
             <Col lg={6} sm={6}>
               <div className="productDetail-content">
                 <Row>
-                  <Col lg={9} sm={9} xs={9}>
+                  <Col lg={9} sm={9} xs={12}>
                     <h4>{productDetails.name}</h4>
                   </Col>
-                  <Col lg={3} sm={3} xs={3}>
+                  <Col lg={3} sm={3} xs={12}>
                     <p>
                       {productDetails.veg == 0 ? (
                         <span>

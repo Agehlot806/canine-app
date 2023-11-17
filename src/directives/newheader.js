@@ -178,7 +178,7 @@ function Newheader(props) {
     const customer_id = localStorage.getItem("userInfo");
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${customer_id}`)
+      .get(`${BASE_URL}/auth/my_profile/${customer_id}`)
       .then((response) => {
         console.log("imageupdate", response.data);
         if (response.data.status === "200" && response.data.data.length > 0) {
@@ -264,7 +264,7 @@ function Newheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        `${BASE_URL}/items/latest`
       );
       setProducts(response.data.data);
     } catch (error) {

@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import loadinggif from "../../assets/images/video/loading.gif";
+import { BASE_URL } from "../../Constant/Index";
 
 function Updateprofile() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Updateprofile() {
   const GetProfileData = () =>{
     // Fetch profile data from the API
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
+      .get(`${BASE_URL}/auth/my_profile/${storedUserId}`)
       .then((response) => {
         console.log("response.data:????? ", response.data);
         setname(response.data.data[0].f_name);
@@ -71,7 +72,7 @@ function Updateprofile() {
 
     axios({
       method: "post",
-      url: `https://canine.hirectjob.in/api/v1/auth/update-profile`,
+      url: `${BASE_URL}/auth/update-profile`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })

@@ -232,7 +232,7 @@ function PetshopOrderviewdetails() {
       seles_man_id: salesmanId,
     };
     axios
-      .post(`https://canine.hirectjob.in/api/v1/auth/selesman_pay_amount`, data)
+      .post(`${BASE_URL}/auth/selesman_pay_amount`, data)
       .then((response) => {
         setResponseMessage(response.data.message);
         toast.success("Remaning Balance Add Successfully");

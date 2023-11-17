@@ -342,7 +342,7 @@ function PetshopOurourbrand(props) {
 
   const allBrandshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
+      .get(`${BASE_URL}/auth/brand`)
       .then((response) => {
         setAllBrand(response.data.data);
         // Perform any additional actions after successful deletion
@@ -354,7 +354,7 @@ function PetshopOurourbrand(props) {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage`)
+      .get(`${BASE_URL}/auth/all_life_stage`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAlllifesage(response.data.data);
@@ -367,7 +367,7 @@ function PetshopOurourbrand(props) {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed`)
+      .get(`${BASE_URL}/auth/all_pets_breed`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllBreed(response.data.data);
@@ -379,7 +379,7 @@ function PetshopOurourbrand(props) {
 
   const allsubcategary = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/categories`)
+      .get(`${BASE_URL}/categories`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllSubcate(response.data.data);
@@ -391,7 +391,7 @@ function PetshopOurourbrand(props) {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition`)
+      .get(`${BASE_URL}/auth/health_condition`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -535,7 +535,7 @@ function PetshopOurourbrand(props) {
   ) => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        `${BASE_URL}/items/latest`
       );
       const products = response.data.data;
       const filteredProducts = applyFilters({
@@ -866,7 +866,7 @@ function PetshopOurourbrand(props) {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `${BASE_URL}/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -883,7 +883,7 @@ function PetshopOurourbrand(props) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        `${BASE_URL}/customer/address/update`,
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -988,7 +988,7 @@ function PetshopOurourbrand(props) {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`${BASE_URL}/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1098,7 +1098,7 @@ function PetshopOurourbrand(props) {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`${BASE_URL}/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })

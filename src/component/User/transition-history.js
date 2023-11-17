@@ -10,6 +10,7 @@ import "moment-timezone";
 import Footer from "../../directives/footer";
 import Newheader from "../../directives/newheader";
 import loadinggif from "../../assets/images/video/loading.gif";
+import { BASE_URL } from "../../Constant/Index";
 
 const Transitionhistory = () => {
   const customer_id = localStorage.getItem("userInfo");
@@ -22,7 +23,7 @@ const Transitionhistory = () => {
 
   const Allfetchdata = async () => {
     try {
-      const response = await axios.get(`https://canine.hirectjob.in/api/v1/auth/phistory_customer/${storedUserId}`);
+      const response = await axios.get(`${BASE_URL}/auth/phistory_customer/${storedUserId}`);
       setTransactionData(response.data.data);
     } catch (error) {
       console.error(error);

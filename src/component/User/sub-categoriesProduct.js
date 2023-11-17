@@ -179,7 +179,7 @@ function SubcategoriesProduct() {
 
   const allBrandshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
+      .get(`${BASE_URL}/auth/brand`)
       .then((response) => {
         setAllBrand(response.data.data);
       })
@@ -190,7 +190,7 @@ function SubcategoriesProduct() {
 
   const allLifesageshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_life_stage`)
+      .get(`${BASE_URL}/auth/all_life_stage`)
       .then((response) => {
         console.log("responseresponse?????", response);
         const filteredData = response.data.data.filter(
@@ -205,7 +205,7 @@ function SubcategoriesProduct() {
 
   const allBreedshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/all_pets_breed`)
+      .get(`${BASE_URL}/auth/all_pets_breed`)
       .then((response) => {
         const filteredData = response.data.data.filter(
           (item) => item.category_id == id
@@ -219,7 +219,7 @@ function SubcategoriesProduct() {
 
   const allsubcategary = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/categories`)
+      .get(`${BASE_URL}/categories`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllSubcate(response.data.data);
@@ -231,7 +231,7 @@ function SubcategoriesProduct() {
 
   const allHealthconditionshow = async () => {
     axios
-      .get(`https://canine.hirectjob.in/api/v1/auth/health_condition`)
+      .get(`${BASE_URL}/auth/health_condition`)
       .then((response) => {
         console.log("responseresponse?????", response);
         setAllHealth(response.data.data);
@@ -378,7 +378,7 @@ function SubcategoriesProduct() {
   ) => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        `${BASE_URL}/items/latest`
       );
       const products = response.data.data;
       const cateidproduct = products.filter((items) => items.category_id == id);
@@ -948,7 +948,7 @@ function SubcategoriesProduct() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `${BASE_URL}/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -965,7 +965,7 @@ function SubcategoriesProduct() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        `${BASE_URL}/customer/address/update`,
         profileData // Send the updated profileData in the request body
       );
       if (response.data.status === 200) {
@@ -1080,7 +1080,7 @@ function SubcategoriesProduct() {
       // Amount * 0.05 + Amount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`${BASE_URL}/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1252,7 +1252,7 @@ function SubcategoriesProduct() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`${BASE_URL}/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })

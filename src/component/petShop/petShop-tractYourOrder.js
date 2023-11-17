@@ -52,7 +52,7 @@ export default function Petshoptrackyourorder() {
   const trackingtargetvaluenumber = () => {
     // Fetch order data from an API endpoint
     fetch(
-      `https://canine.hirectjob.in/api/v1/customer/order/tracking/${trackingValue}`
+      `${BASE_URL}/customer/order/tracking/${trackingValue}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -107,7 +107,7 @@ export default function Petshoptrackyourorder() {
 
     axios({
       method: "post",
-      url: `https://canine.hirectjob.in/api/v1/customer/order/cancel/${id}`,
+      url: `${BASE_URL}/customer/order/cancel/${id}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     })

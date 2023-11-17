@@ -419,7 +419,7 @@ function Addcart() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `${BASE_URL}/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -443,7 +443,7 @@ function Addcart() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        `${BASE_URL}/customer/address/update`,
         profileData // Send the updated profileData in the request body
       );
       // console.log("response in edit", response);
@@ -494,7 +494,7 @@ function Addcart() {
         ) || originalPrice * 0.05 + originalPrice,
       cart: cartData,
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`${BASE_URL}/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -528,7 +528,7 @@ function Addcart() {
     // Send a request
     axios
       .post(
-        `https://canine.hirectjob.in/api/v1/items/notifiction_post`,
+        `${BASE_URL}/items/notifiction_post`,
         notifymePostData
       )
       .then((response) => {

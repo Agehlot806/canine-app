@@ -888,7 +888,7 @@ function PetshopPetcategory() {
   const handleDeleteAddress = (id) => {
     axios
       .delete(
-        `https://canine.hirectjob.in/api/v1/customer/address/delete/${id}`
+        `${BASE_URL}/customer/address/delete/${id}`
       )
       .then((response) => {
         toast.success("Address deleted successfully");
@@ -905,7 +905,7 @@ function PetshopPetcategory() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/customer/address/update",
+        `${BASE_URL}/customer/address/update`,
         profileData // Send the updated profileData in the request body
       );
       if (response.data.status === 200) {
@@ -972,7 +972,7 @@ function PetshopPetcategory() {
       order_amount: orderAmount,
       cart: [cartData],
     };
-    fetch(`https://canine.hirectjob.in/api/v1/customer/order/place`, {
+    fetch(`${BASE_URL}/customer/order/place`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -1084,7 +1084,7 @@ function PetshopPetcategory() {
 
     // Send a request
     axios
-      .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
+      .post(`${BASE_URL}/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -1095,7 +1095,7 @@ function PetshopPetcategory() {
 
   const [banner, setBanner] = useState("");
   useEffect(() => {
-    const apiUrl = "https://canine.hirectjob.in/api/v1/categories";
+    const apiUrl = `${BASE_URL}/categories`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {

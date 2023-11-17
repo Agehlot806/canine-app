@@ -5,6 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
+import { BASE_URL } from "../../Constant/Index";
 function Login() {
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Login() {
     customerData.append("cust_phone", phone);
     try {
       const response = await axios.post(
-        "https://canine.hirectjob.in/api/v1/auth/customer",
+        `${BASE_URL}/auth/customer`,
         customerData
       );
       console.log(response.data);

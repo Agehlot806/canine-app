@@ -31,7 +31,7 @@ function PetshopContact() {
       };
 
       const response = await fetch(
-        "https://canine.hirectjob.in/api/v1/auth/contact_us",
+        `${BASE_URL}/auth/contact_us`,
         {
           method: "POST",
           headers: {

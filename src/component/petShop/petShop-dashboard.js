@@ -70,7 +70,7 @@ function Petshopdashboard() {
       pay_mode: "offline",
     };
     axios
-      .post(`https://canine.hirectjob.in/api/v1/auth/pay_amount`, data)
+      .post(`${BASE_URL}/auth/pay_amount`, data)
       .then((response) => {
         console.log("responseqqqq: ", response);
        
@@ -91,7 +91,7 @@ function Petshopdashboard() {
   const handleAddAmount = () => {
     // Make a POST request to the API
     axios
-      .post("https://canine.hirectjob.in/api/v1/auth/add_amount", {
+      .post(`${BASE_URL}/auth/add_amount`, {
         user_id: storedWholesellerId,
         amount: amount,
       })

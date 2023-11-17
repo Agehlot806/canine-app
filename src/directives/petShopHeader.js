@@ -214,7 +214,7 @@ function Petshopheader(props) {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://canine.hirectjob.in/api/v1/items/latest"
+        `${BASE_URL}/items/latest`
       );
       setProducts(response.data.data);
     } catch (error) {
