@@ -1,9 +1,9 @@
 import React from "react";
-import Newheader from "../../directives/newheader";
+import Petshopheader from "../../directives/petShopHeader";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import HomeImg from "../../assets/images/img/home.png";
 import partner from "../../assets/images/img/partner.png";
-import Footer from "../../directives/footer";
+import Petshopfooter from "../../directives/petShop-Footer";
 import { Link } from "react-router-dom";
 import { loadRazorpay } from "../../utils";
 import { useState } from "react";
@@ -122,7 +122,7 @@ function Planbuy() {
 
   return (
     <>
-      <Newheader />
+     <Petshopheader />
       {/* <div className="home-section">
         {homebanner
           ? homebanner.map(
@@ -183,7 +183,7 @@ function Planbuy() {
           </div>
         </Container>
       </section>
-      <Footer />
+      <Petshopfooter />
     </>
   );
 }

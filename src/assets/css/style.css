@@ -713,6 +713,7 @@ a {
   height: 100%;
   padding: 15px 15px 0;
   transition: 0.5s;
+  color: #000;
 }
 
 .service-card a {

@@ -92,6 +92,23 @@ function PetshopWishlistproduct() {
     );
   };
 
+  const renderProductDescription = (description) => {
+    const maxCharacters = 35; 
+
+    if (description?.length <= maxCharacters) {
+      return <p>{description}</p>; 
+    }
+
+    const truncatedDescription = description?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
+
+
   return (
     <>
       <Toaster />
@@ -122,10 +139,10 @@ function PetshopWishlistproduct() {
                         >
                           <i
                             className="fa fa-trash"
-                            onClick={() => handleRemoveFromWishlist(item.id)}
+                            onClick={() => handleRemoveFromWishlist(item?.id)}
                           />
                           <Link
-                            to={`/petshop-productDetails/${item.store_id[0].id}`}
+                            to={`/petshop-productDetails/${item.store_id[0]?.id}`}
                           >
                             <div className="text-center">
                               {item.store_id &&
@@ -148,7 +165,7 @@ function PetshopWishlistproduct() {
                                   <h6>
                                     {renderProducthead(item.store_id[0].name)}
                                   </h6>
-                                  <p>{item.store_id[0].description}</p>
+                                  <p>{renderProductDescription(item.store_id[0].description)}</p>
                                 </>
                               ) : (
                                 <p>No Product Data</p>

@@ -47,9 +47,7 @@ function Petshopfooter() {
                       Terms & Conditions
                       </Link>
                     </li>
-                    <li>
-                      <Link to="/offers-details">Top Offers</Link>
-                    </li>
+                   
                   </ul>
                 </div>
               </Col>

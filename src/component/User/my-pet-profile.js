@@ -2,9 +2,6 @@ import React from "react";
 import Newheader from "../../directives/newheader";
 import { Col, Container, Row } from "react-bootstrap";
 import banner from "../../assets/images/banner/banner.png";
-import cat from "../../assets/images/banner/cat.png";
-import dog1 from "../../assets/images/img/dog1.svg";
-import cat1 from "../../assets/images/img/cat1.png";
 import Footer from "../../directives/footer";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -51,7 +48,7 @@ function Mypetprofile() {
         <Container>
           <Row className="justify-content-center">
             {allpetprofiles.map((item) => (
-              <Col lg={8}>
+              <Col lg={6}>
                 <div className="service-pet-card">
                   <Row>
                     <Col sm={6} className="align-self-center">

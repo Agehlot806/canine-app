@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
-// import blog1 from "../../assets/images/img/blog.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import PetShopHeader from "../../directives/petShopHeader";

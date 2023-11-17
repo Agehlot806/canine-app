@@ -142,7 +142,7 @@ function Wishlistproduct() {
                             className="fa fa-trash"
                             onClick={() => handleRemoveFromWishlist(item.id)}
                           />
-                          <Link to="">
+                          <Link to={`/product-details/${item.item_id}`}>
                             <div className="text-center">
                               {item.store_id &&
                               item.store_id[0] &&

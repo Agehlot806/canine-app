@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import productdetail from "../../assets/images/banner/productdetail.png";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import brandPro1 from "../../assets/images/img/brandPro1.png";
-// import { Link, useParams } from 'react-router-dom'
 import Cartone from "../../assets/images/icon/cart1.png";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
