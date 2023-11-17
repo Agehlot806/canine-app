@@ -7,7 +7,7 @@ import arrow from "../../assets/images/icon/arrow.png";
 import pro from "../../assets/images/icon/pro.png";
 import filter from "../../assets/images/icon/filter.png";
 import orders from "../../assets/images/img/orders.png";
-import Footer from "../../directives/footer";
+import Petshopfooter from "../../directives/petShop-Footer";
 import { Link, useNavigate } from "react-router-dom";
 import invoice from "../../assets/images/icon/invoice.png";
 import axios from "axios";
@@ -19,7 +19,6 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function DashboadSalesman() {
   const navigate = useNavigate();
   const [wholeSellerList, setWholeSellerList] = useState([]);
-  console.log("wholeSellerList: ", wholeSellerList);
   const [orderList, setOrderList] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [completedOders, setCompletedOders] = useState([]);
@@ -29,7 +28,7 @@ function DashboadSalesman() {
   useEffect(() => {}, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([getWholesellerList(), getOrders(), AllBanner()])
+    Promise.all([getWholesellerList(), getOrders(), AllBanner(),allAddressList()])
       .then(() => {
         setLoading(false);
       })
@@ -45,7 +44,6 @@ function DashboadSalesman() {
     navigate("/petshop-product");
   };
   const handleOrderHistory = async (id) => {
-    console.log("iiiiiiiiiiiiiiiiiiid", id);
     await localStorage.setItem("wholeSellerId", id);
     await localStorage.setItem("UserWholesellerId", id);
     navigate("/petshop-my-orders");
@@ -62,7 +60,21 @@ function DashboadSalesman() {
         console.log("Error in whol list", error);
       });
   };
+  const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
 
+  const [addresslist, setAddressList] = useState([]);
+  const allAddressList = async () => {
+    axios
+      .get(`${BASE_URL}/customer/address/list/${storedWholesellerId}`)
+      .then((response) => {
+        console.log(response);
+        console.log("address list Successful");
+        setAddressList(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const getOrders = async () => {
     await axios
       .get(`${BASE_URL}/auth/seller_orders/${salesmanId}`)
@@ -265,24 +277,7 @@ function DashboadSalesman() {
                               </li>
                             </ul>
                           </Col>
-                          {/* <Col lg={6}>
-                        <div className="side-filter">
-                          <form className="form-inline my-2 my-lg-0">
-                            <div className="left-inner-addon input-container">
-                              <i className="fa fa-search" />
-                              <input
-                                placeholder="Search"
-                                type="search"
-                                className="form-control"
-                                aria-label="Search"
-                              />
-                            </div>
-                            <Link>
-                              <img src={filter} />
-                            </Link>
-                          </form>
-                        </div>
-                      </Col> */}
+                          
                         </Row>
 
                         <div className="tab-content" id="pills-tabContent">
@@ -622,7 +617,7 @@ function DashboadSalesman() {
           </section>
         </>
       )}
-      <Footer />
+      <Petshopfooter />
     </>
   );
 }

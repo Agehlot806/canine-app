@@ -112,7 +112,6 @@ function PetshopOurourbrand(props) {
   };
 
   const { id } = useParams();
-  console.log("brand id", id);
 
   const [petitemproduct, setpetitemproduct] = useState([]);
   const [subcategories, setsubcategories] = useState([]);
@@ -158,7 +157,6 @@ function PetshopOurourbrand(props) {
 
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
   const [allproduct, setallproduct] = useState([]);
   const [wishlistData, setWishlistData] = useState([]);
 
@@ -236,16 +234,12 @@ function PetshopOurourbrand(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -281,7 +275,6 @@ function PetshopOurourbrand(props) {
 
   const [subid, setsubid] = useState("");
   const subcatid = () => {
-    // console.log("categories id ", id);
     setsubid(id);
     axios
       .get(`${BASE_URL}/banners/brand_product_filter/${id}/${subid}`)
@@ -295,12 +288,9 @@ function PetshopOurourbrand(props) {
   };
 
   const [allproductbrand, setallproductbrand] = useState([]);
-  // const [brands, setBrands] = useState([]);
   const [brandIdsToFilter, setBrandIdsToFilter] = useState([]);
   const [brandCanineToFilter, setBrandCanineToFilter] = useState([]);
 
-  console.log("brandIdsToFilter", brandIdsToFilter);
-  console.log("brandCanineToFilter", brandCanineToFilter);
 
   const allProduct = async () => {
     axios
@@ -311,8 +301,6 @@ function PetshopOurourbrand(props) {
         const AllData = response.data.data;
         const data = AllData.filter((el) => el.module_id === 1);
         const data1 = data.filter((item) => item.brand_id === id);
-        console.log("data in fetch", data);
-        console.log("data1 in fetch", data1);
         setallproductbrand(data1);
         setSortOption("default");
       })
@@ -356,7 +344,6 @@ function PetshopOurourbrand(props) {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
-        // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
         // Perform any additional actions after successful deletion
       })
@@ -537,7 +524,6 @@ function PetshopOurourbrand(props) {
     filterProducts();
   };
 
-  console.log("/////", selectedsubcateIds);
   const filterProducts = async (
     updatedBrandIds,
     updatedLifeIds,
@@ -567,8 +553,6 @@ function PetshopOurourbrand(props) {
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproductbrand(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -691,7 +675,6 @@ function PetshopOurourbrand(props) {
         console.log(error);
       });
   };
-  console.log("addresslist------", addresslist);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
@@ -851,7 +834,6 @@ function PetshopOurourbrand(props) {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -864,7 +846,6 @@ function PetshopOurourbrand(props) {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
-        // console.log("responseresponse", response);
         setStateallCity(response.data.data);
       })
       .catch((error) => {
@@ -880,26 +861,7 @@ function PetshopOurourbrand(props) {
     }
   };
 
-  // const removeFromCart = async (selctId) => {
-  //   try {
-  //     const response = await axios
-  //       .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //         window.location.reload(false);
-  //       });
-  //     // if (response.data.success) {
-  //     //   setAddToCartProduct(
-  //     //     (prevData) => prevData.filter((item) => item.id !== id)
-  //     //     // refresh
-  //     //   );
-  //     //   window.location.reload(false);
-  //     //   console.log("Product removed from cart:", response.data);
-  //     // }
-  //   } catch (error) {
-  //     console.error("Error removing product from cart:", error);
-  //   }
-  // };
+ 
 
   const handleDeleteAddress = (id) => {
     axios
@@ -908,7 +870,6 @@ function PetshopOurourbrand(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -969,7 +930,6 @@ function PetshopOurourbrand(props) {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -1041,9 +1001,6 @@ function PetshopOurourbrand(props) {
       .then((responseData) => {
         console.log("responseData???>>>>", responseData);
         shippingpage("/petShop-shipping/" + responseData.data.order_id);
-        // shippingpage(
-        //   `/shipping/${responseData.data.order_id}?gowithbuynow=true`
-        // );
         console.log("order_id", responseData);
       })
       .catch((error) => {
@@ -1138,8 +1095,6 @@ function PetshopOurourbrand(props) {
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -1404,43 +1359,7 @@ function PetshopOurourbrand(props) {
                     <h3>Filters</h3>
 
                     <hr />
-                    {/* <div
-                  onClick={() => handleParentClick("brand")}
-                  className="main-chk"
-                >
-                  Brand
-                  <div className="i-con">
-                    <span>
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  {brandDropdownVisible && (
-                    <>
-                      <div>
-                        {allbrand
-                          ? allbrand.map((items) => (
-                              <div
-                                className="form-check"
-                                onClick={handleCheckboxClick}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  onClick={(e) =>
-                                    handleDataListBrand(items.title)
-                                  }
-                                />
-                                <label className="form-check-label">
-                                  {items.title}
-                                </label>
-                              </div>
-                            ))
-                          : ""}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr /> */}
+                  
                     <div
                       onClick={() => handleParentClick("productType")}
                       className="main-chk"
@@ -1894,133 +1813,7 @@ function PetshopOurourbrand(props) {
                     </div>
                   </Container>
 
-                  {/* <Container>
-                <Row>
-                  <Col lg={6}>
-                    <h1 className="main-head">Our Brand</h1>
-                  </Col>
-                  <Col lg={6}>
-                    <div className="side-filter">
-                      <form className="form-inline my-2 my-lg-0">
-                        <div className="left-inner-addon input-container">
-                          <i className="fa fa-search" />
-                          <input
-                            placeholder="Search"
-                            type="search"
-                            className="form-control"
-                            aria-label="Search"
-                          />
-                        </div>
-                      </form>
-                    </div>
-                  </Col>
-                </Row>
-              </Container> */}
-                  {/* <div className="needplace">
-                <div className="dog-categorys-area">
-                  <ul
-                    className="nav nav-pills mb-3"
-                    id="pills-tab"
-                    role="tablist"
-                  >
-                    {subcategories ? (
-                      subcategories.map(
-                        (item) =>
-                          item.parent_id == "1" && (
-                            <li className="nav-item">
-                              <a
-                                className="nav-link"
-                                id="pills-home-tab"
-                                data-toggle="pill"
-                                onClick={(id) => subcatid(item.id)}
-                                href="#pills-home"
-                                role="tab"
-                                aria-controls="pills-home"
-                                aria-selected="true"
-                              >
-                                <img src={
-                                  "https://canine.hirectjob.in///storage/app/public/category/"
-                                  + item.image}
-                                />
-                                <h6>{item.name}</h6>
-                              </a>
-                            </li>
-                          )
-                      )
-                    ) : (
-                      <p className="emptyMSG">No Sub Categories.</p>
-                    )}
-                  </ul>
-                  <div className="tab-content" id="pills-tabContent">
-                    <div
-                      className="tab-pane fade show"
-                      id="pills-home"
-                      role="tabpanel"
-                      aria-labelledby="pills-home-tab"
-                    >
-                      <Row>
-                        {petitemproduct && petitemproduct.length > 0 ? (
-                          petitemproduct.map((item, index) => (
-                            <Col lg={4} sm={6} xs={6} className="mb-4">
-                              <div className="food-product" key={item.id}>
-                                <i
-                                  class={
-                                    item.isFav ? "fa-solid fa-heart" : "fa-regular fa-heart"
-                                  }
-                                  onClick={(id) => {
-                                    if (storedWholesellerId == null) {
-                                      toast.error("Please Login first");
-                                    } else {
-                                      addToWishlist(item.id);
-                                    }
-                                  }}
-                                />
-                                <Link to={`/petshop-productDetails/${item.id}`}>
-                                  <div className="text-center">
-                                    <img src={
-                                      "https://canine.hirectjob.in///storage/app/public/category/"
-                                      + item.image}
-                                    />
-                                  </div>
-                                  <div>
-                                    <h6>{item.title}</h6>
-                                    <p>{item.description}</p>
-                                  </div>
-                                  <div className="product-bag">
-                                    <Row>
-                                      <Col>
-                                        <p>₹{item.price}</p>
-                                      </Col>
-                                      <Col>
-                                        <h5>{item.discount}%</h5>
-                                      </Col>
-                                    </Row>
-                                    <Row>
-                                      <Col className="align-self-center">
-                                        <h6>{`₹${
-                                          item.price -
-                                          (item.price * item.discount) / 100
-                                        }`}</h6>
-                                      </Col>
-                                      <Col>
-                                        <Link to="">
-                                          <img src={bag} />
-                                        </Link>
-                                      </Col>
-                                    </Row>
-                                  </div>
-                                </Link>
-                              </div>
-                            </Col>
-                          ))
-                        ) : (
-                          <p className="emptyMSG">No Sub Categories Product.</p>
-                        )}
-                      </Row>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+                
                 </section>
               </Col>
             </Row>
@@ -2056,11 +1849,7 @@ function PetshopOurourbrand(props) {
                         </div>
                         <div className="needplace">
                           <Row>
-                            {/* <Col sm={2} className="mb-3">
-                      <div
-                        className="product-item-inner" onClick={() => handleThumbnailClick(index)}>
-                        <img src={singleImage} />
-                      </div></Col> */}
+                          
                             {productDetails?.images &&
                             productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
@@ -2182,36 +1971,18 @@ function PetshopOurourbrand(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3}> */}
-                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                              {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
-                              {/* </Col> */}
+                             
                               <Col lg={4}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5}>
-                        <h6>
-                          Your save
-                          {formattedSavedAmount >= 0
-                            ? "₹" + formattedSavedAmount
-                            : "No savings"}
-                        </h6>
-                      </Col> */}
+                            
                             </Row>
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        {console.log(
-                          "productDetails.brand_id: ",
-                          productDetails.brand_id
-                        )}
-
+                       
                         {productDetails ? (
                           <Table responsive>
                             <tbody>
@@ -2491,27 +2262,7 @@ function PetshopOurourbrand(props) {
                               ))}
                           </Row>
                         </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
+                       
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -2536,48 +2287,20 @@ function PetshopOurourbrand(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${uservariationprice}`}</p>
-                              </Col> */}
                               <Col lg={4} sm={4} xs={3}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col> */}
                             </Row>
                           </div>
                         </div>
                       </Col>
-                      {/* <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col> */}
                     </Row>
                     <hr />
                   </Container>
                 </section>
-                {/* ) : (
-                  <section className="section-padding">
-                    <Container
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Row>
-                        <p>Cart is Empty</p>
-                      </Row>
-                    </Container>
-                  </section>
-                )} */}
+                
 
                 <Container>
                   <div className="needplace">
@@ -2589,25 +2312,11 @@ function PetshopOurourbrand(props) {
                               <h5>Sub Total</h5>
                             </Col>
                             <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
                               <h5>₹{parseInt(Amount)}</h5>
                             </Col>
                           </Row>
                           <hr />
-                          {/* <Row>
-                            <Col>
-                              <h5>Coupon Discount</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {appliedCoupon
-                                  ? parseInt(disscountvalue?.discount)
-                                  : 0}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <hr />*/}
+                          
                           <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
@@ -2678,66 +2387,9 @@ function PetshopOurourbrand(props) {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-              {/* <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option value="" disabled selected>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form> */}
+             
               <Form onSubmit={handleNotifymeSubmit}>
-                {/* <Form.Group controlId="formVariations">
-        <Form.Label>Variations</Form.Label>
-        <Form.Control
-          as="select"
-          value={variation}
-          onChange={(e) => setVariation(e.target.value)}
-          required
-          isInvalid={!!variationError}
-        >
-          <option value="" disabled>
-            Choose an option...
-          </option>
-          {productDetails?.variations &&
-            productDetails?.variations.map((item, index) => (
-              <option key={index}>{item.type}</option>
-            ))}
-        </Form.Control>
-        {variationError && (
-          <div className="error-message">{variationError}</div>
-        )}
-      </Form.Group> */}
+             
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

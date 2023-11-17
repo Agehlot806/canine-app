@@ -25,25 +25,20 @@ const addMonths = (date, months) => {
 function Servicedate() {
   const { id } = useParams();
   const [slotday, setSlotDay] = useState([]);
-  console.log("slotday: ", slotday[0]?.slot_date);
+  
   const [timingSlot, setTimingSlot] = useState([]);
-  console.log("timingSlot: ", timingSlot);
+  
   const [bookingSlot, setBookingSlot] = useState([]);
-  console.log("bookingSlot: ", bookingSlot);
   const [mobile, setMobile] = useState("");
   const [petType, setPetType] = useState([]);
   const [petData, setPetData] = useState("");
-  console.log("petData: ", petData);
   const [stateall, setStateall] = useState([]);
   const [stateallCity, setStateallCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const [formValid, setFormValid] = useState({});
-  console.log("formValid: ", formValid);
   const [state, setstate] = useState("");
   const [allservicebooking, setallservicebooking] = useState([]);
   const [bookedSlotTimes, setBookedSlotTimes] = useState([]);
-  console.log("petType: ", petType);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -95,31 +90,9 @@ function Servicedate() {
     }
   };
 
-  // const handleValid = () => {
-  //   let err = {};
-  //   let formError = true;
-  //   if (petData == "") {
-  //     formError = false;
-  //     err["name"] = "Pet is required";
-  //   } else if (selectedCity == "") {
-  //     formError = false;
-  //     err["city_name"] = "City is required";
-  //   } else if (mobile == "") {
-  //     formError = false;
-  //     err["mobile"] = " Mobile Number is required";
-  //   }
-  //   setFormValid(err);
-  //   return formError;
-  // };
-
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // console.log("handleSubmit called", handleValid()); // Add this
-
-    // if (handleValid()) {
     const bookingData = new FormData();
     bookingData.append("user_id", storedUserId);
     bookingData.append("service_id", id);
@@ -128,26 +101,15 @@ function Servicedate() {
     bookingData.append("pet", petData);
     bookingData.append("city", selectedCity);
     bookingData.append("mobile", mobile);
-    // console.log("bookingData", bookingData);
     axios
       .post(`${BASE_URL}/banners/service_booking`, bookingData)
       .then((response) => {
         // setResponseMessage(response.data.message);
-        // console.log("bookingdatattttt....", bookingData);
         toast.success("Your data Successfully Add");
       })
       .catch((error) => {
         toast.error("Field is required");
       });
-    // .then((response) => {
-    //   setResponseMessage(response.data.message);
-    //   console.log("bookingdatattttt....", bookingData);
-    //   toast.success("Your data Successfully Add");
-    // })
-    // .catch((error) => {
-    //   toast.error("Field is required");
-    // });
-    // }
   };
 
   const GetdataAll = async (e) => {

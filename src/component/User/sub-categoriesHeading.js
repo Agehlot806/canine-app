@@ -11,7 +11,6 @@ function SubcategoriesHeading() {
     const [dogsubcategories, setdogsubcategories] = useState("");
     const [homebanner, sethomebanner] = useState([]);
     const { heading ,id} = useParams()
-    console.log('heading', heading)
     useEffect(() => {
         AllDogsubcategories()
     }, [heading,id]);

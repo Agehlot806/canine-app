@@ -192,7 +192,6 @@ function PetshopHome(props) {
   // *************************
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
   const [wishlistData, setWishlistData] = useState([]);
@@ -231,16 +230,12 @@ function PetshopHome(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -287,7 +282,6 @@ function PetshopHome(props) {
   ];
 
   const { id } = useParams();
-  console.log("id: ", id);
 
   const renderBlogDescription = (description) => {
     const maxCharacters = 50; // Number of characters to show initially
@@ -332,7 +326,6 @@ function PetshopHome(props) {
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState([]);
-  console.log("selectedVariantPrice: ", selectedVariantPrice);
 
   useEffect(() => {
     if (productDetails?.variations && productDetails.variations.length > 0) {
@@ -659,7 +652,6 @@ function PetshopHome(props) {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -696,14 +688,7 @@ function PetshopHome(props) {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
+     
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -716,7 +701,6 @@ function PetshopHome(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setaddresslist((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -733,7 +717,6 @@ function PetshopHome(props) {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setaddresslist((prevAddressList) =>
@@ -777,7 +760,6 @@ function PetshopHome(props) {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -1003,8 +985,6 @@ function PetshopHome(props) {
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -1029,7 +1009,6 @@ function PetshopHome(props) {
     "linear-gradient(180deg, #FECBCD 0%, rgba(253.94, 203.15, 204.70, 0) 100%)",
   ];
   // ********************
-  // console.log("handleAddToCartF", handleAddToCart());
   const handleAddToCart = async () => {
     try {
       const response = await axios.post(
@@ -1921,35 +1900,16 @@ function PetshopHome(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3}> */}
-                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                              {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
-                              {/* </Col> */}
                               <Col lg={4}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5}>
-                        <h6>
-                          Your save
-                          {formattedSavedAmount >= 0
-                            ? "₹" + formattedSavedAmount
-                            : "No savings"}
-                        </h6>
-                      </Col> */}
                             </Row>
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        {console.log(
-                          "productDetails.brand_id: ",
-                          productDetails.brand_id
-                        )}
+                      
 
                         {productDetails ? (
                           <Table responsive>
@@ -1962,18 +1922,12 @@ function PetshopHome(props) {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              {/* <tr>
-                                <th>Health Condition</th>
-                                <td>{productDetails?.helthCondition_id}</td>
-                              </tr> */}
+                              
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
                               </tr>
-                              {/* <tr>
-                          <th>Item From</th>
-                          <td>Pellet</td>
-                        </tr> */}
+                             
                             </tbody>
                           </Table>
                         ) : (
@@ -3664,66 +3618,9 @@ function PetshopHome(props) {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-              {/* <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option value="" disabled selected>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form> */}
+           
               <Form onSubmit={handleNotifymeSubmit}>
-                {/* <Form.Group controlId="formVariations">
-        <Form.Label>Variations</Form.Label>
-        <Form.Control
-          as="select"
-          value={variation}
-          onChange={(e) => setVariation(e.target.value)}
-          required
-          isInvalid={!!variationError}
-        >
-          <option value="" disabled>
-            Choose an option...
-          </option>
-          {productDetails?.variations &&
-            productDetails?.variations.map((item, index) => (
-              <option key={index}>{item.type}</option>
-            ))}
-        </Form.Control>
-        {variationError && (
-          <div className="error-message">{variationError}</div>
-        )}
-      </Form.Group> */}
+               
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

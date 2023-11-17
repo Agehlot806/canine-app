@@ -31,7 +31,7 @@ function Service() {
       .get(`${BASE_URL}/banners/service_category`)
       .then((response) => {
         console.log(response);
-        console.log("Delete Successful");
+        console.log("Service category Successful");
         setallservice(response.data.data);
       })
       .catch((error) => {

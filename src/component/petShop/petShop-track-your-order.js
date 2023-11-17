@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/css/order-tracker.css";
-import Footer from "../../directives/footer";
+import Petshopfooter from "../../directives/petShop-Footer";
 import { Button, Col, Container, Row, Card, CardBody } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,6 @@ export default function Trackyourorderps() {
       setTrackingValue(id);
     }
   }, [id]);
-  console.log("canReturnOrder", canReturnOrder);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -77,8 +76,6 @@ export default function Trackyourorderps() {
         console.log("=======>???????????????????????????????? ", response);
         console.log("order Details Successful");
         setorderDetails(response.data.data);
-        //       const item_id = response.data.data.item_id;
-        // console.log("Item ID:", item_id);
       })
       .catch((error) => {
         console.log(error);
@@ -386,7 +383,7 @@ export default function Trackyourorderps() {
         </>
       )}
 
-      <Footer />
+<Petshopfooter />
 
       {/* Modal */}
       {/* Cancel Order */}
@@ -438,17 +435,7 @@ export default function Trackyourorderps() {
                 value={cancelValue}
                 onChange={Canceldata}
               >
-                {/* <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="exampleRadios"
-                    value="Damaged Product"
-                  />
-                  <label className="form-check-label" htmlFor="exampleRadios1">
-                    Damaged Product
-                  </label>
-                </div> */}
+                
                 <div className="form-check">
                   <input
                     className="form-check-input"

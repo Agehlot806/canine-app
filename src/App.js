@@ -33,14 +33,9 @@ import Signup from "./component/AllUser/signup";
 import DashboadSalesman from "./component/Salesman/dashboardSalesman";
 import Partnerdashboard from "./component/Partner/partner-dashboard";
 import Planbuy from "./component/Partner/planbuy";
-import Partnercard from "./component/Partner/partner-card";
-import Pay from "./component/Partner/pay";
 import Serviceaddpet from "./component/User/service-add-pet";
 import Userpaymethod from "./component/User/user-pay-method";
 import Map from "./component/User/track-your-order";
-import SalesmanaddProduct from "./component/Salesman/salesman-add-product";
-import SalesmanProductdetail from "./component/Salesman/salesman-product-details";
-import SalesmanAddcart from "./component/Salesman/salesman-add-cart";
 import Allveterinary from "./component/User/all-veterinary";
 import Allservicebooking from "./component/User/all-service-booking";
 import Petprofile from "./component/User/pet-profile";
@@ -73,9 +68,7 @@ import Petshopdashboard from "./component/petShop/petShop-dashboard";
 import PetshopHome from "./component/petShop/petShop-home";
 import PetshopLogin from "./component/petShop/petShop-login";
 import PetshopMyorder from "./component/petShop/petShop-my-orders";
-import Petshoppay from "./component/petShop/petShop-pay";
 import PetshopPayLater from "./component/petShop/petShop-paylater";
-import PetshopPaymentMethod from "./component/petShop/petShop-paymentMethod";
 import PetshopPetcategory from "./component/petShop/petShop-pet-category";
 import Petshopproduct from "./component/petShop/petShop-product";
 import PetshopProductbypartner from "./component/petShop/petShop-productbypartner";
@@ -95,8 +88,6 @@ import PetshopOurbrand from "./component/petShop/petShop-our-brand";
 import PetshopOurourbrand from "./component/petShop/petShop-our-ourBrand";
 import PetShopShopbybrand from "./component/petShop/petShop-shopbybrand";
 import PetshopShopbybrandlist from "./component/petShop/petShop-shop-by-brand-list";
-import Latestheader from "./directives/latestheader";
-import Navber from "./directives/navber";
 import SubcategoriesProduct from "./component/User/sub-categoriesProduct";
 import PetShopSubcategoriesProduct from "./component/petShop/petShop-SubcategoriesProduct";
 import Transitionhistory from "./component/User/transition-history";
@@ -141,8 +132,6 @@ const UsersRoutes = () => {
       {/* =============== User flow start routing ===================== */}
 
       <Route path="/" element={<Home />} />
-      <Route path="/latestheader" element={<Latestheader />} />
-      <Route path="/nav" element={<Navber />} />
       <Route path="/about-us" element={<Aboutus />} />
       <Route path="/service" element={<Service />} />
       <Route path="/product" element={<Product />} />
@@ -270,12 +259,8 @@ const WholesalerRoutes = () => {
       />
       <Route path="/petshop-add-cart/:id" element={<PetshopAddCart />} />
       <Route path="/petshop-add-cart" element={<PetshopAddCart />} />
-      <Route
-        path="/petshop-payment-method"
-        element={<PetshopPaymentMethod />}
-      />
+     
 
-      <Route path="/petshop-pay" element={<Petshoppay />} />
       <Route path="/petshop-shipping/:id" element={<PetshopShipping />} />
       <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
       <Route path="/order-view-details/:id" element={<Orderviewdetails />} />
@@ -329,8 +314,6 @@ const partnersRoutes = () => {
       {/*======================== partners flow start ========================*/}
       <Route path="/partner-dashboad" element={<Partnerdashboard />} />
       <Route path="/plan-buy" element={<Planbuy />} />
-      <Route path="/partner-card" element={<Partnercard />} />
-      <Route path="/pay" element={<Pay />} />
       {/*======================== partners flow end ========================*/}
     </Routes>
   );
@@ -344,12 +327,6 @@ const SalesmanRoutes = () => {
       <Route path="/salesman-signup" element={<Salesman />} />
       <Route path="/salesman-login" element={<SalesmanLogin />} />
       <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
-      <Route path="/salesman-add-product" element={<SalesmanaddProduct />} />
-      <Route
-        path="/salesman-product-details"
-        element={<SalesmanProductdetail />}
-      />
-      <Route path="/salesman-add-cart" element={<SalesmanAddcart />} />
       {/*======================== Sales Man flow end ========================*/}
     </Routes>
   );
@@ -387,8 +364,6 @@ const App = () => {
             {/* =============== User flow start routing ===================== */}
 
             <Route path="/" element={<Home />} />
-            <Route path="/latestheader" element={<Latestheader />} />
-            <Route path="/nav" element={<Navber />} />
             <Route path="/about-us" element={<Aboutus />} />
             <Route path="/service" element={<Service />} />
             <Route path="/product" element={<Product />} />
@@ -530,12 +505,8 @@ const App = () => {
             />
             <Route path="/petshop-add-cart/:id" element={<PetshopAddCart />} />
             <Route path="/petshop-add-cart" element={<PetshopAddCart />} />
-            <Route
-              path="/petshop-payment-method"
-              element={<PetshopPaymentMethod />}
-            />
+            
 
-            <Route path="/petshop-pay" element={<Petshoppay />} />
             <Route path="/petshop-shipping/:id" element={<PetshopShipping />} />
             <Route path="/petshop-paylater/:id" element={<PetshopPayLater />} />
             <Route
@@ -598,22 +569,11 @@ const App = () => {
             <Route path="/salesman-signup" element={<Salesman />} />
             <Route path="/salesman-login" element={<SalesmanLogin />} />
             <Route path="/salesman-dashboad" element={<DashboadSalesman />} />
-            <Route
-              path="/salesman-add-product"
-              element={<SalesmanaddProduct />}
-            />
-            <Route
-              path="/salesman-product-details"
-              element={<SalesmanProductdetail />}
-            />
-            <Route path="/salesman-add-cart" element={<SalesmanAddcart />} />
             {/*======================== Sales Man flow end ========================*/}
 
             {/*======================== partners flow start ========================*/}
             <Route path="/partner-dashboad" element={<Partnerdashboard />} />
             <Route path="/plan-buy" element={<Planbuy />} />
-            <Route path="/partner-card" element={<Partnercard />} />
-            <Route path="/pay" element={<Pay />} />
             {/*======================== partners flow end ========================*/}
 
             {/* page Not Found flow  */}

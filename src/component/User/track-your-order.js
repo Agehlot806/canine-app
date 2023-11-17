@@ -23,7 +23,6 @@ export default function Trackyourorder() {
       setTrackingValue(id);
     }
   }, [id]);
-  console.log("canReturnOrder", canReturnOrder);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -281,45 +280,10 @@ export default function Trackyourorder() {
                             ) : null}
                             {/* )} */}
                           </div>
-                          {/* <div>
-                            {canReturnOrder ? (
-                              getCurrentStepIndex() >= 1 &&
-                              getCurrentStepIndex() <= 4 ? (
-                                <Button
-                                  className="cancel-btn"
-                                  data-toggle="modal"
-                                  data-target="#cancle-order-Modal"
-                                >
-                                  Cancel Order
-                                </Button>
-                              ) : null
-                            ) : (
-                              <Button
-                                className="cancel-btn"
-                                data-toggle="modal"
-                                data-target="#returnModal"
-                              >
-                                Return Order
-                              </Button>
-                            )}
-                          </div> */}
+                         
                         </div>
 
                         <hr className="my-4" />
-
-                        {/* <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="dot"></span>
-                                        <hr className="flex-fill track-line" />
-                                        <span className="d-flex justify-content-center align-items-center big-dot dot">
-                                            <MDBIcon icon="check text-white" />
-                                        </span>
-                                    </div> */}
                         <div id="progress">
                           <div
                             id="progress-bar"
@@ -437,17 +401,7 @@ export default function Trackyourorder() {
                 value={cancelValue}
                 onChange={Canceldata}
               >
-                {/* <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="exampleRadios"
-                    value="Damaged Product"
-                  />
-                  <label className="form-check-label" htmlFor="exampleRadios1">
-                    Damaged Product
-                  </label>
-                </div> */}
+              
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -471,15 +425,7 @@ export default function Trackyourorder() {
                   </label>
                 </div>
                 <div className="form-check">
-                  {/* <input
-                    className="form-check-input"
-                    type="radio"
-                    name="exampleRadios"
-                    id="exampleRadios2"
-                    data-toggle="modal"
-                    data-dismiss="modal"
-                    data-target="#exampleModalCenter"
-                  /> */}
+                  
                   <label
                     className="form-check-label"
                     data-toggle="modal"
@@ -616,8 +562,6 @@ export default function Trackyourorder() {
               </form>
             </div>
             <div class="modal-footer">
-              {/* <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button> */}
               <button
                 type="button"
                 class="btn btn-primary"

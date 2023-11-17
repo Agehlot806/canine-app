@@ -1,74 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { Col, Container, Row } from 'react-bootstrap';
-// import { Link, useParams } from 'react-router-dom';
-// import { BASE_URL } from '../../Constant/Index';
-
-// function SubcategoriesProduct() {
-//     const [categorieproduct, setcategorieproduct] = useState([]);
-//     const { name } = useParams();
-//     useEffect(() => {
-//         allcategoriProductList();
-//     }, []);
-
-//     const allcategoriProductList = async () => {
-//         axios
-//             .get(`${BASE_URL}/items/latest`)
-//             .then((response) => {
-//                 console.log(response);
-//                 console.log("Delete Successful");
-//                 setcategorieproduct(response.data.data);
-//             })
-//             .catch((error) => {
-//                 console.log(error);
-//             });
-//     };
-
-//     return (
-//         <div>
-//             <Container>
-//                 <h1>Filter Product</h1>
-//                 <Row>
-//                 {categorieproduct.map(
-//                       (item, index) =>
-//                         item.sub_category === name && (
-//                         <Col lg={4} sm={6} xs={6} className="mb-4">
-//                             <div
-//                                 className="food-product"
-//                                 key={item.id}
-//                             >
-//                                 <Link to="">
-//                                     <div className="text-center">
-//                                         <img
-//                                             src={
-//                                                 "https://canine.hirectjob.in///storage/app/public/product/" +
-//                                                 item.image
-//                                             }
-//                                         />
-//                                     </div>
-//                                     <div>
-//                                         <h6>{item.name}</h6>
-//                                         <p>{item.description}</p>
-//                                     </div>
-//                                     <div className="product-bag">
-//                                         <Row>
-//                                             <Col>
-//                                                 <p>₹{item.price}</p>
-//                                             </Col>
-//                                         </Row>
-//                                     </div>
-//                                 </Link>
-//                             </div>
-//                         </Col>
-//                     ))}
-//                 </Row>
-//             </Container >
-//         </div >
-//     );
-// }
-
-// export default SubcategoriesProduct;
-
 import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
 import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
@@ -172,8 +101,6 @@ function SubcategoriesProduct() {
   const { id, name } = useParams();
 
   const { cart, dispatch } = useCartWithoutLogin();
-  console.log("name: ", name);
-  console.log("iddhsdgjhsdh", id);
 
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
@@ -233,9 +160,7 @@ function SubcategoriesProduct() {
           (item) => item.category_id == id
         );
 
-        console.log("filteredData111", filteredData);
         setCategoryIds(filteredData);
-        console.log("responsDataesponsData", filterDatashow);
         setallproduct(filteredData);
         setSortOption("default");
       })
@@ -256,9 +181,7 @@ function SubcategoriesProduct() {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
-        // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -287,7 +210,6 @@ function SubcategoriesProduct() {
         const filteredData = response.data.data.filter(
           (item) => item.category_id == id
         );
-        console.log("Filtered Data: ", filteredData);
         setAllBreed(filteredData);
       })
       .catch((error) => {
@@ -445,7 +367,6 @@ function SubcategoriesProduct() {
     filterProducts();
   };
 
-  console.log("/////", selectedsubcateIds);
   const filterProducts = async (
     updatedBrandIds,
     updatedLifeIds,
@@ -476,8 +397,6 @@ function SubcategoriesProduct() {
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: cateidproduct,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproduct(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -580,7 +499,6 @@ function SubcategoriesProduct() {
 
   const subcatid = async (id) => {
     setsubid(id);
-    console.log("subcategoriesID", subid);
     await axios
       .get(`${BASE_URL}/items/product/${id}/${subid}`)
       .then((response) => {
@@ -669,16 +587,12 @@ function SubcategoriesProduct() {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -881,7 +795,6 @@ function SubcategoriesProduct() {
         console.log(error);
       });
   };
-  console.log("addresslist--", addresslist);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
@@ -991,7 +904,6 @@ function SubcategoriesProduct() {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -1028,14 +940,6 @@ function SubcategoriesProduct() {
           console.log(response);
           window.location.reload(false);
         });
-      // if (response.data.success) {
-      //   setAddToCartProduct(
-      //     (prevData) => prevData.filter((item) => item.id !== id)
-      //     // refresh
-      //   );
-      //   window.location.reload(false);
-      //   console.log("Product removed from cart:", response.data);
-      // }
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -1048,7 +952,6 @@ function SubcategoriesProduct() {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -1065,7 +968,6 @@ function SubcategoriesProduct() {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
@@ -1109,7 +1011,6 @@ function SubcategoriesProduct() {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -1275,15 +1176,6 @@ function SubcategoriesProduct() {
 
   const handlePayment = async () => {
     try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
       await loadRazorpayScript();
 
       const options = {
@@ -1357,8 +1249,6 @@ function SubcategoriesProduct() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -1829,7 +1719,6 @@ function SubcategoriesProduct() {
                   <Container>
                     <div>
                       <h1 className="main-head mb-4">All {name} Products</h1>
-                      {console.log("name", name)}
                       <Row>
                         {paginatedCategories.length > 0 ? (
                           paginatedCategories.map(

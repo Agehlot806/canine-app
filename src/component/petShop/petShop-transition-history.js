@@ -115,7 +115,6 @@ const PetshopTransitionHistory = () => {
                             <p style={{ color: "red" }}>Debited From Wallet</p>
                           )}
                         </Col>
-                        {console.log("transaction: ", transaction)}
                       </Row>
                      
                     ))}

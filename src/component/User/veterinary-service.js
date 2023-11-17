@@ -25,9 +25,6 @@ function Veterinaryservice() {
 
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
-
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([GetdataAll(), selectPet()])
@@ -51,54 +48,8 @@ function Veterinaryservice() {
       console.error("Error fetching data:", error);
     }
   };
-  console.log("selectgetpet", selectgetpet);
-
-  // const GetStateAll = async (e) => {
-  //   var headers = {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //   };
-  //   await fetch(`${BASE_URL}/auth/state`, {
-  //     method: "GET",
-  //     headers: headers,
-  //   })
-  //     .then((Response) => Response.json())
-  //     .then((Response) => {
-  //       setStateall(Response.state);
-  //       // console.log("99999999999999999999", Response);
-  //     })
-  //     .catch((error) => {
-  //       console.error("ERROR FOUND---->>>>" + error);
-  //     });
-  // };
-
-  // const GetdCityAll = (state) => {
-  //   axios
-  //     .post(`${BASE_URL}/auth/city?state=${state}`, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     })
-  //     .then((response) => {
-  //       console.log("responseresponse", response);
-  //       setStateallCity(response.data.state);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // const Subscription = (event) => {
-  //   if (event.target.value) {
-  //     setstate(event.target.value);
-
-  //     GetdCityAll(event.target.value);
-  //   }
-  // };
-
-  // const [stateall, setStateall] = useState([]);
   const [stateData, setstateData] = useState("");
-  // const [stateallCity, setStateallCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  // const [city, setcity] = useState("");
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -156,14 +107,12 @@ function Veterinaryservice() {
       .then((response) => {
         setResponseMessage(response.data.message);
         toast.success("Successfully");
-        console.log("veterinary", data);
       })
       .catch((error) => {
         toast.error("Field is required");
       });
   };
 
-  console.log("pet_idpet_idpet_id", state);
   return (
     <>
       <Toaster />
@@ -298,42 +247,7 @@ function Veterinaryservice() {
                         </Form.Group>
                       </Row>
 
-                      {/* <div className="row mb-3">
-                        <div className="col">
-                          <div className="form-group">
-                            <Form.Label>State</Form.Label>
-                            <select
-                              className="form-control"
-                              onChange={Subscription}
-                              value={stateData}
-                            >
-                              <option>State Choose...</option>
-                              {stateall.map((items) => (
-                                <option value={items.id} key={items.id}>
-                                  {items.state_name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className="col">
-                          <div className="form-group">
-                            <Form.Label>City</Form.Label>
-                            <select
-                              className="form-control"
-                              onChange={(e) => setSelectedCity(e.target.value)}
-                              value={selectedCity}
-                            >
-                              <option value="">City Choose...</option>
-                              {stateallCity.map((items) => (
-                                <option value={items.id} key={items.id}>
-                                  {items.city_name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      </div> */}
+                      
                       <Form.Group className="mb-3" controlId="formGridAddress1">
                         <Form.Label>
                           Address<span style={{ color: "#008efd" }}>*</span>

@@ -17,9 +17,7 @@ import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopOrderviewdetails() {
   const [allorder, setallorder] = useState([]);
-  console.log("AAallorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
-  console.log("AAorderDetails: ", orderDetails);
 
   // const { id } = useParams();
   const location = useLocation();
@@ -27,7 +25,6 @@ function PetshopOrderviewdetails() {
 
   const id = params.get("id");
   const paymentStatus = params.get("status");
-  console.log("param1 ", id, paymentStatus);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -43,8 +40,6 @@ function PetshopOrderviewdetails() {
   }, []);
 
   const storedFormattedAddress = localStorage.getItem("formattedAddress");
-  console.log("storedFormattedAddress: ", storedFormattedAddress);
-  // const { mobile } = storedFormattedAddress || {};
   let subTotal = orderDetails.reduce(
     (total, order) => total + parseFloat(order.price * order.quantity),
     0
@@ -58,7 +53,6 @@ function PetshopOrderviewdetails() {
     0
   );
   let SubTotalData = subTotal + TaxAmount;
-  console.log("SubTotalTaxAmount: ", SubTotalTaxAmount);
 
   let orderIdData = allorder.reduce(
     (total, order) => total + parseFloat(order.id),
@@ -83,12 +77,10 @@ function PetshopOrderviewdetails() {
 
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // =----------------------------
   // salesmanId
   const loginType = localStorage.getItem("loginType");
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("salesmanId: ", salesmanId);
 
   const allOrders = async () => {
     axios
@@ -116,15 +108,6 @@ function PetshopOrderviewdetails() {
 
   const handlePayment = async () => {
     try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
       await loadRazorpayScript();
 
       const options = {
@@ -185,7 +168,6 @@ function PetshopOrderviewdetails() {
   };
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const handleAddToCart = async (order) => {
-    console.log("itemmmm: ", order);
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/wish-list/add_product`,
@@ -264,7 +246,6 @@ function PetshopOrderviewdetails() {
 
   useEffect(() => {
     const isOrderBuyitagain = localStorage.getItem(`orderBuyitagain_${id}`);
-    console.log("isOrderBuyitagain", isOrderBuyitagain);
     if (isOrderBuyitagain === "true") {
       setIsBuyitagainButtonDisabled(true);
     }
@@ -504,8 +485,6 @@ function PetshopOrderviewdetails() {
                         <div className="order-table" ref={tableRef}>
                           {allorder && allorder.length > 0 ? (
                             allorder.map((item, index) => {
-                              console.log("Desired ID:", id);
-                              console.log("Item ID:", item.id);
 
                               if (item.id == id) {
                                 console.log("Match found for ID:", id);
@@ -748,41 +727,7 @@ function PetshopOrderviewdetails() {
           </div>
         </div>
       </div>
-      {/* modal pay butto */}
-      {/* <div
-        className="modal fade"
-        id="paysubmit"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <div className="payment-done">
-                <img src={paydone} />
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesettingLorem Ipsum is simply dummy text of the printing
-                  and typesetting
-                </p>
-                <Button
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  // onClick={handleSendRequest}
-                >
-                  <Link
-                  // to="/shipping"
-                  >
-                    Done
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
+     
     </>
   );
 }

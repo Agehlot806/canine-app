@@ -4,10 +4,6 @@ import { BASE_URL } from "../../Constant/Index";
 import HomeImg from "../../assets/images/img/home.png";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
-import icon from "../../assets/images/icon/pro.png";
-import arrow from "../../assets/images/icon/arrow.png";
-import invoice from "../../assets/images/icon/invoice.png";
-import orders from "../../assets/images/img/orders.png";
 import { Link, useNavigate } from "react-router-dom";
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
@@ -21,13 +17,9 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function Petshopdashboard() {
   const navigate = useNavigate();
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   const [totalorder, settotalorder] = useState([]);
-  console.log("totalorder: ", totalorder);
   const [homebanner, sethomebanner] = useState([]);
   const [email, setEmail] = useState("");
-  // const [responseMessagePA, setResponseMessagePA] = useState("");
-  // const [responseMessage, setResponseMessage] = useState("");
  
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -81,8 +73,7 @@ function Petshopdashboard() {
       .post(`https://canine.hirectjob.in/api/v1/auth/pay_amount`, data)
       .then((response) => {
         console.log("responseqqqq: ", response);
-        // setResponseMessagePA(response.data.message);
-        // toast.success("Payment Successfully Completed");
+       
         if (response.status === 200) {
           // setResponseMessagePA(response.data.message);
           toast.success("Payment Successfully Completed");
@@ -129,15 +120,6 @@ function Petshopdashboard() {
   const [paymentId, setPaymentId] = useState("");
   const handlePayment = async () => {
     try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
       await loadRazorpayScript();
 
       const options = {
@@ -188,7 +170,6 @@ function Petshopdashboard() {
     navigate(`/order-view-details/${id}`);
   };
   const [idItem, setIdItem] = useState("");
-  console.log("idItem: ", idItem);
   const SaveItemId = (item) => {
     setIdItem(item);
   };
@@ -223,7 +204,6 @@ function Petshopdashboard() {
       .then((response) => response.json())
       .then((data) => {
         setData(data.data);
-        // console.log("data",data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -400,40 +380,7 @@ function Petshopdashboard() {
                                       <h6>{callbackItem.variant}</h6>
                                     )
                                   )}
-                                  {/* <a>
-                                    <i
-                                      class="fa fa-star"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a>
-                                    <i
-                                      class="fa fa-star"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a>
-                                    <i
-                                      class="fa fa-star"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a>
-                                    <i
-                                      class="fa fa-star"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a>
-                                    <i
-                                      class="fa fa-star-half-o"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a> */}
-                                  {/* <p>
-                                  Lorem Ipsum is simply dummy text of the printing
-                                  and typesetting
-                                </p> */}
+                                 
                                 </div>
                               </div>
                               <div className="text-center mt-3">
@@ -444,7 +391,6 @@ function Petshopdashboard() {
                                 >
                                   Detail Order
                                 </Button>
-                                {/* Conditionally render the "Pay" button */}
                                 {!isPaid && (
                                   <Button
                                     onClick={() => {
@@ -766,12 +712,6 @@ function Petshopdashboard() {
                     <Col lg={8}>
                       <div className="balance-card">
                         <h5>Current Balance</h5>
-                        {/* {totalorder && totalorder.map((order) => (
-  <div key={order.id}>
-    <h1>{order?.callback?.user_profile?.wallet_balance}</h1>
-    {console.log("order?.callback?.user_profile?.wallet_balance",order?.callback?.user_profile?.wallet_balance)}
-  </div>
-))} */}
                         <h1>₹{parseInt(walletBalance)}</h1>
                         <div class="input-group">
                           <div class="input-group-prepend">
@@ -793,76 +733,7 @@ function Petshopdashboard() {
                     </Col>
                   </Row>
                 </div>
-                {/* <div className="needplace">
-                  <Row className="justify-content-center">
-                    <Col lg={6}>
-                      <div className="Withdrawal-card">
-                        <Button>Withdrawal Amount</Button>
-                        <h5>Transactions</h5>
-                        <div className="with-table">
-                          <div>
-                            <img src={icon} />
-                          </div>
-                          <div className="with-content">
-                            <h6>John Smith</h6>
-                            <p>
-                              10 May<span>10:30 PM</span>
-                            </p>
-                          </div>
-                          <div className="arrow-icon">
-                            <img src={arrow} />
-                            <p>$30.00</p>
-                          </div>
-                        </div>
-                        <div className="with-table">
-                          <div>
-                            <img src={icon} />
-                          </div>
-                          <div className="with-content">
-                            <h6>John Smith</h6>
-                            <p>
-                              10 May<span>10:30 PM</span>
-                            </p>
-                          </div>
-                          <div className="arrow-icon">
-                            <img src={arrow} />
-                            <p>$30.00</p>
-                          </div>
-                        </div>
-                        <div className="with-table">
-                          <div>
-                            <img src={icon} />
-                          </div>
-                          <div className="with-content">
-                            <h6>John Smith</h6>
-                            <p>
-                              10 May<span>10:30 PM</span>
-                            </p>
-                          </div>
-                          <div className="arrow-icon">
-                            <img src={arrow} />
-                            <p>$30.00</p>
-                          </div>
-                        </div>
-                        <div className="with-table">
-                          <div>
-                            <img src={icon} />
-                          </div>
-                          <div className="with-content">
-                            <h6>John Smith</h6>
-                            <p>
-                              10 May<span>10:30 PM</span>
-                            </p>
-                          </div>
-                          <div className="arrow-icon">
-                            <img src={arrow} />
-                            <p>$30.00</p>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div> */}
+              
               </div>
             </div>
           </div>

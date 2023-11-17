@@ -88,7 +88,6 @@ function PetshopContact() {
   };
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   return (
     <>

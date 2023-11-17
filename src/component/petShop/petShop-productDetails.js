@@ -26,13 +26,10 @@ function PetshopproductDetails() {
   // *************************
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // **********************
 
   const verifiredIdaccess = Number(localStorage.getItem("verifiedId"));
-  console.log("vrifiredIdaccessvrifiredIdaccess", verifiredIdaccess);
   const [productDetails, setProductDetails] = useState([]);
-  console.log("productDetailsmin: ", productDetails.min_order);
   const categoryid = productDetails.category_id;
   const itemsid = productDetails.id;
   const demousercheck = () => {
@@ -41,14 +38,11 @@ function PetshopproductDetails() {
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
-  console.log("productDetails--- ", productDetails);
   // const { stars, reviews } = Productdetail;
   const [quantity, setQuantity] = useState(0);
-  console.log("quantity--->", quantity);
   const [minOrder, setMinOrder] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
-  console.log("selectedVariant: ", selectedVariant);
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
 
   const handleQuantityChange = (event) => {
@@ -155,8 +149,6 @@ function PetshopproductDetails() {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
     axios
       .post(`https://canine.hirectjob.in/api/v1/items/notify/2`, notifymeData)
       .then((response) => {
@@ -338,7 +330,6 @@ function PetshopproductDetails() {
     // Add more gradient colors as needed
   ];
   let wholesellervariationprice = 0;
-  console.log("wholesellervariationpriceeee: ", wholesellervariationprice);
 
   if (selectedVariantPrice !== "") {
     wholesellervariationprice = selectedVariantPrice;
@@ -1118,10 +1109,7 @@ function PetshopproductDetails() {
                       </div>
                     </div>
                     <h5>About Us</h5>
-                    {console.log(
-                      "productDetails.brand_id: ",
-                      productDetails.brand_id
-                    )}
+              
 
                     {productDetails ? (
                       <Table responsive>
@@ -1542,10 +1530,7 @@ function PetshopproductDetails() {
                             <Row>
                               {/* <Col lg={3}> */}
                               {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                              {/* {console.log(
-                                "productDetails?.variations?.price: ",
-                                productDetails?.variations?.price
-                              )} */}
+                             
                               {/* </Col> */}
                               <Col lg={4}>
                                 {/* <h5>{`₹${
@@ -1566,10 +1551,6 @@ function PetshopproductDetails() {
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        {console.log(
-                          "productDetails.brand_id: ",
-                          productDetails.brand_id
-                        )}
 
                         {productDetails ? (
                           <Table responsive>

@@ -24,14 +24,9 @@ function Wishlistproduct() {
       });
   }, []);
 
-  // const { id } = useParams();
-  // console.log("wishlistid-------", id);
-
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  console.log("storedUserId: ", storedUserId);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
   const [itemIds, setItemIds] = useState([]);
 

@@ -24,12 +24,8 @@ function PetshopWishlistproduct() {
       });
   }, []);
 
-  // const { id } = useParams();
-  // console.log("wishlistid-------", id);
-
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   const [itemIds, setItemIds] = useState([]);
 

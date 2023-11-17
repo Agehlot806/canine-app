@@ -29,14 +29,9 @@ function PetshopMyorder() {
 
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
-
-  // const storedPaymentStatus = Number(localStorage.getItem("paymentStatus"));
-  // console.log("storedPaymentStatus: ", storedPaymentStatus);
   // ----------------------------------------
   // salesmanId
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("salesmanId: ", salesmanId);
   const allOrders = async () => {
     axios
       .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
@@ -76,7 +71,6 @@ function PetshopMyorder() {
             <Container>
               <h1 className="main-head">My Orders</h1>
               <div className="needplace">
-                {console.log("allorder: ", allorder)}
                 {allorder && allorder.length > 0 ? (
                   allorder.map((item, index) => (
                     <div className="myorder-list">
@@ -167,10 +161,7 @@ function PetshopMyorder() {
                                 View
                               </Link>
                             </Button>
-                            {console.log(
-                              "item.payment_status: ",
-                              item.payment_status
-                            )}
+                            
                             <Button>
                               <Link to={`/petshoptrackyourorde/${item.id}`}>
                                 Track

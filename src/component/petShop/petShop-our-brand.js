@@ -56,9 +56,6 @@ function PetshopOurbrand() {
       // Handle error as needed
     }
   };
-  console.log("====================================");
-  console.log(brands);
-  console.log("====================================");
 
   return (
     <>
@@ -140,34 +137,7 @@ function PetshopOurbrand() {
         </Container>
       </section>
 
-      {/* <section className="section-padding">
-                <Container>
-                    <div className=" Newsletter-bg">
-                        <Row>
-                            <Col lg={3}>
-                                <img src={catpng} />
-                            </Col>
-                            <Col lg={6}>
-                                <div className="Newsletter">
-                                    <h1 className="main-head">Get Or Promo Code by Subscribing To our Newsletter</h1>
-                                    <Form className="d-flex">
-                                        <Form.Control
-                                            type="search"
-                                            placeholder="Enter your email"
-                                            className="me-2"
-                                            aria-label="Search"
-                                        />
-                                        <Button variant="outline-success">Subscribe</Button>
-                                    </Form>
-                                </div>
-                            </Col>
-                            <Col lg={3} className="align-self-center">
-                                <img src={bannerPro} />
-                            </Col>
-                        </Row>
-                    </div>
-                </Container>
-            </section> */}
+      
         </>
       )}
      

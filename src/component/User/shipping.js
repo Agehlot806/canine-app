@@ -18,9 +18,7 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function Shipping() {
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
-  console.log("=======>>>>>> id", customer_id);
   let storedUserId = JSON.parse(customer_id);
-  console.log("customer_id: ", customer_id);
   // ----------------------------------------
 
   const [loading, setLoading] = useState(true);
@@ -36,7 +34,6 @@ function Shipping() {
   }, []);
 
   const { id } = useParams();
-  console.log("id: ", id);
 
   const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
@@ -72,26 +69,10 @@ function Shipping() {
     return dateObject.toLocaleDateString();
   };
 
-  // const Alldatamodeler1 = () => {
-  //     fetch(` https://sahadev.techpanda.art/api/cta-filter/${loginIduser}`)
-  //       .then((Response) => Response.json())
-  //       .then((response) => {
-  //         console.log("tarun categorys", response);
-  //         setMyactivity1(response.results)
-  //       }).catch((error) => {
-  //         console.log("error", error);
-  //       })
-  //   }
   function formatPrice(price) {
-    // Convert the price to a number
     const numericPrice = parseInt(price);
-
-    // Use toLocaleString to format the number with commas
     const formattedPrice = numericPrice.toLocaleString();
-
-    // Remove unnecessary decimal places
     const finalPrice = formattedPrice.replace(/\.0+$/, "");
-
     return finalPrice;
   }
   return (
@@ -224,15 +205,9 @@ function Shipping() {
                     <div className="order-details">
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
-                          // Convert item.created_at to a JavaScript Date object
                           const createdDate = new Date(item.created_at);
-
-                          // Calculate the 7th day date after item.created_at
                           const seventhDayDate = new Date(createdDate);
                           seventhDayDate.setDate(createdDate.getDate() + 7);
-
                           if (item.id == id) {
                             console.log("Match found for ID:", id);
                             return (

@@ -162,7 +162,6 @@ function PetShopSubcategoriesProduct(props) {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   const [wishlistData, setWishlistData] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
@@ -239,16 +238,12 @@ function PetShopSubcategoriesProduct(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -500,13 +495,8 @@ function PetShopSubcategoriesProduct(props) {
         selectedsubcate: updatesubcateIds || selectedsubcateIds,
         minPrice: minpricevalue !== "" ? parseFloat(minpricevalue) : null,
         maxPrice: maxpricevalue !== "" ? parseFloat(maxpricevalue) : null,
-        // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
-        // minPrice:  minpricevalue !== [] ? minpricevalue : null,
-        // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: products,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproduct(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -957,26 +947,6 @@ function PetShopSubcategoriesProduct(props) {
     }
   };
 
-  // const removeFromCart = async (selctId) => {
-  //   try {
-  //     const response = await axios
-  //       .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //         window.location.reload(false);
-  //       });
-  //     // if (response.data.success) {
-  //     //   setAddToCartProduct(
-  //     //     (prevData) => prevData.filter((item) => item.id !== id)
-  //     //     // refresh
-  //     //   );
-  //     //   window.location.reload(false);
-  //     //   console.log("Product removed from cart:", response.data);
-  //     // }
-  //   } catch (error) {
-  //     console.error("Error removing product from cart:", error);
-  //   }
-  // };
 
   const handleDeleteAddress = (id) => {
     axios
@@ -985,7 +955,6 @@ function PetShopSubcategoriesProduct(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -1002,7 +971,6 @@ function PetShopSubcategoriesProduct(props) {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
@@ -1030,29 +998,7 @@ function PetShopSubcategoriesProduct(props) {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
-  // const finalPrice = parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount - disscountvalue.discount
-  //     : Amount + taxamound
-  // );
-  // {`${parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount -
-  //         disscountvalue.discount +
-  //         taxamound
-  //     : Amount + taxamound
-  // )}`}
-  // const coupendisscount = (dis) => {
-  //   setcoupenCode(!coupencode);
-  //   localStorage.setItem("disconut", JSON.stringify(dis));
-  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-  //   console.log("disccount?????", dis);
-  // };
-  // const clearCoupon = () => {
-  //   setcoupenCode(!coupencode);
-  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
-  // };
+  
   const [selectedInput, setSelectedInput] = useState("");
   function formatAddress(selectedAddress) {
     return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
@@ -1065,14 +1011,7 @@ function PetShopSubcategoriesProduct(props) {
     : "No address selected";
   // Buy now checkout code
   const handleSendRequest = async () => {
-    // const cartData = sendcartdata.map((item) => ({
-    //   product_id: item.item_id,
-    //   variation: item.variant,
-    //   price: item.price,
-    //   quantity: item.quantity,
-    //   tax_amount: taxamound,
-    //   discount_on_item: disscountvalue?.discount || "",
-    // }));
+  
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
@@ -1214,8 +1153,6 @@ function PetShopSubcategoriesProduct(props) {
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -1778,19 +1715,7 @@ function PetShopSubcategoriesProduct(props) {
                       )}
                     </Row>
 
-                    {/* <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={Math.ceil(allproduct.length / itemsPerPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"activebtn"}
-                    nextClassName={"nextbtn"}
-                    previousClassName={"previousbtn"}
-                  /> */}
+                   
                   </Container>
                 </section>
               </Col>
@@ -1953,34 +1878,13 @@ function PetShopSubcategoriesProduct(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3}> */}
-                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                              {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
-                              {/* </Col> */}
                               <Col lg={4}>
                                 <h5>{`₹${wholesellervariationprice}`}</h5>
                               </Col>
-                              {/* <Col lg={5}>
-                        <h6>
-                          Your save
-                          {formattedSavedAmount >= 0
-                            ? "₹" + formattedSavedAmount
-                            : "No savings"}
-                        </h6>
-                      </Col> */}
                             </Row>
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        {console.log(
-                          "productDetails.brand_id: ",
-                          productDetails.brand_id
-                        )}
-
                         {productDetails ? (
                           <Table responsive>
                             <tbody>
@@ -2512,27 +2416,7 @@ function PetShopSubcategoriesProduct(props) {
                               ))}
                           </Row>
                         </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
+                       
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -2557,48 +2441,23 @@ function PetShopSubcategoriesProduct(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3} sm={3} xs={3}>
-                                <p>{`₹${wholesellervariationprice}`}</p>
-                              </Col> */}
+                             
                               <Col lg={4} sm={4} xs={3}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5} sm={5} xs={3}>
-                                <h6>
-                                  Your save
-                                  {formattedSavedAmount >= 0
-                                    ? "₹" + formattedSavedAmount
-                                    : "No savings"}
-                                </h6>
-                              </Col> */}
+                              
                             </Row>
                           </div>
                         </div>
                       </Col>
-                      {/* <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col> */}
+                     
                     </Row>
                     <hr />
                   </Container>
                 </section>
-                {/* ) : (
-                  <section className="section-padding">
-                    <Container
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Row>
-                        <p>Cart is Empty</p>
-                      </Row>
-                    </Container>
-                  </section>
-                )} */}
+                
 
                 <Container>
                   <div className="needplace">
@@ -2610,25 +2469,11 @@ function PetShopSubcategoriesProduct(props) {
                               <h5>Sub Total</h5>
                             </Col>
                             <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
                               <h5>₹{parseInt(Amount)}</h5>
                             </Col>
                           </Row>
                           <hr />
-                          {/* <Row>
-                            <Col>
-                              <h5>Coupon Discount</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {appliedCoupon
-                                  ? parseInt(disscountvalue?.discount)
-                                  : 0}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <hr />*/}
+                         
                           <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
@@ -2699,66 +2544,9 @@ function PetShopSubcategoriesProduct(props) {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-              {/* <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option value="" disabled selected>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form> */}
+              
               <Form onSubmit={handleNotifymeSubmit}>
-                {/* <Form.Group controlId="formVariations">
-        <Form.Label>Variations</Form.Label>
-        <Form.Control
-          as="select"
-          value={variation}
-          onChange={(e) => setVariation(e.target.value)}
-          required
-          isInvalid={!!variationError}
-        >
-          <option value="" disabled>
-            Choose an option...
-          </option>
-          {productDetails?.variations &&
-            productDetails?.variations.map((item, index) => (
-              <option key={index}>{item.type}</option>
-            ))}
-        </Form.Control>
-        {variationError && (
-          <div className="error-message">{variationError}</div>
-        )}
-      </Form.Group> */}
+               
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

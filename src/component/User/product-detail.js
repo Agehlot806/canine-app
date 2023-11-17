@@ -34,7 +34,6 @@ function Productdetail() {
   const { id } = useParams();
   const [paymentId, setPaymentId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
-  console.log("productDetails ", productDetails);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [notifyMeData, setNotifyMeData] = useState("");
@@ -234,9 +233,6 @@ function Productdetail() {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
-
     // Send a request
     axios
       .post(`https://canine.hirectjob.in/api/v1/items/notify`, notifymeData)
@@ -348,7 +344,6 @@ function Productdetail() {
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
 
-  console.log("selectedVariantPrice", selectedVariantPrice);
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();

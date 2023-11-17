@@ -10,7 +10,6 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function PetshopSignUp() {
   // const { addToast } = useToaster();
   const { state } = useLocation();
-  console.log("state in sellarw,hole", state);
   const handleFirstNameChange = (e) => {
     const inputValue = e.target.value;
     if (/^[a-zA-Z ]*$/.test(inputValue)) {
@@ -76,7 +75,6 @@ function PetshopSignUp() {
       toast.error("Please fill in all required fields."); // Display error toast
       return;
     }
-    console.log('errorerrorerror', toast)
     if (password.length < 8) {
       setIsPasswordValid(false);
       return;

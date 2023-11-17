@@ -14,7 +14,6 @@ import Petshopfooter from "../../directives/petShop-Footer";
 
 function PetshopProductbypartner() {
   const { id } = useParams();
-  console.log("id: ", id);
   const [thirdbanner, setthirdbanner] = useState([]);
   const [homebanner, sethomebanner] = useState([]);
   const [allVendorShop, setAllVendorShop] = useState([]);
@@ -195,51 +194,13 @@ function PetshopProductbypartner() {
                             <Col className="align-self-center">
                               <h4>₹{parseFloat(item.price)}</h4>
                             </Col>
-                            {/* <Col>
-                              <Link
-                                to={`/petshop-add-cart/${item.id}`}
-                                onClick={handleAddToCart}
-                              >
-                                <img src={bag} />
-                              </Link>
-                            </Col> */}
+                            
                           </Row>
                         </div>
                       </Link>
                     </div>
                   </Col>
-                  // <Col lg={3} sm={6} xs={6} className="mb-5">
-                  //   <a href="/petshop-product-by-partner">
-                  //     <div className="ProductPartner-card">
-                  //       {/* <img src={item.logo} /> */}
-                  //       <img
-                  //         src={
-                  //           "https://canine.hirectjob.in//storage/app/public/vendor/" +
-                  //           item.image
-                  //         }
-                  //       />
-                  //       <div>
-                  //         <h6>{item.name}</h6>
-                  //         <p>{item.description}</p>
-                  //       </div>
-                  //       <div className="product-bag">
-                  //         <Row>
-                  //           <Col className="align-self-center">
-                  //             <h6>₹{item.price}</h6>
-                  //           </Col>
-                  //           <Col>
-                  //             <Link
-                  //             // to={`/petshop-add-cart/${id}`}
-                  //             // onClick={handleAddToCart}
-                  //             >
-                  //               <img src={bag} />
-                  //             </Link>
-                  //           </Col>
-                  //         </Row>
-                  //       </div>
-                  //     </div>
-                  //   </a>
-                  // </Col>
+                 
                 ))
               ) : (
                 <p className="emptyMSG">No Product By Partner Data.</p>

@@ -15,7 +15,6 @@ import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopBlogdetails() {
   const { id } = useParams();
-  console.log("id", id);
 
   useEffect(() => {}, []);
   const [loading, setLoading] = useState(true);
@@ -35,12 +34,10 @@ function PetshopBlogdetails() {
       });
   }, []);
   const [blogdata, setBlogdata] = useState([]);
-  console.log("blogdata: ", blogdata);
   const [allproduct, setallproduct] = useState([]);
   const [expandedDescription, setExpandedDescription] = useState({});
   const [productIds, setProductIds] = useState([]);
 
-  console.log("productIds: ", productIds);
 
   const allProduct = async () => {
     try {
@@ -63,7 +60,6 @@ function PetshopBlogdetails() {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   const [wishlistData, setWishlistData] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
@@ -144,11 +140,8 @@ function PetshopBlogdetails() {
     if (filterData?.length > 0) {
       for (let index = 0; index < filterData?.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
@@ -291,9 +284,6 @@ function PetshopBlogdetails() {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -620,26 +610,7 @@ function PetshopBlogdetails() {
     }
   };
 
-  // const removeFromCart = async (selctId) => {
-  //   try {
-  //     const response = await axios
-  //       .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //         window.location.reload(false);
-  //       });
-  //     // if (response.data.success) {
-  //     //   setAddToCartProduct(
-  //     //     (prevData) => prevData.filter((item) => item.id !== id)
-  //     //     // refresh
-  //     //   );
-  //     //   window.location.reload(false);
-  //     //   console.log("Product removed from cart:", response.data);
-  //     // }
-  //   } catch (error) {
-  //     console.error("Error removing product from cart:", error);
-  //   }
-  // };
+
 
   const handleDeleteAddress = (id) => {
     axios
@@ -648,7 +619,6 @@ function PetshopBlogdetails() {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -665,7 +635,6 @@ function PetshopBlogdetails() {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
@@ -693,29 +662,7 @@ function PetshopBlogdetails() {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
-  // const finalPrice = parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount - disscountvalue.discount
-  //     : Amount + taxamound
-  // );
-  // {`${parseInt(
-  //   disscountvalue?.discount
-  //     ? Amount -
-  //         disscountvalue.discount +
-  //         taxamound
-  //     : Amount + taxamound
-  // )}`}
-  // const coupendisscount = (dis) => {
-  //   setcoupenCode(!coupencode);
-  //   localStorage.setItem("disconut", JSON.stringify(dis));
-  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-  //   console.log("disccount?????", dis);
-  // };
-  // const clearCoupon = () => {
-  //   setcoupenCode(!coupencode);
-  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
-  // };
+
   const [selectedInput, setSelectedInput] = useState("");
   function formatAddress(selectedAddress) {
     return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
@@ -728,14 +675,6 @@ function PetshopBlogdetails() {
     : "No address selected";
   // Buy now checkout code
   const handleSendRequest = async () => {
-    // const cartData = sendcartdata.map((item) => ({
-    //   product_id: item.item_id,
-    //   variation: item.variant,
-    //   price: item.price,
-    //   quantity: item.quantity,
-    //   tax_amount: taxamound,
-    //   discount_on_item: disscountvalue?.discount || "",
-    // }));
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
@@ -958,7 +897,6 @@ function PetshopBlogdetails() {
                       className="mb-4"
                       key={item[0]?.id}
                     >
-                      {console.log("itemmmhksdkn: ", item)}
                       <div
                         className="food-product"
                         onMouseEnter={() => handleMouseEnter(item[0]?.id)}
@@ -1215,35 +1153,16 @@ function PetshopBlogdetails() {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                              {/* <Col lg={3}> */}
-                              {/* <p>{`₹${productDetails.whole_price}`}</p> */}
-                              {/* <p>{`₹${wholesellervariationprice}`}</p> */}
-                              {/* {console.log(
-                          "productDetails?.variations?.price: ",
-                          productDetails?.variations?.price
-                        )} */}
                               {/* </Col> */}
                               <Col lg={4}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                              {/* <Col lg={5}>
-                        <h6>
-                          Your save
-                          {formattedSavedAmount >= 0
-                            ? "₹" + formattedSavedAmount
-                            : "No savings"}
-                        </h6>
-                      </Col> */}
                             </Row>
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        {console.log(
-                          "productDetails.brand_id: ",
-                          productDetails.brand_id
-                        )}
 
                         {productDetails ? (
                           <Table responsive>
@@ -1256,18 +1175,10 @@ function PetshopBlogdetails() {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              {/* <tr>
-                                <th>Health Condition</th>
-                                <td>{productDetails?.helthCondition_id}</td>
-                              </tr> */}
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
                               </tr>
-                              {/* <tr>
-                          <th>Item From</th>
-                          <td>Pellet</td>
-                        </tr> */}
                             </tbody>
                           </Table>
                         ) : (
@@ -1779,27 +1690,7 @@ function PetshopBlogdetails() {
                               ))}
                           </Row>
                         </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementbuynow}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantitybuynow}
-                                onChange={handleQuantityChangebuynow}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementbuynow}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div> */}
+                       
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -1844,28 +1735,11 @@ function PetshopBlogdetails() {
                           </div>
                         </div>
                       </Col>
-                      {/* <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col> */}
                     </Row>
                     <hr />
                   </Container>
                 </section>
-                {/* ) : (
-                  <section className="section-padding">
-                    <Container
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Row>
-                        <p>Cart is Empty</p>
-                      </Row>
-                    </Container>
-                  </section>
-                )} */}
+              
 
                 <Container>
                   <div className="needplace">
@@ -1877,7 +1751,6 @@ function PetshopBlogdetails() {
                               <h5>Sub Total</h5>
                             </Col>
                             <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
                               <h5>₹{parseInt(Amount)}</h5>
                             </Col>
                           </Row>
@@ -1966,66 +1839,9 @@ function PetshopBlogdetails() {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails?.description}</p>
-              {/* <form>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Variations</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => setVariation(e.target.value)}
-                    value={variation}
-                  >
-                    <option value="" disabled selected>
-                      Choose an option...
-                    </option>
-                    {productDetails?.variations &&
-                      productDetails?.variations.map((item) => (
-                        <option>{item.type}</option>
-                      ))}
-                  </select>{" "}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
-                <div className="Notify-Me">
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                    onClick={(e) => handleNotifymeSubmit(e)}
-                  >
-                    Notify Me When Available
-                  </button>
-                </div>
-              </form> */}
+             
               <Form onSubmit={handleNotifymeSubmit}>
-                {/* <Form.Group controlId="formVariations">
-        <Form.Label>Variations</Form.Label>
-        <Form.Control
-          as="select"
-          value={variation}
-          onChange={(e) => setVariation(e.target.value)}
-          required
-          isInvalid={!!variationError}
-        >
-          <option value="" disabled>
-            Choose an option...
-          </option>
-          {productDetails?.variations &&
-            productDetails?.variations.map((item, index) => (
-              <option key={index}>{item.type}</option>
-            ))}
-        </Form.Control>
-        {variationError && (
-          <div className="error-message">{variationError}</div>
-        )}
-      </Form.Group> */}
+              
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control
@@ -2104,18 +1920,6 @@ function PetshopBlogdetails() {
             <div className="modal-body">
               <div class="form-group">
                 <label>First Name</label>
-                {/* <input
-                  class="form-control"
-                  type="text"
-                  name="first_name"
-                  value={profileData.first_name || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      first_name: e.target.value.replace(/[^A-Za-z]/, ""),
-                    })
-                  }
-                /> */}
                 <input
                   className="form-control"
                   type="text"

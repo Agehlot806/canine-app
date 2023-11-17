@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Newheader from '../../directives/newheader';
+import PetShopHeader from "../../directives/petShopHeader";
 import { Container, Row, Col } from 'react-bootstrap'
 import shopbybrand from '../../assets/images/banner/shopbybrand.png'
 import axios from 'axios';
 import { BASE_URL } from '../../Constant/Index';
 import { Link, useParams } from 'react-router-dom';
-import Footer from '../../directives/footer';
+import Petshopfooter from "../../directives/petShop-Footer";
 import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopShopbybrandlist() {
@@ -40,7 +40,7 @@ function PetshopShopbybrandlist() {
 
     return (
         <>
-            <Newheader />
+            <PetShopHeader />
             {loading ? (
                 <section className="section-padding mt-3 mb-3">
                 <div className="loaderimg text-center text-black mb-4">
@@ -89,7 +89,7 @@ function PetshopShopbybrandlist() {
             </section>
                 </>
             )}
-            <Footer />
+            <Petshopfooter />
         </>
     )
 }

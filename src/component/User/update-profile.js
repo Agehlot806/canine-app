@@ -11,85 +11,10 @@ function Updateprofile() {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // const navigate = useNavigate();
-  // // const [uploadField, setUploadField] = useState([{image:""}])
-  // const [imageFile, setImageFile] = useState(null);
-  // const [imageUrl, setImageUrl] = useState({ image: "" } || null);
-
-  // const [profileData, setProfileData] = useState({
-  //   firstname: "",
-  //   lastname: "",
-  //   email: "", // Initialize with default value
-  //   phone: "", // Initialize with default value
-  //   image: "",
-  //   // Add more fields here as needed
-  // });
-  // console.log("profileData: ", profileData);
 
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
-  // useEffect(() => {
-  //   // Fetch profile data from the API
-  //   axios
-  //     .get(`https://canine.hirectjob.in/api/v1/auth/my_profile/${storedUserId}`)
-  //     .then((response) => {
-  //       if (response.data.status === "200") {
-  //         console.log("response.data:????? ", response.data);
-  //         setProfileData({
-  //           f_name: response.data.data[0].f_name,
-  //           l_name: response.data.data[0].l_name,
-  //           email: response.data.data[0].email, // Set email from response
-  //           phone: response.data.data[0].phone, // Set phone from response
-  //           image: response.data.data[0].image,
-  //           // Set other fields as needed
-  //         });
-  //         // Update the profileData state
-  //         if (profile.image) {
-  //           setImageUrl(profile.image);
-  //         }
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
-  // const addUploadFields = () => {
-  //   let newUpdloadField = {image:""}
-  //   setUploadFields([...uploadField, newUpdloadField]);
-  // };
-  // const removeUploadFields = (index) => {
-  //   let data = [...uploadField];
-  //   data.splice(index, 1);
-  //   setUploadFields(data)
-  // };
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setImageFile(file);
-
-  //     // Create a preview URL for the selected image
-  //     const previewUrl = URL.createObjectURL(file);
-  //     setImageUrl(previewUrl);
-  //   }
-  // };
-
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
-  //       profileData // Send the profileData object in the request
-  //     );
-  //     if (response.data.message === "Successfully updated!") {
-  //       navigate("/home");
-  //       console.log("Profile updated successfully!");
-  //       toast.success("Successfully updated!")
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+ 
 
   const [name, setname] = useState("");
   const [namel, setnamel] = useState("");
@@ -161,9 +86,6 @@ function Updateprofile() {
       });
   };
 
-  // setImagePhoto(true);
-  //       setStorephotofiles(event.target.files[0])
-  //       setFilePhoto(URL.createObjectURL(event.target.files[0]));
   return (
     <>
       <Newheader />

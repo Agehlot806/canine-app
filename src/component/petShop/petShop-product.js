@@ -87,7 +87,6 @@ function Petshopproduct(props) {
           (item) => item.module_id === 1
         );
         const reversedFilterDatashow = filterDatashow.slice().reverse();
-        console.log("reversedData", reversedFilterDatashow);
         setallproduct(reversedFilterDatashow);
         setSortOption("default");
       })
@@ -98,7 +97,6 @@ function Petshopproduct(props) {
   const [brandDropdownVisible, setBrandDropdownVisible] = useState(false);
   const [cateDropdownVisible, setCateDropdownVisible] = useState(false);
   const [brands, setBrands] = useState([]);
-  console.log("brands: ", brands);
   const [productTypeDropdownVisible, setProductTypeDropdownVisible] =
     useState(false);
   const [priceDropdownVisible, setPriceDropdownVisible] = useState(false);
@@ -177,9 +175,7 @@ function Petshopproduct(props) {
     axios
       .get(`https://canine.hirectjob.in/api/v1/auth/brand`)
       .then((response) => {
-        // console.log("responseresponse?????",response);
         setAllBrand(response.data.data);
-        // Perform any additional actions after successful deletion
       })
       .catch((error) => {
         console.log(error);
@@ -307,7 +303,6 @@ function Petshopproduct(props) {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   const salesmanId = localStorage.getItem("salesmanId");
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
   const [wishlistData, setWishlistData] = useState([]);
@@ -390,23 +385,18 @@ function Petshopproduct(props) {
         return ele.item_id === el.id;
       });
     });
-    console.log("filterData", filterData);
 
     if (filterData.length > 0) {
       for (let index = 0; index < filterData.length; index++) {
         const element = filterData[index];
-        console.log("element", element);
         const indexData = allproduct.map((ele) => ele.id).indexOf(element.id);
-        console.log("indexData", indexData);
         newArr[indexData].isFav = true;
-        console.log("newArrnewArr", newArr);
         setallproduct(newArr);
       }
     }
   };
   const addToWishlist = async (item_id) => {
     if (!storedWholesellerId) {
-      // If the user is not logged in, navigate to the login page
       navigate("/login");
       return; // Exit the function without adding to wishlist
     }
@@ -486,7 +476,6 @@ function Petshopproduct(props) {
     filterProducts();
   };
 
-  console.log("/////", selectedsubcateIds);
   const filterProducts = async (
     updatedBrandIds,
     updatedLifeIds,
@@ -517,8 +506,6 @@ function Petshopproduct(props) {
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
         products: cateidproduct,
       });
-      console.log("/////", filteredProducts);
-      console.log("======", products);
       setallproduct(filteredProducts);
     } catch (error) {
       console.error("Error:", error);
@@ -775,15 +762,7 @@ function Petshopproduct(props) {
   // ===============================================================
   const shippingpage = useNavigate("");
   const [quantitybuynow, setQuantitybuynow] = useState(1);
-  // const handleIncrementbuynow = () => {
-  //   setQuantitybuynow(quantitybuynow + 1);
-  // };
-  // const handleDecrementbuynow = () => {
-  //   if (quantitybuynow > 1) {
-  //     setQuantitybuynow(quantitybuynow - 1);
-  //   }
-  // };
-
+  
   const handleQuantityChangebuynow = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
     if (!isNaN(newQuantity)) {
@@ -965,7 +944,6 @@ function Petshopproduct(props) {
       .then((Response) => Response.json())
       .then((Response) => {
         setStateall(Response?.data ? Response?.data : []);
-        // console.log("99999999999999999999", Response);
       })
       .catch((error) => {
         console.error("ERROR FOUND---->>>>" + error);
@@ -978,7 +956,6 @@ function Petshopproduct(props) {
         headers: { "Content-Data": "multipart/form-data" },
       })
       .then((response) => {
-        // console.log("responseresponse", response);
         setStateallCity(response.data.data);
       })
       .catch((error) => {
@@ -994,27 +971,7 @@ function Petshopproduct(props) {
     }
   };
 
-  // const removeFromCart = async (selctId) => {
-  //   try {
-  //     const response = await axios
-  //       .delete(`${BASE_URL}/customer/wish-list/remove_product/${selctId}`)
-  //       .then((response) => {
-  //         console.log(response);
-  //         window.location.reload(false);
-  //       });
-  //     // if (response.data.success) {
-  //     //   setAddToCartProduct(
-  //     //     (prevData) => prevData.filter((item) => item.id !== id)
-  //     //     // refresh
-  //     //   );
-  //     //   window.location.reload(false);
-  //     //   console.log("Product removed from cart:", response.data);
-  //     // }
-  //   } catch (error) {
-  //     console.error("Error removing product from cart:", error);
-  //   }
-  // };
-
+ 
   const handleDeleteAddress = (id) => {
     axios
       .delete(
@@ -1022,7 +979,6 @@ function Petshopproduct(props) {
       )
       .then((response) => {
         toast.success("Address deleted successfully");
-        // console.log("Address deleted successfully:", response.data.message);
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
@@ -1039,7 +995,6 @@ function Petshopproduct(props) {
         "https://canine.hirectjob.in/api/v1/customer/address/update",
         profileData // Send the updated profileData in the request body
       );
-      // console.log("response in edit", response);
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
@@ -1083,7 +1038,6 @@ function Petshopproduct(props) {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
-    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
@@ -1252,8 +1206,6 @@ function Petshopproduct(props) {
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymeData", notifymeData);
 
     // Send a request
     axios
@@ -2041,10 +1993,7 @@ function Petshopproduct(props) {
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        {console.log(
-                          "productDetails.brand_id: ",
-                          productDetails.brand_id
-                        )}
+                        
 
                         {productDetails ? (
                           <Table responsive>
@@ -2057,18 +2006,12 @@ function Petshopproduct(props) {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              {/* <tr>
-                                <th>Health Condition</th>
-                                <td>{productDetails?.helthCondition_id}</td>
-                              </tr> */}
+                             
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
                               </tr>
-                              {/* <tr>
-                          <th>Item From</th>
-                          <td>Pellet</td>
-                        </tr> */}
+                              
                             </tbody>
                           </Table>
                         ) : (

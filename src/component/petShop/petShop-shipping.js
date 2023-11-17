@@ -18,9 +18,7 @@ import loadinggif from "../../assets/images/video/loading.gif";
 function PetshopShipping() {
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   const storedFormattedAddress = localStorage.getItem("formattedAddress");
-  console.log("storedFormattedAddress: ", storedFormattedAddress);
   const { mobile } = storedFormattedAddress || {};
   // ----------------------------------------
   const navigate = useNavigate();
@@ -36,7 +34,6 @@ function PetshopShipping() {
       });
   }, []);
   const { id } = useParams();
-  console.log("idd: ", typeof id);
   const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
 
@@ -201,12 +198,7 @@ function PetshopShipping() {
                     <div className="order-details">
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
-                          console.log("Desired ID:", id);
-                          console.log("Item ID:", item.id);
-                          // Convert item.created_at to a JavaScript Date object
                           const createdDate = new Date(item.created_at);
-
-                          // Calculate the 7th day date after item.created_at
                           const seventhDayDate = new Date(createdDate);
                           seventhDayDate.setDate(createdDate.getDate() + 7);
 

@@ -579,7 +579,7 @@ a {
 }
 
 .Brand-cus {
-  /* background: #fff1a6; */
+  width: 100%;
   border-radius: 20px;
   text-align: center;
   height: 100%;
@@ -4306,4 +4306,16 @@ li.cardpay a img {
 }
 .dash-tabs .nav {
   justify-content: center;
+}
+
+.testimonial-card {
+    background: linear-gradient( 180deg, #c6ecfc 0%, rgba(198, 236, 252, 0.43) 100% );
+    padding: 20px;
+    height: 100%;
+    border-radius: 15px;
+}
+.testimonial-card h3 {
+  font-size: 20px;
+  text-transform: capitalize;
+  font-weight: 600;
 }

@@ -19,13 +19,9 @@ import loadinggif from "../../assets/images/video/loading.gif";
 
 function PetshopAddCart() {
   const { id } = useParams();
-  console.log("id", id);
-  // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(0);
   const [minOrder, setMinOrder] = useState(0);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
-  console.log("addToCartProduct: ", addToCartProduct);
-  // const [customer_id, setcustomer_id] = useState("");
   const salesmanId = localStorage.getItem("salesmanId");
   const [coupencode, setcoupenCode] = useState(false);
   const [couponlist, setcouponlist] = useState([]);
@@ -44,7 +40,6 @@ function PetshopAddCart() {
   // ************************
   // let wholesellervariationprice = 0;
   let itemQty = addToCartProduct[0]?.quantity;
-  console.log("itemQty: ", itemQty);
   // if (addToCartProduct && addToCartProduct.length > 0) {
   //   itemQty = addToCartProduct[0].quantity;
   // }
@@ -53,18 +48,14 @@ function PetshopAddCart() {
     setGetQuantityValue();
   };
   let originalPrice = 0;
-  console.log("originalPrice: ", originalPrice);
 
   const updatedPrice = originalPrice * 0.05;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
-    console.log("elll: ", el);
     let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
   const taxamound = Math.floor(originalPrice * 0.05);
-  console.log("allPrice: ", originalPrice);
-  // console.log("taxamound: ", taxamound);
   const [selectedValue, setSelectedValue] = useState(0);
   const handleRadioButton = (event) => {
     setSelectedValue(parseInt(event.target.value, 10));
@@ -72,7 +63,6 @@ function PetshopAddCart() {
 
   const shippingpage = useNavigate("");
   // const [itemQty, setItemQty] = useState(second);
-  // console.log("itemQty: ", itemQty);
   const [sendcartdata, setSandCartData] = useState([]);
 
   const handleSendRequest = async () => {
@@ -413,7 +403,6 @@ function PetshopAddCart() {
   };
 
   const [selectedCity, setSelectedCity] = useState("");
-  console.log("selectedCity: ", selectedCity);
   const GetdataAll = async (e) => {
     var headers = {
       Accept: "application/json",
@@ -611,7 +600,6 @@ function PetshopAddCart() {
   // ============================================================
 
   const [profileData, setProfileData] = useState({});
-  console.log("profileData: ", profileData);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -686,13 +674,10 @@ function PetshopAddCart() {
 
   // ===============================================================
   // ===============================================================
-  console.log("id", id);
   // const location = useLocation();
   // const state = location.state;
-  // console.log("state: ", state);
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
 
   const [addresslist, setAddressList] = useState([]);
@@ -820,7 +805,6 @@ function PetshopAddCart() {
               {addToCartProduct && addToCartProduct.length > 0 ? (
                 addToCartProduct.map((item, index) => (
                   <Container>
-                    {console.log("item.variant: ", item.variant)}
                     <Row>
                       <Col lg={2} sm={2}>
                         <img
@@ -836,8 +820,7 @@ function PetshopAddCart() {
                         className="align-self-center addCARThead"
                       >
                         <h2>{item.item_name}</h2>
-                        {/* <p>Selected Variant: {item.variant}</p>
-                    {console.log("item.variant",item.variant)} */}
+                        {/* <p>Selected Variant: {item.variant}</p> */}
                         {
                           item.variant ? (
                             <p>{`Selected Variant: ${item.variant

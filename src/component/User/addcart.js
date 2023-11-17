@@ -26,7 +26,6 @@ function Addcart() {
   // const location = useLocation();
   // const params = new URLSearchParams(location.search);
   // const goWithBuyNow = params.get('gowithbuynow');
-  console.log("id", id);
   // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(1);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
@@ -41,7 +40,6 @@ function Addcart() {
       ? Number(localStorage.getItem("UserWholesellerId"))
       : localStorage.getItem("userInfo");
   const { cart, dispatch } = useCartWithoutLogin();
-  console.log("addToCartProduct", addToCartProduct);
 
   useEffect(() => {
     if (customerLoginId !== null) {
@@ -137,22 +135,16 @@ function Addcart() {
     //   originalPrice = allPrice;
     // });
     addToCartProduct.forEach((el) => {
-      console.log("ell: ", el);
       let allPrice = parseInt(el.price) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   }
   const taxamound = Math.floor(originalPrice * 0.05);
-  console.log("allPrice: ", originalPrice);
-  console.log("taxamound: ", taxamound);
   // let totalPrice = parseInt(originalPrice + originalPrice * 0.05);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     setTotalPrice(originalPrice + originalPrice * 0.05);
   }, [originalPrice]);
-  console.log("totalPrice: ", totalPrice);
-  // let itemQuantity = item.quantity;
-  // console.log("itemQuantity: ", itemQuantity);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -226,7 +218,6 @@ function Addcart() {
 
   const [sendcartdata, setSandCartData] = useState([]);
   const [variantStockCount, setVariantStockCount] = useState([]);
-  console.log("variantStockCount: ", variantStockCount);
   const [dataLength, setDataLength] = useState(0);
 
   const addToCartData = async () => {
@@ -424,7 +415,6 @@ function Addcart() {
         console.log(error);
       });
   };
-  console.log("address list", addresslist);
 
   const handleDeleteAddress = (id) => {
     axios
@@ -448,7 +438,6 @@ function Addcart() {
   const [profileData, setProfileData] = useState({});
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
-  console.log("couponPrice: ", disscountvalue);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -535,8 +524,6 @@ function Addcart() {
     notifymePostData.append("item_id", "");
     notifymePostData.append("order_id", "");
 
-    console.log("productDetails.id: ", productDetails?.id);
-    console.log("notifymePostData", notifymePostData);
 
     // Send a request
     axios
@@ -584,9 +571,6 @@ function Addcart() {
   const storedFormattedAddress = localStorage.getItem("formattedAddress");
 
   // // Use the stored formatted address
-  console.log("Stored Address:", storedFormattedAddress);
-
-  console.log("disscountvalue", disscountvalue);
   // const coupendisscount = (dis) => {
   //   setcoupenCode(!coupencode);
   //   localStorage.setItem("disconut", JSON.stringify(dis));

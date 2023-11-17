@@ -8,45 +8,17 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import toast, { Toaster } from "react-hot-toast";
 
 function PetshopUpdateprofile() {
-  // const [uploadField, setUploadField] = useState([{image:""}])
   const navigator = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
-  // const [imageFile, setImageFile] = useState(null);
-  // const [imageUrl, setImageUrl] = useState({ image: "" } || null);
-  // console.log(imageUrl);
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
 
-  // const [profileData, setProfileData] = useState({
-  //   f_name: "",
-  //   l_name: "",
-  //   email: "",
-  //   phone: "",
-  //   image: "",
-
-  // });
-  // console.log("profileData: ", profileData);
   const [name, setname] = useState("");
   const [namel, setnamel] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [imgage, setimgage] = useState("");
-  // useEffect(()=>{
-  //   axios.get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
-  //   .then((response)=>{
-
-  //     console.log("===========>>>>>>>>> ", response.data);
-  //       setname(response.data.data[0].f_name)
-  //       setnamel(response.data.data[0].l_name)
-  //       setemail(response.data.data[0].email)
-  //       setphone(response.data.data[0].phone)
-  //       setimgage(response.data.data[0].image)
-
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
-  // },[]);
+ 
   const getWholesellerProfile = () => {
     axios
       .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
@@ -103,7 +75,6 @@ function PetshopUpdateprofile() {
   const salesmanId = localStorage.getItem("salesmanId");
   // storedWholesellerId
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
-  console.log("storedWholesellerId: ", storedWholesellerId);
   // ----------------------------------------
   useEffect(() => {
     if (loginType == "salesman") {
@@ -116,51 +87,10 @@ function PetshopUpdateprofile() {
     toast.success("Successfully updated!");
   };
 
-  // const getWholesellerProfile = async () => {
-
-  //   await axios
-  //     .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
-  //     .then((response) => {
-  //       if (response.data.status === "200") {
-  //         console.log("response.data: ", response.data);
-  //         setProfileData({
-  //           f_name: response.data.data[0].f_name,
-  //           l_name: response.data.data[0].l_name,
-  //           email: response.data.data[0].email,
-  //           phone: response.data.data[0].phone,
-  //           image: response.data.data[0].image,
-
-  //         });
-
-  //         if (profile.image) {
-  //           setImageUrl(profile.image);
-  //         }
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
+ 
 
   const getSalesmanProfile = async () => {
-    // await axios
-    //   .get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
-    //   .then((response) => {
-    //     if (response.data.status === "200") {
-    //       console.log("response.data: ", response.data);
-    //       setProfileData({
-    //         f_name: response.data.data[0].f_name,
-    //         l_name: response.data.data[0].l_name,
-    //         email: response.data.data[0].email,
-    //         phone: response.data.data[0].phone,
-    //         image: response.data.data[0].image,
-
-    //       });
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    
     axios
       .get(`${BASE_URL}/auth/delivery-man/deliveryman_profile/${salesmanId}`)
       .then((response) => {
@@ -177,53 +107,10 @@ function PetshopUpdateprofile() {
       });
   };
 
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   setProfileData({
-  //     ...profileData,
-  //     image: e.target.files[0],
-  //   });
-  //   if (file) {
-  //     setImageFile(file);
-
-  //     const previewUrl = URL.createObjectURL(file);
-  //     setImageUrl(previewUrl);
-  //   }
-  // };
-
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "https://canine.hirectjob.in/api/v1/auth/update-profile",
-  //       profileData
-  //     );
-  //     if (response.data.message === "Successfully updated!") {
-  //       navigator("/petShop-home");
-  //       console.log("Profile updated successfully!");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+ 
 
   const handleSalesmanUpdate = async (e) => {
-    // e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("f_name", profileData.f_name);
-    // formData.append("l_name", profileData.l_name);
-    // formData.append("email", profileData.email);
-    // formData.append("image", profileData.image);
-    // formData.append("phone", profileData.phone);
-    // await axios
-    //   .post(`${BASE_URL}/auth/delivery-man/deliveryman_update`, formData)
-    //   .then((res) => {
-    //     console.log("res in profile", res);
-    //     navigator("/salesman-dashboad");
-    //   })
-    //   .catch((error) => {
-    //     console.log("error in profile", error);
-    //   });
+   
     e.preventDefault();
     var formData = new FormData();
     // formData.append('username', username);
@@ -342,15 +229,7 @@ function PetshopUpdateprofile() {
                       type="tel"
                       maxLength={10}
                       disabled={loginType == "salesman" ? true : false}
-                      // value={profileData.phone || ""}
-                      // onChange={(e) =>
-                      //   setProfileData({
-                      //     ...profileData,
-                      //     phone: e.target.value
-                      //       .replace(/\D/g, "")
-                      //       .substring(0, 10),
-                      //   })
-                      // }
+                      
                       value={phone}
                       onChange={(e) => setphone(e.target.value)}
                     />
@@ -359,36 +238,8 @@ function PetshopUpdateprofile() {
                     <Form.Label>
                       Upload Image<span style={{ color: "#008efd" }}>*</span>
                     </Form.Label>
-                    {/* <Form.Control type="file" onChange={handleImageUpload} />
-                    {imageUrl.image !== null && imageUrl.image !== "" ? (
-                      <div className="image-preview">
-                        <img src={imageUrl} alt="Uploaded" />
-                        <Button
-                          variant="danger"
-                          size="sm"
-                          onClick={() => {
-                            setImageFile(null);
-                            setImageUrl("");
-                          }}
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="image-preview">
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/public/delivery-man/" +
-                            profileData.image
-                          }
-                          alt="profile"
-                        />
-                      </div>
-                    )} */}
+                   
                     <Form.Control type="file" onChange={halderimage} />
-                    {/* <img src={
-                     loginType == "salesman" ? "https://canine.hirectjob.in//storage/app/public/delivery-man/" + imgage : "https://canine.hirectjob.in//storage/app/public/profile/" + imgage
-                      } alt='' /> */}
                     {selectedImage ? (
                       <img
                         src={selectedImage}

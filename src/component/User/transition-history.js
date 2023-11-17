@@ -109,7 +109,6 @@ const Transitionhistory = () => {
                             <p style={{ color: "red" }}>Cash on Delivery</p>
                           )}
                         </Col>
-                        {console.log("transaction: ", transaction)}
                       </Row>
                     ))}
                   </div>

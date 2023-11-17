@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Newheader from '../../directives/newheader';
+import PetShopHeader from "../../directives/petShopHeader";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import shopbybrand from '../../assets/images/banner/shopbybrand.png'
 import brand1 from "../../assets/images/img/brand1.png";
@@ -9,7 +9,7 @@ import brandPro1 from "../../assets/images/img/brandPro1.png";
 import brandPro2 from "../../assets/images/img/brandPro2.png";
 import brandPro3 from "../../assets/images/img/brandPro3.png";
 import { BASE_URL } from '../../Constant/Index'
-import Footer from '../../directives/footer'
+import Petshopfooter from "../../directives/petShop-Footer";
 import axios from 'axios';
 import catpng from "../../assets/images/img/catpng.png";
 import bannerPro from "../../assets/images/img/bannerPro.png";
@@ -58,12 +58,9 @@ function PetShopShopbybrand() {
             // Handle error as needed
         }
     };
-    console.log("====================================");
-    console.log(brands);
-    console.log("====================================");
     return (
         <>
-            <Newheader />
+            <PetShopHeader />
             {loading ? (
                 <section className="section-padding mt-3 mb-3">
                 <div className="loaderimg text-center text-black mb-4">
@@ -142,7 +139,7 @@ function PetShopShopbybrand() {
             </section>
                 </>
             )}
-            <Footer />
+            <Petshopfooter />
         </>
     )
     
