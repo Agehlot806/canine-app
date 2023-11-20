@@ -72,6 +72,8 @@ function Petshopheader(props) {
         localStorage.removeItem("salesmanPhone");
         localStorage.removeItem("UserWholesellerId");
         localStorage.removeItem("wholeSellerId");
+        localStorage.removeItem("wallet_balance");
+        localStorage.removeItem("wishlist_undefined");
         localStorage.removeItem("WholesellerEmail");
         localStorage.removeItem("WholesellerPassword");
         localStorage.removeItem("verifiedId");

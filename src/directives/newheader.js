@@ -152,8 +152,11 @@ function Newheader(props) {
         navigate("/", { replace: true });
         localStorage.removeItem("userInfo");
         localStorage.removeItem("loginType");
+        localStorage.removeItem("wallet_balance");
+        localStorage.removeItem("wishlist_undefined");
         localStorage.removeItem("phone");
         localStorage.removeItem("otp");
+        localStorage.removeItem("zoneId");
         console.log("Logged out user with ID: ", customer_id);
         setStoredUserId(null); // Reset the storedUserId state
         toast.success("Your user ID logout has been successful.");
@@ -299,18 +302,7 @@ function Newheader(props) {
       .delete(`${BASE_URL}/items/notify_delete/${id}`)
       .then((response) => {
         toast.success("Notification deleted successfully");
-
-        const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
-        setNotify(updatedNotify);
-        // if (response.status === 200 || response.status === 204) {
-        //   toast.success("Notification deleted successfully");
-
-        //     const updatedNotify = prevNotify?.filter((ob) => ob.id !== id);
-        //     setNotify(updatedNotify);
-
-        // } else {
-        //   console.error("Unexpected response status:", response.status);
-        // }
+        setDataZero((prevData) => prevData.filter((item) => item.id !== id));
       })
       .catch((error) => {
         console.error("Error deleting Notification:", error);

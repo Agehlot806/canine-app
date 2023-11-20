@@ -144,7 +144,7 @@ function PetshopproductDetails() {
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
     axios
-      .post(`${BASE_URL}/items/notify/2`, notifymeData)
+      .post(`${BASE_URL}/items/notify`, notifymeData)
       .then((response) => {
         toast.success("Your data Successfully Add");
       })
