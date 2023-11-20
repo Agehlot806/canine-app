@@ -49,6 +49,7 @@ function PetshopSignUp() {
   const [zonedata, setZonedata] = useState([]);
   const [stateallCity, setStateallCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
+  console.log("selectedCity",selectedCity);
   const [isPasswordValid, setIsPasswordValid] = useState(true); // State to track password validity
   const [hasSpecialCharacter, setHasSpecialCharacter] = useState(true); // State to track presence of a special character
   const [city, setcity] = useState("");
@@ -72,13 +73,17 @@ function PetshopSignUp() {
       !upload1 ||
       !upload2
     ) {
-      toast.error("Please fill in all required fields."); // Display error toast
+      toast.error("Please fill in all required fields."); 
       return;
     }
-    if (password.length < 8) {
-      setIsPasswordValid(false);
-      return;
-    }
+    // if (password.length < 8) {
+    //   setIsPasswordValid(false);
+    //   return;
+    // }
+    // if (!zonedata) {
+    //   toast.error("Please select a zone.");
+    //   return;
+    // }
     const WholesellerData = new FormData();
     WholesellerData.append("WholesellerEmail", email);
     WholesellerData.append("WholesellerPassword", email);
@@ -315,10 +320,13 @@ function PetshopSignUp() {
                                 onChange={Subscription}
                                 value={stateData}
                               >
+                                {console.log("state",stateData)}
                                 <option>State Choose...</option>
                                 {stateall.map((items) => (
-                                  <option value={items.id} key={items.id}>
+                                  <option value={`${items.id}`+" "+`${items.state_name}`} key={`${items.id}${items.state_name}`}>
+                                    {console.log("------------------>",`${items.id}-${items.state_name}`)}
                                     {items.state_name}
+
                                   </option>
                                 ))}
                               </select>
@@ -334,7 +342,7 @@ function PetshopSignUp() {
                               >
                                 <option value="">City Choose...</option>
                                 {stateallCity.map((items) => (
-                                  <option value={items.id} key={items.id}>
+                                  <option value={items.name} key={items.id}>
                                     {items.city_name}
                                   </option>
                                 ))}

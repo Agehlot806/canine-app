@@ -171,7 +171,7 @@ function Veterinaryservice() {
                 </Col>
                 <Col lg={6}>
                   <div className="contact-form">
-                    <h1>Pet Grooming Service</h1>
+                    <h4>Pet Health & Wellness Service</h4>
                     <Form>
                       <Form.Group className="mb-3" controlId="formGridAddress1">
                         <Form.Label>

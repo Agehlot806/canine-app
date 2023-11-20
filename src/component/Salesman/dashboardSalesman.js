@@ -125,6 +125,7 @@ function DashboadSalesman() {
     "linear-gradient(180deg,#ffead2 0%,rgba(255, 234, 210, 0.33) 100%)",
   ];
 
+
   return (
     <>
       <PetShopHeader type={"salesman"} />
@@ -319,25 +320,8 @@ function DashboadSalesman() {
                                                       " " +
                                                       item.l_name}
                                                   </h6>
-                                                  <a>
-                                                    <i className="fa fa-star" />
-                                                  </a>
-                                                  <a>
-                                                    <i className="fa fa-star" />
-                                                  </a>
-                                                  <a>
-                                                    <i className="fa fa-star" />
-                                                  </a>
-                                                  <a>
-                                                    <i className="fa fa-star" />
-                                                  </a>
-                                                  <a>
-                                                    <i className="fa fa-star" />
-                                                  </a>
-                                                  <p>
-                                                    1901 Thornridge Cir. Shiloh,
-                                                    Hawaii 81063
-                                                  </p>
+                                                  {/* <p>{item.city + "" + item.state + "" + item.pincode}</p> */}
+                                                  <p>{item.city + " " + item.state.substring(2) + " " + item.pincode}</p>
                                                 </div>
                                               </Col>
                                             </Row>

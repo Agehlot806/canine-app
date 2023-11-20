@@ -597,8 +597,9 @@ a {
 
 .brand-bg h5 {
   font-weight: 400;
-  font-size: 25px;
+  font-size: 20px;
   margin: 0;
+  text-transform: capitalize;
 }
 
 .brand-bg p {
@@ -1842,6 +1843,7 @@ a {
 /* service date page css */
 .Wholeseller-card {
   border-radius: 32.677px;
+  height: 100%;
 }
 
 .wholeseller-bg1 {

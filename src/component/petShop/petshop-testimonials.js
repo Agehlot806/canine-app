@@ -8,10 +8,11 @@ import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";
 
 const Petshoptestimonials = () => {
+  const [reviewlist, setreviewlist] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     Promise.all([
-      // fetchrefund()
+      allReview()
     ])
       .then(() => {
         setLoading(false);
@@ -21,6 +22,40 @@ const Petshoptestimonials = () => {
         setLoading(false);
       });
   }, []);
+
+  const allReview = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/items/get_happyreview`);
+      const data = await response.json();
+      const latestPosts = data.data.slice(0, 3);
+      const reversedPosts = latestPosts.reverse();
+      setreviewlist(reversedPosts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const happyCus = [
+    "linear-gradient(180deg, #C6ECFC 0%, rgba(198.30, 235.76, 251.81, 0.43) 100%)",
+    "linear-gradient(180deg, #EEEEFF 0%, rgba(238.43, 238.43, 255, 0.45) 100%)",
+    "linear-gradient(180deg, #FFEAD2 0%, rgba(255, 234.18, 210.37, 0.33) 100%)",
+  ];
+
+  const renderhappycus = (comment) => {
+    const maxCharacters = 15;
+
+    if (comment?.length <= maxCharacters) {
+      return <p>{comment}</p>;
+    }
+
+    const truncatedDescription = comment?.slice(0, maxCharacters);
+
+    return (
+      <>
+        <p>{truncatedDescription}.......</p>
+      </>
+    );
+  };
   return (
     <>
       <PetShopHeader />
@@ -41,58 +76,48 @@ const Petshoptestimonials = () => {
               <Row className="justify-content-center">
                 <Col lg={12}>
                   <h1 className='text-center'><strong>Testimonials</strong></h1>
+                  <div className="needplace">
                   <Row>
-                  <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Shalini Pandey</h3>
-                        <p>Canine products is awesome...!it has range of products n pet accessories...staffs are very helpful n understanding... whenever I seek extra advice on pet care they are always happy to help.</p>
+                {reviewlist.map((order, index) => (
+                  <Col lg={4} sm={6} key={order.id} className="mb-3">
+                    <div
+                      className="Brand-cus"
+                      style={{
+                        background: happyCus[index % happyCus.length],
+                      }}
+                    >
+                      <>
+                        <img
+                          src={
+                            "https://canine.hirectjob.in/storage/app/public/profile/" +
+                            order.user_id[0].image
+                          }
+                          alt={order.user_id[0].f_name}
+                        />
+                      </>
+                      <div className="brand-bg">
+                        {order.user_id && order.user_id.length > 0 && (
+                          <h5>
+                            {order.user_id[0].f_name} {order.user_id[0].l_name}
+                          </h5>
+                        )}
+                        <p>{order.comment}</p>
+                        <div className="icon-style">
+                          {Array.from({
+                            length: order.rating,
+                          }).map((_, index) => (
+                            <Link>
+                              <i className="fa fa-star" />
+                            </Link>
+                          ))}
+                        </div>
+                        {/* <Link>4.2/5</Link> */}
                       </div>
-                    </Col>
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Vansh Polanki</h3>
-                        <p>Really good service and staff</p>
-                      </div>
-                    </Col>
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>abhijit paradkar</h3>
-                        <p>One Stop For All Your Pets Need. Great Service - Ebrahim the owner is Humble and kind enough to give honest Suggestions...Must Visit</p>
-                      </div>
-                    </Col>
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Shubham Agarkar</h3>
-                        <p>Nicely organises events</p>
-                      </div>
-                    </Col>
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Rajiv Sundararaju</h3>
-                        <p>Wide variety of food and leashes for dogs and cats. They also have a pet stay and care zone</p>
-                      </div>
-                    </Col>
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Deblina Sen</h3>
-                        <p>An amazing place...it's a 100% one stop shop for pets...my pup's entire stuff are from here...the boarding/daycare facility is superb...every pet is so well taken care...good staff...you can trust them...it's a blessing in disguise for pet parents like us…</p>
-                      </div>
-                    </Col>
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Sachin Chand</h3>
-                        <p>Best pet shop in kandivali</p>
-                      </div>
-                    </Col>
-                    
-                    <Col lg={3} className="mb-4">
-                      <div className="testimonial-card">
-                        <h3>Avik Biswas</h3>
-                        <p>This is one of the best place to keep my pet! My pet loves the place. It is like his second home!</p>
-                      </div>
-                    </Col>
-                    
-                  </Row>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+              </div>
                 </Col>
               </Row>
             </Container>
