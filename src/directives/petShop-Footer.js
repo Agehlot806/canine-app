@@ -35,6 +35,22 @@ function Petshopfooter() {
                       </Link>
                     </li>
                     <li>
+                      <Link to="/petshop-privacy-security">
+                      Privacy & Security
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/petshop-terms-of-use">
+                      Terms of use
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/petshop-Returns-Replacements">
+                      Returns & Replacements
+                      </Link>
+                    </li>
+                    
+                    <li>
                       <Link to="/petshop-cancellation-policy">
                         {strings.trackYourOrder}
                       </Link>

@@ -126,7 +126,7 @@ function Addcart() {
   const priceWithoutCents = parseInt(updatedPrice);
   if (customerLoginId === null) {
     cart.forEach((el) => {
-      let allPrice = parseInt(el.price) + parseInt(originalPrice);
+      let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   } else {
@@ -747,7 +747,7 @@ function Addcart() {
                           xs={6}
                           className="align-self-center addCARThead"
                         >
-                          <h3>₹{formatPrice(item.price)}</h3>
+                          <h3>₹{formatPrice(item.price) * item.quantity}</h3>
 
                           <div className="quantity-btn">
                             {/* <button onClick={() => handleDecrementone(index)}>

@@ -6,6 +6,7 @@ import axios from 'axios';
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from '../../directives/petShop-Footer';
 
+
 function PetshopPrivacypolicy() {
   const [privacyPolicy, setPricacyPolicy] = useState([]);
   useEffect(() => {

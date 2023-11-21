@@ -711,9 +711,9 @@ function Petshopdashboard() {
                   <Row className="justify-content-center">
                     <Col lg={8}>
                       <div className="balance-card">
-                        <h5>Current Balance</h5>
-                        <h1>₹{parseInt(walletBalance)}</h1>
-                        <div class="input-group">
+                        <h5>Remaning Balance</h5>
+                        <h1>{parseInt(totalUnpaidAmount)}</h1>
+                        {/* <div class="input-group">
                           <div class="input-group-prepend">
                             <div class="input-group-text">₹</div>
                           </div>
@@ -728,7 +728,7 @@ function Petshopdashboard() {
                         </div>
                         <Button onClick={() => handlePayment()}>
                           + Add Balance
-                        </Button>
+                        </Button> */}
                       </div>
                     </Col>
                   </Row>

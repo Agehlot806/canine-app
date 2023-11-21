@@ -108,6 +108,12 @@ import Cancellationpolicy from "./component/User/cancellation-policy";
 import Petshopcancellationpolicy from "./component/petShop/petshop-cancellationpolicy";
 import TermsAndConditions from "./component/User/terms&conditions";
 import PetshopTermsAndConditions from "./component/petShop/petShop-TermsAndConditions";
+import Privacysecurity from "./component/User/privacy-security";
+import ReturnsReplacements from "./component/User/Returns-Replacements";
+import Termsofuse from "./component/User/Terms-of-use";
+import PetshopPrivacysecurity from "./component/petShop/petshop-privacy-security";
+import PetshopTermsofuse from "./component/petShop/petshop-Terms-of-use";
+import PetshopReturnsReplacements from "./component/petShop/petshop-Returns-Replacements";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -179,6 +185,9 @@ const UsersRoutes = () => {
       {/* user flow links footer */}
       <Route path="/delivery-details" element={<Deliverydetails />} />
       <Route path="/return-policy" element={<Returnpolicy />} />
+      <Route path="/privacy-security" element={<Privacysecurity />} />
+      <Route path="/returns-replacements" element={<ReturnsReplacements />} />
+      <Route path="/terms-of-use" element={<Termsofuse />} />
       {/* <Route path="/terms-of-use" element={<Termsofuse />} /> */}
       <Route path="/privacy-policy" element={<Privacypolicy />} />
       <Route path="/disclaimer" element={<Disclaimer />} />
@@ -272,6 +281,9 @@ const WholesalerRoutes = () => {
       {/*======================== Pet shop flow start routing======================*/}
 
       {/*======================== Pet shop Footer start ========================*/}
+      <Route path="/petshop-privacy-security" element={<PetshopPrivacysecurity />} />
+      <Route path="/petshop-terms-of-use" element={<PetshopTermsofuse />} />
+      <Route path="/petshop-Returns-Replacements" element={<PetshopReturnsReplacements />} />
       <Route path="/petshopfooter" element={<Petshopfooter />} />
       <Route
         path="/petshopdeliverydetails"
@@ -418,6 +430,9 @@ const App = () => {
             <Route path="/blog-details/:id" element={<Blogdetails />} />
             <Route path="/update-profile" element={<Updateprofile />} />
             {/* user flow links footer */}
+            <Route path="/privacy-security" element={<Privacysecurity />} />
+            <Route path="/terms-of-use" element={<Termsofuse />} />
+            <Route path="/returns-replacements" element={<ReturnsReplacements />} />
             <Route path="/delivery-details" element={<Deliverydetails />} />
             <Route path="/return-policy" element={<Returnpolicy />} />
             <Route path="/terms-&-conditions" element={<TermsAndConditions />} />
@@ -521,6 +536,9 @@ const App = () => {
             {/*======================== Pet shop flow start routing======================*/}
 
             {/*======================== Pet shop Footer start ========================*/}
+            <Route path="/petshop-privacy-security" element={<PetshopPrivacysecurity />} />
+            <Route path="/petshop-terms-of-use" element={<PetshopTermsofuse />} />
+            <Route path="/petshop-Returns-Replacements" element={<PetshopReturnsReplacements />} />
             <Route path="/petshopfooter" element={<Petshopfooter />} />
             <Route
               path="/petshopdeliverydetails"

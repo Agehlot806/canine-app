@@ -28,7 +28,7 @@ function Footer() {
             <Row>
               <Col lg={3} sm={6}>
                 <div className="footer-list">
-                  <h5>{strings.usefulLinks}</h5>
+                  <h5>Customer Services</h5>
                   <ul>
                     <li>
                       <Link to="/delivery-details">
@@ -40,11 +40,27 @@ function Footer() {
                         {strings.trackYourOrder}
                       </Link>
                     </li>
+                    
+                    <li>
+                      <Link to="/privacy-security">
+                      Privacy & Security
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/returns-replacements">
+                      Returns & Replacements
+                      </Link>
+                    </li>
                     <li>
                       <Link to="/return-policy">Return Policy</Link>
                     </li>
                     <li>
                       <Link to="/terms-&-conditions">{strings.termsConditions}</Link>
+                    </li>
+                    <li>
+                    <Link to="/terms-of-use">
+                    Terms of use
+                      </Link>
                     </li>
                     <li>
                       <Link to="/offers-details">Top Offers</Link>
@@ -62,9 +78,9 @@ function Footer() {
                     <li>
                       <Link to="/contact">{strings.contactUs}</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="/service">Customer Services</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link to="/blog">{strings.blog}</Link>
                     </li>

@@ -334,6 +334,10 @@ function Productdetail() {
     ? selectedVariantPrice -
       (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
+    // with outlogin
+    const calculatedPriceW = selectedVariantPrice
+    ? selectedVariantPrice
+    : productDetails?.price;
   // const savedAmount = (
   //   productDetails.price * quantity -
   //   (productDetails.price * quantity * productDetails.discount) / 100
@@ -696,7 +700,9 @@ function Productdetail() {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price: Amount,
+      price:  calculatedPrice === 0
+      ? parseInt(productDetails?.price) * quantity
+      : parseInt(calculatedPrice),
       quantity: quantity,
       tax_amount: taxamound,
       discount_on_item: disscountvalue?.discount || "",
@@ -1197,7 +1203,9 @@ function Productdetail() {
                         payload: {
                           item_id: productDetails.id,
                           variant: selectedVariant,
-                          price: productDetails?.price,
+                          price:  calculatedPrice === 0
+              ? parseInt(productDetails?.price) * quantity
+              : parseInt(calculatedPrice),
                           quantity: quantity,
                           name: productDetails.name,
                           image: productDetails.image,
