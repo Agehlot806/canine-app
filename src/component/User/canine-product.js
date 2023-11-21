@@ -22,6 +22,7 @@ import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
 import loadinggif from "../../assets/images/video/loading.gif";
+import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 
 const clinetreview = {
   desktop: {
@@ -847,6 +848,16 @@ function Canineproduct(props) {
       setIsFormValid(true);
     }
   };
+
+
+   // without signup add cart start
+   const loginType = localStorage.getItem("loginType");
+   const customerLoginId =
+     loginType === "wholeseller"
+       ? Number(localStorage.getItem("UserWholesellerId"))
+       : localStorage.getItem("userInfo");
+   const { cart, dispatch } = useCartWithoutLogin();
+   // without signup add cart end
 
   const [selectedCity, setSelectedCity] = useState("");
   const GetdataAll = async (e) => {
@@ -2061,17 +2072,49 @@ function Canineproduct(props) {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      <Button>
-                        <Link
-                          to={`/add-cart/${productDetails.id}`}
-                          onClick={handleAddToCart}
-                        >
-                          <i className="fa fa-shopping-bag" /> Add to cart
-                        </Link>
-                        <p>{addToCartStatus}</p>
-                      </Button>
+                      {customerLoginId === null ? (
+                        <Button data-dismiss="modal">
+                          {/* <Button> */}
+                          <Link
+                            onClick={() => {
+                              const filterData = cart.filter((el) => {
+                                return el.item_id === productDetails.id;
+                              });
+                              if (filterData?.length > 0) {
+                                toast.error("Already in added");
+                              } else {
+                                dispatch({
+                                  type: "ADD_TO_CART",
+                                  payload: {
+                                    item_id: productDetails.id,
+                                    variant: selectedVariant,
+                                    price: formattedAmount,
+                                    quantity: quantity,
+                                    name: productDetails.name,
+                                    image: productDetails.image,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${productDetails.id}`}
+                            onClick={handleAddToCart}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">

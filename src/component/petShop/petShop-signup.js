@@ -134,6 +134,9 @@ function PetshopSignUp() {
           } else {
             navigate("/petshop-login");
           }
+        }else if (response.data.status === "201") {
+          console.log("Registration received status 201");
+          toast.error("Registration error")
         }
       })
       .catch((error) => {

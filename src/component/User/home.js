@@ -2104,6 +2104,7 @@ function Home(props) {
                       </div>
                     </Col>
                   </Row>
+                  
                   {/* without sign in quick view add cart */}
                   {productDetails?.stock &&
                   productDetails?.stock?.length !== 0 ? (
