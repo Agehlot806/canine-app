@@ -250,10 +250,7 @@ function Petshopheader(props) {
       .then((response) => {
         if (response.status === 200 || response.status === 204) {
           toast.success("Notification deleted successfully");
-          setNotify((prevNotify) => {
-            const updatedNotify = prevNotify.filter((ob) => ob.id !== id);
-            return updatedNotify;
-          });
+          setDataZero((prevData) => prevData.filter((item) => item.id !== id));
         } else {
           console.error("Unexpected response status:", response.status);
         }
