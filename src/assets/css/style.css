@@ -1328,7 +1328,9 @@ a {
 }
 
 .order-card button {
-  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%) / 300% no-repeat, #f1c21b;
+  background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
+      var(--_p, 100%) / 300% no-repeat,
+    #f1c21b;
   color: #fff;
   border: none;
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
@@ -2280,9 +2282,9 @@ a.placDate {
   border: none;
   border-radius: 50px;
   background: #fc0;
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
+  width: 150px;
+  font-size: 17px;
+  margin: 4px !important;
 }
 
 .payment-done button a {
@@ -4294,13 +4296,12 @@ li.cardpay a img {
   padding: 6px 0;
 }
 
-
 .addCARThead h2 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .share-btn {
-    float: left;
+  float: left;
 }
 .share-btn i {
   color: #2f2f2f;
@@ -4312,10 +4313,14 @@ li.cardpay a img {
 }
 
 .testimonial-card {
-    background: linear-gradient( 180deg, #c6ecfc 0%, rgba(198, 236, 252, 0.43) 100% );
-    padding: 20px;
-    height: 100%;
-    border-radius: 15px;
+  background: linear-gradient(
+    180deg,
+    #c6ecfc 0%,
+    rgba(198, 236, 252, 0.43) 100%
+  );
+  padding: 20px;
+  height: 100%;
+  border-radius: 15px;
 }
 .testimonial-card h3 {
   font-size: 20px;

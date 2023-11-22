@@ -51,7 +51,9 @@ function Addcart() {
   // const firstDiscount = couponlist.length > 0 ? couponlist[0] : null;
   // const firstDiscountTitle = firstDiscount ? firstDiscount.title : "";
   // const firstDiscountAmount = firstDiscount ? firstDiscount.discount : "";
-
+  const paymentclose = () => {
+    setSelectedInput(null);
+  };
   const handleRadioChange = (event) => {
     setSelectedInput(event.target.checked);
   };
@@ -73,15 +75,6 @@ function Addcart() {
 
   const handlePayment = async () => {
     try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
       await loadRazorpayScript();
 
       const options = {
@@ -126,7 +119,8 @@ function Addcart() {
   const priceWithoutCents = parseInt(updatedPrice);
   if (customerLoginId === null) {
     cart.forEach((el) => {
-      let allPrice = parseInt(el.orderamountwithquantity) + parseInt(originalPrice);
+      let allPrice =
+        parseInt(el.orderamountwithquantity) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   } else {
@@ -135,7 +129,7 @@ function Addcart() {
     //   originalPrice = allPrice;
     // });
     addToCartProduct.forEach((el) => {
-      let allPrice = parseInt(el.price) + parseInt(originalPrice);
+      let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   }
@@ -153,7 +147,6 @@ function Addcart() {
       // itemQuantity = newQuantity;
     }
   };
-
   const handleIncrementone = (index) => {
     const updatedCart = [...addToCartProduct];
     const updatedSendCart = [...sendcartdata];
@@ -165,14 +158,14 @@ function Addcart() {
       toast.error("Stock not avilable");
     } else {
       updatedCart[index].quantity += 1;
-      updatedCart[index].price +=
-        updatedCart[index].price / (updatedCart[index].quantity - 1);
+      // updatedCart[index].price +=
+      //   updatedCart[index].price * (updatedCart[index].quantity - 1);
 
       updatedSendCart[index].quantity += 1;
 
       // Calculate the new price with tax included
-      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-      updatedSendCart[index].price = priceWithTax;
+      // const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      // updatedSendCart[index].price = priceWithTax;
     }
 
     setAddToCartProduct(updatedCart);
@@ -183,6 +176,35 @@ function Addcart() {
       Number(variantStockCount[index].total_quantity)
     );
   };
+  // const handleIncrementone = (index) => {
+  //   const updatedCart = [...addToCartProduct];
+  //   const updatedSendCart = [...sendcartdata];
+
+  //   if (
+  //     updatedCart[index].quantity ===
+  //     Number(variantStockCount[index].total_quantity)
+  //   ) {
+  //     toast.error("Stock not avilable");
+  //   } else {
+  //     updatedCart[index].quantity += 1;
+  //     updatedCart[index].price +=
+  //       updatedCart[index].price / (updatedCart[index].quantity - 1);
+
+  //     updatedSendCart[index].quantity += 1;
+
+  //     // Calculate the new price with tax included
+  //     const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+  //     updatedSendCart[index].price = priceWithTax;
+  //   }
+
+  //   setAddToCartProduct(updatedCart);
+  //   setSandCartData(updatedSendCart); // Update sendcartdata
+  //   console.log("IndexupdatedCart: ", updatedCart[index].quantity);
+  //   console.log(
+  //     "IndexvariantStockCount: ",
+  //     Number(variantStockCount[index].total_quantity)
+  //   );
+  // };
 
   const handleDecrementone = (index) => {
     const updatedCart = [...addToCartProduct];
@@ -418,9 +440,7 @@ function Addcart() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
@@ -524,13 +544,9 @@ function Addcart() {
     notifymePostData.append("item_id", "");
     notifymePostData.append("order_id", "");
 
-
     // Send a request
     axios
-      .post(
-        `${BASE_URL}/items/notifiction_post`,
-        notifymePostData
-      )
+      .post(`${BASE_URL}/items/notifiction_post`, notifymePostData)
       .then((response) => {
         toast.success("Your data was successfully added");
       })
@@ -716,7 +732,7 @@ function Addcart() {
               <>
                 {cart.map((item, index) => (
                   <>
-                  {console.log('cartt: ', item)}
+                    {console.log("cartt: ", item)}
                     <Container>
                       <Row>
                         <Col lg={2} sm={2}>
@@ -734,12 +750,10 @@ function Addcart() {
                             className="align-self-center addCARThead"
                           >
                             <h2>{item.name}</h2>
-                            {
-                              item.variant ? (
-                                // <p>{`Selected Variant: ${item.variant.replace(/\\/g, "").replace(/"/g, "")}`}</p>
-                                <p>{`Selected Variant: ${item.variant}`}</p>
-                              ) : null 
-                            }
+                            {item.variant ? (
+                              // <p>{`Selected Variant: ${item.variant.replace(/\\/g, "").replace(/"/g, "")}`}</p>
+                              <p>{`Selected Variant: ${item.variant}`}</p>
+                            ) : null}
                           </Col>
                         )}
                         <Col
@@ -895,7 +909,7 @@ function Addcart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{formatPrice(item.price)}</h3>
+                    <h3>₹{formatPrice(item.price) * item.quantity}</h3>
 
                     <div className="quantity-btn">
                       <button onClick={() => handleDecrementone(index)}>
@@ -1274,6 +1288,7 @@ function Addcart() {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -1313,6 +1328,9 @@ function Addcart() {
                 >
                   <Link>pay</Link>
                 </Button>
+                <Button data-dismiss="modal" onClick={paymentclose}>
+                  <Link>Close</Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -1327,22 +1345,23 @@ function Addcart() {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-body">
               <div className="payment-done">
                 <img src={paydone} />
-                <p>
-                  Congratulation <br />
-                  Your Order is Placed.
-                </p>
+                <p>Please Confirm to place order.</p>
                 <Button
                   data-dismiss="modal"
                   aria-label="Close"
                   onClick={handleSendRequest}
                 >
-                  <Link to="/shipping">Done</Link>
+                  <Link to="/shipping">Place Order</Link>
+                </Button>
+                <Button data-dismiss="modal">
+                  <Link>Close</Link>
                 </Button>
               </div>
             </div>

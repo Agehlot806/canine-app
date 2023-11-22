@@ -581,9 +581,7 @@ function PetshopAddCart() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         console.log("Address deleted successfully:", response.data.message);
@@ -703,6 +701,10 @@ function PetshopAddCart() {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  const paymentclose = () => {
+    setSelectedInput(null);
+  };
+
   const handleOptionSelecttwo = (option, mode) => {
     if (option !== selectedOptiontwo) {
       setSelectedOptiontwo(option);
@@ -804,6 +806,7 @@ function PetshopAddCart() {
               {addToCartProduct && addToCartProduct.length > 0 ? (
                 addToCartProduct.map((item, index) => (
                   <Container>
+                    {console.log("itemss", addToCartProduct)}
                     <Row>
                       <Col lg={2} sm={2}>
                         <img
@@ -1353,6 +1356,7 @@ function PetshopAddCart() {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -1408,6 +1412,10 @@ function PetshopAddCart() {
                 >
                   <Link>pay</Link>
                 </Button>
+
+                <Button data-dismiss="modal" onClick={paymentclose}>
+                  <Link>Close</Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -1435,7 +1443,27 @@ function PetshopAddCart() {
                         </div>
                         <div>
                           <h5>Canine Products</h5>
-                          <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                          <p>
+                            {" "}
+                            {selectedAddress ? (
+                              <div className="selectedAddress-area">
+                                <p>
+                                  {selectedAddress.first_name}{" "}
+                                  {selectedAddress.last_name}
+                                </p>
+                                <p>
+                                  {selectedAddress.house_no}{" "}
+                                  {selectedAddress.area}{" "}
+                                  {selectedAddress.landmark}{" "}
+                                  {selectedAddress.city} {selectedAddress.state}{" "}
+                                  {selectedAddress.pincode}
+                                </p>
+                                <p>Mobile: {selectedAddress.mobile}</p>
+                              </div>
+                            ) : (
+                              <p>No address selected</p>
+                            )}
+                          </p>
                         </div>
                       </div>
                     </Col>
@@ -1443,7 +1471,14 @@ function PetshopAddCart() {
                       <div className="product-details text-center">
                         <div>
                           <h5>Canine Pay Later</h5>
-                          <p>Your total approved credit is ₹ 10,0000</p>
+                          <p>
+                            Your total approved credit is ₹{" "}
+                            {`${formatPrice(
+                              // itemQty * (
+                              originalPrice * 0.05 + originalPrice
+                              // )
+                            )}`}
+                          </p>
                         </div>
                       </div>
                     </Col>
@@ -1651,15 +1686,29 @@ function PetshopAddCart() {
                           <tbody>
                             <tr>
                               <th>Utilised Credit</th>
-                              <td>₹0</td>
+                              <td>
+                                ₹{" "}
+                                {`${formatPrice(
+                                  // itemQty * (
+                                  originalPrice * 0.05 + originalPrice
+                                  // )
+                                )}`}
+                              </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                               <th>Available Credit</th>
                               <td>₹10,0000</td>
-                            </tr>
+                            </tr> */}
                             <tr>
                               <th>Total Approved Credit</th>
-                              <td>₹10,0000</td>
+                              <td>
+                                ₹{" "}
+                                {`${formatPrice(
+                                  // itemQty * (
+                                  originalPrice * 0.05 + originalPrice
+                                  // )
+                                )}`}
+                              </td>
                             </tr>
                             <tr>
                               {/* <th>(All due are debited on 5th of each month)</th> */}
@@ -1668,7 +1717,7 @@ function PetshopAddCart() {
                           </tbody>
                         </Table>
                         <p className="d-flex justify-content-center">
-                          (All due are debited on 5th of each month)
+                          (Bill will be generated on {selectedOption} )
                         </p>
                       </div>
                     </Col>
