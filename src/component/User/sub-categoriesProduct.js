@@ -723,7 +723,10 @@ function SubcategoriesProduct() {
   ).toFixed(2);
 
   const formattedAmount = Number(Amount).toString();
-
+  const calculatedPrice = selectedVariantPrice
+    ? selectedVariantPrice -
+    (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
@@ -739,7 +742,7 @@ function SubcategoriesProduct() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -747,7 +750,7 @@ function SubcategoriesProduct() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -1387,25 +1390,25 @@ function SubcategoriesProduct() {
                           <div>
                             {allbrand
                               ? allbrand.map(
-                                  (items) =>
-                                    items.canine == "1" && (
-                                      <div
-                                        className="form-check"
-                                        onClick={handleCheckboxClick}
-                                      >
-                                        <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          onClick={(e) =>
-                                            handleDataListBrand(items.title)
-                                          }
-                                        />
-                                        <label className="form-check-label">
-                                          {items.title}
-                                        </label>
-                                      </div>
-                                    )
-                                )
+                                (items) =>
+                                  items.canine == "1" && (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={(e) =>
+                                          handleDataListBrand(items.title)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items.title}
+                                      </label>
+                                    </div>
+                                  )
+                              )
                               : ""}
                           </div>
                         </>
@@ -1427,22 +1430,22 @@ function SubcategoriesProduct() {
                           <div>
                             {subcategories
                               ? subcategories.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allsubcateselect(items.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      allsubcateselect(items.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1544,22 +1547,22 @@ function SubcategoriesProduct() {
                           <div>
                             {alllifesage
                               ? alllifesage.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        Lifesatedataselect(items.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      Lifesatedataselect(items.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1581,22 +1584,22 @@ function SubcategoriesProduct() {
                           <div>
                             {allbreed
                               ? allbreed.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        allbreedselect(items.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.name}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onChange={(e) =>
+                                      allbreedselect(items.name)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.name}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1618,22 +1621,22 @@ function SubcategoriesProduct() {
                           <div>
                             {allhealth
                               ? allhealth.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allhealthselect(items.title)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.title}
-                                    </label>
-                                  </div>
-                                ))
+                                <div
+                                  className="form-check"
+                                  onClick={handleCheckboxClick}
+                                >
+                                  <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    onClick={(e) =>
+                                      allhealthselect(items.title)
+                                    }
+                                  />
+                                  <label className="form-check-label">
+                                    {items.title}
+                                  </label>
+                                </div>
+                              ))
                               : ""}
                           </div>
                         </>
@@ -1733,7 +1736,7 @@ function SubcategoriesProduct() {
                                   style={{
                                     background:
                                       gradientColors[
-                                        index % gradientColors.length
+                                      index % gradientColors.length
                                       ],
                                   }}
                                 >
@@ -1781,10 +1784,9 @@ function SubcategoriesProduct() {
                                       </Row>
                                       <Row>
                                         <Col className="align-self-center">
-                                          <h4>{`₹${
-                                            item.price -
+                                          <h4>{`₹${item.price -
                                             (item.price * item.discount) / 100
-                                          }`}</h4>
+                                            }`}</h4>
                                         </Col>
                                         {/* <Col>
                                       <Link
@@ -1916,13 +1918,13 @@ function SubcategoriesProduct() {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              // onClick={handleMainImageClick}
+                            // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                                productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1963,17 +1965,17 @@ function SubcategoriesProduct() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex + 1) %
+                              productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
+                              (lightboxImageIndex +
+                                productDetails.images.length -
+                                1) %
+                              productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1982,13 +1984,13 @@ function SubcategoriesProduct() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails.images.length
+                                productDetails.images.length
                               )
                             }
                           />
@@ -2047,12 +2049,11 @@ function SubcategoriesProduct() {
                                             >
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
+                                                  className={`tab-variations ${selectedVariant ===
+                                                      item.type
                                                       ? "active"
                                                       : ""
-                                                  }`}
+                                                    }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2117,9 +2118,8 @@ function SubcategoriesProduct() {
                                   <p>{`₹${parseInt(uservariationprice)}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2137,9 +2137,8 @@ function SubcategoriesProduct() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -2173,28 +2172,37 @@ function SubcategoriesProduct() {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {/* without sign in quick view add cart */}
+                  {productDetails?.stock &&
+                    productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
+                          {/* <Button> */}
                           <Link
                             onClick={() => {
-                              dispatch({
-                                type: "ADD_TO_CART",
-                                payload: {
-                                  item_id: productDetails.id,
-                                  variant: selectedVariant,
-                                  price: formattedAmount,
-                                  quantity: quantity,
-                                  name: productDetails.name,
-                                  image: productDetails.image,
-                                  total_quantity: selectedVariantStock
-                                    ? selectedVariantStock
-                                    : productDetails?.stock,
-                                  return_order:
-                                    productDetails?.returnable || "yes",
-                                },
+                              const filterData = cart.filter((el) => {
+                                console.log('elll: ', el)
+                                return el.item_id === productDetails.id;
                               });
+                              if (filterData?.length > 0) {
+                                toast.error("Already in added");
+                              } else {
+                                dispatch({
+                                  type: "ADD_TO_CART",
+                                  payload: {
+                                    item_id: productDetails.id,
+                                    variant: selectedVariant,
+                                    price: calculatedPrice === 0
+                                      ? parseInt(productDetails?.price) * quantity
+                                      : parseInt(calculatedPrice),
+                                    quantity: quantity,
+                                    name: productDetails.name,
+                                    image: productDetails.image,
+                                    orderamountwithquantity: formattedAmount,
+                                  },
+                                });
+                              }
                             }}
                           >
                             <i className="fa fa-shopping-bag" /> Add to cart
@@ -2444,11 +2452,10 @@ function SubcategoriesProduct() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${
-                                    addressContentVisible
+                                  className={`fa ${addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                  }`}
+                                    }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2552,11 +2559,10 @@ function SubcategoriesProduct() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
+                                      className={`tab-variations ${selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                      }`}
+                                        }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2629,9 +2635,8 @@ function SubcategoriesProduct() {
                                   <p>{`₹${parseInt(uservariationprice)}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
+                                    }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2649,9 +2654,8 @@ function SubcategoriesProduct() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
+                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -3208,11 +3212,11 @@ function SubcategoriesProduct() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
+                    // onChange={(e) =>
+                    // setProfileData ({
+                    //   ...profileData,
+                    //   state: e.target.value,
+                    // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

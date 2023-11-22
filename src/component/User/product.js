@@ -697,9 +697,11 @@ function Product(props) {
   const formattedAmount = Number(Amount).toString();
 
   const calculatedPrice = selectedVariantPrice
-    ? selectedVariantPrice -
-      (selectedVariantPrice * productDetails.discount) / 100
-    : productDetails?.price;
+  ? selectedVariantPrice -
+    (selectedVariantPrice * productDetails.discount) / 100
+  : productDetails?.price;
+
+
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
@@ -1117,6 +1119,7 @@ function Product(props) {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
+    setQuantity(1);
     setSelectedVariantStock(null);
   };
   const handleResetClick = () => {
@@ -2087,7 +2090,7 @@ function Product(props) {
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
                                   <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                    isNaN(formattedAmount) * quantity? 0 : formattedAmount * quantity
                                   }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
@@ -2140,28 +2143,36 @@ function Product(props) {
                     </Col>
                   </Row>
                   {/* without sign in quick view add cart */}
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {productDetails?.stock &&
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
+                          {/* <Button> */}
                           <Link
                             onClick={() => {
-                              dispatch({
-                                type: "ADD_TO_CART",
-                                payload: {
-                                  item_id: productDetails.id,
-                                  variant: selectedVariant,
-                                  price: formattedAmount,
-                                  quantity: quantity,
-                                  name: productDetails.name,
-                                  image: productDetails.image,
-                                  total_quantity: selectedVariantStock
-                                    ? selectedVariantStock
-                                    : productDetails?.stock,
-                                  return_order:
-                                    productDetails?.returnable || "yes",
-                                },
+                              const filterData = cart.filter((el) => {
+                                console.log('elll: ', el)
+                                return el.item_id === productDetails.id;
                               });
+                              if (filterData?.length > 0) {
+                                toast.error("Already in added");
+                              } else {
+                                dispatch({
+                                  type: "ADD_TO_CART",
+                                  payload: {
+                                    item_id: productDetails.id,
+                                    variant: selectedVariant,
+                                    price: calculatedPrice === 0
+                                    ? parseInt(productDetails?.price) * quantity
+                                    : parseInt(calculatedPrice),
+                                    quantity: quantity,
+                                    name: productDetails.name,
+                                    image: productDetails.image,
+                                    orderamountwithquantity:formattedAmount,
+                                  },
+                                });
+                              }
                             }}
                           >
                             <i className="fa fa-shopping-bag" /> Add to cart

@@ -335,7 +335,7 @@ function Productdetail() {
       (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
     // with outlogin
-    const calculatedPriceW = selectedVariantPrice
+    const calculatedPriceWithoutlogin = selectedVariantPrice
     ? selectedVariantPrice
     : productDetails?.price;
   // const savedAmount = (
@@ -1214,6 +1214,9 @@ function Productdetail() {
                               ? selectedVariantStock
                               : productDetails?.stock,
                           return_order: productDetails?.returnable || "yes",
+                          orderamountwithquantity:calculatedPrice === 0
+                          ? parseInt(formattedAmount) * quantity
+                          : parseInt(calculatedPrice) * quantity,
                         },
                       });
                     }}
@@ -1793,17 +1796,53 @@ function Productdetail() {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails.stock && productDetails.stock.length !== 0 ? (
+                  {productDetails?.stock &&
+                    productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
-                      <Button>
-                        <Link
-                          to={`/add-cart/${productDetails.id}`}
-                          onClick={handleAddToCart}
-                        >
-                          <i className="fa fa-shopping-bag" /> Add to cart
-                        </Link>
-                        <p>{addToCartStatus}</p>
-                      </Button>
+                      {customerLoginId === null ? (
+                        <Button data-dismiss="modal">
+                          {/* <Button> */}
+                          <Link
+                            onClick={() => {
+                              const filterData = cart.filter((el) => {
+                                console.log('elll: ', el)
+                                return el.item_id === productDetails.id;
+                              });
+                              if (filterData?.length > 0) {
+                                toast.error("Already in added");
+                              } else {
+                                dispatch({
+                                  type: "ADD_TO_CART",
+                                  payload: {
+                                    item_id: productDetails.id,
+                                    variant: selectedVariant,
+                                    price: calculatedPrice === 0
+                                      ? parseInt(productDetails?.price) * quantity
+                                      : parseInt(calculatedPrice),
+                                    quantity: quantity,
+                                    name: productDetails.name,
+                                    image: productDetails.image,
+                                    orderamountwithquantity: formattedAmount,
+                                  },
+                                });
+                              }
+                            }}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                      ) : (
+                        <Button>
+                          <Link
+                            to={`/add-cart/${productDetails.id}`}
+                            onClick={handleAddToCart}
+                          >
+                            <i className="fa fa-shopping-bag" /> Add to cart
+                          </Link>
+                          <p>{addToCartStatus}</p>
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <div className="sold-out-btn mt-3">

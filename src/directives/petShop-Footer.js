@@ -27,7 +27,7 @@ function Petshopfooter() {
             <Row>
               <Col lg={3} sm={6}>
                 <div className="footer-list">
-                  <h5>{strings.usefulLinks}</h5>
+                  <h5>Customer Services</h5>
                   <ul>
                     <li>
                       <Link to="/petshopdeliverydetails">

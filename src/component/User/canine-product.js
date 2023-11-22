@@ -681,7 +681,10 @@ function Canineproduct(props) {
   ).toFixed(2);
 
   const formattedAmount = Number(Amount).toString();
-
+  const calculatedPrice = selectedVariantPrice
+  ? selectedVariantPrice -
+    (selectedVariantPrice * productDetails.discount) / 100
+  : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails?.price * quantity - Amount
   ).toFixed(2);
@@ -2081,6 +2084,7 @@ function Canineproduct(props) {
                           <Link
                             onClick={() => {
                               const filterData = cart.filter((el) => {
+                                console.log('elll: ', el)
                                 return el.item_id === productDetails.id;
                               });
                               if (filterData?.length > 0) {
@@ -2091,10 +2095,13 @@ function Canineproduct(props) {
                                   payload: {
                                     item_id: productDetails.id,
                                     variant: selectedVariant,
-                                    price: formattedAmount,
+                                    price: calculatedPrice === 0
+                                    ? parseInt(productDetails?.price) * quantity
+                                    : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: productDetails.name,
                                     image: productDetails.image,
+                                    orderamountwithquantity:formattedAmount,
                                   },
                                 });
                               }

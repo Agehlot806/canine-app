@@ -126,7 +126,7 @@ function Addcart() {
   const priceWithoutCents = parseInt(updatedPrice);
   if (customerLoginId === null) {
     cart.forEach((el) => {
-      let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
+      let allPrice = parseInt(el.orderamountwithquantity) + parseInt(originalPrice);
       originalPrice = allPrice;
     });
   } else {
@@ -716,6 +716,7 @@ function Addcart() {
               <>
                 {cart.map((item, index) => (
                   <>
+                  {console.log('cartt: ', item)}
                     <Container>
                       <Row>
                         <Col lg={2} sm={2}>
@@ -747,7 +748,7 @@ function Addcart() {
                           xs={6}
                           className="align-self-center addCARThead"
                         >
-                          <h3>₹{formatPrice(item.price) * item.quantity}</h3>
+                          <h3>₹{formatPrice(item.orderamountwithquantity)}</h3>
 
                           <div className="quantity-btn">
                             {/* <button onClick={() => handleDecrementone(index)}>
@@ -809,7 +810,7 @@ function Addcart() {
                             </Col>
                           </Row>
                           <hr />
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>Coupon Discount</h5>
                             </Col>
@@ -817,7 +818,7 @@ function Addcart() {
                               <h5>₹{0}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          <hr /> */}
                           <Row>
                             <Col>
                               <h5>GST</h5>

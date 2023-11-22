@@ -501,7 +501,10 @@ function Home(props) {
   const finalamount = Amount + taxamound;
 
   const formattedAmount = Number(Amount).toString();
-
+  const calculatedPrice = selectedVariantPrice
+  ? selectedVariantPrice -
+    (selectedVariantPrice * productDetails.discount) / 100
+  : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails?.price * quantity - Amount
   ).toFixed(2);
@@ -518,6 +521,8 @@ function Home(props) {
   const buynowAmount = Math.floor(
     buynowprice - (buynowprice * productDetails?.discount) / 100
   ).toFixed(2);
+
+  
   const buynowtaxamound = Math.floor(Amount * 0.05);
   const buynowfinalamount = Amount + taxamound;
 
@@ -2115,6 +2120,7 @@ function Home(props) {
                           <Link
                             onClick={() => {
                               const filterData = cart.filter((el) => {
+                                console.log('elll: ', el)
                                 return el.item_id === productDetails.id;
                               });
                               if (filterData?.length > 0) {
@@ -2125,10 +2131,13 @@ function Home(props) {
                                   payload: {
                                     item_id: productDetails.id,
                                     variant: selectedVariant,
-                                    price: formattedAmount,
+                                    price: calculatedPrice === 0
+                                    ? parseInt(productDetails?.price) * quantity
+                                    : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: productDetails.name,
                                     image: productDetails.image,
+                                    orderamountwithquantity:formattedAmount,
                                   },
                                 });
                               }
