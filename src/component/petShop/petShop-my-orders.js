@@ -38,7 +38,8 @@ function PetshopMyorder() {
       .then((response) => {
         console.log(response);
         console.log("Order List Successful");
-        setallorder(response.data.data);
+        const reversedData = response.data.data.reverse();
+        setallorder(reversedData);
       })
       .catch((error) => {
         console.log(error);
@@ -95,7 +96,7 @@ function PetshopMyorder() {
                               {item.callback.map((callbackItem) => (
                                 <div key={callbackItem.id}>
                                   {callbackItem.user_details &&
-                                  callbackItem.user_details.rating > 0 ? (
+                                    callbackItem.user_details.rating > 0 ? (
                                     <div className="solidFA-icon">
                                       {Array.from({
                                         length:
@@ -154,14 +155,13 @@ function PetshopMyorder() {
                           <div className="myorder-btn">
                             <Button>
                               <Link
-                                to={`/petShop-order-view-details/?id=${
-                                  item.id
-                                }&status=${item.payment_status ?? "not found"}`}
+                                to={`/petShop-order-view-details/?id=${item.id
+                                  }&status=${item.payment_status ?? "not found"}`}
                               >
                                 View
                               </Link>
                             </Button>
-                            
+
                             <Button>
                               <Link to={`/petshoptrackyourorde/${item.id}`}>
                                 Track
@@ -170,11 +170,9 @@ function PetshopMyorder() {
                             {salesmanId && item.payment_status === "unpaid" ? (
                               <Button>
                                 <Link
-                                  to={`/petShop-order-view-details/?id=${
-                                    item.id
-                                  }&status=${
-                                    item.payment_status ?? "not found"
-                                  }`}
+                                  to={`/petShop-order-view-details/?id=${item.id
+                                    }&status=${item.payment_status ?? "not found"
+                                    }`}
                                 >
                                   Pay
                                 </Link>
