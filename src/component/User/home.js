@@ -908,6 +908,7 @@ function Home(props) {
   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
+    setQuantity(1);
     setSelectedVariantStock(null);
   };
   const handleResetClick = () => {
