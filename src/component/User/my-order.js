@@ -41,12 +41,14 @@ function Myorder() {
             .then((response) => {
                 console.log(response);
                 console.log("Order List Successful");
-                setallorder(response.data.data);
+                const reversedData = response.data.data.reverse();
+                setallorder(reversedData);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
+    
 
     const allStarData = async () => {
         axios
