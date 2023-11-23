@@ -32,19 +32,21 @@ function PetshopMyorder() {
   // ----------------------------------------
   // salesmanId
   const salesmanId = localStorage.getItem("salesmanId");
-  const allOrders = async () => {
-    axios
-      .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
-      .then((response) => {
-        console.log(response);
-        console.log("Order List Successful");
-        const reversedData = response.data.data.reverse();
-        setallorder(reversedData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
+ const allOrders = async () => {
+  axios
+    .get(`${BASE_URL}/customer/order/list?id=${storedWholesellerId}`)
+    .then((response) => {
+      console.log(response);
+      console.log("Order List Successful");
+      const reversedData = response.data.data.reverse(); 
+      setallorder(reversedData); 
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 
   const getDateFromCreatedAt = (createdAt) => {
     const dateObject = new Date(createdAt);
