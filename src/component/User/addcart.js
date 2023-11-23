@@ -176,50 +176,21 @@ function Addcart() {
       Number(variantStockCount[index].total_quantity)
     );
   };
-  // const handleIncrementone = (index) => {
-  //   const updatedCart = [...addToCartProduct];
-  //   const updatedSendCart = [...sendcartdata];
-
-  //   if (
-  //     updatedCart[index].quantity ===
-  //     Number(variantStockCount[index].total_quantity)
-  //   ) {
-  //     toast.error("Stock not avilable");
-  //   } else {
-  //     updatedCart[index].quantity += 1;
-  //     updatedCart[index].price +=
-  //       updatedCart[index].price / (updatedCart[index].quantity - 1);
-
-  //     updatedSendCart[index].quantity += 1;
-
-  //     // Calculate the new price with tax included
-  //     const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-  //     updatedSendCart[index].price = priceWithTax;
-  //   }
-
-  //   setAddToCartProduct(updatedCart);
-  //   setSandCartData(updatedSendCart); // Update sendcartdata
-  //   console.log("IndexupdatedCart: ", updatedCart[index].quantity);
-  //   console.log(
-  //     "IndexvariantStockCount: ",
-  //     Number(variantStockCount[index].total_quantity)
-  //   );
-  // };
 
   const handleDecrementone = (index) => {
     const updatedCart = [...addToCartProduct];
     if (updatedCart[index].quantity > 1) {
       updatedCart[index].quantity -= 1;
-      updatedCart[index].price =
-        updatedCart[index].price *
-        (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
+      // updatedCart[index].price =
+      // updatedCart[index].price *
+      // (updatedCart[index].quantity / (updatedCart[index].quantity + 1));
 
       const updatedSendCart = [...sendcartdata];
       updatedSendCart[index].quantity -= 1;
 
       // Calculate the new price with tax included
-      const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
-      updatedSendCart[index].price = priceWithTax;
+      // const priceWithTax = updatedCart[index].price * 1.05; // Adding 5% tax
+      // updatedSendCart[index].price = priceWithTax;
 
       setAddToCartProduct(updatedCart);
       setSandCartData(updatedSendCart); // Update sendcartdata

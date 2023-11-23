@@ -34,6 +34,7 @@ function Productdetail() {
   const { id } = useParams();
   const [paymentId, setPaymentId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
+  console.log("productDetails: ", productDetails);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [notifyMeData, setNotifyMeData] = useState("");
@@ -314,28 +315,32 @@ function Productdetail() {
   let uservariationprice = 0;
 
   if (selectedVariantPrice !== "") {
-    uservariationprice = selectedVariantPrice;
+    uservariationprice = parseInt(selectedVariantPrice);
   } else {
     uservariationprice = productDetails.price;
   }
 
   uservariationprice = uservariationprice * (quantity > 1 ? quantity : 1);
+  console.log("priceuservariationprice: ", uservariationprice);
 
   const Amount = Math.floor(
-    uservariationprice - (uservariationprice * productDetails.discount) / 100
-  ).toFixed(2);
+    uservariationprice -
+      (parseInt(uservariationprice) * parseInt(productDetails.discount)) / 100
+  );
+  console.log("priceAmount: ", Amount);
 
   // const Amount = Math.floor(
   //   uservariationprice * quantity -
   //     (uservariationprice * quantity * productDetails.discount) / 100
   // ).toFixed(2);
-  const formattedAmount = Number(Amount).toString();
+  const formattedAmount = parseInt(Amount).toString();
+  console.log("priceformattedAmount: ", formattedAmount);
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
       (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
-    // with outlogin
-    const calculatedPriceWithoutlogin = selectedVariantPrice
+  // with outlogin
+  const calculatedPriceWithoutlogin = selectedVariantPrice
     ? selectedVariantPrice
     : productDetails?.price;
   // const savedAmount = (
@@ -347,7 +352,6 @@ function Productdetail() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
-
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -621,9 +625,7 @@ function Productdetail() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -700,9 +702,10 @@ function Productdetail() {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price:  calculatedPrice === 0
-      ? parseInt(productDetails?.price) * quantity
-      : parseInt(calculatedPrice),
+      price:
+        calculatedPrice === 0
+          ? parseInt(productDetails?.price) * quantity
+          : parseInt(calculatedPrice),
       quantity: quantity,
       tax_amount: taxamound,
       discount_on_item: disscountvalue?.discount || "",
@@ -1203,9 +1206,10 @@ function Productdetail() {
                         payload: {
                           item_id: productDetails.id,
                           variant: selectedVariant,
-                          price:  calculatedPrice === 0
-              ? parseInt(productDetails?.price) * quantity
-              : parseInt(calculatedPrice),
+                          price:
+                            calculatedPrice === 0
+                              ? parseInt(productDetails?.price) * quantity
+                              : parseInt(calculatedPrice),
                           quantity: quantity,
                           name: productDetails.name,
                           image: productDetails.image,
@@ -1214,9 +1218,10 @@ function Productdetail() {
                               ? selectedVariantStock
                               : productDetails?.stock,
                           return_order: productDetails?.returnable || "yes",
-                          orderamountwithquantity:calculatedPrice === 0
-                          ? parseInt(formattedAmount) * quantity
-                          : parseInt(calculatedPrice) * quantity,
+                          orderamountwithquantity:
+                            calculatedPrice === 0
+                              ? parseInt(formattedAmount) * quantity
+                              : parseInt(calculatedPrice) * quantity,
                         },
                       });
                     }}
@@ -1797,7 +1802,7 @@ function Productdetail() {
                     </Col>
                   </Row>
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 0 ? (
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
@@ -1805,7 +1810,7 @@ function Productdetail() {
                           <Link
                             onClick={() => {
                               const filterData = cart.filter((el) => {
-                                console.log('elll: ', el)
+                                console.log("elll: ", el);
                                 return el.item_id === productDetails.id;
                               });
                               if (filterData?.length > 0) {
@@ -1816,9 +1821,11 @@ function Productdetail() {
                                   payload: {
                                     item_id: productDetails.id,
                                     variant: selectedVariant,
-                                    price: calculatedPrice === 0
-                                      ? parseInt(productDetails?.price) * quantity
-                                      : parseInt(calculatedPrice),
+                                    price:
+                                      calculatedPrice === 0
+                                        ? parseInt(productDetails?.price) *
+                                          quantity
+                                        : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: productDetails.name,
                                     image: productDetails.image,
