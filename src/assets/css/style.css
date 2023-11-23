@@ -4331,3 +4331,15 @@ li.cardpay a img {
 .logoBG img:focus-visible {
   outline: none !important;
 }
+
+
+button.pyleeteclose {
+    border: none;
+    background: #ffc934;
+    padding: 4px 20px;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 50px;
+    float: right;
+    margin: 20px 10px;
+}

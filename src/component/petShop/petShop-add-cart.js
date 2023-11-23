@@ -705,6 +705,11 @@ function PetshopAddCart() {
     setSelectedInput(null);
   };
 
+  const payletterclose = () => {
+    setSelectedOption("Select Payment Time");
+    setSelectedOptiontwo( "Select Payment Mode")
+  }
+
   const handleOptionSelecttwo = (option, mode) => {
     if (option !== selectedOptiontwo) {
       setSelectedOptiontwo(option);
@@ -771,6 +776,7 @@ function PetshopAddCart() {
 
     return finalPrice;
   }
+
   return (
     <>
       <PetShopHeader dataLengthpetshop={dataLengthpetshop} />
@@ -1432,6 +1438,7 @@ function PetshopAddCart() {
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
+        
             <div className="modal-body">
               <Container>
                 <div className="oder-detail-card">
@@ -1474,9 +1481,7 @@ function PetshopAddCart() {
                           <p>
                             Your total approved credit is ₹{" "}
                             {`${formatPrice(
-                              // itemQty * (
                               originalPrice * 0.05 + originalPrice
-                              // )
                             )}`}
                           </p>
                         </div>
@@ -1717,14 +1722,19 @@ function PetshopAddCart() {
                           </tbody>
                         </Table>
                         <p className="d-flex justify-content-center">
-                          (Bill will be generated on {selectedOption} )
+                          (Bill will be generated Today You Pay After {selectedOption} )
                         </p>
                       </div>
+
                     </Col>
                   </Row>
                 </div>
               </Container>
+              <button onClick={payletterclose} className="pyleeteclose" type="button" data-dismiss="modal" aria-label="Close">
+        Close
+      </button>
             </div>
+            
           </div>
         </div>
       </div>
@@ -1743,9 +1753,7 @@ function PetshopAddCart() {
               <div className="payment-done">
                 <img src={paydone} />
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesettingLorem Ipsum is simply dummy text of the printing
-                  and typesetting
+                Please Confirm to place order.
                 </p>
                 <Button
                   data-dismiss="modal"
@@ -1755,7 +1763,10 @@ function PetshopAddCart() {
                     handlePaylater(); // Pass the 'event' parameter here if needed
                   }}
                 >
-                  <Link to="/petshop-shipping">Done</Link>
+                  <Link to="/petshop-shipping">Place Order</Link>
+                </Button>
+                <Button data-dismiss="modal">
+                  <Link>Close</Link>
                 </Button>
               </div>
             </div>
