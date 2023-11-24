@@ -1484,12 +1484,14 @@ function Home(props) {
                       (item, index) =>
                         item.type === "default" && (
                           <Col lg={6} className="mb-4">
+                            <div className="defualtimg">
                             <img
                               src={
                                 "https://canine.hirectjob.in/storage/app/" +
                                 item.image
                               }
                             />
+                            </div>
                           </Col>
                         )
                     )
@@ -1501,12 +1503,14 @@ function Home(props) {
                           (item, index) =>
                             item.type === "store_wise" && (
                               <Col sm={12} className="mb-4">
+                                 <div className="storeimg">
                                 <img
                                   src={
                                     "https://canine.hirectjob.in/storage/app/" +
                                     item.image
                                   }
                                 />
+                                </div>
                               </Col>
                             )
                         )
@@ -1516,12 +1520,14 @@ function Home(props) {
                           (item, index) =>
                             item.type === "item_wise" && (
                               <Col sm={12} className="mb-4">
+                                 <div className="storeimg">
                                 <img
                                   src={
                                     "https://canine.hirectjob.in/storage/app/" +
                                     item.image
                                   }
                                 />
+                                </div>
                               </Col>
                             )
                         )
