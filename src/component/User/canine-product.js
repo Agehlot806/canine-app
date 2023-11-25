@@ -47,7 +47,7 @@ function Canineproduct(props) {
 
   const meta = {
     
-    title: 'Canin Products - Catering to Your Pet’s Nutritional Needs',
+    title: 'Canine Products - Catering to Your Pet’s Nutritional Needs',
     description: 'We offer a wide range of high-quality pet food products that cater to the nutritional needs of your furry friends.',
     canonical: '',
     meta: {

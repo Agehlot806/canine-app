@@ -49,7 +49,7 @@ function Product(props) {
 
   const meta = {
     
-    title: 'Canin Products - Transform your pet care routine with our products',
+    title: 'Canine Products - Transform your pet care routine with our products',
     description: 'Discover the difference in your pet care experience and watch your canine companion thrive with the excellence that Canin Products bring to your home.',
     canonical: '',
     meta: {
