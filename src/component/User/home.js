@@ -29,6 +29,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import "animate.css/animate.min.css";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import DocumentMeta from 'react-document-meta';
 
 const homeslider = {
   desktop: {
@@ -67,6 +68,19 @@ const clinetreview = {
 };
 
 function Home(props) {
+
+  const meta = {
+    title: 'About Techpanda It services|',
+    description: '',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'About Techpanda It services, a react js development company, who we are, what we do'
+      }
+    }
+  }
+
   const [expandedDescription, setExpandedDescription] = useState({});
   const navigate = useNavigate();
   const [categories, setcategories] = useState([]);
@@ -204,17 +218,26 @@ function Home(props) {
   };
 
   const renderBlogDescription = (description) => {
-    const maxCharacters = 50;
-
-    if (description.length <= maxCharacters) {
-      return <p>{description}</p>;
+    // Remove HTML tags
+    const removeHTMLTags = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || '';
+    };
+  
+    // Remove HTML tags and attributes
+    const plainTextDescription = removeHTMLTags(description);
+  
+    const maxCharacters = 50; // Number of characters to show initially
+  
+    if (plainTextDescription.length <= maxCharacters) {
+      return <p>{plainTextDescription}</p>; // Show the full description if it's short
     }
-
-    const truncatedDescription = description.slice(0, maxCharacters);
-
+  
+    const truncatedDescription = plainTextDescription.slice(0, maxCharacters);
+  
     return (
       <>
-        <p>{truncatedDescription}.......</p>
+        <p>{truncatedDescription}......</p>
       </>
     );
   };
@@ -1066,6 +1089,7 @@ function Home(props) {
 
   return (
     <>
+     <DocumentMeta {...meta}>
       <Toaster />
       <Newheader />
       {loading ? (
@@ -3318,6 +3342,7 @@ function Home(props) {
           </div>
         </div>
       </div>
+      </DocumentMeta>
     </>
   );
 }

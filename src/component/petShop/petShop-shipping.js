@@ -239,7 +239,7 @@ function PetshopShipping() {
                     <div className="order-details">
                       <h4>Address</h4>
                       <p>
-                        {addresslist && addresslist.length > 1 ? (
+                        {addresslist && addresslist.length > 0 ? (
                           addresslist.map(
                             (item, index) =>
                               index === 0 && (
@@ -255,10 +255,10 @@ function PetshopShipping() {
                       </p>
                       <h4>shipping Address</h4>
                       <p>
-                        {addresslist && addresslist.length > 1 ? (
+                        {addresslist && addresslist.length > 0 ? 0 : 1 ? (
                           addresslist.map(
                             (item, index) =>
-                              index === 1 && (
+                              index === 0 && (
                                 <p key={item.id}>
                                   {item.house_no} {item.area} {item.landmark}{" "}
                                   {item.city} {item.state} {item.pincode}

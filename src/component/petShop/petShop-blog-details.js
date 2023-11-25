@@ -755,10 +755,11 @@ function PetshopBlogdetails() {
       console.log(error);
     }
   };
-  const quickViewClear = () => {
+   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);
@@ -821,6 +822,17 @@ function PetshopBlogdetails() {
     );
   };
 
+
+  const renderBlogDescriptionHTML = (description) => {
+    const removeHTMLTags = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const textContent = doc.body.textContent || '';
+      return textContent.trim(); 
+    };
+    const plainTextDescription = removeHTMLTags(description);
+    return plainTextDescription;
+  };
+
   return (
     <>
       <Toaster />
@@ -834,39 +846,27 @@ function PetshopBlogdetails() {
         </section>
       ) : (
         <>
-          <section className="section-padding">
+         <section className="section-padding">
             <Container>
               <Row className="justify-content-center">
                 <Col lg={10}>
                   <div className="blogDetails">
-                    {blogdata && blogdata?.length > 0 ? (
+                    {blogdata && blogdata.length > 0 ? (
                       blogdata.map((item, index) => (
                         <Col lg={12} className="mb-4" key={item.id}>
                           <div className="blog-card-are">
-                            <Row>
-                              <Col sm={5}>
-                                {/* <img
-                              src={
-                                item.image
-                                  ? `https://veejayjewels.com/storage/app/public/banner/${item.image}`
-                                  : blog1
-                              }
-                              alt=""
-                            /> */}
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in//storage/app/public/blog/" +
-                                    item.image
-                                  }
-                                />
-                              </Col>
-                              <Col sm={7} className="align-self-center">
-                                <div className="blog-cardContent">
-                                  <h4>{item.title}</h4>
-                                  <p>{item?.description}</p>
-                                </div>
-                              </Col>
-                            </Row>
+
+                            <div className="blog-cardContent">
+                              <h4>{item.title}</h4>
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in//storage/app/public/blog/" +
+                                  item.image
+                                }
+                              />
+                              <p>{renderBlogDescriptionHTML(item.description)}</p>
+                              {/* <p>{item.description}</p> */}
+                            </div>
                           </div>
                         </Col>
                       ))

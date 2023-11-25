@@ -284,17 +284,26 @@ function PetshopHome(props) {
   const { id } = useParams();
 
   const renderBlogDescription = (description) => {
+    // Remove HTML tags
+    const removeHTMLTags = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || '';
+    };
+  
+    // Remove HTML tags and attributes
+    const plainTextDescription = removeHTMLTags(description);
+  
     const maxCharacters = 50; // Number of characters to show initially
-
-    if (description.length <= maxCharacters) {
-      return <p>{description}</p>; // Show the full description if it's short
+  
+    if (plainTextDescription.length <= maxCharacters) {
+      return <p>{plainTextDescription}</p>; // Show the full description if it's short
     }
-
-    const truncatedDescription = description.slice(0, maxCharacters);
-
+  
+    const truncatedDescription = plainTextDescription.slice(0, maxCharacters);
+  
     return (
       <>
-        <p>{truncatedDescription}.......</p>
+        <p>{truncatedDescription}......</p>
       </>
     );
   };
@@ -865,10 +874,11 @@ function PetshopHome(props) {
       console.log(error);
     }
   };
-  const quickViewClear = () => {
+   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);

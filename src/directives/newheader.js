@@ -12,6 +12,7 @@ import loicon1 from "../assets/images/img/loicon1.png";
 import { BiSolidOffer } from "react-icons/bi";
 import "../assets/css/menus.css";
 import { useCartWithoutLogin } from "../component/context/AddToCardWithoutLogin";
+import DocumentMeta from "react-document-meta";
 
 function Newheader(props) {
   const navigate = useNavigate();
@@ -39,51 +40,258 @@ function Newheader(props) {
       : localStorage.getItem("userInfo");
   console.log("customerLoginId", customerLoginId);
   // const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
-  // ...
-  // useEffect(() => {
-  // Check if the visibility state is stored in localStorage
-  //   const storedVisibility = localStorage.getItem("totalLengthVisibility");
-  //   if (storedVisibility) {
-  //     setTotalLengthVisible(JSON.parse(storedVisibility));
-  //   }
-  // }, []);
-  // The click handler for the bell icon
-  // const handleBellClick = () => {
-  //   setTotalLengthVisible(false);
-  // Store the visibility state in localStorage
-  // localStorage.setItem("totalLengthVisibility", JSON.stringify(false));
-  // Set a timeout to make the span visible again after 30 minutes (30 minutes = 30 * 60 * 1000 milliseconds)
-  //   setTimeout(() => {
-  //     setTotalLengthVisible(true);
-  //     localStorage.setItem("totalLengthVisibility", JSON.stringify(true));
-  //   }, 30 * 60 * 1000);
-  // };
+  // Seo Keywords start
+  
+  const DogFoodmeta = {
+    title: 'Canine Culinary Excellence with Fresh, Raw, and Top Dog Food Brands',
+    description: 'Discover the top dog food brands that prioritize your pets health and happiness',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'canin dog food,fresh dog food,best dog food,raw dog food,best dog food brands,dog food brands'
+      }
+    }
+  }
+  const TrainingAccessoriesmeta = {
+    title: 'Essential Dog Training Equipment, Treats, and Accessories',
+    description: 'Electronic dog collars for effective communication, indulge your pup with the best dog treats for training success',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog training equipment,electronic dog collars,dog training treats,puppy training treats,custom dog bandanas,best dog treats for training,best puppy training treats,personalized dog bandanas,puppy bandanas,dog mufflers,dog shoes,dog socks,dog boots,puppy shoes,waterproof dog shoes,pet shoes'
+      }
+    }
+  }
+  const Collarmeta = {
+    
+    title: 'Collar leashes and more Premium Dog Collar Leashes, Harnesses, and Chains for Every Adventure',
+    description: 'Explore the best dog harness options, including no-pull designs for a comfortable and controlled walking experience',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog collar leashes,dog harness,dog chains,no pull dog harness,best dog harness,ruffwear harness,tactical dog harness,small dog harness'
+      }
+    }
+  }
+  const ShampooPerfumesmeta = {
+    title: 'Pamper Your Pooch with Premium Dog Shampoo and Perfumes',
+    description: 'Find the best dog shampoo for various needs, including flea control, dry shampooing, medicated formulas, and soothing options for itchy skin.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog shampoo,dog perfumes,best dog shampoo,flea shampoo for dogs,dry shampoo for dogs,medicated dog shampoo,best dog shampoo for itchy skin,puppy shampoo,dog perfume spray,puppy perfume,dog fragrance spray,dog body spray,canine perfume,dog fragrance spray'
+      }
+    }
+  }
+  const Toysmeta = {
 
-  // const [customCount, setCustomCount] = useState(0);
-  // console.log("lllll", customCount);
-  // const prevTotalLength = useRef(totalLength);
+    title: 'Engaging Dog Toys for Playful Pups | Interactive, Chew Toys & More',
+    description: 'Discover a range of dog toys, including chew toys, interactive options, squeaker toys, and engaging choices for puppies.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog toys,dog chew toys,puppy toys,toys for puppies,squeaker toys,dog interactive toys'
+      }
+    }
+  }
+  const TreatsChewsmeta = {
 
-  // const handleBellClick = () => {
-  //   setCustomCount(0);
-  //   localStorage.setItem("customCount", 0);
-  //   setTotalLengthVisible(false);
-  // };
+    title: 'Irresistible Dog Treats & Biscuits for Training ',
+    description: 'Variety of dog biscuits and treats, perfect for rewarding your furry friend during training.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog biscuits,dog treat biscuits,dog treats,best treats for puppies,dog training treats,healthy dog treats,best dog treats for training'
+      }
+    }
+  }
+  const BedsCagesmeta = {
+  title: 'Premium Dog Beds, Crates, and Carriers',
+    description: 'Provide your furry friend with the ultimate in comfort and security with our range of top-quality dog beds, cages, carriers, and kennels',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog beds,dog cages,dog carriers,large dog crate,pet crate,dog kennel,large dog bed,best dog beds,orthopedic dog bed,xxl dog crate,outdoor dog kennel,puppy cage'
+      }
+    }
+  }
+  const BowlsFeedersmeta = {
 
-  // useEffect(() => {
-  //   const storedVisibility = localStorage.getItem("totalLengthVisibility");
-  //   if (storedVisibility) {
-  //     setTotalLengthVisible(JSON.parse(storedVisibility));
-  //   }
-  // }, []);
+    title: 'Premium Dog Bowls, Feeders, and Dishes for Every Pup Palate',
+    description: 'pups dining experience with our exquisite collection of dog bowls, feeders, and dishes designed for both style and functionality',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog bowls,dog feeders,dog dishes,automatic dog feeder,slow feeder dog bowl,elevated dog bowls,ceramic dog bowls,dog water bowl,dog feeder,dog food dispenser,stainless steel dog bowls,dog food bowls'
+      }
+    }
+  }
+  const Groomingmeta = {
 
-  // useEffect(() => {
-  //   if (prevTotalLength.current < totalLength) {
-  //     setTotalLengthVisible(true);
-  //     setCustomCount(totalLength);
-  //     localStorage.setItem("customCount", totalLength.toString());
-  //   }
-  //   prevTotalLength.current = totalLength;
-  // }, [totalLength]);
+    title: 'Premium Dog Grooming Tools | Brushes, Nail Clippers, Combs & More',
+    description: 'Explore top-quality dog grooming essentials like brushes, nail clippers, slicker brushes, combs, and more.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog brush,dog nail cutter,dog combs,dog slicker brush,dog gloves,dog nail clippers,dog toothbrush,slicker brush,deshedding brush,flea comb for dogs,dog brush for shedding'
+      }
+    }
+  }
+  const HealthCaremeta = {
+    
+    title: 'Solutions for Dog Flea and Tick Control, Diapers, and Treatment',
+    description: 'Discover reliable products for dog flea and tick control, including treatments, medications, and preventive measures.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'dog flea,dog tick,dog diapers,tick treatment for dogs,tick med for dogs,dogs and fleas,canine diapers'
+      }
+    }
+  }
+  // seo Keywords end
+
+  // Seo cat Keywords start
+  
+  const CatFoodmeta = {
+    title: 'Choosing the Best Cat Food: A Guide to Raw, Fresh, and Dry Options Including Royal Canin Wet Cat Food',
+    description: 'Discover the optimal nutrition for your feline friend with our comprehensive guide to cat food options. Explore the benefits of raw, fresh, and dry cat food, and learn about the excellence of Royal Canins wet cat food.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'best cat food,raw cat food,fresh cat food,dry cat food,Best dry cat food,royal cani wet cat food'
+      }
+    }
+  }
+  const CatCollarLeashesMoremeta= {
+    title: 'Purr-fect Companions: Exploring Cat Collars, Leashes, and Harness Sets for Safe Adventures',
+    description: 'Explore the outdoors with our collection of cat collars, leashes, and harness sets, providing comfort and security for your feline friend.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'cat collar and leash,cat leashes and harness,cat harness and collar,leash and collar for cats'
+      }
+    }
+  }
+  const CatLitterScoopermeta= {
+    
+    title: 'Simplify Cat Care with Scoop Away Litter, ScoopFree Trays, and Convenient Cat Litter Scoops',
+    description: 'Our top-quality products, including Scoop Away and ScoopFree litter boxes, streamline cat litter routines, keep spaces clean, and make cat care a breeze.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'scoop away cat litter,scoop free litter box tray,cat litter scoop'
+      }
+    }
+  }
+  const CatToysmeta= {
+    title: 'Engage and Entertain: Interactive Cat Toys for Indoor Fun!',
+    description: 'Our interactive cat toys, including a remote control mouse, provide endless entertainment for indoor cats, eliminating boredom and providing a perfect playmate.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'interactive cat toys for indoor cats,fun cat toys,toys for bored cats,remote control mouse for cats'
+      }
+    }
+  }
+  const CatTreatsmeta= {
+
+    title: 'Spoil Your Feline Friend with Delightful Treats: Crunchy, Creamy, and Wellness Kittles Cat Treats, Plus Raw Meaty Bones',
+    description: 'Our cat treats range from crunchy and creamy to health-conscious Wellness Kittles, offering natural, wholesome options like raw meaty bones, ensuring your cats optimal snack experience.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'crunchy cat treats,creamy cat treats,wellness kittles cat treats,raw meaty bones'
+      }
+    }
+  }
+  const CatShampooPerfumesmeta= {
+
+    title: 'Pamper Your Purr-fect Companion: Cat Deodorants, Perfumes, Shampoos, and Wild Stone Fragrances',
+    description: 'Our collection of cat deodorants, perfumes, and shampoos, including Wild Stones luxurious scents, offers a luxurious grooming experience for the discerning cat owner.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'Cat deodrant & perfumes,Cat shampoo & perfumes,wild stone deodorants'
+      }
+    }
+  }
+  const CatClothingAccessoriesmeta= {
+  title: 'Purr-fectly Chic: Cat in the Hat Inspired Dress for Feline Fashionistas',
+    description: 'Our Cat in the Hat dress is a whimsical pet-inspired fashion piece that combines feline charm with stylish flair, and comes with a pet odor eliminator for a fresh home.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'Clothing & Accessories,cat and the hat dress,best pet odor eliminator,tain & odor remover'
+      }
+    }
+  }
+  const CatBowlsFeedersmeta= {
+
+    title: 'Elevate Mealtime: Stylish and Functional Cat Bowls for Fast Eaters',
+    description: 'Elevated ceramic cat bowls, designed for fast eaters, offer a chic and practical dining solution for your cats meals.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'elevated cat bowls,Cat bowls for fast eaters,elevated cat food bowl,Water feeder for cat,elevated ceramic cat bowls'
+      }
+    }
+  }
+  const CatGroomingmeta= {
+
+    title: 'Feline Fabulous: Top Cat Brushes for Shedding and Grooming',
+    description: 'Explore our collection of cat combs and brushes for effective shedding control and pampered grooming, keeping your cats coat sleek and shiny.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'cat hair brush for shedding,grooming brush for cats,cat combs and brushes,hair brush for cats'
+      }
+    }
+  }
+  const CatHealthCaremeta= {
+    
+    title: 'Top Cat Nutrition: Best Feline Supplements for Health and Vitality',
+    description: 'Our selection of healthy cat supplements includes essential vitamins and comprehensive feline nutrition, ensuring your cats well-being and a happy and thriving companion.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'best nutritional supplement for cats,healthy supplements for cats,feline vitamin supplement,cat vitamins & supplements'
+      }
+    }
+  }
+
+const CatBedsCagesScratcherCratesmeta= {
+    
+    title: 'Cozy Cat Comfort: Heated Bed, Large Litter Mat, and Warming Pad Essentials',
+    description: 'Our heated cat bed, spacious litter mat, and warming pad provide your feline friend with comfort, warmth, and cleanliness, ensuring a happy and content cat.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'heated cat bed,cat litter mat large,cat litter box mat,litter catching mat,modern cat bed'
+      }
+    }
+  }
+  // seo cat Keywords end
 
   useEffect(() => {
     // fetchBrands();
@@ -556,11 +764,13 @@ function Newheader(props) {
                       {/* <Col lg={6} className="p-0">
                         <Row> */}
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...DogFoodmeta}>
                         <header>
                           <Link to={`/sub-categoriesHeading/${`Food`}/${1}`}>
                             Dog Food
                           </Link>
                         </header>
+                          </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -588,6 +798,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...BedsCagesmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Beds Cages, Scratcher & Crates`}/${1}`}
@@ -595,6 +806,7 @@ function Newheader(props) {
                             Beds Cages & Carriers
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -623,6 +835,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...Collarmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Collar Leashes & More`}/${1}`}
@@ -630,6 +843,7 @@ function Newheader(props) {
                             Collar Leashes & More
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -657,6 +871,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                        <DocumentMeta {...ShampooPerfumesmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Shampoo & Perfumes`}/${1}`}
@@ -664,6 +879,7 @@ function Newheader(props) {
                             Shampoo & Perfumes
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -691,11 +907,13 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...TreatsChewsmeta}>
                         <header>
                           <Link to={`/sub-categoriesHeading/${`Treats`}/${1}`}>
                             Treats & Chews
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -723,11 +941,13 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...Toysmeta}>
                         <header>
                           <Link to={`/sub-categoriesHeading/${`Toys`}/${1}`}>
                             Toys
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -758,6 +978,7 @@ function Newheader(props) {
                         <Row> */}
 
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...TrainingAccessoriesmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Training & Accessories`}/${1}`}
@@ -765,6 +986,7 @@ function Newheader(props) {
                             Training & Accessories
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -792,6 +1014,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...BowlsFeedersmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Bowls & Feeders`}/${1}`}
@@ -799,6 +1022,7 @@ function Newheader(props) {
                             Bowls & Feeders
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -826,6 +1050,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...Groomingmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Grooming`}/${1}`}
@@ -833,6 +1058,7 @@ function Newheader(props) {
                             Grooming
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -860,6 +1086,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...HealthCaremeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Health Care`}/${1}`}
@@ -867,6 +1094,7 @@ function Newheader(props) {
                             Health Care
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -915,11 +1143,13 @@ function Newheader(props) {
                       {/* <Col lg={6} className="p-0">
                         <Row> */}
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatFoodmeta}>
                         <header>
                           <Link to={`/sub-categoriesHeading/${`Food`}/${2}`}>
                             Cat Food
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -947,6 +1177,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatCollarLeashesMoremeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Collar Leashes & More`}/${2}`}
@@ -954,6 +1185,7 @@ function Newheader(props) {
                             Collar Leashes & More
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -982,6 +1214,7 @@ function Newheader(props) {
                       </Col>
 
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatLitterScoopermeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Cat Litter & Scooper`}/${2}`}
@@ -989,6 +1222,7 @@ function Newheader(props) {
                             Cat Litter & Scooper
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1016,11 +1250,13 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatToysmeta}>
                         <header>
                           <Link to={`/sub-categoriesHeading/${`Toys`}/${2}`}>
                             Toys
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1050,11 +1286,13 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row> */}
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatTreatsmeta}>
                         <header>
                           <Link to={`/sub-categoriesHeading/${`Treats`}/${2}`}>
                             Treats
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1082,6 +1320,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatShampooPerfumesmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Shampoo & Perfumes`}/${2}`}
@@ -1089,6 +1328,7 @@ function Newheader(props) {
                             Shampoo & Perfumes
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1116,6 +1356,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatClothingAccessoriesmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Clothing & Accessories`}/${2}`}
@@ -1123,6 +1364,7 @@ function Newheader(props) {
                             Clothing & Accessories
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1150,6 +1392,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatBowlsFeedersmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Bowls & Feeders`}/${2}`}
@@ -1157,6 +1400,7 @@ function Newheader(props) {
                             Bowls & Feeders
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1184,6 +1428,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatGroomingmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Grooming`}/${2}`}
@@ -1191,6 +1436,7 @@ function Newheader(props) {
                             Grooming
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1218,6 +1464,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
+                      <DocumentMeta {...CatHealthCaremeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Health Care`}/${2}`}
@@ -1225,6 +1472,7 @@ function Newheader(props) {
                             Health Care
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -1252,6 +1500,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={3} sm={12} className="mga-he">
+                      <DocumentMeta {...CatBedsCagesScratcherCratesmeta}>
                         <header>
                           <Link
                             to={`/sub-categoriesHeading/${`Beds Cages, Scratcher & Crates`}/${2}`}
@@ -1259,6 +1508,7 @@ function Newheader(props) {
                             Beds Cages, Scratcher & Crates
                           </Link>
                         </header>
+                        </DocumentMeta>
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {

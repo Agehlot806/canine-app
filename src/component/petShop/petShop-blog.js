@@ -36,17 +36,26 @@ function PetshopBlog() {
 
 
   const renderBlogDescription = (description) => {
+    // Remove HTML tags
+    const removeHTMLTags = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || '';
+    };
+  
+    // Remove HTML tags and attributes
+    const plainTextDescription = removeHTMLTags(description);
+  
     const maxCharacters = 350; // Number of characters to show initially
-
-    if (description.length <= maxCharacters) {
-      return <p>{description}</p>; // Show the full description if it's short
+  
+    if (plainTextDescription.length <= maxCharacters) {
+      return <p>{plainTextDescription}</p>; // Show the full description if it's short
     }
-
-    const truncatedDescription = description.slice(0, maxCharacters);
-
+  
+    const truncatedDescription = plainTextDescription.slice(0, maxCharacters);
+  
     return (
       <>
-        <p>{truncatedDescription}.......</p>
+        <p>{truncatedDescription}......</p>
       </>
     );
   };

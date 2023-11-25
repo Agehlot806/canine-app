@@ -1144,6 +1144,7 @@ function Petcategory() {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);

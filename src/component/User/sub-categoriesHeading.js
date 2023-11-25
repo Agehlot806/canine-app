@@ -6,8 +6,22 @@ import Footer from '../../directives/footer';
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import loadinggif from "../../assets/images/video/loading.gif";
+import DocumentMeta from "react-document-meta";
 
 function SubcategoriesHeading() {
+
+    const meta = {
+        title: 'About Techpanda It services|',
+        description: '',
+        canonical: '',
+        meta: {
+          charset: 'utf-8',
+          name: {
+            keywords: 'About Techpanda It services, a react js development company, who we are, what we do'
+          }
+        }
+      }
+
     const [dogsubcategories, setdogsubcategories] = useState("");
     const [homebanner, sethomebanner] = useState([]);
     const { heading ,id} = useParams()
@@ -62,6 +76,7 @@ function SubcategoriesHeading() {
     const allowedHeadings = ["Food", "Treats", "Toys", "and many more"];
     return (
         <>
+        <DocumentMeta {...meta}>
             <Newheader />
             {loading ? (
                 <section className="section-padding mt-3 mb-3">
@@ -129,6 +144,7 @@ function SubcategoriesHeading() {
                 </>
             )}
             <Footer />
+            </DocumentMeta>
         </>
     )
 }

@@ -1130,10 +1130,11 @@ function SubcategoriesProduct() {
     }
   };
 
-  const quickViewClear = () => {
+   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
 
   const handleResetClick = () => {

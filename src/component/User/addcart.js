@@ -722,7 +722,6 @@ function Addcart() {
                           >
                             <h2>{item.name}</h2>
                             {item.variant ? (
-                              // <p>{`Selected Variant: ${item.variant.replace(/\\/g, "").replace(/"/g, "")}`}</p>
                               <p>{`Selected Variant: ${item.variant}`}</p>
                             ) : null}
                           </Col>

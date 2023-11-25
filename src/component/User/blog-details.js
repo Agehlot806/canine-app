@@ -691,10 +691,11 @@ function Blogdetails() {
       console.log(error);
     }
   };
-  const quickViewClear = () => {
+   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);
@@ -843,6 +844,19 @@ function Blogdetails() {
       </>
     );
   };
+
+  const renderBlogDescriptionHTML = (description) => {
+    const removeHTMLTags = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const textContent = doc.body.textContent || '';
+      return textContent.trim(); 
+    };
+    const plainTextDescription = removeHTMLTags(description);
+    return plainTextDescription;
+  };
+  
+  
+
   return (
     <>
       <Toaster />
@@ -874,7 +888,8 @@ function Blogdetails() {
                                   item.image
                                 }
                               />
-                              <p>{item.description}</p>
+                              <p>{renderBlogDescriptionHTML(item.description)}</p>
+                              {/* <p>{item.description}</p> */}
                             </div>
                           </div>
                         </Col>

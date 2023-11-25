@@ -2876,7 +2876,7 @@ a.placDate {
 .blog-card-are img {
   width: 100%;
   height: 300px;
-  object-fit: cover;
+  object-fit: fill;
   margin: 20px 0;
 }
 
@@ -4355,4 +4355,13 @@ button.pyleeteclose {
   height: 218px;
   border-radius: 40px;
   object-fit: cover;
+}
+
+
+i.quickarea {
+  background: red;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 22px;
 }

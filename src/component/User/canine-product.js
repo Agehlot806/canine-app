@@ -1097,10 +1097,11 @@ function Canineproduct(props) {
       console.log(error);
     }
   };
-  const quickViewClear = () => {
+   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);

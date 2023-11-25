@@ -173,14 +173,14 @@ function PetshopproductDetails() {
             : productDetails?.stock,
           return_order: productDetails?.returnable || "yes",
           // price: selectedVariantPrice,
-          price:
-            formattedAmount === "0"
-              ? productDetails?.whole_price.toString()
-              : formattedAmount,
+          price: calculatedPrice === 0
+            ? parseInt(productDetails?.whole_price)
+            : parseInt(calculatedPrice),
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
           seller_id: salesmanId ? Number(salesmanId) : "",
+          orderamountwithquantity: parseInt(formattedAmount),
         }
       );
 
@@ -252,7 +252,7 @@ function PetshopproductDetails() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-          productDetails.image
+        productDetails.image
       );
     }
   }, [productDetails]);
@@ -260,7 +260,7 @@ function PetshopproductDetails() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.images[index]
+      productDetails.images[index]
     );
   };
 
@@ -331,7 +331,10 @@ function PetshopproductDetails() {
   const Amount = (
     wholesellervariationprice * (quantity > 1 ? quantity : 1)
   ).toFixed(2);
-  const formattedAmount = Number(productDetails.whole_price).toString();
+  const formattedAmount = Number(Amount).toString();
+  const calculatedPrice = selectedVariantPrice
+    ? selectedVariantPrice
+    : productDetails?.whole_price;
   // const calculatedPrice = selectedVariantPrice
   // ? selectedVariantPrice -
   //   (selectedVariantPrice * productDetails.discount) / 100
@@ -821,6 +824,7 @@ function PetshopproductDetails() {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);
@@ -1071,8 +1075,8 @@ function PetshopproductDetails() {
                                         {item.stock !== 0 ? (
                                           <div
                                             className={`tab-variations ${selectedVariant === item.type
-                                                ? "active"
-                                                : ""
+                                              ? "active"
+                                              : ""
                                               }`}
                                             onClick={() => {
                                               setSelectedVariant(item.type);
@@ -1084,6 +1088,7 @@ function PetshopproductDetails() {
                                               );
                                             }}
                                           >
+                                            {console.log('item.wholeprice: ', item.wholeprice)}
                                             {item.type}
                                           </div>
                                         ) : (
@@ -1135,10 +1140,10 @@ function PetshopproductDetails() {
                           isNaN(formattedAmount) ? 0 : formattedAmount
                         }`}</h5> */}
                             <h5>
-                              ₹
-                              {isNaN(productDetails.whole_price * quantity)
-                                ? 0
-                                : productDetails.whole_price * quantity}
+                              
+                              {`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}
                             </h5>
                           </Col>
                           {/* <Col lg={5}>
@@ -1515,8 +1520,8 @@ function PetshopproductDetails() {
                                             {item.stock !== 0 ? (
                                               <div
                                                 className={`tab-variations ${selectedVariant === item.type
-                                                    ? "active"
-                                                    : ""
+                                                  ? "active"
+                                                  : ""
                                                   }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item.type);
@@ -1990,8 +1995,8 @@ function PetshopproductDetails() {
                                 Select Address{" "}
                                 <i
                                   className={`fa ${addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
+                                    ? "fa-arrow-up"
+                                    : "fa-arrow-down"
                                     }`}
                                   aria-hidden="true"
                                 ></i>
@@ -2097,8 +2102,8 @@ function PetshopproductDetails() {
                                   {item.stock !== 0 ? (
                                     <div
                                       className={`tab-variations ${selectedVariant === item.type
-                                          ? "active"
-                                          : ""
+                                        ? "active"
+                                        : ""
                                         }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);

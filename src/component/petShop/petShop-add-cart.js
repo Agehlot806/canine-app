@@ -828,7 +828,6 @@ function PetshopAddCart() {
                         className="align-self-center addCARThead"
                       >
                         <h2>{item.item_name}</h2>
-                        {/* <p>Selected Variant: {item.variant}</p> */}
                         {
                           item.variant ? (
                             <p>{`Selected Variant: ${item.variant
@@ -844,6 +843,8 @@ function PetshopAddCart() {
                         className="align-self-center addCARThead"
                       >
                         <h3>₹{formatPrice(item.price) * item.quantity}</h3>
+                        {console.log('item ', item)}
+                        {/* <h3>₹{formatPrice(item.orderamountwithquantity)}</h3> */}
                         {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />

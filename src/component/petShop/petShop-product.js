@@ -327,7 +327,9 @@ function Petshopproduct(props) {
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price: calculatedPrice === 0
+          ? parseInt(productDetails?.whole_price)
+          : parseInt(calculatedPrice),
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
@@ -336,6 +338,7 @@ function Petshopproduct(props) {
             ? selectedVariantStock
             : productDetails?.stock,
           return_order: productDetails?.returnable || "yes",
+          orderamountwithquantity:formattedAmount,
         }
       );
 
@@ -720,7 +723,11 @@ function Petshopproduct(props) {
     2
   );
   const formattedAmount = Number(Amount).toString();
-
+  // const formattedAmount = Number(productDetails.whole_price).toString();
+  
+  const calculatedPrice = selectedVariantPrice
+  ? selectedVariantPrice 
+  : productDetails?.whole_price;
   const savedAmount = Math.floor(
     productDetails.whole_price * quantity - Amount
   ).toFixed(2);
@@ -1067,7 +1074,9 @@ function Petshopproduct(props) {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price: Amount,
+      price: calculatedPrice === 0
+          ? parseInt(productDetails?.whole_price)
+          : parseInt(calculatedPrice),
       quantity: quantity,
       tax_amount: Math.floor(Amount * 0.05),
       discount_on_item: "",
@@ -1145,10 +1154,11 @@ function Petshopproduct(props) {
       console.log(error);
     }
   };
-  const quickViewClear = () => {
+   const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
+    setQuantity(1);
   };
   const handleResetClick = () => {
     setfirst_name(null);
@@ -2330,7 +2340,7 @@ function Petshopproduct(props) {
                     <div className="address">
                       <h3>Address</h3>
                       <div className="address-card">
-                        {addresslist && addresslist.length > 1 ? (
+                        {addresslist && addresslist.length > 0 ? (
                           addresslist.map(
                             (item, index) =>
                               index === 0 && (
@@ -2505,9 +2515,9 @@ function Petshopproduct(props) {
                                           setSelectedVariant(item.type);
                                           setSelectedVariantPrice(
                                             item.wholeprice
-                                          ); // Store the price in state
-                                        }}
-                                      >
+                                            ); // Store the price in state
+                                          }}
+                                          >
                                         {item.type}
                                       </div>
                                     ) : (
@@ -3063,17 +3073,23 @@ function Petshopproduct(props) {
             <div className="modal-body">
               <div className="payment-done">
                 <img src={paydone} />
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesettingLorem Ipsum is simply dummy text of the printing
-                  and typesetting
-                </p>
-                <Button
+                <p>Please Confirm to place order.</p>
+                {/* <Button
                   data-dismiss="modal"
                   aria-label="Close"
                   onClick={handleSendRequest}
                 >
                   <Link to="/petShop-shipping">Done</Link>
+                </Button> */}
+                 <Button
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={handleSendRequest}
+                >
+                  <Link to="/petShop-shipping">Place Order</Link>
+                </Button>
+                <Button data-dismiss="modal">
+                  <Link>Close</Link>
                 </Button>
               </div>
             </div>
