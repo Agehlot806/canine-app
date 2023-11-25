@@ -7,8 +7,21 @@ import strings from "../language";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../Constant/Index";
 import { toast } from "react-hot-toast";
+import DocumentMeta from "react-document-meta";
 
 function Contact() {
+  const meta = {
+    
+    title: 'Canin Products - Contact Us for Pawsitively Great Service',
+    description: 'Have questions or inquiries? Reach out to us for top-notch pet care services. Your pets happiness and well-being are our priority.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'Pet care contact,Contact information,Reach out for pet services,Inquiries and appointments,Customer support for pet care,Grooming appointment queries,Dog walking schedule inquiries,Pet sitting arrangements contact,Training program information,Health and wellness services questions,Pet care assistance,Customer service for pet owners,Get in touch with us,Contact details for pet services,Pet care support '
+      }
+    }
+  }
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -88,6 +101,7 @@ function Contact() {
   };
   return (
     <>
+    <DocumentMeta {...meta}>
       <Newheader />
       <Container fluid className="p-0">
         <div className="all-bg">
@@ -2125,6 +2139,7 @@ function Contact() {
       </section>
 
       <Footer />
+      </DocumentMeta>
     </>
   );
 }

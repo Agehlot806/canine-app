@@ -10,8 +10,23 @@ import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { Link } from "react-router-dom";
 import loadinggif from "../../assets/images/video/loading.gif";
+import DocumentMeta from "react-document-meta";
 
 function Service() {
+
+  const meta = {
+  
+    title: 'Canin Products - Services for Grooming, Walking, Sitting, Training, and Health & Wellness',
+    description: 'Our premium services encompass grooming sessions that leave your furry friends looking and feeling fabulous, invigorating walks, attentive sitting for those times your away, expert training to nurture good behavior, and dedicated health and wellness checks.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'Pet grooming,Dog walking services,Pet sitting,Professional pet training,Pet health and wellness,Comprehensive pet care,Grooming specialists,Experienced pet sitters,Certified dog trainers,Holistic pet health,Pet care packages,Tailored grooming solutions,Daily dog walks,In-home pet sitting,Positive reinforcement training'
+      }
+    }
+  }
+
   const [allservice, setallservice] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -40,6 +55,7 @@ function Service() {
   };
   return (
     <>
+     <DocumentMeta {...meta}>
       <Newheader />
       {loading ? (
         <section className="section-padding mt-3 mb-3">
@@ -159,6 +175,7 @@ function Service() {
         </>
       )}
       <Footer />
+      </DocumentMeta>
     </>
   );
 }

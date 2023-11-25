@@ -70,13 +70,14 @@ const clinetreview = {
 function Home(props) {
 
   const meta = {
-    title: 'About Techpanda It services|',
-    description: '',
+    
+    title: 'Canin Products - Pet Care Shop for Premium Dog Care Products',
+    description: 'From grooming essentials to health supplements, our curated selection of dog care products ensures your pup receives the finest care. Discover a range of shampoos, conditioners, toys, treats, and more, all designed to cater to the specific needs of your canine companion.',
     canonical: '',
     meta: {
       charset: 'utf-8',
       name: {
-        keywords: 'About Techpanda It services, a react js development company, who we are, what we do'
+        keywords: 'pet care shop,dog care products '
       }
     }
   }

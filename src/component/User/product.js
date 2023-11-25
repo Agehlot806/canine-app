@@ -25,6 +25,7 @@ import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
 import loadinggif from "../../assets/images/video/loading.gif";
+import DocumentMeta from "react-document-meta";
 // import Lightbox from "react-image-lightbox";
 
 const clinetreview = {
@@ -45,6 +46,19 @@ const clinetreview = {
   },
 };
 function Product(props) {
+
+  const meta = {
+    
+    title: 'Canin Products - Transform your pet care routine with our products',
+    description: 'Discover the difference in your pet care experience and watch your canine companion thrive with the excellence that Canin Products bring to your home.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'Canin pet care,Premium dog products,Pet care essentials,Canin dog food,Grooming solutions,Canin pet accessories,Nutrient-rich dog meals,Canin grooming essentials,pet nutrition,Canin pet wellness,Dog health supplements,Canin canine care,pet care,Canin pet treats,Quality dog toys,'
+      }
+    }
+  }
   const { id } = useParams();
   const [expandedDescription, setExpandedDescription] = useState({});
   const [categories, setcategories] = useState([]);
@@ -1267,6 +1281,7 @@ function Product(props) {
 
   return (
     <>
+    <DocumentMeta {...meta}>
       <Toaster />
       <Newheader />
       {loading ? (
@@ -3425,6 +3440,7 @@ function Product(props) {
           </div>
         </div>
       </div>
+      </DocumentMeta>
     </>
   );
 }

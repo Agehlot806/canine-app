@@ -23,6 +23,7 @@ import ReactPaginate from "react-paginate";
 import { usePagination } from "../../Context/PaginationContext";
 import loadinggif from "../../assets/images/video/loading.gif";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import DocumentMeta from "react-document-meta";
 
 const clinetreview = {
   desktop: {
@@ -43,6 +44,20 @@ const clinetreview = {
 };
 
 function Canineproduct(props) {
+
+  const meta = {
+    
+    title: 'Canin Products - Catering to Your Pet’s Nutritional Needs',
+    description: 'We offer a wide range of high-quality pet food products that cater to the nutritional needs of your furry friends.',
+    canonical: '',
+    meta: {
+      charset: 'utf-8',
+      name: {
+        keywords: 'Canin Products, pet food, dog food, cat food, nutritional needs, healthy, happy, high-quality, finest ingredients, essential nutrients'
+      }
+    }
+  }
+
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
@@ -1266,6 +1281,7 @@ function Canineproduct(props) {
   };
   return (
     <>
+    <DocumentMeta {...meta}>
       <Toaster />
       <Newheader />
       {loading ? (
@@ -3217,6 +3233,7 @@ function Canineproduct(props) {
           </div>
         </div>
       </div>
+      </DocumentMeta>
     </>
   );
 }
