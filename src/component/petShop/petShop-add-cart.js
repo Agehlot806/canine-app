@@ -213,8 +213,7 @@ function PetshopAddCart() {
       toast.error("Stock not avilable");
     } else {
       updatedCart[index].quantity += 1;
-      // updatedCart[index].price +=
-      //   updatedCart[index].price * (updatedCart[index].quantity - 1);
+      // updatedCart[index].price +=zzzzzz
 
       updatedSendCart[index].quantity += 1;
 
@@ -707,8 +706,8 @@ function PetshopAddCart() {
 
   const payletterclose = () => {
     setSelectedOption("Select Payment Time");
-    setSelectedOptiontwo( "Select Payment Mode")
-  }
+    setSelectedOptiontwo("Select Payment Mode");
+  };
 
   const handleOptionSelecttwo = (option, mode) => {
     if (option !== selectedOptiontwo) {
@@ -842,9 +841,8 @@ function PetshopAddCart() {
                         xs={6}
                         className="align-self-center addCARThead"
                       >
-                        <h3>₹{formatPrice(item.price) * item.quantity}</h3>
-                        {console.log('item ', item)}
-                        {/* <h3>₹{formatPrice(item.orderamountwithquantity)}</h3> */}
+                        <h3>₹{formatPrice(item?.price * item?.quantity)}</h3>
+                        {console.log("item?.price: ", item?.price)}
                         {/* <div className="quantity-btn">
                       <button onClick={handleIncrementone}>
                         <i className="fa fa-minus" />
@@ -1439,7 +1437,6 @@ function PetshopAddCart() {
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-        
             <div className="modal-body">
               <Container>
                 <div className="oder-detail-card">
@@ -1723,19 +1720,24 @@ function PetshopAddCart() {
                           </tbody>
                         </Table>
                         <p className="d-flex justify-content-center">
-                          (Bill will be generated Today You Pay After {selectedOption} )
+                          (Bill will be generated Today You Pay After{" "}
+                          {selectedOption} )
                         </p>
                       </div>
-
                     </Col>
                   </Row>
                 </div>
               </Container>
-              <button onClick={payletterclose} className="pyleeteclose" type="button" data-dismiss="modal" aria-label="Close">
-        Close
-      </button>
+              <button
+                onClick={payletterclose}
+                className="pyleeteclose"
+                type="button"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                Close
+              </button>
             </div>
-            
           </div>
         </div>
       </div>
@@ -1753,9 +1755,7 @@ function PetshopAddCart() {
             <div className="modal-body">
               <div className="payment-done">
                 <img src={paydone} />
-                <p>
-                Please Confirm to place order.
-                </p>
+                <p>Please Confirm to place order.</p>
                 <Button
                   data-dismiss="modal"
                   aria-label="Close"
