@@ -25,9 +25,9 @@ const addMonths = (date, months) => {
 function Servicedate() {
   const { id } = useParams();
   const [slotday, setSlotDay] = useState([]);
-  
+
   const [timingSlot, setTimingSlot] = useState([]);
-  
+  const [hoveredDate, setHoveredDate] = useState(null);
   const [bookingSlot, setBookingSlot] = useState([]);
   const [mobile, setMobile] = useState("");
   const [petType, setPetType] = useState([]);
@@ -198,13 +198,18 @@ function Servicedate() {
               </div>
               <div className="service-dateCart">
                 <div className="month-name">
-                  {slotday?.length > 1 ? (
+                  {/* {slotday?.length > 1 ? (
                     <h4>
                       {moment(slotday[1].slot_date).format("MMMM Do YYYY").split("", 3)}
                     </h4>
                   ) : (
                     <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
-                  )}
+                  )} */}
+                   {hoveredDate && (
+        <h4>
+          {moment(hoveredDate).format("MMMM Do YYYY").split("", 3)}
+        </h4>
+      )}
                 </div>
                 <div className="sevice-select-date">
                   {/* <DatePicker
@@ -226,7 +231,12 @@ function Servicedate() {
                   <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     {slotday?.length > 0 ? (
                       slotday.map((item, index) => (
-                        <li className="nav-item" key={index}>
+                        <li
+                          className="nav-item"
+                          key={index}
+                          onMouseEnter={() => setHoveredDate(item.slot_date)} // Set the hovered date
+                          onMouseLeave={() => setHoveredDate(null)} // Reset when leaving
+                        >
                           <a
                             className="nav-link"
                             id="Set-tab"
@@ -240,15 +250,14 @@ function Servicedate() {
                             }}
                           >
                             {moment(item.slot_date).format("dddd").split("", 3)} <br />
-                            <span>
-                              {moment(item.slot_date).format("D")}
-                            </span>
+                            <span>{moment(item.slot_date).format("D")}</span>
                           </a>
                         </li>
                       ))
                     ) : (
                       <p className="emptyMSG">{stringes.invalidDate}</p>
                     )}
+
                   </ul>
                 </div>
               </div>
