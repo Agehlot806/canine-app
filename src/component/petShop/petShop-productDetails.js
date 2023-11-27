@@ -174,9 +174,9 @@ function PetshopproductDetails() {
           return_order: productDetails?.returnable || "yes",
           // price: selectedVariantPrice,
           price:
-            formattedAmount === "0"
-              ? productDetails?.whole_price.toString()
-              : formattedAmount,
+            formattedAmount === 0
+              ? parseInt(productDetails?.whole_price)
+              : parseInt(formattedAmount),
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
@@ -638,9 +638,7 @@ function PetshopproductDetails() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
@@ -890,19 +888,19 @@ function PetshopproductDetails() {
           <div className="home-section">
             {homebanner
               ? homebanner.map(
-                (item, index) =>
-                  item.type === "common" && (
-                    <Link to={item.default_link}>
-                      <img
-                        className="partner-img"
-                        src={
-                          "https://canine.hirectjob.in//storage/app/" +
-                          item.image
-                        }
-                      />
-                    </Link>
-                  )
-              )
+                  (item, index) =>
+                    item.type === "common" && (
+                      <Link to={item.default_link}>
+                        <img
+                          className="partner-img"
+                          src={
+                            "https://canine.hirectjob.in//storage/app/" +
+                            item.image
+                          }
+                        />
+                      </Link>
+                    )
+                )
               : null}
           </div>
           <section className="section-padding">
@@ -960,7 +958,7 @@ function PetshopproductDetails() {
                       <div className="needplace">
                         <Row>
                           {productDetails?.images &&
-                            productDetails?.images.length > 0 ? (
+                          productDetails?.images.length > 0 ? (
                             productDetails.images.map((item, index) => (
                               <Col
                                 lg={2}
@@ -1070,10 +1068,11 @@ function PetshopproductDetails() {
                                       >
                                         {item.stock !== 0 ? (
                                           <div
-                                            className={`tab-variations ${selectedVariant === item.type
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
                                                 ? "active"
                                                 : ""
-                                              }`}
+                                            }`}
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
@@ -1153,7 +1152,6 @@ function PetshopproductDetails() {
                       </div>
                     </div>
                     <h5>About Us</h5>
-
 
                     {productDetails ? (
                       <Table responsive>
@@ -1456,7 +1454,7 @@ function PetshopproductDetails() {
                         <img src={singleImage} />
                       </div></Col> */}
                             {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
+                            productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
                                 <Col sm={3} className="mb-3" key={index}>
                                   <div
@@ -1514,10 +1512,11 @@ function PetshopproductDetails() {
                                           <Col lg={5} sm={5} xs={3} key={index}>
                                             {item.stock !== 0 ? (
                                               <div
-                                                className={`tab-variations ${selectedVariant === item.type
+                                                className={`tab-variations ${
+                                                  selectedVariant === item.type
                                                     ? "active"
                                                     : ""
-                                                  }`}
+                                                }`}
                                                 onClick={() => {
                                                   setSelectedVariant(item.type);
                                                   setSelectedVariantPrice(
@@ -1989,10 +1988,11 @@ function PetshopproductDetails() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
+                                  className={`fa ${
+                                    addressContentVisible
                                       ? "fa-arrow-up"
                                       : "fa-arrow-down"
-                                    }`}
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2096,10 +2096,11 @@ function PetshopproductDetails() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
                                           ? "active"
                                           : ""
-                                        }`}
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(
@@ -2172,8 +2173,9 @@ function PetshopproductDetails() {
                                 <p>{`₹${wholesellervariationprice}`}</p>
                               </Col> */}
                               <Col lg={4} sm={4} xs={3}>
-                                <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
+                                <h5>{`₹${
+                                  isNaN(formattedAmount) ? 0 : formattedAmount
+                                }`}</h5>
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
@@ -2268,7 +2270,7 @@ function PetshopproductDetails() {
                 </Container>
                 <div className="homecheckout">
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 10 ? (
+                  productDetails?.stock?.length !== 10 ? (
                     <button
                       data-toggle="modal"
                       data-target="#cod"
@@ -2489,11 +2491,11 @@ function PetshopproductDetails() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (

@@ -327,7 +327,7 @@ function Petshopproduct(props) {
           variant: selectedVariant, // You may need to update this based on your data
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price: parseInt(formattedAmount),
           min_order: productDetails.min_order,
           user_id: storedWholesellerId,
           item_id: productDetails?.id,
@@ -486,9 +486,7 @@ function Petshopproduct(props) {
     updatesubcateIds
   ) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/items/latest`
-      );
+      const response = await axios.get(`${BASE_URL}/items/latest`);
       const products = response.data.data;
       const cateidproduct = products.filter((item) => item.module_id === 1);
       const filteredProducts = applyFilters({
@@ -719,7 +717,7 @@ function Petshopproduct(props) {
   const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(
     2
   );
-  const formattedAmount = Number(Amount).toString();
+  const formattedAmount = parseInt(Amount).toString();
 
   const savedAmount = Math.floor(
     productDetails.whole_price * quantity - Amount
@@ -762,7 +760,7 @@ function Petshopproduct(props) {
   // ===============================================================
   const shippingpage = useNavigate("");
   const [quantitybuynow, setQuantitybuynow] = useState(1);
-  
+
   const handleQuantityChangebuynow = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
     if (!isNaN(newQuantity)) {
@@ -971,12 +969,9 @@ function Petshopproduct(props) {
     }
   };
 
- 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -1205,7 +1200,6 @@ function Petshopproduct(props) {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -1993,7 +1987,6 @@ function Petshopproduct(props) {
                           </div>
                         </div>
                         <h5>About Us</h5>
-                        
 
                         {productDetails ? (
                           <Table responsive>
@@ -2006,12 +1999,11 @@ function Petshopproduct(props) {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                             
+
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
                               </tr>
-                              
                             </tbody>
                           </Table>
                         ) : (
