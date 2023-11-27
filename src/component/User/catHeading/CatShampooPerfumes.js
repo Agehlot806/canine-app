@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Newheader from '../../directives/newheader';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import Footer from '../../directives/footer';
+import Footer from '../../../directives/footer';
 import axios from "axios";
-import { BASE_URL } from "../../Constant/Index";
-import loadinggif from "../../assets/images/video/loading.gif";
+import { BASE_URL } from "../../../Constant/Index";
+import loadinggif from "../../../assets/images/video/loading.gif";
 import DocumentMeta from "react-document-meta";
+import Newheader from "../../../directives/newheader";
 
-function SubcategoriesHeading() {
+function CatShampooPerfumes() {
 
-    const meta = {
-        title: 'About Techpanda It services|',
-        description: '',
-        canonical: '',
+    const CatShampooPerfumesmeta= {
+
+        title: 'Pamper Your Purr-fect Companion: Cat Deodorants, Perfumes, Shampoos, and Wild Stone Fragrances',
+        description: 'Our collection of cat deodorants, perfumes, and shampoos, including Wild Stones luxurious scents, offers a luxurious grooming experience for the discerning cat owner.',
+        canonical: 'http://caninedemo.caninetest.xyz/',
         meta: {
           charset: 'utf-8',
           name: {
-            keywords: 'About Techpanda It services, a react js development company, who we are, what we do'
+            keywords: 'Cat deodrant & perfumes,Cat shampoo & perfumes,wild stone deodorants'
           }
         }
       }
@@ -76,7 +77,7 @@ function SubcategoriesHeading() {
     const allowedHeadings = ["Food", "Treats", "Toys", "and many more"];
     return (
         <>
-        <DocumentMeta {...meta}>
+        <DocumentMeta {...CatShampooPerfumesmeta}>
             <Newheader />
             {loading ? (
                 <section className="section-padding mt-3 mb-3">
@@ -149,4 +150,4 @@ function SubcategoriesHeading() {
     )
 }
 
-export default SubcategoriesHeading
+export default CatShampooPerfumes

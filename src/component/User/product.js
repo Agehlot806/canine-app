@@ -51,7 +51,7 @@ function Product(props) {
     
     title: 'Canine Products - Transform your pet care routine with our products',
     description: 'Discover the difference in your pet care experience and watch your canine companion thrive with the excellence that Canin Products bring to your home.',
-    canonical: '',
+    canonical: 'http://caninedemo.caninetest.xyz/',
     meta: {
       charset: 'utf-8',
       name: {

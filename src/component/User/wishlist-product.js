@@ -174,7 +174,7 @@ function Wishlistproduct() {
                               <div className="product-bag">
                                 <Row>
                                   <Col>
-                                    <p>₹800.00</p>
+                                  <p>₹{parseFloat(item.store_id[0].price)}</p>
                                   </Col>
                                   <Col>
                                     <h5>Save {item.store_id[0].discount}%</h5>

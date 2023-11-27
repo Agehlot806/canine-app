@@ -49,7 +49,7 @@ function Canineproduct(props) {
     
     title: 'Canine Products - Catering to Your Pet’s Nutritional Needs',
     description: 'We offer a wide range of high-quality pet food products that cater to the nutritional needs of your furry friends.',
-    canonical: '',
+    canonical: 'http://caninedemo.caninetest.xyz/',
     meta: {
       charset: 'utf-8',
       name: {

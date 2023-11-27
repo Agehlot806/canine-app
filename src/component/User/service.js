@@ -18,7 +18,7 @@ function Service() {
   
     title: 'Canine Products - Services for Grooming, Walking, Sitting, Training, and Health & Wellness',
     description: 'Our premium services encompass grooming sessions that leave your furry friends looking and feeling fabulous, invigorating walks, attentive sitting for those times your away, expert training to nurture good behavior, and dedicated health and wellness checks.',
-    canonical: '',
+    canonical: 'http://caninedemo.caninetest.xyz/',
     meta: {
       charset: 'utf-8',
       name: {

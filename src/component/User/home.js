@@ -73,7 +73,7 @@ function Home(props) {
     
     title: 'Canine Products - Pet Care Shop for Premium Dog Care Products',
     description: 'From grooming essentials to health supplements, our curated selection of dog care products ensures your pup receives the finest care. Discover a range of shampoos, conditioners, toys, treats, and more, all designed to cater to the specific needs of your canine companion.',
-    canonical: '',
+    canonical: 'http://caninedemo.caninetest.xyz/',
     meta: {
       charset: 'utf-8',
       name: {

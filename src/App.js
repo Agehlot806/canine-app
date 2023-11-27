@@ -91,7 +91,6 @@ import PetshopShopbybrandlist from "./component/petShop/petShop-shop-by-brand-li
 import SubcategoriesProduct from "./component/User/sub-categoriesProduct";
 import PetShopSubcategoriesProduct from "./component/petShop/petShop-SubcategoriesProduct";
 import Transitionhistory from "./component/User/transition-history";
-import SubcategoriesHeading from "./component/User/sub-categoriesHeading";
 import { PaginationProvider } from "./Context/PaginationContext";
 import Privacypolicy from "./component/User/privacy-policy";
 import Disclaimer from "./component/User/disclaimer";
@@ -114,6 +113,27 @@ import Termsofuse from "./component/User/Terms-of-use";
 import PetshopPrivacysecurity from "./component/petShop/petshop-privacy-security";
 import PetshopTermsofuse from "./component/petShop/petshop-Terms-of-use";
 import PetshopReturnsReplacements from "./component/petShop/petshop-Returns-Replacements";
+import Bedscagescarriers from "./component/User/dogHeading/beds-cages-carriers";
+import CollarLeashesMore from "./component/User/dogHeading/CollarLeashesMore";
+import ShampooPerfumes from "./component/User/dogHeading/ShampooPerfumes";
+import TreatsChews from "./component/User/dogHeading/TreatsChews";
+import Toys from "./component/User/dogHeading/Toys";
+import TrainingAccessories from "./component/User/dogHeading/TrainingAccessories";
+import BowlsFeeders from "./component/User/dogHeading/BowlsFeeders";
+import Grooming from "./component/User/dogHeading/Grooming";
+import HealthCare from "./component/User/dogHeading/HealthCare";
+import DogFood from "./component/User/dogHeading/DogFood";
+import CatFood from "./component/User/catHeading/CatFood";
+import CatCollarLeashesMore from "./component/User/catHeading/CatCollarLeashesMore";
+import CatLitterScooper from "./component/User/catHeading/CatLitterScooper";
+import CatToys from "./component/User/catHeading/CatToys";
+import CatTreats from "./component/User/catHeading/CatTreats";
+import CatShampooPerfumes from "./component/User/catHeading/CatShampooPerfumes";
+import ClothingAccessories from "./component/User/catHeading/ClothingAccessories";
+import CatBowlsFeeders from "./component/User/catHeading/CatBowlsFeeders";
+import CatGrooming from "./component/User/catHeading/CatGrooming";
+import CatHealthCare from "./component/User/catHeading/CatHealthCare";
+import CatBedsCagesScratcherCrates from "./component/User/catHeading/CatBedsCagesScratcherCrates";
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -205,9 +225,89 @@ const UsersRoutes = () => {
       <Route path="/help-faqs" element={<Helpandfaqs />} />
       <Route path="/my-orders" element={<Myorder />} />
       <Route
-        path="/sub-categoriesHeading/:heading/:id"
-        element={<SubcategoriesHeading />}
-      />
+              path="/DogFood/:heading/:id"
+              element={<DogFood />}
+            />
+       <Route
+              path="/Bedscagescarriers/:heading/:id"
+              element={<Bedscagescarriers />}
+            />
+            <Route
+              path="/CollarLeashesMore/:heading/:id"
+              element={<CollarLeashesMore />}
+            />
+             <Route
+              path="/ShampooPerfumes/:heading/:id"
+              element={<ShampooPerfumes />}
+            />
+             <Route
+              path="/TreatsChews/:heading/:id"
+              element={<TreatsChews />}
+            />
+            <Route
+              path="/Toys/:heading/:id"
+              element={<Toys />}
+            />
+             <Route
+              path="/TrainingAccessories/:heading/:id"
+              element={<TrainingAccessories />}
+            />
+             <Route
+              path="/BowlsFeeders/:heading/:id"
+              element={<BowlsFeeders />}
+            />
+             <Route
+              path="/Grooming/:heading/:id"
+              element={<Grooming />}
+            />
+            <Route
+              path="/HealthCare/:heading/:id"
+              element={<HealthCare />}
+            />
+            <Route
+              path="/CatFood/:heading/:id"
+              element={<CatFood />}
+            />
+             <Route
+              path="/CatCollarLeashesMore/:heading/:id"
+              element={<CatCollarLeashesMore />}
+            />
+            <Route
+              path="/CatLitterScooper/:heading/:id"
+              element={<CatLitterScooper />}
+            />
+            <Route
+              path="/CatToys/:heading/:id"
+              element={<CatToys />}
+            />
+             <Route
+              path="/CatTreats/:heading/:id"
+              element={<CatTreats />}
+            />
+            <Route
+              path="/CatShampooPerfumes/:heading/:id"
+              element={<CatShampooPerfumes />}
+            />
+            <Route
+              path="/ClothingAccessories/:heading/:id"
+              element={<ClothingAccessories />}
+            />
+             <Route
+              path="/CatBowlsFeeders/:heading/:id"
+              element={<CatBowlsFeeders />}
+            />
+             <Route
+              path="/CatGrooming/:heading/:id"
+              element={<CatGrooming />}
+            />
+             <Route
+              path="/CatHealthCare/:heading/:id"
+              element={<CatHealthCare />}
+            />
+             <Route
+              path="/CatBedsCagesScratcherCrates/:heading/:id"
+              element={<CatBedsCagesScratcherCrates />}
+            />
       <Route path="/transition-history" element={<Transitionhistory />} />
 
       {/* =============== User flow end routing ===================== */}
@@ -447,8 +547,88 @@ const App = () => {
             <Route path="/help-faqs" element={<Helpandfaqs />} />
             <Route path="/my-orders" element={<Myorder />} />
             <Route
-              path="/sub-categoriesHeading/:heading/:id"
-              element={<SubcategoriesHeading />}
+              path="/DogFood/:heading/:id"
+              element={<DogFood />}
+            />
+            <Route
+              path="/Bedscagescarriers/:heading/:id"
+              element={<Bedscagescarriers />}
+            />
+             <Route
+              path="/CollarLeashesMore/:heading/:id"
+              element={<CollarLeashesMore />}
+            />
+             <Route
+              path="/ShampooPerfumes/:heading/:id"
+              element={<ShampooPerfumes />}
+            />
+             <Route
+              path="/TreatsChews/:heading/:id"
+              element={<TreatsChews />}
+            />
+              <Route
+              path="/Toys/:heading/:id"
+              element={<Toys />}
+            />
+             <Route
+              path="/TrainingAccessories/:heading/:id"
+              element={<TrainingAccessories />}
+            />
+             <Route
+              path="/BowlsFeeders/:heading/:id"
+              element={<BowlsFeeders />}
+            />
+             <Route
+              path="/Grooming/:heading/:id"
+              element={<Grooming />}
+            />
+             <Route
+              path="/HealthCare/:heading/:id"
+              element={<HealthCare />}
+            />
+             <Route
+              path="/CatFood/:heading/:id"
+              element={<CatFood />}
+            />
+            <Route
+              path="/CatCollarLeashesMore/:heading/:id"
+              element={<CatCollarLeashesMore />}
+            />
+             <Route
+              path="/CatLitterScooper/:heading/:id"
+              element={<CatLitterScooper />}
+            />
+             <Route
+              path="/CatToys/:heading/:id"
+              element={<CatToys />}
+            />
+            <Route
+              path="/CatTreats/:heading/:id"
+              element={<CatTreats />}
+            />
+            <Route
+              path="/CatShampooPerfumes/:heading/:id"
+              element={<CatShampooPerfumes />}
+            />
+            <Route
+              path="/ClothingAccessories/:heading/:id"
+              element={<ClothingAccessories />}
+            />
+             <Route
+              path="/CatBowlsFeeders/:heading/:id"
+              element={<CatBowlsFeeders />}
+            />
+            <Route
+              path="/CatGrooming/:heading/:id"
+              element={<CatGrooming />}
+            />
+             <Route
+              path="/CatHealthCare/:heading/:id"
+              element={<CatHealthCare />}
+            />
+            <Route
+              path="/CatBedsCagesScratcherCrates/:heading/:id"
+              element={<CatBedsCagesScratcherCrates />}
             />
             <Route path="/transition-history" element={<Transitionhistory />} />
 
