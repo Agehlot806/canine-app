@@ -1784,9 +1784,10 @@ a {
 }
 
 .banner-video video {
-  width: 100%;
-  object-fit: cover;
-  height: 394px;
+  height: 370px;
+    object-fit: cover;
+    width: 100%;
+    min-height: 100%;
 }
 
 .video-content button {
