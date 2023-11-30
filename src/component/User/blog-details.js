@@ -958,14 +958,16 @@ function Blogdetails() {
                             </p>
                           </div>
                           <div className="product-bag">
-                            <Row>
-                              <Col lg={6} sm={6} xs={6}>
-                                <p>₹{item[0]?.price}</p>
-                              </Col>
-                              <Col lg={6} sm={6} xs={6}>
-                                <h5>Save {parseFloat(item[0]?.discount)}%</h5>
-                              </Col>
-                            </Row>
+                          {parseFloat(item.discount) > 0 ? (
+                                  <Row>
+                                    <Col>
+                                      <p>₹{parseFloat(item.price)}</p>
+                                    </Col>
+                                    <Col>
+                                      <h5>Save {parseFloat(item.discount)}%</h5>
+                                    </Col>
+                                  </Row>
+                                ) : null}
                             <Row>
                               <Col
                                 lg={6}
