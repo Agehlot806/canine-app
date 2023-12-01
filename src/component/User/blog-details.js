@@ -311,7 +311,7 @@ function Blogdetails() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -319,7 +319,7 @@ function Blogdetails() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -884,7 +884,7 @@ function Blogdetails() {
                               <h4>{item.title}</h4>
                               <img
                                 src={
-                                  "http://caninedemo.caninetest.xyz//storage/app/public/blog/" +
+                                  "https://canine.hirectjob.in//storage/app/public/blog/" +
                                   item.image
                                 }
                               />
@@ -947,7 +947,7 @@ function Blogdetails() {
                         <Link to={`/product-details/${item[0]?.id}`}>
                           <div className="text-center">
                             <img
-                              src={`http://caninedemo.caninetest.xyz///storage/app/public/product/${item[0]?.image}`}
+                              src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
                               alt={item[0]?.name}
                             />
                           </div>
@@ -1076,7 +1076,7 @@ function Blogdetails() {
                                     >
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1094,18 +1094,18 @@ function Blogdetails() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails?.images?.length
                               ]
                             }
                             prevSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails?.images?.length -
@@ -1620,7 +1620,7 @@ function Blogdetails() {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

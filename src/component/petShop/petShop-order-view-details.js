@@ -182,7 +182,7 @@ function PetshopOrderviewdetails() {
           variant: order?.variation, // You may need to update this based on your data
           // image: productDetails?.image,
           image:
-            // "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+            // "https://canine.hirectjob.in///storage/app/public/product/" +
             order?.item_details[0]?.image,
           quantity: order?.quantity,
           total_quantity: 5,

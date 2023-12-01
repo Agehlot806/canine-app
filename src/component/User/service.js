@@ -18,7 +18,7 @@ function Service() {
   
     title: 'Canine Products - Services for Grooming, Walking, Sitting, Training, and Health & Wellness',
     description: 'Our premium services encompass grooming sessions that leave your furry friends looking and feeling fabulous, invigorating walks, attentive sitting for those times your away, expert training to nurture good behavior, and dedicated health and wellness checks.',
-    canonical: 'http://caninedemo.caninetest.xyz/',
+    canonical: 'https://canine.hirectjob.in/',
     meta: {
       charset: 'utf-8',
       name: {
@@ -85,7 +85,7 @@ function Service() {
                         <Link to={`/service-date/${item.id}`}>
                           <img
                             src={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/service/" +
+                              "https://canine.hirectjob.in//storage/app/public/service/" +
                               item.image
                             }
                           />
@@ -111,7 +111,7 @@ function Service() {
                         <div className="service-card">
                           <img
                             src={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/service/" +
+                              "https://canine.hirectjob.in//storage/app/public/service/" +
                               item.image
                             }
                           />

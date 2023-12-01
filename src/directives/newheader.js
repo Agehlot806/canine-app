@@ -45,7 +45,7 @@ function Newheader(props) {
   // const DogFoodmeta = {
   //   title: 'Canine Culinary Excellence with Fresh, Raw, and Top Dog Food Brands',
   //   description: 'Discover the top dog food brands that prioritize your pets health and happiness',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -56,7 +56,7 @@ function Newheader(props) {
   // const TrainingAccessoriesmeta = {
   //   title: 'Essential Dog Training Equipment, Treats, and Accessories',
   //   description: 'Electronic dog collars for effective communication, indulge your pup with the best dog treats for training success',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -68,7 +68,7 @@ function Newheader(props) {
     
   //   title: 'Collar leashes and more Premium Dog Collar Leashes, Harnesses, and Chains for Every Adventure',
   //   description: 'Explore the best dog harness options, including no-pull designs for a comfortable and controlled walking experience',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -79,7 +79,7 @@ function Newheader(props) {
   // const ShampooPerfumesmeta = {
   //   title: 'Pamper Your Pooch with Premium Dog Shampoo and Perfumes',
   //   description: 'Find the best dog shampoo for various needs, including flea control, dry shampooing, medicated formulas, and soothing options for itchy skin.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -91,7 +91,7 @@ function Newheader(props) {
 
   //   title: 'Engaging Dog Toys for Playful Pups | Interactive, Chew Toys & More',
   //   description: 'Discover a range of dog toys, including chew toys, interactive options, squeaker toys, and engaging choices for puppies.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -103,7 +103,7 @@ function Newheader(props) {
 
   //   title: 'Irresistible Dog Treats & Biscuits for Training ',
   //   description: 'Variety of dog biscuits and treats, perfect for rewarding your furry friend during training.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -114,7 +114,7 @@ function Newheader(props) {
   // const BedsCagesmeta = {
   // title: 'Premium Dog Beds, Crates, and Carriers',
   //   description: 'Provide your furry friend with the ultimate in comfort and security with our range of top-quality dog beds, cages, carriers, and kennels',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -127,7 +127,7 @@ function Newheader(props) {
 
   //   title: 'Premium Dog Bowls, Feeders, and Dishes for Every Pup Palate',
   //   description: 'pups dining experience with our exquisite collection of dog bowls, feeders, and dishes designed for both style and functionality',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -139,7 +139,7 @@ function Newheader(props) {
 
   //   title: 'Premium Dog Grooming Tools | Brushes, Nail Clippers, Combs & More',
   //   description: 'Explore top-quality dog grooming essentials like brushes, nail clippers, slicker brushes, combs, and more.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -151,7 +151,7 @@ function Newheader(props) {
     
   //   title: 'Solutions for Dog Flea and Tick Control, Diapers, and Treatment',
   //   description: 'Discover reliable products for dog flea and tick control, including treatments, medications, and preventive measures.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -166,7 +166,7 @@ function Newheader(props) {
   // const CatFoodmeta = {
   //   title: 'Choosing the Best Cat Food: A Guide to Raw, Fresh, and Dry Options Including Royal Canin Wet Cat Food',
   //   description: 'Discover the optimal nutrition for your feline friend with our comprehensive guide to cat food options. Explore the benefits of raw, fresh, and dry cat food, and learn about the excellence of Royal Canins wet cat food.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -177,7 +177,7 @@ function Newheader(props) {
   // const CatCollarLeashesMoremeta= {
   //   title: 'Purr-fect Companions: Exploring Cat Collars, Leashes, and Harness Sets for Safe Adventures',
   //   description: 'Explore the outdoors with our collection of cat collars, leashes, and harness sets, providing comfort and security for your feline friend.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -189,7 +189,7 @@ function Newheader(props) {
     
   //   title: 'Simplify Cat Care with Scoop Away Litter, ScoopFree Trays, and Convenient Cat Litter Scoops',
   //   description: 'Our top-quality products, including Scoop Away and ScoopFree litter boxes, streamline cat litter routines, keep spaces clean, and make cat care a breeze.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -200,7 +200,7 @@ function Newheader(props) {
   // const CatToysmeta= {
   //   title: 'Engage and Entertain: Interactive Cat Toys for Indoor Fun!',
   //   description: 'Our interactive cat toys, including a remote control mouse, provide endless entertainment for indoor cats, eliminating boredom and providing a perfect playmate.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -212,7 +212,7 @@ function Newheader(props) {
 
   //   title: 'Spoil Your Feline Friend with Delightful Treats: Crunchy, Creamy, and Wellness Kittles Cat Treats, Plus Raw Meaty Bones',
   //   description: 'Our cat treats range from crunchy and creamy to health-conscious Wellness Kittles, offering natural, wholesome options like raw meaty bones, ensuring your cats optimal snack experience.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -224,7 +224,7 @@ function Newheader(props) {
 
   //   title: 'Pamper Your Purr-fect Companion: Cat Deodorants, Perfumes, Shampoos, and Wild Stone Fragrances',
   //   description: 'Our collection of cat deodorants, perfumes, and shampoos, including Wild Stones luxurious scents, offers a luxurious grooming experience for the discerning cat owner.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -235,7 +235,7 @@ function Newheader(props) {
   const CatClothingAccessoriesmeta= {
   title: 'Purr-fectly Chic: Cat in the Hat Inspired Dress for Feline Fashionistas',
     description: 'Our Cat in the Hat dress is a whimsical pet-inspired fashion piece that combines feline charm with stylish flair, and comes with a pet odor eliminator for a fresh home.',
-    canonical: 'http://caninedemo.caninetest.xyz/',
+    canonical: 'https://canine.hirectjob.in/',
     meta: {
       charset: 'utf-8',
       name: {
@@ -247,7 +247,7 @@ function Newheader(props) {
 
   //   title: 'Elevate Mealtime: Stylish and Functional Cat Bowls for Fast Eaters',
   //   description: 'Elevated ceramic cat bowls, designed for fast eaters, offer a chic and practical dining solution for your cats meals.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -259,7 +259,7 @@ function Newheader(props) {
 
   //   title: 'Feline Fabulous: Top Cat Brushes for Shedding and Grooming',
   //   description: 'Explore our collection of cat combs and brushes for effective shedding control and pampered grooming, keeping your cats coat sleek and shiny.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -271,7 +271,7 @@ function Newheader(props) {
     
   //   title: 'Top Cat Nutrition: Best Feline Supplements for Health and Vitality',
   //   description: 'Our selection of healthy cat supplements includes essential vitamins and comprehensive feline nutrition, ensuring your cats well-being and a happy and thriving companion.',
-  //   canonical: 'http://caninedemo.caninetest.xyz/',
+  //   canonical: 'https://canine.hirectjob.in/',
   //   meta: {
   //     charset: 'utf-8',
   //     name: {
@@ -284,7 +284,7 @@ function Newheader(props) {
     
 //     title: 'Cozy Cat Comfort: Heated Bed, Large Litter Mat, and Warming Pad Essentials',
 //     description: 'Our heated cat bed, spacious litter mat, and warming pad provide your feline friend with comfort, warmth, and cleanliness, ensuring a happy and content cat.',
-//     canonical: 'http://caninedemo.caninetest.xyz/',
+//     canonical: 'https://canine.hirectjob.in/',
 //     meta: {
 //       charset: 'utf-8',
 //       name: {
@@ -656,7 +656,7 @@ function Newheader(props) {
                         <img
                           src={
                             profileData?.image
-                              ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                              ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                                 profileData.image
                               : loicon1
                           }
@@ -671,7 +671,7 @@ function Newheader(props) {
                         <img
                           src={
                             profileData?.image
-                              ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                              ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                                 profileData.image
                               : loicon1
                           }
@@ -1645,11 +1645,11 @@ function Newheader(props) {
                       <img
                         src={
                           // profileData?.image
-                          //   ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                          //   ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                           //     profileData.image
                           //   : loicon1
                           profileData.image
-                            ? `http://caninedemo.caninetest.xyz/storage/app/public/profile/${profileData.image}`
+                            ? `https://canine.hirectjob.in/storage/app/public/profile/${profileData.image}`
                             : loicon1
                         }
                         alt="Profile Image"
@@ -1660,11 +1660,11 @@ function Newheader(props) {
                       <img
                         src={
                           // profileData?.image
-                          //   ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                          //   ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                           //   profileData.image
                           //   : loicon1
                           profileData.image
-                            ? `http://caninedemo.caninetest.xyz/storage/app/public/profile/${profileData.image}`
+                            ? `https://canine.hirectjob.in/storage/app/public/profile/${profileData.image}`
                             : loicon1
                         }
                         alt="Profile Image"
@@ -1907,7 +1907,7 @@ function Newheader(props) {
                             <Row>
                               <Col lg={2}>
                                 <img
-                                  src={`http://caninedemo.caninetest.xyz/storage/app/public/notification/${ob.image}`}
+                                  src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
                                 />
                                 {console.log("emage", ob.image)}
                               </Col>
@@ -1935,7 +1935,7 @@ function Newheader(props) {
                           <Row>
                             <Col lg={2}>
                               <img
-                                src={`http://caninedemo.caninetest.xyz/storage/app/public/notification/${ob.image}`}
+                                src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
                               />
                               {console.log("emage", ob.image)}
                             </Col>

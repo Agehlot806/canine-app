@@ -740,7 +740,7 @@ function Petshopproduct(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -748,7 +748,7 @@ function Petshopproduct(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1722,7 +1722,7 @@ function Petshopproduct(props) {
                                     <div className="text-center">
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                          "https://canine.hirectjob.in///storage/app/public/product/" +
                                           item.image
                                         }
                                       />
@@ -1876,7 +1876,7 @@ function Petshopproduct(props) {
                                   >
                                     <img
                                       src={
-                                        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                        "https://canine.hirectjob.in//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2483,7 +2483,7 @@ function Petshopproduct(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

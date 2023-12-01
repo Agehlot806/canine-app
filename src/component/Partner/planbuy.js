@@ -72,7 +72,7 @@ function Planbuy() {
           setPaymentId(response.razorpay_payment_id);
           // Handle the success callback
           window.location.href =
-            "http://caninedemo.caninetest.xyz/store-panel/auth/login";
+            "https://canine.hirectjob.in/store-panel/auth/login";
           console.log("Payment Successful:", response);
         },
 
@@ -131,7 +131,7 @@ function Planbuy() {
                   <img
                     className="partner-img"
                     src={
-                      "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                      "https://canine.hirectjob.in//storage/app/" + item.image
                     }
                   />
                 )
@@ -151,7 +151,7 @@ function Planbuy() {
           <div className="partner-img">
             <img
               src={
-                "http://caninedemo.caninetest.xyz//uploads/subscription//" + image
+                "https://canine.hirectjob.in//uploads/subscription//" + image
               }
             />
           </div>

@@ -257,7 +257,7 @@ function Partneroneshop() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -265,7 +265,7 @@ function Partneroneshop() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -869,7 +869,7 @@ function Partneroneshop() {
             <div className="all-bg">
               <img
                 src={
-                  "http://caninedemo.caninetest.xyz//storage/app/public/store/cover/" +
+                  "https://canine.hirectjob.in//storage/app/public/store/cover/" +
                   state?.item.cover_photo
                 }
               />
@@ -938,7 +938,7 @@ function Partneroneshop() {
                           <div className="text-center">
                             <img
                               src={
-                                "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                "https://canine.hirectjob.in///storage/app/public/product/" +
                                 item.image
                               }
                             />
@@ -1076,7 +1076,7 @@ function Partneroneshop() {
                                     >
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1094,18 +1094,18 @@ function Partneroneshop() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -1953,7 +1953,7 @@ function Partneroneshop() {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

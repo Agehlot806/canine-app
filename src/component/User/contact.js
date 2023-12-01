@@ -14,7 +14,7 @@ function Contact() {
     
     title: 'Canine Products - Contact Us for Pawsitively Great Service',
     description: 'Have questions or inquiries? Reach out to us for top-notch pet care services. Your pets happiness and well-being are our priority.',
-    canonical: 'http://caninedemo.caninetest.xyz/',
+    canonical: 'https://canine.hirectjob.in/',
     meta: {
       charset: 'utf-8',
       name: {

@@ -14,7 +14,7 @@ function CollarLeashesMore() {
     
         title: 'Collar leashes and more Premium Dog Collar Leashes, Harnesses, and Chains for Every Adventure',
         description: 'Explore the best dog harness options, including no-pull designs for a comfortable and controlled walking experience',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -97,7 +97,7 @@ function CollarLeashesMore() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -123,7 +123,7 @@ function CollarLeashesMore() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

@@ -51,7 +51,7 @@ function Product(props) {
     
     title: 'Canine Products - Transform your pet care routine with our products',
     description: 'Discover the difference in your pet care experience and watch your canine companion thrive with the excellence that Canin Products bring to your home.',
-    canonical: 'http://caninedemo.caninetest.xyz/',
+    canonical: 'https://canine.hirectjob.in/',
     meta: {
       charset: 'utf-8',
       name: {
@@ -728,7 +728,7 @@ function Product(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -736,7 +736,7 @@ function Product(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1619,7 +1619,7 @@ function Product(props) {
                       <Link to={`/pet-category/${item.id}`}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                            "https://canine.hirectjob.in//storage/app/public/category/" +
                             item.image
                           }
                         />
@@ -1688,7 +1688,7 @@ function Product(props) {
                               <div className="text-center">
                                 <img
                                   src={
-                                    "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                    "https://canine.hirectjob.in///storage/app/public/product/" +
                                     item.image
                                   }
                                 />
@@ -1922,7 +1922,7 @@ function Product(props) {
                                     >
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1940,18 +1940,18 @@ function Product(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -2800,7 +2800,7 @@ function Product(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

@@ -49,7 +49,7 @@ function Canineproduct(props) {
     
     title: 'Canine Products - Catering to Your Pet’s Nutritional Needs',
     description: 'We offer a wide range of high-quality pet food products that cater to the nutritional needs of your furry friends.',
-    canonical: 'http://caninedemo.caninetest.xyz/',
+    canonical: 'https://canine.hirectjob.in/',
     meta: {
       charset: 'utf-8',
       name: {
@@ -714,7 +714,7 @@ function Canineproduct(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -722,7 +722,7 @@ function Canineproduct(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1688,7 +1688,7 @@ function Canineproduct(props) {
                                   <div className="text-center">
                                     <img
                                       src={
-                                        "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                        "https://canine.hirectjob.in///storage/app/public/product/" +
                                         item.image
                                       }
                                     />
@@ -1864,7 +1864,7 @@ function Canineproduct(props) {
                                     >
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1882,18 +1882,18 @@ function Canineproduct(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -2324,7 +2324,7 @@ function Canineproduct(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

@@ -13,7 +13,7 @@ function CatToys() {
     const CatToysmeta= {
         title: 'Engage and Entertain: Interactive Cat Toys for Indoor Fun!',
         description: 'Our interactive cat toys, including a remote control mouse, provide endless entertainment for indoor cats, eliminating boredom and providing a perfect playmate.',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -96,7 +96,7 @@ function CatToys() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -122,7 +122,7 @@ function CatToys() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

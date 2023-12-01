@@ -13,7 +13,7 @@ function TrainingAccessories() {
     const TrainingAccessoriesmeta = {
         title: 'Essential Dog Training Equipment, Treats, and Accessories',
         description: 'Electronic dog collars for effective communication, indulge your pup with the best dog treats for training success',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -96,7 +96,7 @@ function TrainingAccessories() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -122,7 +122,7 @@ function TrainingAccessories() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

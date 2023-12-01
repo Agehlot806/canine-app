@@ -409,7 +409,7 @@ function Petshopheader(props) {
                     <img
                       src={
                         profileData?.image
-                          ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                          ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                             profileData.image
                           : loicon1
                       }
@@ -424,7 +424,7 @@ function Petshopheader(props) {
                     <img
                       src={
                         profileData?.image
-                          ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                          ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                             profileData.image
                           : loicon1
                       }
@@ -1097,11 +1097,11 @@ function Petshopheader(props) {
                         src={
                           loginType == "salesman"
                             ? salesmanProfile?.image
-                              ? "http://caninedemo.caninetest.xyz/storage/app/public/delivery-man/" +
+                              ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
                                 salesmanProfile?.image
                               : loicon1
                             : profileData?.image
-                            ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                               profileData?.image
                             : loicon1
                         }
@@ -1113,11 +1113,11 @@ function Petshopheader(props) {
                         src={
                           loginType == "salesman"
                             ? salesmanProfile?.image
-                              ? "http://caninedemo.caninetest.xyz/storage/app/public/delivery-man/" +
+                              ? "https://canine.hirectjob.in/storage/app/public/delivery-man/" +
                                 salesmanProfile?.image
                               : loicon1
                             : profileData?.image
-                            ? "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
+                            ? "https://canine.hirectjob.in/storage/app/public/profile/" +
                               profileData?.image
                             : loicon1
                         }
@@ -1343,7 +1343,7 @@ function Petshopheader(props) {
                             <Row>
                               <Col lg={2}>
                                 <img
-                                  src={`http://caninedemo.caninetest.xyz/storage/app/public/notification/${ob.image}`}
+                                  src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
                                 />
                                 {console.log("emage", ob.image)}
                               </Col>
@@ -1371,7 +1371,7 @@ function Petshopheader(props) {
                           <Row>
                             <Col lg={2}>
                               <img
-                                src={`http://caninedemo.caninetest.xyz/storage/app/public/notification/${ob.image}`}
+                                src={`https://canine.hirectjob.in/storage/app/public/notification/${ob.image}`}
                               />
                               {console.log("emage", ob.image)}
                             </Col>

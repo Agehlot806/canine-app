@@ -149,7 +149,7 @@ function Wishlistproduct() {
                               item.store_id[0].image ? (
                                 <img
                                   src={
-                                    "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                    "https://canine.hirectjob.in///storage/app/public/product/" +
                                     item.store_id[0].image
                                   }
                                   alt="Product"

@@ -13,7 +13,7 @@ function Bedscagescarriers() {
     const BedsCagesmeta = {
         title: 'Premium Dog Beds, Crates, and Carriers',
           description: 'Provide your furry friend with the ultimate in comfort and security with our range of top-quality dog beds, cages, carriers, and kennels',
-          canonical: 'http://caninedemo.caninetest.xyz/',
+          canonical: 'https://canine.hirectjob.in/',
           meta: {
             charset: 'utf-8',
             name: {
@@ -96,7 +96,7 @@ function Bedscagescarriers() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -122,7 +122,7 @@ function Bedscagescarriers() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

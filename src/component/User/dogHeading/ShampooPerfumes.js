@@ -13,7 +13,7 @@ function ShampooPerfumes() {
     const ShampooPerfumesmeta = {
         title: 'Pamper Your Pooch with Premium Dog Shampoo and Perfumes',
         description: 'Find the best dog shampoo for various needs, including flea control, dry shampooing, medicated formulas, and soothing options for itchy skin.',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -96,7 +96,7 @@ function ShampooPerfumes() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -122,7 +122,7 @@ function ShampooPerfumes() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

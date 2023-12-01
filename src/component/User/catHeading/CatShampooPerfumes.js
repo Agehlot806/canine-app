@@ -14,7 +14,7 @@ function CatShampooPerfumes() {
 
         title: 'Pamper Your Purr-fect Companion: Cat Deodorants, Perfumes, Shampoos, and Wild Stone Fragrances',
         description: 'Our collection of cat deodorants, perfumes, and shampoos, including Wild Stones luxurious scents, offers a luxurious grooming experience for the discerning cat owner.',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -97,7 +97,7 @@ function CatShampooPerfumes() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -123,7 +123,7 @@ function CatShampooPerfumes() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

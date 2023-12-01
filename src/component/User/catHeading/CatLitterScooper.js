@@ -14,7 +14,7 @@ function CatLitterScooper() {
     
         title: 'Simplify Cat Care with Scoop Away Litter, ScoopFree Trays, and Convenient Cat Litter Scoops',
         description: 'Our top-quality products, including Scoop Away and ScoopFree litter boxes, streamline cat litter routines, keep spaces clean, and make cat care a breeze.',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -97,7 +97,7 @@ function CatLitterScooper() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -123,7 +123,7 @@ function CatLitterScooper() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

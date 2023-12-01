@@ -55,7 +55,7 @@ function Mypetprofile() {
                       <div className="pet-img-ser">
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//public/" + item.image
+                            "https://canine.hirectjob.in//public/" + item.image
                           }
                         />
                       </div>

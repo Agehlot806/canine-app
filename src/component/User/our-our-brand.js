@@ -752,7 +752,7 @@ function Ourourbrand(props) {
   useEffect(() => {
     if (productDetails?.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails?.image
       );
     }
@@ -760,7 +760,7 @@ function Ourourbrand(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails?.images[index]
     );
   };
@@ -1704,7 +1704,7 @@ function Ourourbrand(props) {
                                     <div className="text-center">
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                          "https://canine.hirectjob.in///storage/app/public/product/" +
                                           item.image
                                         }
                                       />
@@ -1891,7 +1891,7 @@ function Ourourbrand(props) {
                                 aria-selected="true"
                               >
                                 <img src={
-                                  "http://caninedemo.caninetest.xyz///storage/app/public/category/"
+                                  "https://canine.hirectjob.in///storage/app/public/category/"
                                   + item.image}
                                 />
                                 <h6>{item.name}</h6>
@@ -1930,7 +1930,7 @@ function Ourourbrand(props) {
                                 <Link to={`/product-details/${item.id}`}>
                                   <div className="text-center">
                                     <img src={
-                                      "http://caninedemo.caninetest.xyz///storage/app/public/category/"
+                                      "https://canine.hirectjob.in///storage/app/public/category/"
                                       + item.image}
                                     />
                                   </div>
@@ -2032,7 +2032,7 @@ function Ourourbrand(props) {
                                     >
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -2050,18 +2050,18 @@ function Ourourbrand(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -2904,7 +2904,7 @@ function Ourourbrand(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

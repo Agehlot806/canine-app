@@ -13,7 +13,7 @@ function CatFood() {
     const CatFoodmeta = {
         title: 'Choosing the Best Cat Food: A Guide to Raw, Fresh, and Dry Options Including Royal Canin Wet Cat Food',
         description: 'Discover the optimal nutrition for your feline friend with our comprehensive guide to cat food options. Explore the benefits of raw, fresh, and dry cat food, and learn about the excellence of Royal Canins wet cat food.',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -96,7 +96,7 @@ function CatFood() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -122,7 +122,7 @@ function CatFood() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

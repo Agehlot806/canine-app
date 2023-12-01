@@ -687,7 +687,7 @@ function Addcart() {
                     <img
                       className="partner-img"
                       src={
-                        "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                        "https://canine.hirectjob.in//storage/app/" + item.image
                       }
                     />
                   </Link>
@@ -709,7 +709,7 @@ function Addcart() {
                         <Col lg={2} sm={2}>
                           <img
                             src={
-                              "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                              "https://canine.hirectjob.in///storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -870,7 +870,7 @@ function Addcart() {
                   <Col lg={2} sm={2}>
                     <img
                       src={
-                        "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                        "https://canine.hirectjob.in///storage/app/public/product/" +
                         item.image
                       }
                     />

@@ -147,7 +147,7 @@ function DashboadSalesman() {
                         <img
                           className="partner-img"
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/" +
+                            "https://canine.hirectjob.in//storage/app/" +
                             item.image
                           }
                         />

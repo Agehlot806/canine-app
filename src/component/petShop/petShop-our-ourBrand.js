@@ -1222,7 +1222,7 @@ function PetshopOurourbrand(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+        "https://canine.hirectjob.in//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -1230,7 +1230,7 @@ function PetshopOurourbrand(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+      "https://canine.hirectjob.in//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1704,7 +1704,7 @@ function PetshopOurourbrand(props) {
                                     <div className="text-center">
                                       <img
                                         src={
-                                          "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
+                                          "https://canine.hirectjob.in///storage/app/public/product/" +
                                           item.image
                                         }
                                       />
@@ -1861,7 +1861,7 @@ function PetshopOurourbrand(props) {
                                   >
                                     <img
                                       src={
-                                        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                                        "https://canine.hirectjob.in//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2221,7 +2221,7 @@ function PetshopOurourbrand(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
+                            "https://canine.hirectjob.in//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

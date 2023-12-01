@@ -101,7 +101,7 @@ function Shopbybrand() {
                                                             <div className="brandLOGO">
                                                                 <img
                                                                     src={
-                                                                        "http://caninedemo.caninetest.xyz//storage/app/public/brand_logo/" +
+                                                                        "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
                                                                         brand.logo
                                                                     }
                                                                 />
@@ -109,7 +109,7 @@ function Shopbybrand() {
                                                             <div className="brand-main">
                                                                 <img
                                                                     src={
-                                                                        "http://caninedemo.caninetest.xyz//storage/app/public/brand/" +
+                                                                        "https://canine.hirectjob.in//storage/app/public/brand/" +
                                                                         brand.image
                                                                     }
                                                                 />
@@ -138,7 +138,7 @@ function Shopbybrand() {
                                             <div className="banner-bgmain" key={item.id}>
                                                 <img
                                                     src={
-                                                        "http://caninedemo.caninetest.xyz//storage/app/" +
+                                                        "https://canine.hirectjob.in//storage/app/" +
                                                         item.image
                                                     }
                                                 />

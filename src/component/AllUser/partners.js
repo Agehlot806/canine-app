@@ -523,7 +523,7 @@ function Partners() {
           <Link to="/"><img src={logo} /></Link>
             <h4 className="mt-3">
               Already a Partner?{" "}
-              <Link to={"http://caninedemo.caninetest.xyz/store-panel/auth/login"}>
+              <Link to={"https://canine.hirectjob.in/store-panel/auth/login"}>
                 Login Here
               </Link>
             </h4>

@@ -14,7 +14,7 @@ function CatTreats() {
 
         title: 'Spoil Your Feline Friend with Delightful Treats: Crunchy, Creamy, and Wellness Kittles Cat Treats, Plus Raw Meaty Bones',
         description: 'Our cat treats range from crunchy and creamy to health-conscious Wellness Kittles, offering natural, wholesome options like raw meaty bones, ensuring your cats optimal snack experience.',
-        canonical: 'http://caninedemo.caninetest.xyz/',
+        canonical: 'https://canine.hirectjob.in/',
         meta: {
           charset: 'utf-8',
           name: {
@@ -97,7 +97,7 @@ function CatTreats() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
+                                            "https://canine.hirectjob.in//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -123,7 +123,7 @@ function CatTreats() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
+                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />
