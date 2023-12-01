@@ -560,7 +560,7 @@ function Home(props) {
   useEffect(() => {
     if (productDetails?.image) {
       setMainImage(
-        "https://canine.hirectjob.in/storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
           productDetails?.image
       );
     }
@@ -568,7 +568,7 @@ function Home(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in/storage/app/public/product/" +
+      "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
         productDetails?.images[index]
     );
   };
@@ -1133,7 +1133,7 @@ function Home(props) {
                                 <div className="">
                                   <img
                                     src={
-                                      "https://canine.hirectjob.in/storage/app/" +
+                                      "http://caninedemo.caninetest.xyz/storage/app/" +
                                       item.image
                                     }
                                   />
@@ -1166,7 +1166,7 @@ function Home(props) {
                                 <div className="">
                                   <img
                                     src={
-                                      "https://canine.hirectjob.in/storage/app/" +
+                                      "http://caninedemo.caninetest.xyz/storage/app/" +
                                       item.image
                                     }
                                   />
@@ -1205,7 +1205,7 @@ function Home(props) {
                                 <div className="">
                                   <img
                                     src={
-                                      "https://canine.hirectjob.in/storage/app/" +
+                                      "http://caninedemo.caninetest.xyz/storage/app/" +
                                       item.image
                                     }
                                   />
@@ -1267,7 +1267,7 @@ function Home(props) {
                       >
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/category/" +
+                            "http://caninedemo.caninetest.xyz/storage/app/public/category/" +
                             item.image
                           }
                         />
@@ -1326,7 +1326,7 @@ function Home(props) {
                             <div className="text-center">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in//storage/app/public/product/" +
+                                  "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                   item.image
                                 }
                               />
@@ -1477,7 +1477,7 @@ function Home(props) {
                               <div className="brandLOGO">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                    "http://caninedemo.caninetest.xyz/storage/app/public/brand_logo/" +
                                     brand.logo
                                   }
                                 />
@@ -1485,7 +1485,7 @@ function Home(props) {
                               <div className="brand-main">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                    "http://caninedemo.caninetest.xyz/storage/app/public/brand/" +
                                     brand.image
                                   }
                                 />
@@ -1514,7 +1514,7 @@ function Home(props) {
                             <div className="defualtimg">
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/" +
+                                "http://caninedemo.caninetest.xyz/storage/app/" +
                                 item.image
                               }
                             />
@@ -1533,7 +1533,7 @@ function Home(props) {
                                  <div className="storeimg">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/" +
+                                    "http://caninedemo.caninetest.xyz/storage/app/" +
                                     item.image
                                   }
                                 />
@@ -1550,7 +1550,7 @@ function Home(props) {
                                  <div className="storeimg">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/" +
+                                    "http://caninedemo.caninetest.xyz/storage/app/" +
                                     item.image
                                   }
                                 />
@@ -1596,7 +1596,7 @@ function Home(props) {
                                     <div className="brandLOGO">
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                          "http://caninedemo.caninetest.xyz/storage/app/public/brand_logo/" +
                                           brand.logo
                                         }
                                       />
@@ -1604,7 +1604,7 @@ function Home(props) {
                                     <div className="brand-main">
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                          "http://caninedemo.caninetest.xyz/storage/app/public/brand/" +
                                           brand.image
                                         }
                                       />
@@ -1661,7 +1661,7 @@ function Home(props) {
                             {/* <img src={item.logo} /> */}
                             <img
                               src={
-                                "https://canine.hirectjob.in/storage/app/public/store/" +
+                                "http://caninedemo.caninetest.xyz/storage/app/public/store/" +
                                 item.logo
                               }
                             />
@@ -1697,7 +1697,7 @@ function Home(props) {
                               <video loop autoPlay muted>
                                 <source
                                   src={
-                                    "https://canine.hirectjob.in/storage/app/" +
+                                    "http://caninedemo.caninetest.xyz/storage/app/" +
                                     item.image
                                   }
                                   type="video/mp4"
@@ -1725,7 +1725,7 @@ function Home(props) {
                         <div className="blog-card">
                           <img
                             src={
-                              "https://canine.hirectjob.in/storage/app/public/blog/" +
+                              "http://caninedemo.caninetest.xyz/storage/app/public/blog/" +
                               item.image
                             }
                           />
@@ -1767,7 +1767,7 @@ function Home(props) {
                       <>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/profile/" +
+                            "http://caninedemo.caninetest.xyz/storage/app/public/profile/" +
                             order.user_id[0].image
                           }
                           alt={order.user_id[0].f_name}
@@ -1809,7 +1809,7 @@ function Home(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/" +
+                                  "http://caninedemo.caninetest.xyz/storage/app/" +
                                   item.image
                                 }
                               />
@@ -1915,7 +1915,7 @@ function Home(props) {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
+                                          "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1933,18 +1933,18 @@ function Home(props) {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -2710,7 +2710,7 @@ function Home(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz/storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

@@ -134,42 +134,8 @@ function Veterinaryservice() {
           <section className="section-padding">
             <Container>
               <Row>
-                <Col lg={6}>
-                  <div className="veter-area">
-                    <div className="veter-timing">
-                      <div>
-                        {" "}
-                        <i className="fa fa-clock-o" />
-                      </div>
-                      <div>
-                        <h3>Open Hours</h3>
-                        <p>Mon-Fri:7am-6pm</p>
-                        <p>Sat-Sun:9ap-4pm</p>
-                      </div>
-                    </div>
-                    <div className="veter-timing">
-                      <div>
-                        <i className="fa fa-phone " />
-                      </div>
-                      <div>
-                        <h3>Phone</h3>
-                        <p>(+91)0000000000</p>
-                        <p>(+91)0000000000</p>
-                      </div>
-                    </div>
-                    <div className="veter-timing">
-                      <div>
-                        {" "}
-                        <i className="fa fa-map-marker" />
-                      </div>
-                      <div>
-                        <h3>Address</h3>
-                        <p>Canine Products Borvali (Mumbai)</p>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col lg={6}>
+             
+                <Col lg={12}>
                   <div className="contact-form">
                     <h4>Pet Health & Wellness Service</h4>
                     <Form>

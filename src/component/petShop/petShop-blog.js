@@ -88,7 +88,7 @@ function PetshopBlog() {
                           <Col sm={5}>
                             <img
                               src={
-                                "https://canine.hirectjob.in//storage/app/public/blog/" +
+                                "http://caninedemo.caninetest.xyz//storage/app/public/blog/" +
                                 item.image
                               }
                             />

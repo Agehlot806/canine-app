@@ -925,13 +925,13 @@ a {
 .contact-form input {
   box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000d;
   border: none;
-  height: 60px;
+  /* height: 60px; */
 }
 
 .contact-form select {
   box-shadow: 0px 1.321467399597168px 39.644020080566406px 0px #0000000d;
   border: none;
-  height: 60px;
+  /* height: 60px; */
 }
 
 .contact-form textarea {
@@ -1057,7 +1057,7 @@ a {
 
 .otherLogin-card {
   border-radius: 52.677px;
-  padding: 45px 20px;
+  padding: 20px;
   text-align: center;
   height: 100%;
 }

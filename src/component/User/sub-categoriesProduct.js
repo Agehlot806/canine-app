@@ -741,7 +741,7 @@ function SubcategoriesProduct() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
         productDetails.image
       );
     }
@@ -749,7 +749,7 @@ function SubcategoriesProduct() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in//storage/app/public/product/" +
+      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
       productDetails.images[index]
     );
   };
@@ -1453,7 +1453,7 @@ function SubcategoriesProduct() {
                       )}
                     </div>
                     <hr />
-                    {/* <div
+                    <div
                       onClick={() => handleParentClick("cate")}
                       className="main-chk"
                     >
@@ -1487,7 +1487,7 @@ function SubcategoriesProduct() {
                         </>
                       )}
                     </div>
-                    <hr /> */}
+                    <hr />
 
                     <div
                       onClick={() => handleParentClick("price")}
@@ -1759,7 +1759,7 @@ function SubcategoriesProduct() {
                                     <div className="text-center">
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in///storage/app/public/product/" +
+                                          "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                                           item.image
                                         }
                                       />
@@ -1942,7 +1942,7 @@ function SubcategoriesProduct() {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in//storage/app/public/product/" +
+                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -1960,18 +1960,18 @@ function SubcategoriesProduct() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex + 1) %
                               productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                               productDetails.images[
                               (lightboxImageIndex +
                                 productDetails.images.length -
@@ -2544,7 +2544,7 @@ function SubcategoriesProduct() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

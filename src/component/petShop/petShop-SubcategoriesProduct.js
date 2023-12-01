@@ -694,7 +694,7 @@ function PetShopSubcategoriesProduct(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -702,7 +702,7 @@ function PetShopSubcategoriesProduct(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in//storage/app/public/product/" +
+      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1657,7 +1657,7 @@ function PetShopSubcategoriesProduct(props) {
                                     <div className="text-center">
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in///storage/app/public/product/" +
+                                          "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                                           item.image
                                         }
                                       />
@@ -1768,7 +1768,7 @@ function PetShopSubcategoriesProduct(props) {
                                   >
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2375,7 +2375,7 @@ function PetShopSubcategoriesProduct(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

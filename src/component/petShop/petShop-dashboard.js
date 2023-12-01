@@ -233,7 +233,7 @@ function Petshopdashboard() {
                     <img
                       className="partner-img"
                       src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
+                        "http://caninedemo.caninetest.xyz//storage/app/" + item.image
                       }
                     />
                   </Link>
@@ -426,7 +426,7 @@ function Petshopdashboard() {
                                   <div className="">
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in/storage/app/" +
+                                        "http://caninedemo.caninetest.xyz/storage/app/" +
                                         item.image
                                       }
                                     />

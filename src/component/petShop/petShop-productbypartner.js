@@ -138,7 +138,7 @@ function PetshopProductbypartner() {
                         {/* <img src={item.logo} /> */}
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/vendor/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/vendor/" +
                             item.logo
                           }
                         />
@@ -180,7 +180,7 @@ function PetshopProductbypartner() {
                         <div className="text-center">
                           <img
                             src={
-                              "https://canine.hirectjob.in///storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -219,7 +219,7 @@ function PetshopProductbypartner() {
                     <div className="banner-bgmain" key={item.id}>
                       <img
                         src={
-                          "https://canine.hirectjob.in//storage/app/" +
+                          "http://caninedemo.caninetest.xyz//storage/app/" +
                           item.image
                         }
                       />
@@ -241,7 +241,7 @@ function PetshopProductbypartner() {
                         <div className="">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/" +
                               item.image
                             }
                           />

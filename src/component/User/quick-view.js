@@ -150,7 +150,7 @@ function Quickview() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -161,7 +161,7 @@ function Quickview() {
   useEffect(() => {
     if (productDetails.image) {
       setsingleImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -170,7 +170,7 @@ function Quickview() {
   const handleThumbnailClick = (index) => {
     const clickedImage = productDetails.images[index];
     setMainImage(
-      "https://canine.hirectjob.in//storage/app/public/product/" + clickedImage
+      "http://caninedemo.caninetest.xyz//storage/app/public/product/" + clickedImage
     );
   };
   const AllBanner = async () => {
@@ -398,7 +398,7 @@ function Quickview() {
                           >
                             <img
                               src={
-                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                 item
                               }
                               alt={`Image ${index}`}

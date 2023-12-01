@@ -439,7 +439,7 @@ function PetshopHome(props) {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -447,7 +447,7 @@ function PetshopHome(props) {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in//storage/app/public/product/" +
+      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1136,7 +1136,7 @@ function PetshopHome(props) {
                                   <div className="">
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/" +
                                         item.image
                                       }
                                     />
@@ -1169,7 +1169,7 @@ function PetshopHome(props) {
                                   <div className="">
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/" +
                                         item.image
                                       }
                                     />
@@ -1208,7 +1208,7 @@ function PetshopHome(props) {
                                   <div>
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/" +
                                         item.image
                                       }
                                     />
@@ -1269,7 +1269,7 @@ function PetshopHome(props) {
                       >
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/category/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
                             item.image
                           }
                         />
@@ -1331,7 +1331,7 @@ function PetshopHome(props) {
                             <div className="text-center">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in///storage/app/public/product/" +
+                                  "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                                   item.image
                                 }
                               />
@@ -1431,7 +1431,7 @@ function PetshopHome(props) {
                                 <div className="brandLOGO">
                                   <img
                                     src={
-                                      "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
+                                      "http://caninedemo.caninetest.xyz//storage/app/public/brand_logo/" +
                                       brand.logo
                                     }
                                   />
@@ -1439,7 +1439,7 @@ function PetshopHome(props) {
                                 <div className="brand-main">
                                   <img
                                     src={
-                                      "https://canine.hirectjob.in//storage/app/public/brand/" +
+                                      "http://caninedemo.caninetest.xyz//storage/app/public/brand/" +
                                       brand.image
                                     }
                                   />
@@ -1467,7 +1467,7 @@ function PetshopHome(props) {
                           <Col lg={6} className="mb-4">
                             <img
                               src={
-                                "https://canine.hirectjob.in//storage/app/" +
+                                "http://caninedemo.caninetest.xyz//storage/app/" +
                                 item.image
                               }
                             />
@@ -1484,7 +1484,7 @@ function PetshopHome(props) {
                               <Col sm={12} className="mb-4">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in//storage/app/" +
+                                    "http://caninedemo.caninetest.xyz//storage/app/" +
                                     item.image
                                   }
                                 />
@@ -1499,7 +1499,7 @@ function PetshopHome(props) {
                               <Col sm={12} className="mb-4">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in//storage/app/" +
+                                    "http://caninedemo.caninetest.xyz//storage/app/" +
                                     item.image
                                   }
                                 />
@@ -1544,7 +1544,7 @@ function PetshopHome(props) {
                                   <div className="brandLOGO">
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/public/brand_logo/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/public/brand_logo/" +
                                         brand.logo
                                       }
                                     />
@@ -1552,7 +1552,7 @@ function PetshopHome(props) {
                                   <div className="brand-main">
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/public/brand/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/public/brand/" +
                                         brand.image
                                       }
                                     />
@@ -1590,7 +1590,7 @@ function PetshopHome(props) {
                               <video loop autoPlay muted>
                                 <source
                                   src={
-                                    "https://canine.hirectjob.in//storage/app/" +
+                                    "http://caninedemo.caninetest.xyz//storage/app/" +
                                     item.image
                                   }
                                   type="video/mp4"
@@ -1618,7 +1618,7 @@ function PetshopHome(props) {
                         <div className="blog-card">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/blog/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/blog/" +
                               item.image
                             }
                           />
@@ -1662,7 +1662,7 @@ function PetshopHome(props) {
                       <>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/profile/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/profile/" +
                             order.user_id[0].image
                           }
                           alt={order.user_id[0].f_name}
@@ -1709,7 +1709,7 @@ function PetshopHome(props) {
                             <div className="">
                               <img
                                 src={
-                                  "https://canine.hirectjob.in//storage/app/" +
+                                  "http://caninedemo.caninetest.xyz//storage/app/" +
                                   item.image
                                 }
                               />
@@ -1799,7 +1799,7 @@ function PetshopHome(props) {
                                   >
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2153,7 +2153,7 @@ function PetshopHome(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />
@@ -3134,7 +3134,7 @@ function PetshopHome(props) {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

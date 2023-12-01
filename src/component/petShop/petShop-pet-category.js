@@ -694,7 +694,7 @@ function PetshopPetcategory() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -702,7 +702,7 @@ function PetshopPetcategory() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in//storage/app/public/product/" +
+      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1219,7 +1219,7 @@ function PetshopPetcategory() {
               {banner && (
                 <img
                   src={
-                    "https://canine.hirectjob.in//storage/app/public/category/" +
+                    "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
                     banner
                   }
                 />
@@ -1603,7 +1603,7 @@ function PetshopPetcategory() {
                               <div className="text-center">
                                 <img
                                   src={
-                                    "https://canine.hirectjob.in///storage/app/public/product/" +
+                                    "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                                     item.image
                                   }
                                 />
@@ -1751,7 +1751,7 @@ function PetshopPetcategory() {
                                   >
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in//storage/app/public/product/" +
+                                        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                         item
                                       }
                                       alt={`Image ${index}`}
@@ -2348,7 +2348,7 @@ function PetshopPetcategory() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

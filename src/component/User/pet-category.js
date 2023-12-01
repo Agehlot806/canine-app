@@ -740,7 +740,7 @@ function Petcategory() {
   useEffect(() => {
     if (productDetails.image) {
       setMainImage(
-        "https://canine.hirectjob.in//storage/app/public/product/" +
+        "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
           productDetails.image
       );
     }
@@ -748,7 +748,7 @@ function Petcategory() {
 
   const handleThumbnailClick = (index) => {
     setMainImage(
-      "https://canine.hirectjob.in//storage/app/public/product/" +
+      "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
         productDetails.images[index]
     );
   };
@@ -1402,7 +1402,7 @@ function Petcategory() {
               {banner && (
                 <img
                   src={
-                    "https://canine.hirectjob.in//storage/app/public/category/" +
+                    "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
                     banner
                   }
                 />
@@ -1798,7 +1798,7 @@ function Petcategory() {
                                   <div className="text-center">
                                     <img
                                       src={
-                                        "https://canine.hirectjob.in///storage/app/public/product/" +
+                                        "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                                         item.image
                                       }
                                     />
@@ -1983,7 +1983,7 @@ function Petcategory() {
                                     >
                                       <img
                                         src={
-                                          "https://canine.hirectjob.in//storage/app/public/product/" +
+                                          "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                                           item
                                         }
                                         alt={`Image ${index}`}
@@ -2001,18 +2001,18 @@ function Petcategory() {
                         {lightboxIsOpen && (
                           <Lightbox
                             mainSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                               productDetails.images[lightboxImageIndex]
                             }
                             nextSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex + 1) %
                                   productDetails.images.length
                               ]
                             }
                             prevSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                               productDetails.images[
                                 (lightboxImageIndex +
                                   productDetails.images.length -
@@ -2582,7 +2582,7 @@ function Petcategory() {
                       <Col lg={3}>
                         <img
                           src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/public/product/" +
                             productDetails?.image
                           }
                         />

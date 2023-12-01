@@ -687,7 +687,7 @@ function Addcart() {
                     <img
                       className="partner-img"
                       src={
-                        "https://canine.hirectjob.in//storage/app/" + item.image
+                        "http://caninedemo.caninetest.xyz//storage/app/" + item.image
                       }
                     />
                   </Link>
@@ -709,7 +709,7 @@ function Addcart() {
                         <Col lg={2} sm={2}>
                           <img
                             src={
-                              "https://canine.hirectjob.in///storage/app/public/product/" +
+                              "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                               item.image
                             }
                           />
@@ -720,7 +720,7 @@ function Addcart() {
                             sm={5}
                             className="align-self-center addCARThead"
                           >
-                            <h2>{item.name}</h2>
+                            <h2>{item?.name}</h2>
                             {item.variant ? (
                               <p>{`Selected Variant: ${item.variant}`}</p>
                             ) : null}
@@ -828,10 +828,10 @@ function Addcart() {
                       </Col>
                     </Row>
                   </div>
-                  <div className="check-Continue">
-                    {/* <Button onClick={() => handlePayment()}>
-                              Checkout
-                            </Button> */}
+                  {/* <div className="check-Continue">
+                    // <Button onClick={() => handlePayment()}>
+                    //           Checkout
+                    //         </Button> 
                     <Button
                     // data-toggle="modal"
                     // data-target="#cod"
@@ -842,7 +842,19 @@ function Addcart() {
                     <Button>
                       <Link to="/product">Continue Shopping</Link>
                     </Button>
-                  </div>
+                  </div> */}
+                  {parseInt(originalPrice + taxamound) !== 0 ? (
+  <div className="check-Continue">
+    <Button>
+      <Link to="/login">Checkout</Link>
+    </Button>
+    <Button>
+      <Link to="/product">Continue Shopping</Link>
+    </Button>
+  </div>
+) : (
+  <p className="check-Continue">Sorry, the item you're trying to add has a price of ₹0. Please remove this item. We apologize for any inconvenience caused. This issue seems to be on our end. Please remove the selected item and try adding it again. Thank you for your understanding.</p>
+  )}
                 </Container>
               </>
             ) : (
@@ -858,7 +870,7 @@ function Addcart() {
                   <Col lg={2} sm={2}>
                     <img
                       src={
-                        "https://canine.hirectjob.in///storage/app/public/product/" +
+                        "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                         item.image
                       }
                     />

@@ -251,7 +251,7 @@ function PetshopUpdateprofile() {
                         src={
                           loginType === "salesman"
                             ? ` /public/delivery-man/${imgage}`
-                            : `https://canine.hirectjob.in//storage/app/public/profile/${imgage}`
+                            : `http://caninedemo.caninetest.xyz//storage/app/public/profile/${imgage}`
                         }
                         alt={selectedImage ? "Image" : "Image not available"}
                         style={{ width: "100px", height: "100px" }}

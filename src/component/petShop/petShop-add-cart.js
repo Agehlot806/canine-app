@@ -797,7 +797,7 @@ function PetshopAddCart() {
                         <img
                           className="partner-img"
                           src={
-                            "https://canine.hirectjob.in//storage/app/" +
+                            "http://caninedemo.caninetest.xyz//storage/app/" +
                             item.image
                           }
                         />
@@ -816,7 +816,7 @@ function PetshopAddCart() {
                       <Col lg={2} sm={2}>
                         <img
                           src={
-                            "https://canine.hirectjob.in///storage/app/public/product/" +
+                            "http://caninedemo.caninetest.xyz///storage/app/public/product/" +
                             item.image
                           }
                         />

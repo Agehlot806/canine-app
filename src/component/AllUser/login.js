@@ -91,7 +91,7 @@ function Login() {
                   </Form>
                 </div>
               </Col>
-              <Col lg={6}>
+              <Col lg={6} className="align-self-center">
                 <div className="login-img">
                   <img src={login} className="bounce-in"/>
                 </div>

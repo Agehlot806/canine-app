@@ -96,7 +96,7 @@ function Bedscagescarriers() {
                                     <img
                                         className="partner-img"
                                         src={
-                                            "https://canine.hirectjob.in//storage/app/" + item.image
+                                            "http://caninedemo.caninetest.xyz//storage/app/" + item.image
                                         }
                                     />
                                 </Link>
@@ -122,7 +122,7 @@ function Bedscagescarriers() {
                                                 <Link to={`/sub-categoriesProduct/${item.name}/${item.category}`}>
                                                     <img
                                                         src={
-                                                            "https://canine.hirectjob.in//storage/app/public/category/" +
+                                                            "http://caninedemo.caninetest.xyz//storage/app/public/category/" +
                                                             item.image
                                                         }
                                                     />

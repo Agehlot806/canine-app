@@ -15,7 +15,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifisecondData, setNotifisecondData] = useState();
   const [notifithirdLength, setNotifithirdLength] = useState();
   const [notifithirdData, setNotifithirdData] = useState();
-  const BASE_URL = "https://caninetest.xyz/api/v1";
+  const BASE_URL = "https://caninedemo.caninetest.xyz/api/v1";
   const loginType = localStorage.getItem("loginType");
   
   const customer_id = loginType === "wholeseller"

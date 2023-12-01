@@ -69,7 +69,7 @@ function Shopbybrandlist() {
                                                         <div className="brand-main">
                                                             <img
                                                                 src={
-                                                                    "https://canine.hirectjob.in//storage/app/public/brand_product/" +
+                                                                    "http://caninedemo.caninetest.xyz//storage/app/public/brand_product/" +
                                                                     item.image
                                                                 } />
                                                         </div>

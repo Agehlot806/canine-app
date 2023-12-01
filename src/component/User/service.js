@@ -85,7 +85,7 @@ function Service() {
                         <Link to={`/service-date/${item.id}`}>
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/service/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/service/" +
                               item.image
                             }
                           />
@@ -111,7 +111,7 @@ function Service() {
                         <div className="service-card">
                           <img
                             src={
-                              "https://canine.hirectjob.in//storage/app/public/service/" +
+                              "http://caninedemo.caninetest.xyz//storage/app/public/service/" +
                               item.image
                             }
                           />
