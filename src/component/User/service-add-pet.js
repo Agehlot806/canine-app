@@ -14,7 +14,7 @@ import axios from "axios";
 import loadinggif from "../../assets/images/video/loading.gif";
 
 function Serviceaddpet() {
-  const { id } = useParams();
+  const { id ,name} = useParams();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -90,7 +90,7 @@ function Serviceaddpet() {
       .then((response) => {
         setResponseMessage(response.data.message);
         console.log("pet add....", petData);
-        navigate(`/service-date/${id}`);
+        navigate(`/service-date/${item.name}/${item.id}`);
         toast.success("Your Pet Successfully Add");
       })
       .catch((error) => {

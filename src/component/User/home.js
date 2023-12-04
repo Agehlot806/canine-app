@@ -1592,7 +1592,7 @@ function Home(props) {
                                       ourBrand[index % ourBrand.length],
                                   }}
                                 >
-                                  <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                  <Link to={`/shop-by-brand-list/${brand.title}/${brand.id}`}>
                                     <div className="brandLOGO">
                                       <img
                                         src={
@@ -1723,12 +1723,14 @@ function Home(props) {
                     blog.map((item, index) => (
                       <Col lg={4} sm={6} className="mb-4">
                         <div className="blog-card">
+                          <div className="text-center">
                           <img
                             src={
                               "https://canine.hirectjob.in/storage/app/public/blog/" +
                               item.image
                             }
                           />
+                          </div>
                           <h3>{item.title}</h3>
                           <p>{renderBlogDescription(item.description)}</p>
                           <Link to={`/blog-details/${item.id}`}>Read More</Link>
@@ -1819,7 +1821,7 @@ function Home(props) {
                                 <div className="new-content">
                                   <div className="Newsletter">
                                     <Flip right>
-                                      <h1 className="main-head">Newsletter</h1>
+                                      <h1 className="main-head">{item.title}</h1>
                                     </Flip>
                                     <Form className="d-flex">
                                       <Form.Control

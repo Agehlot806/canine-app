@@ -381,7 +381,12 @@ function SubcategoriesProduct() {
         `${BASE_URL}/items/latest`
       );
       const products = response.data.data;
-      const cateidproduct = products.filter((items) => items.category_id == id);
+      const filterDatashow = products.filter(
+        (item) => item.sub_category === name
+      );
+      const filteredData = filterDatashow.filter(
+        (item) => item.category_id == id
+      );
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
         selectLifeStageFilterList: updatedLifeIds || selectedlifeIds,
@@ -395,9 +400,10 @@ function SubcategoriesProduct() {
         // selectedVegOptions: updatedvegIds.map((e) => (e === 0 ? "veg" : "non-veg")),
         // minPrice:  minpricevalue !== [] ? minpricevalue : null,
         // maxPrice: maxpricevalue !== [] ? maxpricevalue : null,
-        products: cateidproduct,
+        products: filteredData,
       });
       setallproduct(filteredProducts);
+      console.log("filteredProducts?????/////", filteredProducts);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -1416,7 +1422,7 @@ function SubcategoriesProduct() {
                       )}
                     </div>
                     <hr />
-                    <div
+                    {/* <div
                       onClick={() => handleParentClick("productType")}
                       className="main-chk"
                     >
@@ -1452,8 +1458,8 @@ function SubcategoriesProduct() {
                         </>
                       )}
                     </div>
-                    <hr />
-                    <div
+                    <hr /> */}
+                    {/* <div
                       onClick={() => handleParentClick("cate")}
                       className="main-chk"
                     >
@@ -1487,7 +1493,7 @@ function SubcategoriesProduct() {
                         </>
                       )}
                     </div>
-                    <hr />
+                    <hr /> */}
 
                     <div
                       onClick={() => handleParentClick("price")}

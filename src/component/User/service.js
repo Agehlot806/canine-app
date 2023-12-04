@@ -74,8 +74,7 @@ function Service() {
           <section className="section-padding">
             <Container>
               <div className="text-left">
-                <h1 className="main-head">All you need, all in one place.</h1>
-                <p>Tristique nulla aliquet enim tortor at auctor urna nunc.</p>
+                <h1 className="main-head">All Services</h1>
               </div>
               <div className="needplace">
                 <Row>
@@ -105,7 +104,7 @@ function Service() {
                         to={
                           item.name === "Health & Wellness"
                             ? "veterinary-service"
-                            : `/service-date/${item.id}`
+                            : `/service-date/${item.name}/${item.id}`
                         }
                       >
                         <div className="service-card">

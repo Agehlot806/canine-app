@@ -692,6 +692,7 @@ a {
   padding: 40px;
   text-align: center;
   transition: 0.5s;
+  height: 100%;
 }
 
 .aboutpage-img img {
@@ -1743,7 +1744,7 @@ a {
   font-family: David Libre;
   font-size: 40px;
   font-weight: 700;
-  color: #fff;
+  color: #000;
 }
 
 .Newsletter input {

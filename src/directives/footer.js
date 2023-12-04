@@ -20,6 +20,9 @@ import Paycard6 from '../assets/images/img/paycard6.png';
 import Paycard7 from '../assets/images/img/paycard7.png';
 
 function Footer() {
+  const linknewwindonopne = (linkdata) => {
+    window.open(linkdata);
+}
   return (
     <>
       <footer className="footer-bg">
@@ -144,7 +147,7 @@ function Footer() {
                     </li>
                     <li className="social-media">
                       <span>Follow Us On</span>
-                      <Link to="https://www.facebook.com/">
+                      <Link onClick={(e) => linknewwindonopne("https://www.facebook.com/canineproductsretail/")}>
                         <BiLogoFacebookCircle />
                       </Link>
                       <Link to="https://twitter.com/">

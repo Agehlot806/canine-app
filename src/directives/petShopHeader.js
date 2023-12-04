@@ -1147,7 +1147,7 @@ function Petshopheader(props) {
                                   : "/petshop-transition-history"
                               }
                             >
-                              Transition History
+                              Transitions History
                             </Link>
                           </li>
                           <li>

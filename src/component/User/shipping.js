@@ -36,6 +36,7 @@ function Shipping() {
   const { id } = useParams();
 
   const [addresslist, setAddressList] = useState([]);
+  console.log("addresslist",addresslist);
   const [allorder, setallorder] = useState([]);
 
   const allAddressList = async () => {
@@ -51,18 +52,21 @@ function Shipping() {
       });
   };
 
+
+
   const allOrders = async () => {
     axios
-      .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
-      .then((response) => {
-        console.log(response);
-        console.log("Order List Successful");
-        setallorder(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+        .get(`${BASE_URL}/customer/order/list?id=${storedUserId}`)
+        .then((response) => {
+            console.log(response);
+            console.log("Order List Successful");
+            const reversedData = response.data.data.reverse();
+            setallorder(reversedData);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
 
   const getDateFromCreatedAt = (createdAt) => {
     const dateObject = new Date(createdAt);

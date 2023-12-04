@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import Newheader from '../../directives/newheader';
-import about from '../../assets/images/banner/about.png'
+import AboutUs from '../../assets/images/banner/about.png'
 import { Container, Row, Col } from 'react-bootstrap'
 import icon1 from '../../assets/images/icon/icon1.png'
 import icon2 from '../../assets/images/icon/icon2.png'
@@ -9,11 +9,14 @@ import icon3 from '../../assets/images/icon/icon3.png'
 import aboutpage from '../../assets/images/img/aboutpage.png'
 import Footer from '../../directives/footer'
 import video1 from '../../assets/images/video/video1.mp4'
+import axios from 'axios';
+import { BASE_URL } from '../../Constant/Index';
 
 
 function Aboutus() {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [about, setabout] = useState([]);
     const [volume, setVolume] = useState(0.5);
 
     const togglePlay = () => {
@@ -33,12 +36,28 @@ function Aboutus() {
         videoRef.current.volume = volume;
     };
 
+
+    
+  useEffect(() => {
+    allabout();
+  }, []);
+  const allabout = async () => {
+    axios
+      .get(`${BASE_URL}/auth/about`)
+      .then((response) => {
+        console.log(response);
+        setabout(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
     return (
         <>
             <Newheader />
             <Container fluid className='p-0'>
                 <div className='all-bg'>
-                    <img src={about} />
+                    <img src={AboutUs} />
                 </div>
             </Container>
             <section className="section-padding">
@@ -51,18 +70,19 @@ function Aboutus() {
                         </Col>
                         <Col lg={6} className='align-self-center'>
                             <div className="aboutPage-content">
-                                <h1 className="main-head">Pet care, up close and personal.</h1>
-                                <p>But this isn’t just about our fresh new look. As you’ll see below, we’ve hired more
-                                    qualified advisors, expanded our range, built a pet-first navigation, and launched
-                                    new services like on-demand healthcare and insurance. There’s much more to come,
-                                    but we hope you think we’re headed in the right direction.
-                                </p>
-                                <ul>
+                                <h1 className="main-head">About Canine Product</h1>
+                               
+                                {about.map((policy, index) => (
+                  <div key={index}>
+                    <p dangerouslySetInnerHTML={{ __html: policy.value }} />
+                  </div>
+                ))}
+                                {/* <ul>
                                     <li>Adipiscing elit pellentesque</li>
                                     <li>Posuere ac ut consequat</li>
                                     <li>Ornare aenean euismod elementum</li>
                                     <li>Sed turpis tincidunt id aliquet risus</li>
-                                </ul>
+                                </ul> */}
                             </div>
                         </Col>
                     </Row>
@@ -90,7 +110,7 @@ function Aboutus() {
                 </div>
                 </Container>
                 <Container>
-                    <div className="text-left">
+                    <div className="text-left needplace">
                         <h1 className="main-head">Pet care, up close and personal.</h1>
                         <p>But this isn’t just about our fresh new look. As you’ll see below, we’ve hired more qualified advisors, expanded our range, built a pet-first navigation, and launched new services like on-demand healthcare and insurance. There’s much more to come, but we hope you think we’re headed in the right direction. But this isn’t just about our fresh new look. As you’ll see below, we’ve hired more qualified advisors, expanded our range, built a pet-first navigation, and launched new services like on-demand healthcare and insurance. There’s much more to come, but we hope you think we’re headed in the right direction. But this isn’t just about our fresh new look. As you’ll see below, we’ve hired more qualified advisors, expanded our range, built a pet-first navigation, and launched new services like on-demand healthcare and insurance. There’s much more to come, but we hope you think we’re headed in the right direction.
 </p>
@@ -102,7 +122,6 @@ function Aboutus() {
                 <Container>
                     <div className="text-center">
                         <h1 className="main-head">All you need, all in one place.</h1>
-                        <p>Tristique nulla aliquet enim tortor at auctor urna nunc. Massa enim nec dui nunc mattis enim ut tellus</p>
                     </div>
                     <div className="needplace">
                         <Row>
@@ -110,21 +129,22 @@ function Aboutus() {
                                 <div className="needplace-card">
                                     <img src={icon1} />
                                     <h4>Tailor-made insurance</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur eiusmod tempor incididunt</p>
+                                    <p>Pet insurance policies often come with additional benefits such as coverage for emergency boarding, advertising and reward for lost pets, liability protection, and more. These additional benefits provide further support and protection for you and your pet.</p>
                                 </div>
                             </Col>
                             <Col lg={4} sm={6} xs={6} className='mb-3'>
                                 <div className="needplace-card">
                                     <img src={icon2} />
                                     <h4>On-demand healthcare</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur eiusmod tempor incididunt</p>
+                                    <p>On-demand vet apps allow pet owners to communicate with veterinary doctors about their pet's health. These apps can also provide information and services related to pet health. 
+</p>
                                 </div>
                             </Col>
                             <Col lg={4} sm={6} xs={6} className='mb-3'>
                                 <div className="needplace-card">
                                     <img src={icon3} />
                                     <h4>Tailor-made insurance</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur eiusmod tempor incididunt</p>
+                                    <p>Pet insurance policies often come with additional benefits such as coverage for emergency boarding, advertising and reward for lost pets, liability protection, and more. These additional benefits provide further support and protection for you and your pet.</p>
                                 </div>
                             </Col>
                         </Row>

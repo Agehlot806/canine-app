@@ -18,7 +18,7 @@ function PetshopUpdateprofile() {
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [imgage, setimgage] = useState("");
- 
+  const [gst_number, setgst_number] = useState("");
   const getWholesellerProfile = () => {
     axios
       .get(`${BASE_URL}/auth/my_profile/${storedWholesellerId}`)
@@ -29,6 +29,7 @@ function PetshopUpdateprofile() {
         setemail(response.data.data[0].email);
         setphone(response.data.data[0].phone);
         setimgage(response.data.data[0].image);
+        setgst_number(response.data.data[0].gst_number);
         // Update the profileData state
       })
       .catch((error) => {
@@ -53,7 +54,7 @@ function PetshopUpdateprofile() {
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("image", imgage);
-
+    formData.append("gst_number", gst_number);
     axios({
       method: "post",
       url: `${BASE_URL}/auth/update-profile`,
@@ -64,7 +65,7 @@ function PetshopUpdateprofile() {
         console.log(" New password updatesuccessfully");
         toast.success("Successfully updated!");
         console.log("respo", response);
-        navigator("/petshop-home");
+        navigator("/petshop-dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -100,6 +101,7 @@ function PetshopUpdateprofile() {
         setemail(response.data.data[0].email);
         setphone(response.data.data[0].phone);
         setimgage(response.data.data[0].image);
+        setgst_number(response.data.data[0].gst_number);
         // Update the profileData state
       })
       .catch((error) => {
@@ -119,7 +121,7 @@ function PetshopUpdateprofile() {
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("image", imgage);
-
+     formData.append("gst_number", gst_number);
     axios({
       method: "post",
       url: `${BASE_URL}/auth/delivery-man/deliveryman_update`,
@@ -234,6 +236,22 @@ function PetshopUpdateprofile() {
                       onChange={(e) => setphone(e.target.value)}
                     />
                   </Form.Group>
+                  {/* <Form.Group className="mb-3" controlId="formGridPhone">
+                    <Form.Label>
+                    GST Number<span style={{ color: "#008efd" }}>*</span>
+                    </Form.Label>
+
+                    <Form.Control
+                      name="gst_number"
+                      placeholder="Enter GST Number"
+                      type="text"
+                      // maxLength={10}
+                      disabled={loginType == "salesman" ? true : false}
+                      
+                      value={gst_number}
+                      onChange={(e) => setgst_number(e.target.value)}
+                    />
+                  </Form.Group> */}
                   <Form.Group className="mb-3" controlId="formGridPhone">
                     <Form.Label>
                       Upload Image<span style={{ color: "#008efd" }}>*</span>

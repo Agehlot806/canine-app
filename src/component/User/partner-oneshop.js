@@ -877,34 +877,7 @@ function Partneroneshop() {
            
           </Container>
 
-          <section className="section-padding">
-            <div className="uy">
-              <Container>
-                <div className="partner-oneshop">
-                  <Table responsive>
-                    <tbody>
-                      <tr>
-                        <th>Partner Name :</th>
-                        <td>{state?.item.name}</td>
-                      </tr>
-                      <tr>
-                        <th>Address :</th>
-                        <td>{state?.item.address}</td>
-                      </tr>
-                      <tr>
-                        <th>Mobile :</th>
-                        <td>{state?.item.phone}</td>
-                      </tr>
-                      <tr>
-                        <th>Email ID :</th>
-                        <td>{state?.item.email}</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </div>
-              </Container>
-            </div>
-          </section>
+         
           <section className="section-padding">
             <Container>
               <Row>
@@ -1021,6 +994,36 @@ function Partneroneshop() {
                 </Button>
               </div>
             </Container>
+          </section>
+
+
+          <section className="section-padding">
+            <div className="uy">
+              <Container>
+                <div className="partner-oneshop">
+                  <Table responsive>
+                    <tbody>
+                      <tr>
+                        <th>Partner Name :</th>
+                        <td>{state?.item.name}</td>
+                      </tr>
+                      <tr>
+                        <th>Address :</th>
+                        <td>{state?.item.address}</td>
+                      </tr>
+                      <tr>
+                        <th>Mobile :</th>
+                        <td>{state?.item.phone}</td>
+                      </tr>
+                      <tr>
+                        <th>Email ID :</th>
+                        <td>{state?.item.email}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
+              </Container>
+            </div>
           </section>
         </>
       )}

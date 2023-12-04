@@ -310,9 +310,9 @@ function Orderviewdetails() {
                       </Button>
                       {/* </Link> */}
                       {/* <Link to="https://veejayjewels.com/storage/app/public/pdf/2023-06-29-649d7c76c81d3.pdf"> */}
-                      <Button className="invoice-2" onClick={summaryPrint}>
+                      {/* <Button className="invoice-2" onClick={summaryPrint}>
                         <img src={invoice} /> download summary
-                      </Button>
+                      </Button> */}
                       {/* </Link> */}
                     </div>
                   </Col>

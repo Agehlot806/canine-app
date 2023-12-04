@@ -136,7 +136,7 @@ function Petshopfooter() {
                     </li>
                     <li className="social-media">
                       <span>Follow Us On</span>
-                      <Link to="https://www.facebook.com/">
+                      <Link to="https://www.facebook.com/canineproductsretail/">
                         <BiLogoFacebookCircle />
                       </Link>
                       <Link to="https://twitter.com/">

@@ -49,7 +49,7 @@ function Allservicebooking() {
                                 <Row>
                                     {allservicebooking &&
                                         allservicebooking.map((item) => (
-                                            <Col lg={4} sm={6} className='mb-4'>
+                                            <Col lg={6} sm={6} className='mb-4'>
                                                 <div className='veterinary-card veterinary-bg1' key={item.id}>
                                                     <div className='veterinary-status'>
                                                         <h6>{item.date}</h6>
@@ -58,6 +58,10 @@ function Allservicebooking() {
                                                         <div className='veterinary-detail'>
                                                             <Table>
                                                                 <tbody>
+                                                                    <tr>
+                                                                        <th>Service Name : </th>
+                                                                        <td>{item.service_id}</td>
+                                                                    </tr>
                                                                     <tr>
                                                                         <th>Pet :</th>
                                                                         <td>{item.pet}</td>

@@ -359,9 +359,9 @@ function PetshopOrderviewdetails() {
                       <Button className="invoice-1" onClick={handlePrint}>
                         <img src={invoice} /> download invoice
                       </Button>
-                      <Button className="invoice-2" onClick={summaryPrint}>
+                      {/* <Button className="invoice-2" onClick={summaryPrint}>
                         <img src={invoice} /> download summary
-                      </Button>
+                      </Button> */}
                     </div>
                   </Col>
                 </Row>

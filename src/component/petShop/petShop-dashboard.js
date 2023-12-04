@@ -436,10 +436,7 @@ function Petshopdashboard() {
                                       <div className="new-content">
                                         <div className="Newsletter">
                                           <Flip right>
-                                            <h1 className="main-head">
-                                              Get Or Promo Code by Subscribing
-                                              To our Newsletter
-                                            </h1>
+                                            <h1 className="main-head">{item.title}</h1>
                                           </Flip>
                                           <Form className="d-flex">
                                             <Form.Control

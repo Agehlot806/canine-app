@@ -97,7 +97,7 @@ function Shopbybrand() {
                                                         background:
                                                             ourBrand[index % ourBrand.length],
                                                     }}>
-                                                        <Link to={`/shop-by-brand-list/${brand.id}`}>
+                                                        <Link to={`/shop-by-brand-list/${brand.title}/${brand.id}`}>
                                                             <div className="brandLOGO">
                                                                 <img
                                                                     src={

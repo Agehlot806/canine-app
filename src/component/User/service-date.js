@@ -23,7 +23,7 @@ const addMonths = (date, months) => {
 };
 
 function Servicedate() {
-  const { id } = useParams();
+  const { id,name } = useParams();
   const [slotday, setSlotDay] = useState([]);
 
   const [timingSlot, setTimingSlot] = useState([]);
@@ -176,6 +176,7 @@ function Servicedate() {
       ) : (
         <>
           <Container fluid className="p-0">
+          
             <div className="all-bg">
               <img src={service} />
             </div>
@@ -183,7 +184,8 @@ function Servicedate() {
 
           <section className="section-padding">
             <Container>
-              <div>
+          <h1 className="main-head">{name} Service Slot </h1>
+              <div className="needplace">
                 {/* <DatePicker
               selected={startDate}
               onChange={onChange}
@@ -299,7 +301,7 @@ function Servicedate() {
                 {!petType.length > 0 ? null : (
                   <div className="add-petbtn">
                     <Button>
-                      <Link to={`/service-add-pet/${id}`}>{stringes.addPet}</Link>
+                      <Link to={`/service-add-pet/${name}/${id}`}>{stringes.addPet}</Link>
                     </Button>
                   </div>
                 )}

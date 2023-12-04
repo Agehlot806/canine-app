@@ -175,15 +175,15 @@ const UsersRoutes = () => {
       />
       <Route path="/add-cart/:id" element={<Addcart />} />
       <Route path="/add-cart" element={<Addcart />} />
-      <Route path="/service-date/:id" element={<Servicedate />} />
-      <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
+      <Route path="/service-date/:name/:id" element={<Servicedate />} />
+      <Route path="/service-add-pet/:name/:id" element={<Serviceaddpet />} />
       <Route path="/pet-profile/" element={<Petprofile />} />
       <Route path="/my-pet-profile" element={<Mypetprofile />} />
       <Route path="/our-brand" element={<Ourbrand />} />
 
       <Route path="/our-our-brand/:id" element={<Ourourbrand />} />
       <Route path="/shop-by-brand" element={<Shopbybrand />} />
-      <Route path="/shop-by-brand-list/:id" element={<Shopbybrandlist />} />
+      <Route path="/shop-by-brand-list/:title/:id" element={<Shopbybrandlist />} />
       <Route path="/product-by-partner" element={<Productbypartner />} />
 
       <Route
@@ -493,8 +493,8 @@ const App = () => {
             />
             <Route path="/add-cart/:id" element={<Addcart />} />
             <Route path="/add-cart" element={<Addcart />} />
-            <Route path="/service-date/:id" element={<Servicedate />} />
-            <Route path="/service-add-pet/:id" element={<Serviceaddpet />} />
+            <Route path="/service-date/:name/:id" element={<Servicedate />} />
+            <Route path="/service-add-pet/:name/:id" element={<Serviceaddpet />} />
             <Route path="/pet-profile/" element={<Petprofile />} />
             <Route path="/my-pet-profile" element={<Mypetprofile />} />
             <Route path="/our-brand" element={<Ourbrand />} />
@@ -502,7 +502,7 @@ const App = () => {
             <Route path="/our-our-brand/:id" element={<Ourourbrand />} />
             <Route path="/shop-by-brand" element={<Shopbybrand />} />
             <Route
-              path="/shop-by-brand-list/:id"
+              path="/shop-by-brand-list/:title/:id"
               element={<Shopbybrandlist />}
             />
             <Route path="/product-by-partner" element={<Productbypartner />} />
