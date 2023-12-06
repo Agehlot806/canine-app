@@ -29,7 +29,7 @@ import paydone from "../../assets/images/icon/paydone.png";
 import { AnimationOnScroll } from "react-animation-on-scroll";
 import "animate.css/animate.min.css";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
-import DocumentMeta from 'react-document-meta';
+import DocumentMeta from "react-document-meta";
 
 const homeslider = {
   desktop: {
@@ -68,19 +68,18 @@ const clinetreview = {
 };
 
 function Home(props) {
-
   const meta = {
-    
-    title: 'Canine Products - Pet Care Shop for Premium Dog Care Products',
-    description: 'From grooming essentials to health supplements, our curated selection of dog care products ensures your pup receives the finest care. Discover a range of shampoos, conditioners, toys, treats, and more, all designed to cater to the specific needs of your canine companion.',
-    canonical: 'https://canine.hirectjob.in/',
+    title: "Canine Products - Pet Care Shop for Premium Dog Care Products",
+    description:
+      "From grooming essentials to health supplements, our curated selection of dog care products ensures your pup receives the finest care. Discover a range of shampoos, conditioners, toys, treats, and more, all designed to cater to the specific needs of your canine companion.",
+    canonical: "https://canine.hirectjob.in/",
     meta: {
-      charset: 'utf-8',
+      charset: "utf-8",
       name: {
-        keywords: 'pet care shop,dog care products '
-      }
-    }
-  }
+        keywords: "pet care shop,dog care products ",
+      },
+    },
+  };
 
   const [expandedDescription, setExpandedDescription] = useState({});
   const navigate = useNavigate();
@@ -221,21 +220,21 @@ function Home(props) {
   const renderBlogDescription = (description) => {
     // Remove HTML tags
     const removeHTMLTags = (html) => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      return doc.body.textContent || '';
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      return doc.body.textContent || "";
     };
-  
+
     // Remove HTML tags and attributes
     const plainTextDescription = removeHTMLTags(description);
-  
+
     const maxCharacters = 50; // Number of characters to show initially
-  
+
     if (plainTextDescription.length <= maxCharacters) {
       return <p>{plainTextDescription}</p>; // Show the full description if it's short
     }
-  
+
     const truncatedDescription = plainTextDescription.slice(0, maxCharacters);
-  
+
     return (
       <>
         <p>{truncatedDescription}......</p>
@@ -327,10 +326,17 @@ function Home(props) {
         `${BASE_URL}/customer/wish-list/add_product`,
         {
           item_name: productDetails?.name,
-          variant: selectedVariant, // You may need to update this based on your data
+          variant:
+            selectedVariant.length === 0
+              ? "without variant product"
+              : selectedVariant,
           image: productDetails?.image,
           quantity: quantity,
-          price: formattedAmount,
+          price:
+            calculatedPrice === 0
+              ? parseInt(productDetails?.price) * quantity
+              : parseInt(calculatedPrice),
+          orderamountwithquantity: formattedAmount,
           user_id: storedUserId,
           item_id: productDetails?.id,
           total_quantity: selectedVariantStock
@@ -441,7 +447,6 @@ function Home(props) {
       [productId]: false,
     }));
   };
-  
 
   // =============================================================================
   // ================================================================================
@@ -452,6 +457,7 @@ function Home(props) {
   const [productDetails, setProductDetails] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
+  console.log("selectedVariantdata: ", selectedVariant);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const handleIncrementone = () => {
     setQuantity(quantity + 1);
@@ -526,9 +532,9 @@ function Home(props) {
 
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
-  ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
-  : productDetails?.price;
+    ? selectedVariantPrice -
+      (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails?.price * quantity - Amount
   ).toFixed(2);
@@ -546,7 +552,6 @@ function Home(props) {
     buynowprice - (buynowprice * productDetails?.discount) / 100
   ).toFixed(2);
 
-  
   const buynowtaxamound = Math.floor(Amount * 0.05);
   const buynowfinalamount = Amount + taxamound;
 
@@ -774,9 +779,7 @@ function Home(props) {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -1047,7 +1050,6 @@ function Home(props) {
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
 
-
     // Send a request
     axios
       .post(`${BASE_URL}/items/notify`, notifymeData)
@@ -1090,253 +1092,253 @@ function Home(props) {
 
   return (
     <>
-     <DocumentMeta {...meta}>
-      <Toaster />
-      <Newheader />
-      {loading ? (
-        <section className="section-padding mt-3 mb-3">
-          <div className="loaderimg text-center text-black mb-4">
-            <img src={loadinggif} alt="" />
-            <h5>Please Wait.....</h5>
-          </div>
-        </section>
-      ) : (
-        <>
-          {/* <section className="section-padding"> */}
-          <div className="home-section">
-            <Container fluid className="p-0">
-              <Carousel
-                swipeable={true}
-                draggable={true}
-                showDots={true}
-                responsive={homeslider}
-                ssr={true} // means to render carousel on server-side.
-                infinite={true}
-                autoPlay={props.deviceType !== "mobile" ? true : false}
-                autoPlaySpeed={2000}
-                keyBoardControl={true}
-                customTransition="all 1s"
-                transitionDuration={1000}
-                containerClass="carousel-container"
-                removeArrowOnDeviceType={["tablet", "mobile"]}
-                deviceType={props.deviceType}
-                dotListClass="custom-dot-list-style"
-                itemClass="carousel-item-padding-40-px"
-              >
-                <div>
-                  {homebanner
-                    ? homebanner.map(
-                        (item, index) =>
-                          item.type === "home_banner_1" && (
-                            <div className="home-img">
-                              <Link to={item.default_link}>
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row>
-                                  <Col lg={7}>
-                                    <div className="home-content">
-                                      <h1>{item.title}</h1>
-                                      <p>{item.description}</p>
-                                      <Button>
-                                        Explore More{" "}
-                                        <i className="fa fa-angle-right" />
-                                      </Button>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </Link>
-                            </div>
-                          )
-                      )
-                    : null}
-                </div>
-                <div>
-                  {homebanner
-                    ? homebanner.map(
-                        (item, index) =>
-                          item.type === "home_banner_2" && (
-                            <div className="home-img">
-                              <Link to={item.default_link}>
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row>
-                                  <Col lg={7}>
-                                    <div className="home-content">
-                                      <h1>{item.title}</h1>
-                                      <p>{item.description}</p>
-
-                                      <div className="app-home">
-                                        <Link>
-                                          <img src={app1} />
-                                        </Link>
-
-                                        <Link>
-                                          <img src={app2} />
-                                        </Link>
+      <DocumentMeta {...meta}>
+        <Toaster />
+        <Newheader />
+        {loading ? (
+          <section className="section-padding mt-3 mb-3">
+            <div className="loaderimg text-center text-black mb-4">
+              <img src={loadinggif} alt="" />
+              <h5>Please Wait.....</h5>
+            </div>
+          </section>
+        ) : (
+          <>
+            {/* <section className="section-padding"> */}
+            <div className="home-section">
+              <Container fluid className="p-0">
+                <Carousel
+                  swipeable={true}
+                  draggable={true}
+                  showDots={true}
+                  responsive={homeslider}
+                  ssr={true} // means to render carousel on server-side.
+                  infinite={true}
+                  autoPlay={props.deviceType !== "mobile" ? true : false}
+                  autoPlaySpeed={2000}
+                  keyBoardControl={true}
+                  customTransition="all 1s"
+                  transitionDuration={1000}
+                  containerClass="carousel-container"
+                  removeArrowOnDeviceType={["tablet", "mobile"]}
+                  deviceType={props.deviceType}
+                  dotListClass="custom-dot-list-style"
+                  itemClass="carousel-item-padding-40-px"
+                >
+                  <div>
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "home_banner_1" && (
+                              <div className="home-img">
+                                <Link to={item.default_link}>
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row>
+                                    <Col lg={7}>
+                                      <div className="home-content">
+                                        <h1>{item.title}</h1>
+                                        <p>{item.description}</p>
+                                        <Button>
+                                          Explore More{" "}
+                                          <i className="fa fa-angle-right" />
+                                        </Button>
                                       </div>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </Link>
-                            </div>
-                          )
-                      )
-                    : null}
-                </div>
-                <div>
-                  {homebanner
-                    ? homebanner.map(
-                        (item, index) =>
-                          item.type === "home_banner_3" && (
-                            <div className="home-img">
-                              <Link to={item.default_link}>
-                                <div className="">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in/storage/app/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <Row>
-                                  <Col lg={7}>
-                                    <div className="home-content">
-                                      <h1>{item.title}</h1>
-                                      <p>{item.description}</p>
-                                      <Button>
-                                        Explore More{" "}
-                                        <i className="fa fa-angle-right" />
-                                      </Button>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </Link>
-                            </div>
-                          )
-                      )
-                    : null}
-                </div>
-              </Carousel>
-            </Container>
-          </div>
-          {/* </section> */}
+                                    </Col>
+                                  </Row>
+                                </Link>
+                              </div>
+                            )
+                        )
+                      : null}
+                  </div>
+                  <div>
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "home_banner_2" && (
+                              <div className="home-img">
+                                <Link to={item.default_link}>
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row>
+                                    <Col lg={7}>
+                                      <div className="home-content">
+                                        <h1>{item.title}</h1>
+                                        <p>{item.description}</p>
 
-          <section className="section-padding">
-            <Container>
-              <Row>
-                <h1 className="main-head ">Shop Deals For Your Best Buddy</h1>
-              </Row>
-            </Container>
-            <Container fluid>
-              <Carousel
-                swipeable={true}
-                draggable={true}
-                showDots={true}
-                responsive={clinetreview}
-                ssr={true} // means to render carousel on server-side.
-                infinite={true}
-                autoPlay={props.deviceType !== "mobile" ? true : false}
-                autoPlaySpeed={7000}
-                keyBoardControl={true}
-                customTransition="all 1s"
-                transitionDuration={1000}
-                containerClass="carousel-container"
-                removeArrowOnDeviceType={["tablet", "mobile"]}
-                deviceType={props.deviceType}
-                dotListClass="custom-dot-list-style"
-                itemClass="carousel-item-padding-40-px"
-              >
-                {categories &&
-                  categories.map((item) => (
-                    <div className="Shop-Deals" key={item.id}>
-                      <Link
-                        className="dog-paw-cursor"
-                        to={`/pet-category/${item.name}/${item.id}`}
-                      >
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/category/" +
-                            item.image
-                          }
-                        />
-                        <h1>{item.name}</h1>
+                                        <div className="app-home">
+                                          <Link>
+                                            <img src={app1} />
+                                          </Link>
+
+                                          <Link>
+                                            <img src={app2} />
+                                          </Link>
+                                        </div>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Link>
+                              </div>
+                            )
+                        )
+                      : null}
+                  </div>
+                  <div>
+                    {homebanner
+                      ? homebanner.map(
+                          (item, index) =>
+                            item.type === "home_banner_3" && (
+                              <div className="home-img">
+                                <Link to={item.default_link}>
+                                  <div className="">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                  <Row>
+                                    <Col lg={7}>
+                                      <div className="home-content">
+                                        <h1>{item.title}</h1>
+                                        <p>{item.description}</p>
+                                        <Button>
+                                          Explore More{" "}
+                                          <i className="fa fa-angle-right" />
+                                        </Button>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Link>
+                              </div>
+                            )
+                        )
+                      : null}
+                  </div>
+                </Carousel>
+              </Container>
+            </div>
+            {/* </section> */}
+
+            <section className="section-padding">
+              <Container>
+                <Row>
+                  <h1 className="main-head ">Shop Deals For Your Best Buddy</h1>
+                </Row>
+              </Container>
+              <Container fluid>
+                <Carousel
+                  swipeable={true}
+                  draggable={true}
+                  showDots={true}
+                  responsive={clinetreview}
+                  ssr={true} // means to render carousel on server-side.
+                  infinite={true}
+                  autoPlay={props.deviceType !== "mobile" ? true : false}
+                  autoPlaySpeed={7000}
+                  keyBoardControl={true}
+                  customTransition="all 1s"
+                  transitionDuration={1000}
+                  containerClass="carousel-container"
+                  removeArrowOnDeviceType={["tablet", "mobile"]}
+                  deviceType={props.deviceType}
+                  dotListClass="custom-dot-list-style"
+                  itemClass="carousel-item-padding-40-px"
+                >
+                  {categories &&
+                    categories.map((item) => (
+                      <div className="Shop-Deals" key={item.id}>
+                        <Link
+                          className="dog-paw-cursor"
+                          to={`/pet-category/${item.name}/${item.id}`}
+                        >
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/category/" +
+                              item.image
+                            }
+                          />
+                          <h1>{item.name}</h1>
+                        </Link>
+                      </div>
+                    ))}
+                </Carousel>
+              </Container>
+            </section>
+
+            <section className="section-padding food">
+              <Container>
+                <Row>
+                  <Col lg={6} sm={6} xs={6}>
+                    <h1 className="main-head">Latest all Products</h1>
+                  </Col>
+                  <Col lg={6} sm={6} xs={6}>
+                    <div className="foodMore">
+                      <Link to="/product">
+                        View More <i className="fa fa-angle-right" />
                       </Link>
                     </div>
-                  ))}
-              </Carousel>
-            </Container>
-          </section>
-
-          <section className="section-padding food">
-            <Container>
-              <Row>
-                <Col lg={6} sm={6} xs={6}>
-                  <h1 className="main-head">Latest all Products</h1>
-                </Col>
-                <Col lg={6} sm={6} xs={6}>
-                  <div className="foodMore">
-                    <Link to="/product">
-                      View More <i className="fa fa-angle-right" />
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-              <div className="needplace">
-                <Row>
-                  {allproduct &&
-                    allproduct.map((item, index) => (
-                      <Col lg={3} sm={6} xs={6} className="mb-4">
-                        <div
-                          className="food-product"
-                          onMouseEnter={() => handleMouseEnter(item.id)}
-                          onMouseLeave={() => handleMouseLeave(item.id)}
-                          key={item.id}
-                          style={{
-                            background:
-                              gradientColors[index % gradientColors.length],
-                          }}
-                        >
-                          <i
-                            class={
-                              item.isFav
-                                ? "fa-solid fa-heart"
-                                : "fa-regular fa-heart"
-                            }
-                            onClick={(id) => {
-                              if (storedUserId == null) {
-                                toast.error("Please Login first");
-                              } else {
-                                addToWishlist(item.id);
-                              }
+                  </Col>
+                </Row>
+                <div className="needplace">
+                  <Row>
+                    {allproduct &&
+                      allproduct.map((item, index) => (
+                        <Col lg={3} sm={6} xs={6} className="mb-4">
+                          <div
+                            className="food-product"
+                            onMouseEnter={() => handleMouseEnter(item.id)}
+                            onMouseLeave={() => handleMouseLeave(item.id)}
+                            key={item.id}
+                            style={{
+                              background:
+                                gradientColors[index % gradientColors.length],
                             }}
-                          />
-                          <Link to={`/product-details/${item.id}`}>
-                            <div className="text-center">
-                              <img
-                                src={
-                                  "https://canine.hirectjob.in//storage/app/public/product/" +
-                                  item.image
+                          >
+                            <i
+                              class={
+                                item.isFav
+                                  ? "fa-solid fa-heart"
+                                  : "fa-regular fa-heart"
+                              }
+                              onClick={(id) => {
+                                if (storedUserId == null) {
+                                  toast.error("Please Login first");
+                                } else {
+                                  addToWishlist(item.id);
                                 }
-                              />
-                            </div>
-                            <div>
-                              <h6>{renderProducthead(item.name)}</h6>
-                              <p>
-                                {renderProductDescription(item.description)}
-                              </p>
-                              {/* <p
+                              }}
+                            />
+                            <Link to={`/product-details/${item.id}`}>
+                              <div className="text-center">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in//storage/app/public/product/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <div>
+                                <h6>{renderProducthead(item.name)}</h6>
+                                <p>
+                                  {renderProductDescription(item.description)}
+                                </p>
+                                {/* <p
                             className={`truncate-text ${
                               !expandedDescription[item.id]
                                 ? "read-more-link"
@@ -1359,9 +1361,9 @@ function Home(props) {
                                 </span>
                               )}
                           </p> */}
-                            </div>
-                            <div className="product-bag">
-                            {parseFloat(item.discount) > 0 ? (
+                              </div>
+                              <div className="product-bag">
+                                {parseFloat(item.discount) > 0 ? (
                                   <Row>
                                     <Col>
                                       <p>₹{parseFloat(item.price)}</p>
@@ -1371,26 +1373,26 @@ function Home(props) {
                                     </Col>
                                   </Row>
                                 ) : null}
-                              <Row>
-                                <Col
-                                  lg={6}
-                                  sm={6}
-                                  xs={6}
-                                  className="align-self-center"
-                                >
-                                  {/* <h6>
+                                <Row>
+                                  <Col
+                                    lg={6}
+                                    sm={6}
+                                    xs={6}
+                                    className="align-self-center"
+                                  >
+                                    {/* <h6>
                                 {`₹${(item.price * item.discount) / 100}`}
                                 {`₹${
                                   item.price -
                                   (item.price * item?.discount) / 100
                                 }`}
                               </h6> */}
-                                  <h4>{`₹${Math.floor(
-                                    item.price -
-                                      (item.price * item.discount) / 100
-                                  )}`}</h4>
-                                </Col>
-                                {/* <Col lg={6} sm={6} xs={6}>
+                                    <h4>{`₹${Math.floor(
+                                      item.price -
+                                        (item.price * item.discount) / 100
+                                    )}`}</h4>
+                                  </Col>
+                                  {/* <Col lg={6} sm={6} xs={6}>
                               <Link
                                 to={`/add-cart/${item.id}`}
                                 onClick={handleAddToCart}
@@ -1398,1430 +1400,1461 @@ function Home(props) {
                                 <img src={bag} />
                               </Link>
                             </Col> */}
-                              </Row>
-                            </div>
-                          </Link>
-                          {buttonVisibility[item.id] && (
-                            <Fade top>
-                              <div className="button-container">
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".bd-example-modal-lg"
-                                  // onClick={(e) => {
-                                  //   if (!storedUserId) {
-                                  //     // window.location.href = '/login';
-                                  //     shippingpage('/login')
-                                  //   } else {
-                                  //     handeldataId(item.id);
-                                  //   }
-                                  // }}
-                                  onClick={(e) => {
-                                    handeldataId(item.id);
-                                  }}
-                                >
-                                  Quick View
-                                </button>
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".buynow"
-                                  onClick={(e) => {
-                                    if (!storedUserId) {
-                                      // window.location.href = '/login';
-                                      shippingpage("/login");
-                                    } else {
-                                      handeldataId(item.id);
-                                    }
-                                  }}
-                                  // onClick={(e) => handeldataId(item.id)}
-                                >
-                                  Buy Now
-                                </button>
-
-
-                              </div>
-                            </Fade>
-                          )}
-                        </div>
-                      </Col>
-                    ))}
-                </Row>
-              </div>
-            </Container>
-          </section>
-
-          <section className="section-padding">
-            <Container>
-              <Row>
-                <Col lg={6} sm={6} xs={6}>
-                  <h1 className="main-head">Our Brand</h1>
-                </Col>
-                <Col lg={6} sm={6} xs={6}>
-                  <div className="foodMore">
-                    <Link to="/our-brand">See all</Link>
-                  </div>
-                </Col>
-              </Row>
-              <Fade left>
-                <Row className="mt-4">
-                  {brands
-                    ? brands.map((brand, index) => (
-                        <Col lg={3} sm={6} xs={6} className="mb-5">
-                          <div
-                            key={brand.id}
-                            className="Brand-card"
-                            style={{
-                              background: ourBrand[index % ourBrand.length],
-                            }}
-                          >
-                            <Link to={`/our-our-brand/${brand.title}`}>
-                              <div className="brandLOGO">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                    brand.logo
-                                  }
-                                />
-                              </div>
-                              <div className="brand-main">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                    brand.image
-                                  }
-                                />
-                              </div>
-                              <div className="brand-text">
-                                <h5>{brand.title}</h5>
+                                </Row>
                               </div>
                             </Link>
+                            {buttonVisibility[item.id] && (
+                              <Fade top>
+                                <div className="button-container">
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".bd-example-modal-lg"
+                                    // onClick={(e) => {
+                                    //   if (!storedUserId) {
+                                    //     // window.location.href = '/login';
+                                    //     shippingpage('/login')
+                                    //   } else {
+                                    //     handeldataId(item.id);
+                                    //   }
+                                    // }}
+                                    onClick={(e) => {
+                                      handeldataId(item.id);
+                                    }}
+                                  >
+                                    Quick View
+                                  </button>
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".buynow"
+                                    onClick={(e) => {
+                                      if (!storedUserId) {
+                                        // window.location.href = '/login';
+                                        shippingpage("/login");
+                                      } else {
+                                        handeldataId(item.id);
+                                      }
+                                    }}
+                                    // onClick={(e) => handeldataId(item.id)}
+                                  >
+                                    Buy Now
+                                  </button>
+                                </div>
+                              </Fade>
+                            )}
                           </div>
                         </Col>
-                      ))
-                    : null}
-                </Row>
-              </Fade>
-            </Container>
-          </section>
+                      ))}
+                  </Row>
+                </div>
+              </Container>
+            </section>
 
-          <section className="section-padding thirdbnner-area">
-            <Container>
-              <Row>
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "default" && (
-                          <Col lg={6} className="mb-4">
-                            <div className="defualtimg">
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/" +
-                                item.image
-                              }
-                            />
+            <section className="section-padding">
+              <Container>
+                <Row>
+                  <Col lg={6} sm={6} xs={6}>
+                    <h1 className="main-head">Our Brand</h1>
+                  </Col>
+                  <Col lg={6} sm={6} xs={6}>
+                    <div className="foodMore">
+                      <Link to="/our-brand">See all</Link>
+                    </div>
+                  </Col>
+                </Row>
+                <Fade left>
+                  <Row className="mt-4">
+                    {brands
+                      ? brands.map((brand, index) => (
+                          <Col lg={3} sm={6} xs={6} className="mb-5">
+                            <div
+                              key={brand.id}
+                              className="Brand-card"
+                              style={{
+                                background: ourBrand[index % ourBrand.length],
+                              }}
+                            >
+                              <Link to={`/our-our-brand/${brand.title}`}>
+                                <div className="brandLOGO">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                      brand.logo
+                                    }
+                                  />
+                                </div>
+                                <div className="brand-main">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                      brand.image
+                                    }
+                                  />
+                                </div>
+                                <div className="brand-text">
+                                  <h5>{brand.title}</h5>
+                                </div>
+                              </Link>
                             </div>
                           </Col>
-                        )
-                    )
-                  : null}
-                <Col lg={6} className="align-self-center">
-                  <Row>
-                    {homebanner
-                      ? homebanner.map(
-                          (item, index) =>
-                            item.type === "store_wise" && (
-                              <Col sm={12} className="mb-4">
-                                 <div className="storeimg">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/" +
-                                    item.image
-                                  }
-                                />
-                                </div>
-                              </Col>
-                            )
-                        )
-                      : null}
-                    {homebanner
-                      ? homebanner.map(
-                          (item, index) =>
-                            item.type === "item_wise" && (
-                              <Col sm={12} className="mb-4">
-                                 <div className="storeimg">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in/storage/app/" +
-                                    item.image
-                                  }
-                                />
-                                </div>
-                              </Col>
-                            )
-                        )
-                      : null}
-                  </Row>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-          <section className="section-padding">
-            <Container>
-              <Row>
-                <Col lg={6} sm={6} xs={6}>
-                  <h1 className="main-head">Shop By Brands</h1>
-                </Col>
-                <Col lg={6} sm={6} xs={6}>
-                  <div className="foodMore">
-                    <Link to="/shop-by-brand">See all</Link>
-                  </div>
-                </Col>
-              </Row>
-              <div className="needplace">
-                <Fade right>
-                  <Row>
-                    {shopbybrand
-                      ? shopbybrand.map(
-                          (brand, index) =>
-                            brand.canine == "0" && (
-                              <Col lg={3} sm={6} xs={6} className="mb-5">
-                                <div
-                                  key={brand.id}
-                                  className="Brand-card"
-                                  style={{
-                                    background:
-                                      ourBrand[index % ourBrand.length],
-                                  }}
-                                >
-                                  <Link to={`/shop-by-brand-list/${brand.title}/${brand.id}`}>
-                                    <div className="brandLOGO">
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
-                                          brand.logo
-                                        }
-                                      />
-                                    </div>
-                                    <div className="brand-main">
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in/storage/app/public/brand/" +
-                                          brand.image
-                                        }
-                                      />
-                                    </div>
-                                    <div className="brand-text">
-                                      <h5>{brand.title}</h5>
-                                    </div>
-                                  </Link>
-                                </div>
-                              </Col>
-                            )
-                        )
+                        ))
                       : null}
                   </Row>
                 </Fade>
-              </div>
-            </Container>
-          </section>
+              </Container>
+            </section>
 
-          <section className="section-padding">
-            <Container>
-              <Row>
-                <Col lg={6} sm={6} xs={6}>
-                  <h1 className="main-head">Product By Partner</h1>
-                </Col>
-                <Col lg={6} sm={6} xs={6}>
-                  <div className="foodMore">
-                    <Link to="/product-by-partner">See all</Link>
-                  </div>
-                </Col>
-              </Row>
-              <div className="needplace">
+            <section className="section-padding thirdbnner-area">
+              <Container>
                 <Row>
-                  {allVendorShop && allVendorShop.length > 0 ? (
-                    allVendorShop.map((item, index) => (
-                      <Col lg={3} sm={6} xs={6} className="mb-5" key={item.id}>
-                        {/* <Link to={`/product-partner-Oneshop/${item.id}`}> */}
-                        <a
-                          onClick={() => {
-                            navigate("/product-partner-Oneshop", {
-                              state: {
-                                item: item,
-                              },
-                            });
-                          }}
-                        >
-                          <div
-                            className="ProductPartner-card"
-                            style={{
-                              background:
-                                gradientColors[index % gradientColors.length],
-                            }}
-                          >
-                            {/* <img src={item.logo} /> */}
-                            <img
-                              src={
-                                "https://canine.hirectjob.in/storage/app/public/store/" +
-                                item.logo
-                              }
-                            />
-                            <h4 className="text-dark">{item.name}</h4>
-                          </div>
-                        </a>
-                      </Col>
-                    ))
-                  ) : (
-                    <p className="emptyMSG">No Product By Partner Data.</p>
-                  )}
-                </Row>
-              </div>
-            </Container>
-          </section>
-
-          <section className="section-padding">
-            <Container>
-              <div className="banner-video">
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "video" && (
-                          <Row>
-                            <Col lg={6} className="p-0">
-                              <div className="video-content">
-                                <h1 className="main-head">{item.title}</h1>
-                                <p>{item.description}</p>
-                                <Button>Shop Now</Button>
-                              </div>
-                            </Col>
-                            <Col lg={6} className="p-0">
-                              <video loop autoPlay muted>
-                                <source
+                  {homebanner
+                    ? homebanner.map(
+                        (item, index) =>
+                          item.type === "default" && (
+                            <Col lg={6} className="mb-4">
+                              <div className="defualtimg">
+                                <img
                                   src={
                                     "https://canine.hirectjob.in/storage/app/" +
                                     item.image
                                   }
-                                  type="video/mp4"
                                 />
-                              </video>
+                              </div>
                             </Col>
-                          </Row>
-                        )
-                    )
-                  : null}
-              </div>
-            </Container>
-          </section>
-
-          <section className="section-padding">
-            <Container>
-              <div className="text-left">
-                <h1 className="main-head">Blog</h1>
-              </div>
-              <div className="needplace">
-                <Row>
-                  {blog && blog.length > 0 ? (
-                    blog.map((item, index) => (
-                      <Col lg={4} sm={6} className="mb-4">
-                        <div className="blog-card">
-                          <div className="text-center">
-                          <img
-                            src={
-                              "https://canine.hirectjob.in/storage/app/public/blog/" +
-                              item.image
-                            }
-                          />
-                          </div>
-                          <h3>{item.title}</h3>
-                          <p>{renderBlogDescription(item.description)}</p>
-                          <Link to={`/blog-details/${item.id}`}>Read More</Link>
-                        </div>
-                      </Col>
-                    ))
-                  ) : (
-                    <p className="emptyMSG">No Blog Data.</p>
-                  )}
+                          )
+                      )
+                    : null}
+                  <Col lg={6} className="align-self-center">
+                    <Row>
+                      {homebanner
+                        ? homebanner.map(
+                            (item, index) =>
+                              item.type === "store_wise" && (
+                                <Col sm={12} className="mb-4">
+                                  <div className="storeimg">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                </Col>
+                              )
+                          )
+                        : null}
+                      {homebanner
+                        ? homebanner.map(
+                            (item, index) =>
+                              item.type === "item_wise" && (
+                                <Col sm={12} className="mb-4">
+                                  <div className="storeimg">
+                                    <img
+                                      src={
+                                        "https://canine.hirectjob.in/storage/app/" +
+                                        item.image
+                                      }
+                                    />
+                                  </div>
+                                </Col>
+                              )
+                          )
+                        : null}
+                    </Row>
+                  </Col>
                 </Row>
-              </div>
-              <div className="allblogbtn">
-                <Button>
-                  <Link to="/blog">All Blogs</Link>
-                </Button>
-              </div>
-            </Container>
-          </section>
-
-          <section className="section-padding">
-            <Container>
-              <Row>
-                <Col lg={6}>
-                  <h1 className="main-head">Happy Customer</h1>
-                </Col>
-              </Row>
-              <Row>
-                {reviewlist.map((order, index) => (
-                  <Col lg={4} sm={6} key={order.id} className="mb-3">
-                    <div
-                      className="Brand-cus"
-                      style={{
-                        background: happyCus[index % happyCus.length],
-                      }}
-                    >
-                      <>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/profile/" +
-                            order.user_id[0].image
-                          }
-                          alt={order.user_id[0].f_name}
-                        />
-                      </>
-                      <div className="brand-bg">
-                        {order.user_id && order.user_id.length > 0 && (
-                          <h5>
-                            {order.user_id[0].f_name} {order.user_id[0].l_name}
-                          </h5>
-                        )}
-                        <p>{renderhappycus(order.comment)}</p>
-                        <div className="icon-style">
-                          {Array.from({
-                            length: order.rating,
-                          }).map((_, index) => (
-                            <Link>
-                              <i className="fa fa-star" />
-                            </Link>
-                          ))}
-                        </div>
-                        {/* <Link>4.2/5</Link> */}
-                      </div>
+              </Container>
+            </section>
+            <section className="section-padding">
+              <Container>
+                <Row>
+                  <Col lg={6} sm={6} xs={6}>
+                    <h1 className="main-head">Shop By Brands</h1>
+                  </Col>
+                  <Col lg={6} sm={6} xs={6}>
+                    <div className="foodMore">
+                      <Link to="/shop-by-brand">See all</Link>
                     </div>
                   </Col>
-                ))}
-              </Row>
-            </Container>
-          </section>
+                </Row>
+                <div className="needplace">
+                  <Fade right>
+                    <Row>
+                      {shopbybrand
+                        ? shopbybrand.map(
+                            (brand, index) =>
+                              brand.canine == "0" && (
+                                <Col lg={3} sm={6} xs={6} className="mb-5">
+                                  <div
+                                    key={brand.id}
+                                    className="Brand-card"
+                                    style={{
+                                      background:
+                                        ourBrand[index % ourBrand.length],
+                                    }}
+                                  >
+                                    <Link
+                                      to={`/shop-by-brand-list/${brand.title}/${brand.id}`}
+                                    >
+                                      <div className="brandLOGO">
+                                        <img
+                                          src={
+                                            "https://canine.hirectjob.in/storage/app/public/brand_logo/" +
+                                            brand.logo
+                                          }
+                                        />
+                                      </div>
+                                      <div className="brand-main">
+                                        <img
+                                          src={
+                                            "https://canine.hirectjob.in/storage/app/public/brand/" +
+                                            brand.image
+                                          }
+                                        />
+                                      </div>
+                                      <div className="brand-text">
+                                        <h5>{brand.title}</h5>
+                                      </div>
+                                    </Link>
+                                  </div>
+                                </Col>
+                              )
+                          )
+                        : null}
+                    </Row>
+                  </Fade>
+                </div>
+              </Container>
+            </section>
 
-          <section className="section-padding">
-            <Container>
-              <div>
-                {homebanner
-                  ? homebanner.map(
-                      (item, index) =>
-                        item.type === "news_letter" && (
-                          <div className="home-img">
-                            <div className="">
+            <section className="section-padding">
+              <Container>
+                <Row>
+                  <Col lg={6} sm={6} xs={6}>
+                    <h1 className="main-head">Product By Partner</h1>
+                  </Col>
+                  <Col lg={6} sm={6} xs={6}>
+                    <div className="foodMore">
+                      <Link to="/product-by-partner">See all</Link>
+                    </div>
+                  </Col>
+                </Row>
+                <div className="needplace">
+                  <Row>
+                    {allVendorShop && allVendorShop.length > 0 ? (
+                      allVendorShop.map((item, index) => (
+                        <Col
+                          lg={3}
+                          sm={6}
+                          xs={6}
+                          className="mb-5"
+                          key={item.id}
+                        >
+                          {/* <Link to={`/product-partner-Oneshop/${item.id}`}> */}
+                          <a
+                            onClick={() => {
+                              navigate("/product-partner-Oneshop", {
+                                state: {
+                                  item: item,
+                                },
+                              });
+                            }}
+                          >
+                            <div
+                              className="ProductPartner-card"
+                              style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}
+                            >
+                              {/* <img src={item.logo} /> */}
                               <img
                                 src={
-                                  "https://canine.hirectjob.in/storage/app/" +
+                                  "https://canine.hirectjob.in/storage/app/public/store/" +
+                                  item.logo
+                                }
+                              />
+                              <h4 className="text-dark">{item.name}</h4>
+                            </div>
+                          </a>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Product By Partner Data.</p>
+                    )}
+                  </Row>
+                </div>
+              </Container>
+            </section>
+
+            <section className="section-padding">
+              <Container>
+                <div className="banner-video">
+                  {homebanner
+                    ? homebanner.map(
+                        (item, index) =>
+                          item.type === "video" && (
+                            <Row>
+                              <Col lg={6} className="p-0">
+                                <div className="video-content">
+                                  <h1 className="main-head">{item.title}</h1>
+                                  <p>{item.description}</p>
+                                  <Button>Shop Now</Button>
+                                </div>
+                              </Col>
+                              <Col lg={6} className="p-0">
+                                <video loop autoPlay muted>
+                                  <source
+                                    src={
+                                      "https://canine.hirectjob.in/storage/app/" +
+                                      item.image
+                                    }
+                                    type="video/mp4"
+                                  />
+                                </video>
+                              </Col>
+                            </Row>
+                          )
+                      )
+                    : null}
+                </div>
+              </Container>
+            </section>
+
+            <section className="section-padding">
+              <Container>
+                <div className="text-left">
+                  <h1 className="main-head">Blog</h1>
+                </div>
+                <div className="needplace">
+                  <Row>
+                    {blog && blog.length > 0 ? (
+                      blog.map((item, index) => (
+                        <Col lg={4} sm={6} className="mb-4">
+                          <div className="blog-card">
+                            <div className="text-center">
+                              <img
+                                src={
+                                  "https://canine.hirectjob.in/storage/app/public/blog/" +
                                   item.image
                                 }
                               />
                             </div>
-                            <Row className="justify-content-center">
-                              <Col lg={7}>
-                                <div className="new-content">
-                                  <div className="Newsletter">
-                                    <Flip right>
-                                      <h1 className="main-head">{item.title}</h1>
-                                    </Flip>
-                                    <Form className="d-flex">
-                                      <Form.Control
-                                        type="search"
-                                        placeholder="Enter your email"
-                                        className="me-2"
-                                        aria-label="Search"
-                                        value={email}
-                                        onChange={(e) =>
-                                          setEmail(e.target.value)
-                                        }
-                                      />
-                                      <Button
-                                        variant="outline-success"
-                                        // onClick={handleNewsletter}
-                                        onClick={() => {
-                                          if (!storedUserId) {
-                                            toast.error("Please Login first");
-                                          } else {
-                                            handleNewsletter;
+                            <h3>{item.title}</h3>
+                            <p>{renderBlogDescription(item.description)}</p>
+                            <Link to={`/blog-details/${item.id}`}>
+                              Read More
+                            </Link>
+                          </div>
+                        </Col>
+                      ))
+                    ) : (
+                      <p className="emptyMSG">No Blog Data.</p>
+                    )}
+                  </Row>
+                </div>
+                <div className="allblogbtn">
+                  <Button>
+                    <Link to="/blog">All Blogs</Link>
+                  </Button>
+                </div>
+              </Container>
+            </section>
+
+            <section className="section-padding">
+              <Container>
+                <Row>
+                  <Col lg={6}>
+                    <h1 className="main-head">Happy Customer</h1>
+                  </Col>
+                </Row>
+                <Row>
+                  {reviewlist.map((order, index) => (
+                    <Col lg={4} sm={6} key={order.id} className="mb-3">
+                      <div
+                        className="Brand-cus"
+                        style={{
+                          background: happyCus[index % happyCus.length],
+                        }}
+                      >
+                        <>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/profile/" +
+                              order.user_id[0].image
+                            }
+                            alt={order.user_id[0].f_name}
+                          />
+                        </>
+                        <div className="brand-bg">
+                          {order.user_id && order.user_id.length > 0 && (
+                            <h5>
+                              {order.user_id[0].f_name}{" "}
+                              {order.user_id[0].l_name}
+                            </h5>
+                          )}
+                          <p>{renderhappycus(order.comment)}</p>
+                          <div className="icon-style">
+                            {Array.from({
+                              length: order.rating,
+                            }).map((_, index) => (
+                              <Link>
+                                <i className="fa fa-star" />
+                              </Link>
+                            ))}
+                          </div>
+                          {/* <Link>4.2/5</Link> */}
+                        </div>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
+            </section>
+
+            <section className="section-padding">
+              <Container>
+                <div>
+                  {homebanner
+                    ? homebanner.map(
+                        (item, index) =>
+                          item.type === "news_letter" && (
+                            <div className="home-img">
+                              <div className="">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in/storage/app/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <Row className="justify-content-center">
+                                <Col lg={7}>
+                                  <div className="new-content">
+                                    <div className="Newsletter">
+                                      <Flip right>
+                                        <h1 className="main-head">
+                                          {item.title}
+                                        </h1>
+                                      </Flip>
+                                      <Form className="d-flex">
+                                        <Form.Control
+                                          type="search"
+                                          placeholder="Enter your email"
+                                          className="me-2"
+                                          aria-label="Search"
+                                          value={email}
+                                          onChange={(e) =>
+                                            setEmail(e.target.value)
                                           }
-                                        }}
-                                      >
-                                        Subscribe
-                                      </Button>
-                                    </Form>
+                                        />
+                                        <Button
+                                          variant="outline-success"
+                                          // onClick={handleNewsletter}
+                                          onClick={() => {
+                                            if (!storedUserId) {
+                                              toast.error("Please Login first");
+                                            } else {
+                                              handleNewsletter;
+                                            }
+                                          }}
+                                        >
+                                          Subscribe
+                                        </Button>
+                                      </Form>
+                                    </div>
                                   </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          )
+                      )
+                    : null}
+                </div>
+              </Container>
+            </section>
+          </>
+        )}
+
+        <Footer />
+
+        {/* Product details Modal */}
+        <div
+          className="modal fade bd-example-modal-lg"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+          data-backdrop="static"
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-body">
+                <Link
+                  class="quickarea fa fa-times"
+                  data-dismiss="modal"
+                  onClick={quickViewClear}
+                  // onClick={handleResetClickWithoutL}
+                >
+                  {" "}
+                </Link>
+                <section className="section-padding">
+                  <Container>
+                    <Row>
+                      <Col lg={6} sm={6}>
+                        <>
+                          <div>
+                            <div className="product-item quickviewimg">
+                              <img
+                                src={mainImage}
+                                alt="Product Image"
+                                // onClick={handleMainImageClick}
+                              />
+                            </div>
+                            <div className="needplace">
+                              <Row>
+                                {productDetails?.images &&
+                                productDetails?.images.length > 0 ? (
+                                  productDetails.images.map((item, index) => (
+                                    <Col
+                                      lg={3}
+                                      sm={3}
+                                      xs={3}
+                                      className="mb-3"
+                                      key={index}
+                                    >
+                                      <div
+                                        className="product-item-inner"
+                                        onClick={() =>
+                                          handleThumbnailClick(index)
+                                        }
+                                      >
+                                        <img
+                                          src={
+                                            "https://canine.hirectjob.in/storage/app/public/product/" +
+                                            item
+                                          }
+                                          alt={`Image ${index}`}
+                                        />
+                                      </div>
+                                    </Col>
+                                  ))
+                                ) : (
+                                  <p className="emptyMSG">No Related Image.</p>
+                                )}
+                              </Row>
+                            </div>
+                          </div>
+
+                          {lightboxIsOpen && (
+                            <Lightbox
+                              mainSrc={
+                                "https://canine.hirectjob.in/storage/app/public/product/" +
+                                productDetails.images[lightboxImageIndex]
+                              }
+                              nextSrc={
+                                "https://canine.hirectjob.in/storage/app/public/product/" +
+                                productDetails.images[
+                                  (lightboxImageIndex + 1) %
+                                    productDetails.images.length
+                                ]
+                              }
+                              prevSrc={
+                                "https://canine.hirectjob.in/storage/app/public/product/" +
+                                productDetails.images[
+                                  (lightboxImageIndex +
+                                    productDetails.images.length -
+                                    1) %
+                                    productDetails.images.length
+                                ]
+                              }
+                              onCloseRequest={() => setLightboxIsOpen(false)}
+                              onMovePrevRequest={() =>
+                                setLightboxImageIndex(
+                                  (lightboxImageIndex +
+                                    productDetails.images.length -
+                                    1) %
+                                    productDetails.images.length
+                                )
+                              }
+                              onMoveNextRequest={() =>
+                                setLightboxImageIndex(
+                                  (lightboxImageIndex + 1) %
+                                    productDetails.images.length
+                                )
+                              }
+                            />
+                          )}
+                        </>
+                      </Col>
+                      <Col lg={6} sm={6}>
+                        <div className="productDetail-content">
+                          <Row>
+                            <Col lg={9} sm={9} xs={9}>
+                              <h4>{productDetails?.name}</h4>
+                            </Col>
+                            <Col lg={3} sm={3} xs={3}>
+                              <p>
+                                {productDetails?.veg == 0 ? (
+                                  <span>
+                                    <span className="non-vegetarian">●</span>
+                                  </span>
+                                ) : (
+                                  <span>
+                                    <span className="vegetarian">●</span>
+                                  </span>
+                                )}
+                              </p>
+                            </Col>
+                          </Row>
+                          <p>
+                            By <span>{productDetails?.store_name}</span>
+                          </p>
+
+                          <Wrapper>
+                            <div className="icon-style">
+                              {ratingStar}
+                              <p>
+                                ({productDetails?.rating_count} customer
+                                reviews)
+                              </p>
+                            </div>
+                          </Wrapper>
+
+                          <div className="needplaceProduct">
+                            <Row>
+                              <Col sm={6} xs={6}>
+                                <div>
+                                  <div>
+                                    <div className="tab-container">
+                                      <h6>Variations</h6>
+                                      <Row>
+                                        {productDetails?.variations &&
+                                          productDetails?.variations.length >
+                                            0 &&
+                                          productDetails?.variations.map(
+                                            (item, index) => (
+                                              <Col
+                                                lg={5}
+                                                key={index}
+                                                className="p-0"
+                                              >
+                                                {item.stock !== 0 ? (
+                                                  <div
+                                                    className={`tab-variations ${
+                                                      selectedVariant ===
+                                                      item.type
+                                                        ? "active"
+                                                        : ""
+                                                    }`}
+                                                    onClick={() => {
+                                                      setSelectedVariant(
+                                                        item.type
+                                                        // === null
+                                                        // ? "without variant product"
+                                                        // : item.type
+                                                      );
+                                                      setSelectedVariantPrice(
+                                                        item.price
+                                                      ); // Store the price in state
+                                                    }}
+                                                  >
+                                                    {item.type}
+                                                  </div>
+                                                ) : (
+                                                  <div
+                                                    className="tab-variations disabledvariation"
+                                                    title="Stock unavailable"
+                                                  >
+                                                    {/* <span className="blurred-text"> */}
+                                                    {item.type}
+                                                    {/* </span> */}
+                                                  </div>
+                                                )}
+                                              </Col>
+                                            )
+                                          )}
+                                      </Row>
+                                    </div>
+                                  </div>
+                                </div>
+                              </Col>
+                              <Col sm={6} xs={6}>
+                                <div className="quantity-btn quickbtn">
+                                  <button onClick={handleDecrementone}>
+                                    <i className="fa fa-minus" />
+                                  </button>
+                                  <form>
+                                    <div className="form-group">
+                                      <input
+                                        type="tel"
+                                        className="form-control"
+                                        placeholder="Quantity"
+                                        value={quantity}
+                                        onChange={handleQuantityChange}
+                                        autoComplete="new-number"
+                                      />
+                                    </div>
+                                  </form>
+                                  <button onClick={handleIncrementone}>
+                                    <i className="fa fa-plus" />
+                                  </button>
                                 </div>
                               </Col>
                             </Row>
                           </div>
-                        )
-                    )
-                  : null}
-              </div>
-            </Container>
-          </section>
-        </>
-      )}
-
-      <Footer />
-
-      {/* Product details Modal */}
-      <div
-        className="modal fade bd-example-modal-lg"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-        data-backdrop="static"
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-body">
-              <Link
-                class="quickarea fa fa-times"
-                data-dismiss="modal"
-                onClick={quickViewClear}
-                // onClick={handleResetClickWithoutL}
-              >
-                {" "}
-              </Link>
-              <section className="section-padding">
-                <Container>
-                  <Row>
-                    <Col lg={6} sm={6}>
-                      <>
-                        <div>
-                          <div className="product-item quickviewimg">
-                            <img
-                              src={mainImage}
-                              alt="Product Image"
-                              // onClick={handleMainImageClick}
-                            />
-                          </div>
-                          <div className="needplace">
-                            <Row>
-                              {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
-                                productDetails.images.map((item, index) => (
-                                  <Col
-                                    lg={3}
-                                    sm={3}
-                                    xs={3}
-                                    className="mb-3"
-                                    key={index}
-                                  >
-                                    <div
-                                      className="product-item-inner"
-                                      onClick={() =>
-                                        handleThumbnailClick(index)
-                                      }
-                                    >
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in/storage/app/public/product/" +
-                                          item
-                                        }
-                                        alt={`Image ${index}`}
-                                      />
-                                    </div>
+                          <div className="needplaceProduct">
+                            <div className="product-deatils-price">
+                              {uservariationprice && formattedAmount >= 0 ? (
+                                <Row>
+                                  <Col lg={3} sm={3} xs={3}>
+                                    <p>{`₹${uservariationprice}`}</p>
                                   </Col>
-                                ))
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(formattedAmount)
+                                        ? 0
+                                        : formattedAmount
+                                    }`}</h5>
+                                  </Col>
+                                  {/* {formattedSavedAmount > 0 && ( */}
+                                  <Col lg={5} sm={5} xs={3}>
+                                    {formattedSavedAmount > 0 ? (
+                                      <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    ) : (
+                                      <h6>No savings</h6>
+                                    )}
+                                  </Col>
+                                  {/* )} */}
+                                </Row>
                               ) : (
-                                <p className="emptyMSG">No Related Image.</p>
+                                <Row>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
+                                  </Col>
+                                </Row>
                               )}
-                            </Row>
+                            </div>
                           </div>
-                        </div>
-
-                        {lightboxIsOpen && (
-                          <Lightbox
-                            mainSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
-                              productDetails.images[lightboxImageIndex]
-                            }
-                            nextSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
-                              productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
-                              ]
-                            }
-                            prevSrc={
-                              "https://canine.hirectjob.in/storage/app/public/product/" +
-                              productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
-                              ]
-                            }
-                            onCloseRequest={() => setLightboxIsOpen(false)}
-                            onMovePrevRequest={() =>
-                              setLightboxImageIndex(
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
-                              )
-                            }
-                            onMoveNextRequest={() =>
-                              setLightboxImageIndex(
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
-                              )
-                            }
-                          />
-                        )}
-                      </>
-                    </Col>
-                    <Col lg={6} sm={6}>
-                      <div className="productDetail-content">
-                        <Row>
-                          <Col lg={9} sm={9} xs={9}>
-                            <h4>{productDetails?.name}</h4>
-                          </Col>
-                          <Col lg={3} sm={3} xs={3}>
-                            <p>
-                              {productDetails?.veg == 0 ? (
-                                <span>
-                                  <span className="non-vegetarian">●</span>
-                                </span>
-                              ) : (
-                                <span>
-                                  <span className="vegetarian">●</span>
-                                </span>
-                              )}
-                            </p>
-                          </Col>
-                        </Row>
-                        <p>
-                          By <span>{productDetails?.store_name}</span>
-                        </p>
-
-                        <Wrapper>
-                          <div className="icon-style">
-                            {ratingStar}
-                            <p>
-                              ({productDetails?.rating_count} customer reviews)
-                            </p>
-                          </div>
-                        </Wrapper>
-
-                        <div className="needplaceProduct">
-                          <Row>
-                            <Col sm={6} xs={6}>
-                              <div>
-                                <div>
-                                  <div className="tab-container">
-                                    <h6>Variations</h6>
-                                    <Row>
-                                      {productDetails?.variations &&
-                                        productDetails?.variations.length > 0 &&
-                                        productDetails?.variations.map(
-                                          (item, index) => (
-                                            <Col
-                                              lg={5}
-                                              key={index}
-                                              className="p-0"
-                                            >
-                                              {item.stock !== 0 ? (
-                                                <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
-                                                      ? "active"
-                                                      : ""
-                                                  }`}
-                                                  onClick={() => {
-                                                    setSelectedVariant(
-                                                      item.type
-                                                    );
-                                                    setSelectedVariantPrice(
-                                                      item.price
-                                                    ); // Store the price in state
-                                                  }}
-                                                >
-                                                  {item.type}
-                                                </div>
-                                              ) : (
-                                                <div
-                                                  className="tab-variations disabledvariation"
-                                                  title="Stock unavailable"
-                                                >
-                                                  {/* <span className="blurred-text"> */}
-                                                  {item.type}
-                                                  {/* </span> */}
-                                                </div>
-                                              )}
-                                            </Col>
-                                          )
-                                        )}
-                                    </Row>
-                                  </div>
-                                </div>
-                              </div>
-                            </Col>
-                            <Col sm={6} xs={6}>
-                              <div className="quantity-btn quickbtn">
-                                <button onClick={handleDecrementone}>
-                                  <i className="fa fa-minus" />
-                                </button>
-                                <form>
-                                  <div className="form-group">
-                                    <input
-                                      type="tel"
-                                      className="form-control"
-                                      placeholder="Quantity"
-                                      value={quantity}
-                                      onChange={handleQuantityChange}
-                                      autoComplete="new-number"
-                                    />
-                                  </div>
-                                </form>
-                                <button onClick={handleIncrementone}>
-                                  <i className="fa fa-plus" />
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                        <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            {uservariationprice && formattedAmount >= 0 ? (
-                              <Row>
-                                <Col lg={3} sm={3} xs={3}>
-                                  <p>{`₹${uservariationprice}`}</p>
-                                </Col>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
-                                </Col>
-                                {/* {formattedSavedAmount > 0 && ( */}
-                                <Col lg={5} sm={5} xs={3}>
-                                  {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
-                                  ) : (
-                                    <h6>No savings</h6>
-                                  )}
-                                </Col>
-                                {/* )} */}
-                              </Row>
-                            ) : (
-                              <Row>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
-                                </Col>
-                              </Row>
-                            )}
-                          </div>
-                        </div>
-                        <h5>About Us</h5>
-                        {productDetails ? (
-                          <Table responsive>
-                            <tbody>
-                              <tr>
-                                <th>Brand</th>
-                                <td>{productDetails?.brand_id}</td>
-                              </tr>
-                              <tr>
-                                <th>Age Range</th>
-                                <td>{productDetails?.lifeStage_id}</td>
-                              </tr>
-                              {/* <tr>
+                          <h5>About Us</h5>
+                          {productDetails ? (
+                            <Table responsive>
+                              <tbody>
+                                <tr>
+                                  <th>Brand</th>
+                                  <td>{productDetails?.brand_id}</td>
+                                </tr>
+                                <tr>
+                                  <th>Age Range</th>
+                                  <td>{productDetails?.lifeStage_id}</td>
+                                </tr>
+                                {/* <tr>
                                 <th>Health Condition</th>
                                 <td>{productDetails?.helthCondition_id}</td>
                               </tr> */}
-                              <tr>
-                                <th>Target Species</th>
-                                <td>{productDetails?.Petsbreeds_id}</td>
-                              </tr>
-                            </tbody>
-                          </Table>
-                        ) : (
-                          <p>No data available for this product.</p>
-                        )}
-                      </div>
-                    </Col>
-                  </Row>
-                  
-                  {/* without sign in quick view add cart */}
-                  {productDetails?.stock &&
-                  productDetails?.stock?.length !== 0 ? (
-                    <div className="productBTNaddcard">
-                      {customerLoginId === null ? (
-                        <Button data-dismiss="modal">
-                          {/* <Button> */}
-                          <Link
-                            onClick={() => {
-                              const filterData = cart.filter((el) => {
-                                console.log('elll: ', el)
-                                return el.item_id === productDetails.id;
-                              });
-                              if (filterData?.length > 0) {
-                                toast.error("Already in added");
-                              } else {
-                                dispatch({
-                                  type: "ADD_TO_CART",
-                                  payload: {
-                                    item_id: productDetails.id,
-                                    variant: selectedVariant,
-                                    price: calculatedPrice === 0
-                                    ? parseInt(productDetails?.price) * quantity
-                                    : parseInt(calculatedPrice),
-                                    quantity: quantity,
-                                    name: productDetails.name,
-                                    image: productDetails.image,
-                                    orderamountwithquantity:formattedAmount,
-                                  },
-                                });
-                              }
-                            }}
-                          >
-                            <i className="fa fa-shopping-bag" /> Add to cart
-                          </Link>
-                          <p>{addToCartStatus}</p>
-                        </Button>
-                      ) : (
-                        <Button>
-                          <Link
-                            to={`/add-cart/${productDetails.id}`}
-                            onClick={handleAddToCart}
-                          >
-                            <i className="fa fa-shopping-bag" /> Add to cart
-                          </Link>
-                          <p>{addToCartStatus}</p>
-                        </Button>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="sold-out-btn mt-3">
-                      <Link>Sold Out</Link>
-                      <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel">
-                        Notify Me When Available
-                      </Button>
-                    </div>
-                  )}
-
-                 
-                  <div
-                    className="modal fade"
-                    id="soldoutModel"
-                    tabIndex={-1}
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog" role="document">
-                      <div className="modal-content">
-                        <div className="modal-body">
-                          <h4>{productDetails?.name}</h4>
-                          <p>{productDetails?.description}</p>
-                          
-                          <Form onSubmit={handleNotifymeSubmit}>
-                           
-                            <Form.Group
-                              controlId="formVariations"
-                              className="mb-3"
-                            >
-                              <Form.Label>Variations</Form.Label>
-                              <Form.Control
-                                as="select"
-                                value={variation}
-                                onChange={(e) => {
-                                  setVariation(e.target.value);
-                                  setVariationError(""); // Clear previous error when the value changes
-                                }}
-                                required
-                                isInvalid={!!variationError}
-                              >
-                                <option value="" disabled>
-                                  Choose an option...
-                                </option>
-                                {productDetails?.variations &&
-                                  productDetails?.variations.map(
-                                    (item, index) => (
-                                      <option key={index}>{item.type}</option>
-                                    )
-                                  )}
-                              </Form.Control>
-                              {variationError && (
-                                <div className="error-message">
-                                  {variationError}
-                                </div>
-                              )}
-                            </Form.Group>
-                            <Form.Group
-                              className="mb-3"
-                              controlId="formGroupEmail"
-                            >
-                              <Form.Control
-                                type="email"
-                                name="email"
-                                placeholder="Email ID"
-                                value={email}
-                                onChange={(e) => {
-                                  setEmail(e.target.value);
-                                  setIsEmailValid(
-                                    isEmailFormatValid(e.target.value)
-                                  );
-                                }}
-                                isInvalid={!isEmailValid}
-                              />
-                              {!isEmailValid && (
-                                <Form.Control.Feedback
-                                  type="invalid"
-                                  className="custom-form-control-feedback"
-                                >
-                                  {/[A-Z]/.test(email) && !email.includes("@")
-                                    ? "Email should not contain capital letters and must include '@'."
-                                    : "Please enter a valid email address."}
-                                </Form.Control.Feedback>
-                              )}
-                            </Form.Group>
-
-                            <Button variant="primary mt-3" type="submit">
-                              Notify Me When Available
-                            </Button>
-                          </Form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/*  Modal */}
-      <div
-        className="modal fade editAddress"
-        id="changeadress-model"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                New Address Add
-              </h5>
-            </div>
-            <div className="modal-body">
-              <div class="form-group">
-                <label>First Name</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={first_name}
-                  onChange={(e) => {
-                    setfirst_name(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (first_name.trim() === "") {
-                      setFirst_nameError("First Name is required");
-                    } else {
-                      setFirst_nameError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{first_nameError}</span>
-              </div>
-              <div class="form-group">
-                <label>Last Name</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={last_name}
-                  onChange={(e) => {
-                    setlast_name(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (last_name.trim() === "") {
-                      setLast_nameError("Last Name is required");
-                    } else {
-                      setLast_nameError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{last_nameError}</span>
-              </div>
-              <div class="form-group">
-                <label>Mobile</label>
-                <input
-                  type="tel"
-                  name="mobile"
-                  class="form-control"
-                  maxLength={10}
-                  value={mobile}
-                  onChange={(e) => {
-                    setmobile(e.target.value);
-                    validateForm();
-                    const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric character
-                    if (numericValue.length <= 10) {
-                      setmobile(numericValue);
-                    }
-                  }}
-                  onBlur={() => {
-                    if (mobile.trim() === "") {
-                      setMobileError("Mobile Number is required");
-                    } else {
-                      setMobileError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{mobileError}</span>
-              </div>
-              <div class="form-group">
-                <label>flat,House no,Building,Company</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={house_no}
-                  onChange={(e) => {
-                    sethouse_no(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (house_no.trim() === "") {
-                      setHouse_noError(
-                        "House no, flat, Building, Company Number is required"
-                      );
-                    } else {
-                      setHouse_noError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{house_noError}</span>
-              </div>
-              <div class="form-group">
-                <label>Area, Street,Sector,Village</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={area}
-                  onChange={(e) => {
-                    setarea(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (area.trim() === "") {
-                      setAreaError("Area, Street, Sector, Village is required");
-                    } else {
-                      setAreaError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{areaError}</span>
-              </div>
-              <div class="form-group">
-                <label>Landmark</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={landmark}
-                  onChange={(e) => {
-                    setlandmark(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (landmark.trim() === "") {
-                      setLandmarkError("Landmark is required");
-                    } else {
-                      setLandmarkError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{landmarkError}</span>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <div className="form-group">
-                    <label>State</label>
-                    <select
-                      className="form-control"
-                      onChange={Subscription}
-                      value={state}
-                      onInput={(e) => {
-                        setstate(e.target.value);
-                        validateForm();
-                      }}
-                      onBlur={() => {
-                        if (state.trim() === "") {
-                          setStateError("State is required");
-                        } else {
-                          setStateError("");
-                        }
-                      }}
-                    >
-                      <option>State Choose...</option>
-                      {stateall.map((items) => (
-                        <option value={items.id} key={items.id}>
-                          {items.state_name}
-                        </option>
-                      ))}
-                    </select>
-                    <span style={{ color: "red" }}>{stateError}</span>
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="form-group">
-                    <label>City</label>
-                    <select
-                      className="form-control"
-                      onInput={(e) => setSelectedCity(e.target.value)}
-                      value={selectedCity}
-                      onChange={(e) => {
-                        setcity(e.target.value);
-                        validateForm();
-                      }}
-                      onBlur={() => {
-                        if (city.trim() === "") {
-                          setCityError("City is required");
-                        } else {
-                          setCityError("");
-                        }
-                      }}
-                    >
-                      <option>City Choose...</option>
-                      {stateallCity.map((items) => (
-                        <option>{items.city_name}</option>
-                      ))}
-                    </select>
-                    <span style={{ color: "red" }}>{cityError}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Pincode</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={pincode}
-                  onChange={(e) => {
-                    setpincode(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (pincode.trim() === "") {
-                      setPincodeError("Pincode is required");
-                    } else {
-                      setPincodeError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{pincodeError}</span>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleAddAddress}
-                data-dismiss="modal"
-                disabled={
-                  !isFormValid ||
-                  first_name.trim() === "" || // Add this condition
-                  last_name.trim() === "" || // Add similar conditions for other fields
-                  mobile.trim() === "" ||
-                  house_no.trim() === "" ||
-                  area.trim() === "" ||
-                  landmark.trim() === "" ||
-                  state.trim() === "" ||
-                  selectedCity.trim() === "" ||
-                  pincode.trim() === ""
-                }
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* buynow-model */}
-      <div
-        className="modal fade buynow"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-        data-backdrop="static"
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-body">
-              <>
-                <Container>
-                  <div className="needplace">
-                    <div className="address">
-                      <h3>Address</h3>
-                      <div className="address-card">
-                        {addresslist && addresslist.length > 1 ? (
-                          addresslist.map(
-                            (item, index) =>
-                              index === 0 && (
-                                <p key={item.id}>
-                                  {item.house_no} {item.area} {item.landmark}{" "}
-                                  {item.city} {item.state} {item.pincode}
-                                </p>
-                              )
-                          )
-                        ) : (
-                          <p>No data to display</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-                <Container>
-                  <div className="needplace">
-                    <div className="address">
-                      <h3>Shipping Address</h3>
-                      <div className="address-card">
-                        <Row>
-                          <Col lg={10} sm={9}>
-                            {selectedAddress ? (
-                              <div className="selectedAddress-area">
-                                <p>
-                                  {selectedAddress.first_name}{" "}
-                                  {selectedAddress.last_name}
-                                </p>
-                                <p>
-                                  {selectedAddress.house_no}{" "}
-                                  {selectedAddress.area}{" "}
-                                  {selectedAddress.landmark}{" "}
-                                  {selectedAddress.city} {selectedAddress.state}{" "}
-                                  {selectedAddress.pincode}
-                                </p>
-                                <p>Mobile: {selectedAddress.mobile}</p>
-                              </div>
-                            ) : (
-                              <p>No address selected</p>
-                            )}
-                          </Col>
-                          <Col lg={2} sm={3}>
-                            <Button
-                              data-toggle="modal"
-                              data-target="#changeadress-model"
-                              data-dismiss="modal"
-                            >
-                              Add
-                            </Button>
-                          </Col>
-                          <Col lg={12} sm={12}>
-                            <div className="address-arrow">
-                              <button onClick={toggleAddressContent}>
-                                Select Address{" "}
-                                <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
-                                  aria-hidden="true"
-                                ></i>
-                              </button>
-                            </div>
-                            <br />
-                            <Row>
-                              {addressContentVisible && (
-                                <Col lg={12}>
-                                  <div className="address-Content">
-                                    {addresslist && addresslist.length > 0 ? (
-                                      addresslist.map((item, index) => (
-                                        <div
-                                          className="chk-address"
-                                          key={item.id}
-                                        >
-                                          <div className="chk-center">
-                                            <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name="exampleRadios"
-                                              onClick={() =>
-                                                handleAddressClick(index)
-                                              }
-                                            />
-                                          </div>
-                                          <div className="Daynamic-address">
-                                            <table>
-                                              <tr>
-                                                <th>Name:&nbsp;</th>
-                                                <td>
-                                                  {item.first_name}&nbsp;
-                                                  {item.last_name}
-                                                </td>
-                                              </tr>
-                                              <tr>
-                                                <th>Address:&nbsp;</th>
-                                                <td>
-                                                  {item.house_no} {item.area}{" "}
-                                                  {item.landmark} {item.city}{" "}
-                                                  {item.state} {item.pincode}
-                                                </td>
-                                              </tr>
-                                              <tr>
-                                                <th>Mobile:&nbsp;</th>
-                                                <td>{item.mobile}</td>
-                                              </tr>
-                                            </table>
-                                            <div className="address-delete">
-                                              <i
-                                                className="fa fa-trash"
-                                                onClick={() =>
-                                                  handleDeleteAddress(item.id)
-                                                }
-                                              />
-                                              &nbsp; &nbsp;
-                                              <i
-                                                className="fa fa-edit"
-                                                data-toggle="modal"
-                                                onClick={() => {
-                                                  setProfileData(item);
-                                                }}
-                                                data-target="#update-model"
-                                              />
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ))
-                                    ) : (
-                                      <p>No Addresses Available</p>
-                                    )}
-                                  </div>
-                                </Col>
-                              )}
-                            </Row>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-                {/* {productDetails && productDetails.length > 0 ? ( */}
-                <section className="section-padding">
-                  <Container>
-                    <Row>
-                      <Col lg={3}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in/storage/app/public/product/" +
-                            productDetails?.image
-                          }
-                        />
-                      </Col>
-                      <Col lg={7} sm={10}>
-                        <h2>{productDetails?.name}</h2>
-                        <div className="tab-container">
-                          <h6>Variations</h6>
-                          <Row>
-                            {productDetails?.variations &&
-                              productDetails?.variations.length > 0 &&
-                              productDetails?.variations.map((item, index) => (
-                                <Col lg={3} key={index}>
-                                  {item.stock !== 0 ? (
-                                    <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                      onClick={() => {
-                                        setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item.price); // Store the price in state
-                                      }}
-                                    >
-                                      {item.type}
-                                    </div>
-                                  ) : (
-                                    <div
-                                      className="tab-variations disabledvariation"
-                                      title="Stock unavailable"
-                                    >
-                                      {/* <span className="blurred-text"> */}
-                                      {item.type}
-                                      {/* </span> */}
-                                    </div>
-                                  )}
-                                </Col>
-                              ))}
-                          </Row>
-                        </div>
-                        
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementone}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantity}
-                                onChange={handleQuantityChange}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementone}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div>
-
-                        <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            {uservariationprice && formattedAmount >= 0 ? (
-                              <Row>
-                                <Col lg={3} sm={3} xs={3}>
-                                  <p>{`₹${uservariationprice}`}</p>
-                                </Col>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
-                                </Col>
-                                {/* {formattedSavedAmount > 0 && ( */}
-                                <Col lg={5} sm={5} xs={3}>
-                                  {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
-                                  ) : (
-                                    <h6>No savings</h6>
-                                  )}
-                                </Col>
-                                {/* )} */}
-                              </Row>
-                            ) : (
-                              <Row>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
-                                </Col>
-                              </Row>
-                            )}
-                          </div>
-                        </div>
-                      </Col>
-                      <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
+                                <tr>
+                                  <th>Target Species</th>
+                                  <td>{productDetails?.Petsbreeds_id}</td>
+                                </tr>
+                              </tbody>
+                            </Table>
+                          ) : (
+                            <p>No data available for this product.</p>
+                          )}
                         </div>
                       </Col>
                     </Row>
-                    <hr />
+
+                    {/* without sign in quick view add cart */}
+                    {productDetails?.stock &&
+                    productDetails?.stock?.length !== 0 ? (
+                      <div className="productBTNaddcard">
+                        {customerLoginId === null ? (
+                          <Button data-dismiss="modal">
+                            {/* <Button> */}
+                            <Link
+                              onClick={() => {
+                                const filterData = cart.filter((el) => {
+                                  console.log("elll: ", el);
+                                  return el.item_id === productDetails.id;
+                                });
+                                if (filterData?.length > 0) {
+                                  toast.error("Already in added");
+                                } else {
+                                  dispatch({
+                                    type: "ADD_TO_CART",
+                                    payload: {
+                                      item_id: productDetails.id,
+                                      variant:
+                                        selectedVariant.length === 0
+                                          ? "without variant product"
+                                          : selectedVariant,
+                                      price:
+                                        calculatedPrice === 0
+                                          ? parseInt(productDetails?.price) *
+                                            quantity
+                                          : parseInt(calculatedPrice),
+                                      quantity: quantity,
+                                      name: productDetails.name,
+                                      image: productDetails.image,
+                                      orderamountwithquantity: formattedAmount,
+                                    },
+                                  });
+                                }
+                              }}
+                            >
+                              <i className="fa fa-shopping-bag" /> Add to cart
+                            </Link>
+                            <p>{addToCartStatus}</p>
+                          </Button>
+                        ) : (
+                          <Button>
+                            <Link
+                              to={`/add-cart/${productDetails.id}`}
+                              onClick={handleAddToCart}
+                            >
+                              <i className="fa fa-shopping-bag" /> Add to cart
+                            </Link>
+                            <p>{addToCartStatus}</p>
+                          </Button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="sold-out-btn mt-3">
+                        <Link>Sold Out</Link>
+                        <br />
+                        <Button data-toggle="modal" data-target="#soldoutModel">
+                          Notify Me When Available
+                        </Button>
+                      </div>
+                    )}
+
+                    <div
+                      className="modal fade"
+                      id="soldoutModel"
+                      tabIndex={-1}
+                      role="dialog"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                          <div className="modal-body">
+                            <h4>{productDetails?.name}</h4>
+                            <p>{productDetails?.description}</p>
+
+                            <Form onSubmit={handleNotifymeSubmit}>
+                              <Form.Group
+                                controlId="formVariations"
+                                className="mb-3"
+                              >
+                                <Form.Label>Variations</Form.Label>
+                                <Form.Control
+                                  as="select"
+                                  value={variation}
+                                  onChange={(e) => {
+                                    setVariation(e.target.value);
+                                    setVariationError(""); // Clear previous error when the value changes
+                                  }}
+                                  required
+                                  isInvalid={!!variationError}
+                                >
+                                  <option value="" disabled>
+                                    Choose an option...
+                                  </option>
+                                  {productDetails?.variations &&
+                                    productDetails?.variations.map(
+                                      (item, index) => (
+                                        <option key={index}>{item.type}</option>
+                                      )
+                                    )}
+                                </Form.Control>
+                                {variationError && (
+                                  <div className="error-message">
+                                    {variationError}
+                                  </div>
+                                )}
+                              </Form.Group>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="formGroupEmail"
+                              >
+                                <Form.Control
+                                  type="email"
+                                  name="email"
+                                  placeholder="Email ID"
+                                  value={email}
+                                  onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    setIsEmailValid(
+                                      isEmailFormatValid(e.target.value)
+                                    );
+                                  }}
+                                  isInvalid={!isEmailValid}
+                                />
+                                {!isEmailValid && (
+                                  <Form.Control.Feedback
+                                    type="invalid"
+                                    className="custom-form-control-feedback"
+                                  >
+                                    {/[A-Z]/.test(email) && !email.includes("@")
+                                      ? "Email should not contain capital letters and must include '@'."
+                                      : "Please enter a valid email address."}
+                                  </Form.Control.Feedback>
+                                )}
+                              </Form.Group>
+
+                              <Button variant="primary mt-3" type="submit">
+                                Notify Me When Available
+                              </Button>
+                            </Form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </Container>
                 </section>
-                {/* ) : (
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*  Modal */}
+        <div
+          className="modal fade editAddress"
+          id="changeadress-model"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  New Address Add
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={first_name}
+                    onChange={(e) => {
+                      setfirst_name(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (first_name.trim() === "") {
+                        setFirst_nameError("First Name is required");
+                      } else {
+                        setFirst_nameError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{first_nameError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={last_name}
+                    onChange={(e) => {
+                      setlast_name(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (last_name.trim() === "") {
+                        setLast_nameError("Last Name is required");
+                      } else {
+                        setLast_nameError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{last_nameError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Mobile</label>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    class="form-control"
+                    maxLength={10}
+                    value={mobile}
+                    onChange={(e) => {
+                      setmobile(e.target.value);
+                      validateForm();
+                      const numericValue = e.target.value.replace(
+                        /[^0-9+]/g,
+                        ""
+                      ); // Remove non-numeric character
+                      if (numericValue.length <= 10) {
+                        setmobile(numericValue);
+                      }
+                    }}
+                    onBlur={() => {
+                      if (mobile.trim() === "") {
+                        setMobileError("Mobile Number is required");
+                      } else {
+                        setMobileError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{mobileError}</span>
+                </div>
+                <div class="form-group">
+                  <label>flat,House no,Building,Company</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={house_no}
+                    onChange={(e) => {
+                      sethouse_no(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (house_no.trim() === "") {
+                        setHouse_noError(
+                          "House no, flat, Building, Company Number is required"
+                        );
+                      } else {
+                        setHouse_noError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{house_noError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Area, Street,Sector,Village</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={area}
+                    onChange={(e) => {
+                      setarea(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (area.trim() === "") {
+                        setAreaError(
+                          "Area, Street, Sector, Village is required"
+                        );
+                      } else {
+                        setAreaError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{areaError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Landmark</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={landmark}
+                    onChange={(e) => {
+                      setlandmark(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (landmark.trim() === "") {
+                        setLandmarkError("Landmark is required");
+                      } else {
+                        setLandmarkError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{landmarkError}</span>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
+                      <label>State</label>
+                      <select
+                        className="form-control"
+                        onChange={Subscription}
+                        value={state}
+                        onInput={(e) => {
+                          setstate(e.target.value);
+                          validateForm();
+                        }}
+                        onBlur={() => {
+                          if (state.trim() === "") {
+                            setStateError("State is required");
+                          } else {
+                            setStateError("");
+                          }
+                        }}
+                      >
+                        <option>State Choose...</option>
+                        {stateall.map((items) => (
+                          <option value={items.id} key={items.id}>
+                            {items.state_name}
+                          </option>
+                        ))}
+                      </select>
+                      <span style={{ color: "red" }}>{stateError}</span>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group">
+                      <label>City</label>
+                      <select
+                        className="form-control"
+                        onInput={(e) => setSelectedCity(e.target.value)}
+                        value={selectedCity}
+                        onChange={(e) => {
+                          setcity(e.target.value);
+                          validateForm();
+                        }}
+                        onBlur={() => {
+                          if (city.trim() === "") {
+                            setCityError("City is required");
+                          } else {
+                            setCityError("");
+                          }
+                        }}
+                      >
+                        <option>City Choose...</option>
+                        {stateallCity.map((items) => (
+                          <option>{items.city_name}</option>
+                        ))}
+                      </select>
+                      <span style={{ color: "red" }}>{cityError}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Pincode</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={pincode}
+                    onChange={(e) => {
+                      setpincode(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (pincode.trim() === "") {
+                        setPincodeError("Pincode is required");
+                      } else {
+                        setPincodeError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{pincodeError}</span>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleAddAddress}
+                  data-dismiss="modal"
+                  disabled={
+                    !isFormValid ||
+                    first_name.trim() === "" || // Add this condition
+                    last_name.trim() === "" || // Add similar conditions for other fields
+                    mobile.trim() === "" ||
+                    house_no.trim() === "" ||
+                    area.trim() === "" ||
+                    landmark.trim() === "" ||
+                    state.trim() === "" ||
+                    selectedCity.trim() === "" ||
+                    pincode.trim() === ""
+                  }
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* buynow-model */}
+        <div
+          className="modal fade buynow"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+          data-backdrop="static"
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-body">
+                <>
+                  <Container>
+                    <div className="needplace">
+                      <div className="address">
+                        <h3>Address</h3>
+                        <div className="address-card">
+                          {addresslist && addresslist.length > 1 ? (
+                            addresslist.map(
+                              (item, index) =>
+                                index === 0 && (
+                                  <p key={item.id}>
+                                    {item.house_no} {item.area} {item.landmark}{" "}
+                                    {item.city} {item.state} {item.pincode}
+                                  </p>
+                                )
+                            )
+                          ) : (
+                            <p>No data to display</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Container>
+                  <Container>
+                    <div className="needplace">
+                      <div className="address">
+                        <h3>Shipping Address</h3>
+                        <div className="address-card">
+                          <Row>
+                            <Col lg={10} sm={9}>
+                              {selectedAddress ? (
+                                <div className="selectedAddress-area">
+                                  <p>
+                                    {selectedAddress.first_name}{" "}
+                                    {selectedAddress.last_name}
+                                  </p>
+                                  <p>
+                                    {selectedAddress.house_no}{" "}
+                                    {selectedAddress.area}{" "}
+                                    {selectedAddress.landmark}{" "}
+                                    {selectedAddress.city}{" "}
+                                    {selectedAddress.state}{" "}
+                                    {selectedAddress.pincode}
+                                  </p>
+                                  <p>Mobile: {selectedAddress.mobile}</p>
+                                </div>
+                              ) : (
+                                <p>No address selected</p>
+                              )}
+                            </Col>
+                            <Col lg={2} sm={3}>
+                              <Button
+                                data-toggle="modal"
+                                data-target="#changeadress-model"
+                                data-dismiss="modal"
+                              >
+                                Add
+                              </Button>
+                            </Col>
+                            <Col lg={12} sm={12}>
+                              <div className="address-arrow">
+                                <button onClick={toggleAddressContent}>
+                                  Select Address{" "}
+                                  <i
+                                    className={`fa ${
+                                      addressContentVisible
+                                        ? "fa-arrow-up"
+                                        : "fa-arrow-down"
+                                    }`}
+                                    aria-hidden="true"
+                                  ></i>
+                                </button>
+                              </div>
+                              <br />
+                              <Row>
+                                {addressContentVisible && (
+                                  <Col lg={12}>
+                                    <div className="address-Content">
+                                      {addresslist && addresslist.length > 0 ? (
+                                        addresslist.map((item, index) => (
+                                          <div
+                                            className="chk-address"
+                                            key={item.id}
+                                          >
+                                            <div className="chk-center">
+                                              <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="exampleRadios"
+                                                onClick={() =>
+                                                  handleAddressClick(index)
+                                                }
+                                              />
+                                            </div>
+                                            <div className="Daynamic-address">
+                                              <table>
+                                                <tr>
+                                                  <th>Name:&nbsp;</th>
+                                                  <td>
+                                                    {item.first_name}&nbsp;
+                                                    {item.last_name}
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <th>Address:&nbsp;</th>
+                                                  <td>
+                                                    {item.house_no} {item.area}{" "}
+                                                    {item.landmark} {item.city}{" "}
+                                                    {item.state} {item.pincode}
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <th>Mobile:&nbsp;</th>
+                                                  <td>{item.mobile}</td>
+                                                </tr>
+                                              </table>
+                                              <div className="address-delete">
+                                                <i
+                                                  className="fa fa-trash"
+                                                  onClick={() =>
+                                                    handleDeleteAddress(item.id)
+                                                  }
+                                                />
+                                                &nbsp; &nbsp;
+                                                <i
+                                                  className="fa fa-edit"
+                                                  data-toggle="modal"
+                                                  onClick={() => {
+                                                    setProfileData(item);
+                                                  }}
+                                                  data-target="#update-model"
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        ))
+                                      ) : (
+                                        <p>No Addresses Available</p>
+                                      )}
+                                    </div>
+                                  </Col>
+                                )}
+                              </Row>
+                            </Col>
+                          </Row>
+                        </div>
+                      </div>
+                    </div>
+                  </Container>
+                  {/* {productDetails && productDetails.length > 0 ? ( */}
+                  <section className="section-padding">
+                    <Container>
+                      <Row>
+                        <Col lg={3}>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in/storage/app/public/product/" +
+                              productDetails?.image
+                            }
+                          />
+                        </Col>
+                        <Col lg={7} sm={10}>
+                          <h2>{productDetails?.name}</h2>
+                          <div className="tab-container">
+                            <h6>Variations</h6>
+                            <Row>
+                              {productDetails?.variations &&
+                                productDetails?.variations.length > 0 &&
+                                productDetails?.variations.map(
+                                  (item, index) => (
+                                    <Col lg={3} key={index}>
+                                      {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(item.price); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
+                                    </Col>
+                                  )
+                                )}
+                            </Row>
+                          </div>
+
+                          <div className="quantity-btn quickbtn">
+                            <button onClick={handleDecrementone}>
+                              <i className="fa fa-minus" />
+                            </button>
+                            <form>
+                              <div className="form-group">
+                                <input
+                                  type="tel"
+                                  className="form-control"
+                                  placeholder="Quantity"
+                                  value={quantity}
+                                  onChange={handleQuantityChange}
+                                  autoComplete="new-number"
+                                />
+                              </div>
+                            </form>
+                            <button onClick={handleIncrementone}>
+                              <i className="fa fa-plus" />
+                            </button>
+                          </div>
+
+                          <div className="needplaceProduct">
+                            <div className="product-deatils-price">
+                              {uservariationprice && formattedAmount >= 0 ? (
+                                <Row>
+                                  <Col lg={3} sm={3} xs={3}>
+                                    <p>{`₹${uservariationprice}`}</p>
+                                  </Col>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(formattedAmount)
+                                        ? 0
+                                        : formattedAmount
+                                    }`}</h5>
+                                  </Col>
+                                  {/* {formattedSavedAmount > 0 && ( */}
+                                  <Col lg={5} sm={5} xs={3}>
+                                    {formattedSavedAmount > 0 ? (
+                                      <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    ) : (
+                                      <h6>No savings</h6>
+                                    )}
+                                  </Col>
+                                  {/* )} */}
+                                </Row>
+                              ) : (
+                                <Row>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
+                                  </Col>
+                                </Row>
+                              )}
+                            </div>
+                          </div>
+                        </Col>
+                        <Col lg={2} sm={2} xs={6} className="align-self-end">
+                          <div className="delete-addcard">
+                            <Link onClick={() => removeFromCart(item.id)}>
+                              <i class="fa fa-trash-o" />
+                            </Link>
+                          </div>
+                        </Col>
+                      </Row>
+                      <hr />
+                    </Container>
+                  </section>
+                  {/* ) : (
                   <section className="section-padding">
                     <Container
                       style={{ display: "flex", justifyContent: "center" }}
@@ -2832,26 +2865,26 @@ function Home(props) {
                     </Container>
                   </section>
                 )} */}
-                <Container>
-                  <div className="needplace">
-                    <Row className="justify-content-center">
-                      <Col lg={10}>
-                        {!coupencode ? (
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <form>
-                                <div class="form-group">
-                                  <label>Have a Coupon Code?</label>
-                                  <div class="input-group ">
-                                    <input
-                                      type="text"
-                                      class="form-control coupon"
-                                      name=""
-                                      placeholder="Coupon code"
-                                      data-toggle="modal"
-                                      data-target="#Coupon"
-                                    />
-                                    {/* <span class="input-group-append px-3">
+                  <Container>
+                    <div className="needplace">
+                      <Row className="justify-content-center">
+                        <Col lg={10}>
+                          {!coupencode ? (
+                            <div class="card mb-3">
+                              <div class="card-body">
+                                <form>
+                                  <div class="form-group">
+                                    <label>Have a Coupon Code?</label>
+                                    <div class="input-group ">
+                                      <input
+                                        type="text"
+                                        class="form-control coupon"
+                                        name=""
+                                        placeholder="Coupon code"
+                                        data-toggle="modal"
+                                        data-target="#Coupon"
+                                      />
+                                      {/* <span class="input-group-append px-3">
                                   <button
                                     onClick={() => {
                                       setcoupenCode(!coupencode);
@@ -2863,141 +2896,141 @@ function Home(props) {
                                     Apply
                                   </button>
                                 </span> */}
+                                    </div>
                                   </div>
-                                </div>
-                              </form>
+                                </form>
+                              </div>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="add-cart-Voucher ">
+                          ) : (
+                            <div className="add-cart-Voucher ">
+                              <Row>
+                                <Col>
+                                  <img src={voch} />
+                                </Col>
+                                <Col className="align-self-center">
+                                  <h5>{disscountvalue?.title}</h5>
+                                </Col>
+                                <Col className="align-self-center">
+                                  <h6>₹{disscountvalue?.discount}</h6>
+                                </Col>
+                                <Col className="align-self-center">
+                                  <button
+                                    // onClick={() => {
+                                    //   setcoupenCode(!coupencode);
+                                    // }}
+                                    onClick={clearCoupon}
+                                    type="button"
+                                    class="btn btn-danger"
+                                  >
+                                    X
+                                  </button>
+                                </Col>
+                              </Row>
+                            </div>
+                          )}
+                        </Col>
+                      </Row>
+                    </div>
+                  </Container>
+
+                  <Container>
+                    <div className="needplace">
+                      <Row className="justify-content-center">
+                        <Col lg={10}>
+                          <div className="add-cart-total">
                             <Row>
                               <Col>
-                                <img src={voch} />
+                                <h5>Sub Total</h5>
                               </Col>
-                              <Col className="align-self-center">
-                                <h5>{disscountvalue?.title}</h5>
+                              <Col>
+                                {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                                <h5>₹{parseInt(Amount)}</h5>
                               </Col>
-                              <Col className="align-self-center">
-                                <h6>₹{disscountvalue?.discount}</h6>
+                            </Row>
+                            <hr />
+                            <Row>
+                              <Col>
+                                <h5>Coupon Discount</h5>
                               </Col>
-                              <Col className="align-self-center">
-                                <button
-                                  // onClick={() => {
-                                  //   setcoupenCode(!coupencode);
-                                  // }}
-                                  onClick={clearCoupon}
-                                  type="button"
-                                  class="btn btn-danger"
-                                >
-                                  X
-                                </button>
+                              <Col>
+                                <h5>
+                                  ₹
+                                  {appliedCoupon
+                                    ? parseInt(disscountvalue?.discount)
+                                    : 0}
+                                </h5>
+                              </Col>
+                            </Row>
+                            <hr />
+                            <Row>
+                              <Col>
+                                <h5>Tax(5%)</h5>
+                              </Col>
+                              <Col>
+                                <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
+                              </Col>
+                            </Row>
+                            <hr />
+
+                            <Row>
+                              <Col>
+                                <h5>Rounding Adjust</h5>
+                              </Col>
+                              <Col>
+                                <h5>
+                                  ₹
+                                  {parseInt(Amount) * 0.05 +
+                                    parseInt(Amount) -
+                                    (disscountvalue?.discount ?? 0)}
+                                </h5>
                               </Col>
                             </Row>
                           </div>
-                        )}
-                      </Col>
-                    </Row>
-                  </div>
-                </Container>
-
-                <Container>
-                  <div className="needplace">
-                    <Row className="justify-content-center">
-                      <Col lg={10}>
-                        <div className="add-cart-total">
-                          <Row>
-                            <Col>
-                              <h5>Sub Total</h5>
-                            </Col>
-                            <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{parseInt(Amount)}</h5>
-                            </Col>
-                          </Row>
-                          <hr />
-                          <Row>
-                            <Col>
-                              <h5>Coupon Discount</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {appliedCoupon
-                                  ? parseInt(disscountvalue?.discount)
-                                  : 0}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <hr />
-                          <Row>
-                            <Col>
-                              <h5>Tax(5%)</h5>
-                            </Col>
-                            <Col>
-                              <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
-                            </Col>
-                          </Row>
-                          <hr />
-
-                          <Row>
-                            <Col>
-                              <h5>Rounding Adjust</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {parseInt(Amount) * 0.05 +
-                                  parseInt(Amount) -
-                                  (disscountvalue?.discount ?? 0)}
-                              </h5>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Container>
-                <div className="homecheckout">
-                  <button
-                    data-toggle="modal"
-                    data-target="#cod"
-                    disabled={!isAddressSelected}
-                  >
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
-                    Close
-                  </button>
-                  {isAddressSelected ? null : (
-                    <div className="error-message">
-                      Please Select Shipping Address.
+                        </Col>
+                      </Row>
                     </div>
-                  )}
-                </div>
-              </>
+                  </Container>
+                  <div className="homecheckout">
+                    <button
+                      data-toggle="modal"
+                      data-target="#cod"
+                      disabled={!isAddressSelected}
+                    >
+                      Checkout
+                    </button>
+                    <button data-dismiss="modal" onClick={handleResetClick}>
+                      Close
+                    </button>
+                    {isAddressSelected ? null : (
+                      <div className="error-message">
+                        Please Select Shipping Address.
+                      </div>
+                    )}
+                  </div>
+                </>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="modal fade editAddress"
-        id="update-model"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Update Address
-              </h5>
-            </div>
-            <div className="modal-body">
-              <div class="form-group">
-                <label>First Name</label>
-                {/* <input
+        <div
+          className="modal fade editAddress"
+          id="update-model"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Update Address
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div class="form-group">
+                  <label>First Name</label>
+                  {/* <input
                   class="form-control"
                   type="text"
                   name="first_name"
@@ -3009,344 +3042,344 @@ function Home(props) {
                     })
                   }
                 /> */}
-                <input
-                  className="form-control"
-                  type="text"
-                  name="first_name"
-                  value={profileData.first_name || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      first_name: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Last Name</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Enter last name"
-                  name="last_name"
-                  value={profileData.last_name || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      last_name: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Mobile</label>
-                <input
-                  type="tel"
-                  name="mobile"
-                  class="form-control"
-                  maxLength={10}
-                  value={profileData.mobile || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      mobile: e.target.value
-                        .replace(/\D/g, "")
-                        .substring(0, 10),
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>flat,House no,Building,Company</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="house_no"
-                  value={profileData.house_no || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      house_no: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Area, Street,Sector,Village</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="area"
-                  value={profileData.area || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      area: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Landmark</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="landmark"
-                  value={profileData.landmark || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      landmark: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="row">
-                <div className="col">
-                  <div className="form-group">
-                    <label>State</label>
-                    <select
-                      className="form-control"
-                      onChange={Subscription}
-                      value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
-                    >
-                      <option value="">State Choose...</option>
-                      {stateall.map((items) => (
-                        <option value={items.state_name} key={items.id}>
-                          {items.state_name}
-                        </option>
-                      ))}
-                    </select>
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="first_name"
+                    value={profileData.first_name || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        first_name: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Enter last name"
+                    name="last_name"
+                    value={profileData.last_name || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        last_name: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Mobile</label>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    class="form-control"
+                    maxLength={10}
+                    value={profileData.mobile || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        mobile: e.target.value
+                          .replace(/\D/g, "")
+                          .substring(0, 10),
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>flat,House no,Building,Company</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="house_no"
+                    value={profileData.house_no || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        house_no: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Area, Street,Sector,Village</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="area"
+                    value={profileData.area || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        area: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Landmark</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="landmark"
+                    value={profileData.landmark || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        landmark: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
+                      <label>State</label>
+                      <select
+                        className="form-control"
+                        onChange={Subscription}
+                        value={profileData.state || ""}
+                        // onChange={(e) =>
+                        // setProfileData ({
+                        //   ...profileData,
+                        //   state: e.target.value,
+                        // })}
+                      >
+                        <option value="">State Choose...</option>
+                        {stateall.map((items) => (
+                          <option value={items.state_name} key={items.id}>
+                            {items.state_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group">
+                      <label>City</label>
+                      <select
+                        className="form-control"
+                        onInput={(e) => setSelectedCity(e.target.value)}
+                        value={profileData.city || ""}
+                        onChange={(e) =>
+                          setProfileData({
+                            ...profileData,
+                            city: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="">City Choose...</option>
+                        {stateallCity.map((items) => (
+                          <option value={items.city_name} key={items.id}>
+                            {items.city_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <div className="col">
-                  <div className="form-group">
-                    <label>City</label>
-                    <select
-                      className="form-control"
-                      onInput={(e) => setSelectedCity(e.target.value)}
-                      value={profileData.city || ""}
-                      onChange={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          city: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">City Choose...</option>
-                      {stateallCity.map((items) => (
-                        <option value={items.city_name} key={items.id}>
-                          {items.city_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Pincode</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={profileData.pincode || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        pincode: e.target.value,
+                      })
+                    }
+                  />
                 </div>
               </div>
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Pincode</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={profileData.pincode || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      pincode: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleFormSubmit}
-                data-dismiss="modal"
-              >
-                Update
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Coupon */}
-      <div
-        className="modal fade notification-area"
-        id="Coupon"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h5>Coupon List</h5>
-              {couponlist && couponlist.length > 0 ? (
-                couponlist.map((item, index) => (
-                  <div className="notification" key={index}>
-                    <Row>
-                      <Col lg={12}>
-                        <table>
-                          <tbody>
-                            <tr>
-                              <th>Title : </th>
-                              <td>{item.title}</td>
-                            </tr>
-                            <tr>
-                              <th>Code : </th>
-                              <td>{item.code}</td>
-                            </tr>
-                            <tr>
-                              <th>Discount Type : </th>
-                              <td>{item.discount_type}</td>
-                            </tr>
-                            <tr>
-                              <th>Discount : </th>
-                              <td>{item.discount}</td>
-                            </tr>
-                            <tr>
-                              <th>Min Purchase : </th>
-                              <td>{item.min_purchase}</td>
-                            </tr>
-                            <tr>
-                              <th>Max Discount : </th>
-                              <td>{item.max_discount}</td>
-                            </tr>
-                            <tr>
-                              <th>Start Date : </th>
-                              <td>{item.start_date}</td>
-                            </tr>
-                            <tr>
-                              <th>Expire Date : </th>
-                              <td>{item.expire_date}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-
-                        <div className="text-center">
-                          <button
-                            // onClick={() => {
-                            //   setcoupenCode(!coupencode);
-                            // }}
-                            onClick={(e) => coupendisscount(item)}
-                            type="button"
-                            className="btn btn-primary btn-apply coupon"
-                            // data-toggle="modal"
-                            // data-target="#Coupon"
-                            data-dismiss="modal"
-                          >
-                            Apply
-                          </button>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                ))
-              ) : (
-                <p className="emptyMSG">No Coupon List.</p>
-              )}
-
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* cod */}
-      <div
-        className="modal fade"
-        id="cod"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <div className="payment-done">
-                <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      data-dismiss="modal"
-                      onClick={() => handlePayment()}
-                    />
-                    <p>Online Payment</p>
-                  </div>
-                </div>
-                <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      checked={selectedInput}
-                      onChange={handleRadioChange}
-                    />
-                    <p>Cash On Delivery</p>
-                  </div>
-                </div>
-                <Button
-                  disabled={!selectedInput}
-                  data-toggle="modal"
-                  data-target="#paysubmit"
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleFormSubmit}
                   data-dismiss="modal"
                 >
-                  <Link>pay</Link>
-                </Button>
+                  Update
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* paysubmit */}
-      <div
-        className="modal fade"
-        id="paysubmit"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <div className="payment-done">
-                <img src={paydone} />
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesettingLorem Ipsum is simply dummy text of the printing
-                  and typesetting
-                </p>
-                <Button
+        {/* Coupon */}
+        <div
+          className="modal fade notification-area"
+          id="Coupon"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <h5>Coupon List</h5>
+                {couponlist && couponlist.length > 0 ? (
+                  couponlist.map((item, index) => (
+                    <div className="notification" key={index}>
+                      <Row>
+                        <Col lg={12}>
+                          <table>
+                            <tbody>
+                              <tr>
+                                <th>Title : </th>
+                                <td>{item.title}</td>
+                              </tr>
+                              <tr>
+                                <th>Code : </th>
+                                <td>{item.code}</td>
+                              </tr>
+                              <tr>
+                                <th>Discount Type : </th>
+                                <td>{item.discount_type}</td>
+                              </tr>
+                              <tr>
+                                <th>Discount : </th>
+                                <td>{item.discount}</td>
+                              </tr>
+                              <tr>
+                                <th>Min Purchase : </th>
+                                <td>{item.min_purchase}</td>
+                              </tr>
+                              <tr>
+                                <th>Max Discount : </th>
+                                <td>{item.max_discount}</td>
+                              </tr>
+                              <tr>
+                                <th>Start Date : </th>
+                                <td>{item.start_date}</td>
+                              </tr>
+                              <tr>
+                                <th>Expire Date : </th>
+                                <td>{item.expire_date}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <div className="text-center">
+                            <button
+                              // onClick={() => {
+                              //   setcoupenCode(!coupencode);
+                              // }}
+                              onClick={(e) => coupendisscount(item)}
+                              type="button"
+                              className="btn btn-primary btn-apply coupon"
+                              // data-toggle="modal"
+                              // data-target="#Coupon"
+                              data-dismiss="modal"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Coupon List.</p>
+                )}
+
+                <button
+                  type="button"
+                  className="btn btn-secondary"
                   data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={handleSendRequest}
                 >
-                  <Link to="/shipping">Done</Link>
-                </Button>
+                  Close
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        {/* cod */}
+        <div
+          className="modal fade"
+          id="cod"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="payment-done">
+                  <div className="select-card select-card3">
+                    <div className="selct-card-text">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="exampleRadios"
+                        data-dismiss="modal"
+                        onClick={() => handlePayment()}
+                      />
+                      <p>Online Payment</p>
+                    </div>
+                  </div>
+                  <div className="select-card select-card3">
+                    <div className="selct-card-text">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="exampleRadios"
+                        value="second"
+                        checked={selectedInput}
+                        onChange={handleRadioChange}
+                      />
+                      <p>Cash On Delivery</p>
+                    </div>
+                  </div>
+                  <Button
+                    disabled={!selectedInput}
+                    data-toggle="modal"
+                    data-target="#paysubmit"
+                    data-dismiss="modal"
+                  >
+                    <Link>pay</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* paysubmit */}
+        <div
+          className="modal fade"
+          id="paysubmit"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="payment-done">
+                  <img src={paydone} />
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesettingLorem Ipsum is simply dummy text of the printing
+                    and typesetting
+                  </p>
+                  <Button
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onClick={handleSendRequest}
+                  >
+                    <Link to="/shipping">Done</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </DocumentMeta>
     </>
   );

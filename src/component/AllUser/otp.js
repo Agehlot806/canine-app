@@ -92,14 +92,17 @@ function Otp() {
       const response = cart.forEach((element) => {
         const res = axios.post(`${BASE_URL}/customer/wish-list/add_product`, {
           item_name: element?.name,
-          variant: element.variant, // You may need to update this based on your data
+          variant:
+            element.variant.length === 0
+              ? "without variant product"
+              : element.variant, // You may need to update this based on your data
           image: element?.image,
           quantity: element.quantity,
           price: element.price,
           user_id: id,
           item_id: element?.item_id,
           total_quantity: element?.total_quantity,
-          return_order: element?.return_order,
+          return_order: element?.return_order || "yes",
         });
         return res;
       });

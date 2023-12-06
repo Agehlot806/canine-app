@@ -828,7 +828,7 @@ function PetshopAddCart() {
                       >
                         <h2>{item.item_name}</h2>
                         {
-                          item.variant ? (
+                          item.variant.length > 0 ? (
                             <p>{`Selected Variant: ${item.variant
                               .replace(/\\/g, "")
                               .replace(/"/g, "")}`}</p>

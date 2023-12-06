@@ -18,7 +18,6 @@ import StarRating from "../starrating";
 import loadinggif from "../../assets/images/video/loading.gif";
 
 function Orderviewdetails() {
- 
   const navigate = useNavigate();
   const tableRef = useRef();
   const summaryTableRef = useRef(); // Ref for summary table
@@ -35,6 +34,8 @@ function Orderviewdetails() {
 
   const [allorder, setallorder] = useState([]);
   const [orderDetails, setorderDetails] = useState([]);
+  console.log("orderDetails: ", orderDetails);
+  console.log("storedFormattedAddress: ", storedFormattedAddress);
 
   const { id } = useParams();
   const [orderItemId, setOrderItemId] = useState(null); // Initialize as null
@@ -66,18 +67,17 @@ function Orderviewdetails() {
   });
 
   let subTotal = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.price),
+    (total, order) => total + parseFloat(order.price * order.quantity),
     0
   );
   let taxAmount = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.tax_amount),
+    (total, order) => total + parseFloat(order.tax_amount * order.quantity),
     0
   );
   let promoDiscount = orderDetails.reduce(
     (total, order) => total + parseFloat(order.discount_on_item ?? 0),
     0
   );
-
 
   let couponDiscount = parseFloat(orderDetails[0]?.discount_on_item ?? 0);
 
@@ -353,12 +353,10 @@ function Orderviewdetails() {
                                     >
                                       Buy it again
                                     </Button>
-
                                   </div>
                                 </Col>
                               </Row>
                               <div>
-
                                 {orderWithstatus &&
                                 orderWithstatus.order_status === "delivered" ? (
                                   <div>
@@ -418,7 +416,6 @@ function Orderviewdetails() {
                     <div className="order-table" ref={tableRef}>
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
-
                           if (item.id == id) {
                             return (
                               <div className="dow-summy">
@@ -436,7 +433,8 @@ function Orderviewdetails() {
                                             {formatPrice(
                                               orderDetails.reduce(
                                                 (total, order) =>
-                                                  total + order.price,
+                                                  total +
+                                                  order.price * order.quantity,
                                                 0
                                               )
                                             )}{" "}
@@ -522,7 +520,6 @@ function Orderviewdetails() {
                     <div ref={summaryTableRef}>
                       {allorder && allorder.length > 0 ? (
                         allorder.map((item, index) => {
-
                           if (item.id == id) {
                             return (
                               <div className="dow-summy leftsummy">
