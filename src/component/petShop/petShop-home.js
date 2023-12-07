@@ -286,21 +286,21 @@ function PetshopHome(props) {
   const renderBlogDescription = (description) => {
     // Remove HTML tags
     const removeHTMLTags = (html) => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      return doc.body.textContent || '';
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      return doc.body.textContent || "";
     };
-  
+
     // Remove HTML tags and attributes
     const plainTextDescription = removeHTMLTags(description);
-  
+
     const maxCharacters = 50; // Number of characters to show initially
-  
+
     if (plainTextDescription.length <= maxCharacters) {
       return <p>{plainTextDescription}</p>; // Show the full description if it's short
     }
-  
+
     const truncatedDescription = plainTextDescription.slice(0, maxCharacters);
-  
+
     return (
       <>
         <p>{truncatedDescription}......</p>
@@ -697,7 +697,6 @@ function PetshopHome(props) {
           console.log(response);
           window.location.reload(false);
         });
-     
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -705,9 +704,7 @@ function PetshopHome(props) {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setaddresslist((prevAddressList) =>
@@ -874,7 +871,7 @@ function PetshopHome(props) {
       console.log(error);
     }
   };
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -994,7 +991,6 @@ function PetshopHome(props) {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -1917,9 +1913,13 @@ function PetshopHome(props) {
                               </Col>
                             </Row>
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
-                      
 
                         {productDetails ? (
                           <Table responsive>
@@ -1932,12 +1932,11 @@ function PetshopHome(props) {
                                 <th>Age Range</th>
                                 <td>{productDetails?.lifeStage_id}</td>
                               </tr>
-                              
+
                               <tr>
                                 <th>Target Species</th>
                                 <td>{productDetails?.Petsbreeds_id}</td>
                               </tr>
-                             
                             </tbody>
                           </Table>
                         ) : (
@@ -2235,6 +2234,7 @@ function PetshopHome(props) {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -3216,6 +3216,7 @@ function PetshopHome(props) {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -3628,9 +3629,8 @@ function PetshopHome(props) {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-           
+
               <Form onSubmit={handleNotifymeSubmit}>
-               
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

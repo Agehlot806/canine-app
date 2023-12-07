@@ -70,10 +70,10 @@ function Orderviewdetails() {
     (total, order) => total + parseFloat(order.price * order.quantity),
     0
   );
-  let taxAmount = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.tax_amount * order.quantity),
-    0
-  );
+  // let taxAmount = orderDetails.reduce(
+  //   (total, order) => total + parseFloat(order.tax_amount * order.quantity),
+  //   0
+  // );
   let promoDiscount = orderDetails.reduce(
     (total, order) => total + parseFloat(order.discount_on_item ?? 0),
     0
@@ -94,10 +94,14 @@ function Orderviewdetails() {
   const GrandTotal = formatted.endsWith(".0")
     ? formatted.slice(0, -2)
     : formatted;
+  // let TotalDataPrice =
+  //   promoDiscount === 0
+  //     ? subTotal + taxAmount + deliveryCharge
+  //     : subTotal + taxAmount + deliveryCharge - couponDiscount;
   let TotalDataPrice =
     promoDiscount === 0
-      ? subTotal + taxAmount + deliveryCharge
-      : subTotal + taxAmount + deliveryCharge - couponDiscount;
+      ? subTotal + deliveryCharge
+      : subTotal + deliveryCharge - couponDiscount;
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   const loginType = localStorage.getItem("loginType");
@@ -340,6 +344,9 @@ function Orderviewdetails() {
                                     <p>
                                       quantity: <span>{order.quantity}</span>
                                     </p>
+                                    <p>
+                                      gst: <span>{order.gst}</span>
+                                    </p>
                                   </div>
                                 </Col>
 
@@ -475,11 +482,16 @@ function Orderviewdetails() {
                                             ₹
                                             {formatPrice(
                                               promoDiscount === 0
+                                                ? subTotal
+                                                : subTotal - couponDiscount
+                                            )}
+                                            {/* {formatPrice(
+                                              promoDiscount === 0
                                                 ? subTotal + taxAmount
                                                 : subTotal +
                                                     taxAmount -
                                                     couponDiscount
-                                            )}
+                                            )} */}
                                           </p>
                                         </td>
                                       </tr>
@@ -548,7 +560,7 @@ function Orderviewdetails() {
                                         )}
                                       </td>
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                       <th>
                                         <p>Total Before Tax:</p>
                                       </th>
@@ -564,7 +576,7 @@ function Orderviewdetails() {
                                           </p>
                                         </p>
                                       </td>
-                                    </tr>
+                                    </tr> */}
                                     <tr>
                                       <th>
                                         <p>Sub Total:</p>
@@ -575,11 +587,16 @@ function Orderviewdetails() {
                                           ₹
                                           {formatPrice(
                                             promoDiscount === 0
+                                              ? subTotal
+                                              : subTotal - couponDiscount
+                                          )}
+                                          {/* {formatPrice(
+                                            promoDiscount === 0
                                               ? subTotal + taxAmount
                                               : subTotal +
                                                   taxAmount -
                                                   couponDiscount
-                                          )}
+                                          )} */}
                                         </p>
                                       </td>
                                     </tr>

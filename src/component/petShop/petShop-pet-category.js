@@ -887,9 +887,7 @@ function PetshopPetcategory() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -1021,7 +1019,7 @@ function PetshopPetcategory() {
       console.log(error);
     }
   };
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -1081,7 +1079,6 @@ function PetshopPetcategory() {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -1725,7 +1722,11 @@ function PetshopPetcategory() {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal"  onClick={quickViewClear}/>
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1863,6 +1864,11 @@ function PetshopPetcategory() {
                               </Col>
                             </Row>
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2390,7 +2396,7 @@ function PetshopPetcategory() {
                               ))}
                           </Row>
                         </div>
-                      
+
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -2410,6 +2416,7 @@ function PetshopPetcategory() {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -2420,17 +2427,14 @@ function PetshopPetcategory() {
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                           
                             </Row>
                           </div>
                         </div>
                       </Col>
-                    
                     </Row>
                     <hr />
                   </Container>
                 </section>
-                
 
                 <Container>
                   <div className="needplace">
@@ -2446,7 +2450,7 @@ function PetshopPetcategory() {
                             </Col>
                           </Row>
                           <hr />
-                          
+
                           <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
@@ -2797,9 +2801,8 @@ function PetshopPetcategory() {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-             
+
               <Form onSubmit={handleNotifymeSubmit}>
-               
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

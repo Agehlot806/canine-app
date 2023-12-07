@@ -243,7 +243,6 @@ function Blogdetails() {
     }
   }, [productDetails]);
 
-
   const productData = async (selctId) => {
     axios
       .get(`${BASE_URL}/items/product_details/${selctId}`)
@@ -294,14 +293,21 @@ function Blogdetails() {
 
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
-  ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
-  : productDetails?.price;
+    ? selectedVariantPrice -
+      (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
+  // coupen code funtion after apply close button start
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setTotalPrice(Amount);
+  }, [Amount]);
+  // coupen code funtion after apply close button end
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -523,9 +529,7 @@ function Blogdetails() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -542,14 +546,14 @@ function Blogdetails() {
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/address/update`,
-        profileData 
+        profileData
       );
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
-        fieldpagerefresh(); 
+        fieldpagerefresh();
       }
     } catch (error) {
       console.error(error);
@@ -571,15 +575,56 @@ function Blogdetails() {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
+  // const coupendisscount = (dis) => {
+  //   setcoupenCode(!coupencode);
+  //   localStorage.setItem("disconut", JSON.stringify(dis));
+  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+  //   console.log("disccount?????", dis);
+  // };
+  // const clearCoupon = () => {
+  //   setcoupenCode(!coupencode);
+  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+  // };
+  useEffect(() => {
+    // Function to be called on page refresh
+    const clearCoupon = () => {
+      setcoupenCode(!coupencode);
+      setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+      setTotalPrice(originalPrice);
+      localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+    };
+
+    // Attach the event listener when the component mounts
+    window.addEventListener("beforeunload", clearCoupon);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", clearCoupon);
+    };
+  }, []);
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+    // setTotalPrice(
+    //   parseInt(originalPrice + originalPrice * 0.05 - disscountvalue)
+    // );
+    const discountAmount = dis?.discount || 0;
+    let newTotalPrice = Amount - discountAmount;
+
+    // Update totalPrice only if the newTotalPrice is a valid number
+    if (!isNaN(newTotalPrice)) {
+      setTotalPrice(newTotalPrice);
+    } else {
+      console.error("Invalid totalPrice calculation. Check your values.");
+    }
     console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
     setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    setTotalPrice(Amount);
     localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [selectedInput, setSelectedInput] = useState("");
@@ -607,14 +652,11 @@ function Blogdetails() {
       variation: selectedVariant,
       price: Amount,
       quantity: quantity,
-      tax_amount: taxamound,
+      tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount =
-      parseInt(Amount) * 0.05 +
-      parseInt(Amount) -
-      (disscountvalue?.discount ?? 0);
+    const orderAmount = parseInt(totalPrice);
 
     const requestData = {
       user_id: storedUserId,
@@ -622,7 +664,7 @@ function Blogdetails() {
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
@@ -691,7 +733,7 @@ function Blogdetails() {
       console.log(error);
     }
   };
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -795,8 +837,6 @@ function Blogdetails() {
   const handleNotifymeSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 
-   
-
     // Prepare form data
     const notifymeData = new FormData();
     notifymeData.append("email", email);
@@ -804,7 +844,6 @@ function Blogdetails() {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -847,15 +886,13 @@ function Blogdetails() {
 
   const renderBlogDescriptionHTML = (description) => {
     const removeHTMLTags = (html) => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const textContent = doc.body.textContent || '';
-      return textContent.trim(); 
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const textContent = doc.body.textContent || "";
+      return textContent.trim();
     };
     const plainTextDescription = removeHTMLTags(description);
     return plainTextDescription;
   };
-  
-  
 
   return (
     <>
@@ -879,7 +916,6 @@ function Blogdetails() {
                       blogdata.map((item, index) => (
                         <Col lg={12} className="mb-4" key={item.id}>
                           <div className="blog-card-are">
-
                             <div className="blog-cardContent">
                               <h4>{item.title}</h4>
                               <img
@@ -888,7 +924,9 @@ function Blogdetails() {
                                   item.image
                                 }
                               />
-                              <p>{renderBlogDescriptionHTML(item.description)}</p>
+                              <p>
+                                {renderBlogDescriptionHTML(item.description)}
+                              </p>
                               {/* <p>{item.description}</p> */}
                             </div>
                           </div>
@@ -958,16 +996,16 @@ function Blogdetails() {
                             </p>
                           </div>
                           <div className="product-bag">
-                          {parseFloat(item.discount) > 0 ? (
-                                  <Row>
-                                    <Col>
-                                      <p>₹{parseFloat(item.price)}</p>
-                                    </Col>
-                                    <Col>
-                                      <h5>Save {parseFloat(item.discount)}%</h5>
-                                    </Col>
-                                  </Row>
-                                ) : null}
+                            {parseFloat(item.discount) > 0 ? (
+                              <Row>
+                                <Col>
+                                  <p>₹{parseFloat(item.price)}</p>
+                                </Col>
+                                <Col>
+                                  <h5>Save {parseFloat(item.discount)}%</h5>
+                                </Col>
+                              </Row>
+                            ) : null}
                             <Row>
                               <Col
                                 lg={6}
@@ -1275,6 +1313,11 @@ function Blogdetails() {
                               </Row>
                             )}
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -1314,7 +1357,7 @@ function Blogdetails() {
                           <Link
                             onClick={() => {
                               const filterData = cart.filter((el) => {
-                                console.log('elll: ', el)
+                                console.log("elll: ", el);
                                 return el.item_id === productDetails.id;
                               });
                               if (filterData?.length > 0) {
@@ -1325,13 +1368,15 @@ function Blogdetails() {
                                   payload: {
                                     item_id: productDetails.id,
                                     variant: selectedVariant,
-                                    price: calculatedPrice === 0
-                                    ? parseInt(productDetails?.price) * quantity
-                                    : parseInt(calculatedPrice),
+                                    price:
+                                      calculatedPrice === 0
+                                        ? parseInt(productDetails?.price) *
+                                          quantity
+                                        : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: productDetails.name,
                                     image: productDetails.image,
-                                    orderamountwithquantity:formattedAmount,
+                                    orderamountwithquantity: formattedAmount,
                                   },
                                 });
                               }
@@ -1362,7 +1407,7 @@ function Blogdetails() {
                       </Button>
                     </div>
                   )}
-                 
+
                   <div
                     className="modal fade"
                     id="soldoutModel"
@@ -1376,9 +1421,8 @@ function Blogdetails() {
                         <div className="modal-body">
                           <h4>{productDetails.name}</h4>
                           <p>{productDetails.description}</p>
-                      
+
                           <Form onSubmit={handleNotifymeSubmit}>
-                          
                             <Form.Group
                               controlId="formVariations"
                               className="mb-3"
@@ -1662,7 +1706,7 @@ function Blogdetails() {
                               ))}
                           </Row>
                         </div>
-                       
+
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementone}>
                             <i className="fa fa-minus" />
@@ -1682,6 +1726,7 @@ function Blogdetails() {
                           <button onClick={handleIncrementone}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -1729,7 +1774,7 @@ function Blogdetails() {
                     <hr />
                   </Container>
                 </section>
-               
+
                 <Container>
                   <div className="needplace">
                     <Row className="justify-content-center">
@@ -1749,7 +1794,6 @@ function Blogdetails() {
                                       data-toggle="modal"
                                       data-target="#Coupon"
                                     />
-                                  
                                   </div>
                                 </div>
                               </form>
@@ -1816,7 +1860,7 @@ function Blogdetails() {
                             </Col>
                           </Row>
                           <hr />
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
                             </Col>
@@ -1824,7 +1868,7 @@ function Blogdetails() {
                               <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          <hr /> */}
 
                           <Row>
                             <Col>
@@ -1833,9 +1877,10 @@ function Blogdetails() {
                             <Col>
                               <h5>
                                 ₹
-                                {parseInt(Amount) * 0.05 +
+                                {/* {parseInt(Amount) * 0.05 +
                                   parseInt(Amount) -
-                                  (disscountvalue?.discount ?? 0)}
+                                  (disscountvalue?.discount ?? 0)} */}
+                                {parseInt(totalPrice)}
                               </h5>
                             </Col>
                           </Row>
@@ -2134,7 +2179,7 @@ function Blogdetails() {
             <div className="modal-body">
               <div class="form-group">
                 <label>First Name</label>
-               
+
                 <input
                   className="form-control"
                   type="text"

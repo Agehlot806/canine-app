@@ -37,7 +37,6 @@ function PetshopBlogdetails() {
   const [expandedDescription, setExpandedDescription] = useState({});
   const [productIds, setProductIds] = useState([]);
 
-
   const allProduct = async () => {
     try {
       const response = await fetch(`${BASE_URL}/items/latest`);
@@ -609,13 +608,9 @@ function PetshopBlogdetails() {
     }
   };
 
-
-
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -755,7 +750,7 @@ function PetshopBlogdetails() {
       console.log(error);
     }
   };
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -822,12 +817,11 @@ function PetshopBlogdetails() {
     );
   };
 
-
   const renderBlogDescriptionHTML = (description) => {
     const removeHTMLTags = (html) => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      const textContent = doc.body.textContent || '';
-      return textContent.trim(); 
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const textContent = doc.body.textContent || "";
+      return textContent.trim();
     };
     const plainTextDescription = removeHTMLTags(description);
     return plainTextDescription;
@@ -846,7 +840,7 @@ function PetshopBlogdetails() {
         </section>
       ) : (
         <>
-         <section className="section-padding">
+          <section className="section-padding">
             <Container>
               <Row className="justify-content-center">
                 <Col lg={10}>
@@ -855,7 +849,6 @@ function PetshopBlogdetails() {
                       blogdata.map((item, index) => (
                         <Col lg={12} className="mb-4" key={item.id}>
                           <div className="blog-card-are">
-
                             <div className="blog-cardContent">
                               <h4>{item.title}</h4>
                               <img
@@ -864,7 +857,9 @@ function PetshopBlogdetails() {
                                   item.image
                                 }
                               />
-                              <p>{renderBlogDescriptionHTML(item.description)}</p>
+                              <p>
+                                {renderBlogDescriptionHTML(item.description)}
+                              </p>
                               {/* <p>{item.description}</p> */}
                             </div>
                           </div>
@@ -1160,6 +1155,11 @@ function PetshopBlogdetails() {
                               </Col>
                             </Row>
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
 
@@ -1689,7 +1689,7 @@ function PetshopBlogdetails() {
                               ))}
                           </Row>
                         </div>
-                       
+
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -1709,6 +1709,7 @@ function PetshopBlogdetails() {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -1738,7 +1739,6 @@ function PetshopBlogdetails() {
                     <hr />
                   </Container>
                 </section>
-              
 
                 <Container>
                   <div className="needplace">
@@ -1838,9 +1838,8 @@ function PetshopBlogdetails() {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails?.description}</p>
-             
+
               <Form onSubmit={handleNotifymeSubmit}>
-              
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

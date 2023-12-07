@@ -291,7 +291,6 @@ function PetshopOurourbrand(props) {
   const [brandIdsToFilter, setBrandIdsToFilter] = useState([]);
   const [brandCanineToFilter, setBrandCanineToFilter] = useState([]);
 
-
   const allProduct = async () => {
     axios
       .get(`${BASE_URL}/items/latest`)
@@ -534,9 +533,7 @@ function PetshopOurourbrand(props) {
     updatesubcateIds
   ) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/items/latest`
-      );
+      const response = await axios.get(`${BASE_URL}/items/latest`);
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -861,13 +858,9 @@ function PetshopOurourbrand(props) {
     }
   };
 
- 
-
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -1034,7 +1027,7 @@ function PetshopOurourbrand(props) {
       console.log(error);
     }
   };
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -1095,7 +1088,6 @@ function PetshopOurourbrand(props) {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -1360,7 +1352,7 @@ function PetshopOurourbrand(props) {
                     <h3>Filters</h3>
 
                     <hr />
-                  
+
                     <div
                       onClick={() => handleParentClick("productType")}
                       className="main-chk"
@@ -1813,8 +1805,6 @@ function PetshopOurourbrand(props) {
                       </ul>
                     </div>
                   </Container>
-
-                
                 </section>
               </Col>
             </Row>
@@ -1850,7 +1840,6 @@ function PetshopOurourbrand(props) {
                         </div>
                         <div className="needplace">
                           <Row>
-                          
                             {productDetails?.images &&
                             productDetails?.images.length > 0 ? (
                               productDetails?.images.map((item, index) => (
@@ -1972,18 +1961,21 @@ function PetshopOurourbrand(props) {
                         <div className="needplaceProduct">
                           <div className="product-deatils-price">
                             <Row>
-                             
                               <Col lg={4}>
                                 <h5>{`₹${
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                            
                             </Row>
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
-                       
+
                         {productDetails ? (
                           <Table responsive>
                             <tbody>
@@ -2263,7 +2255,7 @@ function PetshopOurourbrand(props) {
                               ))}
                           </Row>
                         </div>
-                       
+
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -2283,6 +2275,7 @@ function PetshopOurourbrand(props) {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -2301,7 +2294,6 @@ function PetshopOurourbrand(props) {
                     <hr />
                   </Container>
                 </section>
-                
 
                 <Container>
                   <div className="needplace">
@@ -2317,7 +2309,7 @@ function PetshopOurourbrand(props) {
                             </Col>
                           </Row>
                           <hr />
-                          
+
                           <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
@@ -2388,9 +2380,8 @@ function PetshopOurourbrand(props) {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-             
+
               <Form onSubmit={handleNotifymeSubmit}>
-             
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

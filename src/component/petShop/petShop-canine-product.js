@@ -20,7 +20,6 @@ import { Fade } from "react-reveal";
 import ReactPaginate from "react-paginate";
 import loadinggif from "../../assets/images/video/loading.gif";
 
-
 function PetShopcanineproduct(props) {
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
@@ -460,9 +459,7 @@ function PetShopcanineproduct(props) {
     updatesubcateIds
   ) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/items/latest`
-      );
+      const response = await axios.get(`${BASE_URL}/items/latest`);
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -931,9 +928,7 @@ function PetShopcanineproduct(props) {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -979,7 +974,7 @@ function PetShopcanineproduct(props) {
   const [appliedCoupon, setAppliedCoupon] = useState(false);
   const data = localStorage.getItem("disconut");
   const disscountvalue = JSON.parse(data);
- 
+
   const [selectedInput, setSelectedInput] = useState("");
   function formatAddress(selectedAddress) {
     return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
@@ -992,7 +987,6 @@ function PetShopcanineproduct(props) {
     : "No address selected";
   // Buy now checkout code
   const handleSendRequest = async () => {
-   
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
@@ -1074,7 +1068,7 @@ function PetShopcanineproduct(props) {
       console.log(error);
     }
   };
- const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -1134,7 +1128,6 @@ function PetShopcanineproduct(props) {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedWholesellerId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -1732,7 +1725,11 @@ function PetShopcanineproduct(props) {
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-body">
-              <i class="quickarea fa fa-times" data-dismiss="modal" onClick={quickViewClear} />
+              <i
+                class="quickarea fa fa-times"
+                data-dismiss="modal"
+                onClick={quickViewClear}
+              />
               <section className="section-padding">
                 <Container>
                   <Row>
@@ -1874,6 +1871,11 @@ function PetShopcanineproduct(props) {
                               </Col>
                             </Row>
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2407,7 +2409,7 @@ function PetShopcanineproduct(props) {
                               ))}
                           </Row>
                         </div>
-                       
+
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementOne}>
                             <i className="fa fa-minus" />
@@ -2427,6 +2429,7 @@ function PetShopcanineproduct(props) {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -2437,17 +2440,14 @@ function PetShopcanineproduct(props) {
                                   isNaN(formattedAmount) ? 0 : formattedAmount
                                 }`}</h5>
                               </Col>
-                             
                             </Row>
                           </div>
                         </div>
                       </Col>
-                     
                     </Row>
                     <hr />
                   </Container>
                 </section>
-              
 
                 <Container>
                   <div className="needplace">
@@ -2463,7 +2463,7 @@ function PetShopcanineproduct(props) {
                             </Col>
                           </Row>
                           <hr />
-                         
+
                           <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
@@ -2534,9 +2534,8 @@ function PetShopcanineproduct(props) {
             <div className="modal-body">
               <h4>{productDetails.name}</h4>
               <p>{productDetails.description}</p>
-              
+
               <Form onSubmit={handleNotifymeSubmit}>
-               
                 <Form.Group controlId="formVariations" className="mb-3">
                   <Form.Label>Variations</Form.Label>
                   <Form.Control

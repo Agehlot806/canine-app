@@ -633,14 +633,21 @@ function Productpartnershop() {
 
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
-  ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
-  : productDetails?.price;
+    ? selectedVariantPrice -
+      (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
+  // coupen code funtion after apply close button start
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setTotalPrice(Amount);
+  }, [Amount]);
+  // coupen code funtion after apply close button end
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -693,7 +700,7 @@ function Productpartnershop() {
       setQuantity(newQuantity);
     }
   };
-  const taxamound = Math.floor(Amount * 0.05);
+  // const taxamound = Math.floor(Amount * 0.05);
   const [addresslist, setAddressList] = useState([]);
   const allAddressList = async () => {
     axios
@@ -867,9 +874,7 @@ function Productpartnershop() {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         // console.log("Address deleted successfully:", response.data.message);
@@ -929,15 +934,60 @@ function Productpartnershop() {
   //         taxamound
   //     : Amount + taxamound
   // )}`}
+  // const coupendisscount = (dis) => {
+  //   setcoupenCode(!coupencode);
+  //   localStorage.setItem("disconut", JSON.stringify(dis));
+  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+  //   console.log("disccount?????", dis);
+  // };
+  // const clearCoupon = () => {
+  //   setcoupenCode(!coupencode);
+  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+  // };
+  // const [selectedInput, setSelectedInput] = useState("");
+  // function formatAddress(selectedAddress) {
+  //   return `${selectedAddress.first_name} ${selectedAddress.last_name}, ${selectedAddress.house_no} ${selectedAddress.area} ${selectedAddress.landmark}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}, Mobile: ${selectedAddress.mobile}`;
+  // }
+  useEffect(() => {
+    // Function to be called on page refresh
+    const clearCoupon = () => {
+      setcoupenCode(!coupencode);
+      setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+      setTotalPrice(Amount);
+      localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+    };
+
+    // Attach the event listener when the component mounts
+    window.addEventListener("beforeunload", clearCoupon);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", clearCoupon);
+    };
+  }, []);
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+    // setTotalPrice(
+    //   parseInt(Amount + Amount * 0.05 - disscountvalue)
+    // );
+    const discountAmount = dis?.discount || 0;
+    let newTotalPrice = Amount - discountAmount;
+
+    // Update totalPrice only if the newTotalPrice is a valid number
+    if (!isNaN(newTotalPrice)) {
+      setTotalPrice(newTotalPrice);
+    } else {
+      console.error("Invalid totalPrice calculation. Check your values.");
+    }
     console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
     setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    setTotalPrice(Amount);
     localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [selectedInput, setSelectedInput] = useState("");
@@ -965,14 +1015,11 @@ function Productpartnershop() {
       variation: selectedVariant,
       price: Amount,
       quantity: quantity,
-      tax_amount: taxamound,
+      tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount =
-      parseInt(Amount) * 0.05 +
-      parseInt(Amount) -
-      (disscountvalue?.discount ?? 0);
+    const orderAmount = parseInt(Amount);
 
     const requestData = {
       user_id: storedUserId,
@@ -980,7 +1027,7 @@ function Productpartnershop() {
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
@@ -1179,7 +1226,6 @@ function Productpartnershop() {
     notifymeData.append("stock", productDetails.stock);
     notifymeData.append("user_id", storedUserId);
     notifymeData.append("item_id", productDetails.id);
-
 
     // Send a request
     axios
@@ -1697,22 +1743,24 @@ function Productpartnershop() {
                                     </p>
                                   </div>
                                   <div className="product-bag">
-                                  {parseFloat(item.discount) > 0 ? (
-                                  <Row>
-                                    <Col>
-                                      <p>₹{parseFloat(item.price)}</p>
-                                    </Col>
-                                    <Col>
-                                      <h5>Save {parseFloat(item.discount)}%</h5>
-                                    </Col>
-                                  </Row>
-                                ) : null}
+                                    {parseFloat(item.discount) > 0 ? (
+                                      <Row>
+                                        <Col>
+                                          <p>₹{parseFloat(item.price)}</p>
+                                        </Col>
+                                        <Col>
+                                          <h5>
+                                            Save {parseFloat(item.discount)}%
+                                          </h5>
+                                        </Col>
+                                      </Row>
+                                    ) : null}
                                     <Row>
                                       <Col className="align-self-center">
-                                      <h4>{`₹${Math.floor(
-                                    item.price -
-                                      (item.price * item.discount) / 100
-                                  )}`}</h4>
+                                        <h4>{`₹${Math.floor(
+                                          item.price -
+                                            (item.price * item.discount) / 100
+                                        )}`}</h4>
                                       </Col>
                                       {/* <Col>
                                     <Link
@@ -2084,6 +2132,11 @@ function Productpartnershop() {
                               </Row>
                             )}
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2123,7 +2176,7 @@ function Productpartnershop() {
                           <Link
                             onClick={() => {
                               const filterData = cart.filter((el) => {
-                                console.log('elll: ', el)
+                                console.log("elll: ", el);
                                 return el.item_id === productDetails.id;
                               });
                               if (filterData?.length > 0) {
@@ -2134,13 +2187,15 @@ function Productpartnershop() {
                                   payload: {
                                     item_id: productDetails.id,
                                     variant: selectedVariant,
-                                    price: calculatedPrice === 0
-                                    ? parseInt(productDetails?.price) * quantity
-                                    : parseInt(calculatedPrice),
+                                    price:
+                                      calculatedPrice === 0
+                                        ? parseInt(productDetails?.price) *
+                                          quantity
+                                        : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: productDetails.name,
                                     image: productDetails.image,
-                                    orderamountwithquantity:formattedAmount,
+                                    orderamountwithquantity: formattedAmount,
                                   },
                                 });
                               }
@@ -2838,6 +2893,7 @@ function Productpartnershop() {
                           <button onClick={handleIncrementone}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">
@@ -2993,7 +3049,7 @@ function Productpartnershop() {
                             </Col>
                           </Row>
                           <hr />
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
                             </Col>
@@ -3001,7 +3057,7 @@ function Productpartnershop() {
                               <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          <hr /> */}
 
                           <Row>
                             <Col>
@@ -3010,9 +3066,10 @@ function Productpartnershop() {
                             <Col>
                               <h5>
                                 ₹
-                                {parseInt(Amount) * 0.05 +
+                                {/* {parseInt(Amount) * 0.05 +
                                   parseInt(Amount) -
-                                  (disscountvalue?.discount ?? 0)}
+                                  (disscountvalue?.discount ?? 0)} */}
+                                {parseInt(totalPrice)}
                               </h5>
                             </Col>
                           </Row>

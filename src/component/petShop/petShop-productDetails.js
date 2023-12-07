@@ -1158,6 +1158,11 @@ function PetshopproductDetails() {
                       </Col> */}
                         </Row>
                       </div>
+                      <Row>
+                        <Col lg={5} sm={5} xs={4}>
+                          <p>(inclusive of all taxes)</p>
+                        </Col>
+                      </Row>
                     </div>
                     <h5>About Us</h5>
 
@@ -1599,6 +1604,11 @@ function PetshopproductDetails() {
                       </Col> */}
                             </Row>
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
 
@@ -2172,6 +2182,7 @@ function PetshopproductDetails() {
                           <button onClick={handleIncrementOne}>
                             <i className="fa fa-plus" />
                           </button>
+                          <p>(inclusive of all taxes)</p>
                         </div>
 
                         <div className="needplaceProduct">

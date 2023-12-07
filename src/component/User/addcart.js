@@ -133,11 +133,10 @@ function Addcart() {
       originalPrice = allPrice;
     });
   }
-  const taxamound = Math.floor(originalPrice * 0.05);
-  // let totalPrice = parseInt(originalPrice + originalPrice * 0.05);
+  // const taxamound = Math.floor(originalPrice * 0.05);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
-    setTotalPrice(originalPrice + originalPrice * 0.05);
+    setTotalPrice(originalPrice);
   }, [originalPrice]);
 
   const handleQuantityChange = (event) => {
@@ -458,7 +457,7 @@ function Addcart() {
       variation: item.variant,
       price: item.price,
       quantity: item.quantity,
-      tax_amount: item.price * 0.05,
+      tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     }));
     const requestData = {
@@ -467,7 +466,7 @@ function Addcart() {
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
@@ -480,9 +479,7 @@ function Addcart() {
       delivery_address: deliveryAddress,
       item_campaign_id: "",
       order_amount:
-        parseInt(
-          originalPrice * 0.05 + originalPrice - disscountvalue?.discount
-        ) || originalPrice * 0.05 + originalPrice,
+        parseInt(originalPrice - disscountvalue?.discount) || originalPrice,
       cart: cartData,
     };
     fetch(`${BASE_URL}/customer/order/place`, {
@@ -578,7 +575,7 @@ function Addcart() {
     const clearCoupon = () => {
       setcoupenCode(!coupencode);
       setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-      setTotalPrice(originalPrice + originalPrice * 0.05);
+      setTotalPrice(originalPrice);
       localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
     };
 
@@ -611,7 +608,7 @@ function Addcart() {
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
     setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-    setTotalPrice(originalPrice + originalPrice * 0.05);
+    setTotalPrice(originalPrice);
     localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [first_nameError, setFirst_nameError] = useState("");
@@ -803,15 +800,15 @@ function Addcart() {
                             </Col>
                           </Row>
                           <hr /> */}
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>GST</h5>
                             </Col>
                             <Col>
                               <h5>₹{Math.floor(originalPrice * 0.05)}</h5>
                             </Col>
-                          </Row>
-                          <hr />
+                          </Row> */}
+                          {/* <hr /> */}
 
                           <Row>
                             <Col>
@@ -819,7 +816,8 @@ function Addcart() {
                             </Col>
                             <Col>
                               <h5>
-                                ₹{`${parseInt(originalPrice + taxamound)}`}
+                                {/* ₹{`${parseInt(originalPrice + taxamound)}`} */}
+                                ₹{`${parseInt(originalPrice)}`}
                                 {/* Calculate  and display the Rounding Adjust */}
                               </h5>
                             </Col>
@@ -844,17 +842,23 @@ function Addcart() {
                     </Button>
                   </div> */}
                   {parseInt(originalPrice + taxamound) !== 0 ? (
-  <div className="check-Continue">
-    <Button>
-      <Link to="/login">Checkout</Link>
-    </Button>
-    <Button>
-      <Link to="/product">Continue Shopping</Link>
-    </Button>
-  </div>
-) : (
-  <p className="check-Continue">Sorry, the item you're trying to add has a price of ₹0. Please remove this item. We apologize for any inconvenience caused. This issue seems to be on our end. Please remove the selected item and try adding it again. Thank you for your understanding.</p>
-  )}
+                    <div className="check-Continue">
+                      <Button>
+                        <Link to="/login">Checkout</Link>
+                      </Button>
+                      <Button>
+                        <Link to="/product">Continue Shopping</Link>
+                      </Button>
+                    </div>
+                  ) : (
+                    <p className="check-Continue">
+                      Sorry, the item you're trying to add has a price of ₹0.
+                      Please remove this item. We apologize for any
+                      inconvenience caused. This issue seems to be on our end.
+                      Please remove the selected item and try adding it again.
+                      Thank you for your understanding.
+                    </p>
+                  )}
                 </Container>
               </>
             ) : (
@@ -1034,7 +1038,7 @@ function Addcart() {
                         </Col>
                       </Row>
                       <hr />
-                      <Row>
+                      {/* <Row>
                         <Col>
                           <h5>GST</h5>
                         </Col>
@@ -1042,7 +1046,7 @@ function Addcart() {
                           <h5>₹{formatPrice(originalPrice * 0.05)}</h5>
                         </Col>
                       </Row>
-                      <hr />
+                      <hr /> */}
 
                       <Row>
                         <Col>

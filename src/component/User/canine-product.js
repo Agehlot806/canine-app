@@ -44,19 +44,19 @@ const clinetreview = {
 };
 
 function Canineproduct(props) {
-
   const meta = {
-    
-    title: 'Canine Products - Catering to Your Pet’s Nutritional Needs',
-    description: 'We offer a wide range of high-quality pet food products that cater to the nutritional needs of your furry friends.',
-    canonical: 'https://canine.hirectjob.in/',
+    title: "Canine Products - Catering to Your Pet’s Nutritional Needs",
+    description:
+      "We offer a wide range of high-quality pet food products that cater to the nutritional needs of your furry friends.",
+    canonical: "https://canine.hirectjob.in/",
     meta: {
-      charset: 'utf-8',
+      charset: "utf-8",
       name: {
-        keywords: 'Canin Products, pet food, dog food, cat food, nutritional needs, healthy, happy, high-quality, finest ingredients, essential nutrients'
-      }
-    }
-  }
+        keywords:
+          "Canin Products, pet food, dog food, cat food, nutritional needs, healthy, happy, high-quality, finest ingredients, essential nutrients",
+      },
+    },
+  };
 
   const [categories, setcategories] = useState([]);
   const [allproduct, setallproduct] = useState([]);
@@ -506,9 +506,7 @@ function Canineproduct(props) {
     updatesubcateIds
   ) => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/items/latest`
-      );
+      const response = await axios.get(`${BASE_URL}/items/latest`);
       const products = response.data.data;
       const filteredProducts = applyFilters({
         selectedBrands: updatedBrandIds || selectedBrandIds,
@@ -697,15 +695,21 @@ function Canineproduct(props) {
 
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
-  ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
-  : productDetails?.price;
+    ? selectedVariantPrice -
+      (selectedVariantPrice * productDetails.discount) / 100
+    : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails?.price * quantity - Amount
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
+  // coupen code funtion after apply close button start
 
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setTotalPrice(Amount);
+  }, [Amount]);
+  // coupen code funtion after apply close button end
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
@@ -867,15 +871,14 @@ function Canineproduct(props) {
     }
   };
 
-
-   // without signup add cart start
-   const loginType = localStorage.getItem("loginType");
-   const customerLoginId =
-     loginType === "wholeseller"
-       ? Number(localStorage.getItem("UserWholesellerId"))
-       : localStorage.getItem("userInfo");
-   const { cart, dispatch } = useCartWithoutLogin();
-   // without signup add cart end
+  // without signup add cart start
+  const loginType = localStorage.getItem("loginType");
+  const customerLoginId =
+    loginType === "wholeseller"
+      ? Number(localStorage.getItem("UserWholesellerId"))
+      : localStorage.getItem("userInfo");
+  const { cart, dispatch } = useCartWithoutLogin();
+  // without signup add cart end
 
   const [selectedCity, setSelectedCity] = useState("");
   const GetdataAll = async (e) => {
@@ -925,7 +928,6 @@ function Canineproduct(props) {
           console.log(response);
           window.location.reload(false);
         });
-      
     } catch (error) {
       console.error("Error removing product from cart:", error);
     }
@@ -933,9 +935,7 @@ function Canineproduct(props) {
 
   const handleDeleteAddress = (id) => {
     axios
-      .delete(
-        `${BASE_URL}/customer/address/delete/${id}`
-      )
+      .delete(`${BASE_URL}/customer/address/delete/${id}`)
       .then((response) => {
         toast.success("Address deleted successfully");
         setAddressList((prevAddressList) =>
@@ -952,14 +952,14 @@ function Canineproduct(props) {
     try {
       const response = await axios.post(
         `${BASE_URL}/customer/address/update`,
-        profileData 
+        profileData
       );
       if (response.data.status === 200) {
         console.log("Profile updated successfully!");
         setAddressList((prevAddressList) =>
           prevAddressList.filter((item) => item.id !== id)
         );
-        fieldpagerefresh(); 
+        fieldpagerefresh();
       }
     } catch (error) {
       console.error(error);
@@ -993,14 +993,55 @@ function Canineproduct(props) {
   //         taxamound
   //     : Amount + taxamound
   // )}`}
+  // const coupendisscount = (dis) => {
+  //   setcoupenCode(!coupencode);
+  //   localStorage.setItem("disconut", JSON.stringify(dis));
+  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+  // };
+  // const clearCoupon = () => {
+  //   setcoupenCode(!coupencode);
+  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+  // };
+  useEffect(() => {
+    // Function to be called on page refresh
+    const clearCoupon = () => {
+      setcoupenCode(!coupencode);
+      setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+      setTotalPrice(originalPrice);
+      localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+    };
+
+    // Attach the event listener when the component mounts
+    window.addEventListener("beforeunload", clearCoupon);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", clearCoupon);
+    };
+  }, []);
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+    // setTotalPrice(
+    //   parseInt(originalPrice + originalPrice * 0.05 - disscountvalue)
+    // );
+    const discountAmount = dis?.discount || 0;
+    let newTotalPrice = Amount - discountAmount;
+
+    // Update totalPrice only if the newTotalPrice is a valid number
+    if (!isNaN(newTotalPrice)) {
+      setTotalPrice(newTotalPrice);
+    } else {
+      console.error("Invalid totalPrice calculation. Check your values.");
+    }
+    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
     setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    setTotalPrice(Amount);
     localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [selectedInput, setSelectedInput] = useState("");
@@ -1028,14 +1069,11 @@ function Canineproduct(props) {
       variation: selectedVariant,
       price: Amount,
       quantity: quantity,
-      tax_amount: taxamound,
+      tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount =
-      parseInt(Amount) * 0.05 +
-      parseInt(Amount) -
-      (disscountvalue?.discount ?? 0);
+    const orderAmount = parseInt(totalPrice);
 
     const requestData = {
       user_id: storedUserId,
@@ -1043,7 +1081,7 @@ function Canineproduct(props) {
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
@@ -1112,7 +1150,7 @@ function Canineproduct(props) {
       console.log(error);
     }
   };
-   const quickViewClear = () => {
+  const quickViewClear = () => {
     setSelectedVariantPrice(null);
     setSelectedVariant(null);
     setSelectedVariantStock(null);
@@ -1281,449 +1319,451 @@ function Canineproduct(props) {
   };
   return (
     <>
-    <DocumentMeta {...meta}>
-      <Toaster />
-      <Newheader />
-      {loading ? (
-        <section className="section-padding mt-3 mb-3">
-          <div className="loaderimg text-center text-black mb-4">
-            <img src={loadinggif} alt="" />
-            <h5>Please Wait.......</h5>
-          </div>
-        </section>
-      ) : (
-        <>
-          <Container fluid className="p-0">
-            <div className="all-bg">
-              <img src={product} />
+      <DocumentMeta {...meta}>
+        <Toaster />
+        <Newheader />
+        {loading ? (
+          <section className="section-padding mt-3 mb-3">
+            <div className="loaderimg text-center text-black mb-4">
+              <img src={loadinggif} alt="" />
+              <h5>Please Wait.......</h5>
             </div>
-          </Container>
+          </section>
+        ) : (
+          <>
+            <Container fluid className="p-0">
+              <div className="all-bg">
+                <img src={product} />
+              </div>
+            </Container>
 
-          <Container>
-            <Row>
-              <Col lg={3}>
-                <section className="section-padding">
-                  <div className="filter-product">
-                    <h3>Filters</h3>
+            <Container>
+              <Row>
+                <Col lg={3}>
+                  <section className="section-padding">
+                    <div className="filter-product">
+                      <h3>Filters</h3>
 
-                    <hr />
-                    <div
-                      onClick={() => handleParentClick("brand")}
-                      className="main-chk"
-                    >
-                      Brand
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {brandDropdownVisible && (
-                        <>
-                          <div>
-                            {allbrand
-                              ? allbrand.map(
-                                  (items) =>
-                                    items.canine === 1 && (
-                                      <div
-                                        className="form-check"
-                                        onClick={handleCheckboxClick}
-                                      >
-                                        <input
-                                          className="form-check-input"
-                                          type="checkbox"
-                                          onClick={(e) =>
-                                            handleDataListBrand(items.title)
-                                          }
-                                        />
-                                        <label className="form-check-label">
-                                          {items.title}
-                                        </label>
-                                      </div>
-                                    )
-                                )
-                              : ""}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-                    <div
-                      onClick={() => handleParentClick("productType")}
-                      className="main-chk"
-                    >
-                      Product Type
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {productTypeDropdownVisible && (
-                        <>
-                          <div>
-                            {subcategories
-                              ? subcategories.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allsubcateselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
-                              : ""}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-                    <div
-                      onClick={() => handleParentClick("cate")}
-                      className="main-chk"
-                    >
-                      Category
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {cateDropdownVisible && (
-                        <>
-                          <div>
-                            {allsubcate
-                              ? allsubcate.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allcateselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
-                              : ""}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-
-                    <div
-                      onClick={() => handleParentClick("price")}
-                      className="main-chk"
-                    >
-                      Price
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {priceDropdownVisible && (
-                        <>
-                          <div>
-                            <div
-                              className="form-range"
-                              onClick={handleCheckboxClick}
-                            >
-                              <span>₹</span>
-                              <input
-                                type="number"
-                                placeholder="From"
-                                onChange={minprice}
-                              />
-                            </div>
-                            <div
-                              className="form-range"
-                              onClick={handleCheckboxClick}
-                            >
-                              <span>₹</span>
-                              <input
-                                type="number"
-                                placeholder="From"
-                                onChange={maxprice}
-                              />
-                            </div>
-                            <div className="form-range">
-                              {/* <span>₹</span> */}
-                              <button onClick={applyprice}>Apply</button>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-                    <div
-                      onClick={() => handleParentClick("lifestage")}
-                      className="main-chk"
-                    >
-                      Lifestage
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {lifestageDropdownVisible && (
-                        <>
-                          <div>
-                            {alllifesage
-                              ? alllifesage.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        Lifesatedataselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
-                              : ""}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-                    <div
-                      onClick={() => handleParentClick("breedType")}
-                      className="main-chk"
-                    >
-                      Breed Type
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {breedTypeDropdownVisible && (
-                        <>
-                          <div>
-                            {allbreed
-                              ? allbreed.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        allbreedselect(items?.name)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items?.name}
-                                    </label>
-                                  </div>
-                                ))
-                              : ""}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-                    <div
-                      onClick={() => handleParentClick("health")}
-                      className="main-chk"
-                    >
-                      Health Condition
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {healthDropdownVisible && (
-                        <>
-                          <div>
-                            {allhealth
-                              ? allhealth.map((items) => (
-                                  <div
-                                    className="form-check"
-                                    onClick={handleCheckboxClick}
-                                  >
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      onClick={(e) =>
-                                        allhealthselect(items.title)
-                                      }
-                                    />
-                                    <label className="form-check-label">
-                                      {items.title}
-                                    </label>
-                                  </div>
-                                ))
-                              : ""}
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-
-                    <div
-                      onClick={() => handleParentClick("veg-Non-veg")}
-                      className="main-chk"
-                    >
-                      Veg/Nonveg
-                      <div className="i-con">
-                        <span>
-                          <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      {vegNonvegDropdownVisible && (
-                        <>
-                          <div>
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => vegnonveghandler("1")}
-                              />
-                              <label className="form-check-label">
-                                Non-Veg (219)
-                              </label>
-                            </div>
-                            <div
-                              className="form-check"
-                              onClick={handleCheckboxClick}
-                            >
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                onClick={(e) => vegnonveghandler("0")}
-                              />
-                              <label className="form-check-label">
-                                Veg (73)
-                              </label>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                    <hr />
-                  </div>
-                </section>
-              </Col>
-              <Col lg={9}>
-                <div className="sort-by">
-                  <Row className="justify-content-right">
-                    <Col lg={2}>Sort By</Col>
-                    <Col lg={3}>
-                      <select
-                        className="form-control"
-                        onChange={(e) => setSortOption(e.target.value)}
-                        value={sortOption}
+                      <hr />
+                      <div
+                        onClick={() => handleParentClick("brand")}
+                        className="main-chk"
                       >
-                        <option value="default">Choose...</option>
-                        <option value="A-Z">Alphabetically, A-Z</option>
-                        <option value="Z-A">Alphabetically, Z-A</option>
-                        <option value="PriceLowToHigh">
-                          Price, Low to High
-                        </option>
-                        <option value="PriceHighToLow">
-                          Price, High to Low
-                        </option>
-                        <option value="DateOldToNew">Date, Old to New</option>
-                        <option value="DateNewToOld">Date, New to Old</option>
-                      </select>
-                    </Col>
-                  </Row>
-                </div>
-                <section className="section-padding food">
-                  {/* <h1 className="main-head">Canine Products</h1> */}
-                  <Container>
-                    <Row>
-                      {/* ///tarungurjar// */}
-                      {paginatedCategories
-                        ? paginatedCategories.map((item, index) => (
-                            <Col lg={4} sm={6} xs={6} className="mb-4">
+                        Brand
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {brandDropdownVisible && (
+                          <>
+                            <div>
+                              {allbrand
+                                ? allbrand.map(
+                                    (items) =>
+                                      items.canine === 1 && (
+                                        <div
+                                          className="form-check"
+                                          onClick={handleCheckboxClick}
+                                        >
+                                          <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            onClick={(e) =>
+                                              handleDataListBrand(items.title)
+                                            }
+                                          />
+                                          <label className="form-check-label">
+                                            {items.title}
+                                          </label>
+                                        </div>
+                                      )
+                                  )
+                                : ""}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+                      <div
+                        onClick={() => handleParentClick("productType")}
+                        className="main-chk"
+                      >
+                        Product Type
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {productTypeDropdownVisible && (
+                          <>
+                            <div>
+                              {subcategories
+                                ? subcategories.map((items) => (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={(e) =>
+                                          allsubcateselect(items?.name)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items?.name}
+                                      </label>
+                                    </div>
+                                  ))
+                                : ""}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+                      <div
+                        onClick={() => handleParentClick("cate")}
+                        className="main-chk"
+                      >
+                        Category
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {cateDropdownVisible && (
+                          <>
+                            <div>
+                              {allsubcate
+                                ? allsubcate.map((items) => (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={(e) =>
+                                          allcateselect(items?.name)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items?.name}
+                                      </label>
+                                    </div>
+                                  ))
+                                : ""}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+
+                      <div
+                        onClick={() => handleParentClick("price")}
+                        className="main-chk"
+                      >
+                        Price
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {priceDropdownVisible && (
+                          <>
+                            <div>
                               <div
-                                className="food-product"
-                                onMouseEnter={() => handleMouseEnter(item.id)}
-                                onMouseLeave={() => handleMouseLeave(item.id)}
-                                key={item.id}
-                                style={{
-                                  background:
-                                    gradientColors[
-                                      index % gradientColors.length
-                                    ],
-                                }}
+                                className="form-range"
+                                onClick={handleCheckboxClick}
                               >
-                                <i
-                                  class={
-                                    item.isFav
-                                      ? "fa-solid fa-heart"
-                                      : "fa-regular fa-heart"
-                                  }
-                                  onClick={(id) => {
-                                    if (storedUserId == null) {
-                                      toast.error("Please Login first");
-                                    } else {
-                                      addToWishlist(item.id);
-                                    }
-                                  }}
+                                <span>₹</span>
+                                <input
+                                  type="number"
+                                  placeholder="From"
+                                  onChange={minprice}
                                 />
-                                <Link to={`/product-details/${item.id}`}>
-                                  <div className="text-center">
-                                    <img
-                                      src={
-                                        "https://canine.hirectjob.in///storage/app/public/product/" +
-                                        item.image
+                              </div>
+                              <div
+                                className="form-range"
+                                onClick={handleCheckboxClick}
+                              >
+                                <span>₹</span>
+                                <input
+                                  type="number"
+                                  placeholder="From"
+                                  onChange={maxprice}
+                                />
+                              </div>
+                              <div className="form-range">
+                                {/* <span>₹</span> */}
+                                <button onClick={applyprice}>Apply</button>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+                      <div
+                        onClick={() => handleParentClick("lifestage")}
+                        className="main-chk"
+                      >
+                        Lifestage
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {lifestageDropdownVisible && (
+                          <>
+                            <div>
+                              {alllifesage
+                                ? alllifesage.map((items) => (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onChange={(e) =>
+                                          Lifesatedataselect(items?.name)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items?.name}
+                                      </label>
+                                    </div>
+                                  ))
+                                : ""}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+                      <div
+                        onClick={() => handleParentClick("breedType")}
+                        className="main-chk"
+                      >
+                        Breed Type
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {breedTypeDropdownVisible && (
+                          <>
+                            <div>
+                              {allbreed
+                                ? allbreed.map((items) => (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onChange={(e) =>
+                                          allbreedselect(items?.name)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items?.name}
+                                      </label>
+                                    </div>
+                                  ))
+                                : ""}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+                      <div
+                        onClick={() => handleParentClick("health")}
+                        className="main-chk"
+                      >
+                        Health Condition
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {healthDropdownVisible && (
+                          <>
+                            <div>
+                              {allhealth
+                                ? allhealth.map((items) => (
+                                    <div
+                                      className="form-check"
+                                      onClick={handleCheckboxClick}
+                                    >
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        onClick={(e) =>
+                                          allhealthselect(items.title)
+                                        }
+                                      />
+                                      <label className="form-check-label">
+                                        {items.title}
+                                      </label>
+                                    </div>
+                                  ))
+                                : ""}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+
+                      <div
+                        onClick={() => handleParentClick("veg-Non-veg")}
+                        className="main-chk"
+                      >
+                        Veg/Nonveg
+                        <div className="i-con">
+                          <span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        {vegNonvegDropdownVisible && (
+                          <>
+                            <div>
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => vegnonveghandler("1")}
+                                />
+                                <label className="form-check-label">
+                                  Non-Veg (219)
+                                </label>
+                              </div>
+                              <div
+                                className="form-check"
+                                onClick={handleCheckboxClick}
+                              >
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  onClick={(e) => vegnonveghandler("0")}
+                                />
+                                <label className="form-check-label">
+                                  Veg (73)
+                                </label>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <hr />
+                    </div>
+                  </section>
+                </Col>
+                <Col lg={9}>
+                  <div className="sort-by">
+                    <Row className="justify-content-right">
+                      <Col lg={2}>Sort By</Col>
+                      <Col lg={3}>
+                        <select
+                          className="form-control"
+                          onChange={(e) => setSortOption(e.target.value)}
+                          value={sortOption}
+                        >
+                          <option value="default">Choose...</option>
+                          <option value="A-Z">Alphabetically, A-Z</option>
+                          <option value="Z-A">Alphabetically, Z-A</option>
+                          <option value="PriceLowToHigh">
+                            Price, Low to High
+                          </option>
+                          <option value="PriceHighToLow">
+                            Price, High to Low
+                          </option>
+                          <option value="DateOldToNew">Date, Old to New</option>
+                          <option value="DateNewToOld">Date, New to Old</option>
+                        </select>
+                      </Col>
+                    </Row>
+                  </div>
+                  <section className="section-padding food">
+                    {/* <h1 className="main-head">Canine Products</h1> */}
+                    <Container>
+                      <Row>
+                        {/* ///tarungurjar// */}
+                        {paginatedCategories
+                          ? paginatedCategories.map((item, index) => (
+                              <Col lg={4} sm={6} xs={6} className="mb-4">
+                                <div
+                                  className="food-product"
+                                  onMouseEnter={() => handleMouseEnter(item.id)}
+                                  onMouseLeave={() => handleMouseLeave(item.id)}
+                                  key={item.id}
+                                  style={{
+                                    background:
+                                      gradientColors[
+                                        index % gradientColors.length
+                                      ],
+                                  }}
+                                >
+                                  <i
+                                    class={
+                                      item.isFav
+                                        ? "fa-solid fa-heart"
+                                        : "fa-regular fa-heart"
+                                    }
+                                    onClick={(id) => {
+                                      if (storedUserId == null) {
+                                        toast.error("Please Login first");
+                                      } else {
+                                        addToWishlist(item.id);
                                       }
-                                    />
-                                  </div>
-                                  <div>
-                                    <h6>{renderProducthead(item.name)}</h6>
-                                    <p>
-                                      {renderProductDescription(
-                                        item.description
-                                      )}
-                                    </p>
-                                  </div>
-                                  <div className="product-bag">
-                                  {parseFloat(item.discount) > 0 ? (
-                                  <Row>
-                                    <Col>
-                                      <p>₹{parseFloat(item.price)}</p>
-                                    </Col>
-                                    <Col>
-                                      <h5>Save {parseFloat(item.discount)}%</h5>
-                                    </Col>
-                                  </Row>
-                                ) : null}
-                                    <Row>
-                                      <Col className="align-self-center">
-                                        {/* <h6>{`₹${item.price -
+                                    }}
+                                  />
+                                  <Link to={`/product-details/${item.id}`}>
+                                    <div className="text-center">
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in///storage/app/public/product/" +
+                                          item.image
+                                        }
+                                      />
+                                    </div>
+                                    <div>
+                                      <h6>{renderProducthead(item.name)}</h6>
+                                      <p>
+                                        {renderProductDescription(
+                                          item.description
+                                        )}
+                                      </p>
+                                    </div>
+                                    <div className="product-bag">
+                                      {parseFloat(item.discount) > 0 ? (
+                                        <Row>
+                                          <Col>
+                                            <p>₹{parseFloat(item.price)}</p>
+                                          </Col>
+                                          <Col>
+                                            <h5>
+                                              Save {parseFloat(item.discount)}%
+                                            </h5>
+                                          </Col>
+                                        </Row>
+                                      ) : null}
+                                      <Row>
+                                        <Col className="align-self-center">
+                                          {/* <h6>{`₹${item.price -
                                       (item.price * item.discount) / 100
                                       }`}</h6> */}
 
-                                        <h4>{`₹${Math.floor(
-                                          item.price -
-                                            (item.price * item.discount) / 100
-                                        )}`}</h4>
-                                      </Col>
-                                      {/* <Col>
+                                          <h4>{`₹${Math.floor(
+                                            item.price -
+                                              (item.price * item.discount) / 100
+                                          )}`}</h4>
+                                        </Col>
+                                        {/* <Col>
                                       <Link
                                         to={`/add-cart/${item.id}`}
                                         onClick={handleAddToCart}
@@ -1731,642 +1771,658 @@ function Canineproduct(props) {
                                         <img src={bag} />
                                       </Link>
                                     </Col> */}
-                                    </Row>
-                                  </div>
-                                </Link>
-                                {buttonVisibility[item.id] && (
-                                  <Fade top>
-                                    <div className="button-container">
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".bd-example-modal-lg"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Quick View
-                                      </button>
-                                      <button
-                                        data-toggle="modal"
-                                        data-target=".buynow"
-                                        onClick={(e) => handeldataId(item.id)}
-                                      >
-                                        Buy Now
-                                      </button>
+                                      </Row>
                                     </div>
-                                  </Fade>
-                                )}
-                              </div>
-                            </Col>
-                          ))
-                        : null}
-                    </Row>
-                    <div className="pagination-area">
-                      <ul className="pagination">
-                        <li className="page-item">
-                          {paginatedCategories?.length > 0 && (
-                            <button
-                              className="page-link"
-                              onClick={() => goToPage(currentPage1 - 1)}
-                              disabled={currentPage1 === 1}
-                            >
-                              Previous
-                            </button>
-                          )}
-                        </li>
-                        {pages
-                          .slice(currentPage1 - 1, currentPage1 + 4)
-                          .map((page) => (
-                            <li
-                              key={page}
-                              className={
-                                page === currentPage1
-                                  ? "page-item active"
-                                  : "page-item"
-                              }
-                            >
+                                  </Link>
+                                  {buttonVisibility[item.id] && (
+                                    <Fade top>
+                                      <div className="button-container">
+                                        <button
+                                          data-toggle="modal"
+                                          data-target=".bd-example-modal-lg"
+                                          onClick={(e) => handeldataId(item.id)}
+                                        >
+                                          Quick View
+                                        </button>
+                                        <button
+                                          data-toggle="modal"
+                                          data-target=".buynow"
+                                          onClick={(e) => handeldataId(item.id)}
+                                        >
+                                          Buy Now
+                                        </button>
+                                      </div>
+                                    </Fade>
+                                  )}
+                                </div>
+                              </Col>
+                            ))
+                          : null}
+                      </Row>
+                      <div className="pagination-area">
+                        <ul className="pagination">
+                          <li className="page-item">
+                            {paginatedCategories?.length > 0 && (
                               <button
                                 className="page-link"
-                                onClick={() => goToPage(page)}
+                                onClick={() => goToPage(currentPage1 - 1)}
+                                disabled={currentPage1 === 1}
                               >
-                                {page}
+                                Previous
                               </button>
-                            </li>
-                          ))}
-                        <li className="page-item">
-                          {paginatedCategories?.length > 0 && (
-                            <button
-                              className="page-link"
-                              onClick={() => goToPage(currentPage1 + 1)}
-                              disabled={currentPage1 === pageCount}
-                            >
-                              Next
-                            </button>
-                          )}
-                        </li>
-                      </ul>
-                    </div>
-                  </Container>
-                </section>
-              </Col>
-            </Row>
-          </Container>
-        </>
-      )}
-
-      <Footer />
-
-      {/* Product details Modal */}
-      <div
-        className="modal fade bd-example-modal-lg"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-        data-backdrop="static"
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-body">
-              <i
-                class="quickarea fa fa-times"
-                data-dismiss="modal"
-                onClick={quickViewClear}
-              />
-              <section className="section-padding">
-                <Container>
-                  <Row>
-                    <Col lg={6} sm={6}>
-                      <>
-                        <div>
-                          <div className="product-item quickviewimg">
-                            <img
-                              src={mainImage}
-                              alt="Product Image"
-                              // onClick={handleMainImageClick}
-                            />
-                          </div>
-                          <div className="needplace">
-                            <Row>
-                              {productDetails?.images &&
-                              productDetails?.images.length > 0 ? (
-                                productDetails.images.map((item, index) => (
-                                  <Col
-                                    lg={3}
-                                    sm={3}
-                                    xs={3}
-                                    className="mb-3"
-                                    key={index}
-                                  >
-                                    <div
-                                      className="product-item-inner"
-                                      onClick={() =>
-                                        handleThumbnailClick(index)
-                                      }
-                                    >
-                                      <img
-                                        src={
-                                          "https://canine.hirectjob.in//storage/app/public/product/" +
-                                          item
-                                        }
-                                        alt={`Image ${index}`}
-                                      />
-                                    </div>
-                                  </Col>
-                                ))
-                              ) : (
-                                <p className="emptyMSG">No Related Image.</p>
-                              )}
-                            </Row>
-                          </div>
-                        </div>
-
-                        {lightboxIsOpen && (
-                          <Lightbox
-                            mainSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails.images[lightboxImageIndex]
-                            }
-                            nextSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails.images[
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
-                              ]
-                            }
-                            prevSrc={
-                              "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails.images[
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
-                              ]
-                            }
-                            onCloseRequest={() => setLightboxIsOpen(false)}
-                            onMovePrevRequest={() =>
-                              setLightboxImageIndex(
-                                (lightboxImageIndex +
-                                  productDetails.images.length -
-                                  1) %
-                                  productDetails.images.length
-                              )
-                            }
-                            onMoveNextRequest={() =>
-                              setLightboxImageIndex(
-                                (lightboxImageIndex + 1) %
-                                  productDetails.images.length
-                              )
-                            }
-                          />
-                        )}
-                      </>
-                    </Col>
-                    <Col lg={6} sm={6}>
-                      <div className="productDetail-content">
-                        <Row>
-                          <Col lg={9} sm={9} xs={9}>
-                            <h4>{productDetails?.name}</h4>
-                          </Col>
-                          <Col lg={3} sm={3} xs={3}>
-                            <p>
-                              {productDetails?.veg == 0 ? (
-                                <span>
-                                  <span className="non-vegetarian">●</span>
-                                </span>
-                              ) : (
-                                <span>
-                                  <span className="vegetarian">●</span>
-                                </span>
-                              )}
-                            </p>
-                          </Col>
-                        </Row>
-                        <p>
-                          By <span>{productDetails.store_name}</span>
-                        </p>
-
-                        <Wrapper>
-                          <div className="icon-style">
-                            {ratingStar}
-                            <p>
-                              ({productDetails?.rating_count} customer reviews)
-                            </p>
-                          </div>
-                        </Wrapper>
-
-                        <div className="needplaceProduct">
-                          <Row>
-                            <Col sm={6} xs={6}>
-                              <div>
-                                <div>
-                                  <div className="tab-container">
-                                    <h6>Variations</h6>
-                                    <Row>
-                                      {productDetails?.variations &&
-                                        productDetails?.variations.length > 0 &&
-                                        productDetails.variations.map(
-                                          (item, index) => (
-                                            <Col
-                                              lg={5}
-                                              className="p-0"
-                                              key={index}
-                                            >
-                                              {item.stock !== 0 ? (
-                                                <div
-                                                  className={`tab-variations ${
-                                                    selectedVariant ===
-                                                    item.type
-                                                      ? "active"
-                                                      : ""
-                                                  }`}
-                                                  onClick={() => {
-                                                    setSelectedVariant(
-                                                      item.type
-                                                    );
-                                                    setSelectedVariantPrice(
-                                                      item?.price
-                                                    ); // Store the price in state
-                                                  }}
-                                                >
-                                                  {item.type}
-                                                </div>
-                                              ) : (
-                                                <div
-                                                  className="tab-variations disabledvariation"
-                                                  title="Stock unavailable"
-                                                >
-                                                  {/* <span className="blurred-text"> */}
-                                                  {item.type}
-                                                  {/* </span> */}
-                                                </div>
-                                              )}
-                                            </Col>
-                                          )
-                                        )}
-                                    </Row>
-                                  </div>
-                                </div>
-                              </div>
-                            </Col>
-                            <Col sm={6} xs={6}>
-                              <div className="quantity-btn quickbtn">
-                                <button onClick={handleDecrementone}>
-                                  <i className="fa fa-minus" />
-                                </button>
-                                <form>
-                                  <div className="form-group">
-                                    <input
-                                      type="tel"
-                                      className="form-control"
-                                      placeholder="Quantity"
-                                      value={quantity}
-                                      onChange={handleQuantityChange}
-                                      autoComplete="new-number"
-                                    />
-                                  </div>
-                                </form>
-                                <button onClick={handleIncrementone}>
-                                  <i className="fa fa-plus" />
-                                </button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                        <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            {uservariationprice && formattedAmount >= 0 ? (
-                              <Row>
-                                <Col lg={3} sm={3} xs={3}>
-                                  <p>{`₹${uservariationprice}`}</p>
-                                </Col>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
-                                </Col>
-                                {/* {formattedSavedAmount > 0 && ( */}
-                                <Col lg={5} sm={5} xs={3}>
-                                  {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
-                                  ) : (
-                                    <h6>No savings</h6>
-                                  )}
-                                </Col>
-                                {/* )} */}
-                              </Row>
-                            ) : (
-                              <Row>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
-                                </Col>
-                              </Row>
                             )}
-                          </div>
-                        </div>
-                        <h5>About Us</h5>
-                        {productDetails ? (
-                          <Table responsive>
-                            <tbody>
-                              <tr>
-                                <th>Brand</th>
-                                <td>{productDetails?.brand_id}</td>
-                              </tr>
-                              <tr>
-                                <th>Age Range</th>
-                                <td>{productDetails?.lifeStage_id}</td>
-                              </tr>
-                              {/* <tr>
-                                <th>Health Condition</th>
-                                <td>{productDetails?.helthCondition_id}</td>
-                              </tr> */}
-                              <tr>
-                                <th>Target Species</th>
-                                <td>{productDetails?.Petsbreeds_id}</td>
-                              </tr>
-                            </tbody>
-                          </Table>
-                        ) : (
-                          <p>No data available for this product.</p>
-                        )}
-                      </div>
-                    </Col>
-                  </Row>
-                  {productDetails?.stock &&
-                  productDetails?.stock?.length !== 0 ? (
-                    <div className="productBTNaddcard">
-                      {customerLoginId === null ? (
-                        <Button data-dismiss="modal">
-                          {/* <Button> */}
-                          <Link
-                            onClick={() => {
-                              const filterData = cart.filter((el) => {
-                                console.log('elll: ', el)
-                                return el.item_id === productDetails.id;
-                              });
-                              if (filterData?.length > 0) {
-                                toast.error("Already in added");
-                              } else {
-                                dispatch({
-                                  type: "ADD_TO_CART",
-                                  payload: {
-                                    item_id: productDetails.id,
-                                    variant: selectedVariant,
-                                    price: calculatedPrice === 0
-                                    ? parseInt(productDetails?.price) * quantity
-                                    : parseInt(calculatedPrice),
-                                    quantity: quantity,
-                                    name: productDetails.name,
-                                    image: productDetails.image,
-                                    orderamountwithquantity:formattedAmount,
-                                  },
-                                });
-                              }
-                            }}
-                          >
-                            <i className="fa fa-shopping-bag" /> Add to cart
-                          </Link>
-                          <p>{addToCartStatus}</p>
-                        </Button>
-                      ) : (
-                        <Button>
-                          <Link
-                            to={`/add-cart/${productDetails.id}`}
-                            onClick={handleAddToCart}
-                          >
-                            <i className="fa fa-shopping-bag" /> Add to cart
-                          </Link>
-                          <p>{addToCartStatus}</p>
-                        </Button>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="sold-out-btn mt-3">
-                      <Link>Sold Out</Link>
-                      <br />
-                      <Button data-toggle="modal" data-target="#soldoutModel">
-                        Notify Me When Available
-                      </Button>
-                    </div>
-                  )}
-                </Container>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/*  Modal */}
-
-      {/* buynow-model */}
-      <div
-        className="modal fade buynow"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
-        data-backdrop="static"
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            <div className="modal-body">
-              <>
-                <Container>
-                  <div className="needplace">
-                    <div className="address">
-                      <h3>Address</h3>
-                      <div className="address-card">
-                        {addresslist && addresslist.length > 1 ? (
-                          addresslist.map(
-                            (item, index) =>
-                              index === 0 && (
-                                <p key={item.id}>
-                                  {item.house_no} {item.area} {item.landmark}{" "}
-                                  {item.city} {item.state} {item.pincode}
-                                </p>
-                              )
-                          )
-                        ) : (
-                          <p>No data to display</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </Container>
-                <Container>
-                  <div className="needplace">
-                    <div className="address">
-                      <h3>Shipping Address</h3>
-                      <div className="address-card">
-                        <Row>
-                          <Col lg={10} sm={9}>
-                            {selectedAddress ? (
-                              <div className="selectedAddress-area">
-                                <p>
-                                  {selectedAddress.first_name}{" "}
-                                  {selectedAddress.last_name}
-                                </p>
-                                <p>
-                                  {selectedAddress.house_no}{" "}
-                                  {selectedAddress.area}{" "}
-                                  {selectedAddress.landmark}{" "}
-                                  {selectedAddress.city} {selectedAddress.state}{" "}
-                                  {selectedAddress.pincode}
-                                </p>
-                                <p>Mobile: {selectedAddress.mobile}</p>
-                              </div>
-                            ) : (
-                              <p>No address selected</p>
-                            )}
-                          </Col>
-                          <Col lg={2} sm={3}>
-                            <Button
-                              data-toggle="modal"
-                              data-target="#changeadress-model"
-                            >
-                              Add
-                            </Button>
-                          </Col>
-                          <Col lg={12} sm={12}>
-                            <div className="address-arrow">
-                              <button onClick={toggleAddressContent}>
-                                Select Address{" "}
-                                <i
-                                  className={`fa ${
-                                    addressContentVisible
-                                      ? "fa-arrow-up"
-                                      : "fa-arrow-down"
-                                  }`}
-                                  aria-hidden="true"
-                                ></i>
+                          </li>
+                          {pages
+                            .slice(currentPage1 - 1, currentPage1 + 4)
+                            .map((page) => (
+                              <li
+                                key={page}
+                                className={
+                                  page === currentPage1
+                                    ? "page-item active"
+                                    : "page-item"
+                                }
+                              >
+                                <button
+                                  className="page-link"
+                                  onClick={() => goToPage(page)}
+                                >
+                                  {page}
+                                </button>
+                              </li>
+                            ))}
+                          <li className="page-item">
+                            {paginatedCategories?.length > 0 && (
+                              <button
+                                className="page-link"
+                                onClick={() => goToPage(currentPage1 + 1)}
+                                disabled={currentPage1 === pageCount}
+                              >
+                                Next
                               </button>
-                            </div>
-                            <br />
-                            <Row>
-                              {addressContentVisible && (
-                                <Col lg={12}>
-                                  <div className="address-Content">
-                                    {addresslist && addresslist.length > 0 ? (
-                                      addresslist.map((item, index) => (
-                                        <div
-                                          className="chk-address"
-                                          key={item.id}
-                                        >
-                                          <div className="chk-center">
-                                            <input
-                                              className="form-check-input"
-                                              type="radio"
-                                              name="exampleRadios"
-                                              onClick={() =>
-                                                handleAddressClick(index)
-                                              }
-                                            />
-                                          </div>
-                                          <div className="Daynamic-address">
-                                            <table>
-                                              <tr>
-                                                <th>Name:&nbsp;</th>
-                                                <td>
-                                                  {item.first_name}&nbsp;
-                                                  {item.last_name}
-                                                </td>
-                                              </tr>
-                                              <tr>
-                                                <th>Address:&nbsp;</th>
-                                                <td>
-                                                  {item.house_no} {item.area}{" "}
-                                                  {item.landmark} {item.city}{" "}
-                                                  {item.state} {item.pincode}
-                                                </td>
-                                              </tr>
-                                              <tr>
-                                                <th>Mobile:&nbsp;</th>
-                                                <td>{item.mobile}</td>
-                                              </tr>
-                                            </table>
-                                            <div className="address-delete">
-                                              <i
-                                                className="fa fa-trash"
-                                                onClick={() =>
-                                                  handleDeleteAddress(item.id)
-                                                }
-                                              />
-                                              &nbsp; &nbsp;
-                                              <i
-                                                className="fa fa-edit"
-                                                data-toggle="modal"
-                                                onClick={() => {
-                                                  setProfileData(item);
-                                                }}
-                                                data-target="#update-model"
-                                              />
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ))
-                                    ) : (
-                                      <p>No Addresses Available</p>
-                                    )}
-                                  </div>
-                                </Col>
-                              )}
-                            </Row>
-                          </Col>
-                        </Row>
+                            )}
+                          </li>
+                        </ul>
                       </div>
-                    </div>
-                  </div>
-                </Container>
-                {/* {productDetails && productDetails.length > 0 ? ( */}
+                    </Container>
+                  </section>
+                </Col>
+              </Row>
+            </Container>
+          </>
+        )}
+
+        <Footer />
+
+        {/* Product details Modal */}
+        <div
+          className="modal fade bd-example-modal-lg"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+          data-backdrop="static"
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-body">
+                <i
+                  class="quickarea fa fa-times"
+                  data-dismiss="modal"
+                  onClick={quickViewClear}
+                />
                 <section className="section-padding">
                   <Container>
                     <Row>
-                      <Col lg={3}>
-                        <img
-                          src={
-                            "https://canine.hirectjob.in//storage/app/public/product/" +
-                            productDetails?.image
-                          }
-                        />
+                      <Col lg={6} sm={6}>
+                        <>
+                          <div>
+                            <div className="product-item quickviewimg">
+                              <img
+                                src={mainImage}
+                                alt="Product Image"
+                                // onClick={handleMainImageClick}
+                              />
+                            </div>
+                            <div className="needplace">
+                              <Row>
+                                {productDetails?.images &&
+                                productDetails?.images.length > 0 ? (
+                                  productDetails.images.map((item, index) => (
+                                    <Col
+                                      lg={3}
+                                      sm={3}
+                                      xs={3}
+                                      className="mb-3"
+                                      key={index}
+                                    >
+                                      <div
+                                        className="product-item-inner"
+                                        onClick={() =>
+                                          handleThumbnailClick(index)
+                                        }
+                                      >
+                                        <img
+                                          src={
+                                            "https://canine.hirectjob.in//storage/app/public/product/" +
+                                            item
+                                          }
+                                          alt={`Image ${index}`}
+                                        />
+                                      </div>
+                                    </Col>
+                                  ))
+                                ) : (
+                                  <p className="emptyMSG">No Related Image.</p>
+                                )}
+                              </Row>
+                            </div>
+                          </div>
+
+                          {lightboxIsOpen && (
+                            <Lightbox
+                              mainSrc={
+                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                productDetails.images[lightboxImageIndex]
+                              }
+                              nextSrc={
+                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                productDetails.images[
+                                  (lightboxImageIndex + 1) %
+                                    productDetails.images.length
+                                ]
+                              }
+                              prevSrc={
+                                "https://canine.hirectjob.in//storage/app/public/product/" +
+                                productDetails.images[
+                                  (lightboxImageIndex +
+                                    productDetails.images.length -
+                                    1) %
+                                    productDetails.images.length
+                                ]
+                              }
+                              onCloseRequest={() => setLightboxIsOpen(false)}
+                              onMovePrevRequest={() =>
+                                setLightboxImageIndex(
+                                  (lightboxImageIndex +
+                                    productDetails.images.length -
+                                    1) %
+                                    productDetails.images.length
+                                )
+                              }
+                              onMoveNextRequest={() =>
+                                setLightboxImageIndex(
+                                  (lightboxImageIndex + 1) %
+                                    productDetails.images.length
+                                )
+                              }
+                            />
+                          )}
+                        </>
                       </Col>
-                      <Col lg={7} sm={10}>
-                        <h2>{productDetails?.name}</h2>
-                        <div className="tab-container">
-                          <h6>Variations</h6>
+                      <Col lg={6} sm={6}>
+                        <div className="productDetail-content">
                           <Row>
-                            {productDetails?.variations &&
-                              productDetails?.variations.length > 0 &&
-                              productDetails?.variations.map((item, index) => (
-                                <Col lg={3} key={index}>
-                                  {item.stock !== 0 ? (
-                                    <div
-                                      className={`tab-variations ${
-                                        selectedVariant === item.type
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                      onClick={() => {
-                                        setSelectedVariant(item.type);
-                                        setSelectedVariantPrice(item?.price); // Store the price in state
-                                      }}
-                                    >
-                                      {item.type}
+                            <Col lg={9} sm={9} xs={9}>
+                              <h4>{productDetails?.name}</h4>
+                            </Col>
+                            <Col lg={3} sm={3} xs={3}>
+                              <p>
+                                {productDetails?.veg == 0 ? (
+                                  <span>
+                                    <span className="non-vegetarian">●</span>
+                                  </span>
+                                ) : (
+                                  <span>
+                                    <span className="vegetarian">●</span>
+                                  </span>
+                                )}
+                              </p>
+                            </Col>
+                          </Row>
+                          <p>
+                            By <span>{productDetails.store_name}</span>
+                          </p>
+
+                          <Wrapper>
+                            <div className="icon-style">
+                              {ratingStar}
+                              <p>
+                                ({productDetails?.rating_count} customer
+                                reviews)
+                              </p>
+                            </div>
+                          </Wrapper>
+
+                          <div className="needplaceProduct">
+                            <Row>
+                              <Col sm={6} xs={6}>
+                                <div>
+                                  <div>
+                                    <div className="tab-container">
+                                      <h6>Variations</h6>
+                                      <Row>
+                                        {productDetails?.variations &&
+                                          productDetails?.variations.length >
+                                            0 &&
+                                          productDetails.variations.map(
+                                            (item, index) => (
+                                              <Col
+                                                lg={5}
+                                                className="p-0"
+                                                key={index}
+                                              >
+                                                {item.stock !== 0 ? (
+                                                  <div
+                                                    className={`tab-variations ${
+                                                      selectedVariant ===
+                                                      item.type
+                                                        ? "active"
+                                                        : ""
+                                                    }`}
+                                                    onClick={() => {
+                                                      setSelectedVariant(
+                                                        item.type
+                                                      );
+                                                      setSelectedVariantPrice(
+                                                        item?.price
+                                                      ); // Store the price in state
+                                                    }}
+                                                  >
+                                                    {item.type}
+                                                  </div>
+                                                ) : (
+                                                  <div
+                                                    className="tab-variations disabledvariation"
+                                                    title="Stock unavailable"
+                                                  >
+                                                    {/* <span className="blurred-text"> */}
+                                                    {item.type}
+                                                    {/* </span> */}
+                                                  </div>
+                                                )}
+                                              </Col>
+                                            )
+                                          )}
+                                      </Row>
                                     </div>
-                                  ) : (
-                                    <div
-                                      className="tab-variations disabledvariation"
-                                      title="Stock unavailable"
-                                    >
-                                      {/* <span className="blurred-text"> */}
-                                      {item.type}
-                                      {/* </span> */}
+                                  </div>
+                                </div>
+                              </Col>
+                              <Col sm={6} xs={6}>
+                                <div className="quantity-btn quickbtn">
+                                  <button onClick={handleDecrementone}>
+                                    <i className="fa fa-minus" />
+                                  </button>
+                                  <form>
+                                    <div className="form-group">
+                                      <input
+                                        type="tel"
+                                        className="form-control"
+                                        placeholder="Quantity"
+                                        value={quantity}
+                                        onChange={handleQuantityChange}
+                                        autoComplete="new-number"
+                                      />
                                     </div>
-                                  )}
-                                </Col>
-                              ))}
+                                  </form>
+                                  <button onClick={handleIncrementone}>
+                                    <i className="fa fa-plus" />
+                                  </button>
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                          <div className="needplaceProduct">
+                            <div className="product-deatils-price">
+                              {uservariationprice && formattedAmount >= 0 ? (
+                                <Row>
+                                  <Col lg={3} sm={3} xs={3}>
+                                    <p>{`₹${uservariationprice}`}</p>
+                                  </Col>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(formattedAmount)
+                                        ? 0
+                                        : formattedAmount
+                                    }`}</h5>
+                                  </Col>
+                                  {/* {formattedSavedAmount > 0 && ( */}
+                                  <Col lg={5} sm={5} xs={3}>
+                                    {formattedSavedAmount > 0 ? (
+                                      <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    ) : (
+                                      <h6>No savings</h6>
+                                    )}
+                                  </Col>
+                                  {/* )} */}
+                                </Row>
+                              ) : (
+                                <Row>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
+                                  </Col>
+                                </Row>
+                              )}
+                            </div>
+                            <Row>
+                              <Col lg={5} sm={5} xs={4}>
+                                <p>(inclusive of all taxes)</p>
+                              </Col>
+                            </Row>
+                          </div>
+                          <h5>About Us</h5>
+                          {productDetails ? (
+                            <Table responsive>
+                              <tbody>
+                                <tr>
+                                  <th>Brand</th>
+                                  <td>{productDetails?.brand_id}</td>
+                                </tr>
+                                <tr>
+                                  <th>Age Range</th>
+                                  <td>{productDetails?.lifeStage_id}</td>
+                                </tr>
+                                {/* <tr>
+                                <th>Health Condition</th>
+                                <td>{productDetails?.helthCondition_id}</td>
+                              </tr> */}
+                                <tr>
+                                  <th>Target Species</th>
+                                  <td>{productDetails?.Petsbreeds_id}</td>
+                                </tr>
+                              </tbody>
+                            </Table>
+                          ) : (
+                            <p>No data available for this product.</p>
+                          )}
+                        </div>
+                      </Col>
+                    </Row>
+                    {productDetails?.stock &&
+                    productDetails?.stock?.length !== 0 ? (
+                      <div className="productBTNaddcard">
+                        {customerLoginId === null ? (
+                          <Button data-dismiss="modal">
+                            {/* <Button> */}
+                            <Link
+                              onClick={() => {
+                                const filterData = cart.filter((el) => {
+                                  console.log("elll: ", el);
+                                  return el.item_id === productDetails.id;
+                                });
+                                if (filterData?.length > 0) {
+                                  toast.error("Already in added");
+                                } else {
+                                  dispatch({
+                                    type: "ADD_TO_CART",
+                                    payload: {
+                                      item_id: productDetails.id,
+                                      variant: selectedVariant,
+                                      price:
+                                        calculatedPrice === 0
+                                          ? parseInt(productDetails?.price) *
+                                            quantity
+                                          : parseInt(calculatedPrice),
+                                      quantity: quantity,
+                                      name: productDetails.name,
+                                      image: productDetails.image,
+                                      orderamountwithquantity: formattedAmount,
+                                    },
+                                  });
+                                }
+                              }}
+                            >
+                              <i className="fa fa-shopping-bag" /> Add to cart
+                            </Link>
+                            <p>{addToCartStatus}</p>
+                          </Button>
+                        ) : (
+                          <Button>
+                            <Link
+                              to={`/add-cart/${productDetails.id}`}
+                              onClick={handleAddToCart}
+                            >
+                              <i className="fa fa-shopping-bag" /> Add to cart
+                            </Link>
+                            <p>{addToCartStatus}</p>
+                          </Button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="sold-out-btn mt-3">
+                        <Link>Sold Out</Link>
+                        <br />
+                        <Button data-toggle="modal" data-target="#soldoutModel">
+                          Notify Me When Available
+                        </Button>
+                      </div>
+                    )}
+                  </Container>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/*  Modal */}
+
+        {/* buynow-model */}
+        <div
+          className="modal fade buynow"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+          data-backdrop="static"
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-body">
+                <>
+                  <Container>
+                    <div className="needplace">
+                      <div className="address">
+                        <h3>Address</h3>
+                        <div className="address-card">
+                          {addresslist && addresslist.length > 1 ? (
+                            addresslist.map(
+                              (item, index) =>
+                                index === 0 && (
+                                  <p key={item.id}>
+                                    {item.house_no} {item.area} {item.landmark}{" "}
+                                    {item.city} {item.state} {item.pincode}
+                                  </p>
+                                )
+                            )
+                          ) : (
+                            <p>No data to display</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Container>
+                  <Container>
+                    <div className="needplace">
+                      <div className="address">
+                        <h3>Shipping Address</h3>
+                        <div className="address-card">
+                          <Row>
+                            <Col lg={10} sm={9}>
+                              {selectedAddress ? (
+                                <div className="selectedAddress-area">
+                                  <p>
+                                    {selectedAddress.first_name}{" "}
+                                    {selectedAddress.last_name}
+                                  </p>
+                                  <p>
+                                    {selectedAddress.house_no}{" "}
+                                    {selectedAddress.area}{" "}
+                                    {selectedAddress.landmark}{" "}
+                                    {selectedAddress.city}{" "}
+                                    {selectedAddress.state}{" "}
+                                    {selectedAddress.pincode}
+                                  </p>
+                                  <p>Mobile: {selectedAddress.mobile}</p>
+                                </div>
+                              ) : (
+                                <p>No address selected</p>
+                              )}
+                            </Col>
+                            <Col lg={2} sm={3}>
+                              <Button
+                                data-toggle="modal"
+                                data-target="#changeadress-model"
+                              >
+                                Add
+                              </Button>
+                            </Col>
+                            <Col lg={12} sm={12}>
+                              <div className="address-arrow">
+                                <button onClick={toggleAddressContent}>
+                                  Select Address{" "}
+                                  <i
+                                    className={`fa ${
+                                      addressContentVisible
+                                        ? "fa-arrow-up"
+                                        : "fa-arrow-down"
+                                    }`}
+                                    aria-hidden="true"
+                                  ></i>
+                                </button>
+                              </div>
+                              <br />
+                              <Row>
+                                {addressContentVisible && (
+                                  <Col lg={12}>
+                                    <div className="address-Content">
+                                      {addresslist && addresslist.length > 0 ? (
+                                        addresslist.map((item, index) => (
+                                          <div
+                                            className="chk-address"
+                                            key={item.id}
+                                          >
+                                            <div className="chk-center">
+                                              <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="exampleRadios"
+                                                onClick={() =>
+                                                  handleAddressClick(index)
+                                                }
+                                              />
+                                            </div>
+                                            <div className="Daynamic-address">
+                                              <table>
+                                                <tr>
+                                                  <th>Name:&nbsp;</th>
+                                                  <td>
+                                                    {item.first_name}&nbsp;
+                                                    {item.last_name}
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <th>Address:&nbsp;</th>
+                                                  <td>
+                                                    {item.house_no} {item.area}{" "}
+                                                    {item.landmark} {item.city}{" "}
+                                                    {item.state} {item.pincode}
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <th>Mobile:&nbsp;</th>
+                                                  <td>{item.mobile}</td>
+                                                </tr>
+                                              </table>
+                                              <div className="address-delete">
+                                                <i
+                                                  className="fa fa-trash"
+                                                  onClick={() =>
+                                                    handleDeleteAddress(item.id)
+                                                  }
+                                                />
+                                                &nbsp; &nbsp;
+                                                <i
+                                                  className="fa fa-edit"
+                                                  data-toggle="modal"
+                                                  onClick={() => {
+                                                    setProfileData(item);
+                                                  }}
+                                                  data-target="#update-model"
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        ))
+                                      ) : (
+                                        <p>No Addresses Available</p>
+                                      )}
+                                    </div>
+                                  </Col>
+                                )}
+                              </Row>
+                            </Col>
                           </Row>
                         </div>
-                        {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
+                      </div>
+                    </div>
+                  </Container>
+                  {/* {productDetails && productDetails.length > 0 ? ( */}
+                  <section className="section-padding">
+                    <Container>
+                      <Row>
+                        <Col lg={3}>
+                          <img
+                            src={
+                              "https://canine.hirectjob.in//storage/app/public/product/" +
+                              productDetails?.image
+                            }
+                          />
+                        </Col>
+                        <Col lg={7} sm={10}>
+                          <h2>{productDetails?.name}</h2>
+                          <div className="tab-container">
+                            <h6>Variations</h6>
+                            <Row>
+                              {productDetails?.variations &&
+                                productDetails?.variations.length > 0 &&
+                                productDetails?.variations.map(
+                                  (item, index) => (
+                                    <Col lg={3} key={index}>
+                                      {item.stock !== 0 ? (
+                                        <div
+                                          className={`tab-variations ${
+                                            selectedVariant === item.type
+                                              ? "active"
+                                              : ""
+                                          }`}
+                                          onClick={() => {
+                                            setSelectedVariant(item.type);
+                                            setSelectedVariantPrice(
+                                              item?.price
+                                            ); // Store the price in state
+                                          }}
+                                        >
+                                          {item.type}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className="tab-variations disabledvariation"
+                                          title="Stock unavailable"
+                                        >
+                                          {/* <span className="blurred-text"> */}
+                                          {item.type}
+                                          {/* </span> */}
+                                        </div>
+                                      )}
+                                    </Col>
+                                  )
+                                )}
+                            </Row>
+                          </div>
+                          {/* <h3>{`₹${parseInt(buynowformattedAmount)}`}</h3>
                         <div className="quantity-btn quickbtn">
                           <button onClick={handleDecrementbuynow}>
                             <i className="fa fa-minus" />
@@ -2387,73 +2443,76 @@ function Canineproduct(props) {
                             <i className="fa fa-plus" />
                           </button>
                         </div> */}
-                        <div className="quantity-btn quickbtn">
-                          <button onClick={handleDecrementone}>
-                            <i className="fa fa-minus" />
-                          </button>
-                          <form>
-                            <div className="form-group">
-                              <input
-                                type="tel"
-                                className="form-control"
-                                placeholder="Quantity"
-                                value={quantity}
-                                onChange={handleQuantityChange}
-                                autoComplete="new-number"
-                              />
-                            </div>
-                          </form>
-                          <button onClick={handleIncrementone}>
-                            <i className="fa fa-plus" />
-                          </button>
-                        </div>
-
-                        <div className="needplaceProduct">
-                          <div className="product-deatils-price">
-                            {uservariationprice && formattedAmount >= 0 ? (
-                              <Row>
-                                <Col lg={3} sm={3} xs={3}>
-                                  <p>{`₹${uservariationprice}`}</p>
-                                </Col>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(formattedAmount) ? 0 : formattedAmount
-                                  }`}</h5>
-                                </Col>
-                                {/* {formattedSavedAmount > 0 && ( */}
-                                <Col lg={5} sm={5} xs={3}>
-                                  {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
-                                  ) : (
-                                    <h6>No savings</h6>
-                                  )}
-                                </Col>
-                                {/* )} */}
-                              </Row>
-                            ) : (
-                              <Row>
-                                <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${
-                                    isNaN(MrpPrice) ? 0 : MrpPrice
-                                  }`}</h5>
-                                </Col>
-                              </Row>
-                            )}
+                          <div className="quantity-btn quickbtn">
+                            <button onClick={handleDecrementone}>
+                              <i className="fa fa-minus" />
+                            </button>
+                            <form>
+                              <div className="form-group">
+                                <input
+                                  type="tel"
+                                  className="form-control"
+                                  placeholder="Quantity"
+                                  value={quantity}
+                                  onChange={handleQuantityChange}
+                                  autoComplete="new-number"
+                                />
+                              </div>
+                            </form>
+                            <button onClick={handleIncrementone}>
+                              <i className="fa fa-plus" />
+                            </button>
+                            <p>(inclusive of all taxes)</p>
                           </div>
-                        </div>
-                      </Col>
-                      <Col lg={2} sm={2} xs={6} className="align-self-end">
-                        <div className="delete-addcard">
-                          <Link onClick={() => removeFromCart(item.id)}>
-                            <i class="fa fa-trash-o" />
-                          </Link>
-                        </div>
-                      </Col>
-                    </Row>
-                    <hr />
-                  </Container>
-                </section>
-                {/* ) : (
+
+                          <div className="needplaceProduct">
+                            <div className="product-deatils-price">
+                              {uservariationprice && formattedAmount >= 0 ? (
+                                <Row>
+                                  <Col lg={3} sm={3} xs={3}>
+                                    <p>{`₹${uservariationprice}`}</p>
+                                  </Col>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(formattedAmount)
+                                        ? 0
+                                        : formattedAmount
+                                    }`}</h5>
+                                  </Col>
+                                  {/* {formattedSavedAmount > 0 && ( */}
+                                  <Col lg={5} sm={5} xs={3}>
+                                    {formattedSavedAmount > 0 ? (
+                                      <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    ) : (
+                                      <h6>No savings</h6>
+                                    )}
+                                  </Col>
+                                  {/* )} */}
+                                </Row>
+                              ) : (
+                                <Row>
+                                  <Col lg={4} sm={4} xs={3}>
+                                    <h5>{`₹${
+                                      isNaN(MrpPrice) ? 0 : MrpPrice
+                                    }`}</h5>
+                                  </Col>
+                                </Row>
+                              )}
+                            </div>
+                          </div>
+                        </Col>
+                        <Col lg={2} sm={2} xs={6} className="align-self-end">
+                          <div className="delete-addcard">
+                            <Link onClick={() => removeFromCart(item.id)}>
+                              <i class="fa fa-trash-o" />
+                            </Link>
+                          </div>
+                        </Col>
+                      </Row>
+                      <hr />
+                    </Container>
+                  </section>
+                  {/* ) : (
                   <section className="section-padding">
                     <Container
                       style={{ display: "flex", justifyContent: "center" }}
@@ -2464,26 +2523,26 @@ function Canineproduct(props) {
                     </Container>
                   </section>
                 )} */}
-                <Container>
-                  <div className="needplace">
-                    <Row className="justify-content-center">
-                      <Col lg={10}>
-                        {!coupencode ? (
-                          <div class="card mb-3">
-                            <div class="card-body">
-                              <form>
-                                <div class="form-group">
-                                  <label>Have a Coupon Code?</label>
-                                  <div class="input-group ">
-                                    <input
-                                      type="text"
-                                      class="form-control coupon"
-                                      name=""
-                                      placeholder="Coupon code"
-                                      data-toggle="modal"
-                                      data-target="#Coupon"
-                                    />
-                                    {/* <span class="input-group-append px-3">
+                  <Container>
+                    <div className="needplace">
+                      <Row className="justify-content-center">
+                        <Col lg={10}>
+                          {!coupencode ? (
+                            <div class="card mb-3">
+                              <div class="card-body">
+                                <form>
+                                  <div class="form-group">
+                                    <label>Have a Coupon Code?</label>
+                                    <div class="input-group ">
+                                      <input
+                                        type="text"
+                                        class="form-control coupon"
+                                        name=""
+                                        placeholder="Coupon code"
+                                        data-toggle="modal"
+                                        data-target="#Coupon"
+                                      />
+                                      {/* <span class="input-group-append px-3">
                                   <button
                                     onClick={() => {
                                       setcoupenCode(!coupencode);
@@ -2495,391 +2554,397 @@ function Canineproduct(props) {
                                     Apply
                                   </button>
                                 </span> */}
+                                    </div>
                                   </div>
-                                </div>
-                              </form>
+                                </form>
+                              </div>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="add-cart-Voucher ">
+                          ) : (
+                            <div className="add-cart-Voucher ">
+                              <Row>
+                                <Col>
+                                  <img src={voch} />
+                                </Col>
+                                <Col className="align-self-center">
+                                  <h5>{disscountvalue?.title}</h5>
+                                </Col>
+                                <Col className="align-self-center">
+                                  <h6>₹{disscountvalue?.discount}</h6>
+                                </Col>
+                                <Col className="align-self-center">
+                                  <button
+                                    // onClick={() => {
+                                    //   setcoupenCode(!coupencode);
+                                    // }}
+                                    onClick={clearCoupon}
+                                    type="button"
+                                    class="btn btn-danger"
+                                  >
+                                    X
+                                  </button>
+                                </Col>
+                              </Row>
+                            </div>
+                          )}
+                        </Col>
+                      </Row>
+                    </div>
+                  </Container>
+
+                  <Container>
+                    <div className="needplace">
+                      <Row className="justify-content-center">
+                        <Col lg={10}>
+                          <div className="add-cart-total">
                             <Row>
                               <Col>
-                                <img src={voch} />
+                                <h5>Sub Total</h5>
                               </Col>
-                              <Col className="align-self-center">
-                                <h5>{disscountvalue?.title}</h5>
+                              <Col>
+                                {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                                <h5>₹{parseInt(Amount)}</h5>
                               </Col>
-                              <Col className="align-self-center">
-                                <h6>₹{disscountvalue?.discount}</h6>
+                            </Row>
+                            <hr />
+                            <Row>
+                              <Col>
+                                <h5>Coupon Discount</h5>
                               </Col>
-                              <Col className="align-self-center">
-                                <button
-                                  // onClick={() => {
-                                  //   setcoupenCode(!coupencode);
-                                  // }}
-                                  onClick={clearCoupon}
-                                  type="button"
-                                  class="btn btn-danger"
-                                >
-                                  X
-                                </button>
+                              <Col>
+                                <h5>
+                                  ₹
+                                  {appliedCoupon
+                                    ? parseInt(disscountvalue?.discount)
+                                    : 0}
+                                </h5>
+                              </Col>
+                            </Row>
+                            <hr />
+                            {/* <Row>
+                              <Col>
+                                <h5>Tax(5%)</h5>
+                              </Col>
+                              <Col>
+                                <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
+                              </Col>
+                            </Row>
+                            <hr /> */}
+
+                            <Row>
+                              <Col>
+                                <h5>Rounding Adjust</h5>
+                              </Col>
+                              <Col>
+                                <h5>
+                                  ₹
+                                  {/* {parseInt(Amount) * 0.05 +
+                                    parseInt(Amount) -
+                                    (disscountvalue?.discount ?? 0)} */}
+                                  {parseInt(totalPrice)}
+                                </h5>
                               </Col>
                             </Row>
                           </div>
-                        )}
-                      </Col>
-                    </Row>
-                  </div>
-                </Container>
-
-                <Container>
-                  <div className="needplace">
-                    <Row className="justify-content-center">
-                      <Col lg={10}>
-                        <div className="add-cart-total">
-                          <Row>
-                            <Col>
-                              <h5>Sub Total</h5>
-                            </Col>
-                            <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{parseInt(Amount)}</h5>
-                            </Col>
-                          </Row>
-                          <hr />
-                          <Row>
-                            <Col>
-                              <h5>Coupon Discount</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {appliedCoupon
-                                  ? parseInt(disscountvalue?.discount)
-                                  : 0}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <hr />
-                          <Row>
-                            <Col>
-                              <h5>Tax(5%)</h5>
-                            </Col>
-                            <Col>
-                              <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
-                            </Col>
-                          </Row>
-                          <hr />
-
-                          <Row>
-                            <Col>
-                              <h5>Rounding Adjust</h5>
-                            </Col>
-                            <Col>
-                              <h5>
-                                ₹
-                                {parseInt(Amount) * 0.05 +
-                                  parseInt(Amount) -
-                                  (disscountvalue?.discount ?? 0)}
-                              </h5>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                </Container>
-                <div className="homecheckout">
-                  <button
-                    data-toggle="modal"
-                    data-target="#cod"
-                    disabled={!isAddressSelected}
-                  >
-                    Checkout
-                  </button>
-                  <button data-dismiss="modal" onClick={handleResetClick}>
-                    Close
-                  </button>
-                  {isAddressSelected ? null : (
-                    <div className="error-message">
-                      Please Select Shipping Address.
+                        </Col>
+                      </Row>
                     </div>
-                  )}
-                </div>
-              </>
+                  </Container>
+                  <div className="homecheckout">
+                    <button
+                      data-toggle="modal"
+                      data-target="#cod"
+                      disabled={!isAddressSelected}
+                    >
+                      Checkout
+                    </button>
+                    <button data-dismiss="modal" onClick={handleResetClick}>
+                      Close
+                    </button>
+                    {isAddressSelected ? null : (
+                      <div className="error-message">
+                        Please Select Shipping Address.
+                      </div>
+                    )}
+                  </div>
+                </>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        className="modal fade editAddress"
-        id="changeadress-model"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                New Address Add
-              </h5>
-            </div>
-            <div className="modal-body">
-              <div class="form-group">
-                <label>First Name</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={first_name}
-                  onChange={(e) => {
-                    setfirst_name(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (first_name.trim() === "") {
-                      setFirst_nameError("First Name is required");
-                    } else {
-                      setFirst_nameError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{first_nameError}</span>
+        <div
+          className="modal fade editAddress"
+          id="changeadress-model"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  New Address Add
+                </h5>
               </div>
-              <div class="form-group">
-                <label>Last Name</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={last_name}
-                  onChange={(e) => {
-                    setlast_name(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (last_name.trim() === "") {
-                      setLast_nameError("Last Name is required");
-                    } else {
-                      setLast_nameError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{last_nameError}</span>
-              </div>
-              <div class="form-group">
-                <label>Mobile</label>
-                <input
-                  type="tel"
-                  name="mobile"
-                  class="form-control"
-                  maxLength={10}
-                  value={mobile}
-                  onChange={(e) => {
-                    setmobile(e.target.value);
-                    validateForm();
-                    const numericValue = e.target.value.replace(/[^0-9+]/g, ""); // Remove non-numeric character
-                    if (numericValue.length <= 10) {
-                      setmobile(numericValue);
-                    }
-                  }}
-                  onBlur={() => {
-                    if (mobile.trim() === "") {
-                      setMobileError("Mobile Number is required");
-                    } else {
-                      setMobileError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{mobileError}</span>
-              </div>
-              <div class="form-group">
-                <label>flat,House no,Building,Company</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={house_no}
-                  onChange={(e) => {
-                    sethouse_no(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (house_no.trim() === "") {
-                      setHouse_noError(
-                        "House no, flat, Building, Company Number is required"
-                      );
-                    } else {
-                      setHouse_noError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{house_noError}</span>
-              </div>
-              <div class="form-group">
-                <label>Area, Street,Sector,Village</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={area}
-                  onChange={(e) => {
-                    setarea(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (area.trim() === "") {
-                      setAreaError("Area, Street, Sector, Village is required");
-                    } else {
-                      setAreaError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{areaError}</span>
-              </div>
-              <div class="form-group">
-                <label>Landmark</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={landmark}
-                  onChange={(e) => {
-                    setlandmark(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (landmark.trim() === "") {
-                      setLandmarkError("Landmark is required");
-                    } else {
-                      setLandmarkError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{landmarkError}</span>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <div className="form-group">
-                    <label>State</label>
-                    <select
-                      className="form-control"
-                      onChange={Subscription}
-                      value={state}
-                      onInput={(e) => {
-                        setstate(e.target.value);
-                        validateForm();
-                      }}
-                      onBlur={() => {
-                        if (state.trim() === "") {
-                          setStateError("State is required");
-                        } else {
-                          setStateError("");
-                        }
-                      }}
-                    >
-                      <option>State Choose...</option>
-                      {stateall.map((items) => (
-                        <option value={items.id} key={items.id}>
-                          {items.state_name}
-                        </option>
-                      ))}
-                    </select>
-                    <span style={{ color: "red" }}>{stateError}</span>
+              <div className="modal-body">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={first_name}
+                    onChange={(e) => {
+                      setfirst_name(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (first_name.trim() === "") {
+                        setFirst_nameError("First Name is required");
+                      } else {
+                        setFirst_nameError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{first_nameError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={last_name}
+                    onChange={(e) => {
+                      setlast_name(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (last_name.trim() === "") {
+                        setLast_nameError("Last Name is required");
+                      } else {
+                        setLast_nameError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{last_nameError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Mobile</label>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    class="form-control"
+                    maxLength={10}
+                    value={mobile}
+                    onChange={(e) => {
+                      setmobile(e.target.value);
+                      validateForm();
+                      const numericValue = e.target.value.replace(
+                        /[^0-9+]/g,
+                        ""
+                      ); // Remove non-numeric character
+                      if (numericValue.length <= 10) {
+                        setmobile(numericValue);
+                      }
+                    }}
+                    onBlur={() => {
+                      if (mobile.trim() === "") {
+                        setMobileError("Mobile Number is required");
+                      } else {
+                        setMobileError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{mobileError}</span>
+                </div>
+                <div class="form-group">
+                  <label>flat,House no,Building,Company</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={house_no}
+                    onChange={(e) => {
+                      sethouse_no(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (house_no.trim() === "") {
+                        setHouse_noError(
+                          "House no, flat, Building, Company Number is required"
+                        );
+                      } else {
+                        setHouse_noError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{house_noError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Area, Street,Sector,Village</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={area}
+                    onChange={(e) => {
+                      setarea(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (area.trim() === "") {
+                        setAreaError(
+                          "Area, Street, Sector, Village is required"
+                        );
+                      } else {
+                        setAreaError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{areaError}</span>
+                </div>
+                <div class="form-group">
+                  <label>Landmark</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={landmark}
+                    onChange={(e) => {
+                      setlandmark(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (landmark.trim() === "") {
+                        setLandmarkError("Landmark is required");
+                      } else {
+                        setLandmarkError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{landmarkError}</span>
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
+                      <label>State</label>
+                      <select
+                        className="form-control"
+                        onChange={Subscription}
+                        value={state}
+                        onInput={(e) => {
+                          setstate(e.target.value);
+                          validateForm();
+                        }}
+                        onBlur={() => {
+                          if (state.trim() === "") {
+                            setStateError("State is required");
+                          } else {
+                            setStateError("");
+                          }
+                        }}
+                      >
+                        <option>State Choose...</option>
+                        {stateall.map((items) => (
+                          <option value={items.id} key={items.id}>
+                            {items.state_name}
+                          </option>
+                        ))}
+                      </select>
+                      <span style={{ color: "red" }}>{stateError}</span>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group">
+                      <label>City</label>
+                      <select
+                        className="form-control"
+                        onInput={(e) => setSelectedCity(e.target.value)}
+                        value={selectedCity}
+                        onChange={(e) => {
+                          setcity(e.target.value);
+                          validateForm();
+                        }}
+                        onBlur={() => {
+                          if (city.trim() === "") {
+                            setCityError("City is required");
+                          } else {
+                            setCityError("");
+                          }
+                        }}
+                      >
+                        <option>City Choose...</option>
+                        {stateallCity.map((items) => (
+                          <option>{items.city_name}</option>
+                        ))}
+                      </select>
+                      <span style={{ color: "red" }}>{cityError}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="col">
-                  <div className="form-group">
-                    <label>City</label>
-                    <select
-                      className="form-control"
-                      onInput={(e) => setSelectedCity(e.target.value)}
-                      value={selectedCity}
-                      onChange={(e) => {
-                        setcity(e.target.value);
-                        validateForm();
-                      }}
-                      onBlur={() => {
-                        if (city.trim() === "") {
-                          setCityError("City is required");
-                        } else {
-                          setCityError("");
-                        }
-                      }}
-                    >
-                      <option>City Choose...</option>
-                      {stateallCity.map((items) => (
-                        <option>{items.city_name}</option>
-                      ))}
-                    </select>
-                    <span style={{ color: "red" }}>{cityError}</span>
-                  </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Pincode</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={pincode}
+                    onChange={(e) => {
+                      setpincode(e.target.value);
+                      validateForm();
+                    }}
+                    onBlur={() => {
+                      if (pincode.trim() === "") {
+                        setPincodeError("Pincode is required");
+                      } else {
+                        setPincodeError("");
+                      }
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{pincodeError}</span>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Pincode</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={pincode}
-                  onChange={(e) => {
-                    setpincode(e.target.value);
-                    validateForm();
-                  }}
-                  onBlur={() => {
-                    if (pincode.trim() === "") {
-                      setPincodeError("Pincode is required");
-                    } else {
-                      setPincodeError("");
-                    }
-                  }}
-                />
-                <span style={{ color: "red" }}>{pincodeError}</span>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleAddAddress}
+                  data-dismiss="modal"
+                  disabled={
+                    !isFormValid ||
+                    first_name.trim() === "" || // Add this condition
+                    last_name.trim() === "" || // Add similar conditions for other fields
+                    mobile.trim() === "" ||
+                    house_no.trim() === "" ||
+                    area.trim() === "" ||
+                    landmark.trim() === "" ||
+                    state.trim() === "" ||
+                    selectedCity.trim() === "" ||
+                    pincode.trim() === ""
+                  }
+                >
+                  Add
+                </button>
               </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleAddAddress}
-                data-dismiss="modal"
-                disabled={
-                  !isFormValid ||
-                  first_name.trim() === "" || // Add this condition
-                  last_name.trim() === "" || // Add similar conditions for other fields
-                  mobile.trim() === "" ||
-                  house_no.trim() === "" ||
-                  area.trim() === "" ||
-                  landmark.trim() === "" ||
-                  state.trim() === "" ||
-                  selectedCity.trim() === "" ||
-                  pincode.trim() === ""
-                }
-              >
-                Add
-              </button>
             </div>
           </div>
         </div>
-      </div>
-      {/* update-model */}
-      <div
-        className="modal fade editAddress"
-        id="update-model"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Update Address
-              </h5>
-            </div>
-            <div className="modal-body">
-              <div class="form-group">
-                <label>First Name</label>
-                {/* <input
+        {/* update-model */}
+        <div
+          className="modal fade editAddress"
+          id="update-model"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Update Address
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div class="form-group">
+                  <label>First Name</label>
+                  {/* <input
                   class="form-control"
                   type="text"
                   name="first_name"
@@ -2891,348 +2956,348 @@ function Canineproduct(props) {
                     })
                   }
                 /> */}
-                <input
-                  className="form-control"
-                  type="text"
-                  name="first_name"
-                  value={profileData.first_name || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      first_name: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Last Name</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  placeholder="Enter last name"
-                  name="last_name"
-                  value={profileData.last_name || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      last_name: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Mobile</label>
-                <input
-                  type="tel"
-                  name="mobile"
-                  class="form-control"
-                  maxLength={10}
-                  value={profileData.mobile || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      mobile: e.target.value
-                        .replace(/\D/g, "")
-                        .substring(0, 10),
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>flat,House no,Building,Company</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="house_no"
-                  value={profileData.house_no || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      house_no: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Area, Street,Sector,Village</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="area"
-                  value={profileData.area || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      area: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div class="form-group">
-                <label>Landmark</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="landmark"
-                  value={profileData.landmark || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      landmark: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="row">
-                <div className="col">
-                  <div className="form-group">
-                    <label>State</label>
-                    <select
-                      className="form-control"
-                      onChange={Subscription}
-                      value={profileData.state || ""}
-                      // onChange={(e) =>
-                      // setProfileData ({
-                      //   ...profileData,
-                      //   state: e.target.value,
-                      // })}
-                    >
-                      <option value="">State Choose...</option>
-                      {stateall.map((items) => (
-                        <option value={items.state_name} key={items.id}>
-                          {items.state_name}
-                        </option>
-                      ))}
-                    </select>
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="first_name"
+                    value={profileData.first_name || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        first_name: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Enter last name"
+                    name="last_name"
+                    value={profileData.last_name || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        last_name: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Mobile</label>
+                  <input
+                    type="tel"
+                    name="mobile"
+                    class="form-control"
+                    maxLength={10}
+                    value={profileData.mobile || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        mobile: e.target.value
+                          .replace(/\D/g, "")
+                          .substring(0, 10),
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>flat,House no,Building,Company</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="house_no"
+                    value={profileData.house_no || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        house_no: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Area, Street,Sector,Village</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="area"
+                    value={profileData.area || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        area: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Landmark</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="landmark"
+                    value={profileData.landmark || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        landmark: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="row">
+                  <div className="col">
+                    <div className="form-group">
+                      <label>State</label>
+                      <select
+                        className="form-control"
+                        onChange={Subscription}
+                        value={profileData.state || ""}
+                        // onChange={(e) =>
+                        // setProfileData ({
+                        //   ...profileData,
+                        //   state: e.target.value,
+                        // })}
+                      >
+                        <option value="">State Choose...</option>
+                        {stateall.map((items) => (
+                          <option value={items.state_name} key={items.id}>
+                            {items.state_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="form-group">
+                      <label>City</label>
+                      <select
+                        className="form-control"
+                        onInput={(e) => setSelectedCity(e.target.value)}
+                        value={profileData.city || ""}
+                        onChange={(e) =>
+                          setProfileData({
+                            ...profileData,
+                            city: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="">City Choose...</option>
+                        {stateallCity.map((items) => (
+                          <option value={items.city_name} key={items.id}>
+                            {items.city_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
-                <div className="col">
-                  <div className="form-group">
-                    <label>City</label>
-                    <select
-                      className="form-control"
-                      onInput={(e) => setSelectedCity(e.target.value)}
-                      value={profileData.city || ""}
-                      onChange={(e) =>
-                        setProfileData({
-                          ...profileData,
-                          city: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">City Choose...</option>
-                      {stateallCity.map((items) => (
-                        <option value={items.city_name} key={items.id}>
-                          {items.city_name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Pincode</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    value={profileData.pincode || ""}
+                    onChange={(e) =>
+                      setProfileData({
+                        ...profileData,
+                        pincode: e.target.value,
+                      })
+                    }
+                  />
                 </div>
               </div>
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Pincode</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  value={profileData.pincode || ""}
-                  onChange={(e) =>
-                    setProfileData({
-                      ...profileData,
-                      pincode: e.target.value,
-                    })
-                  }
-                />
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleFormSubmit}
+                  data-dismiss="modal"
+                >
+                  Update
+                </button>
               </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleFormSubmit}
-                data-dismiss="modal"
-              >
-                Update
-              </button>
             </div>
           </div>
         </div>
-      </div>
-      {/* Coupon */}
-      <div
-        className="modal fade notification-area"
-        id="Coupon"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h5>Coupon List</h5>
-              {couponlist && couponlist.length > 0 ? (
-                couponlist.map((item, index) => (
-                  <div className="notification" key={index}>
-                    <Row>
-                      <Col lg={12}>
-                        <table>
-                          <tbody>
-                            <tr>
-                              <th>Title : </th>
-                              <td>{item.title}</td>
-                            </tr>
-                            <tr>
-                              <th>Code : </th>
-                              <td>{item.code}</td>
-                            </tr>
-                            <tr>
-                              <th>Discount Type : </th>
-                              <td>{item?.discount_type}</td>
-                            </tr>
-                            <tr>
-                              <th>Discount : </th>
-                              <td>{item?.discount}</td>
-                            </tr>
-                            <tr>
-                              <th>Min Purchase : </th>
-                              <td>{item.min_purchase}</td>
-                            </tr>
-                            <tr>
-                              <th>Max Discount : </th>
-                              <td>{item.max_discount}</td>
-                            </tr>
-                            <tr>
-                              <th>Start Date : </th>
-                              <td>{item.start_date}</td>
-                            </tr>
-                            <tr>
-                              <th>Expire Date : </th>
-                              <td>{item.expire_date}</td>
-                            </tr>
-                          </tbody>
-                        </table>
+        {/* Coupon */}
+        <div
+          className="modal fade notification-area"
+          id="Coupon"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <h5>Coupon List</h5>
+                {couponlist && couponlist.length > 0 ? (
+                  couponlist.map((item, index) => (
+                    <div className="notification" key={index}>
+                      <Row>
+                        <Col lg={12}>
+                          <table>
+                            <tbody>
+                              <tr>
+                                <th>Title : </th>
+                                <td>{item.title}</td>
+                              </tr>
+                              <tr>
+                                <th>Code : </th>
+                                <td>{item.code}</td>
+                              </tr>
+                              <tr>
+                                <th>Discount Type : </th>
+                                <td>{item?.discount_type}</td>
+                              </tr>
+                              <tr>
+                                <th>Discount : </th>
+                                <td>{item?.discount}</td>
+                              </tr>
+                              <tr>
+                                <th>Min Purchase : </th>
+                                <td>{item.min_purchase}</td>
+                              </tr>
+                              <tr>
+                                <th>Max Discount : </th>
+                                <td>{item.max_discount}</td>
+                              </tr>
+                              <tr>
+                                <th>Start Date : </th>
+                                <td>{item.start_date}</td>
+                              </tr>
+                              <tr>
+                                <th>Expire Date : </th>
+                                <td>{item.expire_date}</td>
+                              </tr>
+                            </tbody>
+                          </table>
 
-                        <div className="text-center">
-                          <button
-                            // onClick={() => {
-                            //   setcoupenCode(!coupencode);
-                            // }}
-                            onClick={(e) => coupendisscount(item)}
-                            type="button"
-                            className="btn btn-primary btn-apply coupon"
-                            // data-toggle="modal"
-                            // data-target="#Coupon"
-                            data-dismiss="modal"
-                          >
-                            Apply
-                          </button>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
-                ))
-              ) : (
-                <p className="emptyMSG">No Coupon List.</p>
-              )}
+                          <div className="text-center">
+                            <button
+                              // onClick={() => {
+                              //   setcoupenCode(!coupencode);
+                              // }}
+                              onClick={(e) => coupendisscount(item)}
+                              type="button"
+                              className="btn btn-primary btn-apply coupon"
+                              // data-toggle="modal"
+                              // data-target="#Coupon"
+                              data-dismiss="modal"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  ))
+                ) : (
+                  <p className="emptyMSG">No Coupon List.</p>
+                )}
 
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-            {/* <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+              {/* <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" className="btn btn-primary">Save changes</button>
           </div> */}
+            </div>
           </div>
         </div>
-      </div>
-      {/* cod */}
-      <div
-        className="modal fade"
-        id="cod"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <div className="payment-done">
-                <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      data-dismiss="modal"
-                      onClick={() => handlePayment()}
-                    />
-                    <p>Online Payment</p>
+        {/* cod */}
+        <div
+          className="modal fade"
+          id="cod"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="payment-done">
+                  <div className="select-card select-card3">
+                    <div className="selct-card-text">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="exampleRadios"
+                        data-dismiss="modal"
+                        onClick={() => handlePayment()}
+                      />
+                      <p>Online Payment</p>
+                    </div>
                   </div>
-                </div>
-                <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      checked={selectedInput}
-                      onChange={handleRadioChange}
-                    />
-                    <p>Cash On Delivery</p>
+                  <div className="select-card select-card3">
+                    <div className="selct-card-text">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="exampleRadios"
+                        value="second"
+                        checked={selectedInput}
+                        onChange={handleRadioChange}
+                      />
+                      <p>Cash On Delivery</p>
+                    </div>
                   </div>
+                  <Button
+                    disabled={!selectedInput}
+                    data-toggle="modal"
+                    data-target="#paysubmit"
+                    data-dismiss="modal"
+                  >
+                    <Link>pay</Link>
+                  </Button>
                 </div>
-                <Button
-                  disabled={!selectedInput}
-                  data-toggle="modal"
-                  data-target="#paysubmit"
-                  data-dismiss="modal"
-                >
-                  <Link>pay</Link>
-                </Button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* paysubmit */}
-      <div
-        className="modal fade"
-        id="paysubmit"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-body">
-              <div className="payment-done">
-                <img src={paydone} />
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesettingLorem Ipsum is simply dummy text of the printing
-                  and typesetting
-                </p>
-                <Button
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={handleSendRequest}
-                >
-                  <Link to="/shipping">Done</Link>
-                </Button>
+        {/* paysubmit */}
+        <div
+          className="modal fade"
+          id="paysubmit"
+          tabIndex={-1}
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="payment-done">
+                  <img src={paydone} />
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesettingLorem Ipsum is simply dummy text of the printing
+                    and typesetting
+                  </p>
+                  <Button
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onClick={handleSendRequest}
+                  >
+                    <Link to="/shipping">Done</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </DocumentMeta>
     </>
   );

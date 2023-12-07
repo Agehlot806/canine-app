@@ -740,6 +740,13 @@ function SubcategoriesProduct() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
+  // coupen code funtion after apply close button start
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setTotalPrice(Amount);
+  }, [Amount]);
+  // coupen code funtion after apply close button end
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -785,7 +792,7 @@ function SubcategoriesProduct() {
   //     setQuantitybuynow(quantitybuynow - 1);
   //   }
   // };
-  const taxamound = Math.floor(Amount * 0.05);
+  // const taxamound = Math.floor(Amount * 0.05);
   const handleQuantityChangebuynow = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
     if (!isNaN(newQuantity)) {
@@ -1016,14 +1023,56 @@ function SubcategoriesProduct() {
   //         taxamound
   //     : Amount + taxamound
   // )}`}
+  // comment date 07-12-2023 by suyash
+  // const coupendisscount = (dis) => {
+  //   setcoupenCode(!coupencode);
+  //   localStorage.setItem("disconut", JSON.stringify(dis));
+  //   setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+  // };
+  // const clearCoupon = () => {
+  //   setcoupenCode(!coupencode);
+  //   setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+  //   localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+  // };
+  useEffect(() => {
+    // Function to be called on page refresh
+    const clearCoupon = () => {
+      setcoupenCode(!coupencode);
+      setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+      setTotalPrice(originalPrice);
+      localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
+    };
+
+    // Attach the event listener when the component mounts
+    window.addEventListener("beforeunload", clearCoupon);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", clearCoupon);
+    };
+  }, []);
   const coupendisscount = (dis) => {
     setcoupenCode(!coupencode);
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
+    // setTotalPrice(
+    //   parseInt(originalPrice + originalPrice * 0.05 - disscountvalue)
+    // );
+    const discountAmount = dis?.discount || 0;
+    let newTotalPrice = Amount - discountAmount;
+
+    // Update totalPrice only if the newTotalPrice is a valid number
+    if (!isNaN(newTotalPrice)) {
+      setTotalPrice(newTotalPrice);
+    } else {
+      console.error("Invalid totalPrice calculation. Check your values.");
+    }
+    console.log("disccount?????", dis);
   };
   const clearCoupon = () => {
     setcoupenCode(!coupencode);
     setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
+    setTotalPrice(Amount);
     localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
   };
   const [selectedInput, setSelectedInput] = useState("");
@@ -1043,7 +1092,7 @@ function SubcategoriesProduct() {
     //   variation: item.variant,
     //   price: item.price,
     //   quantity: item.quantity,
-    //   tax_amount: taxamound,
+    //   tax_amount: 0,
     //   discount_on_item: disscountvalue?.discount || "",
     // }));
     const cartData = {
@@ -1051,14 +1100,12 @@ function SubcategoriesProduct() {
       variation: selectedVariant,
       price: Amount,
       quantity: quantity,
-      tax_amount: taxamound,
+      tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
     const orderAmount =
-      parseInt(Amount) * 0.05 +
-      parseInt(Amount) -
-      (disscountvalue?.discount ?? 0);
+      parseInt(totalPrice);
 
     const requestData = {
       user_id: storedUserId,
@@ -1066,7 +1113,7 @@ function SubcategoriesProduct() {
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
@@ -2155,6 +2202,11 @@ function SubcategoriesProduct() {
                               </Row>
                             )}
                           </div>
+                          <Row>
+                            <Col lg={5} sm={5} xs={4}>
+                              <p>(inclusive of all taxes)</p>
+                            </Col>
+                          </Row>
                         </div>
                         <h5>About Us</h5>
                         {productDetails ? (
@@ -2644,6 +2696,11 @@ function SubcategoriesProduct() {
                           <button onClick={handleIncrementone}>
                             <i className="fa fa-plus" />
                           </button>
+                          {/* <Row>
+                            <Col lg={5} sm={5} xs={4}> */}
+                          <p>(inclusive of all taxes)</p>
+                          {/* </Col>
+                          </Row> */}
                         </div>
 
                         <div className="needplaceProduct">
@@ -2802,7 +2859,7 @@ function SubcategoriesProduct() {
                             </Col>
                           </Row>
                           <hr />
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
                             </Col>
@@ -2810,7 +2867,7 @@ function SubcategoriesProduct() {
                               <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          <hr /> */}
 
                           <Row>
                             <Col>
@@ -2819,9 +2876,10 @@ function SubcategoriesProduct() {
                             <Col>
                               <h5>
                                 ₹
-                                {parseInt(Amount) * 0.05 +
+                                {/* {parseInt(Amount) * 0.05 +
                                   parseInt(Amount) -
-                                  (disscountvalue?.discount ?? 0)}
+                                  (disscountvalue?.discount ?? 0)} */}
+                                {parseInt(totalPrice)}
                               </h5>
                             </Col>
                           </Row>
