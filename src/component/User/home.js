@@ -1837,7 +1837,9 @@ function Home(props) {
                               {order.user_id[0].l_name}
                             </h5>
                           )}
-                          <p>{renderhappycus(order.comment)}</p>
+                          {/* <p>{renderhappycus(order.comment)}</p> */}
+                          <p>{order.comment}</p>
+
                           <div className="icon-style">
                             {Array.from({
                               length: order.rating,

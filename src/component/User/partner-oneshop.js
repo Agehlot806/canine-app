@@ -716,7 +716,7 @@ function Partneroneshop() {
     setarea(null);
     setlandmark(null);
     setpincode(null);
-    setstate(null);
+    // setstate(null);
     setcity(null);
     setFirst_nameError(null);
     setLast_nameError(null);
