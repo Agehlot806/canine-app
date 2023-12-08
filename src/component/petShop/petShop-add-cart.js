@@ -48,13 +48,25 @@ function PetshopAddCart() {
   };
   let originalPrice = 0;
 
-  const updatedPrice = originalPrice * 0.05;
+  const updatedPrice = originalPrice;
   const priceWithoutCents = parseInt(updatedPrice);
   addToCartProduct.forEach((el) => {
     let allPrice = parseInt(el.price * el.quantity) + parseInt(originalPrice);
     originalPrice = allPrice;
   });
-  const taxamound = Math.floor(originalPrice * 0.05);
+
+  // Set deliveryChargesAmount based on the value of originalPrice
+  const deliveryChargesAmount = originalPrice <= 1000 ? 40 : 0;
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
+
+  // const taxamound = Math.floor(originalPrice * 0.05);
   const [selectedValue, setSelectedValue] = useState(0);
   const handleRadioButton = (event) => {
     setSelectedValue(parseInt(event.target.value, 10));
@@ -71,7 +83,7 @@ function PetshopAddCart() {
       price: parseInt(item.price),
       quantity: item.quantity,
       min_order: item.min_order,
-      tax_amount: parseInt(item.price * 0.05),
+      tax_amount: 0,
       discount_on_item: "",
     }));
     const requestData = {
@@ -82,7 +94,7 @@ function PetshopAddCart() {
       coupon_discount_title: "",
       payment_status: "unpaid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       // * itemQty,
       gst_bill: selectedValue,
       payment_day: selectedOption,
@@ -90,6 +102,7 @@ function PetshopAddCart() {
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
+      delivery_charge: deliveryCharges,
       coupon_code: "",
       order_type: "delivery",
       checked: selectedInput,
@@ -99,11 +112,7 @@ function PetshopAddCart() {
       delivery_address: deliveryAddress,
       item_campaign_id: "",
       // order_amount: parseInt(originalPrice * 0.05 + originalPrice),
-      order_amount: parseInt(
-        // itemQty * (
-        originalPrice * 0.05 + originalPrice
-        // )
-      ),
+      order_amount: parseInt(originalPrice),
       cart: cartData,
     };
     fetch(`${BASE_URL}/customer/order/place`, {
@@ -516,7 +525,7 @@ function PetshopAddCart() {
   // const handleAddressClick = (index) => {
   //   setSelectedAddress(addresslist[index]);
   // };
-
+  const [addresslist, setAddressList] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressContentVisible, setAddressContentVisible] = useState(false);
   const [isAddressSelected, setIsAddressSelected] = useState(false);
@@ -554,9 +563,9 @@ function PetshopAddCart() {
   // localStorage.setItem("formattedAddress", formattedAddress);
 
   // // Retrieve the formatted address from localStorage
-  // const storedFormattedAddress = localStorage.getItem("formattedAddress");
+  const storedFormattedAddress = localStorage.getItem("formattedAddress");
   // Check if addresslist exists and has a length greater than 1
-  if (addresslist && addresslist.length > 1) {
+  if (addresslist && addresslist?.length > 1) {
     // Create a formatted address object
     const selectedAddressLocal = {
       first_name: addresslist[0]?.first_name,
@@ -650,11 +659,7 @@ function PetshopAddCart() {
 
     const data = {
       user_id: storedWholesellerId,
-      amount: parseInt(
-        // itemQty * (
-        originalPrice * 0.05 + originalPrice
-        // )
-      ),
+      amount: parseInt(originalPrice),
       paydate: formattedDate, // Formatted current date
     };
 
@@ -698,7 +703,6 @@ function PetshopAddCart() {
   const storedWholesellerId = Number(localStorage.getItem("UserWholesellerId"));
   // ----------------------------------------
 
-  const [addresslist, setAddressList] = useState([]);
   const [allorder, setallorder] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Select Payment Time");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -938,6 +942,15 @@ function PetshopAddCart() {
                           <hr />
                           <Row>
                             <Col>
+                              <h5>Delivery Charges</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{formatPrice(deliveryCharges)}</h5>
+                            </Col>
+                          </Row>
+                          {/* <Row>
+                            <Col>
                               <h5>GST</h5>
                             </Col>
                             <Col>
@@ -964,10 +977,9 @@ function PetshopAddCart() {
                                   originalPrice * 0.05 + originalPrice
                                   // )
                                 )}`}
-                                {/* Calculate and display the Rounding Adjust */}
                               </h5>
                             </Col>
-                          </Row>
+                          </Row> */}
                         </div>
                       </Col>
                     </Row>
@@ -1138,7 +1150,7 @@ function PetshopAddCart() {
                                   ₹{" "}
                                   {`${formatPrice(
                                     // itemQty * (
-                                    originalPrice * 0.05 + originalPrice
+                                    originalPrice + deliveryCharges
                                     // )
                                   )}`}
                                 </h2>
@@ -1500,9 +1512,7 @@ function PetshopAddCart() {
                           <h5>Canine Pay Later</h5>
                           <p>
                             Your total approved credit is ₹{" "}
-                            {`${formatPrice(
-                              originalPrice * 0.05 + originalPrice
-                            )}`}
+                            {`${formatPrice(originalPrice)}`}
                           </p>
                         </div>
                       </div>
@@ -1714,9 +1724,7 @@ function PetshopAddCart() {
                               <td>
                                 ₹{" "}
                                 {`${formatPrice(
-                                  // itemQty * (
-                                  originalPrice * 0.05 + originalPrice
-                                  // )
+                                  originalPrice + deliveryCharges
                                 )}`}
                               </td>
                             </tr>
@@ -1729,9 +1737,7 @@ function PetshopAddCart() {
                               <td>
                                 ₹{" "}
                                 {`${formatPrice(
-                                  // itemQty * (
-                                  originalPrice * 0.05 + originalPrice
-                                  // )
+                                  originalPrice + deliveryCharges
                                 )}`}
                               </td>
                             </tr>

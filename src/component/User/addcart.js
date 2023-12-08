@@ -133,6 +133,16 @@ function Addcart() {
       originalPrice = allPrice;
     });
   }
+  // Set deliveryChargesAmount based on the value of originalPrice
+  const deliveryChargesAmount = originalPrice <= 999 ? 40 : 0;
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
   // const taxamound = Math.floor(originalPrice * 0.05);
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
@@ -470,6 +480,7 @@ function Addcart() {
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
+      delivery_charge: deliveryCharges,
       coupon_code: disscountvalue?.code || "",
       order_type: "delivery",
       checked: selectedInput,
@@ -814,6 +825,15 @@ function Addcart() {
                             </Col>
                           </Row>
                           <hr />
+                          <Row>
+                            <Col>
+                              <h5>Delivery Charges</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{deliveryCharges}</h5>
+                            </Col>
+                          </Row>
                           {/* <Row>
                             <Col>
                               <h5>Coupon Discount</h5>

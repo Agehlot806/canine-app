@@ -44,15 +44,15 @@ function PetshopOrderviewdetails() {
     (total, order) => total + parseFloat(order.price * order.quantity),
     0
   );
-  let TaxAmount = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.tax_amount * order.quantity),
-    0
-  );
+  // let TaxAmount = orderDetails.reduce(
+  //   (total, order) => total + parseFloat(order.tax_amount * order.quantity),
+  //   0
+  // );
   let SubTotalTaxAmount = orderDetails.reduce(
     (total, order) => total + parseFloat(order.total_add_on_price),
     0
   );
-  let SubTotalData = subTotal + TaxAmount;
+  let SubTotalData = subTotal;
 
   let orderIdData = allorder.reduce(
     (total, order) => total + parseFloat(order.id),
@@ -299,14 +299,14 @@ function PetshopOrderviewdetails() {
   };
 
   const renderProducthead = (name) => {
-    const maxCharacters = 30;
+    const maxCharacters = 25;
     if (name?.length <= maxCharacters) {
       return <h6>{name}</h6>;
     }
     const truncatedDescription = name?.slice(0, maxCharacters);
     return (
       <>
-        <h6>{truncatedDescription}</h6>
+        <h6>{truncatedDescription}.</h6>
       </>
     );
   };
@@ -401,6 +401,9 @@ function PetshopOrderviewdetails() {
                                     </p>
                                     <p>
                                       quantity: <span>{order.quantity}</span>
+                                    </p>
+                                    <p>
+                                      gst: <span>{order.gst}</span>
                                     </p>
                                   </div>
                                 </Col>
@@ -497,6 +500,7 @@ function PetshopOrderviewdetails() {
                             allorder.map((item, index) => {
                               if (item.id == id) {
                                 console.log("Match found for ID:", id);
+                                console.log("allorder: ", allorder);
                                 return (
                                   <div className="dow-summy">
                                     <h5>Order Invoice</h5>
@@ -511,12 +515,77 @@ function PetshopOrderviewdetails() {
                                               <p>₹{formatPrice(subTotal)}</p>
                                             </td>
                                           </tr>
-                                          <tr>
+                                          {/* <tr>
                                             <th>
                                               <p>Tax:</p>
                                             </th>
                                             <td>
                                               <p>₹{formatPrice(TaxAmount)}</p>
+                                            </td>
+                                          </tr> */}
+                                          <tr>
+                                            <th>
+                                              <p>Item Name :</p>
+                                            </th>
+                                            <td>
+                                              {item.callback &&
+                                                item.callback.length > 0 && (
+                                                  <div>
+                                                    {item.callback.map(
+                                                      (callbackItem) => (
+                                                        <div
+                                                          key={callbackItem.id}
+                                                        >
+                                                          <p
+                                                            style={{
+                                                              fontSize: "small",
+                                                            }}
+                                                          >
+                                                            {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                            {renderProducthead(
+                                                              callbackItem.variant
+                                                            )}
+                                                          </p>
+                                                          {/* Render other callback item details here */}
+                                                        </div>
+                                                      )
+                                                    )}
+                                                  </div>
+                                                )}
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <th>
+                                              <p>Gst Total Tax :</p>
+                                            </th>
+                                            <td>
+                                              {item.callback &&
+                                                item.callback.length > 0 && (
+                                                  <div>
+                                                    {item.callback.map(
+                                                      (callbackItem) => (
+                                                        <div
+                                                          key={callbackItem.id}
+                                                        >
+                                                          <p
+                                                            style={{
+                                                              fontSize: "small",
+                                                            }}
+                                                          >
+                                                            {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                            {/* {renderProducthead( */}
+                                                            Gst:{" "}
+                                                            {callbackItem.gst}
+                                                            {/* )} */}
+                                                          </p>
+                                                          {/* Render other callback item details here */}
+                                                        </div>
+                                                      )
+                                                    )}
+                                                  </div>
+                                                )}
                                             </td>
                                           </tr>
                                           <tr>
@@ -534,7 +603,7 @@ function PetshopOrderviewdetails() {
                                               <p>Delivery Charge</p>
                                             </th>
                                             <td>
-                                              <p>₹{deliveryCharge}</p>
+                                              <p>₹{item.deliveryCharges}</p>
                                             </td>
                                           </tr>
                                           <tr>
@@ -588,13 +657,65 @@ function PetshopOrderviewdetails() {
                                             <p>Item Name :</p>
                                           </th>
                                           <td>
-                                            {item.callback[0] && (
-                                              <h5>
-                                                {renderProducthead(
-                                                  item.callback[0].variant
-                                                )}
-                                              </h5>
-                                            )}
+                                            {item.callback &&
+                                              item.callback.length > 0 && (
+                                                <div>
+                                                  {item.callback.map(
+                                                    (callbackItem) => (
+                                                      <div
+                                                        key={callbackItem.id}
+                                                      >
+                                                        <p
+                                                          style={{
+                                                            fontSize: "small",
+                                                          }}
+                                                        >
+                                                          {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                          {renderProducthead(
+                                                            callbackItem.variant
+                                                          )}
+                                                        </p>
+                                                        {/* Render other callback item details here */}
+                                                      </div>
+                                                    )
+                                                  )}
+                                                </div>
+                                              )}
+                                          </td>
+                                        </tr>
+
+                                        <tr>
+                                          <th>
+                                            <p>Gst Total Tax :</p>
+                                          </th>
+                                          <td>
+                                            {item.callback &&
+                                              item.callback.length > 0 && (
+                                                <div>
+                                                  {item.callback.map(
+                                                    (callbackItem) => (
+                                                      <div
+                                                        key={callbackItem.id}
+                                                      >
+                                                        <p
+                                                          style={{
+                                                            fontSize: "small",
+                                                          }}
+                                                        >
+                                                          {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                          {/* {renderProducthead( */}
+                                                          Gst:{" "}
+                                                          {callbackItem.gst}
+                                                          {/* )} */}
+                                                        </p>
+                                                        {/* Render other callback item details here */}
+                                                      </div>
+                                                    )
+                                                  )}
+                                                </div>
+                                              )}
                                           </td>
                                         </tr>
                                         <tr>
@@ -605,7 +726,7 @@ function PetshopOrderviewdetails() {
                                             <p>{paymentStatus}</p>
                                           </td>
                                         </tr>
-                                        <tr>
+                                        {/* <tr>
                                           <th>
                                             <p>Total Before Tax:</p>
                                           </th>
@@ -625,7 +746,7 @@ function PetshopOrderviewdetails() {
                                               )}
                                             </p>
                                           </td>
-                                        </tr>
+                                        </tr> */}
                                         <tr>
                                           <th>
                                             <p>Sub Total:</p>

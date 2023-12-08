@@ -556,7 +556,7 @@ function Petshopproduct(props) {
       const Filterveg =
         selectedVegOptions.length === 0 ||
         selectedvegSet.has(product.veg === 0 ? "0" : "1");
-      const price = parseFloat(product.price); // Parse the price to a number
+      const price = parseFloat(product?.price); // Parse the price to a number
       const minPriceFilter = isNaN(minPrice) || price >= minPrice; // Check if price is NaN or greater than minPrice
       const maxPriceFilter = isNaN(maxPrice) || price <= maxPrice;
       // const price = parseFloat(product.price);  // Parse the price to a number
@@ -721,6 +721,18 @@ function Petshopproduct(props) {
   const Amount = (uservariationprice * (quantity > 1 ? quantity : 1)).toFixed(
     2
   );
+
+  // Set deliveryChargesAmount based on the value of uservariationprice
+  const deliveryChargesAmount = Amount <= 1000 ? 40 : 0;
+  console.log("uservariationprice: ", uservariationprice);
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
   const formattedAmount = Number(Amount).toString();
   // const formattedAmount = Number(productDetails.whole_price).toString();
 
@@ -1075,11 +1087,11 @@ function Petshopproduct(props) {
           ? parseInt(productDetails?.whole_price)
           : parseInt(calculatedPrice),
       quantity: quantity,
-      tax_amount: Math.floor(Amount * 0.05),
+      tax_amount: 0,
       discount_on_item: "",
     };
     // Calculate the order_amount
-    const orderAmount = parseInt(Amount) * 0.05 + parseInt(Amount) ?? 0;
+    const orderAmount = parseInt(Amount + deliveryCharges);
 
     const requestData = {
       user_id: storedWholesellerId,
@@ -1087,10 +1099,11 @@ function Petshopproduct(props) {
       coupon_discount_title: "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: Math.floor(Amount * 0.05),
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
+      delivery_charge: deliveryCharges,
       coupon_code: "",
       order_type: "delivery",
       checked: selectedInput,
@@ -2595,10 +2608,19 @@ function Petshopproduct(props) {
                             </Col>
                             <Col>
                               {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{parseInt(Amount)}</h5>
+                              <h5>₹{parseInt(Amount + deliveryCharges)}</h5>
                             </Col>
                           </Row>
                           <hr />
+                          <Row>
+                            <Col>
+                              <h5>Delivery Charges</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{parseInt(deliveryCharges)}</h5>
+                            </Col>
+                          </Row>
                           {/* <Row>
                             <Col>
                               <h5>Coupon Discount</h5>
@@ -2613,7 +2635,7 @@ function Petshopproduct(props) {
                             </Col>
                           </Row>
                           <hr />*/}
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>Tax(5%)</h5>
                             </Col>
@@ -2621,20 +2643,16 @@ function Petshopproduct(props) {
                               <h5>{`₹${Math.floor(Amount * 0.05)}`}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          <hr /> */}
 
-                          <Row>
+                          {/* <Row>
                             <Col>
                               <h5>Rounding Adjust</h5>
                             </Col>
                             <Col>
-                              <h5>
-                                ₹
-                                {parseInt(Amount * 0.05) + parseInt(Amount) ??
-                                  0}
-                              </h5>
+                              <h5>₹{parseInt(Amount)}</h5>
                             </Col>
-                          </Row>
+                          </Row> */}
                         </div>
                       </Col>
                     </Row>
