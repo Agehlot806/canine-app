@@ -78,6 +78,7 @@ function Petshopheader(props) {
         localStorage.removeItem("WholesellerPassword");
         localStorage.removeItem("verifiedId");
         localStorage.removeItem("loginType");
+        localStorage.removeItem("formattedAddress");
         // localStorage.clear('')
         console.log("Logged out Wholeseller with ID: ", storedWholesellerId);
         setStoredWholesellerId(null); // Reset the storedWholesellerId state
@@ -215,9 +216,7 @@ function Petshopheader(props) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/items/latest`
-      );
+      const response = await axios.get(`${BASE_URL}/items/latest`);
       setProducts(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);

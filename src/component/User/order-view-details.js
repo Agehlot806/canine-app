@@ -33,6 +33,7 @@ function Orderviewdetails() {
   });
 
   const [allorder, setallorder] = useState([]);
+  console.log("allorder: ", allorder);
   const [orderDetails, setorderDetails] = useState([]);
   console.log("orderDetails: ", orderDetails);
   console.log("storedFormattedAddress: ", storedFormattedAddress);
@@ -258,7 +259,7 @@ function Orderviewdetails() {
     const truncatedDescription = name?.slice(0, maxCharacters);
     return (
       <>
-        <h6>{truncatedDescription}</h6>
+        <h6>{truncatedDescription}.</h6>
       </>
     );
   };
@@ -302,7 +303,18 @@ function Orderviewdetails() {
                       </div>
                       <div>
                         <h5>Canine Products</h5>
-                        <p>{storedFormattedAddress}</p>
+                        {/* <p>{storedFormattedAddress}</p> */}
+                        {allorder && allorder.length > 0
+                          ? allorder.map((item, index) => {
+                              if (item.id == id) {
+                                return (
+                                  <div key={item.id}>
+                                    <p>{item?.delivery_address}</p>
+                                  </div>
+                                );
+                              }
+                            })
+                          : null}
                       </div>
                     </div>
                   </Col>
@@ -425,7 +437,7 @@ function Orderviewdetails() {
                         allorder.map((item, index) => {
                           if (item.id == id) {
                             return (
-                              <div className="dow-summy">
+                              <div key={item.id} className="dow-summy">
                                 <h5>Order Invoice</h5>
                                 <table responsive key={index}>
                                   <>
@@ -473,6 +485,91 @@ function Orderviewdetails() {
                                           </p>
                                         </td>
                                       </tr>
+                                      <tr>
+                                        <th>
+                                          <p>Item Name :</p>
+                                        </th>
+                                        <td>
+                                          {item.callback &&
+                                            item.callback.length > 0 && (
+                                              <div>
+                                                {item.callback.map(
+                                                  (callbackItem) => (
+                                                    <div key={callbackItem.id}>
+                                                      <p
+                                                        style={{
+                                                          fontSize: "small",
+                                                        }}
+                                                      >
+                                                        {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                        {renderProducthead(
+                                                          callbackItem.variant
+                                                        )}
+                                                      </p>
+                                                      {/* Render other callback item details here */}
+                                                    </div>
+                                                  )
+                                                )}
+                                              </div>
+                                            )}
+                                        </td>
+
+                                        {/* <td>
+                                        
+                                        {item.callback[0] && (
+                                          <p style={{ fontSize: "small" }}>
+                                            {renderProducthead(
+                                              item.callback[0].variant
+                                            )}
+                                          </p>
+                                        )}
+                                      </td> */}
+                                      </tr>
+                                      <tr>
+                                        <th>
+                                          <p>Gst Total Tax :</p>
+                                        </th>
+                                        <td>
+                                          {item.callback &&
+                                            item.callback.length > 0 && (
+                                              <div>
+                                                {item.callback.map(
+                                                  (callbackItem) => (
+                                                    <div key={callbackItem.id}>
+                                                      <p
+                                                        style={{
+                                                          fontSize: "small",
+                                                        }}
+                                                      >
+                                                        {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                        {/* {renderProducthead( */}
+                                                        Gst: {callbackItem.gst}
+                                                        {/* )} */}
+                                                      </p>
+                                                      {/* Render other callback item details here */}
+                                                    </div>
+                                                  )
+                                                )}
+                                              </div>
+                                            )}
+                                        </td>
+                                      </tr>
+                                      {/* <tr>
+                                        <th>
+                                          <p>Gst :</p>
+                                        </th>
+                                        <td>
+                                          {item.callback[0] && (
+                                            <p style={{ fontSize: "small" }}>
+                                              {renderProducthead(
+                                                item.callback[0].gst
+                                              )}
+                                            </p>
+                                          )}
+                                        </td>
+                                      </tr> */}
                                       <tr>
                                         <th>
                                           <p>Sub Total:</p>
@@ -534,7 +631,10 @@ function Orderviewdetails() {
                         allorder.map((item, index) => {
                           if (item.id == id) {
                             return (
-                              <div className="dow-summy leftsummy">
+                              <div
+                                key={item.id}
+                                className="dow-summy leftsummy"
+                              >
                                 <h5>Order Summary</h5>
                                 <table>
                                   <tbody>
@@ -551,6 +651,33 @@ function Orderviewdetails() {
                                         <p>Item Name :</p>
                                       </th>
                                       <td>
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                      {renderProducthead(
+                                                        callbackItem.variant
+                                                      )}
+                                                    </p>
+                                                    {/* Render other callback item details here */}
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}
+                                      </td>
+
+                                      {/* <td>
+                                        
                                         {item.callback[0] && (
                                           <p style={{ fontSize: "small" }}>
                                             {renderProducthead(
@@ -558,6 +685,36 @@ function Orderviewdetails() {
                                             )}
                                           </p>
                                         )}
+                                      </td> */}
+                                    </tr>
+                                    <tr>
+                                      <th>
+                                        <p>Gst Total Tax :</p>
+                                      </th>
+                                      <td>
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                      {/* {renderProducthead( */}
+                                                      Gst: {callbackItem.gst}
+                                                      {/* )} */}
+                                                    </p>
+                                                    {/* Render other callback item details here */}
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}
                                       </td>
                                     </tr>
                                     {/* <tr>

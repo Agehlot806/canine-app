@@ -349,8 +349,18 @@ function PetshopOrderviewdetails() {
                       </div>
                       <div>
                         <h5>Canine Products</h5>
-
-                        <p>{storedFormattedAddress}</p>
+                        {allorder && allorder.length > 0
+                          ? allorder.map((item, index) => {
+                              if (item.id == id) {
+                                return (
+                                  <div key={item.id}>
+                                    <p>{item?.delivery_address}</p>
+                                  </div>
+                                );
+                              }
+                            })
+                          : null}
+                        {/* <p>{storedFormattedAddress}</p> */}
                       </div>
                     </div>
                   </Col>
@@ -485,7 +495,6 @@ function PetshopOrderviewdetails() {
                         <div className="order-table" ref={tableRef}>
                           {allorder && allorder.length > 0 ? (
                             allorder.map((item, index) => {
-
                               if (item.id == id) {
                                 console.log("Match found for ID:", id);
                                 return (
@@ -727,7 +736,6 @@ function PetshopOrderviewdetails() {
           </div>
         </div>
       </div>
-     
     </>
   );
 }

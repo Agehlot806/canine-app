@@ -41,7 +41,7 @@ function Newheader(props) {
   console.log("customerLoginId", customerLoginId);
   // const [isTotalLengthVisible, setTotalLengthVisible] = useState(true);
   // Seo Keywords start
-  
+
   // const DogFoodmeta = {
   //   title: 'Canine Culinary Excellence with Fresh, Raw, and Top Dog Food Brands',
   //   description: 'Discover the top dog food brands that prioritize your pets health and happiness',
@@ -65,7 +65,7 @@ function Newheader(props) {
   //   }
   // }
   // const Collarmeta = {
-    
+
   //   title: 'Collar leashes and more Premium Dog Collar Leashes, Harnesses, and Chains for Every Adventure',
   //   description: 'Explore the best dog harness options, including no-pull designs for a comfortable and controlled walking experience',
   //   canonical: 'https://canine.hirectjob.in/',
@@ -148,7 +148,7 @@ function Newheader(props) {
   //   }
   // }
   // const HealthCaremeta = {
-    
+
   //   title: 'Solutions for Dog Flea and Tick Control, Diapers, and Treatment',
   //   description: 'Discover reliable products for dog flea and tick control, including treatments, medications, and preventive measures.',
   //   canonical: 'https://canine.hirectjob.in/',
@@ -162,7 +162,7 @@ function Newheader(props) {
   // seo Keywords end
 
   // Seo cat Keywords start
-  
+
   // const CatFoodmeta = {
   //   title: 'Choosing the Best Cat Food: A Guide to Raw, Fresh, and Dry Options Including Royal Canin Wet Cat Food',
   //   description: 'Discover the optimal nutrition for your feline friend with our comprehensive guide to cat food options. Explore the benefits of raw, fresh, and dry cat food, and learn about the excellence of Royal Canins wet cat food.',
@@ -186,7 +186,7 @@ function Newheader(props) {
   //   }
   // }
   // const CatLitterScoopermeta= {
-    
+
   //   title: 'Simplify Cat Care with Scoop Away Litter, ScoopFree Trays, and Convenient Cat Litter Scoops',
   //   description: 'Our top-quality products, including Scoop Away and ScoopFree litter boxes, streamline cat litter routines, keep spaces clean, and make cat care a breeze.',
   //   canonical: 'https://canine.hirectjob.in/',
@@ -232,17 +232,20 @@ function Newheader(props) {
   //     }
   //   }
   // }
-  const CatClothingAccessoriesmeta= {
-  title: 'Purr-fectly Chic: Cat in the Hat Inspired Dress for Feline Fashionistas',
-    description: 'Our Cat in the Hat dress is a whimsical pet-inspired fashion piece that combines feline charm with stylish flair, and comes with a pet odor eliminator for a fresh home.',
-    canonical: 'https://canine.hirectjob.in/',
+  const CatClothingAccessoriesmeta = {
+    title:
+      "Purr-fectly Chic: Cat in the Hat Inspired Dress for Feline Fashionistas",
+    description:
+      "Our Cat in the Hat dress is a whimsical pet-inspired fashion piece that combines feline charm with stylish flair, and comes with a pet odor eliminator for a fresh home.",
+    canonical: "https://canine.hirectjob.in/",
     meta: {
-      charset: 'utf-8',
+      charset: "utf-8",
       name: {
-        keywords: 'Clothing & Accessories,cat and the hat dress,best pet odor eliminator,tain & odor remover'
-      }
-    }
-  }
+        keywords:
+          "Clothing & Accessories,cat and the hat dress,best pet odor eliminator,tain & odor remover",
+      },
+    },
+  };
   // const CatBowlsFeedersmeta= {
 
   //   title: 'Elevate Mealtime: Stylish and Functional Cat Bowls for Fast Eaters',
@@ -268,7 +271,7 @@ function Newheader(props) {
   //   }
   // }
   // const CatHealthCaremeta= {
-    
+
   //   title: 'Top Cat Nutrition: Best Feline Supplements for Health and Vitality',
   //   description: 'Our selection of healthy cat supplements includes essential vitamins and comprehensive feline nutrition, ensuring your cats well-being and a happy and thriving companion.',
   //   canonical: 'https://canine.hirectjob.in/',
@@ -280,18 +283,18 @@ function Newheader(props) {
   //   }
   // }
 
-// const CatBedsCagesScratcherCratesmeta= {
-    
-//     title: 'Cozy Cat Comfort: Heated Bed, Large Litter Mat, and Warming Pad Essentials',
-//     description: 'Our heated cat bed, spacious litter mat, and warming pad provide your feline friend with comfort, warmth, and cleanliness, ensuring a happy and content cat.',
-//     canonical: 'https://canine.hirectjob.in/',
-//     meta: {
-//       charset: 'utf-8',
-//       name: {
-//         keywords: 'heated cat bed,cat litter mat large,cat litter box mat,litter catching mat,modern cat bed'
-//       }
-//     }
-//   }
+  // const CatBedsCagesScratcherCratesmeta= {
+
+  //     title: 'Cozy Cat Comfort: Heated Bed, Large Litter Mat, and Warming Pad Essentials',
+  //     description: 'Our heated cat bed, spacious litter mat, and warming pad provide your feline friend with comfort, warmth, and cleanliness, ensuring a happy and content cat.',
+  //     canonical: 'https://canine.hirectjob.in/',
+  //     meta: {
+  //       charset: 'utf-8',
+  //       name: {
+  //         keywords: 'heated cat bed,cat litter mat large,cat litter box mat,litter catching mat,modern cat bed'
+  //       }
+  //     }
+  //   }
   // seo cat Keywords end
 
   useEffect(() => {
@@ -360,6 +363,7 @@ function Newheader(props) {
         });
         navigate("/", { replace: true });
         localStorage.removeItem("userInfo");
+        localStorage.removeItem("formattedAddress");
         localStorage.removeItem("loginType");
         localStorage.removeItem("wallet_balance");
         localStorage.removeItem("wishlist_undefined");
@@ -475,9 +479,7 @@ function Newheader(props) {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}/items/latest`
-      );
+      const response = await axios.get(`${BASE_URL}/items/latest`);
       setProducts(response.data.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -765,13 +767,11 @@ function Newheader(props) {
                       {/* <Col lg={6} className="p-0">
                         <Row> */}
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...DogFoodmeta}> */}
+                        {/* <DocumentMeta {...DogFoodmeta}> */}
                         <header>
-                          <Link to={`/DogFood/${`Food`}/${1}`}>
-                            Dog Food
-                          </Link>
+                          <Link to={`/DogFood/${`Food`}/${1}`}>Dog Food</Link>
                         </header>
-                          {/* </DocumentMeta> */}
+                        {/* </DocumentMeta> */}
                         <ul className="mega-links">
                           {dogsubcategories ? (
                             dogsubcategories.map((item) => {
@@ -799,7 +799,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...BedsCagesmeta}> */}
+                        {/* <DocumentMeta {...BedsCagesmeta}> */}
                         <header>
                           <Link
                             to={`/Bedscagescarriers/${`Beds Cages, Scratcher & Crates`}/${1}`}
@@ -836,7 +836,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...Collarmeta}> */}
+                        {/* <DocumentMeta {...Collarmeta}> */}
                         <header>
                           <Link
                             to={`/CollarLeashesMore/${`Collar Leashes & More`}/${1}`}
@@ -908,7 +908,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...TreatsChewsmeta}> */}
+                        {/* <DocumentMeta {...TreatsChewsmeta}> */}
                         <header>
                           <Link to={`/TreatsChews/${`Treats`}/${1}`}>
                             Treats & Chews
@@ -942,11 +942,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...Toysmeta}> */}
+                        {/* <DocumentMeta {...Toysmeta}> */}
                         <header>
-                          <Link to={`/Toys/${`Toys`}/${1}`}>
-                            Toys
-                          </Link>
+                          <Link to={`/Toys/${`Toys`}/${1}`}>Toys</Link>
                         </header>
                         {/* </DocumentMeta> */}
                         <ul className="mega-links">
@@ -979,7 +977,7 @@ function Newheader(props) {
                         <Row> */}
 
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...TrainingAccessoriesmeta}> */}
+                        {/* <DocumentMeta {...TrainingAccessoriesmeta}> */}
                         <header>
                           <Link
                             to={`/TrainingAccessories/${`Training & Accessories`}/${1}`}
@@ -1015,11 +1013,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...BowlsFeedersmeta}> */}
+                        {/* <DocumentMeta {...BowlsFeedersmeta}> */}
                         <header>
-                          <Link
-                            to={`/BowlsFeeders/${`Bowls & Feeders`}/${1}`}
-                          >
+                          <Link to={`/BowlsFeeders/${`Bowls & Feeders`}/${1}`}>
                             Bowls & Feeders
                           </Link>
                         </header>
@@ -1051,11 +1047,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...Groomingmeta}> */}
+                        {/* <DocumentMeta {...Groomingmeta}> */}
                         <header>
-                          <Link
-                            to={`/Grooming/${`Grooming`}/${1}`}
-                          >
+                          <Link to={`/Grooming/${`Grooming`}/${1}`}>
                             Grooming
                           </Link>
                         </header>
@@ -1087,11 +1081,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...HealthCaremeta}> */}
+                        {/* <DocumentMeta {...HealthCaremeta}> */}
                         <header>
-                          <Link
-                            to={`/HealthCare/${`Health Care`}/${1}`}
-                          >
+                          <Link to={`/HealthCare/${`Health Care`}/${1}`}>
                             Health Care
                           </Link>
                         </header>
@@ -1144,11 +1136,9 @@ function Newheader(props) {
                       {/* <Col lg={6} className="p-0">
                         <Row> */}
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatFoodmeta}> */}
+                        {/* <DocumentMeta {...CatFoodmeta}> */}
                         <header>
-                          <Link to={`/CatFood/${`Food`}/${2}`}>
-                            Cat Food
-                          </Link>
+                          <Link to={`/CatFood/${`Food`}/${2}`}>Cat Food</Link>
                         </header>
                         {/* </DocumentMeta> */}
                         <ul className="mega-links">
@@ -1178,7 +1168,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatCollarLeashesMoremeta}> */}
+                        {/* <DocumentMeta {...CatCollarLeashesMoremeta}> */}
                         <header>
                           <Link
                             to={`/CatCollarLeashesMore/${`Collar Leashes & More`}/${2}`}
@@ -1215,7 +1205,7 @@ function Newheader(props) {
                       </Col>
 
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatLitterScoopermeta}> */}
+                        {/* <DocumentMeta {...CatLitterScoopermeta}> */}
                         <header>
                           <Link
                             to={`/CatLitterScooper/${`Cat Litter & Scooper`}/${2}`}
@@ -1251,11 +1241,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatToysmeta}> */}
+                        {/* <DocumentMeta {...CatToysmeta}> */}
                         <header>
-                          <Link to={`/CatToys/${`Toys`}/${2}`}>
-                            Toys
-                          </Link>
+                          <Link to={`/CatToys/${`Toys`}/${2}`}>Toys</Link>
                         </header>
                         {/* </DocumentMeta> */}
                         <ul className="mega-links">
@@ -1287,11 +1275,9 @@ function Newheader(props) {
                       <Col lg={6} className="p-0">
                         <Row> */}
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatTreatsmeta}> */}
+                        {/* <DocumentMeta {...CatTreatsmeta}> */}
                         <header>
-                          <Link to={`/CatTreats/${`Treats`}/${2}`}>
-                            Treats
-                          </Link>
+                          <Link to={`/CatTreats/${`Treats`}/${2}`}>Treats</Link>
                         </header>
                         {/* </DocumentMeta> */}
                         <ul className="mega-links">
@@ -1321,7 +1307,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatShampooPerfumesmeta}> */}
+                        {/* <DocumentMeta {...CatShampooPerfumesmeta}> */}
                         <header>
                           <Link
                             to={`/CatShampooPerfumes/${`Shampoo & Perfumes`}/${2}`}
@@ -1357,7 +1343,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatClothingAccessoriesmeta}> */}
+                        {/* <DocumentMeta {...CatClothingAccessoriesmeta}> */}
                         <header>
                           <Link
                             to={`/ClothingAccessories/${`Clothing & Accessories`}/${2}`}
@@ -1393,7 +1379,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatBowlsFeedersmeta}> */}
+                        {/* <DocumentMeta {...CatBowlsFeedersmeta}> */}
                         <header>
                           <Link
                             to={`/CatBowlsFeeders/${`Bowls & Feeders`}/${2}`}
@@ -1429,11 +1415,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatGroomingmeta}> */}
+                        {/* <DocumentMeta {...CatGroomingmeta}> */}
                         <header>
-                          <Link
-                            to={`/CatGrooming/${`Grooming`}/${2}`}
-                          >
+                          <Link to={`/CatGrooming/${`Grooming`}/${2}`}>
                             Grooming
                           </Link>
                         </header>
@@ -1465,11 +1449,9 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={2} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatHealthCaremeta}> */}
+                        {/* <DocumentMeta {...CatHealthCaremeta}> */}
                         <header>
-                          <Link
-                            to={`/CatHealthCare/${`Health Care`}/${2}`}
-                          >
+                          <Link to={`/CatHealthCare/${`Health Care`}/${2}`}>
                             Health Care
                           </Link>
                         </header>
@@ -1501,7 +1483,7 @@ function Newheader(props) {
                         </ul>
                       </Col>
                       <Col lg={3} sm={12} className="mga-he">
-                      {/* <DocumentMeta {...CatBedsCagesScratcherCratesmeta}> */}
+                        {/* <DocumentMeta {...CatBedsCagesScratcherCratesmeta}> */}
                         <header>
                           <Link
                             to={`/CatBedsCagesScratcherCrates/${`Beds Cages, Scratcher & Crates`}/${2}`}

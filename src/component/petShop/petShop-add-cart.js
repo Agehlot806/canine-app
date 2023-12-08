@@ -536,25 +536,47 @@ function PetshopAddCart() {
 
   // ...
 
-  // Get the selected address from wherever you have it
-  const selectedAddressLocal = {
-    first_name: selectedAddress?.first_name,
-    last_name: selectedAddress?.last_name,
-    house_no: selectedAddress?.house_no,
-    area: selectedAddress?.area,
-    landmark: selectedAddress?.landmark,
-    city: selectedAddress?.city,
-    state: selectedAddress?.state,
-    pincode: selectedAddress?.pincode,
-    mobile: selectedAddress?.mobile,
-  };
+  // // Get the selected address from wherever you have it
+  // const selectedAddressLocal = {
+  //   first_name: selectedAddress?.first_name,
+  //   last_name: selectedAddress?.last_name,
+  //   house_no: selectedAddress?.house_no,
+  //   area: selectedAddress?.area,
+  //   landmark: selectedAddress?.landmark,
+  //   city: selectedAddress?.city,
+  //   state: selectedAddress?.state,
+  //   pincode: selectedAddress?.pincode,
+  //   mobile: selectedAddress?.mobile,
+  // };
 
-  // Store the formatted address in localStorage
-  const formattedAddress = formatAddress(selectedAddressLocal);
-  localStorage.setItem("formattedAddress", formattedAddress);
+  // // Store the formatted address in localStorage
+  // const formattedAddress = formatAddress(selectedAddressLocal);
+  // localStorage.setItem("formattedAddress", formattedAddress);
 
-  // Retrieve the formatted address from localStorage
-  const storedFormattedAddress = localStorage.getItem("formattedAddress");
+  // // Retrieve the formatted address from localStorage
+  // const storedFormattedAddress = localStorage.getItem("formattedAddress");
+  // Check if addresslist exists and has a length greater than 1
+  if (addresslist && addresslist.length > 1) {
+    // Create a formatted address object
+    const selectedAddressLocal = {
+      first_name: addresslist[0]?.first_name,
+      last_name: addresslist[0]?.last_name,
+      house_no: addresslist[0]?.house_no,
+      area: addresslist[0]?.area,
+      landmark: addresslist[0]?.landmark,
+      city: addresslist[0]?.city,
+      state: addresslist[0]?.state,
+      pincode: addresslist[0]?.pincode,
+      mobile: addresslist[0]?.mobile,
+    };
+
+    // Store the formatted address in localStorage
+    const formattedAddress = formatAddress(selectedAddressLocal);
+    localStorage.setItem("formattedAddress", formattedAddress);
+
+    // Retrieve the formatted address from localStorage
+    const storedFormattedAddress = localStorage.getItem("formattedAddress");
+  }
 
   // // Use the stored formatted address
   console.log("Stored Address:", storedFormattedAddress);

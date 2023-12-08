@@ -848,7 +848,7 @@ function Home(props) {
     const clearCoupon = () => {
       setcoupenCode(!coupencode);
       setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-      setTotalPrice(originalPrice);
+      setTotalPrice(Amount);
       localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
     };
 
@@ -865,7 +865,7 @@ function Home(props) {
     localStorage.setItem("disconut", JSON.stringify(dis));
     setAppliedCoupon(true); // Set appliedCoupon to true when the button is clicked
     // setTotalPrice(
-    //   parseInt(originalPrice + originalPrice * 0.05 - disscountvalue)
+    //   parseInt(Amount + Amount * 0.05 - disscountvalue)
     // );
     const discountAmount = dis?.discount || 0;
     let newTotalPrice = Amount - discountAmount;
