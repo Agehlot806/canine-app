@@ -533,7 +533,7 @@ function Home(props) {
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
-      (selectedVariantPrice * productDetails.discount) / 100
+      (selectedVariantPrice * productDetails?.discount) / 100
     : productDetails?.price;
   const savedAmount = Math.floor(
     productDetails?.price * quantity - Amount

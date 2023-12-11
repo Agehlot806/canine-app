@@ -727,12 +727,12 @@ function Petshopproduct(props) {
   console.log("uservariationprice: ", uservariationprice);
 
   // State for delivery charges
-  const [deliveryCharges, setDeliveryCharges] = useState(0);
+  // const [deliveryCharges, setDeliveryCharges] = useState(0);
 
   // Use useEffect to update the total price when the deliveryChargesAmount changes
-  useEffect(() => {
-    setDeliveryCharges(deliveryChargesAmount);
-  }, [deliveryChargesAmount]);
+  // useEffect(() => {
+  //   setDeliveryCharges(deliveryChargesAmount);
+  // }, [deliveryChargesAmount]);
   const formattedAmount = Number(Amount).toString();
   // const formattedAmount = Number(productDetails.whole_price).toString();
 
@@ -1091,7 +1091,7 @@ function Petshopproduct(props) {
       discount_on_item: "",
     };
     // Calculate the order_amount
-    const orderAmount = parseInt(Amount + deliveryCharges);
+    const orderAmount = parseInt(Amount);
 
     const requestData = {
       user_id: storedWholesellerId,
@@ -2608,19 +2608,19 @@ function Petshopproduct(props) {
                             </Col>
                             <Col>
                               {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{parseInt(Amount + deliveryCharges)}</h5>
+                              <h5>₹{parseInt(Amount)}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          {/* <hr />
                           <Row>
                             <Col>
                               <h5>Delivery Charges</h5>
                             </Col>
                             <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              // <h5>₹{addToCartProduct[0]?.price}</h5> 
                               <h5>₹{parseInt(deliveryCharges)}</h5>
                             </Col>
-                          </Row>
+                          </Row> */}
                           {/* <Row>
                             <Col>
                               <h5>Coupon Discount</h5>

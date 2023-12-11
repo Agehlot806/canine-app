@@ -30,16 +30,13 @@ function PetshopContact() {
         message: formData.message,
       };
 
-      const response = await fetch(
-        `${BASE_URL}/auth/contact_us`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Set appropriate content type
-          },
-          body: JSON.stringify(formDataToSend),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/auth/contact_us`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Set appropriate content type
+        },
+        body: JSON.stringify(formDataToSend),
+      });
 
       if (response.ok) {
         // Successful response
@@ -102,10 +99,10 @@ function PetshopContact() {
           <Row className="justify-content-center">
             <Col lg={4} sm={6} xs={6} className="mb-4">
               <div className="contact-card">
-                <Link to="tel:0987654321">
+                <Link to="tel:7700019949">
                   <i className="fa fa-phone " />
                   <h3>Phone</h3>
-                  <p>(+91){strings.mobile}</p>
+                  <p>(+91)7700019949</p>
                 </Link>
               </div>
             </Col>
@@ -130,17 +127,20 @@ function PetshopContact() {
               <div className="contact-card">
                 <i className="fa fa-map-marker " />
                 <h3>Address</h3>
-                <p>CRAWFORD MARKET <br />
-                  Canine Products Mazi Villa 
-Bunglow # 8 Dattani park road 
-Thakur village Kandivali East 
-Mumbai-400101
+                <p>
+                  Kandivali
+                  <br />
+                  Canine Products Mazi Villa Bunglow # 8 Dattani park road
+                  Thakur village Kandivali East Mumbai-400101
                 </p>
-                <p> CRAWFORD MARKET <br />
-Shop No. 559, Crawford Market , OPP . Sadanand Hotel , Mumbai-400001.  </p>
+                <p>
+                  {" "}
+                  CRAWFORD MARKET <br />
+                  Shop No. 559, Crawford Market , OPP . Sadanand Hotel ,
+                  Mumbai-400001.{" "}
+                </p>
               </div>
             </Col>
-          
           </Row>
         </Container>
       </section>
@@ -209,12 +209,10 @@ Shop No. 559, Crawford Market , OPP . Sadanand Hotel , Mumbai-400001.  </p>
                   </Form>
                 </div>
               </Col>
-             
             </Row>
           </div>
         </Container>
       </section>
-
 
       <Petshopfooter />
     </>

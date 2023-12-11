@@ -1137,7 +1137,7 @@ function Petshopheader(props) {
                       </li>
                       {loginType !== "salesman" && (
                         <>
-                          <li>
+                          {/* <li>
                             <Link
                               className="dropdown-item"
                               to={
@@ -1148,7 +1148,7 @@ function Petshopheader(props) {
                             >
                               Transitions History
                             </Link>
-                          </li>
+                          </li> */}
                           <li>
                             <Link
                               className="dropdown-item"

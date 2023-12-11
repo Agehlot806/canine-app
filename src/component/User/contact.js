@@ -11,17 +11,18 @@ import DocumentMeta from "react-document-meta";
 
 function Contact() {
   const meta = {
-    
-    title: 'Canine Products - Contact Us for Pawsitively Great Service',
-    description: 'Have questions or inquiries? Reach out to us for top-notch pet care services. Your pets happiness and well-being are our priority.',
-    canonical: 'https://canine.hirectjob.in/',
+    title: "Canine Products - Contact Us for Pawsitively Great Service",
+    description:
+      "Have questions or inquiries? Reach out to us for top-notch pet care services. Your pets happiness and well-being are our priority.",
+    canonical: "https://canine.hirectjob.in/",
     meta: {
-      charset: 'utf-8',
+      charset: "utf-8",
       name: {
-        keywords: 'Pet care contact,Contact information,Reach out for pet services,Inquiries and appointments,Customer support for pet care,Grooming appointment queries,Dog walking schedule inquiries,Pet sitting arrangements contact,Training program information,Health and wellness services questions,Pet care assistance,Customer service for pet owners,Get in touch with us,Contact details for pet services,Pet care support '
-      }
-    }
-  }
+        keywords:
+          "Pet care contact,Contact information,Reach out for pet services,Inquiries and appointments,Customer support for pet care,Grooming appointment queries,Dog walking schedule inquiries,Pet sitting arrangements contact,Training program information,Health and wellness services questions,Pet care assistance,Customer service for pet owners,Get in touch with us,Contact details for pet services,Pet care support ",
+      },
+    },
+  };
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -43,16 +44,13 @@ function Contact() {
         message: formData.message,
       };
 
-      const response = await fetch(
-        `${BASE_URL}/auth/contact_us`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Set appropriate content type
-          },
-          body: JSON.stringify(formDataToSend),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/auth/contact_us`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Set appropriate content type
+        },
+        body: JSON.stringify(formDataToSend),
+      });
 
       if (response.ok) {
         // Successful response
@@ -101,132 +99,134 @@ function Contact() {
   };
   return (
     <>
-    <DocumentMeta {...meta}>
-      <Newheader />
-      <Container fluid className="p-0">
-        <div className="all-bg">
-          <img src={contact} />
-        </div>
-      </Container>
-      <section className="section-padding">
-        <Container>
-          <Row className="justify-content-center">
-            <Col lg={4} sm={6} xs={6} className="mb-4">
-              <div className="contact-card">
-                <Link to="tel:0987654321">
-                  <i className="fa fa-phone " />
-                  <h3>Phone</h3>
-                  <p>(+91){strings.mobile}</p>
-                </Link>
-              </div>
-            </Col>
-            <Col lg={4} sm={6} xs={6} className="mb-4">
-              <div className="contact-card">
-                <i className="fa fa-envelope-o " />
-                <Link to="mailto:info@canine.com">
-                  <h3>Email</h3>
-                  <p>info@canine.com</p>
-                </Link>
-              </div>
-            </Col>
-            <Col lg={4} sm={6} xs={6} className="mb-4">
-              <div className="contact-card">
-                <i className="fa fa-clock-o" />
-                <h3>Open Hours</h3>
-                <p>Mon-Fri:7am-6pm</p>
-                <p>Sat-Sun:9ap-4pm</p>
-              </div>
-            </Col>
-            <Col lg={12} sm={6} xs={6} className="mb-4">
-              <div className="contact-card">
-                <i className="fa fa-map-marker " />
-                <h3>Address</h3>
-                <p>CRAWFORD MARKET <br />
-                  Canine Products Mazi Villa 
-Bunglow # 8 Dattani park road 
-Thakur village Kandivali East 
-Mumbai-400101
-                </p>
-                <p> CRAWFORD MARKET <br />
-Shop No. 559, Crawford Market , OPP . Sadanand Hotel , Mumbai-400001.  </p>
-              </div>
-            </Col>
-          
-          </Row>
-        </Container>
-      </section>
-
-      <section className="section-padding">
-        <Container>
-          <div className="text-left">
-            <h1 className="main-head">Contact Us</h1>
+      <DocumentMeta {...meta}>
+        <Newheader />
+        <Container fluid className="p-0">
+          <div className="all-bg">
+            <img src={contact} />
           </div>
-          <div className="needplace">
-            <Row>
-              <Col lg={12}>
-                <div className="contact-form">
-                  <Form onSubmit={handleFormSubmit}>
-                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                      <Form.Label>Name</Form.Label>
-                      <Form.Control
-                        name="name"
-                        placeholder="Enter name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                      <Form.Label>Address</Form.Label>
-                      <Form.Control
-                        name="address"
-                        placeholder="Enter address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Row className="mb-3">
-                      <Col lg={6} sm={6} xs={12}>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                          name="email"
-                          placeholder="Enter email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                        />
-                      </Col>
-                      <Col lg={6} sm={6} xs={12}>
-                        <Form.Label>Phone no</Form.Label>
-                        <Form.Control
-                          name="phone"
-                          placeholder="Enter phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                        />
-                      </Col>
-                    </Row>
-                    <Form.Group className="mb-3" controlId="formGridAddress1">
-                      <Form.Label>Message</Form.Label>
-                      <Form.Control
-                        name="message"
-                        placeholder="Leave a comment here"
-                        as="textarea"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                    <Button type="submit" className="mt-4">
-                      Submit
-                    </Button>
-                  </Form>
+        </Container>
+        <section className="section-padding">
+          <Container>
+            <Row className="justify-content-center">
+              <Col lg={4} sm={6} xs={6} className="mb-4">
+                <div className="contact-card">
+                  <Link to="tel:7700019949">
+                    <i className="fa fa-phone " />
+                    <h3>Phone</h3>
+                    <p>(+91)7700019949</p>
+                  </Link>
                 </div>
               </Col>
-             
+              <Col lg={4} sm={6} xs={6} className="mb-4">
+                <div className="contact-card">
+                  <i className="fa fa-envelope-o " />
+                  <Link to="mailto:info@canine.com">
+                    <h3>Email</h3>
+                    <p>info@canine.com</p>
+                  </Link>
+                </div>
+              </Col>
+              <Col lg={4} sm={6} xs={6} className="mb-4">
+                <div className="contact-card">
+                  <i className="fa fa-clock-o" />
+                  <h3>Open Hours</h3>
+                  <p>Mon-Fri:7am-6pm</p>
+                  <p>Sat-Sun:9ap-4pm</p>
+                </div>
+              </Col>
+              <Col lg={12} sm={6} xs={6} className="mb-4">
+                <div className="contact-card">
+                  <i className="fa fa-map-marker " />
+                  <h3>Address</h3>
+                  <p>
+                    Kandivali
+                    <br />
+                    Canine Products Mazi Villa Bunglow # 8 Dattani park road
+                    Thakur village Kandivali East Mumbai-400101
+                  </p>
+                  <p>
+                    {" "}
+                    CRAWFORD MARKET <br />
+                    Shop No. 559, Crawford Market , OPP . Sadanand Hotel ,
+                    Mumbai-400001.{" "}
+                  </p>
+                </div>
+              </Col>
             </Row>
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
 
-      <Footer />
+        <section className="section-padding">
+          <Container>
+            <div className="text-left">
+              <h1 className="main-head">Contact Us</h1>
+            </div>
+            <div className="needplace">
+              <Row>
+                <Col lg={12}>
+                  <div className="contact-form">
+                    <Form onSubmit={handleFormSubmit}>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                          name="name"
+                          placeholder="Enter name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                          name="address"
+                          placeholder="Enter address"
+                          value={formData.address}
+                          onChange={handleInputChange}
+                        />
+                      </Form.Group>
+                      <Row className="mb-3">
+                        <Col lg={6} sm={6} xs={12}>
+                          <Form.Label>Email</Form.Label>
+                          <Form.Control
+                            name="email"
+                            placeholder="Enter email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                          />
+                        </Col>
+                        <Col lg={6} sm={6} xs={12}>
+                          <Form.Label>Phone no</Form.Label>
+                          <Form.Control
+                            name="phone"
+                            placeholder="Enter phone"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                          />
+                        </Col>
+                      </Row>
+                      <Form.Group className="mb-3" controlId="formGridAddress1">
+                        <Form.Label>Message</Form.Label>
+                        <Form.Control
+                          name="message"
+                          placeholder="Leave a comment here"
+                          as="textarea"
+                          value={formData.message}
+                          onChange={handleInputChange}
+                        />
+                      </Form.Group>
+                      <Button type="submit" className="mt-4">
+                        Submit
+                      </Button>
+                    </Form>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </section>
+
+        <Footer />
       </DocumentMeta>
     </>
   );

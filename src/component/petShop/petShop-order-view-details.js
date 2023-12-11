@@ -62,7 +62,7 @@ function PetshopOrderviewdetails() {
   // let couponDiscount = orderDetails.coupon_discount_amount || 200;
 
   let deliveryCharge = orderDetails.reduce(
-    (total, order) => total + parseFloat(order.delivery_charge == 0 ? 60 : 60),
+    (total, order) => parseFloat(order.delivery_charge),
     0
   );
 
@@ -299,7 +299,7 @@ function PetshopOrderviewdetails() {
   };
 
   const renderProducthead = (name) => {
-    const maxCharacters = 25;
+    const maxCharacters = 22;
     if (name?.length <= maxCharacters) {
       return <h6>{name}</h6>;
     }
@@ -423,7 +423,8 @@ function PetshopOrderviewdetails() {
                               {salesmanId && paymentStatus === "unpaid" ? (
                                 <Row>
                                   <h6>Total outstanding amount</h6>
-                                  <h4>₹{SubTotalData + deliveryCharge}</h4>
+                                  {/* <h4>₹{SubTotalData + deliveryCharge}</h4> */}
+                                  <h4>₹{SubTotalData}</h4>
                                   <Col sm={3}>
                                     <div className="order-ids">
                                       <Button

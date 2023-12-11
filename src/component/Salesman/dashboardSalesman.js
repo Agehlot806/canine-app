@@ -28,7 +28,12 @@ function DashboadSalesman() {
   useEffect(() => {}, []);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    Promise.all([getWholesellerList(), getOrders(), AllBanner(),allAddressList()])
+    Promise.all([
+      getWholesellerList(),
+      getOrders(),
+      AllBanner(),
+      allAddressList(),
+    ])
       .then(() => {
         setLoading(false);
       })
@@ -38,14 +43,18 @@ function DashboadSalesman() {
       });
   }, []);
 
-  const handleAddProduct = async (id) => {
-    await localStorage.setItem("wholeSellerId", id);
-    await localStorage.setItem("UserWholesellerId", id);
+  const handleAddProduct = async (item) => {
+    await localStorage.setItem("wholeSellerId", item.id);
+    await localStorage.setItem("UserWholesellerId", item.id);
+    await localStorage.setItem("verifiedId", item.verified);
+
     navigate("/petshop-product");
   };
-  const handleOrderHistory = async (id) => {
-    await localStorage.setItem("wholeSellerId", id);
-    await localStorage.setItem("UserWholesellerId", id);
+  const handleOrderHistory = async (item) => {
+    await localStorage.setItem("wholeSellerId", item.id);
+    await localStorage.setItem("UserWholesellerId", item.id);
+    await localStorage.setItem("verifiedId", item.verified);
+
     navigate("/petshop-my-orders");
   };
 
@@ -125,7 +134,6 @@ function DashboadSalesman() {
     "linear-gradient(180deg,#ffead2 0%,rgba(255, 234, 210, 0.33) 100%)",
   ];
 
-
   return (
     <>
       <PetShopHeader type={"salesman"} />
@@ -178,7 +186,7 @@ function DashboadSalesman() {
                       <h5>{wholeSellerList?.length}</h5>
                     </a>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a
                       className="nav-link"
                       id="transaction-tab"
@@ -193,7 +201,7 @@ function DashboadSalesman() {
                         ₹{isNaN(totalTransactions) ? 0 : totalTransactions}
                       </h5>
                     </a>
-                  </li>
+                  </li> */}
                   <li className="nav-item">
                     <a
                       className="nav-link"
@@ -278,7 +286,6 @@ function DashboadSalesman() {
                               </li>
                             </ul>
                           </Col>
-                          
                         </Row>
 
                         <div className="tab-content" id="pills-tabContent">
@@ -321,7 +328,13 @@ function DashboadSalesman() {
                                                       item.l_name}
                                                   </h6>
                                                   {/* <p>{item.city + "" + item.state + "" + item.pincode}</p> */}
-                                                  <p>{item.city + " " + item.state.substring(2) + " " + item.pincode}</p>
+                                                  <p>
+                                                    {item.city +
+                                                      " " +
+                                                      item.state.substring(2) +
+                                                      " " +
+                                                      item.pincode}
+                                                  </p>
                                                 </div>
                                               </Col>
                                             </Row>
@@ -329,14 +342,14 @@ function DashboadSalesman() {
                                           <div className="Wholeseller-btn">
                                             <Button
                                               onClick={() => {
-                                                handleAddProduct(item.id);
+                                                handleAddProduct(item);
                                               }}
                                             >
                                               Add Product
                                             </Button>
                                             <Button
                                               onClick={() => {
-                                                handleOrderHistory(item.id);
+                                                handleOrderHistory(item);
                                               }}
                                             >
                                               Order History
