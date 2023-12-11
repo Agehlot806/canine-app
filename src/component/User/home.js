@@ -547,6 +547,16 @@ function Home(props) {
     setTotalPrice(Amount);
   }, [Amount]);
   // coupen code funtion after apply close button end
+  // Set deliveryChargesAmount based on the value of originalPrice
+  const deliveryChargesAmount = totalPrice <= 999 ? 40 : 0;
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
   // buy now price
   let buynowprice = 0;
 
@@ -899,21 +909,22 @@ function Home(props) {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price: Amount,
+      price: parseInt(productDetails?.price),
       quantity: quantity,
       tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = parseInt(totalPrice);
+    const orderAmount = parseInt(totalPrice + deliveryCharges);
 
     const requestData = {
       user_id: storedUserId,
+      delivery_charge: deliveryCharges,
       coupon_discount_amount: disscountvalue?.discount || "",
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
       order_status: "pending",
-      total_tax_amount: taxamound,
+      total_tax_amount: 0,
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
@@ -1134,7 +1145,18 @@ function Home(props) {
       </>
     );
   };
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = parseInt(price);
 
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
   return (
     <>
       <DocumentMeta {...meta}>
@@ -3037,6 +3059,16 @@ function Home(props) {
                                     (disscountvalue?.discount ?? 0)} */}
                                   {parseInt(totalPrice)}
                                 </h5>
+                              </Col>
+                            </Row>
+                            <hr />
+                            <Row>
+                              <Col>
+                                <h5>Delivery Charges</h5>
+                              </Col>
+                              <Col>
+                                {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                                <h5>₹{formatPrice(deliveryCharges)}</h5>
                               </Col>
                             </Row>
                           </div>

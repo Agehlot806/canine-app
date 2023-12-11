@@ -498,6 +498,11 @@ function PetshopOrderviewdetails() {
                         <div className="order-table" ref={tableRef}>
                           {allorder && allorder.length > 0 ? (
                             allorder.map((item, index) => {
+                              console.log(
+                                "item.delivery_charge: ",
+                                item.delivery_charge
+                              );
+                              console.log("item.deliveryChargee: ", item);
                               if (item.id == id) {
                                 console.log("Match found for ID:", id);
                                 console.log("allorder: ", allorder);
@@ -603,7 +608,10 @@ function PetshopOrderviewdetails() {
                                               <p>Delivery Charge</p>
                                             </th>
                                             <td>
-                                              <p>₹{item.deliveryCharges}</p>
+                                              <p>
+                                                ₹
+                                                {parseInt(item.delivery_charge)}
+                                              </p>
                                             </td>
                                           </tr>
                                           <tr>
@@ -611,7 +619,8 @@ function PetshopOrderviewdetails() {
                                             <td>
                                               ₹
                                               {formatPrice(
-                                                SubTotalData + deliveryCharge
+                                                SubTotalData +
+                                                  parseInt(item.delivery_charge)
                                               )}
                                             </td>
                                           </tr>
@@ -761,7 +770,9 @@ function PetshopOrderviewdetails() {
                                             <p>Delivery Fee:</p>
                                           </th>
                                           <td>
-                                            <p>₹{deliveryCharge}</p>
+                                            <p>
+                                              ₹ {parseInt(item.delivery_charge)}
+                                            </p>
                                           </td>
                                         </tr>
                                         <tr>
@@ -772,7 +783,8 @@ function PetshopOrderviewdetails() {
                                             <h4>
                                               ₹
                                               {formatPrice(
-                                                SubTotalData + deliveryCharge
+                                                SubTotalData +
+                                                  parseInt(item.delivery_charge)
                                               )}
                                             </h4>
                                           </td>

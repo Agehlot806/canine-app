@@ -224,6 +224,7 @@ function Blogdetails() {
   // =============================================================================
 
   const [productDetails, setProductDetails] = useState([]);
+  console.log("setProductDetails: ", productDetails);
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
@@ -290,6 +291,7 @@ function Blogdetails() {
   const Amount = Math.floor(
     uservariationprice - (uservariationprice * productDetails.discount) / 100
   ).toFixed(2);
+  console.log("Amount: ", Amount);
 
   const formattedAmount = Number(Amount).toString();
   const calculatedPrice = selectedVariantPrice
@@ -308,6 +310,16 @@ function Blogdetails() {
     setTotalPrice(Amount);
   }, [Amount]);
   // coupen code funtion after apply close button end
+  // Set deliveryChargesAmount based on the value of originalPrice
+  const deliveryChargesAmount = totalPrice <= 999 ? 40 : 0;
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -650,16 +662,17 @@ function Blogdetails() {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price: Amount,
+      price: parseInt(productDetails?.price),
       quantity: quantity,
       tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = parseInt(totalPrice);
+    const orderAmount = parseInt(totalPrice + deliveryCharges);
 
     const requestData = {
       user_id: storedUserId,
+      delivery_charge: deliveryCharges,
       coupon_discount_amount: disscountvalue?.discount || "",
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
@@ -1043,7 +1056,7 @@ function Blogdetails() {
                                   if (!storedUserId) {
                                     shippingpage("/login");
                                   } else {
-                                    handeldataId(item.id);
+                                    handeldataId(item[0].id);
                                   }
                                 }}
                               >
@@ -1882,6 +1895,16 @@ function Blogdetails() {
                                   (disscountvalue?.discount ?? 0)} */}
                                 {parseInt(totalPrice)}
                               </h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Delivery Charges</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{deliveryCharges}</h5>
                             </Col>
                           </Row>
                         </div>

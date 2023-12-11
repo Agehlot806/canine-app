@@ -255,6 +255,17 @@ function Partneroneshop() {
     setTotalPrice(Amount);
   }, [Amount]);
   // coupen code funtion after apply close button end
+  // Set deliveryChargesAmount based on the value of originalPrice
+  const deliveryChargesAmount = totalPrice <= 999 ? 40 : 0;
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
+  // coupen code funtion after apply close button end
 
   // Lightbox product =====
   const [mainImage, setMainImage] = useState("");
@@ -619,16 +630,17 @@ function Partneroneshop() {
     const cartData = {
       product_id: productDetails.id,
       variation: selectedVariant,
-      price: Amount,
+      price: parseInt(productDetails?.price),
       quantity: quantity,
       tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
     };
     // Calculate the order_amount
-    const orderAmount = parseInt(totalPrice);
+    const orderAmount = parseInt(totalPrice + deliveryCharges);
 
     const requestData = {
       user_id: storedUserId,
+      delivery_charge: deliveryCharges,
       coupon_discount_amount: disscountvalue?.discount || "",
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",
@@ -895,6 +907,18 @@ function Partneroneshop() {
       </>
     );
   };
+  function formatPrice(price) {
+    // Convert the price to a number
+    const numericPrice = parseInt(price);
+
+    // Use toLocaleString to format the number with commas
+    const formattedPrice = numericPrice.toLocaleString();
+
+    // Remove unnecessary decimal places
+    const finalPrice = formattedPrice.replace(/\.0+$/, "");
+
+    return finalPrice;
+  }
 
   return (
     <>
@@ -2248,6 +2272,16 @@ function Partneroneshop() {
                                   (disscountvalue?.discount ?? 0)} */}
                                 {parseInt(totalPrice)}
                               </h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Delivery Charges</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              <h5>₹{formatPrice(deliveryCharges)}</h5>
                             </Col>
                           </Row>
                         </div>

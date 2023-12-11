@@ -103,6 +103,7 @@ function PetshopAddCart() {
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
       delivery_charge: deliveryCharges,
+      original_delivery_charge: deliveryCharges,
       coupon_code: "",
       order_type: "delivery",
       checked: selectedInput,

@@ -133,8 +133,15 @@ function Addcart() {
       originalPrice = allPrice;
     });
   }
+
+  // const taxamound = Math.floor(originalPrice * 0.05);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setTotalPrice(originalPrice);
+  }, [originalPrice]);
+
   // Set deliveryChargesAmount based on the value of originalPrice
-  const deliveryChargesAmount = originalPrice <= 999 ? 40 : 0;
+  const deliveryChargesAmount = totalPrice <= 999 ? 40 : 0;
 
   // State for delivery charges
   const [deliveryCharges, setDeliveryCharges] = useState(0);
@@ -143,11 +150,6 @@ function Addcart() {
   useEffect(() => {
     setDeliveryCharges(deliveryChargesAmount);
   }, [deliveryChargesAmount]);
-  // const taxamound = Math.floor(originalPrice * 0.05);
-  const [totalPrice, setTotalPrice] = useState(0);
-  useEffect(() => {
-    setTotalPrice(originalPrice);
-  }, [originalPrice]);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
@@ -489,8 +491,10 @@ function Addcart() {
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
       item_campaign_id: "",
-      order_amount:
-        parseInt(originalPrice - disscountvalue?.discount) || originalPrice,
+      order_amount: parseInt(
+        // originalPrice + deliveryCharges - disscountvalue?.discount) ||
+        totalPrice + deliveryCharges
+      ),
       cart: cartData,
     };
     fetch(`${BASE_URL}/customer/order/place`, {
@@ -629,7 +633,7 @@ function Addcart() {
     //   parseInt(originalPrice + originalPrice * 0.05 - disscountvalue)
     // );
     const discountAmount = dis?.discount || 0;
-    let newTotalPrice = originalPrice + originalPrice * 0.05 - discountAmount;
+    let newTotalPrice = parseInt(originalPrice) - parseInt(discountAmount);
 
     // Update totalPrice only if the newTotalPrice is a valid number
     if (!isNaN(newTotalPrice)) {
@@ -860,9 +864,19 @@ function Addcart() {
                             <Col>
                               <h5>
                                 {/* ₹{`${parseInt(originalPrice + taxamound)}`} */}
-                                ₹{`${parseInt(originalPrice)}`}
+                                ₹{`${parseInt(totalPrice)}`}
                                 {/* Calculate  and display the Rounding Adjust */}
                               </h5>
+                            </Col>
+                          </Row>
+                          <hr />
+                          <Row>
+                            <Col>
+                              <h5>Delivery Charges</h5>
+                            </Col>
+                            <Col>
+                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                              {/* <h5>₹{formatPrice(deliveryCharges)}</h5> */}
                             </Col>
                           </Row>
                         </div>
@@ -1109,6 +1123,16 @@ function Addcart() {
                           </h5>
                         </Col>
                       </Row>
+                      <hr />
+                      <Row>
+                        <Col>
+                          <h5>Delivery Charges</h5>
+                        </Col>
+                        <Col>
+                          {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
+                          <h5>₹{formatPrice(deliveryCharges)}</h5>
+                        </Col>
+                      </Row>
                     </div>
                   </Col>
                 </Row>
@@ -1270,7 +1294,9 @@ function Addcart() {
                         <Row>
                           <Col sm={6}>
                             <h4>Total</h4>
-                            <h2>₹{`${formatPrice(totalPrice)}`}</h2>
+                            <h2>
+                              ₹{`${formatPrice(totalPrice + deliveryCharges)}`}
+                            </h2>
                           </Col>
                           <Col sm={6}>
                             {/* <Button onClick={() => handlePayment()}>

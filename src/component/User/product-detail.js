@@ -359,6 +359,17 @@ function Productdetail() {
     setTotalPrice(Amount);
   }, [Amount]);
   // coupen code funtion after apply close button end
+  // Set deliveryChargesAmount based on the value of originalPrice
+  const deliveryChargesAmount = totalPrice <= 999 ? 40 : 0;
+
+  // State for delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  // Use useEffect to update the total price when the deliveryChargesAmount changes
+  useEffect(() => {
+    setDeliveryCharges(deliveryChargesAmount);
+  }, [deliveryChargesAmount]);
+  // coupen code funtion after apply close button end
 
   const addToWishlist = async (item_id) => {
     const formData = new FormData();
@@ -759,6 +770,7 @@ function Productdetail() {
 
     const requestData = {
       user_id: storedUserId,
+      delivery_charge: deliveryCharges,
       coupon_discount_amount: disscountvalue?.discount || "",
       coupon_discount_title: disscountvalue?.title || "",
       payment_status: "paid",

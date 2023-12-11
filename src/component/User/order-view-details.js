@@ -71,6 +71,11 @@ function Orderviewdetails() {
     (total, order) => total + parseFloat(order.price * order.quantity),
     0
   );
+  let totalAllPrice = orderDetails.reduce(
+    (total, order) => parseFloat(order.total_add_on_price),
+    0
+  );
+  console.log("totalAllPrice: ", totalAllPrice);
   // let taxAmount = orderDetails.reduce(
   //   (total, order) => total + parseFloat(order.tax_amount * order.quantity),
   //   0
@@ -100,9 +105,8 @@ function Orderviewdetails() {
   //     ? subTotal + taxAmount + deliveryCharge
   //     : subTotal + taxAmount + deliveryCharge - couponDiscount;
   let TotalDataPrice =
-    promoDiscount === 0
-      ? subTotal + deliveryCharge
-      : subTotal + deliveryCharge - couponDiscount;
+    promoDiscount === 0 ? subTotal : subTotal - couponDiscount;
+  let TotalDataPricetwo = totalAllPrice;
   // storedUserId
   const customer_id = localStorage.getItem("userInfo");
   const loginType = localStorage.getItem("loginType");
@@ -459,7 +463,7 @@ function Orderviewdetails() {
                                             )}{" "}
                                             {item && !isNaN(item.coupon_code)
                                               ? item.coupon_code
-                                              : "0"}
+                                              : " "}
                                           </p>
                                         </td>
                                       </tr>
@@ -598,7 +602,9 @@ function Orderviewdetails() {
                                           <p>Delivery Charge</p>
                                         </th>
                                         <td>
-                                          <p>₹{deliveryCharge}</p>
+                                          <p>
+                                            ₹{parseInt(item.delivery_charge)}
+                                          </p>
                                         </td>
                                       </tr>
                                       <tr>
@@ -607,7 +613,12 @@ function Orderviewdetails() {
                                         </th>
                                         <td>
                                           <h4 style={{ color: "#3b71ca" }}>
-                                            ₹{formatPrice(TotalDataPrice)}
+                                            {/* ₹{formatPrice(TotalDataPrice)}₹ */}
+                                            ₹{formatPrice(TotalDataPricetwo)}
+                                            {/* {formatPrice(
+                                              subTotal +
+                                                parseInt(item.delivery_charge)
+                                            )} */}
                                           </h4>
                                         </td>
                                       </tr>
@@ -763,7 +774,7 @@ function Orderviewdetails() {
                                       </th>
                                       <td>
                                         <p>
-                                          ₹
+                                          -₹
                                           {formatPrice(
                                             item.coupon_discount_amount ?? 0
                                           )}
@@ -775,7 +786,10 @@ function Orderviewdetails() {
                                         <p>Delivery Fee:</p>
                                       </th>
                                       <td>
-                                        <p>₹{deliveryCharge}</p>
+                                        <p>
+                                          {" "}
+                                          ₹{parseInt(item.delivery_charge)}
+                                        </p>
                                       </td>
                                     </tr>
                                     <tr>
@@ -784,7 +798,12 @@ function Orderviewdetails() {
                                       </th>
                                       <td>
                                         <h4 style={{ color: "#3b71ca" }}>
-                                          ₹{formatPrice(TotalDataPrice)}
+                                          {/* ₹{formatPrice(TotalDataPrice)}₹ */}
+                                          ₹{formatPrice(TotalDataPricetwo)}₹
+                                          {/* {formatPrice(
+                                            subTotal +
+                                              parseInt(item.delivery_charge)
+                                          )} */}
                                         </h4>
                                       </td>
                                     </tr>
