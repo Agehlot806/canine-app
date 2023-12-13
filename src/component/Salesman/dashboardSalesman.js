@@ -46,14 +46,16 @@ function DashboadSalesman() {
   const handleAddProduct = async (item) => {
     await localStorage.setItem("wholeSellerId", item.id);
     await localStorage.setItem("UserWholesellerId", item.id);
-    await localStorage.setItem("verifiedId", item.verified);
+    // await localStorage.setItem("verifiedId", item.verified); harsh
+    await localStorage.setItem("verifiedId", item.status);
 
     navigate("/petshop-product");
   };
   const handleOrderHistory = async (item) => {
     await localStorage.setItem("wholeSellerId", item.id);
     await localStorage.setItem("UserWholesellerId", item.id);
-    await localStorage.setItem("verifiedId", item.verified);
+    // await localStorage.setItem("verifiedId", item.verified);harsh
+    await localStorage.setItem("verifiedId", item.statuss);
 
     navigate("/petshop-my-orders");
   };
@@ -99,10 +101,10 @@ function DashboadSalesman() {
           let subtotal = 0;
           for (let index = 0; index < orderList.length; index++) {
             const element = orderList[index];
-            let total =
-              parseInt(element.order_amount) +
-              parseInt(element.total_tax_amount) -
-              parseInt(element.coupon_discount_amount);
+            let total = parseInt(element.order_amount);
+            // +
+            // parseInt(element.total_tax_amount) -
+            // parseInt(element.coupon_discount_amount);
             if (subtotal === 0) {
               subtotal = total;
             } else {
@@ -453,15 +455,17 @@ function DashboadSalesman() {
                                     </h3>
                                     <h3>
                                       Order Amount: ₹{" "}
-                                      {isNaN(
-                                        parseInt(item.order_amount) +
-                                          parseInt(item.total_tax_amount) -
-                                          parseInt(item.coupon_discount_amount)
-                                      )
-                                        ? 0
-                                        : parseInt(item.order_amount) +
-                                          parseInt(item.total_tax_amount) -
-                                          parseInt(item.coupon_discount_amount)}
+                                      {
+                                        isNaN(
+                                          parseInt(item.order_amount)
+                                          //+ parseInt(item.total_tax_amount) -
+                                          // parseInt(item.coupon_discount_amount)
+                                        )
+                                          ? parseInt(item.order_amount)
+                                          : parseInt(item.order_amount)
+                                        // + parseInt(item.total_tax_amount) -
+                                        //   parseInt(item.coupon_discount_amount)
+                                      }
                                     </h3>
                                   </Col>
 
@@ -570,15 +574,17 @@ function DashboadSalesman() {
                                     </h3>
                                     <h3>
                                       Order Amount: ₹{" "}
-                                      {isNaN(
-                                        parseInt(item.order_amount) +
-                                          parseInt(item.total_tax_amount) -
-                                          parseInt(item.coupon_discount_amount)
-                                      )
-                                        ? 0
-                                        : parseInt(item.order_amount) +
-                                          parseInt(item.total_tax_amount) -
-                                          parseInt(item.coupon_discount_amount)}
+                                      {
+                                        isNaN(
+                                          parseInt(item.order_amount)
+                                          //+ parseInt(item.total_tax_amount) -
+                                          // parseInt(item.coupon_discount_amount)
+                                        )
+                                          ? parseInt(item.order_amount)
+                                          : parseInt(item.order_amount)
+                                        // + parseInt(item.total_tax_amount) -
+                                        // parseInt(item.coupon_discount_amount)
+                                      }
                                     </h3>
                                   </Col>
 

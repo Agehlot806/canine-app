@@ -1529,7 +1529,15 @@ function Home(props) {
                   </Col>
                 </Row>
                 <Fade left>
-                  <Row className="mt-4">
+                  {/* <Row className="mt-4"> */}
+                  <Row
+                    className="mt-4"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
                     {brands
                       ? brands.map((brand, index) => (
                           <Col lg={3} sm={6} xs={6} className="mb-5">
@@ -1805,6 +1813,7 @@ function Home(props) {
                                   item.image
                                 }
                               />
+                              {console.log("itemmm: ", item)}
                             </div>
                             <h3>{item.title}</h3>
                             <p>{renderBlogDescription(item.description)}</p>

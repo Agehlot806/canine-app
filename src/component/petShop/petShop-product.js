@@ -723,8 +723,8 @@ function Petshopproduct(props) {
   );
 
   // Set deliveryChargesAmount based on the value of uservariationprice
-  const deliveryChargesAmount = Amount <= 1000 ? 40 : 0;
-  console.log("uservariationprice: ", uservariationprice);
+  // const deliveryChargesAmount = Amount <= 1000 ? 40 : 0;
+  // console.log("uservariationprice: ", uservariationprice);
 
   // State for delivery charges
   // const [deliveryCharges, setDeliveryCharges] = useState(0);
@@ -1103,7 +1103,8 @@ function Petshopproduct(props) {
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
-      delivery_charge: deliveryCharges,
+      delivery_charge: 0,
+      // delivery_charge: deliveryCharges, comment 12/12/2023
       coupon_code: "",
       order_type: "delivery",
       checked: selectedInput,

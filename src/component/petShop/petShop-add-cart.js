@@ -56,15 +56,15 @@ function PetshopAddCart() {
   });
 
   // Set deliveryChargesAmount based on the value of originalPrice
-  const deliveryChargesAmount = originalPrice <= 1000 ? 40 : 0;
+  // const deliveryChargesAmount = originalPrice <= 1000 ? 40 : 0;
 
   // State for delivery charges
-  const [deliveryCharges, setDeliveryCharges] = useState(0);
+  // const [deliveryCharges, setDeliveryCharges] = useState(0);
 
   // Use useEffect to update the total price when the deliveryChargesAmount changes
-  useEffect(() => {
-    setDeliveryCharges(deliveryChargesAmount);
-  }, [deliveryChargesAmount]);
+  // useEffect(() => {
+  //   setDeliveryCharges(deliveryChargesAmount);
+  // }, [deliveryChargesAmount]);
 
   // const taxamound = Math.floor(originalPrice * 0.05);
   const [selectedValue, setSelectedValue] = useState(0);
@@ -102,8 +102,9 @@ function PetshopAddCart() {
       payment_method: selectedInput ? "offline" : "online",
       transaction_reference: selectedInput ? "" : "sadgash23asds",
       delivery_address_id: 2,
-      delivery_charge: deliveryCharges,
-      original_delivery_charge: deliveryCharges,
+      // delivery_charge: deliveryCharges,
+      delivery_charge: 0,
+      original_delivery_charge: 0,
       coupon_code: "",
       order_type: "delivery",
       checked: selectedInput,
@@ -940,16 +941,15 @@ function PetshopAddCart() {
                               <h5>₹{formatPrice(originalPrice)}</h5>
                             </Col>
                           </Row>
-                          <hr />
+                          {/* <hr />
                           <Row>
                             <Col>
                               <h5>Delivery Charges</h5>
                             </Col>
                             <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
                               <h5>₹{formatPrice(deliveryCharges)}</h5>
                             </Col>
-                          </Row>
+                          </Row> */}
                           {/* <Row>
                             <Col>
                               <h5>GST</h5>
@@ -1151,7 +1151,7 @@ function PetshopAddCart() {
                                   ₹{" "}
                                   {`${formatPrice(
                                     // itemQty * (
-                                    originalPrice + deliveryCharges
+                                    originalPrice
                                     // )
                                   )}`}
                                 </h2>
@@ -1722,12 +1722,7 @@ function PetshopAddCart() {
                           <tbody>
                             <tr>
                               <th>Utilised Credit</th>
-                              <td>
-                                ₹{" "}
-                                {`${formatPrice(
-                                  originalPrice + deliveryCharges
-                                )}`}
-                              </td>
+                              <td>₹ {`${formatPrice(originalPrice)}`}</td>
                             </tr>
                             {/* <tr>
                               <th>Available Credit</th>
@@ -1735,12 +1730,7 @@ function PetshopAddCart() {
                             </tr> */}
                             <tr>
                               <th>Total Approved Credit</th>
-                              <td>
-                                ₹{" "}
-                                {`${formatPrice(
-                                  originalPrice + deliveryCharges
-                                )}`}
-                              </td>
+                              <td>₹ {`${formatPrice(originalPrice)}`}</td>
                             </tr>
                             <tr>
                               {/* <th>(All due are debited on 5th of each month)</th> */}

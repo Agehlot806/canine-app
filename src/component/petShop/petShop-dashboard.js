@@ -64,7 +64,7 @@ function Petshopdashboard() {
     const data = {
       order_id: idItem.id,
       user_id: storedWholesellerId,
-      amount: idItem.order_amount,
+      amount: 0,
       pay_mode: "offline",
     };
     axios
@@ -86,24 +86,24 @@ function Petshopdashboard() {
       });
   };
   const [amount, setAmount] = useState([]);
-  const handleAddAmount = () => {
-    // Make a POST request to the API
-    axios
-      .post(`${BASE_URL}/auth/add_amount`, {
-        user_id: storedWholesellerId,
-        amount: amount,
-      })
-      .then((response) => {
-        // Handle the response as needed
-        toast.success("Payment Add Wallet Successfully");
-        console.log("POST request was successful:", response.data);
-      })
-      .catch((error) => {
-        // Handle errors
-        toast.error("The email field is required");
-        console.error("POST request failed:", error);
-      });
-  };
+  // const handleAddAmount = () => {
+  //   // Make a POST request to the API
+  //   axios
+  //     .post(`${BASE_URL}/auth/add_amount`, {
+  //       user_id: storedWholesellerId,
+  //       amount: 0,
+  //     })
+  //     .then((response) => {
+  //       // Handle the response as needed
+  //       toast.success("Payment Add Wallet Successfully");
+  //       console.log("POST request was successful:", response.data);
+  //     })
+  //     .catch((error) => {
+  //       // Handle errors
+  //       toast.error("The email field is required");
+  //       console.error("POST request failed:", error);
+  //     });
+  // };
   // Razorpay
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -133,6 +133,7 @@ function Petshopdashboard() {
           handleAddAmount();
           // Handle the success callback
           // window.location.href = "/shipping";
+          toast.success("Unpaid Amount Payment Add Successfully Paylater");
           console.log("Payment Successful:", response);
         },
 
@@ -165,7 +166,12 @@ function Petshopdashboard() {
   };
 
   const handleOrderHistory = (id) => {
-    navigate(`/order-view-details/${id}`);
+    // navigate(`/petShop-order-view-details/${id}`);
+    navigate(
+      `/petShop-order-view-details/?id=${item.id}&status=${
+        item.payment_status ?? "not found"
+      }`
+    );
   };
   const [idItem, setIdItem] = useState("");
   const SaveItemId = (item) => {
@@ -184,6 +190,7 @@ function Petshopdashboard() {
         console.log(error);
       });
   };
+  console.log("totalorderrrrr: ", totalorder);
   const deliveredOrders = totalorder.filter(
     (order) => order.order_status === "delivered"
   );
@@ -390,11 +397,19 @@ function Petshopdashboard() {
                                   </div>
                                   <div className="text-center mt-3">
                                     <Button
-                                      onClick={() => {
-                                        handleOrderHistory(item.id);
-                                      }}
+                                    // onClick={() => {
+                                    //   handleOrderHistory(item.id);
+                                    // }}
                                     >
-                                      Detail Order
+                                      <Link
+                                        to={`/petShop-order-view-details/?id=${
+                                          item.id
+                                        }&status=${
+                                          item.payment_status ?? "not found"
+                                        }`}
+                                      >
+                                        Detail Order
+                                      </Link>
                                     </Button>
                                     {!isPaid && (
                                       <Button
@@ -575,11 +590,19 @@ function Petshopdashboard() {
                                     </div>
                                     <div className="text-center mt-3">
                                       <Button
-                                        onClick={() => {
-                                          handleOrderHistory(item.id);
-                                        }}
+                                      // onClick={() => {
+                                      //   handleOrderHistory(item.id);
+                                      // }}
                                       >
-                                        Detail Order
+                                        <Link
+                                          to={`/petShop-order-view-details/?id=${
+                                            item.id
+                                          }&status=${
+                                            item.payment_status ?? "not found"
+                                          }`}
+                                        >
+                                          Detail Order
+                                        </Link>
                                       </Button>
                                     </div>
                                   </div>
@@ -692,11 +715,19 @@ function Petshopdashboard() {
                                     </div>
                                     <div className="text-center mt-3">
                                       <Button
-                                        onClick={() => {
-                                          handleOrderHistory(item.id);
-                                        }}
+                                      // onClick={() => {
+                                      //   handleOrderHistory(item.id);
+                                      // }}
                                       >
-                                        Detail Order
+                                        <Link
+                                          to={`/petShop-order-view-details/?id=${
+                                            item.id
+                                          }&status=${
+                                            item.payment_status ?? "not found"
+                                          }`}
+                                        >
+                                          Detail Order
+                                        </Link>
                                       </Button>
                                     </div>
                                   </div>

@@ -38,10 +38,7 @@ function PetshopLogin() {
     formData.append("email", email);
     formData.append("password", password);
     axios
-      .post(
-        `${BASE_URL}/auth/wholesaler_login`,
-        formData
-      )
+      .post(`${BASE_URL}/auth/wholesaler_login`, formData)
       .then((response) => {
         console.log("tarunnnnn", response);
 
@@ -53,7 +50,7 @@ function PetshopLogin() {
             response.data.data[0].wallet_balance
           );
           localStorage.setItem("loginType", "wholeseller");
-          navigate("/petshop-dashboard",{replace:true});
+          navigate("/petshop-dashboard", { replace: true });
           toast.success("Successfully");
         } else if (response.data.message === "User Not Exit") {
           toast.error("User Not Exit");
@@ -74,7 +71,9 @@ function PetshopLogin() {
       <div className="users-bg">
         <Container>
           <div className="text-center">
-          <Link to="/"><img src={logo} /></Link>
+            <Link to="/">
+              <img src={logo} />
+            </Link>
           </div>
           <div>
             <Row>
@@ -159,6 +158,9 @@ function PetshopLogin() {
                       </Button>
                       <div className="login-btns">
                         <Link to="/petshop-signup">SignUp</Link>
+                      </div>
+                      <div className="login-btns">
+                        <Link to="/other-login">Other Login</Link>
                       </div>
                     </div>
                   </Form>

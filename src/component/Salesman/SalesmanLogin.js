@@ -139,6 +139,9 @@ const SalesmanLogin = () => {
                     <div className="login-btns">
                       <Link to="/salesman-signup">SignUp</Link>
                     </div>
+                    <div className="login-btns">
+                      <Link to="/other-login">Other Login</Link>
+                    </div>
                   </div>
                 </Form>
               </div>

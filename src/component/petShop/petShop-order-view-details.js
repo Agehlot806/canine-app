@@ -66,7 +66,8 @@ function PetshopOrderviewdetails() {
     0
   );
 
-  const AddAllServiceCharges = SubTotalTaxAmount + deliveryCharge;
+  // const AddAllServiceCharges = SubTotalTaxAmount + deliveryCharge;
+  const AddAllServiceCharges = SubTotalTaxAmount;
   const formatted = AddAllServiceCharges.toLocaleString(undefined, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
@@ -188,7 +189,7 @@ function PetshopOrderviewdetails() {
           total_quantity: 5,
           return_order: "yes",
           min_order: order?.quantity,
-          price: order?.price.toString() * order?.quantity,
+          price: order?.price.toString(),
           // calculatedPrice === 0 ? productDetails?.price : calculatedPrice,
           user_id: storedWholesellerId,
           item_id: order?.item_id,
@@ -203,7 +204,7 @@ function PetshopOrderviewdetails() {
           localStorage.setItem(`orderBuyitagain_${order?.item_id}`, "true");
           // buy it again end
           // setAddToCartStatus("Added to cart!");
-          navigate(`/add-cart/${order?.item_id}`);
+          navigate(`/petShop-add-cart/${order?.item_id}`);
         } else {
           // setAddToCartStatus(response.data.message);
           toast.error("Already added");
@@ -227,7 +228,8 @@ function PetshopOrderviewdetails() {
     const data = {
       order_id: id,
       user_id: storedWholesellerId,
-      amount: SubTotalData + deliveryCharge,
+      // amount: SubTotalData + deliveryCharge,
+      amount: SubTotalData,
       pay_mode: selectedPaymentMode,
       seles_man_id: salesmanId,
     };
@@ -402,9 +404,9 @@ function PetshopOrderviewdetails() {
                                     <p>
                                       quantity: <span>{order.quantity}</span>
                                     </p>
-                                    <p>
+                                    {/* <p>
                                       gst: <span>{order.gst}</span>
-                                    </p>
+                                    </p> */}
                                   </div>
                                 </Col>
 
@@ -499,11 +501,6 @@ function PetshopOrderviewdetails() {
                         <div className="order-table" ref={tableRef}>
                           {allorder && allorder.length > 0 ? (
                             allorder.map((item, index) => {
-                              console.log(
-                                "item.delivery_charge: ",
-                                item.delivery_charge
-                              );
-                              console.log("item.deliveryChargee: ", item);
                               if (item.id == id) {
                                 console.log("Match found for ID:", id);
                                 console.log("allorder: ", allorder);
@@ -561,7 +558,7 @@ function PetshopOrderviewdetails() {
                                                 )}
                                             </td>
                                           </tr>
-                                          <tr>
+                                          {/* <tr>
                                             <th>
                                               <p>Gst Total Tax :</p>
                                             </th>
@@ -574,26 +571,20 @@ function PetshopOrderviewdetails() {
                                                         <div
                                                           key={callbackItem.id}
                                                         >
-                                                          <p
+                                                           <p
                                                             style={{
                                                               fontSize: "small",
                                                             }}
                                                           >
-                                                            {/* Item ID: {callbackItem.id}
-                                                      , Variant:{" "} */}
-                                                            {/* {renderProducthead( */}
-                                                            Gst:{" "}
                                                             {callbackItem.gst}
-                                                            {/* )} */}
-                                                          </p>
-                                                          {/* Render other callback item details here */}
+                                                          </p> 
                                                         </div>
                                                       )
                                                     )}
                                                   </div>
                                                 )}
                                             </td>
-                                          </tr>
+                                          </tr> */}
                                           <tr>
                                             <th>
                                               <p>Sub Total</p>
@@ -604,7 +595,7 @@ function PetshopOrderviewdetails() {
                                               </p>
                                             </td>
                                           </tr>
-                                          <tr>
+                                          {/* <tr>
                                             <th>
                                               <p>Delivery Charge</p>
                                             </th>
@@ -614,15 +605,11 @@ function PetshopOrderviewdetails() {
                                                 {parseInt(item.delivery_charge)}
                                               </p>
                                             </td>
-                                          </tr>
+                                          </tr> */}
                                           <tr>
                                             <th>Total</th>
                                             <td>
-                                              ₹
-                                              {formatPrice(
-                                                SubTotalData +
-                                                  parseInt(item.delivery_charge)
-                                              )}
+                                              ₹{formatPrice(SubTotalData)}
                                             </td>
                                           </tr>
                                         </tbody>
@@ -695,7 +682,7 @@ function PetshopOrderviewdetails() {
                                           </td>
                                         </tr>
 
-                                        <tr>
+                                        {/* <tr>
                                           <th>
                                             <p>Gst Total Tax :</p>
                                           </th>
@@ -713,21 +700,16 @@ function PetshopOrderviewdetails() {
                                                             fontSize: "small",
                                                           }}
                                                         >
-                                                          {/* Item ID: {callbackItem.id}
-                                                      , Variant:{" "} */}
-                                                          {/* {renderProducthead( */}
                                                           Gst:{" "}
                                                           {callbackItem.gst}
-                                                          {/* )} */}
                                                         </p>
-                                                        {/* Render other callback item details here */}
                                                       </div>
                                                     )
                                                   )}
                                                 </div>
                                               )}
                                           </td>
-                                        </tr>
+                                        </tr> */}
                                         <tr>
                                           <th>
                                             <p>Payment Status:</p>
@@ -766,7 +748,7 @@ function PetshopOrderviewdetails() {
                                           </td>
                                         </tr>
 
-                                        <tr>
+                                        {/* <tr>
                                           <th>
                                             <p>Delivery Fee:</p>
                                           </th>
@@ -775,18 +757,14 @@ function PetshopOrderviewdetails() {
                                               ₹ {parseInt(item.delivery_charge)}
                                             </p>
                                           </td>
-                                        </tr>
+                                        </tr> */}
                                         <tr>
                                           <th>
                                             <h4>Total:</h4>
                                           </th>
                                           <td>
                                             <h4>
-                                              ₹
-                                              {formatPrice(
-                                                SubTotalData +
-                                                  parseInt(item.delivery_charge)
-                                              )}
+                                              ₹{formatPrice(SubTotalData)}
                                             </h4>
                                           </td>
                                         </tr>
