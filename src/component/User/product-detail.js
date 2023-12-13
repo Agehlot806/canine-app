@@ -100,8 +100,8 @@ function Productdetail() {
 
   const productData = async () => {
     axios
-      // .get(`${BASE_URL}/items/product_details/${id}`)
-      .get(`${BASE_URL}/items/details/${id}`)
+      // .get(`${BASE_URL}/items/details/${id}`)
+      .get(`${BASE_URL}/items/product_details/${id}`)
       .then((response) => {
         setProductDetails(response.data.data);
         const cate = response.data.data.category_id;
@@ -725,7 +725,7 @@ function Productdetail() {
     const clearCoupon = () => {
       setcoupenCode(!coupencode);
       setAppliedCoupon(false); // Set appliedCoupon to false when the "X" button is clicked
-      setTotalPrice(originalPrice);
+      setTotalPrice(Amount);
       localStorage.removeItem("disconut"); // Optionally, you can remove the discount value from localStorage here
     };
 
@@ -1298,138 +1298,7 @@ function Productdetail() {
               </div>
             </Col>
           </Row>
-          {/* suggetion product start */}
-          <section className="section-padding food">
-            <Container>
-              <div
-                className="text-left"
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <h1 className="main-head">Suggestion Products</h1>
-                <i
-                  className={
-                    showContent ? "fa fa-chevron-down" : "fa fa-chevron-up"
-                  }
-                  onClick={handleCancelIconClick}
-                />
-                {/* <i
-                  className="fa fa-chevron-down"
-                  onClick={handleCancelIconClick}
-                />
-                <i
-                  className="fa fa-chevron-up"
-                  onClick={handleCancelIconClickTrue}
-                /> */}
-              </div>
-              {showContent && (
-                <div className="needplace">
-                  <Row>
-                    {productDetails?.suggestion_products &&
-                      productDetails?.suggestion_products.map((item, index) => (
-                        <Col lg={3} sm={6} xs={6} className="mb-4">
-                          <div
-                            className="food-product"
-                            onMouseEnter={() =>
-                              handleMouseEntersuggetion(item.id)
-                            }
-                            onMouseLeave={() =>
-                              handleMouseLeavesuggetion(item.id)
-                            }
-                            key={item.id}
-                            style={{
-                              background:
-                                gradientColors[index % gradientColors.length],
-                            }}
-                          >
-                            <i
-                              class="fa fa-heart-o"
-                              onClick={(id) => addToWishlist(item.id)}
-                            />
-                            <Link to={`/product-details/${item.id}`}>
-                              <div className="text-center">
-                                <img
-                                  src={
-                                    "https://canine.hirectjob.in///storage/app/public/product/" +
-                                    item.image
-                                  }
-                                />
-                              </div>
-                              <div>
-                                <h6>{renderProducthead(item.name)}</h6>
-                                <p>
-                                  {renderProductDescription(item.description)}
-                                </p>
-                              </div>
-                              <div className="product-bag">
-                                <Row>
-                                  <Col lg={6} sm={6} xs={6}>
-                                    <p>{item.price}</p>
-                                  </Col>
-                                  <Col lg={6} sm={6} xs={6}>
-                                    <h5>Save {parseFloat(item.discount)}%</h5>
-                                  </Col>
-                                </Row>
-                                <Row>
-                                  <Col
-                                    lg={6}
-                                    sm={6}
-                                    xs={6}
-                                    className="align-self-center"
-                                  >
-                                    <h4>{`₹${Math.floor(
-                                      item.price -
-                                        (item.price * item.discount) / 100
-                                    )}`}</h4>
-                                  </Col>
-                                  {/* <Col lg={6} sm={6} xs={6}>
-                              <Link
-                                to={`/add-cart/${item.id}`}
-                                onClick={handleAddToCart}
-                              >
-                                <img src={bag} />
-                              </Link>
-                            </Col> */}
-                                </Row>
-                              </div>
-                            </Link>
-
-                            {suggetionbuttonVisibility[item.id] && (
-                              <Fade top>
-                                <div className="button-container">
-                                  <button
-                                    data-toggle="modal"
-                                    data-target=".bd-example-modal-lgsuggestion"
-                                    onClick={(e) =>
-                                      suggetionhandeldataId(item.id)
-                                    }
-                                  >
-                                    Quick View
-                                  </button>
-                                  <button
-                                    data-toggle="modal"
-                                    data-target=".buynow"
-                                    onClick={(e) =>
-                                      suggetionhandeldataId(item.id)
-                                    }
-                                  >
-                                    Buy Now
-                                  </button>
-                                </div>
-                              </Fade>
-                            )}
-                          </div>
-                        </Col>
-                      ))}
-                  </Row>
-                </div>
-              )}
-            </Container>
-          </section>
-          {/* suggetion product end */}
+          {/* suggestion part */}
           {productDetails.stock && productDetails.stock.length !== 0 ? (
             <div className="productBTNaddcard">
               {customerLoginId === null ? (
