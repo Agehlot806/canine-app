@@ -1173,7 +1173,7 @@ function Productdetail() {
                 <div className="needplaceProduct">
                   <Row>
                     {productDetails?.variations?.length > 0 && (
-                      <Col sm={6} xs={6}>
+                      <Col sm={6} xs={12}>
                         <div>
                           <div>
                             <div className="tab-container">
@@ -1183,7 +1183,7 @@ function Productdetail() {
                                   productDetails?.variations.length > 0 &&
                                   productDetails?.variations.map(
                                     (item, index) => (
-                                      <Col lg={3} key={index} className="p-0">
+                                      <Col lg={3} xs={3} key={index} className="p-0">
                                         {/* <div
                                         className={`tab-variations ${
                                           selectedVariant === item.type
@@ -1235,7 +1235,7 @@ function Productdetail() {
                         </div>
                       </Col>
                     )}
-                    <Col sm={6} xs={6}>
+                    <Col sm={6} xs={12}>
                       <div className="quantity-btn">
                         <button onClick={handleDecrementone}>
                           <i className="fa fa-minus" />
@@ -1263,16 +1263,16 @@ function Productdetail() {
                   <div className="product-deatils-price">
                     {uservariationprice && formattedAmount >= 0 ? (
                       <Row>
-                        <Col lg={3} sm={3} xs={3}>
+                        <Col lg={3} sm={3} xs={4}>
                           <p>{`₹${uservariationprice}`}</p>
                         </Col>
-                        <Col lg={4} sm={4} xs={3}>
+                        <Col lg={4} sm={4} xs={4}>
                           <h5>{`₹${
                             isNaN(formattedAmount) ? 0 : formattedAmount
                           }`}</h5>
                         </Col>
                         {/* {formattedSavedAmount > 0 && ( */}
-                        <Col lg={5} sm={5} xs={3}>
+                        <Col lg={5} sm={5} xs={4}>
                           {formattedSavedAmount > 0 ? (
                             <h6>Your save ₹{formattedSavedAmount}</h6>
                           ) : (
@@ -1283,14 +1283,14 @@ function Productdetail() {
                       </Row>
                     ) : (
                       <Row>
-                        <Col lg={4} sm={4} xs={3}>
+                        <Col lg={4} sm={4} xs={4}>
                           <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice}`}</h5>
                         </Col>
                       </Row>
                     )}
                   </div>
                   <Row>
-                    <Col lg={5} sm={5} xs={4}>
+                    <Col lg={5} sm={5} xs={12}>
                       <p>(inclusive of all taxes)</p>
                     </Col>
                   </Row>

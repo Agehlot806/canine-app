@@ -360,9 +360,9 @@ function Orderviewdetails() {
                                     <p>
                                       quantity: <span>{order.quantity}</span>
                                     </p>
-                                    <p>
+                                    {/* <p>
                                       gst: <span>{order.gst}</span>
-                                    </p>
+                                    </p> */}
                                   </div>
                                 </Col>
 

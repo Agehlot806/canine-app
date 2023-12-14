@@ -430,7 +430,7 @@ function Petshopheader(props) {
                       alt="Profile Image"
                     />
                   </label>
-                  <ul className="drop-menu">
+                  {/* <ul className="drop-menu">
                     <li>
                       <Link className="dropdown-item" to={`/pet-profile/`}>
                         Pet Profile
@@ -461,7 +461,73 @@ function Petshopheader(props) {
                         Profile
                       </Link>
                     </li>
-                  </ul>
+                  </ul> */}
+                  <ul className="drop-menu">
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={
+                            loginType === "salesman"
+                              ? "/salesman-dashboad/"
+                              : "/petshop-dashboard"
+                          }
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                      {loginType !== "salesman" && (
+                        <>
+                          {/* <li>
+                            <Link
+                              className="dropdown-item"
+                              to={
+                                loginType === "salesman"
+                                  ? "/salesman-dashboad/"
+                                  : "/petshop-transition-history"
+                              }
+                            >
+                              Transitions History
+                            </Link>
+                          </li> */}
+                          <li>
+                            <Link
+                              className="dropdown-item"
+                              to={
+                                loginType === "salesman"
+                                  ? "/salesman-dashboad/"
+                                  : "/petshop-my-orders"
+                              }
+                            >
+                              My Orders
+                            </Link>
+                          </li>
+                        </>
+                      )}
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={
+                            loginType === "salesman"
+                              ? "/salesman-dashboad/"
+                              : "/petshop-wishlist-product"
+                          }
+                        >
+                          Wishlist Products
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={
+                            loginType == "salesman"
+                              ? "/petshop-update-profile"
+                              : "/petshop-update-profile"
+                          }
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                    </ul>
                 </li>
                 <li className="webhide">
                   <a

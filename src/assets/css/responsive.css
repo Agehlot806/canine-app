@@ -301,6 +301,9 @@
 }
 
 @media only screen and (max-width: 540px) {
+  .banner-video video {
+    height: 100%;
+}
   .drop-menu li a {
     font-size: 14px;
     padding: 0;
@@ -485,7 +488,7 @@
   }
 
   .quantity-btn {
-    margin: 0 -8px 15px;
+    margin: 12px -10px 0;
   }
 
   .contact-card i {
@@ -997,6 +1000,9 @@
 }
 } */
 @media only screen and (max-width: 320px) {
+  .dow-summy table tbody tr td {
+    left: 0;
+}
   nav .wrapper {
     padding: 0px 10px !important;
   }
