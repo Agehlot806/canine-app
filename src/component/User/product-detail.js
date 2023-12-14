@@ -34,6 +34,8 @@ function Productdetail() {
   const { id } = useParams();
   const [paymentId, setPaymentId] = useState("");
   const [productDetails, setProductDetails] = useState([]);
+  const [suggestionDetails, setSuggestionDetails] = useState([]);
+  console.log("suggestionDetails: ", suggestionDetails);
   console.log("productDetailsssss: ", productDetails?.suggestion_products);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
@@ -43,6 +45,14 @@ function Productdetail() {
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
+  //suggestion
+  const [selectedVariantSuggestion, setSelectedVariantSuggestion] = useState(
+    []
+  );
+  const [selectedVariantPriceSuggestion, setSelectedVariantPriceSuggestion] =
+    useState("");
+  const [selectedVariantStockSuggestion, setSelectedVariantStockSuggestion] =
+    useState("");
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
     loginType === "wholeseller"
@@ -107,7 +117,7 @@ function Productdetail() {
         const cate = response.data.data.category_id;
         const subcate = response.data.data.sub_category;
         const suggestionproductsID = productDetails?.suggestion_products[0]?.id;
-        console.log("suggestionProducts: ", suggestionProducts);
+        // console.log("suggestionProducts: ", suggestionProducts);
         fetchrelated(cate, subcate);
         // Perform any additional actions after successful deletion
       })
@@ -260,9 +270,24 @@ function Productdetail() {
     let number = index + 0.5;
     return (
       <span key={index}>
-        {productDetails.rating_count >= index + 1 ? (
+        {productDetails?.rating_count >= index + 1 ? (
           <FaStar className="icon" />
-        ) : productDetails.rating_count >= number ? (
+        ) : productDetails?.rating_count >= number ? (
+          <FaStarHalfAlt className="icon" />
+        ) : (
+          <AiOutlineStar className="icon" />
+        )}
+      </span>
+    );
+  });
+
+  const ratingStarSuggetstion = Array.from({ length: 5 }, (item, index) => {
+    let number = index + 0.5;
+    return (
+      <span key={index}>
+        {productDetails?.suggestion_products?.rating_count >= index + 1 ? (
+          <FaStar className="icon" />
+        ) : productDetails?.suggestion_products?.rating_count >= number ? (
           <FaStarHalfAlt className="icon" />
         ) : (
           <AiOutlineStar className="icon" />
@@ -486,9 +511,9 @@ function Productdetail() {
 
   const productDatasuggetion = async (selctId) => {
     axios
-      .get(`${BASE_URL}/items/details/${selctId}`)
+      .get(`${BASE_URL}/items/product_details/${selctId}`)
       .then((response) => {
-        setProductDetails(response.data.data.suggestion_products);
+        setSuggestionDetails(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -1298,7 +1323,138 @@ function Productdetail() {
               </div>
             </Col>
           </Row>
-          {/* suggestion part */}
+          {/* suggetion product start */}
+          <section className="section-padding food">
+            <Container>
+              <div
+                className="text-left"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h1 className="main-head">Suggestion Products</h1>
+                <i
+                  className={
+                    showContent ? "fa fa-chevron-down" : "fa fa-chevron-up"
+                  }
+                  onClick={handleCancelIconClick}
+                />
+                {/* <i
+                  className="fa fa-chevron-down"
+                  onClick={handleCancelIconClick}
+                />
+                <i
+                  className="fa fa-chevron-up"
+                  onClick={handleCancelIconClickTrue}
+                /> */}
+              </div>
+              {showContent && (
+                <div className="needplace">
+                  <Row>
+                    {productDetails?.suggestion_products &&
+                      productDetails?.suggestion_products.map((item, index) => (
+                        <Col lg={3} sm={6} xs={6} className="mb-4">
+                          <div
+                            className="food-product"
+                            onMouseEnter={() =>
+                              handleMouseEntersuggetion(item.id)
+                            }
+                            onMouseLeave={() =>
+                              handleMouseLeavesuggetion(item.id)
+                            }
+                            key={item.id}
+                            style={{
+                              background:
+                                gradientColors[index % gradientColors.length],
+                            }}
+                          >
+                            <i
+                              class="fa fa-heart-o"
+                              onClick={(id) => addToWishlist(item.id)}
+                            />
+                            <Link to={`/product-details/${item.id}`}>
+                              <div className="text-center">
+                                <img
+                                  src={
+                                    "https://canine.hirectjob.in///storage/app/public/product/" +
+                                    item.image
+                                  }
+                                />
+                              </div>
+                              <div>
+                                <h6>{renderProducthead(item.name)}</h6>
+                                <p>
+                                  {renderProductDescription(item.description)}
+                                </p>
+                              </div>
+                              <div className="product-bag">
+                                <Row>
+                                  <Col lg={6} sm={6} xs={6}>
+                                    <p>{item.price}</p>
+                                  </Col>
+                                  <Col lg={6} sm={6} xs={6}>
+                                    <h5>Save {parseFloat(item.discount)}%</h5>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col
+                                    lg={6}
+                                    sm={6}
+                                    xs={6}
+                                    className="align-self-center"
+                                  >
+                                    <h4>{`₹${Math.floor(
+                                      item.price -
+                                        (item.price * item.discount) / 100
+                                    )}`}</h4>
+                                  </Col>
+                                  {/* <Col lg={6} sm={6} xs={6}>
+                              <Link
+                                to={`/add-cart/${item.id}`}
+                                onClick={handleAddToCart}
+                              >
+                                <img src={bag} />
+                              </Link>
+                            </Col> */}
+                                </Row>
+                              </div>
+                            </Link>
+
+                            {suggetionbuttonVisibility[item.id] && (
+                              <Fade top>
+                                <div className="button-container">
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".bd-example-modal-lgsuggestion"
+                                    onClick={(e) =>
+                                      suggetionhandeldataId(item.id)
+                                    }
+                                  >
+                                    Quick View
+                                  </button>
+                                  <button
+                                    data-toggle="modal"
+                                    data-target=".buynow"
+                                    onClick={(e) =>
+                                      suggetionhandeldataId(item.id)
+                                    }
+                                  >
+                                    Buy Now
+                                  </button>
+                                </div>
+                              </Fade>
+                            )}
+                          </div>
+                        </Col>
+                      ))}
+                  </Row>
+                </div>
+              )}
+            </Container>
+          </section>
+          {/* suggetion product end */}
           {productDetails.stock && productDetails.stock.length !== 0 ? (
             <div className="productBTNaddcard">
               {customerLoginId === null ? (
@@ -2006,40 +2162,37 @@ function Productdetail() {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                              // onClick={handleMainImageClick}
+                              onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
                             <Row>
-                              {productDetails?.suggestion_products?.images &&
-                              productDetails?.suggestion_products?.images
-                                .length > 0 ? (
-                                productDetails?.suggestion_products?.images.map(
-                                  (item, index) => (
-                                    <Col
-                                      lg={3}
-                                      sm={3}
-                                      xs={3}
-                                      className="mb-3"
-                                      key={index}
+                              {suggestionDetails?.images &&
+                              suggestionDetails?.images.length > 0 ? (
+                                suggestionDetails?.images.map((item, index) => (
+                                  <Col
+                                    lg={3}
+                                    sm={3}
+                                    xs={3}
+                                    className="mb-3"
+                                    key={index}
+                                  >
+                                    <div
+                                      className="product-item-inner"
+                                      onClick={() =>
+                                        handleThumbnailClick(index)
+                                      }
                                     >
-                                      <div
-                                        className="product-item-inner"
-                                        onClick={() =>
-                                          handleThumbnailClick(index)
+                                      <img
+                                        src={
+                                          "https://canine.hirectjob.in//storage/app/public/product/" +
+                                          item
                                         }
-                                      >
-                                        <img
-                                          src={
-                                            "https://canine.hirectjob.in//storage/app/public/product/" +
-                                            item
-                                          }
-                                          alt={`Image ${index}`}
-                                        />
-                                      </div>
-                                    </Col>
-                                  )
-                                )
+                                        alt={`Image ${index}`}
+                                      />
+                                    </div>
+                                  </Col>
+                                ))
                               ) : (
                                 <p className="emptyMSG">No Related Image.</p>
                               )}
@@ -2050,45 +2203,37 @@ function Productdetail() {
                           <Lightbox
                             mainSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails?.suggestion_products?.images[
-                                lightboxImageIndex
-                              ]
+                              suggestionDetails?.images[lightboxImageIndex]
                             }
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails?.suggestion_products?.images[
+                              suggestionDetails?.images[
                                 (lightboxImageIndex + 1) %
-                                  productDetails?.suggestion_products?.images
-                                    .length
+                                  suggestionDetails?.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
-                              productDetails?.suggestion_products?.images[
+                              suggestionDetails?.images[
                                 (lightboxImageIndex +
-                                  productDetails?.suggestion_products?.images
-                                    .length -
+                                  suggestionDetails?.images.length -
                                   1) %
-                                  productDetails?.suggestion_products?.images
-                                    .length
+                                  suggestionDetails?.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
                             onMovePrevRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex +
-                                  productDetails?.suggestion_products?.images
-                                    .length -
+                                  suggestionDetails?.images.length -
                                   1) %
-                                  productDetails?.suggestion_products?.images
-                                    .length
+                                  suggestionDetails?.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                  productDetails?.suggestion_products?.images
-                                    .length
+                                  suggestionDetails?.images.length
                               )
                             }
                           />
@@ -2099,12 +2244,11 @@ function Productdetail() {
                       <div className="productDetail-content">
                         <Row>
                           <Col lg={9} sm={9} xs={9}>
-                            <h4>{productDetails?.suggestion_products?.name}</h4>
-                            <h4>test</h4>
+                            <h4>{suggestionDetails?.name}</h4>
                           </Col>
                           <Col lg={3} sm={3} xs={3}>
                             <p>
-                              {productDetails?.suggestion_products?.veg == 0 ? (
+                              {suggestionDetails?.veg == 0 ? (
                                 <span>
                                   <span className="non-vegetarian">●</span>
                                 </span>
@@ -2117,21 +2261,14 @@ function Productdetail() {
                           </Col>
                         </Row>
                         <p>
-                          By{" "}
-                          <span>
-                            {productDetails?.suggestion_products?.store_name}
-                          </span>
+                          By <span>{suggestionDetails?.store_name}</span>
                         </p>
                         <Wrapper>
                           <div className="icon-style">
-                            {ratingStar}
+                            {ratingStarSuggetstion}
                             <p>
-                              (
-                              {
-                                productDetails?.suggestion_products
-                                  ?.rating_count
-                              }{" "}
-                              customer reviews)
+                              ({suggestionDetails?.rating_count} customer
+                              reviews)
                             </p>
                           </div>
                         </Wrapper>
@@ -2144,11 +2281,10 @@ function Productdetail() {
                                   <div className="tab-container">
                                     <h6>Variations</h6>
                                     <Row>
-                                      {productDetails?.suggestion_products
-                                        ?.variations &&
-                                        productDetails?.suggestion_products
-                                          ?.variations?.length > 0 &&
-                                        productDetails?.suggestion_products?.variations.map(
+                                      {suggestionDetails?.variations &&
+                                        suggestionDetails?.variations?.length >
+                                          0 &&
+                                        suggestionDetails?.variations.map(
                                           (item, index) => (
                                             <Col
                                               lg={5}
@@ -2260,30 +2396,15 @@ function Productdetail() {
                             <tbody>
                               <tr>
                                 <th>Brand</th>
-                                <td>
-                                  {
-                                    productDetails?.suggestion_products
-                                      ?.brand_id
-                                  }
-                                </td>
+                                <td>{suggestionDetails?.brand_id}</td>
                               </tr>
                               <tr>
                                 <th>Age Range</th>
-                                <td>
-                                  {
-                                    productDetails?.suggestion_products
-                                      ?.lifeStage_id
-                                  }
-                                </td>
+                                <td>{suggestionDetails?.lifeStage_id}</td>
                               </tr>
                               <tr>
                                 <th>Target Species</th>
-                                <td>
-                                  {
-                                    productDetails?.suggestion_products
-                                      ?.Petsbreeds_id
-                                  }
-                                </td>
+                                <td>{suggestionDetails?.Petsbreeds_id}</td>
                               </tr>
                             </tbody>
                           </Table>
@@ -2293,8 +2414,8 @@ function Productdetail() {
                       </div>
                     </Col>
                   </Row>
-                  {productDetails?.suggestion_products?.stock &&
-                  productDetails?.suggestion_products?.stock?.length !== 0 ? (
+                  {suggestionDetails?.stock &&
+                  suggestionDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
@@ -2303,10 +2424,7 @@ function Productdetail() {
                             onClick={() => {
                               const filterData = cart.filter((el) => {
                                 console.log("elll: ", el);
-                                return (
-                                  el.item_id ===
-                                  productDetails?.suggestion_products?.id
-                                );
+                                return el.item_id === suggestionDetails?.id;
                               });
                               if (filterData?.length > 0) {
                                 toast.error("Already in added");
@@ -2314,22 +2432,16 @@ function Productdetail() {
                                 dispatch({
                                   type: "ADD_TO_CART",
                                   payload: {
-                                    item_id:
-                                      productDetails?.suggestion_products?.id,
+                                    item_id: suggestionDetails?.id,
                                     variant: selectedVariant,
                                     price:
                                       calculatedPrice === 0
-                                        ? parseInt(
-                                            productDetails?.suggestion_products
-                                              ?.price
-                                          ) * quantity
+                                        ? parseInt(suggestionDetails?.price) *
+                                          quantity
                                         : parseInt(calculatedPrice),
                                     quantity: quantity,
-                                    name: productDetails?.suggestion_products
-                                      ?.name,
-                                    image:
-                                      productDetails?.suggestion_products
-                                        ?.image,
+                                    name: suggestionDetails?.name,
+                                    image: suggestionDetails?.image,
                                     orderamountwithquantity: formattedAmount,
                                   },
                                 });
@@ -2343,7 +2455,7 @@ function Productdetail() {
                       ) : (
                         <Button>
                           <Link
-                            to={`/add-cart/${productDetails?.suggestion_products?.id}`}
+                            to={`/add-cart/${suggestionDetails?.id}`}
                             onClick={handleAddToCart}
                           >
                             <i className="fa fa-shopping-bag" /> Add to cart

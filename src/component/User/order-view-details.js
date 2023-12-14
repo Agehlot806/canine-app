@@ -530,7 +530,7 @@ function Orderviewdetails() {
                                         )}
                                       </td> */}
                                       </tr>
-                                      <tr>
+                                      {/* <tr>
                                         <th>
                                           <p>Gst Total Tax :</p>
                                         </th>
@@ -546,20 +546,15 @@ function Orderviewdetails() {
                                                           fontSize: "small",
                                                         }}
                                                       >
-                                                        {/* Item ID: {callbackItem.id}
-                                                      , Variant:{" "} */}
-                                                        {/* {renderProducthead( */}
                                                         Gst: {callbackItem.gst}
-                                                        {/* )} */}
                                                       </p>
-                                                      {/* Render other callback item details here */}
                                                     </div>
                                                   )
                                                 )}
                                               </div>
                                             )}
                                         </td>
-                                      </tr>
+                                      </tr> */}
                                       {/* <tr>
                                         <th>
                                           <p>Gst :</p>
@@ -698,7 +693,7 @@ function Orderviewdetails() {
                                         )}
                                       </td> */}
                                     </tr>
-                                    <tr>
+                                    {/* <tr>
                                       <th>
                                         <p>Gst Total Tax :</p>
                                       </th>
@@ -714,20 +709,15 @@ function Orderviewdetails() {
                                                         fontSize: "small",
                                                       }}
                                                     >
-                                                      {/* Item ID: {callbackItem.id}
-                                                      , Variant:{" "} */}
-                                                      {/* {renderProducthead( */}
                                                       Gst: {callbackItem.gst}
-                                                      {/* )} */}
                                                     </p>
-                                                    {/* Render other callback item details here */}
                                                   </div>
                                                 )
                                               )}
                                             </div>
                                           )}
                                       </td>
-                                    </tr>
+                                    </tr> */}
                                     {/* <tr>
                                       <th>
                                         <p>Total Before Tax:</p>
