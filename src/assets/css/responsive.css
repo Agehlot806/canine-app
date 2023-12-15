@@ -301,6 +301,16 @@
 }
 
 @media only screen and (max-width: 540px) {
+  .frequ h2 {
+    font-size: 14px;
+  }
+  .frequ h6 {
+    font-size: 10px;
+}
+.frequ-btn button {
+  padding: 8px;
+  font-size: 12px;
+}
   .banner-video video {
     height: 100%;
 }

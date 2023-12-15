@@ -139,16 +139,13 @@ function Contact() {
                 <div className="contact-card">
                   <i className="fa fa-map-marker " />
                   <h3>Address</h3>
+                  <h4>Kandivali Retail Shop</h4>
                   <p>
-                    Kandivali Retail Shop
-                    <br />
                     Canine Products Mazi Villa Bunglow # 8 Dattani park road
                     Thakur village Kandivali East Mumbai-400101
                   </p>
+                  <h4>CRAWFORD MARKET Warehouse</h4>
                   <p>
-                    {" "}
-                    CRAWFORD MARKET Warehouse
-                    <br />
                     Shop No. 559, Crawford Market , OPP . Sadanand Hotel ,
                     Mumbai-400001.{" "}
                   </p>
