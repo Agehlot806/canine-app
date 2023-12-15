@@ -16,7 +16,8 @@ function Blog() {
     try {
       const response = await fetch(`${BASE_URL}/auth/blog`);
       const data = await response.json();
-      setblog(data.data);
+      const reversedata = data.data.reverse();
+      setblog(reversedata);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     }
