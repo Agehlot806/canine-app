@@ -75,6 +75,7 @@ function Blogdetails() {
         const allProductIds = extractedProductIds.flat();
 
         setProductIds(allProductIds);
+        console.log("allProductIds",allProductIds);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -969,12 +970,12 @@ function Blogdetails() {
                       sm={6}
                       xs={6}
                       className="mb-4"
-                      key={item[0]?.id}
+                      key={item?.id}
                     >
                       <div
                         className="food-product"
-                        onMouseEnter={() => handleMouseEnter(item[0]?.id)}
-                        onMouseLeave={() => handleMouseLeave(item[0]?.id)}
+                        onMouseEnter={() => handleMouseEnter(item?.id)}
+                        onMouseLeave={() => handleMouseLeave(item?.id)}
                         style={{
                           background:
                             gradientColors[index % gradientColors?.length],
@@ -990,22 +991,22 @@ function Blogdetails() {
                             if (storedUserId == null) {
                               toast.error("Please Login first");
                             } else {
-                              addToWishlist(item[0]?.id);
+                              addToWishlist(item?.id);
                             }
                           }}
                         />
 
-                        <Link to={`/product-details/${item[0]?.id}`}>
+                        <Link to={`/product-details/${item?.id}`}>
                           <div className="text-center">
                             <img
-                              src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
-                              alt={item[0]?.name}
+                              src={`https://canine.hirectjob.in///storage/app/public/product/${item?.image}`}
+                              alt={item?.name}
                             />
                           </div>
                           <div>
-                            <h6>{renderProducthead(item[0]?.name)}</h6>
+                            <h6>{renderProducthead(item?.name)}</h6>
                             <p>
-                              {renderProductDescription(item[0]?.description)}
+                              {renderProductDescription(item?.description)}
                             </p>
                           </div>
                           <div className="product-bag">
@@ -1027,36 +1028,36 @@ function Blogdetails() {
                                 className="align-self-center"
                               >
                                 {/* <h6>{`₹${
-                              item[0]?.price -
-                              (item[0]?.price * item[0]?.discount) / 100
+                              item?.price -
+                              (item?.price * item?.discount) / 100
                             }`}</h6> */}
                                 <h4>{`₹${Math.floor(
-                                  item[0]?.price -
-                                    (item[0]?.price * item[0]?.discount) / 100
+                                  item?.price -
+                                    (item?.price * item?.discount) / 100
                                 )}`}</h4>
                               </Col>
                             </Row>
                           </div>
                         </Link>
-                        {buttonVisibility[item[0]?.id] && (
+                        {buttonVisibility[item?.id] && (
                           <Fade top>
                             <div className="button-container">
                               <button
                                 data-toggle="modal"
                                 data-target=".bd-example-modal-lg"
-                                onClick={() => handeldataId(item[0].id)}
+                                onClick={() => handeldataId(item.id)}
                               >
                                 Quick View
                               </button>
                               <button
                                 data-toggle="modal"
                                 data-target=".buynow"
-                                // onClick={() => handeldataId(item[0].id)}
+                                // onClick={() => handeldataId(item.id)}
                                 onClick={(e) => {
                                   if (!storedUserId) {
                                     shippingpage("/login");
                                   } else {
-                                    handeldataId(item[0].id);
+                                    handeldataId(item.id);
                                   }
                                 }}
                               >

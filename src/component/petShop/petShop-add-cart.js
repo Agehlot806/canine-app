@@ -1659,7 +1659,7 @@ function PetshopAddCart() {
                         )}
 
                         <div>
-                          {showGstOptions && (
+                          {/* {showGstOptions && (
                             <div>
                               <div className="form-check form-check-inline">
                                 <input
@@ -1702,6 +1702,33 @@ function PetshopAddCart() {
                                   GST
                                 </label>
                               </div>
+                            </div>
+                          )} */}
+                          {showGstOptions && (
+                            <div>
+                              {selectedOptiontwo !== "Cash" && (
+                                <div className="form-check form-check-inline">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="gstRadios"
+                                    id="withGST"
+                                    value={1}
+                                    onChange={handleRadioButton}
+                                    checked={
+                                      selectedPaymentMode == "GST"
+                                        ? selectedOptiontwo == "Cheque"
+                                        : selectedOptiontwo == "UPI"
+                                    }
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="withGST"
+                                  >
+                                    GST
+                                  </label>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
