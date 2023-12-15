@@ -121,9 +121,9 @@ function Contact() {
               <Col lg={4} sm={6} xs={6} className="mb-4">
                 <div className="contact-card">
                   <i className="fa fa-envelope-o " />
-                  <Link to="mailto:info@canine.com">
+                  <Link to="mailto:info@canineproducts.in">
                     <h3>Email</h3>
-                    <p>info@canine.com</p>
+                    <p>info@canineproducts.in</p>
                   </Link>
                 </div>
               </Col>
@@ -131,8 +131,8 @@ function Contact() {
                 <div className="contact-card">
                   <i className="fa fa-clock-o" />
                   <h3>Open Hours</h3>
-                  <p>Mon-Fri:7am-6pm</p>
-                  <p>Sat-Sun:9ap-4pm</p>
+                  <p>Mon-Sat:10am-9pm</p>
+                  {/* <p>Sat-Sun:9ap-4pm</p> */}
                 </div>
               </Col>
               <Col lg={12} sm={6} xs={6} className="mb-4">
@@ -140,14 +140,15 @@ function Contact() {
                   <i className="fa fa-map-marker " />
                   <h3>Address</h3>
                   <p>
-                    Kandivali
+                    Kandivali Retail Shop
                     <br />
                     Canine Products Mazi Villa Bunglow # 8 Dattani park road
                     Thakur village Kandivali East Mumbai-400101
                   </p>
                   <p>
                     {" "}
-                    CRAWFORD MARKET <br />
+                    CRAWFORD MARKET Warehouse
+                    <br />
                     Shop No. 559, Crawford Market , OPP . Sadanand Hotel ,
                     Mumbai-400001.{" "}
                   </p>

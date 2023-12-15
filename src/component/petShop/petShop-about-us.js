@@ -171,13 +171,13 @@ function Petshopaboutus() {
               </Col>
               <Col lg={3} sm={3} className="mb-3">
                 <div className="about-choose">
-                  <h5>Emergency Services</h5>
+                  <h5>Quality Product</h5>
                   {/* <p>Lorem ipsum dolor sit amet, consectetur.</p> */}
                 </div>
               </Col>
               <Col lg={3} sm={3} className="mb-3">
                 <div className="about-choose">
-                  <h5>Veterinary Help</h5>
+                  <h5>Best Pricing</h5>
                   {/* <p>Lorem ipsum dolor sit amet, consectetur.</p> */}
                 </div>
               </Col>

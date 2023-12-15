@@ -36,7 +36,7 @@ function Productdetail() {
   const [productDetails, setProductDetails] = useState([]);
   const [suggestionDetails, setSuggestionDetails] = useState([]);
   console.log("suggestionDetails: ", suggestionDetails);
-  console.log("productDetailsssss: ", productDetails?.suggestion_products);
+  console.log("productDetailsssss: ", productDetails?.suggestion_product);
   const [itemwiseonebanner, setitemwiseonebanner] = useState([]);
   const [addToCartStatus, setAddToCartStatus] = useState("");
   const [notifyMeData, setNotifyMeData] = useState("");
@@ -116,7 +116,7 @@ function Productdetail() {
         setProductDetails(response.data.data);
         const cate = response.data.data.category_id;
         const subcate = response.data.data.sub_category;
-        const suggestionproductsID = productDetails?.suggestion_products[0]?.id;
+        const suggestionproductsID = productDetails?.suggestion_product[0]?.id;
         // console.log("suggestionProducts: ", suggestionProducts);
         fetchrelated(cate, subcate);
         // Perform any additional actions after successful deletion
@@ -285,9 +285,9 @@ function Productdetail() {
     let number = index + 0.5;
     return (
       <span key={index}>
-        {productDetails?.suggestion_products?.rating_count >= index + 1 ? (
+        {productDetails?.suggestion_product?.rating_count >= index + 1 ? (
           <FaStar className="icon" />
-        ) : productDetails?.suggestion_products?.rating_count >= number ? (
+        ) : productDetails?.suggestion_product?.rating_count >= number ? (
           <FaStarHalfAlt className="icon" />
         ) : (
           <AiOutlineStar className="icon" />
@@ -1183,7 +1183,12 @@ function Productdetail() {
                                   productDetails?.variations.length > 0 &&
                                   productDetails?.variations.map(
                                     (item, index) => (
-                                      <Col lg={3} xs={3} key={index} className="p-0">
+                                      <Col
+                                        lg={3}
+                                        xs={3}
+                                        key={index}
+                                        className="p-0"
+                                      >
                                         {/* <div
                                         className={`tab-variations ${
                                           selectedVariant === item.type
@@ -1334,7 +1339,7 @@ function Productdetail() {
                   justifyContent: "space-between",
                 }}
               >
-                <h1 className="main-head">Suggestion Products</h1>
+                <h1 className="main-head">Frequently bought together</h1>
                 <i
                   className={
                     showContent ? "fa fa-chevron-down" : "fa fa-chevron-up"
@@ -1353,8 +1358,8 @@ function Productdetail() {
               {showContent && (
                 <div className="needplace">
                   <Row>
-                    {productDetails?.suggestion_products &&
-                      productDetails?.suggestion_products.map((item, index) => (
+                    {productDetails?.suggestion_product &&
+                      productDetails?.suggestion_product.map((item, index) => (
                         <Col lg={3} sm={6} xs={6} className="mb-4">
                           <div
                             className="food-product"
