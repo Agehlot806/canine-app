@@ -116,8 +116,16 @@ function Productdetail() {
         setProductDetails(response.data.data);
         const cate = response.data.data.category_id;
         const subcate = response.data.data.sub_category;
-        const suggestionproductsID = productDetails?.suggestion_product[0]?.id;
-        // console.log("suggestionProducts: ", suggestionProducts);
+        const responseData = response?.data?.data?.suggestion_product;
+        let suggestionTotal = 0;
+
+        responseData.forEach((item) => {
+          let priceeee = Math.floor(
+            item.price - (item.price * item.discount) / 100
+          );
+          return suggestionTotal + priceeee;
+        });
+        console.log("suggestionTotal: ", suggestionTotal);
         fetchrelated(cate, subcate);
         // Perform any additional actions after successful deletion
       })
@@ -354,7 +362,7 @@ function Productdetail() {
 
   const Amount = Math.floor(
     uservariationprice -
-    (parseInt(uservariationprice) * parseInt(productDetails.discount)) / 100
+      (parseInt(uservariationprice) * parseInt(productDetails.discount)) / 100
   );
   console.log("priceAmount: ", Amount);
 
@@ -366,7 +374,7 @@ function Productdetail() {
   console.log("priceformattedAmount: ", formattedAmount);
   const calculatedPrice = selectedVariantPrice
     ? selectedVariantPrice -
-    (selectedVariantPrice * productDetails.discount) / 100
+      (selectedVariantPrice * productDetails.discount) / 100
     : productDetails?.price;
   // with outlogin
   const calculatedPriceWithoutlogin = selectedVariantPrice
@@ -427,7 +435,7 @@ function Productdetail() {
     if (productDetails.image) {
       setMainImage(
         "https://canine.hirectjob.in//storage/app/public/product/" +
-        productDetails.image
+          productDetails.image
       );
     }
   }, [productDetails]);
@@ -435,7 +443,7 @@ function Productdetail() {
   const handleThumbnailClick = (index) => {
     setMainImage(
       "https://canine.hirectjob.in//storage/app/public/product/" +
-      productDetails.images[index]
+        productDetails.images[index]
     );
   };
 
@@ -1048,18 +1056,18 @@ function Productdetail() {
       <div className="home-section">
         {homebanner
           ? homebanner.map(
-            (item, index) =>
-              item.type === "common" && (
-                <Link to={item.default_link}>
-                  <img
-                    className="partner-img"
-                    src={
-                      "https://canine.hirectjob.in//storage/app/" + item.image
-                    }
-                  />
-                </Link>
-              )
-          )
+              (item, index) =>
+                item.type === "common" && (
+                  <Link to={item.default_link}>
+                    <img
+                      className="partner-img"
+                      src={
+                        "https://canine.hirectjob.in//storage/app/" + item.image
+                      }
+                    />
+                  </Link>
+                )
+            )
           : null}
       </div>
 
@@ -1079,7 +1087,7 @@ function Productdetail() {
                   <div className="needplace">
                     <Row>
                       {productDetails?.images &&
-                        productDetails?.images.length > 0 ? (
+                      productDetails?.images.length > 0 ? (
                         productDetails.images.map((item, index) => (
                           <Col
                             lg={2}
@@ -1204,10 +1212,11 @@ function Productdetail() {
                                       </div> */}
                                         {item.stock !== 0 ? (
                                           <div
-                                            className={`tab-variations ${selectedVariant === item.type
-                                              ? "active"
-                                              : ""
-                                              }`}
+                                            className={`tab-variations ${
+                                              selectedVariant === item.type
+                                                ? "active"
+                                                : ""
+                                            }`}
                                             onClick={() => {
                                               setSelectedVariant(item.type);
                                               setSelectedVariantPrice(
@@ -1271,8 +1280,9 @@ function Productdetail() {
                           <p>{`₹${uservariationprice}`}</p>
                         </Col>
                         <Col lg={4} sm={4} xs={4}>
-                          <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                            }`}</h5>
+                          <h5>{`₹${
+                            isNaN(formattedAmount) ? 0 : formattedAmount
+                          }`}</h5>
                         </Col>
                         {/* {formattedSavedAmount > 0 && ( */}
                         <Col lg={5} sm={5} xs={4}>
@@ -1326,181 +1336,7 @@ function Productdetail() {
               </div>
             </Col>
           </Row>
-          {/* suggetion product start */}
-          <section className="section-padding food">
-            <Container>
-              <div
-                className="text-left"
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <h1 className="main-head">Frequently bought together</h1>
-                <i
-                  className={
-                    showContent ? "fa fa-chevron-down" : "fa fa-chevron-up"
-                  }
-                  onClick={handleCancelIconClick}
-                />
-                {/* <i
-                  className="fa fa-chevron-down"
-                  onClick={handleCancelIconClick}
-                />
-                <i
-                  className="fa fa-chevron-up"
-                  onClick={handleCancelIconClickTrue}
-                /> */}
-              </div>
-              {showContent && (
-                <div className="needplace">
-                  <Row>
-                    {productDetails?.suggestion_product &&
-                      productDetails?.suggestion_product.map((item, index) => (
-                        <>
-                          <Col lg={3} sm={6} xs={6} className="mb-4">
-                            <div
-                              className="food-product"
-                              onMouseEnter={() =>
-                                handleMouseEntersuggetion(item.id)
-                              }
-                              onMouseLeave={() =>
-                                handleMouseLeavesuggetion(item.id)
-                              }
-                              key={item.id}
-                              style={{
-                                background:
-                                  gradientColors[index % gradientColors.length],
-                              }}
-                            >
-                              <i
-                                class="fa fa-heart-o"
-                                onClick={(id) => addToWishlist(item.id)}
-                              />
-                              <Link to={`/product-details/${item.id}`}>
-                                <div className="text-center">
-                                  <img
-                                    src={
-                                      "https://canine.hirectjob.in///storage/app/public/product/" +
-                                      item.image
-                                    }
-                                  />
-                                </div>
-                                <div>
-                                  <h6>{renderProducthead(item.name)}</h6>
-                                  <p>
-                                    {renderProductDescription(item.description)}
-                                  </p>
-                                </div>
-                                <div className="product-bag">
-                                  <Row>
-                                    <Col lg={6} sm={6} xs={6}>
-                                      <p>{item.price}</p>
-                                    </Col>
-                                    <Col lg={6} sm={6} xs={6}>
-                                      <h5>Save {parseFloat(item.discount)}%</h5>
-                                    </Col>
-                                  </Row>
-                                  <Row>
-                                    <Col
-                                      lg={6}
-                                      sm={6}
-                                      xs={6}
-                                      className="align-self-center"
-                                    >
-                                      <h4>{`₹${Math.floor(
-                                        item.price -
-                                        (item.price * item.discount) / 100
-                                      )}`}</h4>
-                                    </Col>
-                                    {/* <Col lg={6} sm={6} xs={6}>
-                              <Link
-                                to={`/add-cart/${item.id}`}
-                                onClick={handleAddToCart}
-                              >
-                                <img src={bag} />
-                              </Link>
-                            </Col> */}
-                                  </Row>
-                                </div>
-                              </Link>
 
-                              {suggetionbuttonVisibility[item.id] && (
-                                <Fade top>
-                                  <div className="button-container">
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".bd-example-modal-lgsuggestion"
-                                      onClick={(e) =>
-                                        suggetionhandeldataId(item.id)
-                                      }
-                                    >
-                                      Quick View
-                                    </button>
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".buynow"
-                                      onClick={(e) =>
-                                        suggetionhandeldataId(item.id)
-                                      }
-                                    >
-                                      Buy Now
-                                    </button>
-                                  </div>
-                                </Fade>
-                              )}
-                            </div>
-                          </Col>
-                          {index < productDetails.suggestion_product.length - 1 && (
-                            <Col lg={1} sm={2} xs={2} className="mb-4 d-flex align-items-center justify-content-center" key={`plus-${item.id}`}>
-                              <i className="fa fa-plus" aria-hidden="true"></i>
-                            </Col>
-                          )}
-                        </>
-                      ))}
-                  </Row>
-                  <Row>
-
-                    <Col lg={8}>
-                      <Row>
-                        <Col lg={3} xs={3}>
-                          <div className="frequ">
-                            <h6>1 Item</h6>
-                            <h2>₹25,000</h2>
-                          </div>
-                        </Col>
-                        <Col lg={2} xs={1} className="d-flex align-items-center justify-content-left">
-                          <h4>+</h4>
-                        </Col>
-                        <Col lg={3} xs={3}>
-                          <div className="frequ">
-                            <h6>2 Add-ons</h6>
-                            <h2>₹1000</h2>
-                          </div>
-                        </Col>
-                        <Col lg={1} xs={1} className="d-flex align-items-center justify-content-center">
-                          <h4>=</h4>
-                        </Col>
-                        <Col lg={3} xs={3}>
-                          <div className="frequ">
-                            <h6>Total</h6>
-                            <h2>₹26,000</h2>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col lg={4} className="align-self-center">
-                      <div className="frequ-btn">
-                        <button><i class="fa fa-shopping-cart" /> ADD 3 ITEMS TO CART</button>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              )}
-            </Container>
-          </section>
-          {/* suggetion product end */}
           {productDetails.stock && productDetails.stock.length !== 0 ? (
             <div className="productBTNaddcard">
               {customerLoginId === null ? (
@@ -1555,7 +1391,263 @@ function Productdetail() {
               </Button>
             </div>
           )}
+          {/* suggetion product start */}
+          <section className="section-padding food">
+            <Container>
+              <div
+                className="text-left"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h1 className="main-head">Frequently bought together</h1>
+                <i
+                  className={
+                    showContent ? "fa fa-chevron-down" : "fa fa-chevron-up"
+                  }
+                  onClick={handleCancelIconClick}
+                />
+                {/* <i
+                  className="fa fa-chevron-down"
+                  onClick={handleCancelIconClick}
+                />
+                <i
+                  className="fa fa-chevron-up"
+                  onClick={handleCancelIconClickTrue}
+                /> */}
+              </div>
+              {showContent && (
+                <div className="needplace">
+                  <Row>
+                    {productDetails?.suggestion_product &&
+                      productDetails?.suggestion_product.map((item, index) => (
+                        <>
+                          <Col lg={3} sm={6} xs={6} className="mb-4">
+                            <div
+                              className="food-product"
+                              onMouseEnter={() =>
+                                handleMouseEntersuggetion(item.id)
+                              }
+                              onMouseLeave={() =>
+                                handleMouseLeavesuggetion(item.id)
+                              }
+                              key={item.id}
+                              style={{
+                                background:
+                                  gradientColors[index % gradientColors.length],
+                              }}
+                            >
+                              {/* <i
+                                class="fa fa-heart-o"
+                                onClick={(id) => addToWishlist(item.id)}
+                              /> */}
+                              <Link to={`/product-details/${item.id}`}>
+                                <div className="text-center">
+                                  <img
+                                    src={
+                                      "https://canine.hirectjob.in///storage/app/public/product/" +
+                                      item.image
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  <h6>{renderProducthead(item.name)}</h6>
+                                  <p>
+                                    {renderProductDescription(item.description)}
+                                  </p>
+                                </div>
+                                <div className="product-bag">
+                                  <Row>
+                                    <Col lg={6} sm={6} xs={6}>
+                                      <p>{item.price}</p>
+                                    </Col>
+                                    <Col lg={6} sm={6} xs={6}>
+                                      <h5>Save {parseFloat(item.discount)}%</h5>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col
+                                      lg={6}
+                                      sm={6}
+                                      xs={6}
+                                      className="align-self-center"
+                                    >
+                                      <h4>{`₹${Math.floor(
+                                        item.price -
+                                          (item.price * item.discount) / 100
+                                      )}`}</h4>
+                                    </Col>
+                                    {/* <Col lg={6} sm={6} xs={6}>
+                              <Link
+                                to={`/add-cart/${item.id}`}
+                                onClick={handleAddToCart}
+                              >
+                                <img src={bag} />
+                              </Link>
+                            </Col> */}
+                                  </Row>
+                                </div>
+                              </Link>
 
+                              {/* {suggetionbuttonVisibility[item.id] && (
+                                <Fade top>
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lgsuggestion"
+                                      onClick={(e) =>
+                                        suggetionhandeldataId(item.id)
+                                      }
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) =>
+                                        suggetionhandeldataId(item.id)
+                                      }
+                                    >
+                                      Buy Now
+                                    </button>
+                                  </div>
+                                </Fade>
+                              )} */}
+                            </div>
+                          </Col>
+                          {index <
+                            productDetails.suggestion_product.length - 1 && (
+                            <Col
+                              lg={1}
+                              sm={2}
+                              xs={2}
+                              className="mb-4 d-flex align-items-center justify-content-center"
+                              key={`plus-${item.id}`}
+                            >
+                              <i className="fa fa-plus" aria-hidden="true"></i>
+                            </Col>
+                          )}
+                        </>
+                      ))}
+                  </Row>
+                  <Row>
+                    <Col lg={8}>
+                      {productDetails?.suggestion_product?.length > 0 ? (
+                        <Row>
+                          <Col lg={2} xs={2}>
+                            <div className="frequ">
+                              <h6>1 Item</h6>
+                              {productDetails?.suggestion_product[0] && (
+                                <h2>
+                                  {productDetails?.suggestion_product[0]
+                                    ? `₹${Math.floor(
+                                        productDetails?.suggestion_product[0]
+                                          ?.price -
+                                          (productDetails?.suggestion_product[0]
+                                            ?.price *
+                                            productDetails
+                                              ?.suggestion_product[0]
+                                              ?.discount) /
+                                            100
+                                      )}`
+                                    : 0}
+                                </h2>
+                              )}
+                            </div>
+                          </Col>
+
+                          {productDetails?.suggestion_product[1] && (
+                            <>
+                              <Col
+                                lg={1}
+                                xs={1}
+                                className="d-flex align-items-center justify-content-left"
+                              >
+                                <h4>+</h4>
+                              </Col>
+                              <Col lg={2} xs={2}>
+                                <div className="frequ">
+                                  <h6>1 Add-ons</h6>
+                                  <h2>
+                                    {productDetails?.suggestion_product[1]
+                                      ? `₹${Math.floor(
+                                          productDetails?.suggestion_product[1]
+                                            .price -
+                                            (productDetails
+                                              ?.suggestion_product[1].price *
+                                              productDetails
+                                                ?.suggestion_product[1]
+                                                .discount) /
+                                              100
+                                        )}`
+                                      : 0}
+                                  </h2>
+                                </div>
+                              </Col>
+                            </>
+                          )}
+
+                          {productDetails?.suggestion_product[2] && (
+                            <>
+                              <Col
+                                xs={1}
+                                className="d-flex align-items-center justify-content-left"
+                              >
+                                <h4>+</h4>
+                              </Col>
+                              <Col lg={2} xs={2}>
+                                <div className="frequ">
+                                  <h6>2 Add-ons</h6>
+                                  <h2>
+                                    {productDetails?.suggestion_product[2]
+                                      ? `₹${Math.floor(
+                                          productDetails?.suggestion_product[2]
+                                            .price -
+                                            (productDetails
+                                              ?.suggestion_product[2].price *
+                                              productDetails
+                                                ?.suggestion_product[2]
+                                                .discount) /
+                                              100
+                                        )}`
+                                      : 0}
+                                  </h2>
+                                </div>
+                              </Col>
+                            </>
+                          )}
+                          <Col
+                            lg={1}
+                            xs={1}
+                            className="d-flex align-items-center justify-content-center"
+                          >
+                            <h4>=</h4>
+                          </Col>
+                          <Col lg={3} xs={3}>
+                            <div className="frequ">
+                              <h6>Total</h6>
+                              <h2>{}</h2>
+                            </div>
+                          </Col>
+                        </Row>
+                      ) : null}
+                    </Col>
+                    <Col lg={4} className="align-self-center">
+                      <div className="frequ-btn">
+                        <button>
+                          <i class="fa fa-shopping-cart" />{" "}
+                          {`ADD ${productDetails?.suggestion_product?.length} ITEMS TO CART`}
+                        </button>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              )}
+            </Container>
+          </section>
+          {/* suggetion product end */}
           <div>
             <h1 className="main-head mt-4">Product details</h1>
             <p>{productDetails.description}</p>
@@ -1865,13 +1957,13 @@ function Productdetail() {
                             <img
                               src={mainImage}
                               alt="Product Image"
-                            // onClick={handleMainImageClick}
+                              // onClick={handleMainImageClick}
                             />
                           </div>
                           <div className="needplace">
                             <Row>
                               {productDetails?.images &&
-                                productDetails?.images.length > 0 ? (
+                              productDetails?.images.length > 0 ? (
                                 productDetails.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -1911,17 +2003,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex + 1) %
-                              productDetails.images.length
+                                (lightboxImageIndex + 1) %
+                                  productDetails.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               productDetails.images[
-                              (lightboxImageIndex +
-                                productDetails.images.length -
-                                1) %
-                              productDetails.images.length
+                                (lightboxImageIndex +
+                                  productDetails.images.length -
+                                  1) %
+                                  productDetails.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -1930,13 +2022,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   productDetails.images.length -
                                   1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                productDetails.images.length
+                                  productDetails.images.length
                               )
                             }
                           />
@@ -1994,11 +2086,12 @@ function Productdetail() {
                                             >
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
                                                     item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2060,8 +2153,9 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2076,8 +2170,9 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -2113,7 +2208,7 @@ function Productdetail() {
                     </Col>
                   </Row>
                   {productDetails?.stock &&
-                    productDetails?.stock?.length !== 0 ? (
+                  productDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
@@ -2135,7 +2230,7 @@ function Productdetail() {
                                     price:
                                       calculatedPrice === 0
                                         ? parseInt(productDetails?.price) *
-                                        quantity
+                                          quantity
                                         : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: productDetails.name,
@@ -2211,7 +2306,7 @@ function Productdetail() {
                           <div className="needplace">
                             <Row>
                               {suggestionDetails?.images &&
-                                suggestionDetails?.images.length > 0 ? (
+                              suggestionDetails?.images.length > 0 ? (
                                 suggestionDetails?.images.map((item, index) => (
                                   <Col
                                     lg={3}
@@ -2251,17 +2346,17 @@ function Productdetail() {
                             nextSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               suggestionDetails?.images[
-                              (lightboxImageIndex + 1) %
-                              suggestionDetails?.images.length
+                                (lightboxImageIndex + 1) %
+                                  suggestionDetails?.images.length
                               ]
                             }
                             prevSrc={
                               "https://canine.hirectjob.in//storage/app/public/product/" +
                               suggestionDetails?.images[
-                              (lightboxImageIndex +
-                                suggestionDetails?.images.length -
-                                1) %
-                              suggestionDetails?.images.length
+                                (lightboxImageIndex +
+                                  suggestionDetails?.images.length -
+                                  1) %
+                                  suggestionDetails?.images.length
                               ]
                             }
                             onCloseRequest={() => setLightboxIsOpen(false)}
@@ -2270,13 +2365,13 @@ function Productdetail() {
                                 (lightboxImageIndex +
                                   suggestionDetails?.images.length -
                                   1) %
-                                suggestionDetails?.images.length
+                                  suggestionDetails?.images.length
                               )
                             }
                             onMoveNextRequest={() =>
                               setLightboxImageIndex(
                                 (lightboxImageIndex + 1) %
-                                suggestionDetails?.images.length
+                                  suggestionDetails?.images.length
                               )
                             }
                           />
@@ -2326,7 +2421,7 @@ function Productdetail() {
                                     <Row>
                                       {suggestionDetails?.variations &&
                                         suggestionDetails?.variations?.length >
-                                        0 &&
+                                          0 &&
                                         suggestionDetails?.variations.map(
                                           (item, index) => (
                                             <Col
@@ -2336,11 +2431,12 @@ function Productdetail() {
                                             >
                                               {item.stock !== 0 ? (
                                                 <div
-                                                  className={`tab-variations ${selectedVariant ===
+                                                  className={`tab-variations ${
+                                                    selectedVariant ===
                                                     item.type
-                                                    ? "active"
-                                                    : ""
-                                                    }`}
+                                                      ? "active"
+                                                      : ""
+                                                  }`}
                                                   onClick={() => {
                                                     setSelectedVariant(
                                                       item.type
@@ -2402,8 +2498,9 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2418,8 +2515,9 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -2455,7 +2553,7 @@ function Productdetail() {
                     </Col>
                   </Row>
                   {suggestionDetails?.stock &&
-                    suggestionDetails?.stock?.length !== 0 ? (
+                  suggestionDetails?.stock?.length !== 0 ? (
                     <div className="productBTNaddcard">
                       {customerLoginId === null ? (
                         <Button data-dismiss="modal">
@@ -2477,7 +2575,7 @@ function Productdetail() {
                                     price:
                                       calculatedPrice === 0
                                         ? parseInt(suggestionDetails?.price) *
-                                        quantity
+                                          quantity
                                         : parseInt(calculatedPrice),
                                     quantity: quantity,
                                     name: suggestionDetails?.name,
@@ -2594,10 +2692,11 @@ function Productdetail() {
                               <button onClick={toggleAddressContent}>
                                 Select Address{" "}
                                 <i
-                                  className={`fa ${addressContentVisible
-                                    ? "fa-arrow-up"
-                                    : "fa-arrow-down"
-                                    }`}
+                                  className={`fa ${
+                                    addressContentVisible
+                                      ? "fa-arrow-up"
+                                      : "fa-arrow-down"
+                                  }`}
                                   aria-hidden="true"
                                 ></i>
                               </button>
@@ -2701,10 +2800,11 @@ function Productdetail() {
                                 <Col lg={3} key={index}>
                                   {item.stock !== 0 ? (
                                     <div
-                                      className={`tab-variations ${selectedVariant === item.type
-                                        ? "active"
-                                        : ""
-                                        }`}
+                                      className={`tab-variations ${
+                                        selectedVariant === item.type
+                                          ? "active"
+                                          : ""
+                                      }`}
                                       onClick={() => {
                                         setSelectedVariant(item.type);
                                         setSelectedVariantPrice(item.price); // Store the price in state
@@ -2777,8 +2877,9 @@ function Productdetail() {
                                   <p>{`₹${uservariationprice}`}</p>
                                 </Col>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(formattedAmount) ? 0 : formattedAmount
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(formattedAmount) ? 0 : formattedAmount
+                                  }`}</h5>
                                 </Col>
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
@@ -2792,8 +2893,9 @@ function Productdetail() {
                             ) : (
                               <Row>
                                 <Col lg={4} sm={4} xs={3}>
-                                  <h5>{`₹${isNaN(MrpPrice) ? 0 : MrpPrice
-                                    }`}</h5>
+                                  <h5>{`₹${
+                                    isNaN(MrpPrice) ? 0 : MrpPrice
+                                  }`}</h5>
                                 </Col>
                               </Row>
                             )}
@@ -3350,11 +3452,11 @@ function Productdetail() {
                       className="form-control"
                       onChange={Subscription}
                       value={profileData.state || ""}
-                    // onChange={(e) =>
-                    // setProfileData ({
-                    //   ...profileData,
-                    //   state: e.target.value,
-                    // })}
+                      // onChange={(e) =>
+                      // setProfileData ({
+                      //   ...profileData,
+                      //   state: e.target.value,
+                      // })}
                     >
                       <option value="">State Choose...</option>
                       {stateall.map((items) => (
