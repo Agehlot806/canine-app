@@ -1342,7 +1342,9 @@ a {
   margin: 0 5px;
   width: 133px;
 }
-
+.order-card button a {
+  color: #fff;
+}
 .dash-head {
   text-align: center;
   margin: 10px 0 20px;

@@ -1372,10 +1372,10 @@ function Product(props) {
                         {brandDropdownVisible && (
                           <>
                             <div>
-                              {allbrand
-                                ? allbrand.map(
-                                    (items) =>
-                                      items.canine == "1" && (
+                            {allbrand
+                              ? allbrand.map(
+                                  (items) =>
+                                      // items.canine == "1" && (
                                         <div
                                           className="form-check"
                                           onClick={handleCheckboxClick}
@@ -1391,9 +1391,9 @@ function Product(props) {
                                             {items.title}
                                           </label>
                                         </div>
+                                      // )
                                       )
-                                  )
-                                : ""}
+                                      : ""}
                             </div>
                           </>
                         )}

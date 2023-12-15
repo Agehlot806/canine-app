@@ -184,7 +184,9 @@ function Petshopdashboard() {
       .then((response) => {
         console.log(response);
         console.log("Order List Successful");
-        settotalorder(response.data.data);
+        const reversedata = response.data.data.reverse();
+        settotalorder(reversedata);
+
       })
       .catch((error) => {
         console.log(error);

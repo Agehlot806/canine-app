@@ -64,7 +64,8 @@ function DashboadSalesman() {
     await axios
       .get(`${BASE_URL}/auth/wholesaler_list/${zoneId}`)
       .then((res) => {
-        setWholeSellerList(res.data.data);
+        const reversedata = res.data.data.reverse();
+        setWholeSellerList(reversedata);
         console.log("res in list", res);
       })
       .catch((error) => {
@@ -92,7 +93,8 @@ function DashboadSalesman() {
       .then((res) => {
         console.log("res in orderList", res);
         if (res.data.status === "200") {
-          setOrderList(res.data.data);
+          const reversedata = res.data.data.reverse();
+          setOrderList(reversedata);
           const orderList = res.data.data;
           const completeOrdes = orderList.filter((el) => {
             return el.delivered !== null;
