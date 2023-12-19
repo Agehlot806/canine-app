@@ -863,12 +863,12 @@ function Orderviewdetails() {
                                   <div className="row invoiceitems">
                                     <div className="col-2">
                                       {" "}
-                                      Discount:{" "}
+                                      Discount :{" "}
                                       <span style={{ fontSize: 20 }}>
                                         {"-"}
                                       </span>
                                       ₹{formatPrice(couponDiscount)} <br />{" "}
-                                      Promo Code:
+                                      Promo Code :{" "}
                                       {item?.coupon_discount_title
                                         ? item?.coupon_discount_title
                                         : " "}
@@ -878,17 +878,29 @@ function Orderviewdetails() {
                                     </div>
                                     <div className="col-2">
                                       Order MRP:
-                                      {formatPrice(
-                                        orderDetails.reduce(
-                                          (total, order) =>
-                                            total +
-                                            order.price * order.quantity,
-                                          0
-                                        )
-                                      )}{" "}
-                                      {item && !isNaN(item.coupon_code)
-                                        ? item.coupon_code
-                                        : " "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                    {parseInt(
+                                                      callbackItem.price *
+                                                        callbackItem.quantity
+                                                    )}
+                                                  </p>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
                                     </div>
                                     <div className="col-2">
                                       Item Name :{" "}

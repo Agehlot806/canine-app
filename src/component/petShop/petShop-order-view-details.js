@@ -498,7 +498,10 @@ function PetshopOrderviewdetails() {
                   <Col lg={7} className="align-self-center">
                     <Row>
                       <Col sm={12} className="mb-4">
-                        <div className="order-table" ref={tableRef}>
+                        <div
+                          className="order-table"
+                          // ref={tableRef}
+                        >
                           {allorder && allorder.length > 0 ? (
                             allorder.map((item, index) => {
                               if (item.id == id) {
@@ -783,6 +786,233 @@ function PetshopOrderviewdetails() {
                         </div>
                       </Col>
                     </Row>
+                  </Col>
+                </Row>
+                {/* download */}
+                <Row>
+                  <Col lg={6} className="mb-4">
+                    <div className="order-tablee" ref={tableRef}>
+                      {console.log("allorderInvoice: ", allorder)}
+                      {allorder && allorder.length > 0 ? (
+                        allorder.map((item, index) => {
+                          if (item.id == id) {
+                            return (
+                              <div className="row" key={item.id}>
+                                <div className="col-12" key={index}>
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <h3 className="text-center">CASH RECEIPT</h3>
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <br />
+                                  <br />
+                                  <h3 className="text-center">
+                                    Order ID :{item?.id}
+                                  </h3>
+                                  <h6 className="text-center">
+                                    GSTIN :27unghy100085
+                                  </h6>
+                                  <h6 className="text-center">
+                                    {item.callback &&
+                                      item.callback.length > 0 && (
+                                        <div>
+                                          <p
+                                            style={{
+                                              fontSize: "small",
+                                            }}
+                                          >
+                                            {item.callback[0]?.created_at}
+                                          </p>
+                                        </div>
+                                      )}
+                                  </h6>
+                                  <br />
+                                  <br />
+                                  <h4> Address : {item?.delivery_address}</h4>
+                                  <div className="row invoiceitems">
+                                    {/* <div className="col-2">
+                                      {" "}
+                                      Discount:{" "}
+                                      <span style={{ fontSize: 20 }}>
+                                        {"-"}
+                                      </span>
+                                      ₹{formatPrice(couponDiscount)} <br />{" "}
+                                      Promo Code:
+                                      {item?.coupon_discount_title
+                                        ? item?.coupon_discount_title
+                                        : " "}
+                                      {item && !isNaN(item.coupon_code)
+                                        ? item.coupon_code
+                                        : "0"}
+                                    </div> */}
+                                    <div className="col-3">
+                                      Item Name :{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                    {renderProducthead(
+                                                      callbackItem.variant
+                                                    )}
+                                                  </p>
+                                                  {/* Render other callback item details here */}
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+
+                                    {/* <div className="col-3">
+                                      {" "}
+                                      ₹
+                                      {formatPrice(
+                                        promoDiscount === 0
+                                          ? subTotal
+                                          : subTotal - couponDiscount
+                                      )}
+                                    </div> */}
+                                    <div className="col-3">
+                                      GST:{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    Gst: {callbackItem.gst}
+                                                  </p>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+                                    <div className="col-3">
+                                      QTY:{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    QTY: {callbackItem.quantity}
+                                                  </p>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+                                    <div className="col-2">
+                                      Order MRP:{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    {parseInt(
+                                                      callbackItem?.price *
+                                                        callbackItem?.quantity
+                                                    )}
+                                                  </p>
+                                                  {/* Render other callback item details here */}
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                      {/* {formatPrice(
+                                        orderDetails.reduce(
+                                          (total, order) =>
+                                            total +
+                                            order.price * order.quantity,
+                                          0
+                                        )
+                                      )}{" "} */}
+                                    </div>
+                                  </div>
+                                  <h4>
+                                    {" "}
+                                    SubTotal : ₹
+                                    {formatPrice(
+                                      orderDetails.reduce(
+                                        (total, order) =>
+                                          total + order.price * order.quantity,
+                                        0
+                                      )
+                                    )}{" "}
+                                  </h4>
+                                  {/* <h4>
+                                    {" "}
+                                    Delivery Charge ₹
+                                    {parseInt(item.delivery_charge)}
+                                  </h4> */}
+                                  <h4>
+                                    {" "}
+                                    TotalPrice : ₹
+                                    {formatPrice(
+                                      orderDetails.reduce(
+                                        (total, order) =>
+                                          total + order.price * order.quantity,
+                                        0
+                                      )
+                                    )}{" "}
+                                  </h4>
+
+                                  <br />
+                                  <br />
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <h3 className="text-center">
+                                    FSSAI:226572678456565
+                                  </h3>
+                                  <h3 className="text-center">THANK YOU</h3>
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <h3 className="text-center">
+                                    @Elevenmonk. Canine @ 2023
+                                  </h3>
+                                </div>
+                              </div>
+                            );
+                          } else {
+                            return null; // If no match, return null or an empty fragment
+                          }
+                        })
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
+                    </div>
                   </Col>
                 </Row>
               </div>
