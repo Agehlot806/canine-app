@@ -15,15 +15,73 @@ import { Toaster, toast } from "react-hot-toast";
 // import DatePicker from "react-datepicker/dist/react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 import loadinggif from "../../assets/images/video/loading.gif";
+import servicepage from "../../assets/images/img/servicepage.png";
 
 const addMonths = (date, months) => {
   const newDate = new Date(date);
   newDate.setMonth(newDate.getMonth() + months);
   return newDate;
 };
+const serviceDetailsMap = {
+  "Pets Grooming": {
+    title: "Each Visit Also Includes",
+    details: [
+      "Pampered pups Expert baths, trims, and styles for furry friends.",
+      "Tail wags guaranteed Gentle groomers handle anxious furries with love.",
+      "More than shampoo Spa treatments leave coats gleaming & smiles wide.",
+      "Convenience is key Mobile grooming brings the salon to your doorstep.",
+      "Healthy & happy Regular sessions prevent mats and promote skin health.",
+    ],
+  },
+  "Health & Wellness": {
+    title: "Each Visit Also Includes",
+    details: [
+      "Comprehensive Health Assessments",
+      "Laboratory Testing",
+      "Fitness and Exercise Programs",
+      "Weight Management Programs",
+    ],
+  },
+  "Walking & Sitting": {
+    title: "Each Visit Also Includes",
+    details: [
+      "Pet walking",
+      "Pet  running",
+      "Pet sitting for any animal or time",
+    ],
+  },
+  "Pet Training": {
+    title: "Each Visit Also Includes",
+    details: [
+      "Experienced Trainers",
+      "Behavior Modification",
+      "Pet Therapy",
+      "Obedience Training",
+    ],
+  },
+  "Pet Onboarding": {
+    title: "Each Visit Also Includes",
+    details: [
+      " Luxurious pet boarding with playtime",
+      " Luxurious pet boarding with spa treatments",
+      " Luxurious pet boarding with comfy suites",
+    ],
+  },
+  "Pet-Swimming": {
+    title: "Each Visit Also Includes",
+    details: [
+      "Swimming Lesson",
+      "Swim Safety Assessments",
+      "Life Jackets",
+      "Fun and Recreational Swims",
+    ],
+  },
+};
 
 function Servicedate() {
-  const { id,name } = useParams();
+  const { id, name } = useParams();
+  const { title, details } = serviceDetailsMap[name] || {};
+  console.log("name: ", name);
   const [slotday, setSlotDay] = useState([]);
 
   const [timingSlot, setTimingSlot] = useState([]);
@@ -78,7 +136,6 @@ function Servicedate() {
       console.error("Error fetching booked slot times:", error);
     }
   };
-
 
   const petCategories = async () => {
     try {
@@ -176,15 +233,51 @@ function Servicedate() {
       ) : (
         <>
           <Container fluid className="p-0">
-          
             <div className="all-bg">
               <img src={service} />
             </div>
           </Container>
-
           <section className="section-padding">
             <Container>
-          <h1 className="main-head">{name} Service Slot </h1>
+              <Row>
+                <Col lg={7} sm={7} className="align-self-center">
+                  <div className="service-Visit">
+                    <h1 className="main-head">{title}</h1>
+
+                    <ul>
+                      {details &&
+                        details.map((detail, index) => (
+                          <li key={index}>
+                            <i className="fa fa-check-circle" /> {detail}
+                          </li>
+                        ))}
+                      {/* <li>
+                          
+                        <i className="fa fa-check-circle" /> {details}
+                      </li> */}
+                      {/* <li>
+                          <i className="fa fa-check-circle" /> {pointtwo}
+                      </li>
+                      <li>
+                        <i className="fa fa-check-circle" /> {pointthree}
+                      </li>
+                      <li>
+                          <i className="fa fa-check-circle" /> Watering Plants
+                        </li> */}
+                    </ul>
+                  </div>
+                </Col>
+                <Col lg={5} sm={5}>
+                  <div className="aboutpage-img">
+                    <img src={servicepage} />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+          <section className="section-padding">
+            <Container>
+              <h1 className="main-head">{name} Service Slot </h1>
               <div className="needplace">
                 {/* <DatePicker
               selected={startDate}
@@ -207,11 +300,11 @@ function Servicedate() {
                   ) : (
                     <h4 className="emptyMSG">{stringes.invalidMonth}</h4>
                   )} */}
-                   {hoveredDate && (
-        <h4>
-          {moment(hoveredDate).format("MMMM Do YYYY").split("", 3)}
-        </h4>
-      )}
+                  {hoveredDate && (
+                    <h4>
+                      {moment(hoveredDate).format("MMMM Do YYYY").split("", 3)}
+                    </h4>
+                  )}
                 </div>
                 <div className="sevice-select-date">
                   {/* <DatePicker
@@ -230,7 +323,11 @@ function Servicedate() {
                 //   setTimingSlot(item.slot_timing);
                 // }}
               /> */}
-                  <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <ul
+                    className="nav nav-pills mb-3"
+                    id="pills-tab"
+                    role="tablist"
+                  >
                     {slotday?.length > 0 ? (
                       slotday.map((item, index) => (
                         <li
@@ -251,7 +348,8 @@ function Servicedate() {
                               setTimingSlot(item.slot_timing);
                             }}
                           >
-                            {moment(item.slot_date).format("dddd").split("", 3)} <br />
+                            {moment(item.slot_date).format("dddd").split("", 3)}{" "}
+                            <br />
                             <span>{moment(item.slot_date).format("D")}</span>
                           </a>
                         </li>
@@ -259,7 +357,6 @@ function Servicedate() {
                     ) : (
                       <p className="emptyMSG">{stringes.invalidDate}</p>
                     )}
-
                   </ul>
                 </div>
               </div>
@@ -278,7 +375,11 @@ function Servicedate() {
                           timingSlot.map((item, index) => (
                             <li className="nav-item" key={index}>
                               <a
-                                className={`nav-link ${bookedSlotTimes.includes(item) ? 'disabled' : ''}`}
+                                className={`nav-link ${
+                                  bookedSlotTimes.includes(item)
+                                    ? "disabled"
+                                    : ""
+                                }`}
                                 data-toggle="pill"
                                 role="tab"
                                 aria-selected="true"
@@ -301,7 +402,9 @@ function Servicedate() {
                 {!petType.length > 0 ? null : (
                   <div className="add-petbtn">
                     <Button>
-                      <Link to={`/service-add-pet/${name}/${id}`}>{stringes.addPet}</Link>
+                      <Link to={`/service-add-pet/${name}/${id}`}>
+                        {stringes.addPet}
+                      </Link>
                     </Button>
                   </div>
                 )}

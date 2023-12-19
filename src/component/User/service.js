@@ -77,6 +77,47 @@ function Service() {
                 <div className="text-left">
                   <h1 className="main-head">All Services</h1>
                 </div>
+                <section className="section-padding">
+                  <Container>
+                    <Row>
+                      <Col lg={7} sm={7} className="align-self-center">
+                        <div className="service-Visit">
+                          <h1 className="main-head">
+                            Each Visit Also Includes
+                          </h1>
+                          {/* <p>
+                      Justo eget magna fermentum iaculis eu non diam phasellus.
+                      Eu lobortis elementum nibh tellus molestie nunc.
+                      Ullamcorper eget nulla facilisi etiam dignissim diam. Eget
+                      felis eget nunc lobortis mattis
+                    </p> */}
+                          <ul>
+                            <li>
+                              <i className="fa fa-check-circle" /> Clean pet
+                              cages and tanks
+                            </li>
+                            <li>
+                              <i className="fa fa-check-circle" /> Scoop Litter
+                              Boxes
+                            </li>
+                            <li>
+                              <i className="fa fa-check-circle" /> Bringing in
+                              mail and packages
+                            </li>
+                            {/* <li>
+                          <i className="fa fa-check-circle" /> Watering Plants
+                        </li> */}
+                          </ul>
+                        </div>
+                      </Col>
+                      <Col lg={5} sm={5}>
+                        <div className="aboutpage-img">
+                          <img src={servicepage} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </Container>
+                </section>
                 <div className="needplace">
                   <Row>
                     {/* {allservice.map((item) => (
@@ -134,18 +175,12 @@ function Service() {
               </Container>
             </section>
 
-            <section className="section-padding">
+            {/* <section className="section-padding">
               <Container>
                 <Row>
                   <Col lg={7} sm={7} className="align-self-center">
                     <div className="service-Visit">
                       <h1 className="main-head">Each Visit Also Includes</h1>
-                      {/* <p>
-                      Justo eget magna fermentum iaculis eu non diam phasellus.
-                      Eu lobortis elementum nibh tellus molestie nunc.
-                      Ullamcorper eget nulla facilisi etiam dignissim diam. Eget
-                      felis eget nunc lobortis mattis
-                    </p> */}
                       <ul>
                         <li>
                           <i className="fa fa-check-circle" /> Clean pet cages
@@ -172,7 +207,7 @@ function Service() {
                   </Col>
                 </Row>
               </Container>
-            </section>
+            </section> */}
           </>
         )}
         <Footer />

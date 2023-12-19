@@ -16,6 +16,7 @@ import { useBootstrapMinBreakpoint } from "react-bootstrap/esm/ThemeProvider";
 import { Toaster, toast } from "react-hot-toast";
 import StarRating from "../starrating";
 import loadinggif from "../../assets/images/video/loading.gif";
+import "../../assets/css/invoice.css";
 
 function Orderviewdetails() {
   const navigate = useNavigate();
@@ -620,6 +621,7 @@ function Orderviewdetails() {
                                     </tbody>
                                   </>
                                 </table>
+                                {/* ---- */}
                               </div>
                             );
                           } else {
@@ -803,6 +805,209 @@ function Orderviewdetails() {
                             );
                           } else {
                             return null;
+                          }
+                        })
+                      ) : (
+                        <p className="emptyMSG">No Order list</p>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={6} className="mb-4">
+                    <div className="order-tablee" ref={tableRef}>
+                      {console.log("allorderInvoice: ", allorder)}
+                      {allorder && allorder.length > 0 ? (
+                        allorder.map((item, index) => {
+                          if (item.id == id) {
+                            return (
+                              <div className="row" key={item.id}>
+                                <div className="col-12" key={index}>
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <h3 className="text-center">CASH RECEIPT</h3>
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <br />
+                                  <br />
+                                  <h3 className="text-center">
+                                    Order ID :{item?.id}
+                                  </h3>
+                                  <h6 className="text-center">
+                                    GSTIN :27unghy100085
+                                  </h6>
+                                  <h6 className="text-center">
+                                    {item.callback &&
+                                      item.callback.length > 0 && (
+                                        <div>
+                                          {item.callback.map((callbackItem) => (
+                                            <div key={callbackItem.id}>
+                                              <p
+                                                style={{
+                                                  fontSize: "small",
+                                                }}
+                                              >
+                                                {callbackItem?.created_at}
+                                              </p>
+                                              {/* Render other callback item details here */}
+                                            </div>
+                                          ))}
+                                        </div>
+                                      )}
+                                  </h6>
+                                  <br />
+                                  <br />
+                                  <h4> Address : {item?.delivery_address}</h4>
+                                  <div className="row invoiceitems">
+                                    <div className="col-2">
+                                      {" "}
+                                      Discount:{" "}
+                                      <span style={{ fontSize: 20 }}>
+                                        {"-"}
+                                      </span>
+                                      ₹{formatPrice(couponDiscount)} <br />{" "}
+                                      Promo Code:
+                                      {item?.coupon_discount_title
+                                        ? item?.coupon_discount_title
+                                        : " "}
+                                      {item && !isNaN(item.coupon_code)
+                                        ? item.coupon_code
+                                        : "0"}
+                                    </div>
+                                    <div className="col-2">
+                                      Order MRP:
+                                      {formatPrice(
+                                        orderDetails.reduce(
+                                          (total, order) =>
+                                            total +
+                                            order.price * order.quantity,
+                                          0
+                                        )
+                                      )}{" "}
+                                      {item && !isNaN(item.coupon_code)
+                                        ? item.coupon_code
+                                        : " "}
+                                    </div>
+                                    <div className="col-2">
+                                      Item Name :{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                    {renderProducthead(
+                                                      callbackItem.variant
+                                                    )}
+                                                  </p>
+                                                  {/* Render other callback item details here */}
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+                                    {/* <div className="col-3">
+                                      {" "}
+                                      ₹
+                                      {formatPrice(
+                                        promoDiscount === 0
+                                          ? subTotal
+                                          : subTotal - couponDiscount
+                                      )}
+                                    </div> */}
+                                    <div className="col-2">
+                                      GST:{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    Gst: {callbackItem.gst}
+                                                  </p>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+                                    <div className="col-2">
+                                      QTY:{" "}
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    Gst: {callbackItem.quantity}
+                                                  </p>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+                                  </div>
+                                  <h4>
+                                    {" "}
+                                    SubTotal : ₹
+                                    {formatPrice(
+                                      promoDiscount === 0
+                                        ? subTotal
+                                        : subTotal - couponDiscount
+                                    )}
+                                  </h4>
+                                  <h4>
+                                    {" "}
+                                    Delivery Charge ₹
+                                    {parseInt(item.delivery_charge)}
+                                  </h4>
+                                  <h4>
+                                    {" "}
+                                    TotalPrice : ₹
+                                    {formatPrice(TotalDataPricetwo)}
+                                  </h4>
+
+                                  <br />
+                                  <br />
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <h3 className="text-center">
+                                    FSSAI:226572678456565
+                                  </h3>
+                                  <h3 className="text-center">THANK YOU</h3>
+                                  <h4 className="text-center">
+                                    *******************************************************************************
+                                  </h4>
+                                  <h3 className="text-center">
+                                    @Elevenmonk. Canine @ 2023
+                                  </h3>
+                                </div>
+                              </div>
+                            );
+                          } else {
+                            return null; // If no match, return null or an empty fragment
                           }
                         })
                       ) : (

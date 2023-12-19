@@ -29,6 +29,7 @@ function Addcart() {
   // Create a ref to store the list of items in the cart
   const [quantity, setQuantity] = useState(1);
   const [addToCartProduct, setAddToCartProduct] = useState([]);
+  console.log("addToCartProduct: ", addToCartProduct);
   const [coupencode, setcoupenCode] = useState(false);
   const [couponlist, setcouponlist] = useState([]);
   const [appliedCoupon, setAppliedCoupon] = useState(false);

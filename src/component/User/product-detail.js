@@ -123,7 +123,7 @@ function Productdetail() {
           let priceeee = Math.floor(
             item.price - (item.price * item.discount) / 100
           );
-          return suggestionTotal + priceeee;
+          return (suggestionTotal += priceeee);
         });
         console.log("suggestionTotal: ", suggestionTotal);
         fetchrelated(cate, subcate);
@@ -227,6 +227,69 @@ function Productdetail() {
         modalBackdrop.remove();
       }
     }
+  };
+  const handleComboAddToCart = async () => {
+    let productData = [];
+    const suggestionCombo = productDetails?.suggestion_product ?? [];
+    for (let i = 0; i < suggestionCombo.length; i++) {
+      const element = suggestionCombo[i];
+      const data = {
+        item_name: element?.name,
+        // variant: element.variations[0] ?? "", // You may need to update this based on your data
+        variant: "1kg", // You may need to update this based on your data
+        image: element?.image,
+        quantity: 1,
+        total_quantity: element?.stock,
+        return_order: element?.returnable || "yes",
+        price: element?.price,
+        user_id: storedUserId,
+        item_id: element?.id,
+        type: "combo",
+        min_order: "",
+        seller_id: "",
+      };
+      productData.push(data);
+    }
+    console.log("productData", productData);
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/customer/wish-list/add_comboproduct`,
+        productData,
+        {
+          headers: {
+            "Content-Type": "application/json", // Set appropriate content type
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+        }
+      );
+      if (response) {
+        if (response.data.status === "200") {
+          toast.success("Added to cart!");
+
+          // setAddToCartStatus("Added to cart!");
+          shippingpage(`/add-cart/${id}`);
+        } else {
+          // setAddToCartStatus(response.data.message);
+          toast.error("Already added");
+        }
+        // const updatedCart = [...addToCartStatus, productDetails];
+        // setAddToCartStatus(updatedCart);
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartStatus("Error adding to cart");
+    }
+    // const modal = document.querySelector(".modal");
+    // if (modal) {
+    //   modal.classList.remove("show");
+    //   modal.style.display = "none";
+    //   document.body.classList.remove("modal-open");
+    //   const modalBackdrop = document.querySelector(".modal-backdrop");
+    //   if (modalBackdrop) {
+    //     modalBackdrop.remove();
+    //   }
+    // }
   };
 
   // ****************notifyme
@@ -389,6 +452,17 @@ function Productdetail() {
   ).toFixed(2);
   const formattedSavedAmount = Number(savedAmount).toString();
   const MrpPrice = Number(savedAmount).toString();
+
+  let suggestionTotalPrice = 0;
+  productDetails?.suggestion_product &&
+    productDetails?.suggestion_product.map((item) => {
+      let priceeee = Math.floor(
+        item.price - (item.price * item.discount) / 100
+      );
+      return (suggestionTotalPrice += priceeee);
+    });
+  console.log("suggestionTotalPrice: ", suggestionTotalPrice);
+
   // coupen code funtion after apply close button start
 
   const [totalPrice, setTotalPrice] = useState(0);
@@ -1463,9 +1537,9 @@ function Productdetail() {
                                     <Col lg={6} sm={6} xs={6}>
                                       <p>{item.price}</p>
                                     </Col>
-                                    <Col lg={6} sm={6} xs={6}>
+                                    {/* <Col lg={6} sm={6} xs={6}>
                                       <h5>Save {parseFloat(item.discount)}%</h5>
-                                    </Col>
+                                    </Col> */}
                                   </Row>
                                   <Row>
                                     <Col
@@ -1628,7 +1702,7 @@ function Productdetail() {
                           <Col lg={3} xs={3}>
                             <div className="frequ">
                               <h6>Total</h6>
-                              <h2>{}</h2>
+                              <h2>₹{suggestionTotalPrice}</h2>
                             </div>
                           </Col>
                         </Row>
@@ -1636,10 +1710,48 @@ function Productdetail() {
                     </Col>
                     <Col lg={4} className="align-self-center">
                       <div className="frequ-btn">
-                        <button>
-                          <i class="fa fa-shopping-cart" />{" "}
-                          {`ADD ${productDetails?.suggestion_product?.length} ITEMS TO CART`}
-                        </button>
+                        {customerLoginId === null ? (
+                          <Button>
+                            <Link
+                              to={"/add-cart"}
+                              // onClick={() => {
+                              //   dispatch({
+                              //     type: "ADD_TO_CART",
+                              //     payload: {
+                              //       item_id: productDetails.id,
+                              //       variant: selectedVariant,
+                              //       price:
+                              //         calculatedPrice === 0
+                              //           ? parseInt(productDetails?.price) * quantity
+                              //           : parseInt(calculatedPrice),
+                              //       quantity: quantity,
+                              //       name: productDetails.name,
+                              //       image: productDetails.image,
+                              //       total_quantity:
+                              //         selectedVariantStock.length > 0
+                              //           ? selectedVariantStock
+                              //           : productDetails?.stock,
+                              //       return_order: productDetails?.returnable || "yes",
+                              //       orderamountwithquantity:
+                              //         calculatedPrice === 0
+                              //           ? parseInt(formattedAmount) * quantity
+                              //           : parseInt(calculatedPrice) * quantity,
+                              //     },
+                              //   });
+                              // }}
+                            >
+                              <i className="fa fa-shopping-bag" /> `ADD $
+                              {productDetails?.suggestion_product?.length} ITEMS
+                              TO CART`
+                            </Link>
+                            <p>{addToCartStatus}</p>
+                          </Button>
+                        ) : (
+                          <button onClick={() => handleComboAddToCart()}>
+                            <i class="fa fa-shopping-cart" />{" "}
+                            {`ADD ${productDetails?.suggestion_product?.length} ITEMS TO CART`}
+                          </button>
+                        )}
                       </div>
                     </Col>
                   </Row>
