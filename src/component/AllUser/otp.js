@@ -13,8 +13,28 @@ function Otp() {
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(30);
   const { cart, dispatch } = useCartWithoutLogin();
+  console.log("cart", cart);
+  const [comboData, setComboData] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // checkComboProduct();
+  }, [cart]);
+
+  const checkComboProduct = () => {
+    let product = [];
+    for (let i = 0; i < cart.length; i++) {
+      const element = cart[i];
+      console.log("element", element);
+      if (element?.type === "combo") {
+        const data = { ...element, user_id: 1 };
+        product.push();
+      }
+    }
+    console.log("product", product);
+    setComboData(product);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const phone = await localStorage.getItem("phone");
@@ -89,27 +109,56 @@ function Otp() {
 
   const handleAddToCart = async (id) => {
     try {
-      const response = cart.forEach((element) => {
-        const res = axios.post(`${BASE_URL}/customer/wish-list/add_product`, {
-          item_name: element?.name,
-          variant:
-            element.variant.length === 0
-              ? "without variant product"
-              : element.variant, // You may need to update this based on your data
-          image: element?.image,
-          quantity: element.quantity,
-          price: element.price,
-          user_id: id,
-          item_id: element?.item_id,
-          total_quantity: element?.total_quantity,
-          return_order: element?.return_order || "yes",
-        });
-        return res;
-      });
+      let comboProduct = [];
+      let product = [];
+      for (let i = 0; i < cart.length; i++) {
+        const element = cart[i];
+        console.log("element", element);
+        if (element?.type === "combo") {
+          const data = { ...element, user_id: id };
+          comboProduct.push(data);
+        } else {
+          const data = { ...element, user_id: id };
+          product.push(data);
+        }
+      }
 
-      if (response.data.success) {
-        toast.success("Added to cart!");
-        // Navigate("/addcart")
+      if (comboProduct?.length > 0) {
+        const response = await axios.post(
+          `${BASE_URL}/customer/wish-list/add_comboproduct`,
+          comboProduct,
+          {
+            headers: {
+              "Content-Type": "application/json", // Set appropriate content type
+              "Access-Control-Allow-Methods": "POST",
+              "Access-Control-Allow-Headers": "Content-Type",
+            },
+          }
+        );
+      }
+      if (product?.length > 0) {
+        const response = product.forEach((element) => {
+          const res = axios.post(`${BASE_URL}/customer/wish-list/add_product`, {
+            item_name: element?.item_name ? element?.item_name : element?.name,
+            variant:
+              element.variant.length === 0
+                ? "without variant product"
+                : element.variant, // You may need to update this based on your data
+            image: element?.image,
+            quantity: element.quantity,
+            price: element.price,
+            user_id: element.user_id,
+            item_id: element?.item_id,
+            total_quantity: element?.total_quantity,
+            return_order: element?.return_order || "yes",
+          });
+          return res;
+        });
+
+        if (response.data.success) {
+          toast.success("Added to cart!");
+          // Navigate("/addcart")
+        }
       }
     } catch (error) {
       console.error("Error adding to cart:", error);

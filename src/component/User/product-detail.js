@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Newheader from "../../directives/newheader";
-import productdetail from "../../assets/images/banner/productdetail.png";
-import product from "../../assets/images/banner/product.png";
-import productItem from "../../assets/images/img/brandPro1.png";
 import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../directives/footer";
-import product1 from "../../assets/images/img/product1.png";
-import product2 from "../../assets/images/img/product2.png";
-import product3 from "../../assets/images/img/product3.png";
-import bag from "../../assets/images/icon/bag.png";
 import axios from "axios";
 // import star from "../star";
 import { BASE_URL } from "../../Constant/Index";
 import { Toaster, toast } from "react-hot-toast";
-import brandPro1 from "../../assets/images/img/brandPro1.png";
-import brandPro2 from "../../assets/images/img/brandPro2.png";
-import brandpro3 from "../../assets/images/img/brandPro3.png";
-import bannerPro from "../../assets/images/img/bannerPro.png";
-import pro from "../../assets/images/icon/pro.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import { styled } from "styled-components";
@@ -26,7 +14,6 @@ import Lightbox from "react-awesome-lightbox";
 import paydone from "../../assets/images/icon/paydone.png";
 import voch from "../../assets/images/icon/voch.png";
 import { Fade } from "react-reveal";
-import { useContext } from "react";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
 import { RWebShare } from "react-web-share";
 
@@ -45,14 +32,7 @@ function Productdetail() {
   const [selectedVariant, setSelectedVariant] = useState([]);
   const [selectedVariantPrice, setSelectedVariantPrice] = useState("");
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
-  //suggestion
-  const [selectedVariantSuggestion, setSelectedVariantSuggestion] = useState(
-    []
-  );
-  const [selectedVariantPriceSuggestion, setSelectedVariantPriceSuggestion] =
-    useState("");
-  const [selectedVariantStockSuggestion, setSelectedVariantStockSuggestion] =
-    useState("");
+  const [comboData, setComboData] = useState([]);
   const loginType = localStorage.getItem("loginType");
   const customerLoginId =
     loginType === "wholeseller"
@@ -116,16 +96,42 @@ function Productdetail() {
         setProductDetails(response.data.data);
         const cate = response.data.data.category_id;
         const subcate = response.data.data.sub_category;
-        const responseData = response?.data?.data?.suggestion_product;
-        let suggestionTotal = 0;
+        const responseData = response?.data?.data?.suggestion_product[0];
+        let suggestionData = [];
+        if (responseData) {
+          for (let i = 0; i < 3; i++) {
+            const element = i;
+            if (i === 0) {
+              const data = {
+                ...responseData.product_1[0],
+                combo_price: responseData.price_1,
+                combo_variation: responseData.variation_1,
+              };
+              suggestionData.push(data);
+            } else if (i === 1) {
+              const data = {
+                ...responseData.product_2[0],
+                combo_price: responseData.price_2,
+                combo_variation: responseData.variation_2,
+              };
+              suggestionData.push(data);
+            } else if (i === 2) {
+              if (responseData?.product_3?.length > 0) {
+                const data = {
+                  ...responseData.product_3[0],
+                  combo_price: responseData.price_3,
+                  combo_variation: responseData.variation_3,
+                };
+                suggestionData.push(data);
+              }
+            } else {
+            }
+          }
+        }
+        setComboData(suggestionData);
+        console.log("comboData 111", suggestionData);
+        console.log("comboData", comboData);
 
-        responseData.forEach((item) => {
-          let priceeee = Math.floor(
-            item.price - (item.price * item.discount) / 100
-          );
-          return (suggestionTotal += priceeee);
-        });
-        console.log("suggestionTotal: ", suggestionTotal);
         fetchrelated(cate, subcate);
         // Perform any additional actions after successful deletion
       })
@@ -230,18 +236,17 @@ function Productdetail() {
   };
   const handleComboAddToCart = async () => {
     let productData = [];
-    const suggestionCombo = productDetails?.suggestion_product ?? [];
+    const suggestionCombo = comboData ?? [];
     for (let i = 0; i < suggestionCombo.length; i++) {
       const element = suggestionCombo[i];
       const data = {
         item_name: element?.name,
-        // variant: element.variations[0] ?? "", // You may need to update this based on your data
-        variant: "1kg", // You may need to update this based on your data
+        variant: element?.combo_variation,
         image: element?.image,
         quantity: 1,
         total_quantity: element?.stock,
         return_order: element?.returnable || "yes",
-        price: element?.price,
+        price: element?.combo_price,
         user_id: storedUserId,
         item_id: element?.id,
         type: "combo",
@@ -454,11 +459,9 @@ function Productdetail() {
   const MrpPrice = Number(savedAmount).toString();
 
   let suggestionTotalPrice = 0;
-  productDetails?.suggestion_product &&
-    productDetails?.suggestion_product.map((item) => {
-      let priceeee = Math.floor(
-        item.price - (item.price * item.discount) / 100
-      );
+  comboData &&
+    comboData.map((item) => {
+      let priceeee = Number(item.combo_price);
       return (suggestionTotalPrice += priceeee);
     });
   console.log("suggestionTotalPrice: ", suggestionTotalPrice);
@@ -1428,7 +1431,7 @@ function Productdetail() {
                               ? parseInt(productDetails?.price) * quantity
                               : parseInt(calculatedPrice),
                           quantity: quantity,
-                          name: productDetails.name,
+                          item_name: productDetails.name,
                           image: productDetails.image,
                           total_quantity:
                             selectedVariantStock.length > 0
@@ -1495,8 +1498,8 @@ function Productdetail() {
               {showContent && (
                 <div className="needplace">
                   <Row>
-                    {productDetails?.suggestion_product &&
-                      productDetails?.suggestion_product.map((item, index) => (
+                    {comboData &&
+                      comboData.map((item, index) => (
                         <>
                           <Col lg={3} sm={6} xs={6} className="mb-4">
                             <div
@@ -1548,51 +1551,14 @@ function Productdetail() {
                                       xs={6}
                                       className="align-self-center"
                                     >
-                                      <h4>{`₹${Math.floor(
-                                        item.price -
-                                          (item.price * item.discount) / 100
-                                      )}`}</h4>
+                                      <h4>{item.combo_price}</h4>
                                     </Col>
-                                    {/* <Col lg={6} sm={6} xs={6}>
-                              <Link
-                                to={`/add-cart/${item.id}`}
-                                onClick={handleAddToCart}
-                              >
-                                <img src={bag} />
-                              </Link>
-                            </Col> */}
                                   </Row>
                                 </div>
                               </Link>
-
-                              {/* {suggetionbuttonVisibility[item.id] && (
-                                <Fade top>
-                                  <div className="button-container">
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".bd-example-modal-lgsuggestion"
-                                      onClick={(e) =>
-                                        suggetionhandeldataId(item.id)
-                                      }
-                                    >
-                                      Quick View
-                                    </button>
-                                    <button
-                                      data-toggle="modal"
-                                      data-target=".buynow"
-                                      onClick={(e) =>
-                                        suggetionhandeldataId(item.id)
-                                      }
-                                    >
-                                      Buy Now
-                                    </button>
-                                  </div>
-                                </Fade>
-                              )} */}
                             </div>
                           </Col>
-                          {index <
-                            productDetails.suggestion_product.length - 1 && (
+                          {index < comboData.length - 1 && (
                             <Col
                               lg={1}
                               sm={2}
@@ -1608,31 +1574,18 @@ function Productdetail() {
                   </Row>
                   <Row>
                     <Col lg={8}>
-                      {productDetails?.suggestion_product?.length > 0 ? (
+                      {comboData?.length > 0 ? (
                         <Row>
                           <Col lg={2} xs={2}>
                             <div className="frequ">
                               <h6>1 Item</h6>
-                              {productDetails?.suggestion_product[0] && (
-                                <h2>
-                                  {productDetails?.suggestion_product[0]
-                                    ? `₹${Math.floor(
-                                        productDetails?.suggestion_product[0]
-                                          ?.price -
-                                          (productDetails?.suggestion_product[0]
-                                            ?.price *
-                                            productDetails
-                                              ?.suggestion_product[0]
-                                              ?.discount) /
-                                            100
-                                      )}`
-                                    : 0}
-                                </h2>
+                              {comboData[0] && (
+                                <h2>{comboData[0]?.combo_price}</h2>
                               )}
                             </div>
                           </Col>
 
-                          {productDetails?.suggestion_product[1] && (
+                          {comboData[1] && (
                             <>
                               <Col
                                 lg={1}
@@ -1645,17 +1598,8 @@ function Productdetail() {
                                 <div className="frequ">
                                   <h6>1 Add-ons</h6>
                                   <h2>
-                                    {productDetails?.suggestion_product[1]
-                                      ? `₹${Math.floor(
-                                          productDetails?.suggestion_product[1]
-                                            .price -
-                                            (productDetails
-                                              ?.suggestion_product[1].price *
-                                              productDetails
-                                                ?.suggestion_product[1]
-                                                .discount) /
-                                              100
-                                        )}`
+                                    {comboData[1]
+                                      ? comboData[1]?.combo_price
                                       : 0}
                                   </h2>
                                 </div>
@@ -1663,7 +1607,7 @@ function Productdetail() {
                             </>
                           )}
 
-                          {productDetails?.suggestion_product[2] && (
+                          {comboData[2] && (
                             <>
                               <Col
                                 xs={1}
@@ -1675,17 +1619,8 @@ function Productdetail() {
                                 <div className="frequ">
                                   <h6>2 Add-ons</h6>
                                   <h2>
-                                    {productDetails?.suggestion_product[2]
-                                      ? `₹${Math.floor(
-                                          productDetails?.suggestion_product[2]
-                                            .price -
-                                            (productDetails
-                                              ?.suggestion_product[2].price *
-                                              productDetails
-                                                ?.suggestion_product[2]
-                                                .discount) /
-                                              100
-                                        )}`
+                                    {comboData[2]
+                                      ? comboData[2]?.combo_price
                                       : 0}
                                   </h2>
                                 </div>
@@ -1714,42 +1649,40 @@ function Productdetail() {
                           <Button>
                             <Link
                               to={"/add-cart"}
-                              // onClick={() => {
-                              //   dispatch({
-                              //     type: "ADD_TO_CART",
-                              //     payload: {
-                              //       item_id: productDetails.id,
-                              //       variant: selectedVariant,
-                              //       price:
-                              //         calculatedPrice === 0
-                              //           ? parseInt(productDetails?.price) * quantity
-                              //           : parseInt(calculatedPrice),
-                              //       quantity: quantity,
-                              //       name: productDetails.name,
-                              //       image: productDetails.image,
-                              //       total_quantity:
-                              //         selectedVariantStock.length > 0
-                              //           ? selectedVariantStock
-                              //           : productDetails?.stock,
-                              //       return_order: productDetails?.returnable || "yes",
-                              //       orderamountwithquantity:
-                              //         calculatedPrice === 0
-                              //           ? parseInt(formattedAmount) * quantity
-                              //           : parseInt(calculatedPrice) * quantity,
-                              //     },
-                              //   });
-                              // }}
+                              onClick={() => {
+                                for (let i = 0; i < comboData.length; i++) {
+                                  const element = comboData[i];
+                                  dispatch({
+                                    type: "ADD_TO_CART",
+                                    payload: {
+                                      item_name: element?.name,
+                                      variant: element?.combo_variation,
+                                      image: element?.image,
+                                      quantity: 1,
+                                      total_quantity: element?.stock,
+                                      return_order:
+                                        element?.returnable || "yes",
+                                      price: element?.combo_price,
+                                      item_id: element?.id,
+                                      type: "combo",
+                                      min_order: "",
+                                      seller_id: "",
+                                      orderamountwithquantity:
+                                        element?.combo_price,
+                                    },
+                                  });
+                                }
+                              }}
                             >
-                              <i className="fa fa-shopping-bag" /> `ADD $
-                              {productDetails?.suggestion_product?.length} ITEMS
-                              TO CART`
+                              <i className="fa fa-shopping-bag" />{" "}
+                              {`ADD ${comboData?.length} ITEMS TO CART`}
                             </Link>
                             <p>{addToCartStatus}</p>
                           </Button>
                         ) : (
                           <button onClick={() => handleComboAddToCart()}>
                             <i class="fa fa-shopping-cart" />{" "}
-                            {`ADD ${productDetails?.suggestion_product?.length} ITEMS TO CART`}
+                            {`ADD ${comboData?.length} ITEMS TO CART`}
                           </button>
                         )}
                       </div>
@@ -2345,7 +2278,7 @@ function Productdetail() {
                                           quantity
                                         : parseInt(calculatedPrice),
                                     quantity: quantity,
-                                    name: productDetails.name,
+                                    item_name: productDetails.name,
                                     image: productDetails.image,
                                     orderamountwithquantity: formattedAmount,
                                   },
@@ -2690,7 +2623,7 @@ function Productdetail() {
                                           quantity
                                         : parseInt(calculatedPrice),
                                     quantity: quantity,
-                                    name: suggestionDetails?.name,
+                                    item_name: suggestionDetails?.name,
                                     image: suggestionDetails?.image,
                                     orderamountwithquantity: formattedAmount,
                                   },

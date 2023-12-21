@@ -831,24 +831,9 @@ function PetshopOrderviewdetails() {
                                   <br />
                                   <br />
                                   <h4> Address : {item?.delivery_address}</h4>
-                                  <div className="row invoiceitems">
-                                    {/* <div className="col-2">
-                                      {" "}
-                                      Discount:{" "}
-                                      <span style={{ fontSize: 20 }}>
-                                        {"-"}
-                                      </span>
-                                      ₹{formatPrice(couponDiscount)} <br />{" "}
-                                      Promo Code:
-                                      {item?.coupon_discount_title
-                                        ? item?.coupon_discount_title
-                                        : " "}
-                                      {item && !isNaN(item.coupon_code)
-                                        ? item.coupon_code
-                                        : "0"}
-                                    </div> */}
-                                    <div className="col-3">
-                                      Item Name :{" "}
+                                  <div class="row ">
+                                    <div class="col-4 font-weight-bold">
+                                      <h5 class="font-weight-bold"> ITEM : </h5>
                                       {item.callback &&
                                         item.callback.length > 0 && (
                                           <div>
@@ -862,9 +847,31 @@ function PetshopOrderviewdetails() {
                                                   >
                                                     {/* Item ID: {callbackItem.id}
                                                       , Variant:{" "} */}
-                                                    {renderProducthead(
-                                                      callbackItem.variant
-                                                    )}
+                                                    {callbackItem.variant}
+                                                    <br />
+                                                    CGST :
+                                                    {(parseInt(
+                                                      callbackItem.price *
+                                                        callbackItem.quantity
+                                                    ) *
+                                                      (callbackItem.gst.slice(
+                                                        0,
+                                                        -1
+                                                      ) /
+                                                        100)) /
+                                                      2}
+                                                    <br />
+                                                    SGST :
+                                                    {(parseInt(
+                                                      callbackItem.price *
+                                                        callbackItem.quantity
+                                                    ) *
+                                                      (callbackItem.gst.slice(
+                                                        0,
+                                                        -1
+                                                      ) /
+                                                        100)) /
+                                                      2}
                                                   </p>
                                                   {/* Render other callback item details here */}
                                                 </div>
@@ -874,17 +881,11 @@ function PetshopOrderviewdetails() {
                                         )}
                                     </div>
 
-                                    {/* <div className="col-3">
-                                      {" "}
-                                      ₹
-                                      {formatPrice(
-                                        promoDiscount === 0
-                                          ? subTotal
-                                          : subTotal - couponDiscount
-                                      )}
-                                    </div> */}
-                                    <div className="col-3">
-                                      GST:{" "}
+                                    <div class="col-3 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        {" "}
+                                        PRICE :
+                                      </h5>
                                       {item.callback &&
                                         item.callback.length > 0 && (
                                           <div>
@@ -892,101 +893,276 @@ function PetshopOrderviewdetails() {
                                               (callbackItem) => (
                                                 <div key={callbackItem.id}>
                                                   <p
+                                                    class="text-center font-weight-bold"
                                                     style={{
                                                       fontSize: "small",
                                                     }}
                                                   >
-                                                    Gst: {callbackItem.gst}
-                                                  </p>
-                                                </div>
-                                              )
-                                            )}
-                                          </div>
-                                        )}
-                                    </div>
-                                    <div className="col-3">
-                                      QTY:{" "}
-                                      {item.callback &&
-                                        item.callback.length > 0 && (
-                                          <div>
-                                            {item.callback.map(
-                                              (callbackItem) => (
-                                                <div key={callbackItem.id}>
-                                                  <p
-                                                    style={{
-                                                      fontSize: "small",
-                                                    }}
-                                                  >
-                                                    QTY: {callbackItem.quantity}
-                                                  </p>
-                                                </div>
-                                              )
-                                            )}
-                                          </div>
-                                        )}
-                                    </div>
-                                    <div className="col-2">
-                                      Order MRP:{" "}
-                                      {item.callback &&
-                                        item.callback.length > 0 && (
-                                          <div>
-                                            {item.callback.map(
-                                              (callbackItem) => (
-                                                <div key={callbackItem.id}>
-                                                  <p
-                                                    style={{
-                                                      fontSize: "small",
-                                                    }}
-                                                  >
+                                                    {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
                                                     {parseInt(
-                                                      callbackItem?.price *
-                                                        callbackItem?.quantity
+                                                      callbackItem.price *
+                                                        callbackItem.quantity
                                                     )}
                                                   </p>
-                                                  {/* Render other callback item details here */}
                                                 </div>
                                               )
                                             )}
                                           </div>
                                         )}
-                                      {/* {formatPrice(
+                                    </div>
+                                    <div class="col-2 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        QTY :{" "}
+                                      </h5>
+                                      {item.callback &&
+                                        item.callback.length > 0 && (
+                                          <div>
+                                            {item.callback.map(
+                                              (callbackItem) => (
+                                                <div key={callbackItem.id}>
+                                                  <p
+                                                    class="text-center font-weight-bold"
+                                                    style={{
+                                                      fontSize: "small",
+                                                    }}
+                                                  >
+                                                    {callbackItem.quantity}
+                                                  </p>
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
+                                        )}
+                                    </div>
+                                  </div>
+                                  <div class="d-flex justify-content-between">
+                                    <h4> SubTotal :</h4>
+                                    <h4>
+                                      ₹
+                                      {formatPrice(
                                         orderDetails.reduce(
                                           (total, order) =>
                                             total +
                                             order.price * order.quantity,
                                           0
                                         )
-                                      )}{" "} */}
+                                      )}
+                                    </h4>
+                                  </div>
+                                  <div class="d-flex justify-content-between">
+                                    <h4>TotalPrice :</h4>
+
+                                    <h4>
+                                      ₹{" "}
+                                      {formatPrice(
+                                        orderDetails.reduce(
+                                          (total, order) =>
+                                            total +
+                                            order.price * order.quantity,
+                                          0
+                                        )
+                                      )}
+                                    </h4>
+                                  </div>
+
+                                  <br />
+                                  <p>
+                                    -------------------------------------------------------------------------------------
+                                  </p>
+                                  <div class="row ">
+                                    <div class="col-2 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        {" "}
+                                        GST :{" "}
+                                      </h5>
+                                      <p
+                                        class="text-center font-weight-bold"
+                                        style={{ fontSize: 20 }}
+                                      >
+                                        {" "}
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                      {callbackItem.gst}
+                                                    </p>
+                                                    {/* Render other callback item details here */}
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}
+                                      </p>
+                                    </div>
+                                    <div class="col-3 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        {" "}
+                                        Taxiable Amount :{" "}
+                                      </h5>
+                                      <p
+                                        class="text-center font-weight-bold"
+                                        style={{ fontSize: 20 }}
+                                      >
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      class="text-center font-weight-bold"
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                      {parseInt(
+                                                        callbackItem.price *
+                                                          callbackItem.quantity
+                                                      ) -
+                                                        callbackItem.price *
+                                                          callbackItem.quantity *
+                                                          (callbackItem.gst.slice(
+                                                            0,
+                                                            -1
+                                                          ) /
+                                                            100)}
+                                                    </p>
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}
+                                      </p>
+                                    </div>
+                                    <div class="col-2 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        {" "}
+                                        CGST :
+                                      </h5>
+                                      <p class="text-center">
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {(parseInt(
+                                                        callbackItem.price *
+                                                          callbackItem.quantity
+                                                      ) *
+                                                        (callbackItem.gst.slice(
+                                                          0,
+                                                          -1
+                                                        ) /
+                                                          100)) /
+                                                        2}
+                                                    </p>
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}{" "}
+                                      </p>
+                                    </div>
+                                    <div class="col-2 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        {" "}
+                                        SGST :
+                                      </h5>
+                                      <p class="text-center">
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {(parseInt(
+                                                        callbackItem.price *
+                                                          callbackItem.quantity
+                                                      ) *
+                                                        (callbackItem.gst.slice(
+                                                          0,
+                                                          -1
+                                                        ) /
+                                                          100)) /
+                                                        2}
+                                                    </p>
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}{" "}
+                                      </p>
+                                    </div>
+                                    <div class="col-3 font-weight-bold">
+                                      <h5 class="text-center font-weight-bold">
+                                        Total Amount:{" "}
+                                      </h5>
+                                      <p class="text-center">
+                                        {item.callback &&
+                                          item.callback.length > 0 && (
+                                            <div>
+                                              {item.callback.map(
+                                                (callbackItem) => (
+                                                  <div key={callbackItem.id}>
+                                                    <p
+                                                      class="text-center font-weight-bold"
+                                                      style={{
+                                                        fontSize: "small",
+                                                      }}
+                                                    >
+                                                      {/* Item ID: {callbackItem.id}
+                                                      , Variant:{" "} */}
+                                                      {parseInt(
+                                                        callbackItem.price *
+                                                          callbackItem.quantity
+                                                      )}
+                                                    </p>
+                                                  </div>
+                                                )
+                                              )}
+                                            </div>
+                                          )}
+                                      </p>
                                     </div>
                                   </div>
-                                  <h4>
-                                    {" "}
-                                    SubTotal : ₹
-                                    {formatPrice(
-                                      orderDetails.reduce(
-                                        (total, order) =>
-                                          total + order.price * order.quantity,
-                                        0
-                                      )
-                                    )}{" "}
-                                  </h4>
-                                  {/* <h4>
-                                    {" "}
-                                    Delivery Charge ₹
-                                    {parseInt(item.delivery_charge)}
-                                  </h4> */}
-                                  <h4>
-                                    {" "}
-                                    TotalPrice : ₹
-                                    {formatPrice(
-                                      orderDetails.reduce(
-                                        (total, order) =>
-                                          total + order.price * order.quantity,
-                                        0
-                                      )
-                                    )}{" "}
-                                  </h4>
-
+                                  <div class="d-flex justify-content-end">
+                                    <h4>Grand Total : </h4>
+                                    <h4>
+                                      {" "}
+                                      ₹
+                                      {formatPrice(
+                                        orderDetails.reduce(
+                                          (total, order) =>
+                                            total +
+                                            order.price * order.quantity,
+                                          0
+                                        )
+                                      )}
+                                    </h4>
+                                  </div>
                                   <br />
                                   <br />
                                   <h4 className="text-center">

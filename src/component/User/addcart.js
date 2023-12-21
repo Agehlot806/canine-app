@@ -135,7 +135,7 @@ function Addcart() {
     });
   }
 
-  // const taxamound = Math.floor(originalPrice * 0.05);
+  // const taxamound = Math.floor(originalPrice * 0.05) ?? 0;
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     setTotalPrice(originalPrice);
@@ -264,6 +264,7 @@ function Addcart() {
           quantity: item.quantity,
           return_order: item?.return_order || "no",
           total_quantity: item.total_quantity,
+          type: item.type,
           // Assuming the response already includes the quantity
         }));
 
@@ -750,18 +751,20 @@ function Addcart() {
                             }
                           />
                         </Col>
-                        {item.variant === "" ? null : (
-                          <Col
-                            lg={6}
-                            sm={5}
-                            className="align-self-center addCARThead"
-                          >
-                            <h2>{item?.name}</h2>
-                            {item.variant ? (
-                              <p>{`Selected Variant: ${item.variant}`}</p>
-                            ) : null}
-                          </Col>
-                        )}
+                        <Col
+                          lg={6}
+                          sm={5}
+                          className="align-self-center addCARThead"
+                        >
+                          <h2>{item.item_name}</h2>
+                          {
+                            item.variant?.length === 0 ? null : item.variant ? (
+                              <p>{`Selected Variant: ${item.variant
+                                .replace(/\\/g, "")
+                                .replace(/"/g, "")}`}</p>
+                            ) : null // or you can omit this part if you want nothing to be displayed
+                          }
+                        </Col>
                         <Col
                           lg={2}
                           sm={3}
@@ -770,28 +773,32 @@ function Addcart() {
                         >
                           <h3>₹{formatPrice(item.orderamountwithquantity)}</h3>
 
-                          <div className="quantity-btn">
-                            {/* <button onClick={() => handleDecrementone(index)}>
+                          {item?.type == "combo" ? (
+                            <h5>Qty -: 1</h5>
+                          ) : (
+                            <div className="quantity-btn">
+                              {/* <button onClick={() => handleDecrementone(index)}>
                         <i className="fa fa-minus" />
                       </button> */}
-                            <button>Qty</button>
-                            <form>
-                              <div className="form-group">
-                                <input
-                                  type="tel"
-                                  className="form-control"
-                                  placeholder="Quantity"
-                                  value={item.quantity}
-                                  onChange={handleQuantityChange}
-                                  autoComplete="new-number"
-                                  disabled
-                                />
-                              </div>
-                            </form>
-                            {/* <button onClick={() => handleIncrementone(index)}>
+                              <button>Qty</button>
+                              <form>
+                                <div className="form-group">
+                                  <input
+                                    type="tel"
+                                    className="form-control"
+                                    placeholder="Quantity"
+                                    value={item.quantity}
+                                    onChange={handleQuantityChange}
+                                    autoComplete="new-number"
+                                    disabled
+                                  />
+                                </div>
+                              </form>
+                              {/* <button onClick={() => handleIncrementone(index)}>
                         <i className="fa fa-plus" />
                       </button> */}
-                          </div>
+                            </div>
+                          )}
                         </Col>
                         <Col lg={2} sm={2} xs={6} className="align-self-center">
                           <div
@@ -830,15 +837,7 @@ function Addcart() {
                             </Col>
                           </Row>
                           <hr />
-                          <Row>
-                            <Col>
-                              <h5>Delivery Charges</h5>
-                            </Col>
-                            <Col>
-                              {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              <h5>₹{deliveryCharges}</h5>
-                            </Col>
-                          </Row>
+
                           {/* <Row>
                             <Col>
                               <h5>Coupon Discount</h5>
@@ -877,7 +876,7 @@ function Addcart() {
                             </Col>
                             <Col>
                               {/* <h5>₹{addToCartProduct[0]?.price}</h5> */}
-                              {/* <h5>₹{formatPrice(deliveryCharges)}</h5> */}
+                              <h5>₹{deliveryCharges}</h5>
                             </Col>
                           </Row>
                         </div>
@@ -899,7 +898,7 @@ function Addcart() {
                       <Link to="/product">Continue Shopping</Link>
                     </Button>
                   </div> */}
-                  {parseInt(originalPrice + taxamound) !== 0 ? (
+                  {parseInt(originalPrice) !== 0 ? (
                     <div className="check-Continue">
                       <Button>
                         <Link to="/login">Checkout</Link>
@@ -955,26 +954,30 @@ function Addcart() {
                   >
                     <h3>₹{formatPrice(item.price) * item.quantity}</h3>
 
-                    <div className="quantity-btn">
-                      <button onClick={() => handleDecrementone(index)}>
-                        <i className="fa fa-minus" />
-                      </button>
-                      <form>
-                        <div className="form-group">
-                          <input
-                            type="tel"
-                            className="form-control"
-                            placeholder="Quantity"
-                            value={item.quantity}
-                            onChange={handleQuantityChange}
-                            autoComplete="new-number"
-                          />
-                        </div>
-                      </form>
-                      <button onClick={() => handleIncrementone(index)}>
-                        <i className="fa fa-plus" />
-                      </button>
-                    </div>
+                    {item?.type == "combo" ? (
+                      <h5>Qty -: 1</h5>
+                    ) : (
+                      <div className="quantity-btn">
+                        <button onClick={() => handleDecrementone(index)}>
+                          <i className="fa fa-minus" />
+                        </button>
+                        <form>
+                          <div className="form-group">
+                            <input
+                              type="tel"
+                              className="form-control"
+                              placeholder="Quantity"
+                              value={item.quantity}
+                              onChange={handleQuantityChange}
+                              autoComplete="new-number"
+                            />
+                          </div>
+                        </form>
+                        <button onClick={() => handleIncrementone(index)}>
+                          <i className="fa fa-plus" />
+                        </button>
+                      </div>
+                    )}
                   </Col>
                   <Col lg={2} sm={2} xs={6} className="align-self-center">
                     <div
