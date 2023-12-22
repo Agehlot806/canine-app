@@ -15,8 +15,8 @@ body {
 }
 .logo {
   width: 100px;
-  height: 100px;
-  margin: 0 auto;
+  /* height: 100px; */
+  /* margin: 0 auto; */
 }
 .title {
   font-size: 20px;
