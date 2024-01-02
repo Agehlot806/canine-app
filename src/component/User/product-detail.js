@@ -1677,7 +1677,6 @@ function Productdetail() {
                               <i className="fa fa-shopping-bag" />{" "}
                               {`ADD ${comboData?.length} ITEMS TO CART`}
                             </Link>
-                            <p>{addToCartStatus}</p>
                           </Button>
                         ) : (
                           <button onClick={() => handleComboAddToCart()}>
@@ -1685,6 +1684,8 @@ function Productdetail() {
                             {`ADD ${comboData?.length} ITEMS TO CART`}
                           </button>
                         )}
+                            <p>{addToCartStatus}</p>
+
                       </div>
                     </Col>
                   </Row>

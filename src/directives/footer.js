@@ -29,7 +29,7 @@ function Footer() {
         <div className="section-padding">
           <Container>
             <Row>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Customer Services</h5>
                   <ul>
@@ -69,7 +69,7 @@ function Footer() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Company Info</h5>
                   <ul>
@@ -100,7 +100,7 @@ function Footer() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Contact Us</h5>
                   <ul>
@@ -130,11 +130,12 @@ function Footer() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Download The Apps</h5>
                   <ul>
-                    <li>
+                    <div className="d-flex">
+                    <li >
                       <Link to="https://play.google.com/store/games?device=windows">
                         <img src={app1} />
                       </Link>
@@ -144,7 +145,54 @@ function Footer() {
                         <img src={app2} />
                       </Link>
                     </li>
-                    <li className="social-media">
+                    </div>
+                    <li className="social-media web-social">
+                      <span>Follow Us On</span>
+                      <Link
+                        onClick={(e) =>
+                          linknewwindonopne(
+                            "https://www.facebook.com/canineproductsretail/"
+                          )
+                        }
+                      >
+                        <BiLogoFacebookCircle />
+                      </Link>
+                      <Link to="https://twitter.com/">
+                        <BiLogoTwitter />
+                      </Link>
+                      <Link to="https://www.instagram.com/">
+                        <BiLogoInstagramAlt />
+                      </Link>
+                    </li>
+                    <li className="cardpay web-social">
+                      <Link>
+                        <img src={Paycard1} />
+                      </Link>
+                      <Link>
+                        <img src={Paycard2} />
+                      </Link>
+                      <Link>
+                        <img src={Paycard3} />
+                      </Link>
+                      <Link>
+                        <img src={Paycard4} />
+                      </Link>
+                      <Link>
+                        <img src={Paycard5} />
+                      </Link>
+                      <Link>
+                        <img src={Paycard6} />
+                      </Link>
+                      <Link>
+                        <img src={Paycard7} />
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </Col>
+              <div className="footer-list mobile-social">
+              <ul>
+              <li className="social-media">
                       <span>Follow Us On</span>
                       <Link
                         onClick={(e) =>
@@ -185,9 +233,8 @@ function Footer() {
                         <img src={Paycard7} />
                       </Link>
                     </li>
-                  </ul>
-                </div>
-              </Col>
+              </ul>
+        </div>
             </Row>
           </Container>
         </div>

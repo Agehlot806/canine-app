@@ -298,14 +298,32 @@
     padding: 0 10px;
     font-size: 16px;
   }
+ 
+
+  /* Show buttons on food-product hover */
+  .food-product:hover .button-container button {
+    display: block;
+  }
 }
 
 @media only screen and (max-width: 540px) {
   .frequ h2 {
     font-size: 14px;
   }
+  .footer-list.mobile-social {
+    display: block;
+}
+.footer-list ul li a img {
+  width: 60px;
+}
+.web-social {
+  display: none;
+}
   .frequ h6 {
     font-size: 10px;
+}
+.footer-list ul li {
+  margin: 0;
 }
 .frequ-btn button {
   padding: 8px;
@@ -677,6 +695,12 @@
 }
 
 @media only screen and (max-width: 414px) {
+  .footer-list h5 {
+    font-size: 12px;
+  }
+  .footer-list ul li a {
+    font-size: 10px;
+  }
   .logoBG img {
     width: 50px;
   }
@@ -893,7 +917,7 @@
   }
 
   .footer-list h5 {
-    font-size: 18px;
+    font-size: 12px;
     margin: 0 0 10px;
   }
 
@@ -981,12 +1005,9 @@
     font-size: 15px;
   }
 
-  .footer-list ul li a img {
-    width: 100px;
-  }
 
   .footer-list ul li a {
-    font-size: 15px;
+    font-size: 8px;
   }
 
   .video-right img {

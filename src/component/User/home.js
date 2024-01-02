@@ -1471,7 +1471,7 @@ function Home(props) {
                               </div>
                             </Link>
                             {buttonVisibility[item.id] && (
-                              <Fade top>
+                              // <Fade top>
                                 <div className="button-container">
                                   <button
                                     data-toggle="modal"
@@ -1506,7 +1506,8 @@ function Home(props) {
                                     Buy Now
                                   </button>
                                 </div>
-                              </Fade>
+                              // </Fade>
+                              
                             )}
                           </div>
                         </Col>
