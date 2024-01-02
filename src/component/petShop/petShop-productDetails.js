@@ -1010,10 +1010,7 @@ function PetshopproductDetails() {
                 <Col lg={6}>
                   <div className="productDetail-content">
                     <Row>
-                      <Col lg={9} sm={9} xs={12}>
-                        <h4>{productDetails.name}</h4>
-                      </Col>
-                      <Col lg={3} sm={3} xs={12}>
+                      <Col lg={12} sm={12} xs={12}>
                         <p>
                           {productDetails.veg == 0 ? (
                             <span>
@@ -1040,6 +1037,9 @@ function PetshopproductDetails() {
                             </div>
                           </RWebShare>
                         </p>
+                      </Col>
+                      <Col lg={12} sm={12} xs={12}>
+                        <h4>{productDetails.name}</h4>
                       </Col>
                     </Row>
                     <p>
@@ -1150,7 +1150,7 @@ function PetshopproductDetails() {
                           </Col>
                           {/* <Col lg={5}>
                         <h6>
-                          Your save
+                          You save
                           {formattedSavedAmount >= 0
                             ? "₹" + formattedSavedAmount
                             : "No savings"}
@@ -1359,8 +1359,8 @@ function PetshopproductDetails() {
                       <Col lg={3} sm={6} xs={6} className="mb-4">
                         <div
                           className="food-product"
-                          onMouseEnter={() => handleMouseEnter(item.id)}
-                          onMouseLeave={() => handleMouseLeave(item.id)}
+                          // onMouseEnter={() => handleMouseEnter(item.id)}
+                          // onMouseLeave={() => handleMouseLeave(item.id)}
                           key={item.id}
                           style={{
                             background:
@@ -1401,26 +1401,26 @@ function PetshopproductDetails() {
                             </div>
                           </Link>
 
-                          {buttonVisibility[item.id] && (
-                            <Fade top>
-                              <div className="button-container">
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".bd-example-modal-lg"
-                                  onClick={(e) => handeldataId(item.id)}
-                                >
-                                  Quick View
-                                </button>
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".buynow"
-                                  onClick={(e) => handeldataId(item.id)}
-                                >
-                                  Buy Now
-                                </button>
-                              </div>
-                            </Fade>
-                          )}
+                          {/* {buttonVisibility[item.id] && (
+                            <Fade top> */}
+                          <div className="button-container">
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Quick View
+                            </button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                          {/* </Fade>
+                          )} */}
                         </div>
                       </Col>
                     ))}
@@ -1596,7 +1596,7 @@ function PetshopproductDetails() {
                               </Col>
                               {/* <Col lg={5}>
                         <h6>
-                          Your save
+                          You save
                           {formattedSavedAmount >= 0
                             ? "₹" + formattedSavedAmount
                             : "No savings"}
@@ -2198,7 +2198,7 @@ function PetshopproductDetails() {
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
-                                  Your save
+                                  You save
                                   {formattedSavedAmount >= 0
                                     ? "₹" + formattedSavedAmount
                                     : "No savings"}

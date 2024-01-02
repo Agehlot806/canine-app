@@ -1706,8 +1706,8 @@ function Petshopproduct(props) {
                                 <div
                                   className="food-product"
                                   key={item.id}
-                                  onMouseEnter={() => handleMouseEnter(item.id)}
-                                  onMouseLeave={() => handleMouseLeave(item.id)}
+                                  // onMouseEnter={() => handleMouseEnter(item.id)}
+                                  // onMouseLeave={() => handleMouseLeave(item.id)}
                                   style={{
                                     background:
                                       gradientColors[
@@ -1766,26 +1766,26 @@ function Petshopproduct(props) {
                                     </div>
                                   </Link>
 
-                                  {buttonVisibility[item.id] && (
-                                    <Fade top>
-                                      <div className="button-container">
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".bd-example-modal-lg"
-                                          onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Quick View
-                                        </button>
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".buynow"
-                                          onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Buy Now
-                                        </button>
-                                      </div>
-                                    </Fade>
-                                  )}
+                                  {/* {buttonVisibility[item.id] && (
+                                    <Fade top> */}
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lg"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Buy Now
+                                    </button>
+                                  </div>
+                                  {/* </Fade>
+                                  )} */}
                                 </div>
                               </Col>
                             )

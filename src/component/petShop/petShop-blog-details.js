@@ -873,58 +873,58 @@ function PetshopBlogdetails() {
               </Row>
             </Container>
           </section>
-
-          <section className="section-padding food">
-            <Container>
-              <Row>
-                <Col lg={6} sm={6} xs={6}>
-                  <h1 className="main-head">Related products</h1>
-                </Col>
-              </Row>
-              <div className="needplace">
+          {productIds[0] == "null" || productIds?.length === 0 ? null : (
+            <section className="section-padding food">
+              <Container>
                 <Row>
-                  {productIds.map((item, index) => (
-                    <Col
-                      lg={3}
-                      sm={6}
-                      xs={6}
-                      className="mb-4"
-                      key={item[0]?.id}
-                    >
-                      <div
-                        className="food-product"
-                        onMouseEnter={() => handleMouseEnter(item[0]?.id)}
-                        onMouseLeave={() => handleMouseLeave(item[0]?.id)}
-                        style={{
-                          background:
-                            gradientColors[index % gradientColors?.length],
-                        }}
+                  <Col lg={6} sm={6} xs={6}>
+                    <h1 className="main-head">Related products</h1>
+                  </Col>
+                </Row>
+                <div className="needplace">
+                  <Row>
+                    {productIds.map((item, index) => (
+                      <Col
+                        lg={3}
+                        sm={6}
+                        xs={6}
+                        className="mb-4"
+                        key={item[0]?.id}
                       >
-                        <i
-                          className={
-                            item.isFav
-                              ? "fa-solid fa-heart"
-                              : "fa-regular fa-heart"
-                          }
-                          onClick={() => {
-                            if (storedWholesellerId == null) {
-                              toast.error("Please Login first");
-                            } else {
-                              addToWishlist(item[0]?.id);
-                            }
+                        <div
+                          className="food-product"
+                          // onMouseEnter={() => handleMouseEnter(item[0]?.id)}
+                          // onMouseLeave={() => handleMouseLeave(item[0]?.id)}
+                          style={{
+                            background:
+                              gradientColors[index % gradientColors?.length],
                           }}
-                        />
+                        >
+                          <i
+                            className={
+                              item.isFav
+                                ? "fa-solid fa-heart"
+                                : "fa-regular fa-heart"
+                            }
+                            onClick={() => {
+                              if (storedWholesellerId == null) {
+                                toast.error("Please Login first");
+                              } else {
+                                addToWishlist(item[0]?.id);
+                              }
+                            }}
+                          />
 
-                        <Link to={`/petshop-productDetails/${item[0]?.id}`}>
-                          <div className="text-center">
-                            <img
-                              src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
-                              alt={item[0]?.name}
-                            />
-                          </div>
-                          <div>
-                            <h6>{renderProducthead(item[0]?.name)}</h6>
-                            {/* <p
+                          <Link to={`/petshop-productDetails/${item[0]?.id}`}>
+                            <div className="text-center">
+                              <img
+                                src={`https://canine.hirectjob.in///storage/app/public/product/${item[0]?.image}`}
+                                alt={item[0]?.name}
+                              />
+                            </div>
+                            <div>
+                              <h6>{renderProducthead(item[0]?.name)}</h6>
+                              {/* <p
                           className={`truncate-text ${
                             !expandedDescription[item[0]?.id]
                               ? "read-more-link"
@@ -947,48 +947,51 @@ function PetshopBlogdetails() {
                               </span>
                             )}
                         </p> */}
-                            <p>{renderProductDescription(item?.description)}</p>
-                          </div>
-                          <div className="product-bag">
-                            <Row>
-                              <Col
-                                lg={6}
-                                sm={6}
-                                xs={6}
-                                className="align-self-center"
-                              >
-                                <h4>₹{item[0]?.whole_price}</h4>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Link>
-                        {buttonVisibility[item[0].id] && (
-                          <Fade top>
-                            <div className="button-container">
-                              <button
-                                data-toggle="modal"
-                                data-target=".bd-example-modal-lg"
-                                onClick={() => handeldataId(item[0].id)}
-                              >
-                                Quick View
-                              </button>
-                              <button
-                                data-toggle="modal"
-                                data-target=".buynow"
-                                onClick={() => handeldataId(item[0].id)}
-                              >
-                                Buy Now
-                              </button>
+                              <p>
+                                {renderProductDescription(item?.description)}
+                              </p>
                             </div>
-                          </Fade>
-                        )}
-                      </div>
-                    </Col>
-                  ))}
-                </Row>
-              </div>
-            </Container>
-          </section>
+                            <div className="product-bag">
+                              <Row>
+                                <Col
+                                  lg={6}
+                                  sm={6}
+                                  xs={6}
+                                  className="align-self-center"
+                                >
+                                  <h4>₹{item[0]?.whole_price}</h4>
+                                </Col>
+                              </Row>
+                            </div>
+                          </Link>
+                          {/* {buttonVisibility[item[0].id] && (
+                          <Fade top> */}
+                          <div className="button-container">
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={() => handeldataId(item[0].id)}
+                            >
+                              Quick View
+                            </button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              onClick={() => handeldataId(item[0].id)}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                          {/* </Fade>
+                        )} */}
+                        </div>
+                      </Col>
+                    ))}
+                  </Row>
+                </div>
+              </Container>
+            </section>
+          )}
         </>
       )}
       <Petshopfooter />
@@ -1725,7 +1728,7 @@ function PetshopBlogdetails() {
                               </Col>
                               {/* <Col lg={5} sm={5} xs={3}>
                                 <h6>
-                                  Your save
+                                  You save
                                   {formattedSavedAmount >= 0
                                     ? "₹" + formattedSavedAmount
                                     : "No savings"}

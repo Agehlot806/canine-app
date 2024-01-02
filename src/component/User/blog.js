@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Newheader from '../../directives/newheader';;
+import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
@@ -54,8 +54,8 @@ function Blog() {
   const renderBlogDescription = (description) => {
     // Remove HTML tags
     const removeHTMLTags = (html) => {
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      return doc.body.textContent || '';
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      return doc.body.textContent || "";
     };
 
     // Remove HTML tags and attributes
@@ -76,11 +76,9 @@ function Blog() {
     );
   };
 
-
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -139,31 +137,30 @@ function Blog() {
           </Container>
           <section className="section-padding">
             <Container>
-            <div className="text-right">
-  <div className="search-bar">
-    <input
-      type="text"
-      placeholder="Search Blog"
-      value={searchQuery}
-      onChange={handleSearchInputChange}
-      className="search-input"
-    />
-    <button type="button" className="search-button">
-      <i className="fa fa-search" />
-    </button>
-  </div>
-  {/* Your dropdown here */}
-  <ul className="search-dropdown">
-    {filteredProducts.map((product, index) => (
-      <li key={index}>
-        <Link to={`/blog-details/${product.id}`}>
-          {product.title}
-        </Link>
-      </li>
-    ))}
-  </ul>
-</div>
-
+              <div className="text-right">
+                <div className="search-bar">
+                  <input
+                    type="text"
+                    placeholder="Search Blog"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    className="search-input"
+                  />
+                  <button type="button" className="search-button">
+                    <i className="fa fa-search" />
+                  </button>
+                </div>
+                {/* Your dropdown here */}
+                <ul className="search-dropdown">
+                  {filteredProducts.map((product, index) => (
+                    <li key={index}>
+                      <Link to={`/blog-details/${product.id}`}>
+                        {product.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Container>
           </section>
 
@@ -187,7 +184,9 @@ function Blog() {
                             <div className="blog-cardContent">
                               <h4>{item.title}</h4>
                               <p>{renderBlogDescription(item.description)}</p>
-                              <Link to={`/blog-details/${item.id}`}>Read More</Link>
+                              <Link to={`/blog-details/${item.id}`}>
+                                Read More
+                              </Link>
                               <hr />
                               <Row>
                                 <Col lg={8}>

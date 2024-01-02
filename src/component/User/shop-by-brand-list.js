@@ -951,8 +951,8 @@ function Shopbybrandlist() {
                       <Col lg={3} sm={6} xs={6} className="mb-4">
                         <div
                           className="food-product"
-                          onMouseEnter={() => handleMouseEnter(item.id)}
-                          onMouseLeave={() => handleMouseLeave(item.id)}
+                          // onMouseEnter={() => handleMouseEnter(item.id)}
+                          // onMouseLeave={() => handleMouseLeave(item.id)}
                           key={item.id}
                           style={{
                             background:
@@ -1009,33 +1009,33 @@ function Shopbybrandlist() {
                               </Row>
                             </div>
                           </Link>
-                          {buttonVisibility[item.id] && (
-                            <Fade top>
-                              <div className="button-container">
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".bd-example-modal-lg"
-                                  onClick={(e) => handeldataId(item.id)}
-                                >
-                                  Quick View
-                                </button>
-                                <button
-                                  data-toggle="modal"
-                                  data-target=".buynow"
-                                  // onClick={(e) => handeldataId(item.id)}
-                                  onClick={(e) => {
-                                    if (!storedUserId) {
-                                      shippingpage("/login");
-                                    } else {
-                                      handeldataId(item.id);
-                                    }
-                                  }}
-                                >
-                                  Buy Now
-                                </button>
-                              </div>
-                            </Fade>
-                          )}
+                          {/* {buttonVisibility[item.id] && (
+                            <Fade top> */}
+                          <div className="button-container">
+                            <button
+                              data-toggle="modal"
+                              data-target=".bd-example-modal-lg"
+                              onClick={(e) => handeldataId(item.id)}
+                            >
+                              Quick View
+                            </button>
+                            <button
+                              data-toggle="modal"
+                              data-target=".buynow"
+                              // onClick={(e) => handeldataId(item.id)}
+                              onClick={(e) => {
+                                if (!storedUserId) {
+                                  shippingpage("/login");
+                                } else {
+                                  handeldataId(item.id);
+                                }
+                              }}
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                          {/* </Fade>
+                          )} */}
                         </div>
                       </Col>
                     ))
@@ -1279,7 +1279,7 @@ function Shopbybrandlist() {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}
@@ -1664,7 +1664,7 @@ function Shopbybrandlist() {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}

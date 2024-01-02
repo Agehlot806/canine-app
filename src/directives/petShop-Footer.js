@@ -25,7 +25,7 @@ function Petshopfooter() {
         <div className="section-padding">
           <Container>
             <Row>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Customer Services</h5>
                   <ul>
@@ -64,7 +64,7 @@ function Petshopfooter() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Information</h5>
                   <ul>
@@ -95,7 +95,7 @@ function Petshopfooter() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Conta ct Us</h5>
                   <ul>
@@ -119,21 +119,23 @@ function Petshopfooter() {
                   </ul>
                 </div>
               </Col>
-              <Col lg={3} sm={6}>
+              <Col lg={3} sm={6} xs={6}>
                 <div className="footer-list">
                   <h5>Download The Apps</h5>
                   <ul>
-                    <li>
-                      <Link to="https://play.google.com/store/games?device=windows">
-                        <img src={app1} />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="https://www.apple.com/in/">
-                        <img src={app2} />
-                      </Link>
-                    </li>
-                    <li className="social-media">
+                    <div className="footer-list">
+                      <li>
+                        <Link to="https://play.google.com/store/games?device=windows">
+                          <img src={app1} />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="https://www.apple.com/in/">
+                          <img src={app2} />
+                        </Link>
+                      </li>
+                    </div>
+                    <li className="social-media web-social">
                       <span>Follow Us On</span>
                       <Link to="https://www.facebook.com/canineproductsretail/">
                         <BiLogoFacebookCircle />
@@ -145,7 +147,7 @@ function Petshopfooter() {
                         <BiLogoInstagramAlt />
                       </Link>
                     </li>
-                    <li className="cardpay">
+                    <li className="cardpay web-social">
                       <Link>
                         <img src={Paycard1} />
                       </Link>
@@ -171,6 +173,51 @@ function Petshopfooter() {
                   </ul>
                 </div>
               </Col>
+              <div className="footer-list mobile-social">
+                <ul>
+                  <li className="social-media">
+                    <span>Follow Us On</span>
+                    <Link
+                      onClick={(e) =>
+                        linknewwindonopne(
+                          "https://www.facebook.com/canineproductsretail/"
+                        )
+                      }
+                    >
+                      <BiLogoFacebookCircle />
+                    </Link>
+                    <Link to="https://twitter.com/">
+                      <BiLogoTwitter />
+                    </Link>
+                    <Link to="https://www.instagram.com/">
+                      <BiLogoInstagramAlt />
+                    </Link>
+                  </li>
+                  <li className="cardpay">
+                    <Link>
+                      <img src={Paycard1} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard2} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard3} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard4} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard5} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard6} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard7} />
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </Row>
           </Container>
         </div>

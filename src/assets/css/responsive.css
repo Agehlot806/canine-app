@@ -20,7 +20,7 @@
   }
   .video-content {
     padding: 10px;
-}
+  }
   .Newsletter {
     padding: 0;
   }
@@ -298,7 +298,6 @@
     padding: 0 10px;
     font-size: 16px;
   }
- 
 
   /* Show buttons on food-product hover */
   .food-product:hover .button-container button {
@@ -312,39 +311,39 @@
   }
   .footer-list.mobile-social {
     display: block;
-}
-.footer-list ul li a img {
-  width: 60px;
-}
-.web-social {
-  display: none;
-}
+  }
+  .footer-list ul li a img {
+    width: 60px;
+  }
+  .web-social {
+    display: none;
+  }
   .frequ h6 {
     font-size: 10px;
-}
-.footer-list ul li {
-  margin: 0;
-}
-.frequ-btn button {
-  padding: 8px;
-  font-size: 12px;
-}
+  }
+  .footer-list ul li {
+    margin: 0;
+  }
+  .frequ-btn button {
+    padding: 8px;
+    font-size: 12px;
+  }
   .banner-video video {
     height: 100%;
-}
+  }
   .drop-menu li a {
     font-size: 14px;
     padding: 0;
   }
   .dow-summy table tbody tr td {
     left: 20%;
-}
-.dow-summy.leftsummy tr td {
-  left: 3%;
-}
-.dow-summy table tbody tr p {
-  font-size: 10px;
-}
+  }
+  .dow-summy.leftsummy tr td {
+    left: 3%;
+  }
+  .dow-summy table tbody tr p {
+    font-size: 10px;
+  }
   .pet-text-ser {
     padding: 65px 20px 18px;
   }
@@ -709,7 +708,7 @@
   }
 
   p {
-    font-size: 20px;
+    font-size: 10px;
   }
   li.cartbell {
     position: relative;
@@ -1005,7 +1004,6 @@
     font-size: 15px;
   }
 
-
   .footer-list ul li a {
     font-size: 8px;
   }
@@ -1033,7 +1031,7 @@
 @media only screen and (max-width: 320px) {
   .dow-summy table tbody tr td {
     left: 0;
-}
+  }
   nav .wrapper {
     padding: 0px 10px !important;
   }
@@ -1051,10 +1049,6 @@
   .payment-done p {
     margin: 15px 0;
     font-size: 14px;
-  }
-
-  p {
-    font-size: 15px;
   }
 
   .video-right img {

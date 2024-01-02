@@ -1212,10 +1212,7 @@ function Productdetail() {
             <Col lg={6} sm={6}>
               <div className="productDetail-content">
                 <Row>
-                  <Col lg={9} sm={9} xs={12}>
-                    <h4>{productDetails.name}</h4>
-                  </Col>
-                  <Col lg={3} sm={3} xs={12}>
+                  <Col lg={12} sm={12} xs={12}>
                     <p>
                       {productDetails.veg == 0 ? (
                         <span>
@@ -1242,6 +1239,9 @@ function Productdetail() {
                         </div>
                       </RWebShare>
                     </p>
+                  </Col>
+                  <Col lg={12} sm={12} xs={12}>
+                    <h4>{productDetails.name}</h4>
                   </Col>
                 </Row>
                 <p>
@@ -1364,7 +1364,7 @@ function Productdetail() {
                         {/* {formattedSavedAmount > 0 && ( */}
                         <Col lg={5} sm={5} xs={4}>
                           {formattedSavedAmount > 0 ? (
-                            <h6>Your save ₹{formattedSavedAmount}</h6>
+                            <h6>You save ₹{formattedSavedAmount}</h6>
                           ) : (
                             <h6>No savings</h6>
                           )}
@@ -1497,19 +1497,19 @@ function Productdetail() {
               </div>
               {showContent && (
                 <div className="needplace">
-                  <Row>
+                  <Row className="justify-content-center">
                     {comboData &&
                       comboData.map((item, index) => (
                         <>
-                          <Col lg={3} sm={6} xs={6} className="mb-4">
+                          <Col lg={3} sm={6} xs={12} className="mb-4">
                             <div
                               className="food-product"
-                              onMouseEnter={() =>
-                                handleMouseEntersuggetion(item.id)
-                              }
-                              onMouseLeave={() =>
-                                handleMouseLeavesuggetion(item.id)
-                              }
+                              // onMouseEnter={() =>
+                              //   handleMouseEntersuggetion(item.id)
+                              // }
+                              // onMouseLeave={() =>
+                              //   handleMouseLeavesuggetion(item.id)
+                              // }
                               key={item.id}
                               style={{
                                 background:
@@ -1576,7 +1576,7 @@ function Productdetail() {
                     <Col lg={8}>
                       {comboData?.length > 0 ? (
                         <Row>
-                          <Col lg={2} xs={2}>
+                          <Col lg={2} xs={3}>
                             <div className="frequ">
                               <h6>1 Item</h6>
                               {comboData[0] && (
@@ -1594,7 +1594,7 @@ function Productdetail() {
                               >
                                 <h4>+</h4>
                               </Col>
-                              <Col lg={2} xs={2}>
+                              <Col lg={2} xs={3}>
                                 <div className="frequ">
                                   <h6>1 Add-ons</h6>
                                   <h2>
@@ -1684,8 +1684,7 @@ function Productdetail() {
                             {`ADD ${comboData?.length} ITEMS TO CART`}
                           </button>
                         )}
-                            <p>{addToCartStatus}</p>
-
+                        <p>{addToCartStatus}</p>
                       </div>
                     </Col>
                   </Row>
@@ -1870,26 +1869,26 @@ function Productdetail() {
                         </div>
                       </Link>
 
-                      {buttonVisibility[item.id] && (
-                        <Fade top>
-                          <div className="button-container">
-                            <button
-                              data-toggle="modal"
-                              data-target=".bd-example-modal-lg"
-                              onClick={(e) => handeldataId(item.id)}
-                            >
-                              Quick View
-                            </button>
-                            <button
-                              data-toggle="modal"
-                              data-target=".buynow"
-                              onClick={(e) => handeldataId(item.id)}
-                            >
-                              Buy Now
-                            </button>
-                          </div>
-                        </Fade>
-                      )}
+                      {/* {buttonVisibility[item.id] && (
+                        <Fade top> */}
+                      <div className="button-container">
+                        <button
+                          data-toggle="modal"
+                          data-target=".bd-example-modal-lg"
+                          onClick={(e) => handeldataId(item.id)}
+                        >
+                          Quick View
+                        </button>
+                        <button
+                          data-toggle="modal"
+                          data-target=".buynow"
+                          onClick={(e) => handeldataId(item.id)}
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                      {/* </Fade>
+                      )} */}
                     </div>
                   </Col>
                 ))}
@@ -2206,7 +2205,7 @@ function Productdetail() {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}
@@ -2551,7 +2550,7 @@ function Productdetail() {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}
@@ -2930,7 +2929,7 @@ function Productdetail() {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}

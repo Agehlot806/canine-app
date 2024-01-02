@@ -510,7 +510,7 @@ function Quickview() {
                       </Col>
                       {/* <Col lg={5}>
                         <h6>
-                          Your save
+                          You save
                           {formattedSavedAmount >= 0
                             ? "₹" + formattedSavedAmount
                             : "No savings"}

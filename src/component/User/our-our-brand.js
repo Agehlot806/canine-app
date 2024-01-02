@@ -1748,8 +1748,8 @@ function Ourourbrand(props) {
                                         index % gradientColors.length
                                       ],
                                   }}
-                                  onMouseEnter={() => handleMouseEnter(item.id)}
-                                  onMouseLeave={() => handleMouseLeave(item.id)}
+                                  // onMouseEnter={() => handleMouseEnter(item.id)}
+                                  // onMouseLeave={() => handleMouseLeave(item.id)}
                                 >
                                   <i
                                     class={
@@ -1815,32 +1815,32 @@ function Ourourbrand(props) {
                                     </div>
                                   </Link>
 
-                                  {buttonVisibility[item.id] && (
-                                    <Fade top>
-                                      <div className="button-container">
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".bd-example-modal-lg"
-                                          onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Quick View
-                                        </button>
-                                        <button
-                                          data-toggle="modal"
-                                          data-target=".buynow"
-                                          onClick={(e) => {
-                                            if (!storedUserId) {
-                                              // window.location.href = '/login';
-                                              shippingpage("/login");
-                                            } else {
-                                              handeldataId(item.id);
-                                            }
-                                          }}
-                                          // onClick={(e) => handeldataId(item.id)}
-                                        >
-                                          Buy Now
-                                        </button>
-                                        {/* <Button>
+                                  {/* {buttonVisibility[item.id] && (
+                                    <Fade top> */}
+                                  <div className="button-container">
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".bd-example-modal-lg"
+                                      onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Quick View
+                                    </button>
+                                    <button
+                                      data-toggle="modal"
+                                      data-target=".buynow"
+                                      onClick={(e) => {
+                                        if (!storedUserId) {
+                                          // window.location.href = '/login';
+                                          shippingpage("/login");
+                                        } else {
+                                          handeldataId(item.id);
+                                        }
+                                      }}
+                                      // onClick={(e) => handeldataId(item.id)}
+                                    >
+                                      Buy Now
+                                    </button>
+                                    {/* <Button>
                         <Link
                           // to={`/add-cart/${productDetails.id}`}
                           to={`/add-cart/${productDetails.id}?gowithbuynow=true`}
@@ -1850,9 +1850,8 @@ function Ourourbrand(props) {
                         </Link>
                         <p>{addToCartStatus}</p>
                       </Button> */}
-                                      </div>
-                                    </Fade>
-                                  )}
+                                  </div>
+                                  {/* <s */}
                                 </div>
                               </Col>
                             );
@@ -2279,7 +2278,7 @@ function Ourourbrand(props) {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}
@@ -3076,7 +3075,7 @@ function Ourourbrand(props) {
                                 {/* {formattedSavedAmount > 0 && ( */}
                                 <Col lg={5} sm={5} xs={3}>
                                   {formattedSavedAmount > 0 ? (
-                                    <h6>Your save ₹{formattedSavedAmount}</h6>
+                                    <h6>You save ₹{formattedSavedAmount}</h6>
                                   ) : (
                                     <h6>No savings</h6>
                                   )}
