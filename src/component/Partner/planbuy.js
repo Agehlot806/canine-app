@@ -1,5 +1,4 @@
 import React from "react";
-import Petshopheader from "../../directives/petShopHeader";
 import { Col, Container, Row, Button, Form, Nav, Table } from "react-bootstrap";
 import HomeImg from "../../assets/images/img/home.png";
 import partner from "../../assets/images/img/partner.png";
@@ -9,6 +8,7 @@ import { loadRazorpay } from "../../utils";
 import { useState } from "react";
 import { useEffect } from "react";
 import moment from "moment";
+import Partnerheader from "../../directives/partner-header";
 function Planbuy() {
   const [paymentId, setPaymentId] = useState("");
   const [homebanner, sethomebanner] = useState([]);
@@ -122,7 +122,7 @@ function Planbuy() {
 
   return (
     <>
-     <Petshopheader />
+     <Partnerheader />
       {/* <div className="home-section">
         {homebanner
           ? homebanner.map(

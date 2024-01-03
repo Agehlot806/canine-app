@@ -6,7 +6,7 @@ import Petshopfooter from "../../directives/petShop-Footer";
 import axios from "axios";
 import { BASE_URL } from "../../Constant/Index";
 import { useNavigate } from "react-router-dom";
-import Petshopheader from "../../directives/petShopHeader";
+import Partnerheader from "../../directives/partner-header";
 
 function Partnerdashboard() {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ function Partnerdashboard() {
   };
   return (
     <>
-      <Petshopheader />
+      <Partnerheader />
       <div className="home-section">
         {homebanner
           ? homebanner.map(

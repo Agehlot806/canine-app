@@ -426,6 +426,7 @@ const partnersRoutes = () => {
       {/*======================== partners flow start ========================*/}
       <Route path="/partner-dashboad" element={<Partnerdashboard />} />
       <Route path="/plan-buy" element={<Planbuy />} />
+      
       {/*======================== partners flow end ========================*/}
     </Routes>
   );
