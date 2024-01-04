@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
-import about from "../../assets/images/banner/about.png";
+import about from "../../assets/images/banner/banner.png";
 import { Link } from "react-router-dom";
 import PetShopHeader from "../../directives/petShopHeader";
 import Petshopfooter from "../../directives/petShop-Footer";

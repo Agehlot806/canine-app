@@ -3,7 +3,7 @@ import Newheader from "../../directives/newheader";
 import Footer from "../../directives/footer";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { BASE_URL } from "../../Constant/Index";
-import about from "../../assets/images/banner/about.png";
+import about from "../../assets/images/banner/banner.png";
 import { Link } from "react-router-dom";
 import loadinggif from "../../assets/images/video/loading.gif";
 
