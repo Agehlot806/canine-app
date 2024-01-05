@@ -154,12 +154,7 @@ function Petshopfooter() {
                       <Link>
                         <img src={Paycard2} />
                       </Link>
-                      <Link>
-                        <img src={Paycard3} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard4} />
-                      </Link>
+
                       <Link>
                         <img src={Paycard5} />
                       </Link>

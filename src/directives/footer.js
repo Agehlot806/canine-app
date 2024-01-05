@@ -135,16 +135,16 @@ function Footer() {
                   <h5>Download The Apps</h5>
                   <ul>
                     <div className="d-flex">
-                    <li >
-                      <Link to="https://play.google.com/store/games?device=windows">
-                        <img src={app1} />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="https://www.apple.com/in/">
-                        <img src={app2} />
-                      </Link>
-                    </li>
+                      <li>
+                        <Link to="https://play.google.com/store/games?device=windows">
+                          <img src={app1} />
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="https://www.apple.com/in/">
+                          <img src={app2} />
+                        </Link>
+                      </li>
                     </div>
                     <li className="social-media web-social">
                       <span>Follow Us On</span>
@@ -171,12 +171,7 @@ function Footer() {
                       <Link>
                         <img src={Paycard2} />
                       </Link>
-                      <Link>
-                        <img src={Paycard3} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard4} />
-                      </Link>
+
                       <Link>
                         <img src={Paycard5} />
                       </Link>
@@ -191,50 +186,45 @@ function Footer() {
                 </div>
               </Col>
               <div className="footer-list mobile-social">
-              <ul>
-              <li className="social-media">
-                      <span>Follow Us On</span>
-                      <Link
-                        onClick={(e) =>
-                          linknewwindonopne(
-                            "https://www.facebook.com/canineproductsretail/"
-                          )
-                        }
-                      >
-                        <BiLogoFacebookCircle />
-                      </Link>
-                      <Link to="https://twitter.com/">
-                        <BiLogoTwitter />
-                      </Link>
-                      <Link to="https://www.instagram.com/">
-                        <BiLogoInstagramAlt />
-                      </Link>
-                    </li>
-                    <li className="cardpay">
-                      <Link>
-                        <img src={Paycard1} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard2} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard3} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard4} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard5} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard6} />
-                      </Link>
-                      <Link>
-                        <img src={Paycard7} />
-                      </Link>
-                    </li>
-              </ul>
-        </div>
+                <ul>
+                  <li className="social-media">
+                    <span>Follow Us On</span>
+                    <Link
+                      onClick={(e) =>
+                        linknewwindonopne(
+                          "https://www.facebook.com/canineproductsretail/"
+                        )
+                      }
+                    >
+                      <BiLogoFacebookCircle />
+                    </Link>
+                    <Link to="https://twitter.com/">
+                      <BiLogoTwitter />
+                    </Link>
+                    <Link to="https://www.instagram.com/">
+                      <BiLogoInstagramAlt />
+                    </Link>
+                  </li>
+                  <li className="cardpay">
+                    <Link>
+                      <img src={Paycard1} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard2} />
+                    </Link>
+
+                    <Link>
+                      <img src={Paycard5} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard6} />
+                    </Link>
+                    <Link>
+                      <img src={Paycard7} />
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </Row>
           </Container>
         </div>
