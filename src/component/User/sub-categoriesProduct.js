@@ -1397,7 +1397,7 @@ function SubcategoriesProduct() {
   };
 
   const renderProducthead = (name) => {
-    const maxCharacters = 20; // Number of characters to show initially
+    const maxCharacters = 15; // Number of characters to show initially
 
     if (name?.length <= maxCharacters) {
       return <h6>{name}</h6>; // Show the full description if it's short

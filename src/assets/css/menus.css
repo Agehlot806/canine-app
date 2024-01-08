@@ -73,7 +73,7 @@ nav .wrapper {
   color: #000;
   width: 180px;
   line-height: 45px;
-  top: 85px;
+  top: 60px;
   opacity: 0;
   padding: 0;
   visibility: hidden;
@@ -83,7 +83,7 @@ nav .wrapper {
 .nav-links li:hover .drop-menu,
 .nav-links li:hover .mega-box {
   transition: all 0.3s ease;
-  top: 54px;
+  /* top: 54px; */
   opacity: 1;
   visibility: visible;
 }
@@ -101,8 +101,8 @@ nav .wrapper {
   position: absolute;
   /* left: 0;
   width: 100%; */
-  left: -12%;
-  width: 124%;
+  left: -8%;
+    width: 115%;
   padding: 0 30px;
   /* top: 20px; */
   opacity: 0;

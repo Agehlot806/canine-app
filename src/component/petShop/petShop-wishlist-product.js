@@ -77,7 +77,7 @@ function PetshopWishlistproduct() {
   ];
 
   const renderProducthead = (name) => {
-    const maxCharacters = 20;
+    const maxCharacters = 15;
 
     if (name?.length <= maxCharacters) {
       return <h6>{name}</h6>;
