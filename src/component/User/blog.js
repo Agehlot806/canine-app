@@ -141,7 +141,7 @@ function Blog() {
                 <div className="search-bar">
                   <input
                     type="text"
-                    placeholder="Search Blog"
+                    placeholder="Type your pet-related question or topic of concern to find helpful articles and information below!"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                     className="search-input"

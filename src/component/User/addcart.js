@@ -927,6 +927,7 @@ function Addcart() {
           ) : addToCartProduct && addToCartProduct.length > 0 ? (
             addToCartProduct.map((item, index) => (
               <Container>
+                {console.log("addToCartProduct: ", addToCartProduct)}
                 <Row>
                   <Col lg={2} sm={2}>
                     <img
@@ -952,7 +953,8 @@ function Addcart() {
                     xs={6}
                     className="align-self-center addCARThead"
                   >
-                    <h3>₹{formatPrice(item.price) * item.quantity}</h3>
+                    <h3>₹{parseInt(item?.price) * item?.quantity}</h3>
+                    {/* <h3>₹{formatPrice(item?.price)}</h3> */}
 
                     {item?.type == "combo" ? (
                       <h5>Qty -: 1</h5>
