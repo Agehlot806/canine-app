@@ -18,7 +18,10 @@ import loadinggif from "../../assets/images/video/loading.gif";
 
 function Partneroneshop() {
   const { id } = useParams();
+  console.log("id: ", id);
+
   const { state } = useLocation();
+  console.log("state: ", state);
   const [vendorItemList, setVendorItemList] = useState([]);
   const [allproduct, setallproduct] = useState([]);
   const [paymentId, setPaymentId] = useState("");
@@ -65,8 +68,11 @@ function Partneroneshop() {
     // Add more gradient colors as needed
   ];
 
-  // const vendorID = state.item.id
-  // console.log("vendorIDvendorIDvendorID",vendorID);
+  const vendorID = state.item.id;
+  const vendorIDstore = localStorage.setItem("vendorID", vendorID);
+
+  console.log("vendorIDstore: ", vendorIDstore);
+  console.log("vendorIDvendorIDvendorID", vendorID);
   const customer_id = localStorage.getItem("userInfo");
   let storedUserId = JSON.parse(customer_id);
   const [buttonVisibility, setButtonVisibility] = useState({});
@@ -634,6 +640,7 @@ function Partneroneshop() {
       quantity: quantity,
       tax_amount: 0,
       discount_on_item: disscountvalue?.discount || "",
+      store_id: vendorID,
     };
     // Calculate the order_amount
     const orderAmount = parseInt(totalPrice + deliveryCharges);
@@ -652,7 +659,7 @@ function Partneroneshop() {
       coupon_code: disscountvalue?.code || "",
       order_type: "delivery",
       checked: selectedInput,
-      store_id: 1,
+      store_id: vendorID,
       zone_id: 2,
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,

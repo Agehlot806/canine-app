@@ -36,6 +36,7 @@ function Addcart() {
   const [paymentId, setPaymentId] = useState("");
   const [selectedInput, setSelectedInput] = useState("");
   const loginType = localStorage.getItem("loginType");
+  const vendorIDstore = localStorage.getItem("vendorID");
   const customerLoginId =
     loginType === "wholeseller"
       ? Number(localStorage.getItem("UserWholesellerId"))
@@ -488,7 +489,7 @@ function Addcart() {
       coupon_code: disscountvalue?.code || "",
       order_type: "delivery",
       checked: selectedInput,
-      store_id: 1,
+      store_id: vendorIDstore || 1,
       zone_id: 2,
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
@@ -512,6 +513,7 @@ function Addcart() {
       .then((responseData) => {
         console.log("responseData???>>>>", responseData);
         shippingpage("/shipping/" + responseData.data.order_id);
+        localStorage.removeItem("vendorID");
       })
       .catch((error) => {
         console.error("Error sending request:", error);
