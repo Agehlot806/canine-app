@@ -34,6 +34,7 @@ function Productdetail() {
   const [selectedVariantStock, setSelectedVariantStock] = useState("");
   const [comboData, setComboData] = useState([]);
   const loginType = localStorage.getItem("loginType");
+  const vendorIDstore = localStorage.getItem("vendorID");
   const customerLoginId =
     loginType === "wholeseller"
       ? Number(localStorage.getItem("UserWholesellerId"))
@@ -925,7 +926,7 @@ function Productdetail() {
       coupon_code: disscountvalue?.code || "",
       order_type: "delivery",
       checked: selectedInput,
-      store_id: 1,
+      store_id: vendorIDstore || 1,
       zone_id: 2,
       delivered_status: "undelivered",
       delivery_address: deliveryAddress,
