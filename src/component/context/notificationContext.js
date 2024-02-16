@@ -15,7 +15,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifisecondData, setNotifisecondData] = useState();
   const [notifithirdLength, setNotifithirdLength] = useState();
   const [notifithirdData, setNotifithirdData] = useState();
-  const BASE_URL = "https://canine.hirectjob.in/api/v1";
+  const BASE_URL = "https://eduadmin.digiatto.online/api/v1";
   const loginType = localStorage.getItem("loginType");
   
   const customer_id = loginType === "wholeseller"
