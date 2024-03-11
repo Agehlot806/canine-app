@@ -2159,57 +2159,46 @@ function Addcart() {
                 <p className="emptyMSG">No Coupon List.</p>
               )} */}
               {couponlist && couponlist.length > 0 ? (
-                couponlist.map((item, index) => (
-                  <div className="coupon-main">
-                    <div className="coupon-card" key={index}>
-                      {/* <img src="" alt="Company Logo" className="logo" /> */}
-                      <h3>{item.title}</h3>
-                      <p className="min-max">
-                        Min Purchase :{parseInt(item.min_purchase)} & Max
-                        Discount :{parseInt(item.max_discount)}
-                      </p>
-                      <div className="coupon-row">
-                        <span id="cpnCode" className="coupon-code">
-                          {item.code}
-                        </span>
-                        <span className="discount-type-code">
-                          {item.discount_type}
-                        </span>
-                        {/* <button
-                          id="cpnBtn"
-                          className="copy-button"
-                          // onClick={this.handleCopyCode}
-                        >
-                          {copied ? "COPIED" : "COPY CODE"}
-                        </button> */}
-                      </div>
-                      <p>Start Date: {item.start_date}</p>
-                      <p>Expire Date: {item.expire_date}</p>
-                      {/* <div className="circle1">{item.start_date}</div>
-                      <div className="circle2">{item.expire_date}</div> */}
-                      <div className="coup-area">
-                        {/* {totalPrice + deliveryCharges >= 200 ? ( */}
-                        <button
-                          onClick={(e) => coupendisscount(item)}
-                          type="button"
-                          className="btn btn-primary btn-apply coupon"
-                          data-dismiss="modal"
-                        >
-                          Apply
-                        </button>
-                        {/* ) : (
-                          <p className="apply-coupon">
-                            Apply for this coupon: Minimum purchase amount is
-                            200₹.
-                          </p>
-                        )} */}
+                couponlist.map((item, index) =>
+                  // Check if the total price + delivery charges meets the minimum purchase requirement
+                  totalPrice + deliveryCharges >=
+                  parseInt(item.min_purchase) ? (
+                    <div className="coupon-main" key={index}>
+                      <div className="coupon-card">
+                        {/* <img src="" alt="Company Logo" className="logo" /> */}
+                        <h3>{item.title}</h3>
+                        <p className="min-max">
+                          Min Purchase: {parseInt(item.min_purchase)} & Max
+                          Discount: {parseInt(item.max_discount)}
+                        </p>
+                        <div className="coupon-row">
+                          <span id="cpnCode" className="coupon-code">
+                            {item.code}
+                          </span>
+                          <span className="discount-type-code">
+                            {item.discount_type}
+                          </span>
+                        </div>
+                        <p>Start Date: {item.start_date}</p>
+                        <p>Expire Date: {item.expire_date}</p>
+                        <div className="coup-area">
+                          <button
+                            onClick={(e) => coupendisscount(item)}
+                            type="button"
+                            className="btn btn-primary btn-apply coupon"
+                            data-dismiss="modal"
+                          >
+                            Apply
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ) : null
+                )
               ) : (
                 <p className="emptyMSG">No Coupon List.</p>
               )}
+
               <button
                 type="button"
                 className="btn btn-secondary"
