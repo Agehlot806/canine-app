@@ -20,6 +20,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { loadRazorpay } from "../../utils";
 import paydone from "../../assets/images/icon/paydone.png";
 import { useCartWithoutLogin } from "../context/AddToCardWithoutLogin";
+import "../../assets/css/style.css";
 
 function Addcart() {
   const { id } = useParams();
@@ -234,7 +235,7 @@ function Addcart() {
 
     if (
       updatedCart[index].quantity ===
-      Number(variantStockCount[index].total_quantity)
+      Number(variantStockCount[index]?.total_quantity)
     ) {
       toast.error("Stock not avilable");
     } else {
@@ -254,7 +255,7 @@ function Addcart() {
     console.log("IndexupdatedCart: ", updatedCart[index].quantity);
     console.log(
       "IndexvariantStockCount: ",
-      Number(variantStockCount[index].total_quantity)
+      Number(variantStockCount[index]?.total_quantity)
     );
   };
 
@@ -319,7 +320,7 @@ function Addcart() {
         setSandCartData([...newCartsend]);
 
         const newVariantStockCount = response.data.data.map((stock) => ({
-          total_quantity: stock.total_quantity,
+          total_quantity: stock?.total_quantity,
         }));
 
         setVariantStockCount(newVariantStockCount);
@@ -332,7 +333,7 @@ function Addcart() {
           variant: item.variant,
           quantity: item.quantity,
           return_order: item?.return_order || "no",
-          total_quantity: item.total_quantity,
+          total_quantity: item?.total_quantity,
           type: item.type,
           // Assuming the response already includes the quantity
         }));
@@ -1520,20 +1521,22 @@ function Addcart() {
                     <p>Online Payment</p>
                   </div>
                 </div>
-                <div className="select-card select-card3">
-                  <div className="selct-card-text">
-                    <input
-                      // style={{cursor:""}}
-                      className="form-check-input"
-                      type="radio"
-                      name="exampleRadios"
-                      value="second"
-                      checked={selectedInput}
-                      onChange={handleRadioChange}
-                    />
-                    <p>Cash On Delivery</p>
+                {totalPrice + deliveryCharges > 999 && (
+                  <div className="select-card select-card3">
+                    <div className="selct-card-text">
+                      <input
+                        // style={{cursor:""}}
+                        className="form-check-input"
+                        type="radio"
+                        name="exampleRadios"
+                        value="second"
+                        checked={selectedInput}
+                        onChange={handleRadioChange}
+                      />
+                      <p>Cash On Delivery</p>
+                    </div>
                   </div>
-                </div>
+                )}
                 <Button
                   disabled={!selectedInput}
                   data-toggle="modal"
@@ -2091,7 +2094,7 @@ function Addcart() {
           <div className="modal-content">
             <div className="modal-body">
               <h5>Coupon List</h5>
-              {couponlist && couponlist.length > 0 ? (
+              {/* {couponlist && couponlist.length > 0 ? (
                 couponlist.map((item, index) => (
                   <div className="notification" key={index}>
                     <Row>
@@ -2154,8 +2157,59 @@ function Addcart() {
                 ))
               ) : (
                 <p className="emptyMSG">No Coupon List.</p>
+              )} */}
+              {couponlist && couponlist.length > 0 ? (
+                couponlist.map((item, index) => (
+                  <div className="coupon-main">
+                    <div className="coupon-card" key={index}>
+                      {/* <img src="" alt="Company Logo" className="logo" /> */}
+                      <h3>{item.title}</h3>
+                      <p className="min-max">
+                        Min Purchase :{parseInt(item.min_purchase)} & Max
+                        Discount :{parseInt(item.max_discount)}
+                      </p>
+                      <div className="coupon-row">
+                        <span id="cpnCode" className="coupon-code">
+                          {item.code}
+                        </span>
+                        <span className="discount-type-code">
+                          {item.discount_type}
+                        </span>
+                        {/* <button
+                          id="cpnBtn"
+                          className="copy-button"
+                          // onClick={this.handleCopyCode}
+                        >
+                          {copied ? "COPIED" : "COPY CODE"}
+                        </button> */}
+                      </div>
+                      <p>Start Date: {item.start_date}</p>
+                      <p>Expire Date: {item.expire_date}</p>
+                      {/* <div className="circle1">{item.start_date}</div>
+                      <div className="circle2">{item.expire_date}</div> */}
+                      <div className="coup-area">
+                        {/* {totalPrice + deliveryCharges >= 200 ? ( */}
+                        <button
+                          onClick={(e) => coupendisscount(item)}
+                          type="button"
+                          className="btn btn-primary btn-apply coupon"
+                          data-dismiss="modal"
+                        >
+                          Apply
+                        </button>
+                        {/* ) : (
+                          <p className="apply-coupon">
+                            Apply for this coupon: Minimum purchase amount is
+                            200₹.
+                          </p>
+                        )} */}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="emptyMSG">No Coupon List.</p>
               )}
-
               <button
                 type="button"
                 className="btn btn-secondary"

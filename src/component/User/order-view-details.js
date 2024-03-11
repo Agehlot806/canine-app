@@ -836,7 +836,7 @@ function Orderviewdetails() {
                                     Order ID :{item?.id}
                                   </h3>
                                   <h6 className="text-center">
-                                    GSTIN :27unghy100085
+                                    GSTIN :27AUIPM6812G1ZI
                                   </h6>
                                   <h6 className="text-center">
                                     {item.callback &&

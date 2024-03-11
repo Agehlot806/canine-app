@@ -4109,7 +4109,7 @@ li.nav-.nonhide {
 }
 
 .coup-area {
-  text-align: right;
+  text-align: center;
 }
 
 /* 23-oct-2023 */
@@ -4463,4 +4463,236 @@ ul.search-dropdown li a:hover {
 
 .search-bar button:hover {
   background-color: #0056b3;
+}
+/* coupons 11/3/2024 */
+
+.coupon-main {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.coupon-card {
+  background: linear-gradient(135deg, #7158fe, #9d4de6);
+  color: #fff;
+  text-align: center;
+  padding: 40px 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+  position: relative;
+  width: 92%;
+  height: 294px;
+  margin-bottom: 10px;
+}
+.logo {
+  width: 80px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.coupon-card h3 {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 40px;
+}
+.coupon-card p {
+  font-size: 15px;
+}
+.min-max {
+  font-size: 15px;
+}
+.discount-type-code {
+  padding: 10px 10px;
+}
+.coupon-row {
+  display: flex;
+  align-items: center;
+  margin: 15px auto;
+  width: fit-content;
+}
+#cpnCode {
+  border: 1px dashed #fff;
+  padding: 10px 20px;
+  /* border-right: 0; */
+}
+/* #cpnBtn {
+  border: 1px solid #fff;
+  background: #fff;
+  padding: 10px 20px;
+  color: #7158fe;
+  cursor: pointer;
+} */
+.circle1,
+.circle2 {
+  background: #f0fff3;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.circle1 {
+  left: -25px;
+}
+.circle2 {
+  right: -25px;
+}
+.apply-coupon {
+  background: #ffc934;
+  padding: 5px 20px;
+  border-radius: 5px;
+}
+
+/* Media Queries */
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .coup-area {
+    text-align: center;
+    /* padding: 0 10px; */
+    padding-bottom: 10px;
+  }
+  .coupon-main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .coupon-card {
+    background: linear-gradient(135deg, #7158fe, #9d4de6);
+    color: #fff;
+    text-align: center;
+    padding: 40px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+    position: relative;
+    width: 92%;
+    height: 300px;
+    margin-bottom: 10px;
+  }
+  .logo {
+    width: 80px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .coupon-card h3 {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 40px;
+  }
+  .coupon-card p {
+    font-size: 15px;
+  }
+  .min-max {
+    font-size: 15px;
+  }
+  .discount-type-code {
+    padding: 10px 10px;
+  }
+  .coupon-row {
+    display: flex;
+    align-items: center;
+    margin: 15px auto;
+    width: fit-content;
+  }
+  #cpnCode {
+    border: 1px dashed #fff;
+    padding: 10px 20px;
+    /* border-right: 0; */
+  }
+  /* #cpnBtn {
+  border: 1px solid #fff;
+  background: #fff;
+  padding: 10px 20px;
+  color: #7158fe;
+  cursor: pointer;
+} */
+  .circle1,
+  .circle2 {
+    background: #f0fff3;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .circle1 {
+    left: -25px;
+  }
+  .circle2 {
+    right: -25px;
+  }
+}
+
+@media screen and (min-width: 481) and (max-width: 768px) {
+  .coup-area {
+    text-align: center;
+  }
+  .coupon-main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .coupon-card {
+    background: linear-gradient(135deg, #7158fe, #9d4de6);
+    color: #fff;
+    text-align: center;
+    padding: 40px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+    position: relative;
+    width: 92%;
+    height: 294px;
+    margin-bottom: 10px;
+  }
+  .logo {
+    width: 80px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .coupon-card h3 {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 40px;
+  }
+  .coupon-card p {
+    font-size: 15px;
+  }
+  .min-max {
+    font-size: 15px;
+  }
+  .discount-type-code {
+    padding: 10px 10px;
+  }
+  .coupon-row {
+    display: flex;
+    align-items: center;
+    margin: 15px auto;
+    width: fit-content;
+  }
+  #cpnCode {
+    border: 1px dashed #fff;
+    padding: 10px 20px;
+    /* border-right: 0; */
+  }
+  /* #cpnBtn {
+  border: 1px solid #fff;
+  background: #fff;
+  padding: 10px 20px;
+  color: #7158fe;
+  cursor: pointer;
+} */
+  .circle1,
+  .circle2 {
+    background: #f0fff3;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .circle1 {
+    left: -25px;
+  }
+  .circle2 {
+    right: -25px;
+  }
 }
