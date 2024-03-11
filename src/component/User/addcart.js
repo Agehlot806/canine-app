@@ -63,55 +63,123 @@ function Addcart() {
   const redirectToShipping = () => {
     Navigate("/shipping");
   };
+  const [paymentDetails, setPaymentDetails] = useState({
+    amount: 100, // In paise
+    customerDetails: {
+      name: "John Doe",
+      phone: "9999999999",
+    },
+    orderId: "ORDER12345",
+    cardDetails: {
+      card_number: "4242424242424242",
+      card_type: "DEBIT_CARD",
+      card_issuer: "VISA",
+      expiry_month: "12",
+      expiry_year: "2023",
+      cvv: "936",
+    },
+  });
+
+  // const handlePayment = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay",
+  //       paymentDetails
+  //     );
+
+  //     if (response.data.status === "SUCCESS") {
+  //       window.location.href =
+  //         response.data.instrumentResponse.redirectInfo.url;
+  //     } else {
+  //       // Handle payment initiation error
+  //     }
+  //   } catch (error) {
+  //     // Handle network or other errors
+  //   }
+  // };
+  // const handlePayment = async () => {
+  //   const merchantId = "PGTESTPAYUAT";
+  //   const accessKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
+  //   const apiUrl = "https://api.phonepe.com/v3/payment";
+  //   const requestData = {
+  //     merchantId,
+  //     accessKey,
+  //     // Add other required parameters
+  //     amount: 100,
+  //     orderId: "10010",
+  //     // Add other payment details
+  //   };
+  //   try {
+  //     const response = await fetch(apiUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(requestData),
+  //     });
+  //     if (response.ok) {
+  //       const paymentResponse = await response.json();
+  //       // Handle the payment response
+  //       console.log("Payment Response:", paymentResponse);
+  //     } else {
+  //       // Handle errors
+  //       console.error("Payment Error:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     // Handle network errors
+  //     console.error("Network Error:", error.message);
+  //   }
+  // };
+
   // loadRazorpayScript
-  const loadRazorpayScript = () => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.async = true;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.body.appendChild(script);
-    });
-  };
+  // const loadRazorpayScript = () => {
+  //   return new Promise((resolve, reject) => {
+  //     const script = document.createElement("script");
+  //     script.src = "https://checkout.razorpay.com/v1/checkout.js";
+  //     script.async = true;
+  //     script.onload = resolve;
+  //     script.onerror = reject;
+  //     document.body.appendChild(script);
+  //   });
+  // };
 
-  const handlePayment = async () => {
-    try {
-      await loadRazorpayScript();
+  // const handlePayment = async () => {
+  //   try {
+  //     await loadRazorpayScript();
 
-      const options = {
-        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
-        amount: 10000, // Amount in paise (100 INR)
-        currency: "INR",
-        name: "HEllo world",
-        description: "Test Payment",
-        image: "https://your_logo_url.png",
-        // order_id: response.id, // Order ID obtained from Razorpay
-        handler: (response) => {
-          setPaymentId(response.razorpay_payment_id);
-          // Handle the success callback
-          window.location.href = "/shipping";
-          console.log("Payment Successful:", response);
-        },
+  //     const options = {
+  //       key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
+  //       amount: 10000, // Amount in paise (100 INR)
+  //       currency: "INR",
+  //       name: "HEllo world",
+  //       description: "Test Payment",
+  //       image: "https://your_logo_url.png",
+  //       // order_id: response.id, // Order ID obtained from Razorpay
+  //       handler: (response) => {
+  //         setPaymentId(response.razorpay_payment_id);
+  //         // Handle the success callback
+  //         window.location.href = "/shipping";
+  //         console.log("Payment Successful:", response);
+  //       },
 
-        prefill: {
-          email: "test@example.com",
-          contact: "1234567890",
-        },
-        notes: {
-          address: "1234, Demo Address",
-        },
-        theme: {
-          color: "#F37254",
-        },
-      };
+  //       prefill: {
+  //         email: "test@example.com",
+  //         contact: "1234567890",
+  //       },
+  //       notes: {
+  //         address: "1234, Demo Address",
+  //       },
+  //       theme: {
+  //         color: "#F37254",
+  //       },
+  //     };
 
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.error("Razorpay Load Error:", error);
-    }
-  };
+  //     const rzp1 = new window.Razorpay(options);
+  //     rzp1.open();
+  //   } catch (error) {
+  //     console.error("Razorpay Load Error:", error);
+  //   }
+  // };
 
   // const originalPrice = addToCartProduct[0]?.price;
 
@@ -519,6 +587,89 @@ function Addcart() {
         console.error("Error sending request:", error);
       });
   };
+
+  // PhonePe Payment Gateway Integration start
+  const phonepaydata = {
+    amount: totalPrice + deliveryCharges,
+  };
+  const handlePayment = (e) => {
+    // e.preventDefault();
+    // const transaction_id = generateUniqueTransactionId();
+    const cartData = sendcartdata.map((item) => ({
+      product_id: item.item_id,
+      variation: item.variant,
+      price: item.price,
+      quantity: item.quantity,
+      tax_amount: 0,
+      discount_on_item: disscountvalue?.discount || "",
+    }));
+    const requestData = {
+      role: 0,
+      user_id: customer_id,
+      coupon_discount_amount: disscountvalue?.discount || "",
+      coupon_discount_title: disscountvalue?.title || "",
+      payment_status: "paid",
+      order_status: "pending",
+      total_tax_amount: 0,
+      payment_method: selectedInput ? "offline" : "online",
+      transaction_reference: selectedInput ? "" : "sadgash23asds",
+      delivery_address_id: 2,
+      delivery_charge: deliveryCharges,
+      coupon_code: disscountvalue?.code || "",
+      order_type: "delivery",
+      checked: selectedInput,
+      store_id: vendorIDstore || 1,
+      zone_id: 2,
+      delivered_status: "undelivered",
+      delivery_address: deliveryAddress,
+      item_campaign_id: "",
+      order_amount: parseInt(
+        // originalPrice + deliveryCharges - disscountvalue?.discount) ||
+        totalPrice + deliveryCharges
+      ),
+      cart: cartData,
+    };
+    axios
+      .post("https://canine.hirectjob.in/api/v1/auth/payment/initiate", {
+        ...phonepaydata,
+        ...requestData,
+      })
+      .then((res) => {
+        // Extract the redirect URL from the response
+        const redirectUrl = res.data.data.instrumentResponse.redirectInfo.url;
+        const merchantTransactionId = res.data.data.merchantTransactionId;
+
+        // Call your callback API with relevant data
+        axios
+          .post("http://canine.hirectjob.in/api/v1/auth/payment/callback", {
+            payment_status: true,
+            transaction_id: merchantTransactionId,
+          })
+          .then((callbackRes) => {
+            // Handle callback response if needed
+          })
+          .catch((callbackError) => {
+            // Handle callback error if needed
+          });
+
+        // Open the redirect URL in a new window
+        window.open(redirectUrl);
+      })
+      .catch((error) => {
+        // Handle error if needed
+      });
+    // .then((res) => {
+    //   const abc = res.data.data.instrumentResponse.redirectInfo.url;
+    //   window.open(abc);
+    // })
+    // .catch((error) => {});
+  };
+  function generateUniqueTransactionId() {
+    // Generate a unique ID based on your requirements
+    // You can use libraries like uuid or generate IDs based on timestamps
+    return merchantTransactionId; // Example unique transaction ID
+  }
+  // PhonePe Payment Gateway Integration end
 
   // failed place api notifiction_post
   const handlenotifictionpostSubmit = async (e) => {

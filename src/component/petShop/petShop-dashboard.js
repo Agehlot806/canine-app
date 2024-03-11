@@ -116,44 +116,86 @@ function Petshopdashboard() {
     });
   };
   const [paymentId, setPaymentId] = useState("");
-  const handlePayment = async () => {
-    try {
-      await loadRazorpayScript();
+  const phonepaydata = {
+    // amount: parseInt(originalPrice),
+  };
+  const handlePayment = (e) => {
+    // e.preventDefault();
+    // const transaction_id = generateUniqueTransactionId();
+    // const cartData = sendcartdata.map((item) => ({
+    //   product_id: item.item_id,
+    //   variation: item.variant,
+    //   price: parseInt(item.price),
+    //   quantity: item.quantity,
+    //   min_order: item.min_order,
+    //   tax_amount: 0,
+    //   discount_on_item: "",
+    // }));
+    // const requestData = {
+    //   user_id: storedWholesellerId,
+    //   seller_id: Number(salesmanId),
+    //   coupon_discount_amount: "",
+    //   discount_on_item: "",
+    //   coupon_discount_title: "",
+    //   payment_status: "unpaid",
+    //   order_status: "pending",
+    //   total_tax_amount: 0,
+    //   // * itemQty,
+    //   gst_bill: selectedValue,
+    //   payment_day: selectedOption,
+    //   payment_mode: selectedOptiontwo,
+    //   payment_method: selectedInput ? "offline" : "online",
+    //   transaction_reference: selectedInput ? "" : "sadgash23asds",
+    //   delivery_address_id: 2,
+    //   // delivery_charge: deliveryCharges,
+    //   delivery_charge: 0,
+    //   original_delivery_charge: 0,
+    //   coupon_code: "",
+    //   order_type: "delivery",
+    //   checked: selectedInput,
+    //   store_id: 1,
+    //   zone_id: 2,
+    //   delivered_status: "undelivered",
+    //   delivery_address: deliveryAddress,
+    //   item_campaign_id: "",
+    //   // order_amount: parseInt(originalPrice * 0.05 + originalPrice),
+    //   order_amount: parseInt(originalPrice),
+    //   cart: cartData,
+    // };
+    axios
+      .post("https://canine.hirectjob.in/api/v1/auth/payment/initiate", {
+        ...phonepaydata,
+        // ...requestData,
+      })
+      .then((res) => {
+        // Extract the redirect URL from the response
+        const redirectUrl = res.data.data.instrumentResponse.redirectInfo.url;
+        const merchantTransactionId = res.data.data.merchantTransactionId;
 
-      const options = {
-        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
-        amount: "100", // Amount in paise (100 INR)
-        currency: "INR",
-        name: "ritik vyas",
-        description: "Test Payment",
-        image: "https://your_logo_url.png",
-        // order_id: response.id, // Order ID obtained from Razorpay
-        handler: (response) => {
-          setPaymentId(response.razorpay_payment_id);
-          handleAddAmount();
-          // Handle the success callback
-          // window.location.href = "/shipping";
-          toast.success("Unpaid Amount Payment Add Successfully Paylater");
-          console.log("Payment Successful:", response);
-        },
+        // Call your callback API with relevant data
+        axios
+          .post("http://canine.hirectjob.in/api/v1/auth/payment/callback", {
+            payment_status: true,
+            transaction_id: merchantTransactionId,
+          })
+          .then((callbackRes) => {
+            // Handle callback response if needed
+          })
+          .catch((callbackError) => {
+            // Handle callback error if needed
+          });
 
-        prefill: {
-          email: "test@example.com",
-          contact: "1234567890",
-        },
-        notes: {
-          address: "1234, Demo Address",
-        },
-        theme: {
-          color: "#F37254",
-        },
-      };
-
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.error("Razorpay Load Error:", error);
-    }
+        // Open the redirect URL in a new window
+        window.open(redirectUrl);
+      })
+      .catch((error) => {
+        // Handle error if needed
+      });
+    // .then((res) => {
+    //   const abc = res.data.data.instrumentResponse.redirectInfo.url;
+    //   window.open(abc);
+    // })
+    // .catch((error) => {});
   };
   // Razorpay
   const AllBanner = async () => {
@@ -186,7 +228,6 @@ function Petshopdashboard() {
         console.log("Order List Successful");
         const reversedata = response.data.data.reverse();
         settotalorder(reversedata);
-
       })
       .catch((error) => {
         console.log(error);

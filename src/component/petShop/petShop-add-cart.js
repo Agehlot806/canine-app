@@ -158,53 +158,136 @@ function PetshopAddCart() {
     });
   };
 
-  const handlePayment = async () => {
-    try {
-      // const response = await loadRazorpay();
-      // loadRazorpay()
-      //   .then((response) => {
-      //     console.log("response handlePayment: ", response);
-      //     // Code to execute after the script has loaded
-      //   })
-      //   .catch((error) => {
-      //     console.error("Error loading Razorpay script:", error);
-      //   });
-      await loadRazorpayScript();
+  // const handlePayment = async () => {
+  //   try {
+  //     // const response = await loadRazorpay();
+  //     // loadRazorpay()
+  //     //   .then((response) => {
+  //     //     console.log("response handlePayment: ", response);
+  //     //     // Code to execute after the script has loaded
+  //     //   })
+  //     //   .catch((error) => {
+  //     //     console.error("Error loading Razorpay script:", error);
+  //     //   });
+  //     await loadRazorpayScript();
 
-      const options = {
-        key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
-        amount: 10000, // Amount in paise (100 INR)
-        currency: "INR",
-        name: "HEllo world",
-        description: "Test Payment",
-        image: "https://your_logo_url.png",
-        // order_id: response.id, // Order ID obtained from Razorpay
-        handler: (response) => {
-          setPaymentId(response.razorpay_payment_id);
-          // Handle the success callback
-          window.location.href = "/shipping";
-          console.log("Payment Successful:", response);
-        },
+  //     const options = {
+  //       key: "rzp_test_yXpKwsLWjkzvBJ", // Replace with your actual key
+  //       amount: 10000, // Amount in paise (100 INR)
+  //       currency: "INR",
+  //       name: "HEllo world",
+  //       description: "Test Payment",
+  //       image: "https://your_logo_url.png",
+  //       // order_id: response.id, // Order ID obtained from Razorpay
+  //       handler: (response) => {
+  //         setPaymentId(response.razorpay_payment_id);
+  //         // Handle the success callback
+  //         window.location.href = "/shipping";
+  //         console.log("Payment Successful:", response);
+  //       },
 
-        prefill: {
-          email: "test@example.com",
-          contact: "1234567890",
-        },
-        notes: {
-          address: "1234, Demo Address",
-        },
-        theme: {
-          color: "#F37254",
-        },
-      };
+  //       prefill: {
+  //         email: "test@example.com",
+  //         contact: "1234567890",
+  //       },
+  //       notes: {
+  //         address: "1234, Demo Address",
+  //       },
+  //       theme: {
+  //         color: "#F37254",
+  //       },
+  //     };
 
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.error("Razorpay Load Error:", error);
-    }
-  };
+  //     const rzp1 = new window.Razorpay(options);
+  //     rzp1.open();
+  //   } catch (error) {
+  //     console.error("Razorpay Load Error:", error);
+  //   }
+  // };
   // const originalPrice = addToCartProduct[0]?.price;
+
+  const phonepaydata = {
+    amount: parseInt(originalPrice),
+  };
+  const handlePayment = (e) => {
+    // e.preventDefault();
+    // const transaction_id = generateUniqueTransactionId();
+    const cartData = sendcartdata.map((item) => ({
+      product_id: item.item_id,
+      variation: item.variant,
+      price: parseInt(item.price),
+      quantity: item.quantity,
+      min_order: item.min_order,
+      tax_amount: 0,
+      discount_on_item: "",
+    }));
+    const requestData = {
+      role: 1,
+      user_id: storedWholesellerId,
+      seller_id: Number(salesmanId),
+      coupon_discount_amount: "",
+      discount_on_item: "",
+      coupon_discount_title: "",
+      payment_status: "paid",
+      order_status: "confirm",
+      total_tax_amount: 0,
+      // * itemQty,
+      gst_bill: selectedValue,
+      payment_day: selectedOption,
+      payment_mode: selectedOptiontwo,
+      payment_method: selectedInput ? "online" : "online",
+      transaction_reference: selectedInput ? "" : "sadgash23asds",
+      delivery_address_id: 2,
+      // delivery_charge: deliveryCharges,
+      delivery_charge: 0,
+      original_delivery_charge: 0,
+      coupon_code: "",
+      order_type: "delivery",
+      checked: selectedInput,
+      store_id: 1,
+      zone_id: 2,
+      delivered_status: "undelivered",
+      delivery_address: deliveryAddress,
+      item_campaign_id: "",
+      // order_amount: parseInt(originalPrice * 0.05 + originalPrice),
+      order_amount: parseInt(originalPrice),
+      cart: cartData,
+    };
+    axios
+      .post("https://canine.hirectjob.in/api/v1/auth/payment/initiate", {
+        ...phonepaydata,
+        ...requestData,
+      })
+      .then((res) => {
+        // Extract the redirect URL from the response
+        const redirectUrl = res.data.data.instrumentResponse.redirectInfo.url;
+        const merchantTransactionId = res.data.data.merchantTransactionId;
+
+        // Call your callback API with relevant data
+        axios
+          .post("http://canine.hirectjob.in/api/v1/auth/payment/callback", {
+            payment_status: true,
+            transaction_id: merchantTransactionId,
+          })
+          .then((callbackRes) => {
+            // Handle callback response if needed
+          })
+          .catch((callbackError) => {
+            // Handle callback error if needed
+          });
+
+        // Open the redirect URL in a new window
+        window.open(redirectUrl);
+      })
+      .catch((error) => {
+        // Handle error if needed
+      });
+    // .then((res) => {
+    //   const abc = res.data.data.instrumentResponse.redirectInfo.url;
+    //   window.open(abc);
+    // })
+    // .catch((error) => {});
+  };
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
